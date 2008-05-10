@@ -45,6 +45,13 @@ describe "BigDecimal#to_s" do
     @bigneg.to_s(" F").should_not =~ /\ .*/
   end
 
+  it "removes trailing spaces in floating point notation" do
+    BigDecimal.new('-123.45678901234567890').to_s('F').should == "-123.4567890123456789"
+    BigDecimal.new('1.2500').to_s('F').should == "1.25"
+    BigDecimal.new('0000.00000').to_s('F').should == "0.0"
+    BigDecimal.new('-00.000010000').to_s('F').should == "-0.00001"
+  end
+
   it "can use engineering notation" do
     @bigdec.to_s("E").should =~ /^0\.[0-9]*E[0-9]*$/
   end
