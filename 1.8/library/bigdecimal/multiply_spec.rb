@@ -15,6 +15,7 @@ describe "BigDecimal#*" do
   end
 
   it "multiply self with other" do
+    (@one * @one).should == @one
     (@e3_minus * @e3_plus).should == BigDecimal("9")
     # Can't do this till we implement **
     # (@e3_minus * @e3_minus).should == @e3_minus ** 2
