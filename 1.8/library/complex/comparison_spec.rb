@@ -2,12 +2,19 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'complex'
 
 describe "Complex#<=>" do
-  it "needs to be reviewed for spec completeness" do
-  end
-  
-  it "compares the absolute values of the two arguments" do
+  it "compares the absolute values of self and other" do
     (Complex(1, 2) <=> Complex(2, 1)).should == 0
     (Complex(-3, -10) <=> Complex(2, 1)).should > 0
     (Complex(3, 5) <=> Complex(100.0, -190.5)).should < 0
+    
+    (Complex(3, 4) <=> 5).should == 0
+    (Complex(3, 4) <=> -5).should == 0
+    (Complex(-3, -4) <=> -5).should == 0
+    
+    (Complex(3, 4) <=> 6).should < 0
+    (Complex(3, 4) <=> -4).should > 0
+
+    (Complex(3, 4) <=> 6.0).should < 0
+    (Complex(3, 4) <=> -4.0).should > 0
   end
 end
