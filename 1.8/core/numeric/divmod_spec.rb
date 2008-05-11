@@ -15,7 +15,7 @@ describe "Numeric#divmod" do
     4.divmod(13).should == [0,4]
   end
 
-  it "returns [quotent, modulus] where modulus may be Float or Integer when operating with Integers and Floats" do
+  it "returns [quotient, modulus] where modulus may be Float or Integer when operating with Integers and Floats" do
     13.divmod(4.0).should == [3,1]
     4.divmod(13.0).should == [0,4]
     a, b = 13.divmod(4.6)
