@@ -74,6 +74,20 @@ describe "BigDecimal#div" do
     @one.div(@zero_minus).nan?.should == true
   end
 
+  it "returns NaN if zero is divided by zero" do
+    @zero.div(@zero).nan?.should == true
+    @zero_minus.div(@zero_plus).nan?.should == true
+    @zero_plus.div(@zero_minus).nan?.should == true
+
+    @zero.div(@zero, 0).nan?.should == true
+    @zero_minus.div(@zero_plus, 0).nan?.should == true
+    @zero_plus.div(@zero_minus, 0).nan?.should == true
+
+    @zero.div(@zero, 10).nan?.should == true
+    @zero_minus.div(@zero_plus, 10).nan?.should == true
+    @zero_plus.div(@zero_minus, 10).nan?.should == true
+  end
+
   it "returns NaN if (+|-) Infinity divided by 1 and no precision given" do
     @infinity_minus.div(@one).nan?.should == true
     @infinity.div(@one).nan?.should == true

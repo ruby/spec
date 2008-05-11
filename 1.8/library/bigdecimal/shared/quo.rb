@@ -58,6 +58,13 @@ shared :bigdecimal_quo do |cmd|
       @one.send(cmd, @zero_plus).should == @infinity
       @one.send(cmd, @zero_minus).should == @infinity_minus
     end
+
+    it "returns NaN if zero is divided by zero" do
+      @zero.send(cmd, @zero).nan?.should == true
+      @zero_minus.send(cmd, @zero_plus).nan?.should == true
+      @zero_plus.send(cmd, @zero_minus).nan?.should == true
+    end
+
   end
 
 end
