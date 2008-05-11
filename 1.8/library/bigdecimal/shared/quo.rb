@@ -7,6 +7,8 @@ shared :bigdecimal_quo do |cmd|
     before(:each) do
       @one = BigDecimal("1")
       @zero = BigDecimal("0")
+      @zero_plus = BigDecimal("+0")
+      @zero_minus = BigDecimal("-0")
       @two = BigDecimal("2")
       @three = BigDecimal("3")
       @eleven = BigDecimal("11")
@@ -51,6 +53,11 @@ shared :bigdecimal_quo do |cmd|
       @infinity_minus.send(cmd, @infinity).nan?.should == true
     end
 
+    it "returns (+|-) Infinity if divided by zero" do
+      @one.send(cmd, @zero).should == @infinity
+      @one.send(cmd, @zero_plus).should == @infinity
+      @one.send(cmd, @zero_minus).should == @infinity_minus
+    end
   end
 
 end

@@ -23,6 +23,8 @@ describe "BigDecimal#div" do
   before(:each) do
     @one = BigDecimal("1")
     @zero = BigDecimal("0")
+    @zero_plus = BigDecimal("+0")
+    @zero_minus = BigDecimal("-0")
     @two = BigDecimal("2")
     @three = BigDecimal("3")
     @nan = BigDecimal("NaN")
@@ -64,6 +66,12 @@ describe "BigDecimal#div" do
     @frac_2.div(@infinity, 1).should == 0
     @zero.div(@infinity, 100000).should == 0
     @frac_2.div(@infinity, 100000).should == 0
+  end
+  
+  it "returns NaN if divided by zero and no precision given" do
+    @one.div(@zero).nan?.should == true
+    @one.div(@zero_plus).nan?.should == true
+    @one.div(@zero_minus).nan?.should == true
   end
 
   it "returns NaN if (+|-) Infinity divided by 1 and no precision given" do
