@@ -2,10 +2,9 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#readline" do
-  @testfile = File.dirname(__FILE__) + '/fixtures/gets.txt'
-
   it "raises EOFError on end of stream" do
-    File.open(@testfile, 'r') do |f|
+    testfile = File.dirname(__FILE__) + '/fixtures/gets.txt'
+    File.open(testfile, 'r') do |f|
       lambda { loop { f.readline } }.should raise_error(EOFError)
     end
   end
