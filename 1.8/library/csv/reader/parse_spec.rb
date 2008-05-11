@@ -9,7 +9,6 @@ describe "CSV::Reader.parse" do
     CSV::Reader.parse(empty_input) do |row|
       Expectation.fail_with('block should not be executed', 'but executed')
     end
-    Mock.verify_count
   end
 
   it "calls block once for one row of input" do
