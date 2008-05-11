@@ -82,7 +82,7 @@ describe "IO#reopen" do
     @file1.gets.should == "Line 2: Two\n"
   end
 
-  platform_is_not :darwin do
+  platform_is_not :darwin, :freebsd do
     it "reassociates self with the I/O stream specified as an argument, after some sysreads" do
       length = 12 # length of first lines in numbered_lines.txt
 
