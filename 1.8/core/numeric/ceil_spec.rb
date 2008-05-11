@@ -14,10 +14,7 @@ describe "Numeric#ceil" do
   end
 
   it "returns the smallest Integer greater than or equal to self when passed a Bignum" do
-  # FIXME: use bignum_value helper
-    2147483648.ceil.should == 2147483648
-    -2147483648.ceil.should == -2147483648
-    9223372036854775808.ceil.should == 9223372036854775808
-    -9223372036854775808.ceil.should == -9223372036854775808  
+    bignum_value.ceil.should == bignum_value
+    (-bignum_value).ceil.should == -bignum_value
   end
 end
