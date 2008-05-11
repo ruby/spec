@@ -15,12 +15,25 @@ describe "File#chmod" do
     @file.chmod(0755).should == 0
   end
 
-  it "always succeeds with any numeric values" do
-    vals = [-2**30, -2**16, -2**8, -2, -1,
-      -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
-    vals.each { |v|
-      lambda { @file.chmod(v) }.should_not raise_error
-    }
+  platform_is_not :freebsd do
+    it "always succeeds with any numeric values" do
+      vals = [-2**30, -2**16, -2**8, -2, -1,
+        -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
+      vals.each { |v|
+        lambda { @file.chmod(v) }.should_not raise_error
+      }
+    end
+  end
+
+  # -256, -2 and -1 raise Errno::E079 on FreeBSD
+  platform_is :freebsd do
+    it "always succeeds with any numeric values" do
+      vals = [-2**30, -2**16, #-2**8, -2, -1,
+        -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
+      vals.each { |v|
+        lambda { @file.chmod(v) }.should_not raise_error
+      }
+    end
   end
 
   it "invokes to_int on non-integer argument" do
@@ -81,12 +94,25 @@ describe "File.chmod" do
     @count.should == 1
   end
 
-  it "always succeeds with any numeric values" do
-    vals = [-2**30, -2**16, -2**8, -2, -1,
-      -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
-    vals.each { |v|
-      lambda { File.chmod(v, @file) }.should_not raise_error
-    }
+  platform_is_not :freebsd do
+    it "always succeeds with any numeric values" do
+      vals = [-2**30, -2**16, -2**8, -2, -1,
+        -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
+      vals.each { |v|
+        lambda { File.chmod(v, @file) }.should_not raise_error
+      }
+    end
+  end
+
+  # -256, -2 and -1 raise Errno::E079 on FreeBSD
+  platform_is :freebsd do
+    it "always succeeds with any numeric values" do
+      vals = [-2**30, -2**16, #-2**8, -2, -1,
+        -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
+      vals.each { |v|
+        lambda { File.chmod(v, @file) }.should_not raise_error
+      }
+    end
   end
 
   it "throws a TypeError if the given path is not coercable into a string" do
