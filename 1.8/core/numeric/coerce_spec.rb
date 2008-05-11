@@ -15,7 +15,7 @@ describe "Numeric#coerce" do
     result.last.should be_kind_of(Float)
   end
 
-  compliant_on :ruby do
+  not_compliant_on :rubinius do
     it "returns an array containing other and self as Floats when given a Bignum" do
       result = 1.coerce(bignum_value)
       result.should == [bignum_value.to_f, 1.0]
