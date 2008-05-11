@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 require 'base64'
 
-describe "Base64#decode_d" do
+describe "Base64#decode_b" do
   it "supports an encoding type of base64 and the charachter set SHIFT_JIS" do
     Base64.decode_b("=?SHIFT_JIS?B?Zm9v?=").should == 'foo'
   end
