@@ -15,11 +15,13 @@ describe "Numeric#coerce" do
     result.last.should be_kind_of(Float)
   end
 
-  it "returns an array containing other and self as Floats when given a Bignum" do
-    result = 1.coerce(4294967296)
-    result.should == [4294967296.0, 1.0]
-    result.first.should be_kind_of(Float)
-    result.last.should be_kind_of(Float)
+  compliant_on :ruby do
+    it "returns an array containing other and self as Floats when given a Bignum" do
+      result = 1.coerce(bignum_value)
+      result.should == [bignum_value.to_f, 1.0]
+      result.first.should be_kind_of(Float)
+      result.last.should be_kind_of(Float)
+    end
   end
   
   it "raises a TypeError when other can't be coerced" do
