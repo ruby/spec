@@ -25,7 +25,7 @@ describe "Etc.getgrgid" do
   end
 
   compliant_on :ruby do
-    platform_is_not :darwin do
+    platform_is_not :darwin, :freebsd do
       it "ignores its argument" do
         lambda { Etc.getgrgid("foo") }.should raise_error(TypeError)
         Etc.getgrgid(42)
