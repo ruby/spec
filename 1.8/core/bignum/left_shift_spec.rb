@@ -15,7 +15,7 @@ describe "Bignum#<<" do
     (@bignum << -4).should == (@bignum >> 4)
   end
 
-  it "tries to convert its argument to an Integer using to_int" do
+  it "tries to convert the given argument to an Integer using to_int" do
     (@bignum << 4.5).should == 147573952589676413072
     
     (obj = mock('4')).should_receive(:to_int).and_return(4)
@@ -23,18 +23,20 @@ describe "Bignum#<<" do
   end
 
   it "raises a TypeError when the given argument can't be converted to Integer" do
-    obj = mock('asdf')
+    obj = mock("Converted to Integer")
     lambda { @bignum << obj }.should raise_error(TypeError)
     
     obj.should_receive(:to_int).and_return("asdf")
     lambda { @bignum << obj }.should raise_error(TypeError)
   end
   
-  it "raises a RangeError when the given argument is out of range of Integer" do
-    (obj = mock('large value')).should_receive(:to_int).and_return(8000_0000_0000_0000_0000)
+  it "raises a RangeError when the given argument is a Bignum" do
+    lambda { @bignum << bignum_value }.should raise_error(RangeError)
+    lambda { -@bignum << bignum_value }.should raise_error(RangeError)
+    
+    obj = mock("Converted to Integer")
+    obj.should_receive(:to_int).exactly(2).times.and_return(bignum_value)
     lambda { @bignum << obj }.should raise_error(RangeError)
-
-    obj = 8e19
-    lambda { @bignum << obj }.should raise_error(RangeError)
+    lambda { -@bignum << obj }.should raise_error(RangeError)
   end
 end

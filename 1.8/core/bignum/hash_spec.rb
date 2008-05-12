@@ -6,7 +6,7 @@ describe "Bignum#hash" do
   end
 
   it "is stable" do
-    (2**100).hash.should == (2**100).hash
+    bignum_value.hash.should == bignum_value.hash
+    bignum_value.hash.should_not == bignum_value(1).hash
   end
-
 end

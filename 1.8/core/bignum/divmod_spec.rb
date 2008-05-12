@@ -37,7 +37,7 @@ describe "Bignum#divmod" do
     lambda { (-@bignum).divmod(0.0) }.should raise_error(FloatDomainError, "NaN")
   end
 
-  it "raises a TypeError when given a non-Integer" do
+  it "raises a TypeError when the given argument is not an Integer" do
     lambda {
       (obj = mock('10')).should_receive(:to_int).any_number_of_times.and_return(10)
       @bignum.divmod(obj)

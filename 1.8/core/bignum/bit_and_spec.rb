@@ -18,7 +18,7 @@ describe "Bignum#&" do
     (bignum_value & bignum_value(0xffff).to_f).should == 9223372036854775808
   end
 
-  it "tries to convert it's argument to an Integer using to_int" do
+  it "tries to convert the given argument to an Integer using to_int" do
     (@bignum & 3.4).should == 1
     
     (obj = mock('3')).should_receive(:to_int).and_return(3)
