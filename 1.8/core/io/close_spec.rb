@@ -4,10 +4,11 @@ describe "IO#close" do
   before :each do
     @io = IO.popen(RUBY_NAME, "r+")
   end
+
   after :each do
     @io.close unless @io.closed?
-  end  
-  
+  end
+
   it "closes the stream" do
     lambda { @io.close }.should_not raise_error
     @io.closed?.should == true
@@ -16,7 +17,7 @@ describe "IO#close" do
   it "returns nil" do
     @io.close.should == nil
   end
-  
+
   it "makes the stream unavailable for any further data operations" do
     @io.close
     lambda { @io.print "attempt to write" }.should raise_error(IOError)
