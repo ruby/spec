@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "IO#close" do
   before :each do
-    @io = IO.popen(RUBY_NAME, "r+")
+    @io = File.open tmp('io.close.txt'), 'w'
   end
 
   after :each do
@@ -32,18 +32,38 @@ describe "IO#close" do
     lambda { @io.close }.should raise_error(IOError)
   end
 
-  it "sets $? if the stream is opened by IO.popen" do
-    @io.close
-    $?.should == 0
-
-    old_stderr = $stderr.dup
-    $stderr.reopen("/dev/null")
-    begin
-      @io = IO.popen("does-not-exist-for-sure", "r+")
-      @io.close
-      $?.exitstatus.should == 127
-    ensure
-      $stderr.reopen(old_stderr)
-    end
-  end
 end
+
+describe "IO#close on an IO.popen stream" do
+
+  it "clears #pid" do
+    io = IO.popen 'yes', 'r'
+
+    io.pid.should_not == 0
+
+    io.close
+
+    lambda { io.pid }.should raise_error(IOError, 'closed stream')
+  end
+
+  it "sets $?" do
+    io = IO.popen 'true', 'r'
+    io.close
+
+    $?.exitstatus.should == 0
+
+    io = IO.popen 'false', 'r'
+    io.close
+
+    $?.exitstatus.should == 1
+  end
+
+  it "waits for the child to exit" do
+    io = IO.popen 'yes', 'r'
+    io.close
+
+    $?.exitstatus.should_not == 0 # SIGPIPE/EPIPE
+  end
+
+end
+
