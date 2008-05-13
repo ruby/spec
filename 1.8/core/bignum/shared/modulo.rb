@@ -23,10 +23,7 @@ shared :bignum_modulo do |cmd|
     end
 
     it "raises a TypeError when given a non-Integer" do
-      lambda {
-        (obj = mock('10')).should_receive(:to_int).any_number_of_times.and_return(10)
-        @bignum.send(cmd, obj)
-      }.should raise_error(TypeError)
+      lambda { @bignum.send(cmd, mock('10')) }.should raise_error(TypeError)
       lambda { @bignum.send(cmd, "10") }.should raise_error(TypeError)
       lambda { @bignum.send(cmd, :symbol) }.should raise_error(TypeError)
     end
