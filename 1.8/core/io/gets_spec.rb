@@ -14,27 +14,27 @@ describe "IO#gets" do
 
   it "returns tainted strings" do
     File.open(IOSpecs.gets_fixtures, 'r') do |f|
-       while (line = f.gets(nil))
-         line.tainted?.should == true
-       end
+      while (line = f.gets(nil))
+        line.tainted?.should == true
+      end
     end
 
     File.open(IOSpecs.gets_fixtures, 'r') do |f|
-       while (line = f.gets(""))
-         line.tainted?.should == true
-       end
+      while (line = f.gets(""))
+        line.tainted?.should == true
+      end
     end
 
     File.open(IOSpecs.gets_fixtures, 'r') do |f|
-       while (line = f.gets)
-         line.tainted?.should == true
-       end
+      while (line = f.gets)
+        line.tainted?.should == true
+      end
     end
 
     File.open(IOSpecs.gets_fixtures, 'r') do |f|
-       while (line = f.gets("la"))
-         line.tainted?.should == true
-       end
+      while (line = f.gets("la"))
+        line.tainted?.should == true
+      end
     end
   end
 
