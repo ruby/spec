@@ -20,15 +20,14 @@ describe "IO#close" do
 
   it "makes the stream unavailable for any further data operations" do
     @io.close
-    lambda { @io.print "attempt to write" }.should raise_error(IOError)
-    lambda { @io.syswrite "attempt to write" }.should raise_error(IOError)
+
+    lambda { @io.write "attempt to write" }.should raise_error(IOError)
     lambda { @io.read }.should raise_error(IOError)
-    lambda { @io.sysread(1) }.should raise_error(IOError)
   end
 
   it "raises an IOError on subsequent invocations" do
     @io.close
-    lambda { @io.close }.should raise_error(IOError)
+
     lambda { @io.close }.should raise_error(IOError)
   end
 
