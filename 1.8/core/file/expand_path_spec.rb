@@ -63,10 +63,10 @@ describe "File.expand_path" do
       File.expand_path('.').should == Dir.pwd
       File.expand_path(Dir.pwd).should == Dir.pwd
       File.expand_path('~/').should == ENV['HOME']
-      File.expand_path('~/..badfilename').should == ENV['HOME'] + '/..badfilename'
+      File.expand_path('~/..badfilename').should == "#{ENV['HOME']}/..badfilename"
       File.expand_path('..').should == Dir.pwd.split('/')[0...-1].join("/")
       File.expand_path('//').should == '//'
-      File.expand_path('~/a','~/b').should == ENV['HOME']+"/a"
+      File.expand_path('~/a','~/b').should == "#{ENV['HOME']}/a"
     end
 
     it "raises an ArgumentError if the path is not valid" do
@@ -75,6 +75,7 @@ describe "File.expand_path" do
 
     it "expands ~ENV['USER'] to the user's home directory" do
       File.expand_path("~#{ENV['USER']}").should == ENV['HOME']
+      File.expand_path("~#{ENV['USER']}/a").should == "#{ENV['HOME']}/a"
     end
   end
 
