@@ -11,6 +11,8 @@ end
 describe "Bignum#eql? when given a non-Bignum" do
   it "returns false" do
     a = bignum_value(13)
+    a.eql?(a.to_f).should == false
+
     a.eql?(2).should == false
     a.eql?(3.14).should == false
     a.eql?(:symbol).should == false
