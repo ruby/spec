@@ -1,30 +1,34 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "IO#popen" do
+describe "IO::popen" do
   it "reads from a read-only pipe" do
-    IO.popen("echo foo", "r") do |pipe|
-      pipe.read.should == "foo\n"
+    IO.popen("echo foo", "r") do |io|
+      io.read.should == "foo\n"
     end
   end
 
   platform_is_not :windows do
-    it "writes to a read/write pipe" do
-      IO.popen("cat", "r+") do |pipe|
-        pipe.write("bar")
-        pipe.read 3
-      end.should == "bar"
+    it "reads and writes to a read/write pipe" do
+      data = IO.popen("cat", "r+") do |io|
+        io.write("bar")
+        io.read 3
+      end
+
+      data.should == "bar"
     end
   end
 
-  it "with block does not raise error when io closed inside the block" do
-    lambda {
-      @io = IO.popen(RUBY_NAME, "r+") { |io| io.close; io }
-    }.should_not raise_error
-    @io.closed?.should == true
+  it "allows the io to be closed inside the block" do
+    io = IO.popen('yes', 'r') do |io|
+      io.close
+      io
+    end
+
+    io.closed?.should == true
   end
 end
 
-describe "IO.popen" do
+describe "IO::popen" do
   it "needs to be reviewed for spec completeness" do
   end
 end
