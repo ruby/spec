@@ -1,39 +1,30 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
+# TODO: change to a.should be_equal(b)
+# TODO: write spec for cloning classes and calling private methods
+# TODO: write spec for private_methods not showing up via extended
 describe "Singleton._load" do
 
   it "is a private method" do
-    lambda { SingletonSpecs::MyClass.instance._load("") }.should raise_error(NoMethodError)
+    # TODO: SingletonSpecs::MyClass.private_methods.sort.should include("_load")
+    lambda { # TODO: remove when above works
+      SingletonSpecs::MyClass._load("")
+    }.should raise_error(NoMethodError)
+    SingletonSpecs::MyClass.send(:_load, ""  ).should_not == nil
   end
-  
+
   it "returns the singleton instance for anything passed in" do
-    SingletonSpecs::MyClass.send(:_load, "").equal?(SingletonSpecs::MyClass.instance).should == true
-    SingletonSpecs::MyClass.send(:_load, "42").equal?(SingletonSpecs::MyClass.instance).should == true
-    SingletonSpecs::MyClass.send(:_load, 42).equal?(SingletonSpecs::MyClass.instance).should == true
+    klass = SingletonSpecs::MyClass
+    klass.send(:_load, ""  ).equal?(klass.instance).should == true
+    klass.send(:_load, "42").equal?(klass.instance).should == true
+    klass.send(:_load, 42  ).equal?(klass.instance).should == true
   end
 
-  it "returns the singleton instance for anything passed in for a singleton subclass" do
-    SingletonSpecs::MyClassChild.send(:_load, "").equal?(SingletonSpecs::MyClassChild.instance).should == true
-    SingletonSpecs::MyClassChild.send(:_load, "42").equal?(SingletonSpecs::MyClassChild.instance).should == true
-    SingletonSpecs::MyClassChild.send(:_load, 42).equal?(SingletonSpecs::MyClassChild.instance).should == true
-  end
-
-  it "returns the singleton instance for anything passed in for a singleton clone" do
-    klone = SingletonSpecs::MyClass.clone
-    klone.send(:_load, "").equal?(klone.instance).should == true
-    klone.send(:_load, "42").equal?(klone.instance).should == true
-    klone.send(:_load, 42).equal?(klone.instance).should == true
-  end
-
-end
-
-describe "Marshal.load on singleton object previously serialised in this process" do
-  ruby_bug do
-    # http://rubyforge.org/tracker/index.php?func=detail&aid=19377&group_id=426&atid=1698
-    it "returns the singleton instance" do
-      instance = SingletonSpecs::MyClass.instance
-      instance.equal?(Marshal.load(Marshal.dump(instance))).should == true
-    end
+  it "returns the singleton instance for anything passed in to subclass" do
+    subklass = SingletonSpecs::MyClassChild
+    subklass.send(:_load, ""  ).equal?(subklass.instance).should == true
+    subklass.send(:_load, "42").equal?(subklass.instance).should == true
+    subklass.send(:_load, 42  ).equal?(subklass.instance).should == true
   end
 end
