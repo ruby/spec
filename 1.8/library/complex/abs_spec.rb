@@ -2,9 +2,6 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'complex'
 
 describe "Complex#abs" do
-  it "needs to be reviewed for spec completeness" do
-  end
-  
   it "returns the modulus: |a + bi| = Ã((a ^ 2) + (b ^ 2))" do
     Complex(0, 0).abs.should == 0
     Complex(3, 4).abs.should == 5 # well-known integer case

@@ -2,9 +2,6 @@ require 'complex'
 
 shared :complex_conjugate do |cmd|
   describe "Complex##{cmd}" do
-    it "needs to be reviewed for spec completeness" do
-    end
-    
     it "returns the complex conjugate: conj a + bi = a - bi" do
       Complex(3, 5).send(cmd).should == Complex(3, -5)
       Complex(3, -5).send(cmd).should == Complex(3, 5)

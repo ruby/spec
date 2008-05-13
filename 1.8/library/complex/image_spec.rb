@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/shared/image'
 require 'complex'
 
 describe "Complex#image" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it_behaves_like(:complex_image, :image)
 end

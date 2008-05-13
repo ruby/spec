@@ -10,8 +10,8 @@ describe "Bignum#coerce when given a Fixnum or Bignum" do
   end
 end
 
-describe "Bignum#coerce" do
-  it "raises a TypeError when given a non Fixnum/Bignum" do
+describe "Bignum#coerce when given a non Fixnum/Bignum" do
+  it "raises a TypeError" do
     a = bignum_value
 
     lambda { a.coerce(nil) }.should raise_error(TypeError)
