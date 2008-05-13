@@ -18,7 +18,14 @@ describe "Bignum#==" do
 
   it "calls 'other == self' if the given argument is not an Integer" do
     obj = mock('not integer')
-    obj.should_receive(:==).and_return(:expected)
-    (@bignum == obj).should == :expected
+    obj.should_receive(:==).and_return(true)
+    (@bignum == obj).should == true
+  end
+  
+  it "returns the result of 'other == self' as a boolean" do
+    obj = mock('not integer')
+    obj.should_receive(:==).exactly(2).times.and_return("woot", nil)
+    (@bignum == obj).should == true
+    (@bignum == obj).should == false
   end
 end
