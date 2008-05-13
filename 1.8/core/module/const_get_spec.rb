@@ -30,16 +30,6 @@ describe "Module#const_get" do
     ModuleSpecs::LookupMod.const_get(:TopLevelConst).should == TopLevelConst
   end
 
-  extended_on :rubinius do
-    it "returns the value of the constant when a scoped constant name" do
-      ModuleSpecs.const_get("Super::SuperChild").should == ModuleSpecs::Super::SuperChild
-
-      lambda {
-        ModuleSpecs.const_get("Super::NonExistingConstantName")
-      }.should raise_error(NameError)
-    end
-  end
-
   it "raises a NameError when there is no constant with the given name" do
     lambda { ModuleSpecs.const_get("NotExistant") }.should raise_error(NameError)
   end
