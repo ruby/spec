@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
+require File.dirname(__FILE__) + '/shared/conjugate'
 require 'complex'
 
 describe "Numeric#conj" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it_behaves_like :numeric_conjugate, :conj
 end
