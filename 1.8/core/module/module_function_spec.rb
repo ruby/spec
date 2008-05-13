@@ -103,6 +103,15 @@ describe "Module#module_function as a toggle (no arguments) in a Module body" do
     m.respond_to?(:test2).should == true
   end
 
+  it "returns the current module" do
+    x = nil
+    m = Module.new {
+      x = module_function
+    }
+
+    x.should == m
+  end
+
   it "stops creating module functions if the body encounters another toggle " \
      "like public/protected/private without arguments" do
     m = Module.new {
