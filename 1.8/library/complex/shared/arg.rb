@@ -2,9 +2,6 @@ require 'complex'
 
 shared :complex_arg do |cmd|
   describe "Complex##{cmd}" do
-    it "needs to be reviewed for spec completeness" do
-    end
-  
     it "returns the argument -- i.e., the angle from (1, 0) in the complex plane" do
       TwoPi = 2 * Math::PI
       (Complex(1, 0).send(cmd) % TwoPi).should be_close(0, TOLERANCE)

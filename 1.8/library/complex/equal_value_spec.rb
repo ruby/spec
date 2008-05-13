@@ -51,6 +51,7 @@ describe "Complex#== with Numeric" do
 end
 
 describe "Complex#== with Object" do
+  # Fixnum#==, Float#== and Bignum#== only return booleans - Bug?
   it "calls other#== with self" do
     value = Complex(3, 0)
     
