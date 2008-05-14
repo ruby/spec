@@ -67,7 +67,7 @@ describe "IO#reopen" do
   it "reassociates self with the I/O stream specified as an argument, after some reads" do
     length = 12 # length of first lines in numbered_lines.txt
 
-    # reade some first
+    # read some first
     @file1.gets
     @file2.gets
 
