@@ -26,12 +26,20 @@ describe "IO#pos=" do
   end
 
   it "can handle any numerical argument without breaking" do
-    File.open @fname do |f|
-      f.seek(1.2).should == 0
-      f.seek(2**32).should == 0
-      f.seek(1.23423423432e12).should == 0
-      f.seek(0.00000000000000000000001).should == 0
-      lambda { f.seek(2**128) }.should raise_error(RangeError)
+    File.open @fname do |io|
+      io.pos = 1.2
+      io.pos.should == 1
+
+      io.pos = 2**32
+      io.pos.should == 2**32
+
+      io.pos = 1.23423423432e12
+      io.pos.should == Integer(1.23423423432e12)
+
+      io.pos = Float::EPSILON
+      io.pos.should == 0
+
+      lambda { io.pos = 2**128 }.should raise_error(RangeError)
     end
   end
   
