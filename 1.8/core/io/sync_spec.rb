@@ -3,14 +3,11 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#sync=" do
   before :each do
-    @file = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r')
-    @io = IO.open @file.fileno, 'r'
+    @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt')
   end
 
   after :each do
-    # we *must* close both in order to not leak descriptors
     @io.close unless @io.closed?
-    @file.close unless @file.closed? rescue Errno::EBADF
   end
 
   it "sets the sync mode to true or false" do
@@ -36,14 +33,11 @@ end
 
 describe "IO#sync" do
   before :each do
-    @file = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r')
-    @io = IO.open @file.fileno, 'r'
+    @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt')
   end
 
   after :each do
-    # we *must* close both in order to not leak descriptors
     @io.close unless @io.closed?
-    @file.close unless @file.closed? rescue Errno::EBADF
   end
 
   it "returns the current sync mode" do
