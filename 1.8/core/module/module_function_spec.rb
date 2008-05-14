@@ -16,6 +16,16 @@ describe "Module#module_function with specific method names" do
     m.respond_to?(:test3).should == false
   end
 
+  it "returns the current module" do
+    x = nil
+    m = Module.new do
+      def test()  end
+      x = module_function :test
+    end
+
+    x.should == m
+  end
+
   it "creates an independent copy of the method, not a redirect" do
     module Mixin
       def test
