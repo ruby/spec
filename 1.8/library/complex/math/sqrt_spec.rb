@@ -46,7 +46,7 @@ describe "Math#sqrt!" do
     lambda { @im.send(:sqrt!, -19.36) }.should raise_error(Errno::EDOM)
   end
 
-  it "raises a TypeError when given a Complex number" do
+  it "raises a TypeError when passed a Complex number" do
     lambda { @im.send(:sqrt!, Complex(4, 5)) }.should raise_error(TypeError)
   end
 end
@@ -79,7 +79,7 @@ describe "Math.sqrt!" do
     lambda { Math.sqrt!(-19.36) }.should raise_error(Errno::EDOM)
   end
 
-  it "raises a TypeError when given a Complex number" do
+  it "raises a TypeError when passed a Complex number" do
     lambda { Math.sqrt!(Complex(4, 5)) }.should raise_error(TypeError)
   end
 end
