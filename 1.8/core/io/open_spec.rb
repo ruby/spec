@@ -32,31 +32,20 @@ describe "IO.open" do
 
   it "with a block propagates non-StandardErrors produced by close" do
     lambda {
-      File.open(@file_name, 'r') do |f|
-        IO.open(f.fileno, 'r') do |io|
-          class << io
-            alias_method(:close_orig, :close)
-            def close
-              close_orig
-              raise Exception, "exception out of close"
-            end
+      File.open @file_name do |f|
+        IO.open f.fileno do |io|
+          def io.close
+            raise Exception, "exception out of close"
           end
         end
-      end
+      end # IO object is closed here
     }.should raise_error(Exception, "exception out of close")
   end
 
   it "with a block swallows StandardErrors produced by close" do
-    File.open(@file_name, 'r') do |f|
-      IO.open(f.fileno, 'r') do |io|
-        class << io
-          alias_method(:close_orig, :close)
-          def close
-            close_orig
-            raise IOError
-          end
-        end
-      end
+    # This closes the file descriptor twice, the second raises Errno::EBADF
+    File.open @file_name do |f|
+      IO.open f.fileno do end
     end
   end
 
