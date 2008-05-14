@@ -24,6 +24,11 @@ describe "Array#unshift" do
     a.unshift(3, 4)
     a.should == [3, 4]
   end
+  
+  it "quietly ignores unshifting nothing" do
+    [].unshift().should == []
+    [].unshift(*[]).should == []
+  end
 
   compliant_on :ruby, :jruby do
     it "raises a TypeError on a frozen array" do

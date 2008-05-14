@@ -34,11 +34,25 @@ describe "Array#&" do
     ([1, 2] & obj).should == [1, 2]
   end
 
-  # MRI doesn't actually call eql?() however. So you can't reimplement it.
-  it "acts as if using eql?" do
+  # MRI follows hashing semantics here, so doesn't actually call eql?/hash for Fixnum/Symbol
+  it "acts as if using an  intermediate hash to collect values" do
     ([5.0, 4.0] & [5, 4]).should == []
     str = "x"
     ([str] & [str.dup]).should == [str]
+    
+    obj1 = mock('1')
+    obj2 = mock('2')
+    def obj1.hash; 0; end
+    def obj2.hash; 0; end
+    def obj1.eql? a; true; end
+    def obj2.eql? a; true; end
+    
+    ([obj1] & [obj2]).should == [obj1]
+    
+    def obj1.eql? a; false; end
+    def obj2.eql? a; false; end
+    
+    ([obj1] & [obj2]).should == []
   end
   
   it "does return subclass instances for Array subclasses" do

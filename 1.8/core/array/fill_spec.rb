@@ -24,6 +24,10 @@ describe "Array#fill" do
     [1, 2, 3, 4, 5].fill('a', -2, 0).should == [1, 2, 3, 4, 5]
   end
   
+  it "makes no modifications if given an index greater than end and no size" do
+    [1, 2, 3, 4, 5].fill('a', 5).should == [1, 2, 3, 4, 5]
+  end
+  
   it "calls to_int on start and length" do
     x = mock('2')
     def x.to_int() 2 end
@@ -96,6 +100,12 @@ describe "Array#fill" do
 
   it "raises a TypeError if the index is not numeric" do
     lambda { [].fill 'a', true }.should raise_error(TypeError)
+  end
+  
+  it "raises an ArgumentError or RangeError for too-large sizes" do
+    arr = [1, 2, 3]
+    lambda { arr.fill(10, 1, 2**31 - 1) }.should raise_error(ArgumentError)
+    lambda { arr.fill(10, 1, 2**31) }.should raise_error(RangeError)
   end
 
   it "raises a TypeError with range and length argument" do

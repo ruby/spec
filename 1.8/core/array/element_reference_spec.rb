@@ -22,4 +22,9 @@ describe "Array.[]" do
     splatted_array = Array[3, 4, 5]
     Array[1, 2, *splatted_array].should == [1, 2, 3, 4, 5]
   end
+  
+  it "returns an instance of the subtype when called on an Array subclass" do
+    ArraySub = Class.new Array
+    ArraySub[1,2].class.should == ArraySub
+  end
 end

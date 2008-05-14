@@ -46,6 +46,8 @@ describe "Array#flatten!" do
   it "returns nil if no modifications took place" do
     a = [1, 2, 3]
     a.flatten!.should == nil
+    a = [1, [2, 3]]
+    a.flatten!.should_not == nil
   end
 
   it "raises an ArgumentError on recursive arrays" do

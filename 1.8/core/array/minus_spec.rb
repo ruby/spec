@@ -32,4 +32,25 @@ describe "Array#-" do
   it "does not call to_ary on array subclasses" do
     ([5, 6, 7] - ArraySpecs::ToAryArray[7]).should == [5, 6]
   end
+
+  # MRI follows hashing semantics here, so doesn't actually call eql?/hash for Fixnum/Symbol
+  it "acts as if using an  intermediate hash to collect values" do
+    ([5.0, 4.0] - [5, 4]).should == [5.0, 4.0]
+    str = "x"
+    ([str] - [str.dup]).should == []
+    
+    obj1 = mock('1')
+    obj2 = mock('2')
+    def obj1.hash; 0; end
+    def obj2.hash; 0; end
+    def obj1.eql? a; true; end
+    def obj2.eql? a; true; end
+    
+    ([obj1] - [obj2]).should == []
+    
+    def obj1.eql? a; false; end
+    def obj2.eql? a; false; end
+    
+    ([obj1] - [obj2]).should == [obj1]
+  end
 end
