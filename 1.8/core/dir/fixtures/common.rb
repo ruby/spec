@@ -43,6 +43,9 @@ module DirSpecs
                 #{mock_dir}/file_one.ext
                 #{mock_dir}/file_two.ext
 
+                #{mock_dir}/dir_filename_ordering
+                #{mock_dir}/dir/filename_ordering
+
                 #{mock_dir}/nondotfile
 
                 #{mock_dir}/subdir_one/.dotfile
@@ -86,6 +89,8 @@ module DirSpecs
       .dotfile
       .dotsubdir
       deeply
+      dir
+      dir_filename_ordering
       file_one.ext
       file_two.ext
       nondotfile

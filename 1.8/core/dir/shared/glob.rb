@@ -9,6 +9,8 @@ shared :dir_glob do |cmd|
     it "matches non-dotfiles with '*'" do
       expected = %w[
         deeply
+        dir
+        dir_filename_ordering
         file_one.ext
         file_two.ext
         nondotfile
@@ -95,12 +97,14 @@ shared :dir_glob do |cmd|
     end
 
     it "matches files with multiple '*' special characters" do
-      Dir.send(cmd, '*fi*e*').sort.should == %w|nondotfile file_one.ext file_two.ext|.sort
+      Dir.send(cmd, '*fi*e*').sort.should == %w|dir_filename_ordering nondotfile file_one.ext file_two.ext|.sort
     end
 
     it "matches non-dotfiles in the current directory with '**'" do
       expected = %w[
         deeply
+        dir
+        dir_filename_ordering
         file_one.ext
         file_two.ext
         nondotfile
@@ -122,6 +126,7 @@ shared :dir_glob do |cmd|
         deeply/nested/
         deeply/nested/directory/
         deeply/nested/directory/structure/
+        dir/
         special/
         subdir_one/
         subdir_two/
@@ -188,14 +193,26 @@ shared :dir_glob do |cmd|
 
     it "recursively matches directories with '**/<characters>'" do
       %w|glob []|.each {|cmd|
-        Dir.send(cmd, '**/*fil?{,.}*').sort.should == %w|deeply/nested/directory/structure/file_one 
-                                                         deeply/nested/directory/structure/file_one.ext 
-                                                         deeply/nondotfile file_one.ext file_two.ext 
-                                                         nondotfile subdir_one/nondotfile 
-                                                         subdir_two/nondotfile subdir_two/nondotfile.ext 
+        Dir.send(cmd, '**/*fil?{,.}*').sort.should == %w|deeply/nested/directory/structure/file_one
+                                                         deeply/nested/directory/structure/file_one.ext
+                                                         deeply/nondotfile
+                                                         dir/filename_ordering
+                                                         dir_filename_ordering
+                                                         file_one.ext file_two.ext
+                                                         nondotfile subdir_one/nondotfile
+                                                         subdir_two/nondotfile
+                                                         subdir_two/nondotfile.ext
                                                          subdir_two/nondotfile.ext|
       }
     end
+
+    it "orders directory-based entries before files when a glob matches both" do
+      expected = %w[dir/filename_ordering dir_filename_ordering]
+      %w|glob []|.each do |cmd|
+        Dir.send(cmd, '**/*filename_ordering').should == expected
+      end
+    end
+
     after(:all) do
       Dir.chdir @cwd
     end

@@ -30,6 +30,7 @@ describe "Dir.glob" do
       deeply/nested/
       deeply/nested/directory/
       deeply/nested/directory/structure/
+      dir/
       special/
       subdir_one/
       subdir_two/
