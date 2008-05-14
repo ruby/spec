@@ -9,4 +9,7 @@ module SocketSpecs
     Socket::SockAddr_In.new(Socket.sockaddr_in(port, host))
   end
 
+  def self.socket_path
+    "#{File.dirname(__FILE__)}/unix_server_spec.socket"
+  end
 end
