@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
-require File.dirname(__FILE__) + '/fixtures/classes'
 require File.dirname(__FILE__) + '/shared/log'
-require 'complex'
 
 describe "Math#log" do
   it_behaves_like :complex_math_log, IncludesMath.new

@@ -1,3 +1,6 @@
+require 'complex'
+require File.dirname(__FILE__) + '/../fixtures/classes'
+
 shared :complex_math_log do |obj|
   describe "Math#{obj == Math ? '.' : '#'}log" do
     it "returns the natural logarithm of the passed argument" do 
