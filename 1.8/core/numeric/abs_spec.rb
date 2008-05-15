@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Numeric#abs" do  
+  it "should be provided" do
+    Numeric.instance_methods.should include("abs")
+  end
+
   it "returns the absolute value for Fixnums" do      
     0.abs.should == 0 
     100.abs.should == 100

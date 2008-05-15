@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 # Returns true if num is an Integer (including Fixnum and Bignum).
 describe "Numeric#integer?" do  
+  it "should be provided" do
+    Numeric.instance_methods.should include("integer?")
+  end
+
   it "retrun true if the num is an integer?" do 
     0.integer?.should == true
     100.integer?.should  == true

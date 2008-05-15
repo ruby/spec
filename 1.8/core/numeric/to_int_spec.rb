@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Numeric#to_int" do  
+  it "should be provided" do
+    Numeric.instance_methods.should include("to_int")
+  end
+
   it "return the integer (integers)" do 
     0.to_int.should == 0
     100.to_int.should  == 100

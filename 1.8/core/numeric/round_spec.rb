@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 # Rounds num to the nearest integer
 describe "Numeric#round" do  
+  it "should be provided" do
+    Numeric.instance_methods.should include("round")
+  end
+
   it " round (down) " do 
     0.round.should == 0.0
     100.round.should == 100

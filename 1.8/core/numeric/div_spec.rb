@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Numeric#div" do  
+  it "should be provided" do
+    Numeric.instance_methods.should include("div")
+  end
+
   it "returns the integer quotient of two Integers" do 
     13.div(4).should == 3
     4.div(13).should == 0

@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 # Returns num if num is not zero, nil otherwise. 
 # This behavior is useful when chaining comparisons:
 describe "Numeric#nonzero?" do 
+  it "should be provided" do
+    Numeric.instance_methods.should include("nonzero?")
+  end
+
   it "returns nil if the number is zero" do
     0.nonzero?.should == nil
   end

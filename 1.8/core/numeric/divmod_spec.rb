@@ -6,6 +6,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 #    x = q*y + r
 
 describe "Numeric#divmod" do
+  it "should be provided" do
+    Numeric.instance_methods.should include("divmod")
+  end
+
   it "returns self divmod other" do
     (3**33).divmod(100).should == [55590605665555, 23]
   end

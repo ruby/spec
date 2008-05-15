@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 # If num and numeric have different signs, returns mod-numeric;
 # otherwise, returns mod. In both cases mod is the value num.modulo(numeric)
 describe "Numeric#remainder" do    
+  it "should be provided" do
+    Numeric.instance_methods.should include("remainder")
+  end
+
   it "remainder the right  integers" do 
     13.remainder(4).should == 1
     13.remainder(-4).should == 1

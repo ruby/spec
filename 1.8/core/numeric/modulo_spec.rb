@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Numeric#modulo" do 
+  it "should be provided" do
+    Numeric.instance_methods.should include("modulo")
+  end
+
   it " zero modulo x should be 0 (integer) " do 
     0.modulo(100).should == 0
     0.modulo(-100).should == 0

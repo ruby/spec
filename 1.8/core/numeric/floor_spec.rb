@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 # Returns the largest integer less than or equal to num. Numeric implements 
 # this by converting anInteger to a Float and invoking Float#floor.
 describe "Numeric#floor" do 
+  it "should be provided" do
+    Numeric.instance_methods.should include("floor")
+  end
+
   it "return the largest integer less than or equal to num (integer)" do 
     0.floor.should == 0
     100.floor.should == 100

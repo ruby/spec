@@ -16,6 +16,10 @@ describe "Numeric#step" do
     @basef = 5.4
   end  
   
+  it "should be provided" do
+    Numeric.instance_methods.should include("step")
+  end
+
   it "if base < limit > step then it should iterate (base-limit)/step times (integers)" do 
     x = []
     @base.step(@limit, @step) { |i| x << i }

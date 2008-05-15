@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 # Equivalent to Numeric#/, but overridden in subclasses.
 describe "Numeric#quo" do
+  it "should be provided" do
+    Numeric.instance_methods.should include("quo")
+  end
+
   it "returns the floating-point result of self divided by other" do
     # the to_f is required because RSpec (I'm assuming) requires 'rational'
     2.quo(2.5).to_s.should == '0.8'

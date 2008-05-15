@@ -16,6 +16,10 @@ describe "Numeric#eql?" do
     @bigfloat = nil
     @numeric = nil
   end
+
+  it "should be provided" do
+    Numeric.instance_methods.should include("eql?")
+  end
   
   it "be equal (integers and floats)" do 
     @integer.eql?(@integer).should == true

@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Numeric#coerce" do
+  it "should be provided" do
+    Numeric.instance_methods.should include("coerce")
+  end
+
   it "returns an array containing other and self as Fixnums when given an Fixnum" do
     result = 1.coerce(20)
     result.should == [20, 1]
