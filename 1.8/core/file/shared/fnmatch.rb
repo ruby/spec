@@ -116,11 +116,17 @@ shared :file_fnmatch do |cmd|
 
     it "matches multiple directories with ** when flags includes File::FNM_PATHNAME" do
       files = '**/*.rb'
-      File.send(cmd, files, 'main.rb', File::FNM_PATHNAME).should == true
-      File.send(cmd, files, 'one/two/three/main.rb', File::FNM_PATHNAME).should == true
-      File.send(cmd, files, './main.rb', File::FNM_PATHNAME).should == false
-      File.send(cmd, files, './main.rb', File::FNM_PATHNAME| File::FNM_DOTMATCH).should == true
-      File.send(cmd, files, 'one/two/.main.rb', File::FNM_PATHNAME| File::FNM_DOTMATCH).should == true
+      flags = File::FNM_PATHNAME
+
+      File.send(cmd, files, 'main.rb',               flags).should == true
+      File.send(cmd, files, 'one/two/three/main.rb', flags).should == true
+      File.send(cmd, files, './main.rb',             flags).should == false
+
+      flags = File::FNM_PATHNAME | File::FNM_DOTMATCH
+
+      File.send(cmd, files, './main.rb',        flags).should == true
+      File.send(cmd, files, 'one/two/.main.rb', flags).should == true
+
       File.send(cmd, "**/best/*", 'lib/my/best/song.rb').should == true
     end
 
