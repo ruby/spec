@@ -11,10 +11,12 @@ describe "Math.acosh" do
     Math.acosh(1.0).should be_close(0.0, TOLERANCE)
   end
   
-  it "it raises Errno::EDOM if x < 1" do
-    lambda { Math.acosh(1.0 - TOLERANCE) }.should raise_error(Errno::EDOM)
-    lambda { Math.acosh(0) }.should raise_error(Errno::EDOM)
-    lambda { Math.acosh(-1.0) }.should raise_error(Errno::EDOM)
+  conflicts_with Complex do
+    it "it raises Errno::EDOM if the passed argument is less than -1.0 or greater than 1.0" do
+      lambda { Math.acosh(1.0 - TOLERANCE) }.should raise_error(Errno::EDOM)
+      lambda { Math.acosh(0) }.should raise_error(Errno::EDOM)
+      lambda { Math.acosh(-1.0) }.should raise_error(Errno::EDOM)
+    end
   end
   
   it "raises an ArgumentError if the argument cannot be coerced with Float()" do

@@ -33,9 +33,14 @@ describe "Math.atanh" do
     end
   end
   
-  it "raises an Errno::EDOM if x > 1.0" do
-    lambda { Math.atanh(1.0 + TOLERANCE)  }.should raise_error(Errno::EDOM)
-    lambda { Math.atanh(-1.0 - TOLERANCE) }.should raise_error(Errno::EDOM)
+  conflicts_with Complex do
+    it "raises an Errno::EDOM if the passed argument is greater than 1.0" do
+      lambda { Math.atanh(1.0 + TOLERANCE)  }.should raise_error(Errno::EDOM)
+    end
+    
+    it "raises an Errno::EDOM if the passed argument is less than -1.0" do
+      lambda { Math.atanh(-1.0 - TOLERANCE) }.should raise_error(Errno::EDOM)
+    end
   end
   
   it "raises an ArgumentError if the argument cannot be coerced with Float()" do
