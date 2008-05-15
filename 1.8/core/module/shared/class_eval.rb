@@ -4,6 +4,11 @@ shared :module_class_eval do |cmd|
       ModuleSpecs.send(cmd, "self").should == ModuleSpecs
       ModuleSpecs.send(cmd, "1 + 1").should == 2
     end
+
+    it "defines constants in the receiver's scope" do
+      ModuleSpecs.send(cmd, "module NewEvaluatedModule;end")
+      ModuleSpecs.const_defined?(:NewEvaluatedModule).should == true
+    end
     
     it "evaluates a given block in the context of self" do
       ModuleSpecs.send(cmd) { self }.should == ModuleSpecs
