@@ -1,45 +1,22 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "Numeric#eql?" do 
-  before(:each) do 
-    @integer  = 1
-    @float    = 1.0
-    @bignum   = 4294967296
-    @bigfloat = 4294967296.0
-    @numeric = Numeric.new
+describe "Numeric#eql?" do
+  before(:each) do
+    @obj = NumericSub.new
   end
 
-  after(:each) do 
-    @integer  = nil
-    @float    = nil
-    @bignum   = nil
-    @bigfloat = nil
-    @numeric = nil
-  end
-
-  it "should be provided" do
-    Numeric.instance_methods.should include("eql?")
+  it "returns false if self's and other's types don't match" do
+    @obj.eql?(1).should == false
+    @obj.eql?(-1.5).should == false
+    @obj.eql?(bignum_value).should == false
+    @obj.eql?(:sym).should == false
   end
   
-  it "be equal (integers and floats)" do 
-    @integer.eql?(@integer).should == true
-    @integer.eql?(@float).should == false
-    @float.eql?(@float).should == true
-    @float.eql?(@integer).should == false
-  end
-  
-  it " should be equal (bignums and floats " do
-    @bignum.eql?(@bignum).should == true 
-    @bignum.eql?(@bigfloat).should == false
-  end
-  
-  it "be equal (edge cases)" do  
-    0.eql?(0).should ==  true
-    1.0.eql?(1.00000000000000000000).should == true
-    0.eql?(0.0).should ==  false
-    000000.eql?(0.0).should ==  false
-    000000.eql?(000) .should ==  true
-    @numeric.eql?(@numeric).should == true
-    @numeric.eql?(Numeric.new).should == false
+  it "returns the result of calling self#== with other when self's and other's types match" do
+    other = NumericSub.new
+    @obj.should_receive(:==).with(other).and_return("result", nil)
+    @obj.eql?(other).should == true
+    @obj.eql?(other).should == false
   end
 end

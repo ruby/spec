@@ -1,18 +1,18 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-# Returns num if num is not zero, nil otherwise. 
-# This behavior is useful when chaining comparisons:
 describe "Numeric#nonzero?" do 
-  it "should be provided" do
-    Numeric.instance_methods.should include("nonzero?")
+  before(:each) do
+    @obj = NumericSub.new
   end
-
-  it "returns nil if the number is zero" do
-    0.nonzero?.should == nil
+  
+  it "returns self if self#zero? is false" do
+    @obj.should_receive(:zero?).and_return(false)
+    @obj.nonzero?.should == @obj
   end
-
-  it "returns the value if number is different to 0" do
-    1.nonzero?.should == 1
-    2.nonzero?.should == 2
-  end  
+  
+  it "returns nil if self#zero? is true" do
+    @obj.should_receive(:zero?).and_return(true)
+    @obj.nonzero?.should == nil
+  end
 end

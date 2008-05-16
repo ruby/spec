@@ -1,24 +1,14 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-# Rounds num to the nearest integer
 describe "Numeric#round" do  
-  it "should be provided" do
-    Numeric.instance_methods.should include("round")
+  before(:each) do
+    @obj = NumericSub.new
   end
-
-  it " round (down) " do 
-    0.round.should == 0.0
-    100.round.should == 100
-    -100.round.should == -100
-  end  
   
-  it " round (up) " do  
-    34.56.round.should == 35
-    -34.56.round.should == -35
-  end  
-  
-  it " round twos complement " do
-    9223372036854775808.round.should == 9223372036854775808 
-    -9223372036854775808.round.should == -9223372036854775808 
-  end   
+  it "converts self to a Float (using #to_f) and returns the #round'ed result" do
+    @obj.should_receive(:to_f).and_return(2 - TOLERANCE, TOLERANCE - 2)
+    @obj.round.should == 2
+    @obj.round.should == -2
+  end
 end

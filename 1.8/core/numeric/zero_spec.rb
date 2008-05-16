@@ -1,12 +1,18 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "Numeric#zero?" do   
-  it "should be provided" do
-    Numeric.instance_methods.should include("zero?")
+describe "Numeric#zero?" do
+  before(:each) do
+    @obj = NumericSub.new
   end
-
-  it "return the vaule if number is different to 0" do 
-    0.zero?.should == true
-    1.zero?.should == false
-  end     
+  
+  it "returns true if self is 0" do
+    @obj.should_receive(:==).with(0).and_return(true)
+    @obj.zero?.should == true
+  end
+  
+  it "returns false if self is not 0" do
+    @obj.should_receive(:==).with(0).and_return(false)
+    @obj.zero?.should == false
+  end
 end

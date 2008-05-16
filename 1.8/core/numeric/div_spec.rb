@@ -1,46 +1,16 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "Numeric#div" do  
-  it "should be provided" do
-    Numeric.instance_methods.should include("div")
-  end
-
-  it "returns the integer quotient of two Integers" do 
-    13.div(4).should == 3
-    4.div(13).should == 0
+describe "Numeric#div" do
+  before(:each) do
+    @obj = NumericSub.new
   end
   
-  it "returns the integer quotient of an Integer and a Float" do 
-    13.div(4.0).should == 3
-    4.div(13.0).should == 0
-  end
-  
-  it "returns the integer quotient of a Float and an Integer" do 
-    (13.0).div(4).should == 3
-    (4.0).div(13).should == 0
-  end
-  
-  it "returns the integer quotient of two Floats" do 
-    (13.0).div(4.0).should == 3
-    (4.0).div(13.0).should == 0
-  end
-  
-  it "returns the integer quotient of a Bignum and an Integer" do
-    bignum_value(0).div(100).should == 92233720368547758
-  end
-  
-  it "raises an ArgumentError if not passed one argument" do
-    lambda { 13.div       }.should raise_error(ArgumentError)
-    lambda { 13.div(1, 2) }.should raise_error(ArgumentError)
-  end
-  
-  it "raises a ZeroDivisionError if passed 0" do
-    lambda { 13.div(0) }.should raise_error(ZeroDivisionError)
-  end
-  
-  it "raises a TypeError if not passed a Numeric type" do
-    lambda { 13.div(nil)    }.should raise_error(TypeError)
-    lambda { 13.div('test') }.should raise_error(TypeError)
-    lambda { 13.div(true)   }.should raise_error(TypeError)   
+  it "calls self#/ with other, converts the result to a Float (using #to_f) and returns the #floor'ed result" do
+    result = mock("Numeric#div result")
+    result.should_receive(:to_f).and_return(13 - TOLERANCE)
+    @obj.should_receive(:/).with(10).and_return(result)
+    
+    @obj.div(10).should == 12
   end
 end

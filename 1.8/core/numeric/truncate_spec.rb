@@ -1,25 +1,14 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Numeric#truncate" do
-  it "should be provided" do
-    Numeric.instance_methods.should include("truncate")
+  before(:each) do
+    @obj = NumericSub.new
   end
   
-  it "truncates integers " do 
-    0.truncate.should == 0.0
-    100.truncate.should == 100
-    -100.truncate.should == -100
-  end  
-  
-  it "truncates floats " do  
-    34.56.truncate.should == 34
-    -34.56.truncate.should == -34
-  end  
-  
-  it "truncates two complement " do
-    2147483648.truncate.should == 2147483648
-    -2147483648.truncate.should == -2147483648
-    9223372036854775808.truncate.should == 9223372036854775808 
-    -9223372036854775808.truncate.should == -9223372036854775808 
-  end 
+  it "converts self to a Float (using #to_f) and returns the #truncate'd result" do
+    @obj.should_receive(:to_f).and_return(2.5555, -2.3333)
+    @obj.truncate.should == 2
+    @obj.truncate.should == -2
+  end
 end

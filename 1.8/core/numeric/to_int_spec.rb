@@ -1,25 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Numeric#to_int" do  
-  it "should be provided" do
-    Numeric.instance_methods.should include("to_int")
+  it "returns self#to_i" do
+    obj = NumericSub.new
+    obj.should_receive(:to_i).and_return(:result)
+    obj.to_int.should == :result
   end
-
-  it "return the integer (integers)" do 
-    0.to_int.should == 0
-    100.to_int.should  == 100
-    -100.to_int.should == -100
-  end  
-  
-  it "return the integer part (float)" do 
-    34.56.to_int.should == 34 
-    -34.56.to_int.should == -34
-  end  
-  
-  it "return the integer part (two complement)" do    
-    2147483648.to_int.should == 2147483648
-    -2147483648.to_int.should == -2147483648
-    9223372036854775808.to_int.should == 9223372036854775808
-    -9223372036854775808.to_int.should == -9223372036854775808
-  end   
 end

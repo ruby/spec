@@ -1,20 +1,8 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-# Returns true if num is an Integer (including Fixnum and Bignum).
-describe "Numeric#integer?" do  
-  it "should be provided" do
-    Numeric.instance_methods.should include("integer?")
-  end
-
-  it "retrun true if the num is an integer?" do 
-    0.integer?.should == true
-    100.integer?.should  == true
-    -100.integer?.should  == true
-    34.56.integer?.should == false
-    -34.56.integer?.should == false
-    2147483648.integer?.should == true
-    -2147483648.integer?.should == true
-    9223372036854775808.integer?.should == true
-    -9223372036854775808.integer?.should == true
+describe "Numeric#integer?" do
+  it "returns false" do
+    NumericSub.new.integer?.should == false
   end   
 end 

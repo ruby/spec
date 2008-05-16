@@ -1,119 +1,173 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
-# Invokes block with the sequence of numbers starting at num, incremented by 
-# step on each call. The loop finishes when the value to be passed to the block 
-# is greater than limit (if step is positive) or less than limit (if step is negative).
-# If all the arguments are integers, the loop operates using an integer counter.
-describe "Numeric#step" do 
-  before(:each) do 
-    @step  = 2
-    @stepn = -2
-    @stepnf = -2
-    @stepf = 2.0
-    @limitf = 10.0
-    @limit = 10
-    @base  = 1
-    @basef = 5.4
-  end  
+describe "Numeric#step with [stop, step]" do
+  before(:each) do
+    @obj = NumericSub.new
+  end
   
-  it "should be provided" do
-    Numeric.instance_methods.should include("step")
+  it "raises an ArgumentError when step is 0" do
+    lambda { @obj.step(5, 0) }.should raise_error(ArgumentError)
+  end
+  
+  it "raises no LocalJumpError when passed no block and self > stop" do
+    @stop = mock("Stop value")
+    @step = mock("Step value")
+    @step.should_receive(:>).with(0).and_return(true)
+    
+    @obj.should_receive(:>).with(@stop).and_return(true)
+    
+    lambda { @obj.step(@stop, @step) }.should_not raise_error(LocalJumpError)
   end
 
-  it "if base < limit > step then it should iterate (base-limit)/step times (integers)" do 
-    x = []
-    @base.step(@limit, @step) { |i| x << i }
-    x.should == [1, 3, 5, 7, 9]  
+  it "raises a LocalJumpError when passed no block and self < stop" do
+    @stop = mock("Stop value")
+    @step = mock("Step value")
+    @step.should_receive(:>).with(0).and_return(true)
+    
+    @obj.should_receive(:>).with(@stop).and_return(false)
+    
+    lambda { @obj.step(@stop, @step) }.should raise_error(LocalJumpError)
   end
   
-  it "iterate one time if step is bigger than base-limit (integers)" do 
-    x = []
-    @base.step(@limit, 11) { |i| x<< i }
-    x.should == [1]    
+  it "increments self (using #+) until self > stop when step > 0" do
+    values = []
+    
+    @stop = mock("Stop value")
+    @step = mock("Step value")
+    @step.should_receive(:>).with(0).and_return(true)
+    
+    # Stepping 3 times
+    @obj.should_receive(:>).with(@stop).and_return(false, false, false, true)
+    @obj.should_receive(:+).with(@step).and_return(@obj, @obj, @obj)
+    
+    @obj.step(@stop, @step) { |i| values << i }
+    
+    values.should == [@obj, @obj, @obj]
   end
   
-  it "not iterate if base is bigger than limit and step >0 (integers)" do 
-    x = []
-    12.step(@limit, @step) { |i| x<< i }
-    x.should == []  
-  end  
-  
-  it "iterate backward if base is bigger than limit (integers)" do 
-    x = []
-    10.step(1, @stepn) { |i| x << i}
-    x.should == [10, 8, 6, 4, 2]  
-  end  
-  
-  it "not iterate if base is minor than limit and step <0 (integers)" do 
-    x = []
-    res = @base.step(@limit, @stepn) { |i| x<< i }
-    x.should == []
-    res.should == @base
-  end   
-  
-  it "if base < limit > step then it should iterate (base-limit)/step times (integers)" do 
-    x = []
-    @base.step(@limit, @step) { |i| x << i }
-    x.should == [1, 3, 5, 7, 9]  
+  it "decrements self (using #-) until self < stop when step < 0" do
+    values = []
+    
+    @stop = mock("Stop value")
+    @step = mock("Step value")
+    @step.should_receive(:>).with(0).and_return(false)
+    
+    # Stepping 3 times
+    @obj.should_receive(:<).with(@stop).and_return(false, false, false, true)
+    # Calling #+ with negative step decrements self
+    @obj.should_receive(:+).with(@step).and_return(@obj, @obj, @obj)
+    
+    @obj.step(@stop, @step) { |i| values << i }
+    
+    values.should == [@obj, @obj, @obj]
+  end
+end
+
+describe "Numeric#step with [stop, step] when self, stop and step are Fixnums" do
+  it "raises an ArgumentError when step is 0" do
+    lambda { 1.step(5, 0) }.should raise_error(ArgumentError)
+  end
+
+  it "yields only Fixnums" do
+    1.step(5, 1) { |x| x.should be_kind_of(Fixnum) }
   end
   
-  it "iterate one time if step is bigger than base-limit (integers)" do 
-    x = []
-    @base.step(@limit, 11) { |i| x<< i }
-    x.should == [1]    
+  it "defaults to step = 1" do
+    result = []
+    1.step(5) { |x| result << x }
+    result.should == [1, 2, 3, 4, 5]
   end
-      
-  it "if base < limit > step then it should iterate (base-limit)/step times (floats)" do 
-    x = []
-    @basef.step(@limitf, @stepf) { |i| x << i }
-    x.should == [5.4, 7.4, 9.4]  
-  end
-  
-  it "iterate one time if step is bigger than base-limit (floats)" do 
-    x = []
-    @basef.step(@limitf, 11) { |i| x<< i }
-    x.should == [5.4]
-  end
-  
-  it "not iterate if base is bigger than limit and step >0 (floats)" do 
-    x = []
-    res = 12.0.step(@limitf, @stepf) { |i| x<< i }
-    x.should == []
-    res.should == 12.0
-  end  
-  
-  it "iterate backward if base is bigger than limit (floats)" do 
-    x = []
-    res = 10.0.step(1.0, @stepnf) { |i| x << i}
-    x.should == [10, 8, 6, 4, 2]
-    res.should == 10.0
-  end  
-  
-  it "not iterate if base is minor than limit and step <0 (floats)" do 
-    x = []
-    res = @basef.step(@limitf, @stepnf) { |i| x<< i }
-    x.should == []
-    res.should == @basef
-  end   
-  
-  it "if base < limit > step then iterate (base-limit)/step times (floats)" do 
-    x = []
-    @basef.step(@limitf, @stepf) { |i| x << i }
-    x.should == [5.4, 7.4, 9.4]
+
+  describe "and when step is positive" do
+    it "yields while increasing self by step until stop is reached" do
+      result = []
+      1.step(5, 1) { |x| result << x }
+      result.should == [1, 2, 3, 4, 5]
+    end
+
+    it "yields once when self equals stop" do
+      result = []
+      1.step(1, 1) { |x| result << x }
+      result.should == [1]
+    end
+
+    it "does not yield when self is greater than stop" do
+      result = []
+      2.step(1, 1) { |x| result << x }
+      result.should == []
+    end
   end
   
-  it "raises an ArgumentError if not passed not passed Numeric types in the correct range" do
-    lambda { @base.step            }.should raise_error(ArgumentError)
-    lambda { @base.step(100,0)     }.should raise_error(ArgumentError)
-    lambda { @base.step(nil)       }.should raise_error(ArgumentError)
-    lambda { @base.step('test')    }.should raise_error(ArgumentError)
-    lambda { @base.step(true, 123) }.should raise_error(ArgumentError)
+  describe "and when step is negative" do
+    it "yields while decreasing self by step until stop is reached" do
+      result = []
+      5.step(1, -1) { |x| result << x }
+      result.should == [5, 4, 3, 2, 1]
+    end
+
+    it "yields once when self equals stop" do
+      result = []
+      5.step(5, -1) { |x| result << x }
+      result.should == [5]
+    end
+
+    it "does not yield when self is less than stop" do
+      result = []
+      1.step(5, -1) { |x| result << x }
+      result.should == []
+    end
+  end
+end
+
+describe "Numeric#step with [stop, step] when self, stop or step is a Float" do
+  it "raises an ArgumentError when step is 0" do
+    lambda { 1.1.step(2, 0.0) }.should raise_error(ArgumentError)
   end
   
-  it "raises a LocalJumpError if not provided a block" do
-    lambda { @base.step(5, 5)      }.should raise_error(LocalJumpError)
-    lambda { @base.step(5, 3.4)    }.should raise_error(LocalJumpError)
-    lambda { @base.step(5.0, 2)    }.should raise_error(LocalJumpError)
-    lambda { @base.step(5.0, 1.0)  }.should raise_error(LocalJumpError)
-  end 
+  it "yields only Floats" do
+    1.5.step(5, 1) { |x| x.should be_kind_of(Float) }
+    1.step(5.0, 1) { |x| x.should be_kind_of(Float) }
+    1.step(5, 1.0) { |x| x.should be_kind_of(Float) }
+  end
+
+  describe "and when step is positive" do
+    it "yields while increasing self by step until stop is reached" do
+      result = []
+      1.5.step(5, 1) { |x| result << x }
+      result.should == [1.5, 2.5, 3.5, 4.5]
+    end
+
+    it "yields once when self equals stop" do
+      result = []
+      1.5.step(1.5, 1) { |x| result << x }
+      result.should == [1.5]
+    end
+
+    it "does not yield when self is greater than stop" do
+      result = []
+      2.5.step(1.5, 1) { |x| result << x }
+      result.should == []
+    end
+  end
+
+  describe "and when step is negative" do
+    it "yields while decreasing self by step until stop is reached" do
+      result = []
+      5.step(1.5, -1) { |x| result << x }
+      result.should == [5.0, 4.0, 3.0, 2.0]
+    end
+
+    it "yields once when self equals stop" do
+      result = []
+      1.5.step(1.5, -1) { |x| result << x }
+      result.should == [1.5]
+    end
+
+    it "does not yield when self is less than stop" do
+      result = []
+      1.step(5, -1.5) { |x| result << x }
+      result.should == []
+    end
+  end
 end

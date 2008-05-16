@@ -1,24 +1,14 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Numeric#ceil" do
-  it "should be provided" do
-    Numeric.instance_methods.should include("ceil")
+  before(:each) do
+    @obj = NumericSub.new
   end
-
-  it "returns the smallest Integer greater than or equal to self when passed a Fixnum" do
-    0.ceil.should == 0
-    100.ceil.should == 100
-    -100.ceil.should == -100
-  end
-
-  it "returns the smallest Integer greater than or equal to self when passed a Float" do
-    0.ceil.should == 0.0
-    34.56.ceil.should == 35
-    -34.56.ceil.should == -34
-  end
-
-  it "returns the smallest Integer greater than or equal to self when passed a Bignum" do
-    bignum_value.ceil.should == bignum_value
-    (-bignum_value).ceil.should == -bignum_value
+  
+  it "converts self to a Float (using #to_f) and returns the #ceil'ed result" do
+    @obj.should_receive(:to_f).and_return(1 + TOLERANCE, - 1 - TOLERANCE)
+    @obj.ceil.should == 2
+    @obj.ceil.should == -1
   end
 end
