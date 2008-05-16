@@ -7,7 +7,6 @@ shared :bignum_divide do |cmd|
     it "returns self divided by other" do
       @bignum.send(cmd, 4).should == 2305843009213693974
 
-      @bignum.send(cmd, 0xffff_ffff.to_f).should be_close(2147483648.5, TOLERANCE)
       @bignum.send(cmd, bignum_value(2)).should be_close(1, TOLERANCE)
       
       (-(10**50)).send(cmd, -(10**40 + 1)).should == 9999999999
