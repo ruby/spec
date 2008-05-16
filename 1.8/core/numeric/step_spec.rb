@@ -78,45 +78,45 @@ describe "Numeric#step with [stop, step] when self, stop and step are Fixnums" d
     1.step(5) { |x| result << x }
     result.should == [1, 2, 3, 4, 5]
   end
+end
 
-  describe "and when step is positive" do
-    it "yields while increasing self by step until stop is reached" do
-      result = []
-      1.step(5, 1) { |x| result << x }
-      result.should == [1, 2, 3, 4, 5]
-    end
-
-    it "yields once when self equals stop" do
-      result = []
-      1.step(1, 1) { |x| result << x }
-      result.should == [1]
-    end
-
-    it "does not yield when self is greater than stop" do
-      result = []
-      2.step(1, 1) { |x| result << x }
-      result.should == []
-    end
+describe "Numeric#step with [stop, +step] when self, stop and step are Fixnums" do
+  it "yields while increasing self by step until stop is reached" do
+    result = []
+    1.step(5, 1) { |x| result << x }
+    result.should == [1, 2, 3, 4, 5]
   end
+
+  it "yields once when self equals stop" do
+    result = []
+    1.step(1, 1) { |x| result << x }
+    result.should == [1]
+  end
+
+  it "does not yield when self is greater than stop" do
+    result = []
+    2.step(1, 1) { |x| result << x }
+    result.should == []
+  end
+end
   
-  describe "and when step is negative" do
-    it "yields while decreasing self by step until stop is reached" do
-      result = []
-      5.step(1, -1) { |x| result << x }
-      result.should == [5, 4, 3, 2, 1]
-    end
+describe "Numeric#step with [stop, -step] when self, stop and step are Fixnums" do
+  it "yields while decreasing self by step until stop is reached" do
+    result = []
+    5.step(1, -1) { |x| result << x }
+    result.should == [5, 4, 3, 2, 1]
+  end
 
-    it "yields once when self equals stop" do
-      result = []
-      5.step(5, -1) { |x| result << x }
-      result.should == [5]
-    end
+  it "yields once when self equals stop" do
+    result = []
+    5.step(5, -1) { |x| result << x }
+    result.should == [5]
+  end
 
-    it "does not yield when self is less than stop" do
-      result = []
-      1.step(5, -1) { |x| result << x }
-      result.should == []
-    end
+  it "does not yield when self is less than stop" do
+    result = []
+    1.step(5, -1) { |x| result << x }
+    result.should == []
   end
 end
 
@@ -130,44 +130,44 @@ describe "Numeric#step with [stop, step] when self, stop or step is a Float" do
     1.step(5.0, 1) { |x| x.should be_kind_of(Float) }
     1.step(5, 1.0) { |x| x.should be_kind_of(Float) }
   end
+end
 
-  describe "and when step is positive" do
-    it "yields while increasing self by step until stop is reached" do
-      result = []
-      1.5.step(5, 1) { |x| result << x }
-      result.should == [1.5, 2.5, 3.5, 4.5]
-    end
-
-    it "yields once when self equals stop" do
-      result = []
-      1.5.step(1.5, 1) { |x| result << x }
-      result.should == [1.5]
-    end
-
-    it "does not yield when self is greater than stop" do
-      result = []
-      2.5.step(1.5, 1) { |x| result << x }
-      result.should == []
-    end
+describe "Numeric#step with [stop, +step] when self, stop or step is a Float" do
+  it "yields while increasing self by step until stop is reached" do
+    result = []
+    1.5.step(5, 1) { |x| result << x }
+    result.should == [1.5, 2.5, 3.5, 4.5]
   end
 
-  describe "and when step is negative" do
-    it "yields while decreasing self by step until stop is reached" do
-      result = []
-      5.step(1.5, -1) { |x| result << x }
-      result.should == [5.0, 4.0, 3.0, 2.0]
-    end
+  it "yields once when self equals stop" do
+    result = []
+    1.5.step(1.5, 1) { |x| result << x }
+    result.should == [1.5]
+  end
 
-    it "yields once when self equals stop" do
-      result = []
-      1.5.step(1.5, -1) { |x| result << x }
-      result.should == [1.5]
-    end
+  it "does not yield when self is greater than stop" do
+    result = []
+    2.5.step(1.5, 1) { |x| result << x }
+    result.should == []
+  end
+end
 
-    it "does not yield when self is less than stop" do
-      result = []
-      1.step(5, -1.5) { |x| result << x }
-      result.should == []
-    end
+describe "Numeric#step with [stop, -step] when self, stop or step is a Float" do
+  it "yields while decreasing self by step until stop is reached" do
+    result = []
+    5.step(1.5, -1) { |x| result << x }
+    result.should == [5.0, 4.0, 3.0, 2.0]
+  end
+
+  it "yields once when self equals stop" do
+    result = []
+    1.5.step(1.5, -1) { |x| result << x }
+    result.should == [1.5]
+  end
+
+  it "does not yield when self is less than stop" do
+    result = []
+    1.step(5, -1.5) { |x| result << x }
+    result.should == []
   end
 end
