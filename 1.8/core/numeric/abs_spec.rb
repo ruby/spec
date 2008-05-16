@@ -1,10 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-
-class NumericSub < Numeric
-  # Allow methods to be mocked
-  def singleton_method_added(val)
-  end
-end
+require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Numeric#abs" do
   before(:each) do
