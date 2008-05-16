@@ -17,7 +17,7 @@ shared :env_each do |cmd|
     end
 
     it "raises LocalJumpError if no block given" do
-      lambda { ENV.each_key }.should raise_error(LocalJumpError)
+      lambda { ENV.send(cmd) }.should raise_error(LocalJumpError)
     end
 
   end

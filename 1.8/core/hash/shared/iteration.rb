@@ -62,11 +62,11 @@ shared :hash_iteration_no_block do |cmd|
     empty = {}
     
     it "raises a LocalJumpError when called on a non-empty hash without a block" do
-      lambda { hsh.delete_if }.should raise_error(LocalJumpError)
+      lambda { hsh.send(cmd) }.should raise_error(LocalJumpError)
     end
     
     it "does not raise a LocalJumpError when called on an empty hash without a block" do
-      empty.delete_if.should == empty
+      empty.send(cmd).should == empty
     end
   end
 end
