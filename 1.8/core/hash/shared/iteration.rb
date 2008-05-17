@@ -58,15 +58,17 @@ end
 
 shared :hash_iteration_no_block do |cmd|
   describe "Hash##{cmd}" do
-    hsh = {1 => 2, 3 => 4, 5 => 6}  
-    empty = {}
+    before(:each) do
+      @hsh = {1 => 2, 3 => 4, 5 => 6}
+      @empty = {}
+    end
     
     it "raises a LocalJumpError when called on a non-empty hash without a block" do
-      lambda { hsh.send(cmd) }.should raise_error(LocalJumpError)
+      lambda { @hsh.send(cmd) }.should raise_error(LocalJumpError)
     end
     
     it "does not raise a LocalJumpError when called on an empty hash without a block" do
-      empty.send(cmd).should == empty
+      @empty.send(cmd).should == @empty
     end
   end
 end
