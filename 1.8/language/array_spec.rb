@@ -10,8 +10,7 @@ describe "Array literals" do
   end
 end
 
-describe "Bareword array literals" do
-    
+describe "Bareword array literal" do
   it "%w() transforms unquoted barewords into an array" do
     a = 3
     %w(a #{3+a} 3).should == ["a", '#{3+a}', "3"]
@@ -20,6 +19,25 @@ describe "Bareword array literals" do
   it "%W() transforms unquoted barewords into an array, supporting interpolation" do
     a = 3
     %W(a #{3+a} 3).should == ["a", '6', "3"]
+  end
+
+  it "%W() always treats interpolated expressions as a single word" do
+    a = "hello world"
+    %W(a b c #{a} d e).should == ["a", "b", "c", "hello world", "d", "e"]
+  end
+
+  it "treats consecutive whitespace characters the same as one" do
+    %w(a  b c  d).should == ["a", "b", "c", "d"]
+    %W(hello
+       world).should == ["hello", "world"]
+  end
+
+  it "treats whitespace as literals characters when escaped by a backslash" do
+    %w(a b\ c d e).should == ["a", "b c", "d", "e"]
+    %w(a b\
+c d).should == ["a", "b\nc", "d"]
+    %W(a\  b\tc).should == ["a ", "b\tc"]
+    %W(white\  \  \ \  \ space).should == ["white ", " ", "  ", " space"]
   end
 end
 
