@@ -26,6 +26,12 @@ describe "Integer.induced_from" do
     obj.should_not_receive(:to_int)
     lambda { Integer.induced_from(obj) }.should raise_error(TypeError)
   end
+
+  it "does not try to convert non-Integers to Integers using #to_i" do
+    obj = mock("Not converted to Integer")
+    obj.should_not_receive(:to_i)
+    lambda { Integer.induced_from(obj) }.should raise_error(TypeError)
+  end
   
   it "raises a TypeError when passed a non-Integer" do
     lambda { Integer.induced_from("2") }.should raise_error(TypeError)
