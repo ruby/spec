@@ -16,21 +16,21 @@ describe "Float.induced_from" do
     Float.induced_from(-bignum_value).eql?(-bignum_value.to_f).should == true
   end
 
-  it "does not try to convert non-Integers to a Integers using #to_int" do
+  it "does not try to convert non-Integers to Integers using #to_int" do
     obj = mock("Not converted to Integer")
     obj.should_not_receive(:to_int)
-    lambda { Integer.induced_from(obj) }.should raise_error(TypeError)
+    lambda { Float.induced_from(obj) }.should raise_error(TypeError)
   end
 
-  it "does not try to convert non-Integers to a Fixnum using #to_f" do
-    obj = mock("Not converted to Integer")
+  it "does not try to convert non-Integers to Floats using #to_f" do
+    obj = mock("Not converted to Float")
     obj.should_not_receive(:to_f)
-    lambda { Integer.induced_from(obj) }.should raise_error(TypeError)
+    lambda { Float.induced_from(obj) }.should raise_error(TypeError)
   end
   
   it "raises a TypeError when passed a non-Integer" do
-    lambda { Integer.induced_from("2") }.should raise_error(TypeError)
-    lambda { Integer.induced_from(:symbol) }.should raise_error(TypeError)
-    lambda { Integer.induced_from(Object.new) }.should raise_error(TypeError)
+    lambda { Float.induced_from("2") }.should raise_error(TypeError)
+    lambda { Float.induced_from(:symbol) }.should raise_error(TypeError)
+    lambda { Float.induced_from(Object.new) }.should raise_error(TypeError)
   end
 end 
