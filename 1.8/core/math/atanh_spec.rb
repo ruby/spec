@@ -33,7 +33,7 @@ describe "Math.atanh" do
     end
   end
   
-  conflicts_with Complex do
+  conflicts_with :Complex do
     it "raises an Errno::EDOM if the passed argument is greater than 1.0" do
       lambda { Math.atanh(1.0 + TOLERANCE)  }.should raise_error(Errno::EDOM)
     end

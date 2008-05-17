@@ -15,7 +15,7 @@ describe "Math.log" do
     Math.log(10e15).should be_close(36.8413614879047, TOLERANCE)
   end
   
-  conflicts_with Complex do
+  conflicts_with :Complex do
     it "raises an Errno::EDOM if the argument is less than 0" do    
       lambda { Math.log(-1e-15) }.should raise_error(Errno::EDOM)
     end

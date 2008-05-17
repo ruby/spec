@@ -16,7 +16,7 @@ describe "Math.asin" do
     Math.asin(0.75).should be_close(0.8480620789814816,TOLERANCE) 
   end
   
-  conflicts_with Complex do
+  conflicts_with :Complex do
     it "raises an Errno::EDOM if the argument is greater than 1.0" do    
       lambda { Math.asin(1.0001) }.should raise_error( Errno::EDOM)
     end
