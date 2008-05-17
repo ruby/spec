@@ -10,6 +10,6 @@ module SocketSpecs
   end
 
   def self.socket_path
-    "#{File.dirname(__FILE__)}/unix_server_spec.socket"
+    "/tmp/unix_server_spec.socket"
   end
 end
