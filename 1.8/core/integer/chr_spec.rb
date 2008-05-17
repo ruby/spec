@@ -8,7 +8,16 @@ describe "Integer#chr" do
       ["R", "u", "b", "i", "n", "i", "u", "s", " ", "r", "o", "c", "k", "s"]
   end
 
-  it "returns a new string" do
-     82.chr.equal?(82.chr).should == false
+  it "returns a new String for each call" do
+    82.chr.equal?(82.chr).should == false
+  end
+  
+  it "raises a RangeError if self is out of the ASCII character range" do
+    lambda { -1.chr }.should raise_error(RangeError)
+    lambda { -300.chr }.should raise_error(RangeError)
+    lambda { (-bignum_value).chr }.should raise_error(RangeError)
+
+    lambda { 300.chr }.should raise_error(RangeError)
+    lambda { bignum_value.chr }.should raise_error(RangeError)
   end
 end
