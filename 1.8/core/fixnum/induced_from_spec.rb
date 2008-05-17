@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Fixnum.induced_from with [Float]" do
   it "returns a Fixnum when the passed Float is in Fixnum's range" do
-    Fixnum.induced_from(2.5).eql?(2).should == true
-    Fixnum.induced_from(-3.14).eql?(-3).should == true
-    Fixnum.induced_from(10 - TOLERANCE).eql?(9).should == true
-    Fixnum.induced_from(TOLERANCE).eql?(0).should == true
+    Fixnum.induced_from(2.5).should eql(2)
+    Fixnum.induced_from(-3.14).should eql(-3)
+    Fixnum.induced_from(10 - TOLERANCE).should eql(9)
+    Fixnum.induced_from(TOLERANCE).should eql(0)
   end
   
   it "raises a RangeError when the passed Float is out of Fixnum's range" do
@@ -16,8 +16,8 @@ end
 
 describe "Fixnum.induced_from" do
   it "returns the passed argument when passed a Fixnum" do
-    Fixnum.induced_from(3).eql?(3).should == true
-    Fixnum.induced_from(-10).eql?(-10).should == true
+    Fixnum.induced_from(3).should eql(3)
+    Fixnum.induced_from(-10).should eql(-10)
   end
   
   it "tries to convert non-Integers to a Integers using #to_int" do

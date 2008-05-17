@@ -2,18 +2,18 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Float.induced_from" do
   it "returns the passed argument when passed a Float" do
-    Float.induced_from(5.5).eql?(5.5).should == true
-    Float.induced_from(-5.5).eql?(-5.5).should == true
-    Float.induced_from(TOLERANCE).eql?(TOLERANCE).should == true
+    Float.induced_from(5.5).should eql(5.5)
+    Float.induced_from(-5.5).should eql(-5.5)
+    Float.induced_from(TOLERANCE).should eql(TOLERANCE)
   end
   
   it "converts passed Fixnums or Bignums to Floats (using #to_f)" do
-    Float.induced_from(5).eql?(5.0).should == true
-    Float.induced_from(-5).eql?(-5.0).should == true
-    Float.induced_from(0).eql?(0.0).should == true
+    Float.induced_from(5).should eql(5.0)
+    Float.induced_from(-5).should eql(-5.0)
+    Float.induced_from(0).should eql(0.0)
     
-    Float.induced_from(bignum_value).eql?(bignum_value.to_f).should == true
-    Float.induced_from(-bignum_value).eql?(-bignum_value.to_f).should == true
+    Float.induced_from(bignum_value).should eql(bignum_value.to_f)
+    Float.induced_from(-bignum_value).should eql(-bignum_value.to_f)
   end
 
   it "does not try to convert non-Integers to Integers using #to_int" do

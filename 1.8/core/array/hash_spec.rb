@@ -55,6 +55,6 @@ describe "Array#hash" do
     a.fill 'a', 0..3
     b = %w|a a a a|
     a.hash.should == b.hash
-    a.eql?(b).should == true
+    a.should eql(b)
   end
 end

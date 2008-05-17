@@ -5,8 +5,8 @@ describe "Array#eql?" do
   it "returns true if other is the same array" do
     a, b = [1], [2]
 
-    a.eql?(b).should == false
-    a.eql?(a).should == true
+    a.should_not eql(b)
+    a.should eql(a)
   end
   
   it "returns true if other has the same length and elements" do
@@ -15,15 +15,15 @@ describe "Array#eql?" do
     c = [1, 2]
     d = ['a', 'b', 'c', 'd']
 
-    a.eql?(b).should == true
-    a.eql?(c).should == false
-    a.eql?(d).should == false
-    [].eql?([]).should == true
+    a.should eql(b)
+    a.should_not eql(c)
+    a.should_not eql(d)
+    [].should eql([])
   end
 
   it "ignores array class differences" do
-    ArraySpecs::MyArray[1, 2, 3].eql?([1, 2, 3]).should == true
-    ArraySpecs::MyArray[1, 2, 3].eql?(ArraySpecs::MyArray[1, 2, 3]).should == true
-    [1, 2, 3].eql?(ArraySpecs::MyArray[1, 2, 3]).should == true
+    ArraySpecs::MyArray[1, 2, 3].should eql([1, 2, 3])
+    ArraySpecs::MyArray[1, 2, 3].should eql(ArraySpecs::MyArray[1, 2, 3])
+    [1, 2, 3].should eql(ArraySpecs::MyArray[1, 2, 3])
   end
 end

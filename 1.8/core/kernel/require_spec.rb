@@ -207,7 +207,7 @@ describe "Kernel#require" do
     b.nil?.should == false
 
     # Timestamps should not differ
-    a.eql?(b).should == true
+    a.should eql(b)
 
     $LOADED_FEATURES.include?('require_spec_7.rb').should == true
   end

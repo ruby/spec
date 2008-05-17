@@ -1,10 +1,10 @@
 shared :integer_to_i do |cmd|
   describe "Integer##{cmd}" do
     it "returns self" do
-      10.send(cmd).eql?(10).should == true
-      (-15).send(cmd).eql?(-15).should == true
-      bignum_value.send(cmd).eql?(bignum_value).should == true
-      (-bignum_value).send(cmd).eql?(-bignum_value).should == true
+      10.send(cmd).should eql(10)
+      (-15).send(cmd).should eql(-15)
+      bignum_value.send(cmd).should eql(bignum_value)
+      (-bignum_value).send(cmd).should eql(-bignum_value)
     end
   end
 end

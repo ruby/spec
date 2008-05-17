@@ -6,8 +6,8 @@ describe "Method#clone" do
     m1 = MethodSpecs::Methods.new.method(:foo)
     m2 = m1.clone
 
-    (m1 == m2).should == true
-    m1.eql?(m2).should == false
+    m1.should == m2
+    m1.should_not eql(m2)
 
     m1.call.should == m2.call
   end

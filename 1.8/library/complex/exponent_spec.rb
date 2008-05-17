@@ -4,8 +4,8 @@ require "rational"
 
 describe "Complex#** when given 0" do
   it "returns Complex(1)" do
-    (Complex(3, 4) ** 0).eql?(Complex(1)).should == true
-    (Complex(10, 20) ** 0.0).eql?(Complex(1)).should == true
+    (Complex(3, 4) ** 0).should eql(Complex(1))
+    (Complex(10, 20) ** 0.0).should eql(Complex(1))
   end
 end
 

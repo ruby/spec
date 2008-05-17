@@ -137,7 +137,7 @@ describe "Kernel#load" do
     load('load_spec_5.rb').should == true
     b = $load_spec_5
 
-    a.eql?(b).should == false
+    a.should_not eql(b)
   end
 
   it "loads the file even if it has already been #required" do
@@ -150,8 +150,8 @@ describe "Kernel#load" do
     load('load_spec_6.rb').should == true
     c = $load_spec_6
 
-    a.eql?(b).should == true
-    c.eql?(a).should == false
+    a.should eql(b)
+    c.should_not eql(a)
   end
 
   it "does not cause #require on the same filename to fail" do 
@@ -164,9 +164,9 @@ describe "Kernel#load" do
     load('load_spec_7.rb').should == true
     c = $load_spec_7
 
-    a.eql?(b).should == false
-    b.eql?(c).should == false
-    c.eql?(a).should == false
+    a.should_not eql(b)
+    b.should_not eql(c)
+    c.should_not eql(a)
   end
 
   it "raises a LoadError if the file can't be found" do

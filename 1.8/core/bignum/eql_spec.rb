@@ -3,20 +3,20 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe "Bignum#eql? when given a Bignum" do
   it "returns true if the given argument has the same value" do
     a = bignum_value(13)
-    a.eql?(bignum_value(13)).should == true
-    (-a).eql?(-bignum_value(13)).should == true
+    a.should eql(bignum_value(13))
+    (-a).should eql(-bignum_value(13))
   end
 end
 
 describe "Bignum#eql? when given a non-Bignum" do
   it "returns false" do
     a = bignum_value(13)
-    a.eql?(a.to_f).should == false
+    a.should_not eql(a.to_f)
 
-    a.eql?(2).should == false
-    a.eql?(3.14).should == false
-    a.eql?(:symbol).should == false
-    a.eql?("String").should == false
-    a.eql?(mock('str')).should == false
+    a.should_not eql(2)
+    a.should_not eql(3.14)
+    a.should_not eql(:symbol)
+    a.should_not eql("String")
+    a.should_not eql(mock('str'))
   end
 end
