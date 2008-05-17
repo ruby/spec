@@ -13,10 +13,7 @@ describe "String#rindex with object" do
     lambda { "hello".rindex(obj) }.should raise_error(TypeError)
   end
 
-  # Note: MRI doesn't call to_str, but should do so because index() does it.
-  # See http://groups.google.com/group/ruby-core-google/t/3f2d4129febd2a66
-
-  deviates_on :rubinius do
+  ruby_bug do # Fixed at MRI 1.8.7
     it "tries to convert obj to a string via to_str" do
       obj = mock('lo')
       def obj.to_str() "lo" end
@@ -26,19 +23,6 @@ describe "String#rindex with object" do
       def obj.respond_to?(arg) true end
       def obj.method_missing(*args) "o" end
       "hello".rindex(obj).should == "hello".rindex("o")
-    end
-  end
-  
-  compliant_on :ruby, :jruby do
-    it "tries to convert obj to a string via to_str" do
-      obj = mock('lo')
-      def obj.to_str() "lo" end
-      lambda { "hello".rindex(obj) }.should raise_error(Exception)
-
-      obj = mock('o')
-      def obj.respond_to?(arg) true end
-      def obj.method_missing(*args) "o" end
-      lambda { "hello".rindex(obj) }.should raise_error(Exception)
     end
   end
 end
