@@ -36,11 +36,9 @@ describe "Array#fetch" do
     [1, 2, 3].fetch(o) { |i| i }.should equal(o)
   end
 
-$VERBOSE, old = nil, $VERBOSE
   it "gives precedence to the default block over the default argument" do
     [1, 2, 3].fetch(9, :foo) { |i| i * i }.should == 81
   end
-$VERBOSE = old
 
   it "calls to_int on its argument" do
     x = mock('0')

@@ -61,8 +61,6 @@ describe "The for expression" do
   #end
 
   it "splats multiple arguments together if there are fewer arguments than values" do
-    v = $VERBOSE
-    $VERBOSE = nil
     class OFor
       def each
         [[1,2,3], [4,5,6]].each do |a|
@@ -75,7 +73,6 @@ describe "The for expression" do
     for q in o
       qs << q
     end
-    $VERBOSE = v
     qs.should == [[1,2,3], [4,5,6]]
     q.should == [4,5,6]
   end

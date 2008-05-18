@@ -23,9 +23,7 @@ describe "Hash#fetch" do
   end
 
   it "gives precedence to the default block over the default argument when passed both" do
-    old, $VERBOSE = $VERBOSE, nil
     {}.fetch(9, :foo) { |i| i * i }.should == 81
-    $VERBOSE = old
   end
 
   it "raises an ArgumentError when not passed one or two arguments" do
