@@ -12,7 +12,7 @@ describe "Singleton._instantiate?" do
     it "returns nil until it is instantiated" do
       SingletonSpecs::NotInstantiated.send(:_instantiate?).should == nil
       SingletonSpecs::NotInstantiated.instance
-      SingletonSpecs::NotInstantiated.send(:_instantiate?).eql?(SingletonSpecs::NotInstantiated.instance).should == true
+      SingletonSpecs::NotInstantiated.send(:_instantiate?).should eql(SingletonSpecs::NotInstantiated.instance)
     end
   end
 end
