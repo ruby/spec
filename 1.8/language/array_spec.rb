@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/array'
 
 describe "Array literals" do
   it "[] should return a new array populated with the given elements" do
@@ -62,10 +63,19 @@ describe "The unpacking splat operator (*)" do
     alphabet_1.should == alphabet_2
   end
 
-  # mSpec doesn't have pending specs yet
-  # it "unpacks a literal array into arguments in a method call"
-  # 
-  # it "unpacks a referenced array into arguments in a method call"
+  it "unpacks a literal array into arguments in a method call" do
+    tester = ArraySpec::Splat.new
+    tester.unpack_3args(*[1, 2, 3]).should == [1, 2, 3]
+    tester.unpack_4args(1, 2, *[3, 4]).should == [1, 2, 3, 4]
+    tester.unpack_4args("a", %w(b c), *%w(d e)).should == ["a", ["b", "c"], "d", "e"]
+  end
+
+  it "unpacks a referenced array into arguments in a method call" do
+    args = [1, 2, 3]
+    tester = ArraySpec::Splat.new
+    tester.unpack_3args(*args).should == [1, 2, 3]
+    tester.unpack_4args(0, *args).should == [0, 1, 2, 3]
+  end
 end
 
 describe "The packing splat operator (*)" do
