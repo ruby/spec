@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "File.basename" do
   before :each do
-    @name = "test.txt"
+    @name = tmp("test.txt")
     File.delete(@name) if File.exist? @name
-    @file = File.open(@name,"w+")
+    @file = File.open(@name, "w+")
   end
 
   after :each do
