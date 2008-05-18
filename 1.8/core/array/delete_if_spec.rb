@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "Array#delete_if" do
   it "removes each element for which block returns true" do
     a = [ "a", "b", "c" ] 
-    a.delete_if { |x| x >= "b" }.equal?(a).should == true
+    a.delete_if { |x| x >= "b" }.should equal(a)
     a.should == ["a"]
   end
 

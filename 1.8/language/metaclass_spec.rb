@@ -25,7 +25,7 @@ describe "self in a metaclass body (class << obj)" do
   it "is a singleton Class instance" do
     cls = class << mock('x'); self; end
     cls.is_a?(Class).should == true
-    cls.equal?(Object).should == false
+    cls.should_not equal(Object)
   end
   
   deviates_on(:rubinius) do 

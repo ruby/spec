@@ -3,9 +3,9 @@ shared :array_replace do |cmd|
     it "replaces the elements with elements from other array" do
       a = [1, 2, 3, 4, 5]
       b = ['a', 'b', 'c']
-      a.send(cmd, b).equal?(a).should == true
+      a.send(cmd, b).should equal(a)
       a.should == b
-      a.equal?(b).should == false
+      a.should_not equal(b)
 
       a.send(cmd, [4] * 10)
       a.should == [4] * 10

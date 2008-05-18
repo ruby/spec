@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "Array#clear" do
   it "removes all elements" do
     a = [1, 2, 3, 4]
-    a.clear.equal?(a).should == true
+    a.clear.should equal(a)
     a.should == []
   end  
 

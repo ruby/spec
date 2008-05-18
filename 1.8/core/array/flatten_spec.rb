@@ -39,7 +39,7 @@ end
 describe "Array#flatten!" do
   it "modifies array to produce a one-dimensional flattening recursively" do
     a = [[[1, [2, 3]],[2, 3, [4, [4, [5, 5]], [1, 2, 3]]], [4]], []]
-    a.flatten!.equal?(a).should == true
+    a.flatten!.should equal(a)
     a.should == [1, 2, 3, 2, 3, 4, 4, 5, 5, 1, 2, 3, 4]
   end
 

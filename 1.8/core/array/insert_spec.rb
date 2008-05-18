@@ -4,10 +4,10 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "Array#insert" do
   it "inserts objects before the element at index for non-negative index" do
     ary = []
-    ary.insert(0, 3).equal?(ary).should == true
+    ary.insert(0, 3).should equal(ary)
     ary.should == [3]
 
-    ary.insert(0, 1, 2).equal?(ary).should == true
+    ary.insert(0, 1, 2).should equal(ary)
     ary.should == [1, 2, 3]
     ary.insert(0)
     ary.should == [1, 2, 3]

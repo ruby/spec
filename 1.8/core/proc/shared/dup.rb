@@ -4,7 +4,7 @@ shared :proc_dup do |cmd|
       a = lambda { "hello" }
       b = a.send(cmd)
       
-      a.equal?(b).should == false
+      a.should_not equal(b)
       
       a.call.should == b.call
     end

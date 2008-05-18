@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "Array#concat" do
   it "appends the elements in the other array" do
     ary = [1, 2, 3]
-    ary.concat([9, 10, 11]).equal?(ary).should == true
+    ary.concat([9, 10, 11]).should equal(ary)
     ary.should == [1, 2, 3, 9, 10, 11]
     ary.concat([])
     ary.should == [1, 2, 3, 9, 10, 11]

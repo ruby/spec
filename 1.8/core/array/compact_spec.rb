@@ -21,13 +21,13 @@ end
 describe "Array#compact!" do
   it "removes all nil elements" do
     a = ['a', nil, 'b', false, 'c']
-    a.compact!.equal?(a).should == true
+    a.compact!.should equal(a)
     a.should == ["a", "b", false, "c"]
     a = [nil, 'a', 'b', false, 'c']
-    a.compact!.equal?(a).should == true
+    a.compact!.should equal(a)
     a.should == ["a", "b", false, "c"]
     a = ['a', 'b', false, 'c', nil]
-    a.compact!.equal?(a).should == true
+    a.compact!.should equal(a)
     a.should == ["a", "b", false, "c"]
   end
   

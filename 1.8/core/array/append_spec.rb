@@ -9,8 +9,8 @@ describe "Array#<<" do
   it "returns self to allow chaining" do
     a = []
     b = a
-    (a << 1).equal?(b).should == true
-    (a << 2 << 3).equal?(b).should == true
+    (a << 1).should equal(b)
+    (a << 2 << 3).should equal(b)
   end
 
   it "correctly resizes the Array" do
