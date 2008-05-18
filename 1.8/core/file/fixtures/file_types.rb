@@ -1,21 +1,24 @@
 module FileSpecs
   # Try to set up known locations of each filetype
   def self.reconfigure()
-    @file   = "test.txt"
+    @file   = tmp("test.txt")
     @dir    = Dir.pwd
-    @fifo   = "test_fifo"
-    @block  = `find /dev /devices -type b 2> /dev/null`.split("\n").first
-    @char   = `find /dev /devices -type c 2> /dev/null`.split("\n").last
-
-    %w[/dev /usr/bin /usr/local/bin].each do |dir|
-      links = `find #{dir} -type l 2> /dev/null`.split("\n")
-      next if links.empty?
-      @link = links.first
-      break
-    end
-
+    @fifo   = tmp("test_fifo")
     @sock   = nil
-    find_socket
+
+    platform_is_not :windows do
+      @block  = `find /dev /devices -type b 2> /dev/null`.split("\n").first
+      @char   = `find /dev /devices -type c 2> /dev/null`.split("\n").last
+
+      %w[/dev /usr/bin /usr/local/bin].each do |dir|
+        links = `find #{dir} -type l 2> /dev/null`.split("\n")
+        next if links.empty?
+        @link = links.first
+        break
+      end
+
+      find_socket
+    end
   end
 
   # TODO: This is probably too volatile
