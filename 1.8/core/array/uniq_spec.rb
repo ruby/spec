@@ -84,7 +84,7 @@ describe "Array#uniq!" do
   
   it "returns self" do
     a = [ "a", "a", "b", "b", "c" ]
-    a.equal?(a.uniq!).should == true
+    a.should equal(a.uniq!)
   end
   
   it "returns nil if no changes are made to the array" do

@@ -10,7 +10,7 @@ end
 describe "Kernel#to_a when the receiver is an Array" do
   it "returns self" do
     array = [1, 2]
-    array.to_a.equal?(array).should == true
+    array.to_a.should equal(array)
   end
 end
 

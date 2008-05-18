@@ -33,7 +33,7 @@ end
 describe "String#downcase!" do
   it "modifies self in place" do
     a = "HeLlO"
-    a.downcase!.equal?(a).should == true
+    a.downcase!.should equal(a)
     a.should == "hello"
   end
   

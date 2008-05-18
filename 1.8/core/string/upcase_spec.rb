@@ -33,7 +33,7 @@ end
 describe "String#upcase!" do
   it "modifies self in place" do
     a = "HeLlO"
-    a.upcase!.equal?(a).should == true
+    a.upcase!.should equal(a)
     a.should == "HELLO"
   end
   

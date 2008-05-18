@@ -11,7 +11,7 @@ describe "Hash#delete_if" do
   
   it "removes every entry for which block is true and returns self" do
     h = {:a => 1, :b => 2, :c => 3, :d => 4}
-    h.delete_if { |k,v| v % 2 == 1 }.equal?(h).should == true
+    h.delete_if { |k,v| v % 2 == 1 }.should equal(h)
     h.should == {:b => 2, :d => 4}
   end
   

@@ -55,7 +55,7 @@ describe "String#chop!" do
 
   it "returns self if modifications were made" do
     ["hello", "hello\r\n"].each do |s|
-      s.chop!.equal?(s).should == true
+      s.chop!.should equal(s)
     end
   end
 

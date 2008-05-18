@@ -2,7 +2,7 @@ shared :string_concat do |cmd|
   describe "String##{cmd}" do
     it "concatenates the given argument to self and returns self" do
       str = 'hello '
-      str.send(cmd, 'world').equal?(str).should == true
+      str.send(cmd, 'world').should equal(str)
       str.should == "hello world"
     end
     

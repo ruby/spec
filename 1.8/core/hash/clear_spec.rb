@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "Hash#clear" do
   it "removes all key, value pairs" do
     h = { 1 => 2, 3 => 4 }
-    h.clear.equal?(h).should == true
+    h.clear.should equal(h)
     h.should == {}
   end
 

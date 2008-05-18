@@ -9,7 +9,7 @@ describe "Hash.new" do
 
   it "does not create a copy of the default argument" do
     str = "foo"
-    Hash.new(str).default.equal?(str).should == true
+    Hash.new(str).default.should equal(str)
   end
   
   it "creates a Hash with a default_proc if passed a block" do

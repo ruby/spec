@@ -16,7 +16,7 @@ shared :array_collect_b do |cmd|
   describe "Array##{cmd}" do
     it "replaces each element with the value returned by block" do
       a = [7, 9, 3, 5]
-      a.send(cmd) { |i| i - 1 }.equal?(a).should == true
+      a.send(cmd) { |i| i - 1 }.should equal(a)
       a.should == [6, 8, 2, 4]
     end
 

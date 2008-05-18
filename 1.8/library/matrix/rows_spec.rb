@@ -20,8 +20,8 @@ describe "Matrix.rows" do
   it "copies the original rows by default" do
     @a << 3
     @b << 6
-    @m.row(0).equal?(@a).should == false
-    @m.row(1).equal?(@b).should == false
+    @m.row(0).should_not equal(@a)
+    @m.row(1).should_not equal(@b)
   end
 
   it "references the original rows if copy is false" do

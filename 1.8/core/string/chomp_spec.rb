@@ -99,11 +99,11 @@ end
 describe "String#chomp! with seperator" do
   it "modifies self in place and returns self" do
     s = "one\n"
-    s.chomp!.equal?(s).should == true
+    s.chomp!.should equal(s)
     s.should == "one"
     
     t = "two\r\n"
-    t.chomp!.equal?(t).should == true
+    t.chomp!.should equal(t)
     t.should == "two"
     
     u = "three\r"

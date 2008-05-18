@@ -63,7 +63,7 @@ shared :string_each do |cmd|
     
     it "returns self" do
       s = "hello\nworld"
-      (s.send(cmd) {}).equal?(s).should == true
+      (s.send(cmd) {}).should equal(s)
     end
   
     it "tries to convert the separator to a string using to_str" do

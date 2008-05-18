@@ -31,7 +31,7 @@ end
 describe "String#capitalize!" do
   it "capitalizes self in place" do
     a = "hello"
-    a.capitalize!.equal?(a).should == true
+    a.capitalize!.should equal(a)
     a.should == "Hello"
   end
   

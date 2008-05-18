@@ -2,7 +2,7 @@ shared :hash_replace do |cmd|
   describe "Hash##{cmd}" do
     it "replaces the contents of self with other" do
       h = { :a => 1, :b => 2 }
-      h.send(cmd, :c => -1, :d => -2).equal?(h).should == true
+      h.send(cmd, :c => -1, :d => -2).should equal(h)
       h.should == { :c => -1, :d => -2 }
     end
 

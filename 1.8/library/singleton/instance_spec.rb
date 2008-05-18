@@ -7,7 +7,7 @@ describe "Singleton.instance" do
   end
   
   it "returns the same instance for multiple calls to instance" do
-    SingletonSpecs::MyClass.instance.equal?(SingletonSpecs::MyClass.instance).should == true
+    SingletonSpecs::MyClass.instance.should equal(SingletonSpecs::MyClass.instance)
   end
   
   it "returns an instance of the singleton's subclasses" do
@@ -15,7 +15,7 @@ describe "Singleton.instance" do
   end
   
   it "returns the same instance for multiple class to instance on subclasses" do
-    SingletonSpecs::MyClassChild.instance.equal?(SingletonSpecs::MyClassChild.instance).should == true
+    SingletonSpecs::MyClassChild.instance.should equal(SingletonSpecs::MyClassChild.instance)
   end
   
   it "returns an instance of the singleton's clone" do
@@ -25,6 +25,6 @@ describe "Singleton.instance" do
   
   it "returns the same instance for multiple class to instance on clones" do
     klone = SingletonSpecs::MyClassChild.clone
-    klone.instance.equal?(klone.instance).should == true
+    klone.instance.should equal(klone.instance)
   end  
 end

@@ -303,7 +303,7 @@ end
 describe "String#gsub! with pattern and replacement" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.gsub!(/[aeiou]/, '*').equal?(a).should == true
+    a.gsub!(/[aeiou]/, '*').should equal(a)
     a.should == "h*ll*"
   end
 
@@ -335,7 +335,7 @@ end
 describe "String#gsub! with pattern and block" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.gsub!(/[aeiou]/) { '*' }.equal?(a).should == true
+    a.gsub!(/[aeiou]/) { '*' }.should equal(a)
     a.should == "h*ll*"
   end
 

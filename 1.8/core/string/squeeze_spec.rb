@@ -84,7 +84,7 @@ end
 describe "String#squeeze!" do
   it "modifies self in place and returns self" do
     a = "yellow moon"
-    a.squeeze!.equal?(a).should == true
+    a.squeeze!.should equal(a)
     a.should == "yelow mon"
   end
   

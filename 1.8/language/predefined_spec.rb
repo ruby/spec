@@ -388,17 +388,17 @@ describe "The predefined global constants" do
 
   it "includes TRUE" do
     Object.const_defined?(:TRUE).should == true
-    TRUE.equal?(true).should == true
+    TRUE.should equal(true)
   end
   
   it "includes FALSE" do
     Object.const_defined?(:FALSE).should == true
-    FALSE.equal?(false).should == true
+    FALSE.should equal(false)
   end
   
   it "includes NIL" do
     Object.const_defined?(:NIL).should == true
-    NIL.equal?(nil).should == true
+    NIL.should equal(nil)
   end
   
   it "includes STDIN" do

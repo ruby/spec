@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes.rb'
 describe "String#replace" do
   it "replaces the content of self with other and returns self" do
     a = "some string"
-    a.replace("another string").equal?(a).should == true
+    a.replace("another string").should equal(a)
     a.should == "another string"
   end
   

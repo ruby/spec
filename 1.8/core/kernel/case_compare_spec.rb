@@ -80,18 +80,18 @@ describe "Kernel#=== for a class with #== overridden to consider other object's 
   end
 
   it "returns true if #== returns true even if #equal? is false" do
-    @o1.equal?(@o2).should == false
+    @o1.should_not equal(@o2)
     (@o1 == @o2).should == true
     (@o1 === @o2).should == true
   end
 
   it "returns true if #equal? returns true" do
-    @o1.equal?(@o1).should == true
+    @o1.should equal(@o1)
     (@o1 === @o1).should == true
   end
 
   it "returns false if neither #== nor #equal? returns true" do
-    @o1.equal?(@o).should == false
+    @o1.should_not equal(@o)
     (@o1 == @o).should == false
     (@o1 === @o).should == false
   end
@@ -105,13 +105,13 @@ describe "Kernel#=== for a class with #equal? overridden to always be false" do
   end
 
   it "returns true if #== returns true even if #equal? is false" do
-    @o1.equal?(@o1).should == false
+    @o1.should_not equal(@o1)
     (@o1 == @o1).should == true
     (@o1 === @o1).should == true
   end
 
   it "returns false if neither #== nor #equal? returns true" do
-    @o1.equal?(@o).should == false
+    @o1.should_not equal(@o)
     (@o1 == @o).should == false
     (@o1 === @o).should == false
   end
@@ -128,7 +128,7 @@ describe "Kernel#=== for a class with #== and #equal? overridden to always be fa
     it "returns true if the object id is the same even if both #== and #equal? return false" do
       @o1.object_id.should == @o1.object_id
 
-      @o1.equal?(@o1).should == false
+      @o1.should_not equal(@o1)
       (@o1 == @o1).should == false
 
       (@o1 === @o1).should == true
@@ -139,7 +139,7 @@ describe "Kernel#=== for a class with #== and #equal? overridden to always be fa
     it "returns false if both #== and #equal? return false even if object id is same" do
       @o1.object_id.should == @o1.object_id
 
-      @o1.equal?(@o1).should == false
+      @o1.should_not equal(@o1)
       (@o1 == @o1).should == false
 
       (@o1 === @o1).should == false
@@ -149,7 +149,7 @@ describe "Kernel#=== for a class with #== and #equal? overridden to always be fa
   it "returns false if the object id is not the same and both #== and #equal? return false" do
     @o1.object_id.should_not == @o2.object_id
 
-    @o1.equal?(@o2).should == false
+    @o1.should_not equal(@o2)
     (@o1 == @o2).should == false
 
     (@o1 === @o2).should == false
@@ -166,7 +166,7 @@ describe "Kernel#=== for a class with #object_id overridden to always be differe
   it "returns true if #== or #equal? is true even if object id is different" do
     @o1.object_id.should_not == @o1.object_id
 
-    @o1.equal?(@o1).should == true
+    @o1.should equal(@o1)
     (@o1 == @o1).should == true
 
     (@o1 === @o1).should == true

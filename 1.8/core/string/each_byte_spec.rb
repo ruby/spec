@@ -35,6 +35,6 @@ describe "String#each_byte" do
   
   it "returns self" do
     s = "hello"
-    (s.each_byte {}).equal?(s).should == true
+    (s.each_byte {}).should equal(s)
   end
 end

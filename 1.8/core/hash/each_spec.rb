@@ -12,7 +12,7 @@ describe "Hash#each" do
   it "calls block once for each entry, passing key, value" do
     r = {}
     h = {:a => 1, :b => 2, :c => 3, :d => 5}
-    h.each { |k,v| r[k.to_s] = v.to_s }.equal?(h).should == true
+    h.each { |k,v| r[k.to_s] = v.to_s }.should equal(h)
     r.should == {"a" => "1", "b" => "2", "c" => "3", "d" => "5" }
   end
 

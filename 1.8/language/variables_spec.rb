@@ -668,8 +668,8 @@ describe "Multiple assignment without grouping or splatting" do
     o_of_a, o_of_b = mock('a'), mock('b')
     a, b = o_of_a, o_of_b
     a, b = b, a
-    a.equal?(o_of_b).should == true
-    b.equal?(o_of_a).should == true
+    a.should equal(o_of_b)
+    b.should equal(o_of_a)
   end
 end
 

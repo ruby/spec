@@ -13,7 +13,7 @@ describe "Hash#rehash" do
     h.key?(k1).should == false
     h.keys.include?(k1).should == true
     
-    h.rehash.equal?(h).should == true
+    h.rehash.should equal(h)
     h.key?(k1).should == true
     h[k1].should == 0
     

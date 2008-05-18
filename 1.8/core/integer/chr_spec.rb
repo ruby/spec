@@ -9,7 +9,7 @@ describe "Integer#chr" do
   end
 
   it "returns a new String for each call" do
-    82.chr.equal?(82.chr).should == false
+    82.chr.should_not equal(82.chr)
   end
   
   it "raises a RangeError if self is out of the ASCII character range" do

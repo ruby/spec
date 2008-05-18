@@ -101,7 +101,7 @@ describe "Calling a method" do
 
     res = foo 1, 2, 3, *a
     res.first.should == 2501
-    res.last.equal?(obj).should == true
+    res.last.should equal(obj)
   end
   
   it "allows to pass literal hashes without curly braces as the last parameter" do

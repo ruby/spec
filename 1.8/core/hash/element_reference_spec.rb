@@ -68,7 +68,7 @@ describe "Hash#[]" do
     b = h[:b]
     a << "bar"
 
-    a.equal?(b).should == true
+    a.should equal(b)
     a.should == "foobar"
     b.should == "foobar"
   end

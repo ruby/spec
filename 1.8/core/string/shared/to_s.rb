@@ -2,7 +2,7 @@ shared :string_to_s do |cmd|
   describe "String##{cmd}" do
     it "returns self when self.class == String" do
       a = "a string"
-      a.equal?(a.send(cmd)).should == true
+      a.should equal(a.send(cmd))
     end
   
     it "returns a new instance of String when called on a subclass" do

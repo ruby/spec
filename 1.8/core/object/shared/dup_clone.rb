@@ -41,7 +41,7 @@ shared :object_dup_clone do |cmd|
       o.obj = array
 
       o2 = o.send(cmd)
-      o2.obj.equal?(o.obj).should == true
+      o2.obj.should equal(o.obj)
     end
 
     it "calls #initialize_copy on the NEW object if available, passing in original object" do
@@ -50,7 +50,7 @@ shared :object_dup_clone do |cmd|
 
       o.obj.should == :original
       o2.obj.should == :init_copy
-      o2.original.equal?(o).should == true
+      o2.original.should equal(o)
     end
   end
 end

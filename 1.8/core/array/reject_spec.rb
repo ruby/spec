@@ -30,7 +30,7 @@ end
 describe "Array#reject!" do
   it "removes elements for which block is true" do
     a = [3, 4, 5, 6, 7, 8, 9, 10, 11]
-    a.reject! { |i| i % 2 == 0 }.equal?(a).should == true
+    a.reject! { |i| i % 2 == 0 }.should equal(a)
     a.should == [3, 5, 7, 9, 11]
     a.reject! { |i| i > 8 }
     a.should == [3, 5, 7]

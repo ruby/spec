@@ -77,7 +77,7 @@ shared :string_succ_bang do |cmd|
     it "is equivalent to succ, but modifies self in place (still returns self)" do
       ["", "abcd", "THX1138"].each do |s|
         r = s.dup.send(cmd)
-        s.send(cmd).equal?(s).should == true
+        s.send(cmd).should equal(s)
         s.should == r
       end
     end

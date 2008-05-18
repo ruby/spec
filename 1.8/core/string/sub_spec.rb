@@ -318,7 +318,7 @@ end
 describe "String#sub! with pattern, replacement" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.sub!(/[aeiou]/, '*').equal?(a).should == true
+    a.sub!(/[aeiou]/, '*').should equal(a)
     a.should == "h*llo"
   end
 
@@ -350,7 +350,7 @@ end
 describe "String#sub! with pattern and block" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.sub!(/[aeiou]/) { '*' }.equal?(a).should == true
+    a.sub!(/[aeiou]/) { '*' }.should equal(a)
     a.should == "h*llo"
   end
 
