@@ -1,8 +1,8 @@
 shared :file_executable do |cmd, klass, name|
   describe "#{name || "#{klass}.#{cmd}"}" do
     before :each do
-      @file1 = 'temp1.txt'
-      @file2 = 'temp2.txt'
+      @file1 = tmp('temp1.txt')
+      @file2 = tmp('temp2.txt')
 
       File.open(@file1, "w"){} # touch
       File.open(@file2, "w"){} # touch
@@ -18,13 +18,13 @@ shared :file_executable do |cmd, klass, name|
       @file2 = nil
     end
 
-    it "returns true if named file is executable by the effective user id of the process, otherwise false" do
-      klass.send(cmd, '/etc/passwd').should == false
-      klass.send(cmd, @file1).should == true
-      klass.send(cmd, @file2).should == false
-    end
-
     platform_is_not :windows do
+      it "returns true if named file is executable by the effective user id of the process, otherwise false" do
+        klass.send(cmd, '/etc/passwd').should == false
+        klass.send(cmd, @file1).should == true
+        klass.send(cmd, @file2).should == false
+      end
+
       it "return true if the argument is an executable file" do
         klass.send(cmd, @file1).should == true
         klass.send(cmd, @file2).should == false

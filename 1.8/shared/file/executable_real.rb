@@ -1,8 +1,8 @@
 shared :file_executable_real do |cmd, klass, name|
   describe "#{name || "#{klass}.#{cmd}"}" do
     before :each do
-      @file1 = File.join(Dir.pwd, 'temp1.txt')
-      @file2 = File.join(Dir.pwd, 'temp2.txt')
+      @file1 = tmp('temp1.txt')
+      @file2 = tmp('temp2.txt')
 
       File.open(@file1, "w") {} # touch
       File.open(@file2, "w") {}
