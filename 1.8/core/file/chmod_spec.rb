@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "File#chmod" do
   before :each do
-    @filename = File.dirname(__FILE__) + '/fixtures/i_exist'
+    @filename = tmp('i_exist')
     @file = File.open(@filename, 'w')
   end
 
@@ -43,35 +43,51 @@ describe "File#chmod" do
     File.stat(@filename).mode.should == mode
   end
 
-  it "with '0222' makes file writable but not readable or executable" do
-    @file.chmod(0222)
-    File.readable?(@filename).should == false
-    File.writable?(@filename).should == true
-    File.executable?(@filename).should == false
-  end
+  platform_is :windows do
+    it "with '0444' makes file readable and executable but not writable" do
+      @file.chmod(0444)
+      File.readable?(@filename).should == true
+      File.writable?(@filename).should == false
+      File.executable?(@filename).should == true
+    end
 
-  it "with '0444' makes file readable but not writable or executable" do
-    @file.chmod(0444)
-    File.readable?(@filename).should == true
-    File.writable?(@filename).should == false
-    File.executable?(@filename).should == false
-  end
-
-  it "with '0666' makes file readable and writable but not executable" do
-    @file.chmod(0666)
-    File.readable?(@filename).should == true
-    File.writable?(@filename).should == true
-    File.executable?(@filename).should == false
-  end
-
-  it "with '0111' makes file executable but not readable or writable" do
-    @file.chmod(0111)
-    File.readable?(@filename).should == false
-    File.writable?(@filename).should == false
-    File.executable?(@filename).should == true
+    it "with '0644' makes file readable and writable and also executable" do
+      @file.chmod(0644)
+      File.readable?(@filename).should == true
+      File.writable?(@filename).should == true
+      File.executable?(@filename).should == true
+    end
   end
 
   platform_is_not :windows do
+    it "with '0222' makes file writable but not readable or executable" do
+      @file.chmod(0222)
+      File.readable?(@filename).should == false
+      File.writable?(@filename).should == true
+      File.executable?(@filename).should == false
+    end
+
+    it "with '0444' makes file readable but not writable or executable" do
+      @file.chmod(0444)
+      File.readable?(@filename).should == true
+      File.writable?(@filename).should == false
+      File.executable?(@filename).should == false
+    end
+
+    it "with '0666' makes file readable and writable but not executable" do
+      @file.chmod(0666)
+      File.readable?(@filename).should == true
+      File.writable?(@filename).should == true
+      File.executable?(@filename).should == false
+    end
+
+    it "with '0111' makes file executable but not readable or writable" do
+      @file.chmod(0111)
+      File.readable?(@filename).should == false
+      File.writable?(@filename).should == false
+      File.executable?(@filename).should == true
+    end
+
     it "modifies the permission bits of the files specified" do
       @file.chmod(0755)
       File.stat(@filename).mode.should == 33261
@@ -81,7 +97,7 @@ end
 
 describe "File.chmod" do
   before :each do
-    @file = File.dirname(__FILE__) + '/fixtures/i_exist'
+    @file = tmp('i_exist')
     File.open(@file, 'w') {}
     @count = File.chmod(0755, @file)
   end
@@ -133,35 +149,51 @@ describe "File.chmod" do
     File.stat(@file).mode.should == mode
   end
 
-  it "with '0222' makes file writable but not readable or executable" do
-    File.chmod(0222, @file)
-    File.readable?(@file).should == false
-    File.writable?(@file).should == true
-    File.executable?(@file).should == false
-  end
-
-  it "with '0444' makes file readable but not writable or executable" do
-    File.chmod(0444, @file)
-    File.readable?(@file).should == true
-    File.writable?(@file).should == false
-    File.executable?(@file).should == false
-  end
-
-  it "with '0666' makes file readable and writable but not executable" do
-    File.chmod(0666, @file)
-    File.readable?(@file).should == true
-    File.writable?(@file).should == true
-    File.executable?(@file).should == false
-  end
-
-  it "with '0111' makes file executable but not readable or writable" do
-    File.chmod(0111, @file)
-    File.readable?(@file).should == false
-    File.writable?(@file).should == false
-    File.executable?(@file).should == true
+  platform_is :windows do
+    it "with '0444' makes file readable and executable but not writable" do
+      File.chmod(0444, @file)
+      File.readable?(@file).should == true
+      File.writable?(@file).should == false
+      File.executable?(@file).should == true
+    end
+    
+    it "with '0644' makes file readable and writable and also executable" do
+      File.chmod(0644, @file)
+      File.readable?(@file).should == true
+      File.writable?(@file).should == true
+      File.executable?(@file).should == true
+    end
   end
 
   platform_is_not :windows do
+    it "with '0222' makes file writable but not readable or executable" do
+      File.chmod(0222, @file)
+      File.readable?(@file).should == false
+      File.writable?(@file).should == true
+      File.executable?(@file).should == false
+    end
+
+    it "with '0444' makes file readable but not writable or executable" do
+      File.chmod(0444, @file)
+      File.readable?(@file).should == true
+      File.writable?(@file).should == false
+      File.executable?(@file).should == false
+    end
+
+    it "with '0666' makes file readable and writable but not executable" do
+      File.chmod(0666, @file)
+      File.readable?(@file).should == true
+      File.writable?(@file).should == true
+      File.executable?(@file).should == false
+    end
+
+    it "with '0111' makes file executable but not readable or writable" do
+      File.chmod(0111, @file)
+      File.readable?(@file).should == false
+      File.writable?(@file).should == false
+      File.executable?(@file).should == true
+    end
+
     it "modifies the permission bits of the files specified" do
       File.stat(@file).mode.should == 33261
     end
