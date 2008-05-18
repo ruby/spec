@@ -12,10 +12,8 @@ describe "Struct.new" do
     first = Struct.new('Person', :height, :weight)
     first.should == Struct::Person
 
-    old, $VERBOSE = $VERBOSE, nil
     second = Struct.new('Person', :hair, :sex)
     second.should == Struct::Person
-    $VERBOSE = old
 
     first.members.should_not == second.members
   end
@@ -79,18 +77,14 @@ describe "Struct.new" do
   
   not_compliant_on :rubinius do
     it "accepts Fixnums as Symbols unless fixnum.to_sym.nil?" do
-      old, $VERBOSE = $VERBOSE, nil
       num = :foo.to_i
       Struct.new(nil, num).new("bar").foo.should == "bar"
-      $VERBOSE = old
     end
 
     it "raises an ArgumentError if fixnum#to_sym is nil" do
-      old, $VERBOSE = $VERBOSE, nil
       num = 10000
       num.to_sym.should == nil  # if this fails, we need a new Fixnum to test
       lambda { Struct.new(:animal, num) }.should raise_error(ArgumentError)
-      $VERBOSE = old
     end
   end
 
