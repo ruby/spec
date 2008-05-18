@@ -11,7 +11,7 @@ shared :file_file do |cmd, klass, name|
         @dir  = "/bin"
       end
 
-      @file = "test.txt"
+      @file = tmp("test.txt")
       File.open(@file, "w"){} # touch
     end
 
@@ -24,7 +24,12 @@ shared :file_file do |cmd, klass, name|
     it "returns true if the named file exists and is a regular file." do 
       klass.send(cmd, @file).should == true
       klass.send(cmd, @dir).should == false
-      klass.send(cmd, @null).should == false # May fail on MS Windows
+    end
+
+    platform_is_not :windows do
+      it "return true if the null device exists and is a regular file." do
+        klass.send(cmd, @null).should == false # May fail on MS Windows
+      end
     end
 
     it "raises an ArgumentError if not passed one argument" do
