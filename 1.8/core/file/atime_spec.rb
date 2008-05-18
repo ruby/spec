@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "File.atime" do
   before :each do
-    @file = File.join('test.txt')
+    @file = tmp('test.txt')
     File.open(@file, "w") {} # touch
   end
 
