@@ -18,6 +18,7 @@ describe "IO#write on a file" do
     File.delete(@filename)
   end
 
+  # TODO: impl detail? discuss this with matz. This spec is useless. - rdavis
   it "writes all of the string's bytes but buffers them" do
     written = @file.write("abcde")
     written.should == 5
