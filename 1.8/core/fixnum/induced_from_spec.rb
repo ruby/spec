@@ -9,8 +9,8 @@ describe "Fixnum.induced_from with [Float]" do
   end
   
   it "raises a RangeError when the passed Float is out of Fixnum's range" do
-    lambda { Fixnum.induced_from(bignum_value.to_f) }.should raise_error(RangeError)
-    lambda { Fixnum.induced_from(-bignum_value.to_f) }.should raise_error(RangeError)
+    lambda { Fixnum.induced_from((2**64).to_f) }.should raise_error(RangeError)
+    lambda { Fixnum.induced_from(-(2**64).to_f) }.should raise_error(RangeError)
   end
 end
 
