@@ -40,6 +40,11 @@ describe "Hash#reject" do
 end
 
 describe "Hash#reject!" do
+  before(:each) do
+    @hsh = {1 => 2, 3 => 4, 5 => 6}
+    @empty = {}
+  end
+
   it "is equivalent to delete_if if changes are made" do
     {:a => 2}.reject! { |k,v| v > 1 }.should == ({:a => 2}.delete_if { |k, v| v > 1 })
 
@@ -73,6 +78,13 @@ describe "Hash#reject!" do
     end
   end
 
+  it "raises a LocalJumpError when called on a non-empty hash without a block" do
+    lambda { @hsh.reject! }.should raise_error(LocalJumpError)
+  end
+
+  it "does not raise a LocalJumpError when called on an empty hash without a block" do
+    @empty.reject!.should == nil
+  end
+
   it_behaves_like(:hash_iteration_method, :reject!)
-  it_behaves_like(:hash_iteration_no_block, :reject!)
 end

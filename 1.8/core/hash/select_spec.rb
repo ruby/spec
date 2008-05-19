@@ -3,6 +3,11 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 require File.dirname(__FILE__) + '/shared/iteration'
 
 describe "Hash#select" do
+  before(:each) do
+    @hsh = {1 => 2, 3 => 4, 5 => 6}
+    @empty = {}
+  end
+
   it "yields two arguments: key and value" do
     all_args = []
     {1 => 2, 3 => 4}.select { |*args| all_args << args }
@@ -24,7 +29,14 @@ describe "Hash#select" do
     select_pairs.should == reject_pairs
   end
 
+  it "raises a LocalJumpError when called on a non-empty hash without a block" do
+    lambda { @hsh.select }.should raise_error(LocalJumpError)
+  end
+
+  it "does not raise a LocalJumpError when called on an empty hash without a block" do
+    @empty.select.should == []
+  end
+
   it_behaves_like(:hash_iteration_method, :select)
   it_behaves_like(:hash_iteration_modifying, :select)
-  it_behaves_like(:hash_iteration_no_block, :select)
 end
