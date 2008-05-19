@@ -44,7 +44,7 @@ shared :time_params do |cmd|
     it "throws ArgumentError for out of range values" do
       # year-based Time.local(year (, month, day, hour, min, sec, usec))
       # Year range only fails on 32 bit archs
-      if defined? Rubinius && Rubinius::WORDSIZE == 32
+      platform_is :wordsize => 32 do
         lambda { Time.send(cmd, 1111, 12, 31, 23, 59, 59, 0) }.should raise_error(ArgumentError) # year
       end
       lambda { Time.send(cmd, 2008, 13, 31, 23, 59, 59, 0) }.should raise_error(ArgumentError) # mon
@@ -60,7 +60,7 @@ shared :time_params do |cmd|
       lambda { Time.send(cmd, 59, 59, 23, 32, 12, 2008, :ignored, :ignored, :ignored, :ignored) }.should raise_error(ArgumentError) # day
       lambda { Time.send(cmd, 59, 59, 23, 31, 13, 2008, :ignored, :ignored, :ignored, :ignored) }.should raise_error(ArgumentError) # month
       # Year range only fails on 32 bit archs
-      if defined? Rubinius && Rubinius::WORDSIZE == 32
+      platform_is :wordsize => 32 do
         lambda { Time.send(cmd, 59, 59, 23, 31, 12, 1111, :ignored, :ignored, :ignored, :ignored) }.should raise_error(ArgumentError) # year
       end
     end
