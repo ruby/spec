@@ -1,13 +1,3 @@
-$:.push File.dirname(__FILE__) + '/../'
-
-# Prefer included mspec source over a gem version
-mspec_dir = File.dirname(__FILE__) + '/../../../mspec/lib'
-if File.exist? mspec_dir
-  $:.unshift mspec_dir
-else
-  require 'rubygems'
-end
-
 if ENV['MSPEC_RUNNER'] == '1'
   require 'mspec'
   require 'pp'
