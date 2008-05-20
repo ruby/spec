@@ -10,7 +10,7 @@ shared :complex_math_atanh do |obj|
       obj.send(:atanh, -0.2).should be_close(-0.202732554054082, TOLERANCE)
     end
 
-    platform_is :darwin, :freebsd do
+    platform_is :darwin, :freebsd, :java do
       it "returns Infinity for 1.0" do
         obj.send(:atanh, 1.0).infinite?.should == 1
       end
@@ -21,12 +21,15 @@ shared :complex_math_atanh do |obj|
     end
 
     platform_is :windows, :linux, :openbsd do
-      it "raises an Errno::EDOM if x = 1.0" do
-        lambda { obj.send(:atanh, 1.0) }.should raise_error(Errno::EDOM)
-      end
+      # jruby is cross-platform and behaves as :darwin above
+      not_compliant_on :jruby do
+        it "raises an Errno::EDOM if x = 1.0" do
+          lambda { obj.send(:atanh, 1.0) }.should raise_error(Errno::EDOM)
+        end
 
-      it "raises an Errno::EDOM if x = -1.0" do
-        lambda { obj.send(:atanh, -1.0) }.should raise_error(Errno::EDOM)
+        it "raises an Errno::EDOM if x = -1.0" do
+          lambda { obj.send(:atanh, -1.0) }.should raise_error(Errno::EDOM)
+        end
       end
     end
 
@@ -55,7 +58,7 @@ shared :complex_math_atanh_bang do |obj|
       obj.send(:atanh!, -0.2).should be_close(-0.202732554054082, TOLERANCE)
     end
 
-    platform_is :darwin, :freebsd do
+    platform_is :darwin, :freebsd, :java do
       it "returns Infinity for 1.0" do
         obj.send(:atanh!, 1.0).infinite?.should == 1
       end
@@ -66,12 +69,15 @@ shared :complex_math_atanh_bang do |obj|
     end
 
     platform_is :windows, :linux, :openbsd do
-      it "raises an Errno::EDOM if x = 1.0" do
-        lambda { obj.send(:atanh!, 1.0) }.should raise_error(Errno::EDOM)
-      end
+      # jruby is cross-platform and behaves as :darwin above
+      not_compliant_on :jruby do
+        it "raises an Errno::EDOM if x = 1.0" do
+          lambda { obj.send(:atanh!, 1.0) }.should raise_error(Errno::EDOM)
+        end
 
-      it "raises an Errno::EDOM if x = -1.0" do
-        lambda { obj.send(:atanh!, -1.0) }.should raise_error(Errno::EDOM)
+        it "raises an Errno::EDOM if x = -1.0" do
+          lambda { obj.send(:atanh!, -1.0) }.should raise_error(Errno::EDOM)
+        end
       end
     end
 
