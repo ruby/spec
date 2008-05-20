@@ -193,16 +193,23 @@ shared :dir_glob do |cmd|
 
     it "recursively matches directories with '**/<characters>'" do
       %w|glob []|.each {|cmd|
-        Dir.send(cmd, '**/*fil?{,.}*').sort.should == %w|deeply/nested/directory/structure/file_one
-                                                         deeply/nested/directory/structure/file_one.ext
-                                                         deeply/nondotfile
-                                                         dir/filename_ordering
-                                                         dir_filename_ordering
-                                                         file_one.ext file_two.ext
-                                                         nondotfile subdir_one/nondotfile
-                                                         subdir_two/nondotfile
-                                                         subdir_two/nondotfile.ext
-                                                         subdir_two/nondotfile.ext|
+        Dir.send(cmd, '**/*fil?{,.}*').sort.should ==
+          %w[deeply/nested/directory/structure/file_one
+             deeply/nested/directory/structure/file_one.ext
+             deeply/nondotfile
+
+             dir/filename_ordering
+             dir_filename_ordering
+
+             file_one.ext
+             file_two.ext
+
+             nondotfile
+
+             subdir_one/nondotfile
+             subdir_two/nondotfile
+             subdir_two/nondotfile.ext
+             subdir_two/nondotfile.ext]
       }
     end
 
