@@ -8,11 +8,18 @@ describe "Hash#clear" do
     h.should == {}
   end
 
-  it "does not remove default values and procs" do
+  it "does not remove default values" do
     h = Hash.new(5)
     h.clear
     h.default.should == 5
 
+    h = { "a" => 100, "b" => 200 }
+    h.default = "Go fish"
+    h.clear
+    h["z"].should == "Go fish"
+  end
+
+  it "does not remove default procs" do
     h = Hash.new { 5 }
     h.clear
     h.default_proc.should_not == nil
