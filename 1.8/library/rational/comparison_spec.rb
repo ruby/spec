@@ -54,7 +54,7 @@ describe "Rational#<=> when passed [Float]" do
   end
 end
 
-describe "Rationa#<=> when passed an Object that responds to #coerce"
+describe "Rationa#<=> when passed an Object that responds to #coerce" do
   it "should call #coerce on the passed argument with self" do
     rational = Rational(3, 4)
         
