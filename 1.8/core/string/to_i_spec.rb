@@ -57,22 +57,36 @@ describe "String#to_i" do
     "5e10".to_i.should == 5
   end
   
-  it "auto-detects base via base specifiers (default: 10) for base = 0" do
+  it "auto-detects base 8 via leading 0 when base = 0" do
     "01778".to_i(0).should == 0177
-    "0b112".to_i(0).should == 0b11
-    "0d19A".to_i(0).should == 19
-    "0o178".to_i(0).should == 0o17
-    "0xFAZ".to_i(0).should == 0xFA
-    "1234567890ABC".to_i(0).should == 1234567890
-
     "-01778".to_i(0).should == -0177
+  end
+
+  it "auto-detects base 2 via 0b when base = 0" do
+    "0b112".to_i(0).should == 0b11
     "-0b112".to_i(0).should == -0b11
+  end
+
+  it "auto-detects base 10 via 0d when base = 0" do
+    "0d19A".to_i(0).should == 19
     "-0d19A".to_i(0).should == -19
+  end
+
+  it "auto-detects base 8 via 0o when base = 0" do
+    "0o178".to_i(0).should == 0o17
     "-0o178".to_i(0).should == -0o17
+  end
+
+  it "auto-detects base 16 via 0x when base = 0" do
+    "0xFAZ".to_i(0).should == 0xFA
     "-0xFAZ".to_i(0).should == -0xFA
+  end
+
+  it "auto-detects base 10 with no base specifier when base = 0" do
+    "1234567890ABC".to_i(0).should == 1234567890
     "-1234567890ABC".to_i(0).should == -1234567890
   end
-  
+
   it "doesn't handle foreign base specifiers when base is > 0" do
     [2, 3, 4, 8, 10].each do |base|
       "0111".to_i(base).should == "111".to_i(base)
@@ -105,10 +119,10 @@ describe "String#to_i" do
   end
   
   it "requires that the sign if any appears before the base specifier" do
-    "0b-1".to_i(0).should == 0
-    "0d-1".to_i(0).should == 0
-    "0o-1".to_i(0).should == 0
-    "0x-1".to_i(0).should == 0
+    "0b-1".to_i( 2).should == 0
+    "0d-1".to_i(10).should == 0
+    "0o-1".to_i( 8).should == 0
+    "0x-1".to_i(16).should == 0
 
     "0b-1".to_i(2).should == 0
     "0o-1".to_i(8).should == 0
