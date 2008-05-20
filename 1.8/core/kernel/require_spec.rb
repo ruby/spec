@@ -20,9 +20,9 @@ $require_spec_recursive = nil
 require 'rbconfig'
 
 describe "Kernel#require" do
-  runner_is_not :rspec do
-    # RSpec requires rubygems, which redefines #require without setting
-    # it's visibility back to module_function or private
+  conflicts_with :Gem do
+    # rubygems redefines #require without setting its
+    # visibility back to module_function or private
     it "is a private method" do
       Kernel.private_instance_methods.should include("require")
     end
