@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Hash#clone" do
-  it "clones" do
+  it "copies instance variable but not the objects they refer to" do
     hash = { 'key' => 'value' }
 
     clone = hash.clone
