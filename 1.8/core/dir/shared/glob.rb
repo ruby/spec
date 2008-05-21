@@ -192,32 +192,28 @@ shared :dir_glob do |cmd|
     end
 
     it "recursively matches directories with '**/<characters>'" do
-      %w|glob []|.each {|cmd|
-        Dir.send(cmd, '**/*fil?{,.}*').sort.should ==
-          %w[deeply/nested/directory/structure/file_one
-             deeply/nested/directory/structure/file_one.ext
-             deeply/nondotfile
+      Dir.send(cmd, '**/*fil?{,.}*').sort.should ==
+        %w[deeply/nested/directory/structure/file_one
+           deeply/nested/directory/structure/file_one.ext
+           deeply/nondotfile
 
-             dir/filename_ordering
-             dir_filename_ordering
+           dir/filename_ordering
+           dir_filename_ordering
 
-             file_one.ext
-             file_two.ext
+           file_one.ext
+           file_two.ext
 
-             nondotfile
+           nondotfile
 
-             subdir_one/nondotfile
-             subdir_two/nondotfile
-             subdir_two/nondotfile.ext
-             subdir_two/nondotfile.ext]
-      }
+           subdir_one/nondotfile
+           subdir_two/nondotfile
+           subdir_two/nondotfile.ext
+           subdir_two/nondotfile.ext]
     end
 
     it "orders directory-based entries before files when a glob matches both" do
       expected = %w[dir/filename_ordering dir_filename_ordering]
-      %w|glob []|.each do |cmd|
-        Dir.send(cmd, '**/*filename_ordering').should == expected
-      end
+      Dir.send(cmd, '**/*filename_ordering').should == expected
     end
 
     after(:all) do
