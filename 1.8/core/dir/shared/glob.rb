@@ -228,22 +228,23 @@ shared :dir_glob do |cmd|
   describe "Dir.#{cmd}" do
     before(:all) do
       @cwd = Dir.pwd
-      mock_dir = File.expand_path tmp('mock2')
+      @mock_dir = File.expand_path tmp('dir_glob_mock')
 
       %w[
         a/x/b/y/c
         a/x/b/y/b/z/c
       ].each do |path|
-        file = File.join mock_dir, path
+        file = File.join @mock_dir, path
         FileUtils.mkdir_p File.dirname(file)
         FileUtils.touch file
       end
 
-      Dir.chdir mock_dir
+      Dir.chdir @mock_dir
     end
 
     after(:all) do
       Dir.chdir @cwd
+      FileUtils.rm_r @mock_dir
     end
 
     it "matches multiple recursives" do
