@@ -6,27 +6,28 @@ describe "Hash#==" do
     Hash.new(5).should == Hash.new(1)
     Hash.new {|h, k| 1}.should == Hash.new {}
     Hash.new {|h, k| 1}.should == Hash.new(2)
-    
+
     a = {:a => 5}
     b = {}
-
     a.should_not == b
 
     b[:a] = 5
-
     a.should == b
 
-    c = Hash.new {|h, k| 1}
-    d = Hash.new {}
-    c[1] = 2
+    c = {"a" => 5}
+    a.should_not == c
+
+    d = Hash.new {|h, k| 1}
+    e = Hash.new {}
     d[1] = 2
-    c.should == d
+    e[1] = 2
+    d.should == e
   end
-  
+
   it "does not call to_hash on hash subclasses" do
     {5 => 6}.should == ToHashHash[5 => 6]
   end
-  
+
   it "returns false when the numbers of keys differ without comparing any elements" do
     obj = mock('x')
     obj.should_not_receive(:==)
@@ -35,7 +36,7 @@ describe "Hash#==" do
     {}.should_not == { obj => obj }
     { obj => obj }.should_not == {}
   end
-  
+
   it "compares keys with eql? semantics" do
     { 1.0 => "x" }.should == { 1.0 => "x" }
     { 1 => "x" }.should_not == { 1.0 => "x" }
@@ -97,7 +98,7 @@ describe "Hash#==" do
     a[0].tainted?.should == true
     a[1].tainted?.should == true
 
-    a = Array.new(2) do 
+    a = Array.new(2) do
       obj = mock('0')
 
       def obj.hash()
@@ -114,17 +115,17 @@ describe "Hash#==" do
     a[0].tainted?.should == true
     a[1].tainted?.should == true
   end
-  
+
   it "compares values with == semantics" do
     { "x" => 1.0 }.should == { "x" => 1 }
   end
-  
+
   it "does not compare values when keys don't match" do
     value = mock('x')
     value.should_not_receive(:==)
     { 1 => value }.should_not == { 2 => value }
   end
-  
+
   it "compares values when keys match" do
     x = mock('x')
     y = mock('y')
@@ -144,5 +145,5 @@ describe "Hash#==" do
     MyHash[h].should == h
     MyHash[h].should == MyHash[h]
     h.should == MyHash[h]
-  end  
+  end
 end
