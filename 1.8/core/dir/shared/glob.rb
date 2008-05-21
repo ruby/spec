@@ -224,4 +224,36 @@ shared :dir_glob do |cmd|
       Dir.chdir @cwd
     end
   end
+
+  describe "Dir.#{cmd}" do
+    before(:all) do
+      @cwd = Dir.pwd
+      mock_dir = File.expand_path tmp('mock2')
+
+      %w[
+        a/x/b/y/c
+        a/x/b/y/b/z/c
+      ].each do |path|
+        file = File.join mock_dir, path
+        FileUtils.mkdir_p File.dirname(file)
+        FileUtils.touch file
+      end
+
+      Dir.chdir mock_dir
+    end
+
+    after(:all) do
+      Dir.chdir @cwd
+    end
+
+    it "matches multiple recursives" do
+      expected = %w[
+        a/x/b/y/b/z/c
+        a/x/b/y/c
+      ]
+
+      Dir.send(cmd, 'a/**/b/**/c').sort.should == expected
+    end
+  end
 end
+
