@@ -31,7 +31,12 @@ end
 describe "Rational#divmod when passed [Float]" do
   it "returns the quotient as Integer and the remainder as Float" do
     Rational(7, 4).divmod(0.5).should eql([3, 0.25])
-    Rational(7, 4).divmod(-0.5).should eql([-3, 0.25])
+  end
+
+  ruby_bug do # Fixed at MRI 1.8.7
+    it "returns the quotient as Integer and the remainder as Float" do
+      Rational(7, 4).divmod(-0.5).should eql([-4, -0.25])
+    end
   end
   
   it "raises a FloatDomainError when passed 0" do
