@@ -18,6 +18,11 @@ shared :hash_key_p do |cmd|
       { :xyz => false }.send(cmd, :xyz).should == true
     end
 
+    it "returns true if the key is nil" do
+      { nil => 'b'}.send(cmd, nil).should == true
+      { nil => nil}.send(cmd, nil).should == true
+    end
+
     it "returns false for objects with the same hash" do
       o1 = Object.new
       def o1.hash() 0 end
