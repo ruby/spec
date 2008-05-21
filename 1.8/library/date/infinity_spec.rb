@@ -36,7 +36,7 @@ describe "Date::Infinity" do
   end
 
   # These checks fail on MRI because of a bug in Date::Infinity#<=>
-  ruby_bug do
+  ruby_bug "#", "1.8.6.114" do
     it "should be able to compare Infinity objects" do
       i1 = Date::Infinity.new
       i2 = Date::Infinity.new(-1)
@@ -50,7 +50,7 @@ describe "Date::Infinity" do
   end
 
   # Also fails because of the same bug as the previous spec
-  ruby_bug do
+  ruby_bug "#", "1.8.6.114" do
     it "should be able to return plus Infinity for abs" do
       i1 = Date::Infinity.new
       i2 = Date::Infinity.new(-1)
@@ -60,7 +60,7 @@ describe "Date::Infinity" do
     end
   end
   
-  ruby_bug do
+  ruby_bug "#", "1.8.6.114" do
     it "should be able to use -@ and +@ for Date::Infinity" do
       (Date::Infinity.new <=> +Date::Infinity.new).should == 0
       (Date::Infinity.new(-1) <=> -Date::Infinity.new).should == 0

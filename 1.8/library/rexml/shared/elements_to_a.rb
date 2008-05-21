@@ -20,7 +20,7 @@ shared :elements_to_a do |klass, cmd|
     # always needs the first param (even if it's nil).
     # A patch was submitted:
     # http://rubyforge.org/tracker/index.php?func=detail&aid=19354&group_id=426&atid=1698
-    ruby_bug do
+    ruby_bug "#", "1.8.6.114" do
       it "returns all childs if xpath is nil" do
         @e.elements.to_a.should == [@first, @second]
       end

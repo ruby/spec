@@ -83,7 +83,7 @@ describe "REXML::Element#delete_attribute" do
   end
 
 
-  ruby_bug do
+  ruby_bug "#", "1.8.6.114" do
     # According to the docs, it can also receive an Attribute as key and delete
     # it, but this doesn't seem to be the case. A patch was sent in:
     # http://rubyforge.org/tracker/index.php?func=detail&aid=19039&group_id=426&atid=1698

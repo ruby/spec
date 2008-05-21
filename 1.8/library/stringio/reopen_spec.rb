@@ -10,7 +10,7 @@ describe "StringIO#reopen" do
   end
 
   # TODO: find out if this is really a bug
-  ruby_bug do
+  ruby_bug "#", "1.8.6.114" do
     it "reopens a stream when given a String argument" do
       @io.reopen('goodbye').should == @io
       @io.string.should == 'goodbye'

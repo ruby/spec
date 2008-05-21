@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Thread#wakeup" do
-  ruby_bug do
+  ruby_bug "#", "1.8.6.114" do
     it "does not result in a deadlock" do
       c = Channel.new
       t1 = Thread.new do

@@ -98,14 +98,14 @@ describe "BigDecimal#divmod" do
     # TODO: file MRI bug:
     # BigDecimal('1').divmod(BigDecimal('3E-9'))[0] #=> 0.3E9,
     # but really should be 0.333333333E9
-    ruby_bug { #MRI's precision is very low in some cases
+    ruby_bug "#", "1.8.6.114" do #MRI's precision is very low in some cases
       values << BigDecimal('1E-10')
       values << BigDecimal('-1E-10')
       values << BigDecimal('2E55')
       values << BigDecimal('-2E55')
       values << BigDecimal('2E-5555')
       values << BigDecimal('-2E-5555')
-    }
+    end
 
     values_and_zeroes = values + @zeroes
     values_and_zeroes.each do |val1|

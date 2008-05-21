@@ -7,7 +7,7 @@ shared :time_params do |cmd|
       Time.send(cmd, 2008, obj).should == Time.send(cmd, 2008, 12)
     end
 
-    ruby_bug do
+    ruby_bug "#", "1.8.6.114" do
       # Exclude MRI 1.8.6 because it segfaults. :)
       # But the problem is fixed in MRI repository already.
       it "handles string-like second argument" do

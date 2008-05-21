@@ -13,7 +13,7 @@ describe "String#rindex with object" do
     lambda { "hello".rindex(obj) }.should raise_error(TypeError)
   end
 
-  ruby_bug do # Fixed at MRI 1.8.7
+  ruby_bug "#", "1.8.7" do # Fixed at MRI 1.8.7
     it "tries to convert obj to a string via to_str" do
       obj = mock('lo')
       def obj.to_str() "lo" end

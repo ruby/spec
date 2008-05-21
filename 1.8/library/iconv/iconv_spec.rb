@@ -128,7 +128,7 @@ describe "Iconv#iconv" do
     end
   end
 
-  ruby_bug "#17910" do
+  ruby_bug "#17910", "1.8.6.114" do
     it "sanitizes invalid upper bounds" do
       Iconv.open "us-ascii", "us-ascii" do |conv|
         conv.iconv("testing", 0, 99).should == "testing"
