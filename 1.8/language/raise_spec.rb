@@ -242,3 +242,31 @@ describe "Exceptions" do
   
 end
 
+
+describe "raise inside an rescue block" do
+  it "should re-raise the exception that was rescued" do
+    lambda {
+      begin
+        raise "This one is re-raised"
+      rescue
+        raise
+      end
+    }.should raise_error(RuntimeError, "This one is re-raised")
+  end
+  
+  it "should ignore inner exceptions" do
+    lambda {
+      begin
+        raise "This one is re-raised"
+      rescue
+        begin
+          raise "This is another error"
+        rescue
+          nil
+        end
+        
+        raise
+      end
+    }.should raise_error(RuntimeError, "This one is re-raised")
+  end
+end
