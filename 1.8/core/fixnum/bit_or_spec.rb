@@ -33,7 +33,7 @@ describe "Fixnum#|" do
     lambda { 3 | obj }.should raise_error(TypeError)
   end
 
-  ruby_bug "#", "1.8.7" do # Fixed at MRI 1.8.7
+  ruby_bug "#", "1.8.6" do # Fixed at MRI 1.8.7
     it "coerces arguments correctly even if it is a Bignum" do
       (obj = mock('large value')).should_receive(:to_int).and_return(8000_0000_0000_0000_0000)
       (3 | obj).should == 80000000000000000003

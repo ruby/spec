@@ -33,7 +33,7 @@ describe "Rational#divmod when passed [Float]" do
     Rational(7, 4).divmod(0.5).should eql([3, 0.25])
   end
 
-  ruby_bug "#", "1.8.7" do # Fixed at MRI 1.8.7
+  ruby_bug "#", "1.8.6" do # Fixed at MRI 1.8.7
     it "returns the quotient as Integer and the remainder as Float" do
       Rational(7, 4).divmod(-0.5).should eql([-4, -0.25])
     end
