@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'rational'
 
+describe "Rational.new" do
+  it "is private" do
+    Rational.private_methods.should include("new")
+  end
+end
+
 describe "Rational.new!" do
   it "returns a Rational with the passed numerator and denominator not reduced to their lowest terms" do
     Rational.new!(2, 4).should_not eql(Rational(1, 4))
