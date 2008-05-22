@@ -2,6 +2,9 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'rational'
 
 describe "Rational#to_i" do
-  it "needs to be reviewed for spec completeness" do
+  it "converts self to an Integer by truncation" do
+    Rational(7, 4).to_i.should eql(1)
+    Rational(-7, 4).to_i.should eql(-2)
+    Rational(11, 4).to_i.should eql(2)
   end
 end
