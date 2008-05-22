@@ -17,9 +17,21 @@ describe "Object#to_yaml" do
   end
 
   it "returns the YAML representation of a Float object" do
-    @float = 1.2
-    @float.should be_kind_of(Float)
-    @float.to_yaml.should == "--- 1.2\n"
+    float = 1.2
+    float.should be_kind_of(Float)
+    float.to_yaml.should == "--- 1.2\n"
+  end
+  
+  it "returns the YAML representation of an Integer object" do
+    int = 20
+    int.should be_kind_of(Integer)
+    int.to_yaml.should == "--- 20\n"
+  end
+  
+  it "returns the YAML representation of a NilClass object" do
+    nil_klass = nil
+    nil_klass.should be_kind_of(NilClass)
+    nil_klass.to_yaml.should == "--- \n"
   end
   
   it "returns the YAML representation of a String object" do
@@ -33,5 +45,9 @@ describe "Object#to_yaml" do
 
   it "returns the YAML representation of a Symbol object" do
     :symbol.to_yaml.should ==  "--- :symbol\n"
+  end
+  
+  it "returns the YAML representation of a Time object" do
+    Time.utc(2000,"jan",1,20,15,1).to_yaml.should == "--- 2000-01-01 20:15:01 Z\n"
   end
 end
