@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/ensure'
 
 describe "An ensure block inside a begin block" do
-  it "is executed when an exception is raised in it's correspoding begin block" do
+  it "is executed when an exception is raised in it's corresponding begin block" do
     begin
       executed = []
       
@@ -19,7 +19,7 @@ describe "An ensure block inside a begin block" do
     end
   end
 
-  it "is executed when an exception is raised and rescued in it's correspoding begin block" do
+  it "is executed when an exception is raised and rescued in it's corresponding begin block" do
     begin
       executed = []
       
@@ -36,7 +36,7 @@ describe "An ensure block inside a begin block" do
     end
   end
 
-  it "is executed even when a symbol is thrown in it's correspoding begin block" do
+  it "is executed even when a symbol is thrown in it's corresponding begin block" do
     begin
       executed = []
       
