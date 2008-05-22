@@ -23,7 +23,8 @@ describe "REXML::Element#delete_attribute" do
   end
 
   # Docs say that it returns the removed attribute but then examples
-  # show it returns the element with the attribute removed
+  # show it returns the element with the attribute removed.
+  # Also fixed in #20298
   it "returns the element with the attribute removed" do
     elem = @e.delete_attribute("name")
     elem.attributes.should be_empty
