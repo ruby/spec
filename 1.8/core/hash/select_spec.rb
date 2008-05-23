@@ -29,12 +29,24 @@ describe "Hash#select" do
     select_pairs.should == reject_pairs
   end
 
-  it "raises a LocalJumpError when called on a non-empty hash without a block" do
-    lambda { @hsh.select }.should raise_error(LocalJumpError)
+  ruby_version_is "" ... "1.8.7" do
+    it "raises a LocalJumpError when called on a non-empty hash without a block" do
+      lambda { @hsh.select }.should raise_error(LocalJumpError)
+    end
+
+    it "does not raise a LocalJumpError when called on an empty hash without a block" do
+      @empty.select.should == []
+    end
   end
 
-  it "does not raise a LocalJumpError when called on an empty hash without a block" do
-    @empty.select.should == []
+  ruby_version_is "1.8.7" do
+    it "returns an Enumerator when called on a non-empty hash without a block" do
+      @hsh.select.should be_kind_of(Enumerable::Enumerator)
+    end
+
+    it "returns an Enumerator when called on an empty hash without a block" do
+      @empty.select.should be_kind_of(Enumerable::Enumerator)
+    end
   end
 
   it_behaves_like(:hash_iteration_method, :select)
