@@ -42,15 +42,16 @@ describe "Hash#[]" do
     h[[]].should == "baz"
   end
 
+  it "returns nil as default default value" do
+    { 0 => 0 }[5].should == nil
+  end
+
   it "returns the default (immediate) value for missing keys" do
     h = Hash.new(5)
     h[:a].should == 5
     h[:a] = 0
     h[:a].should == 0
     h[:b].should == 5
-
-    # The default default is nil
-    { 0 => 0 }[5].should == nil
   end
 
   it "calls subclass implementations of default" do
