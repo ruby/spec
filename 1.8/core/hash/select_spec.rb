@@ -13,19 +13,20 @@ describe "Hash#select" do
     {1 => 2, 3 => 4}.select { |*args| all_args << args }
     all_args.should == [[1, 2], [3, 4]]
   end
-  
+
   it "returns an array of entries for which block is true" do
-    { :a => 9, :c => 4, :b => 5, :d => 2 }.select { |k,v| v % 2 == 0 }
+    a_pairs = { :a => 9, :c => 4, :b => 5, :d => 2 }.select { |k,v| v % 2 == 0 }
+    a_pairs.should == [[:c, 4], [:d, 2]]
   end
 
   it "processes entries with the same order as reject" do
     h = { :a => 9, :c => 4, :b => 5, :d => 2 }
-    
+
     select_pairs = []
     reject_pairs = []
     h.dup.select { |*pair| select_pairs << pair }
     h.reject { |*pair| reject_pairs << pair }
-    
+
     select_pairs.should == reject_pairs
   end
 
