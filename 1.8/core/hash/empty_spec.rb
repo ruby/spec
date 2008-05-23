@@ -7,7 +7,7 @@ describe "Hash#empty?" do
     {1 => 1}.empty?.should == false
   end
 
-  it "returns true if the hash has no entries and have a default value" do
+  it "returns true if the hash has no entries and has a default value" do
     Hash.new(5).empty?.should == true
     Hash.new { 5 }.empty?.should == true
     Hash.new { |hsh, k| hsh[k] = k }.empty?.should == true
