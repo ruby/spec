@@ -404,3 +404,25 @@ describe "A method definition in an eval" do
     lambda { other.an_eval_singleton_method }.should raise_error(NoMethodError)
   end
 end
+
+describe "a method definition that sets more than one default parameter all to the same value" do
+  def foo(a=b=c={})
+    [a,b,c]
+  end
+  it "assigns them all the same object by default" do
+    foo.should == [{},{},{}]
+    a, b, c = foo
+    a.should.eql?(b)
+    a.should.eql?(c)
+  end
+
+  it "allows the first argument to be given, and sets the rest to null" do
+    foo(1).should == [1,nil,nil]
+  end
+
+  it "assigns the parameters different objects across different default calls" do
+    a, b, c = foo
+    d, e, f = foo
+    a.should_not.eql?(d)
+  end
+end
