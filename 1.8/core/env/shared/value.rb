@@ -1,5 +1,5 @@
 shared :env_value do |cmd|
-  describe "ENV##{cmd}" do
+  describe "ENV.#{cmd}" do
 
     it "returns true if ENV has the value" do
       ENV["foo"] = "bar"

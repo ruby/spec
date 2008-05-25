@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../fixtures/classes'
 
 shared :env_store do |cmd|
-  describe "ENV##{cmd}" do
+  describe "ENV.#{cmd}" do
     it "sets the environment variable to the given value" do
       ENV["foo"] = "bar"
       EnvSpecs.get_env.key?("foo").should == true

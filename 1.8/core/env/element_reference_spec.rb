@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "ENV#[]" do
+describe "ENV.[]" do
   it "returns the specified environment variable" do
     ENV["USER"].should == EnvSpecs.get_current_user
   end
