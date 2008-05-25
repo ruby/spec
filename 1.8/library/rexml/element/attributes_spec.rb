@@ -2,7 +2,7 @@ require 'rexml/document'
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
 # Covers Element#add_attribute, Element#add_attributes, Element#attribute, 
-# Element#delete_attribute, Element#has_attributes?
+# Element#has_attributes?
 
 describe "REXML::Element#add_attribute" do
   it "adds an attribute" do
@@ -60,40 +60,6 @@ describe "REXML::Element#attribute" do
     a = REXML::Attribute.new ("drink", "coffee")
     p.add_attribute a
     p.attribute("drink").should == a
-  end
-end
-
-describe "REXML::Element#delete_attribute" do
-  it "deletes attribute by name" do
-    p = REXML::Element.new "Person"
-    p.add_attribute("food", "pizza")
-    p.delete_attribute("food")
-    p.attribute("food").should == nil
-  end
-
-  # Unlike the docs say in http://www.ruby-doc.org/stdlib/libdoc/rexml/rdoc/classes/REXML/Element.html#M002966
-  # this returns the element _without_ the deleted attribute, not the deleted
-  # attribute by itself. This can be seen on the docs' examples. A patch was sent in:
-  # http://rubyforge.org/tracker/index.php?func=detail&aid=19038&group_id=426&atid=1698
-  it "returns modified element" do
-    p = REXML::Element.new "Person"
-    p.add_attribute("food", "pizza")
-    del_attr = p.delete_attribute("food")
-    del_attr.should == p
-  end
-
-
-  ruby_bug "#", "1.8.6.114" do
-    # According to the docs, it can also receive an Attribute as key and delete
-    # it, but this doesn't seem to be the case. A patch was sent in:
-    # http://rubyforge.org/tracker/index.php?func=detail&aid=19039&group_id=426&atid=1698
-    it "deletes the attribute 'key'" do
-      p = REXML::Element.new "Person"
-      a = REXML::Attribute.new("name", "John")
-      p.add_attribute a
-      p.delete_attribute a
-      p.attribute("name").should == nil
-    end
   end
 end
 
