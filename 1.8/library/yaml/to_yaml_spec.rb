@@ -40,6 +40,10 @@ describe "Object#to_yaml" do
     nil_klass.to_yaml.should == "--- \n"
   end
   
+  it "returns the YAML represenation of a RegExp object" do
+    Regexp.new('^a-z+:\\s+\w+').to_yaml.should == "--- !ruby/regexp /^a-z+:\\s+\\w+/\n"
+  end
+  
   it "returns the YAML representation of a String object" do
     "I love Ruby".to_yaml.should == "--- I love Ruby\n"
   end
