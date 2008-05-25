@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'ostruct'
 
-describe "OpenStruct.delete" do
+describe "OpenStruct.delete_field" do
   before :each do
     @os = OpenStruct.new(:name => "John Smith", :age => 70, :pension => 300)
   end
