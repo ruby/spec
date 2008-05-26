@@ -11,7 +11,7 @@ describe "REXML::Element#has_attributes?" do
     @e.has_attributes?.should be_true
   end
 
-  it "returns false if it has no attributes" do
+  it "returns false if element has no attributes" do
     @e.has_attributes?.should be_false
   end
 end
