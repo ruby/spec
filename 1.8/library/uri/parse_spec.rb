@@ -125,7 +125,7 @@ describe "URI.parse" do
     @base_url = URI.parse(@url)
     
     # 0
-    @base_url.kind_of?(URI::HTTP).should == true
+    @base_url.should.be_kind_of(URI::HTTP)
 
     exp = [
       'http', 
@@ -139,7 +139,7 @@ describe "URI.parse" do
 
     # 1
     url = URI.parse('ftp://ftp.is.co.za/rfc/rfc1808.txt')
-    url.kind_of?(URI::FTP).should == true
+    url.should.be_kind_of(URI::FTP)
 
     exp = [
       'ftp', 
@@ -151,7 +151,7 @@ describe "URI.parse" do
 
     # 2
     url = URI.parse('gopher://spinaltap.micro.umn.edu/00/Weather/California/Los%20Angeles')
-    url.kind_of?(URI::Generic).should == true
+    url.should.be_kind_of(URI::Generic)
 
     exp = [
       'gopher', 
@@ -165,7 +165,7 @@ describe "URI.parse" do
 
     # 3
     url = URI.parse('http://www.math.uio.no/faq/compression-faq/part1.html')
-    url.kind_of?(URI::HTTP).should == true
+    url.should.be_kind_of(URI::HTTP)
 
     exp = [
       'http', 
@@ -179,7 +179,7 @@ describe "URI.parse" do
 
     # 4
     url = URI.parse('mailto:mduerst@ifi.unizh.ch')
-    url.kind_of?(URI::Generic).should == true
+    url.should.be_kind_of(URI::Generic)
 
     exp = [
       'mailto', 
@@ -191,7 +191,7 @@ describe "URI.parse" do
 
     # 5
     url = URI.parse('news:comp.infosystems.www.servers.unix')
-    url.kind_of?(URI::Generic).should == true
+    url.should.be_kind_of(URI::Generic)
 
     exp = [
       'news', 
@@ -205,7 +205,7 @@ describe "URI.parse" do
 
     # 6
     url = URI.parse('telnet://melvyl.ucop.edu/')
-    url.kind_of?(URI::Generic).should == true
+    url.should.be_kind_of(URI::Generic)
 
     exp = [
       'telnet', 
@@ -225,9 +225,9 @@ describe "URI.parse" do
     # 8
     # reported by m_seki
     uri = URI.parse('file:///foo/bar.txt')
-    url.kind_of?(URI::Generic).should == true
+    url.should.be_kind_of(URI::Generic)
     uri = URI.parse('file:/foo/bar.txt')
-    url.kind_of?(URI::Generic).should == true
+    url.should.be_kind_of(URI::Generic)
 
     # 9
     # [ruby-dev:25667]
@@ -248,7 +248,7 @@ describe "URI.parse" do
   it "conforms to MatzRuby's ldap tests" do
     url = 'ldap://ldap.jaist.ac.jp/o=JAIST,c=JP?sn?base?(sn=ttate*)'
     u = URI.parse(url)
-    u.kind_of?(URI::LDAP).should == true
+    u.should.be_kind_of(URI::LDAP)
     u.to_s.should == url
     u.dn.should == 'o=JAIST,c=JP'
     u.attributes.should == 'sn'
