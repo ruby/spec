@@ -2,8 +2,16 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'uri'
 
 describe "URI.extract" do
-  it "should behave according to its documentation" do
+  it "behaves according to its documentation" do
     URI.extract("text here http://foo.example.org/bla and here mailto:test@example.com and here also.").should == ["http://foo.example.org/bla", "mailto:test@example.com"]
+  end
+
+  it "treats contiguous URIs as a single URI" do
+    URI.extract('http://example.jphttp://example.jp').should == ['http://example.jphttp://example.jp']
+  end
+
+  it "treats pretty much anything with a colon as a URI" do
+    URI.extract('From: XXX [mailto:xxx@xxx.xxx.xxx]').should == ['From:', 'mailto:xxx@xxx.xxx.xxx]']
   end
 
   it "wraps a URI string in an array" do
