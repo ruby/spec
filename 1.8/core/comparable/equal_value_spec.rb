@@ -17,6 +17,7 @@ describe "Comparable#==" do
     a.should_receive(:<=>).any_number_of_times.and_return(0)
     (a == b).should == true
 
+    a = ComparableSpecs::Weird.new(0)
     a.should_receive(:<=>).any_number_of_times.and_return(0.0)
     (a == b).should == true
   end
