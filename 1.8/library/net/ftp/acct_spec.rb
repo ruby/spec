@@ -16,27 +16,33 @@ describe "Net::FTP#acct" do
     @ftp.acct("my_account")
   end
   
-  it "raises a Net::FTPPermError when the response code is 5xx" do
-    @socket.should_receive(:readline).and_return("502 Failure", "530 Failure")
-    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPPermError)
-    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPPermError)
-  end
-  
-  it "raises a Net::FTPTempError when the response code is 4xx" do
-    @socket.should_receive(:readline).and_return("421 Failure", "425 Failure")
-    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPTempError)
-    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPTempError)
-  end
-  
-  it "raises a Net::FTPReplyError when the response code is positive but not 2xx" do
-    @socket.should_receive(:readline).and_return("100 Test", "300 Test")
-    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPReplyError)
-    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPReplyError)
-  end
-  
-  it "does not raise an error when the response code is 2xx" do
-    @socket.should_receive(:readline).and_return("200 Test", "212 Test")
+  it "does not raise any error when the response code is 230" do
+    @socket.should_receive(:readline).and_return("230 User logged in, proceed.")
     @ftp.acct("my_account")
-    @ftp.acct("my_account")
+  end
+  
+  it "raises a Net::FTPPermError when the response code is 530" do
+    @socket.should_receive(:readline).and_return("530 Not logged in.")
+    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPPermError)
+  end
+
+  it "raises a Net::FTPPermError when the response code is 500" do
+    @socket.should_receive(:readline).and_return("500 Syntax error, command unrecognized.")
+    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPPermError)
+  end
+  
+  it "raises a Net::FTPPermError when the response code is 501" do
+    @socket.should_receive(:readline).and_return("501 Syntax error in parameters or arguments.")
+    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPPermError)
+  end
+
+  it "raises a Net::FTPPermError when the response code is 503" do
+    @socket.should_receive(:readline).and_return("503 Bad sequence of commands.")
+    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPPermError)
+  end
+
+  it "raises a Net::FTPTempError when the response code is 421" do
+    @socket.should_receive(:readline).and_return("421 Service not available, closing control connection.")
+    lambda { @ftp.acct("my_account") }.should raise_error(Net::FTPTempError)
   end
 end
