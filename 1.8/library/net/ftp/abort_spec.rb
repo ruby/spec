@@ -23,9 +23,9 @@ describe "Net::FTP#abort" do
   
   it "does not raise a Net::FTPProtoError when the response code is 426, 226 or 225" do
     @socket.should_receive(:readline).and_return("426 Ignored", "226 Ignored", "225 Ignored")
-    lambda { @ftp.abort }.should_not raise_error(Net::FTPProtoError)
-    lambda { @ftp.abort }.should_not raise_error(Net::FTPProtoError)
-    lambda { @ftp.abort }.should_not raise_error(Net::FTPProtoError)
+    @ftp.abort
+    @ftp.abort
+    @ftp.abort
   end
 
   it "raises a Net::FTPProtoError when the response code is not 426, 226 or 225" do
