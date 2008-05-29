@@ -31,7 +31,7 @@ describe "Net::FTP#getline" do
     @ftp.send(:getline).should == "200 Command okay.\r\n"
   end
   
-  it "outputs the sanitized line if in debug mode" do
+  it "outputs the sanitized line when in debug mode" do
     @ftp.debug_mode = true
     
     @socket.should_receive(:readline).and_return("PASS password")
