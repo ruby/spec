@@ -6,16 +6,17 @@ describe "Readline::HISTORY.pop" do
     Readline::HISTORY.pop.should be_nil
   end
   
-  it "returns the last item of the history" do
-    Readline::HISTORY.push("test")
-    Readline::HISTORY.pop.should == "test"
-  end
-  
-  it "removes the item from the history" do
-    Readline::HISTORY.push("test")
+  it "returns and removes the last item from the history" do
+    Readline::HISTORY.push("1", "2", "3")
+    Readline::HISTORY.size.should == 3
+    
+    Readline::HISTORY.pop.should == "3"
+    Readline::HISTORY.size.should == 2
+    
+    Readline::HISTORY.pop.should == "2"
     Readline::HISTORY.size.should == 1
     
-    Readline::HISTORY.pop
+    Readline::HISTORY.pop.should == "1"
     Readline::HISTORY.size.should == 0
   end
 end
