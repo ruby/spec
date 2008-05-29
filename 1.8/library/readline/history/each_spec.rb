@@ -2,6 +2,27 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'readline'
 
 describe "Readline::HISTORY.each" do
-  it "needs to be reviewed for spec completeness" do
+  before(:each) do
+    Readline::HISTORY.push("1", "2", "3")
+  end
+  
+  after(:each) do
+    Readline::HISTORY.pop
+    Readline::HISTORY.pop
+    Readline::HISTORY.pop
+  end
+  
+  it "yields each item but the first in the history" do
+    result = []
+    Readline::HISTORY.each do |x|
+      result << x
+    end
+    result.should == ["2", "3"]
+  end
+
+  it "yields tainted Objects" do
+    Readline::HISTORY.each do |x|
+      x.tainted?.should be_true
+    end
   end
 end
