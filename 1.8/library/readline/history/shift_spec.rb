@@ -19,4 +19,11 @@ describe "Readline::HISTORY.shift" do
     Readline::HISTORY.shift.should == "3"
     Readline::HISTORY.size.should == 0
   end
+
+  it "taints the returned strings" do
+    Readline::HISTORY.push("1", "2", "3")
+    Readline::HISTORY.shift.tainted?.should be_true
+    Readline::HISTORY.shift.tainted?.should be_true
+    Readline::HISTORY.shift.tainted?.should be_true
+  end
 end

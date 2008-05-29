@@ -19,4 +19,11 @@ describe "Readline::HISTORY.pop" do
     Readline::HISTORY.pop.should == "1"
     Readline::HISTORY.size.should == 0
   end
+  
+  it "taints the returned strings" do
+    Readline::HISTORY.push("1", "2", "3")
+    Readline::HISTORY.pop.tainted?.should be_true
+    Readline::HISTORY.pop.tainted?.should be_true
+    Readline::HISTORY.pop.tainted?.should be_true
+  end
 end
