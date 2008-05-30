@@ -9,7 +9,7 @@ describe "Bignum#/" do
   end
 
   it "does NOT raise ZeroDivisionError if other is zero and is a Float" do
-    (@bignum / 0.0).to_s.should == 'Infinity'
-    (@bignum / -0.0).to_s.should == '-Infinity'
+    (bignum_value / 0.0).to_s.should == 'Infinity'
+    (bignum_value / -0.0).to_s.should == '-Infinity'
   end
 end
