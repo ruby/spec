@@ -1,3 +1,7 @@
 *.rbc
 *.swp
+<<<<<<< HEAD:.gitignore
 .DS_Store
+=======
+*.DS_Store
+>>>>>>> peter:.gitignore
