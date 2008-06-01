@@ -11,7 +11,7 @@ end
 
 describe "URI.parse" do
   it "returns a URI::HTTP object when parsing an HTTP URI" do
-    URI.parse("http://www.example.com/").instance_of?(URI::HTTP).should == true
+    URI.parse("http://www.example.com/").should.be_kind_of(URI::HTTP)
   end
   
   it "populates the components of a parsed URI::HTTP, setting the port to 80 by default" do
@@ -31,7 +31,7 @@ describe "URI.parse" do
   end
   
   it "returns a URI::HTTPS object when parsing an HTTPS URI" do
-    URI.parse("https://important-intern-net.net").instance_of?(URI::HTTPS).should == true
+    URI.parse("https://important-intern-net.net").should.be_kind_of(URI::HTTPS)
   end
   
   it "sets the port of a parsed https URI to 443 by default" do
@@ -39,7 +39,7 @@ describe "URI.parse" do
   end
   
   it "returns a URI::FTP object when parsing an FTP URI" do
-    URI.parse("ftp://ruby-lang.org/").instance_of?(URI::FTP).should == true
+    URI.parse("ftp://ruby-lang.org/").should.be_kind_of(URI::FTP)
   end
   
   it "populates the components of a parsed URI::FTP object" do
@@ -57,7 +57,7 @@ describe "URI.parse" do
     #taken from http://www.faqs.org/rfcs/rfc2255.html 'cause I don't really know what an LDAP url looks like
     ldap_uris = %w{ ldap:///o=University%20of%20Michigan,c=US ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US?postalAddress ldap://host.com:6666/o=University%20of%20Michigan,c=US??sub?(cn=Babs%20Jensen) ldap://ldap.itd.umich.edu/c=GB?objectClass?one ldap://ldap.question.com/o=Question%3f,c=US?mail ldap://ldap.netscape.com/o=Babsco,c=US??(int=%5c00%5c00%5c00%5c04) ldap:///??sub??bindname=cn=Manager%2co=Foo ldap:///??sub??!bindname=cn=Manager%2co=Foo }
     ldap_uris.each do |ldap_uri|
-      URI.parse(ldap_uri).instance_of?(URI::LDAP).should == true
+      URI.parse(ldap_uri).should.be_kind_of(URI::LDAP)
     end
   end
   
@@ -75,7 +75,7 @@ describe "URI.parse" do
   end
   
   it "returns a URI::MailTo object when passed a mailto URI" do
-    URI.parse("mailto:spam@mailinator.com").instance_of?(URI::MailTo).should == true
+    URI.parse("mailto:spam@mailinator.com").should.be_kind_of(URI::MailTo)
   end
   
   it "populates the components of a parsed URI::MailTo object" do
@@ -94,7 +94,7 @@ describe "URI.parse" do
      "news:alt.religion.kibology",
      "git://github.com/brixen/rubyspec.git"].each do |uri|
       
-      URI.parse(uri).instance_of?(URI::Generic).should == true  
+      URI.parse(uri).should.be_kind_of(URI::Generic)  
     end
   end
   
