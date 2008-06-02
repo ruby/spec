@@ -415,25 +415,25 @@ describe "a method definition that sets more than one default parameter all to t
     a.should.eql?(b)
     a.should.eql?(c)
   end
-  
+
   it "allows the first argument to be given, and sets the rest to null" do
     foo(1).should == [1,nil,nil]
   end
-  
+
   it "assigns the parameters different objects across different default calls" do
     a, b, c = foo
     d, e, f = foo
     a.should_not.eql?(d)
   end
-  
+
   it "only allows overriding the default value of the first such parameter in each set" do
     lambda { foo(1,2) }.should raise_error(ArgumentError)
   end
-  
+
   def bar(a=b=c=1,d=2)
     [a,b,c,d]
   end
-  
+
   it "treats the argument after the multi-parameter normally" do
     bar.should == [1,1,1,2]
     bar(3).should == [3,nil,nil,2]
