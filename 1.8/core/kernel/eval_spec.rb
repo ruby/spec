@@ -143,6 +143,35 @@ describe "Kernel#eval" do
 end
 
 describe "Kernel.eval" do
+  # TODO: this is MRI 1.8.6-1.8.7 behavior, changed in 1.9
+  it "yields to the provided block when evaling 'yield'" do
+    i = 0;
+    (eval('yield') { i += 1 }).should == 1
+    (eval('yield') { i += 1 }).should == 2
+
+    i = 0;
+    (eval('yield; yield; yield') { i += 1 }).should == 3
+
+    var = "test"
+    (eval('yield') { var }).should == "test"
+  end
+
+  it "does not yield to the provided block when evaling 'yield' when scope argument is present" do
+    lambda {
+      eval('yield', binding) { "vvs" }
+    }.should raise_error(LocalJumpError)
+  end
+
+  it "yields to the block captured by binding" do
+    KernelSpecs::EvalTest.call_yield_from_eval { "vvs" }.should == "vvs"
+  end
+
+  it "does not pass the block to the method being eval'ed" do
+    lambda {
+      eval('KernelSpecs::EvalTest.call_yield') { "vvs" }
+    }.should raise_error(LocalJumpError)
+  end
+
   it "needs to be reviewed for spec completeness" do
   end
 end
