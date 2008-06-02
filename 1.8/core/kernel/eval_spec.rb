@@ -158,17 +158,28 @@ describe "Kernel.eval" do
 
   it "does not yield to the provided block when evaling 'yield' when scope argument is present" do
     lambda {
-      eval('yield', binding) { "vvs" }
+      eval('yield', binding) { "content" }
     }.should raise_error(LocalJumpError)
   end
 
-  it "yields to the block captured by binding" do
-    KernelSpecs::EvalTest.call_yield_from_eval { "vvs" }.should == "vvs"
+  it "yields to the method's block captured by binding when evaling 'yield'" do
+    KernelSpecs::EvalTest.eval_yield_with_binding { "content" }.should == "content"
   end
+
+#  TODO: This is how MRI 1.9 and JRuby behave. Bug or feature?
+#  it "yields to the block of the method when evaling 'yield' inside it" do
+#    class TT
+#      def self.call_yield_from_eval_no_binding
+#        eval('yield')
+#      end
+#    end
+#
+#    (TT.call_yield_from_eval_no_binding {"content"}).should == "content"
+#  end
 
   it "does not pass the block to the method being eval'ed" do
     lambda {
-      eval('KernelSpecs::EvalTest.call_yield') { "vvs" }
+      eval('KernelSpecs::EvalTest.call_yield') { "content" }
     }.should raise_error(LocalJumpError)
   end
 

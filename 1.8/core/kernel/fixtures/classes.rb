@@ -165,7 +165,7 @@ module KernelSpecs
   end
 
   class EvalTest
-    def self.call_yield_from_eval
+    def self.eval_yield_with_binding
       eval("yield", binding)
     end
     def self.call_yield
