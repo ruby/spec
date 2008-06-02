@@ -36,7 +36,12 @@ describe "Net::FTP#getmultiline" do
       "201 Ignored line."
     ]
 
-    @socket.stub!(:readline).and_return(*responses)
+    # TODO: calling any_number_of_times should not be neccessary,
+    # but mspec fails otherwise (while rspec works fine).
+    # See http://rubyspec.org/issues/show/15.
+    # @socket.stub!(:readline).and_return(*responses)
+    @socket.stub!(:readline).and_return(*responses).any_number_of_times
+
     @ftp.send(:getmultiline).should == "200-Start of multi line response.\n200 End of multi line response.\n"
   end
   
