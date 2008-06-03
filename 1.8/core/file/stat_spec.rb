@@ -18,11 +18,13 @@ describe "File.stat" do
     File.delete(@link) if File.exist?(@link)
     File.delete(@file) if File.exist?(@file)
   end
-  
-  it "returns a File::Stat object with file properties for a symlink" do
-    st = File.stat(@link)
 
-    st.file?.should == true
-    st.symlink?.should == false
+  not_supported_on :windows do  
+    it "returns a File::Stat object with file properties for a symlink" do
+      st = File.stat(@link)
+  
+      st.file?.should == true
+      st.symlink?.should == false
+    end
   end
 end
