@@ -11,7 +11,7 @@ end
 
 describe "URI.parse" do
   it "returns a URI::HTTP object when parsing an HTTP URI" do
-    URI.parse("http://www.example.com/").should.be_kind_of(URI::HTTP)
+    URI.parse("http://www.example.com/").should be_kind_of(URI::HTTP)
   end
   
   it "populates the components of a parsed URI::HTTP, setting the port to 80 by default" do
@@ -31,7 +31,7 @@ describe "URI.parse" do
   end
   
   it "returns a URI::HTTPS object when parsing an HTTPS URI" do
-    URI.parse("https://important-intern-net.net").should.be_kind_of(URI::HTTPS)
+    URI.parse("https://important-intern-net.net").should be_kind_of(URI::HTTPS)
   end
   
   it "sets the port of a parsed https URI to 443 by default" do
@@ -39,7 +39,7 @@ describe "URI.parse" do
   end
   
   it "returns a URI::FTP object when parsing an FTP URI" do
-    URI.parse("ftp://ruby-lang.org/").should.be_kind_of(URI::FTP)
+    URI.parse("ftp://ruby-lang.org/").should be_kind_of(URI::FTP)
   end
   
   it "populates the components of a parsed URI::FTP object" do
@@ -48,7 +48,7 @@ describe "URI.parse" do
       :userinfo => "anonymous",
       :host => "ruby-lang.org",
       :port => 21,
-      :path => "/pub/ruby/1.8/ruby-1.8.6.tar.bz2",
+      :path => "pub/ruby/1.8/ruby-1.8.6.tar.bz2",
       :typecode => "i"
     }
   end
@@ -57,7 +57,7 @@ describe "URI.parse" do
     #taken from http://www.faqs.org/rfcs/rfc2255.html 'cause I don't really know what an LDAP url looks like
     ldap_uris = %w{ ldap:///o=University%20of%20Michigan,c=US ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US?postalAddress ldap://host.com:6666/o=University%20of%20Michigan,c=US??sub?(cn=Babs%20Jensen) ldap://ldap.itd.umich.edu/c=GB?objectClass?one ldap://ldap.question.com/o=Question%3f,c=US?mail ldap://ldap.netscape.com/o=Babsco,c=US??(int=%5c00%5c00%5c00%5c04) ldap:///??sub??bindname=cn=Manager%2co=Foo ldap:///??sub??!bindname=cn=Manager%2co=Foo }
     ldap_uris.each do |ldap_uri|
-      URI.parse(ldap_uri).should.be_kind_of(URI::LDAP)
+      URI.parse(ldap_uri).should be_kind_of(URI::LDAP)
     end
   end
   
@@ -75,7 +75,7 @@ describe "URI.parse" do
   end
   
   it "returns a URI::MailTo object when passed a mailto URI" do
-    URI.parse("mailto:spam@mailinator.com").should.be_kind_of(URI::MailTo)
+    URI.parse("mailto:spam@mailinator.com").should be_kind_of(URI::MailTo)
   end
   
   it "populates the components of a parsed URI::MailTo object" do
@@ -94,7 +94,7 @@ describe "URI.parse" do
      "news:alt.religion.kibology",
      "git://github.com/brixen/rubyspec.git"].each do |uri|
       
-      URI.parse(uri).should.be_kind_of(URI::Generic)  
+      URI.parse(uri).should be_kind_of(URI::Generic)  
     end
   end
   
@@ -125,7 +125,7 @@ describe "URI.parse" do
     @base_url = URI.parse(@url)
     
     # 0
-    @base_url.should.be_kind_of(URI::HTTP)
+    @base_url.should be_kind_of(URI::HTTP)
 
     exp = [
       'http', 
@@ -139,19 +139,19 @@ describe "URI.parse" do
 
     # 1
     url = URI.parse('ftp://ftp.is.co.za/rfc/rfc1808.txt')
-    url.should.be_kind_of(URI::FTP)
+    url.should be_kind_of(URI::FTP)
 
     exp = [
       'ftp', 
       nil, 'ftp.is.co.za', URI::FTP.default_port, 
-      '/rfc/rfc1808.txt', nil,
+      'rfc/rfc1808.txt', nil,
     ]
     ary = uri_to_ary(url)
     ary.should == exp
 
     # 2
     url = URI.parse('gopher://spinaltap.micro.umn.edu/00/Weather/California/Los%20Angeles')
-    url.should.be_kind_of(URI::Generic)
+    url.should be_kind_of(URI::Generic)
 
     exp = [
       'gopher', 
@@ -165,7 +165,7 @@ describe "URI.parse" do
 
     # 3
     url = URI.parse('http://www.math.uio.no/faq/compression-faq/part1.html')
-    url.should.be_kind_of(URI::HTTP)
+    url.should be_kind_of(URI::HTTP)
 
     exp = [
       'http', 
@@ -179,7 +179,7 @@ describe "URI.parse" do
 
     # 4
     url = URI.parse('mailto:mduerst@ifi.unizh.ch')
-    url.should.be_kind_of(URI::Generic)
+    url.should be_kind_of(URI::Generic)
 
     exp = [
       'mailto', 
@@ -191,7 +191,7 @@ describe "URI.parse" do
 
     # 5
     url = URI.parse('news:comp.infosystems.www.servers.unix')
-    url.should.be_kind_of(URI::Generic)
+    url.should be_kind_of(URI::Generic)
 
     exp = [
       'news', 
@@ -205,7 +205,7 @@ describe "URI.parse" do
 
     # 6
     url = URI.parse('telnet://melvyl.ucop.edu/')
-    url.should.be_kind_of(URI::Generic)
+    url.should be_kind_of(URI::Generic)
 
     exp = [
       'telnet', 
@@ -225,9 +225,9 @@ describe "URI.parse" do
     # 8
     # reported by m_seki
     uri = URI.parse('file:///foo/bar.txt')
-    url.should.be_kind_of(URI::Generic)
+    url.should be_kind_of(URI::Generic)
     uri = URI.parse('file:/foo/bar.txt')
-    url.should.be_kind_of(URI::Generic)
+    url.should be_kind_of(URI::Generic)
 
     # 9
     # [ruby-dev:25667]
@@ -248,7 +248,7 @@ describe "URI.parse" do
   it "conforms to MatzRuby's ldap tests" do
     url = 'ldap://ldap.jaist.ac.jp/o=JAIST,c=JP?sn?base?(sn=ttate*)'
     u = URI.parse(url)
-    u.should.be_kind_of(URI::LDAP)
+    u.should be_kind_of(URI::LDAP)
     u.to_s.should == url
     u.dn.should == 'o=JAIST,c=JP'
     u.attributes.should == 'sn'
