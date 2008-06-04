@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'readline'
 
+# Note: additional specs for HISTORY are in 'history' subdir. 
 describe "Readline::HISTORY" do
   it "is defined" do
     Readline.const_defined?(:HISTORY).should == true
