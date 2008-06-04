@@ -143,29 +143,6 @@ describe "Kernel#eval" do
 end
 
 describe "Kernel.eval" do
-  # TODO: this is MRI 1.8.6-1.8.7 behavior, changed in 1.9
-  it "yields to the provided block when evaling 'yield'" do
-    i = 0;
-    (eval('yield') { i += 1 }).should == 1
-    (eval('yield') { i += 1 }).should == 2
-
-    i = 0;
-    (eval('yield; yield; yield') { i += 1 }).should == 3
-
-    var = "test"
-    (eval('yield') { var }).should == "test"
-  end
-
-  it "does not yield to the provided block when evaling 'yield' when scope argument is present" do
-    lambda {
-      eval('yield', binding) { "content" }
-    }.should raise_error(LocalJumpError)
-  end
-
-  it "yields to the method's block captured by binding when evaling 'yield'" do
-    KernelSpecs::EvalTest.eval_yield_with_binding { "content" }.should == "content"
-  end
-
 #  TODO: This is how MRI 1.9 and JRuby behave. Bug or feature?
 #  it "yields to the block of the method when evaling 'yield' inside it" do
 #    class TT
