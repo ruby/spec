@@ -70,6 +70,11 @@ describe "Iconv#iconv" do
     end
   end
 
+  # The current spec (this one and below) test for the current MRI
+  # behavior, which is out of sync with the ruby-doc.
+  # TODO: MRI 1.9 apparently changed this behavior, to be in sync
+  # with the docs that state that the second argument is *length*.
+  # See http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17092
   it "when given a positive end position treats it as exclusive" do
     # i.e. string[start...end]
     Iconv.open "us-ascii", "us-ascii" do |conv|
@@ -79,6 +84,7 @@ describe "Iconv#iconv" do
     end
   end
 
+  # TODO: see the comment above
   it "when given a negative end position treats it as inclusive" do
     # i.e. string[start..end]
     Iconv.open "us-ascii", "us-ascii" do |conv|
