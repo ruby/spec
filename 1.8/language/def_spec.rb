@@ -412,8 +412,8 @@ describe "a method definition that sets more than one default parameter all to t
   it "assigns them all the same object by default" do
     foo.should == [{},{},{}]
     a, b, c = foo
-    a.should.eql?(b)
-    a.should.eql?(c)
+    a.should eql(b)
+    a.should eql(c)
   end
 
   it "allows the first argument to be given, and sets the rest to null" do
@@ -423,7 +423,7 @@ describe "a method definition that sets more than one default parameter all to t
   it "assigns the parameters different objects across different default calls" do
     a, b, c = foo
     d, e, f = foo
-    a.should_not.eql?(d)
+    a.should_not eql(d)
   end
 
   it "only allows overriding the default value of the first such parameter in each set" do
