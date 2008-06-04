@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe "Class.new with a block given" do
   it "uses the given block as the class' body" do
     klass = Class.new do
-      def self.hello
-        "hello"
+      def self.message
+        "text"
       end
 
       def hello
@@ -12,8 +12,32 @@ describe "Class.new with a block given" do
       end
     end
 
-    klass.hello.should     == "hello"
+    klass.message.should     == "text"
     klass.new.hello.should == "hello again"
+  end
+
+  it "creates a subclass of the given superclass" do
+    sc = Class.new do
+      def self.body
+        @body
+      end
+      @body = self
+      def message; "text"; end
+    end
+    klass = Class.new(sc) do
+      def self.body
+        @body
+      end
+      @body = self
+      def message2; "hello"; end
+    end
+
+    klass.body.should == klass
+    sc.body.should == sc
+    klass.superclass.should == sc
+    klass.new.message.should == "text"
+    klass.new.message2.should == "hello"
+    klass.dup.body.should == klass
   end
 end
 
