@@ -42,17 +42,32 @@ describe "URI.parse" do
     URI.parse("ftp://ruby-lang.org/").should be_kind_of(URI::FTP)
   end
   
-  it "populates the components of a parsed URI::FTP object" do
-    components(URI.parse("ftp://anonymous@ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2;type=i")).should == {
-      :scheme => "ftp",
-      :userinfo => "anonymous",
-      :host => "ruby-lang.org",
-      :port => 21,
-      :path => "pub/ruby/1.8/ruby-1.8.6.tar.bz2",
-      :typecode => "i"
-    }
+  ruby_version_is "" ... "1.8.7" do
+    it "populates the components of a parsed URI::FTP object" do
+      components(URI.parse("ftp://anonymous@ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2;type=i")).should == {
+        :scheme => "ftp",
+        :userinfo => "anonymous",
+        :host => "ruby-lang.org",
+        :port => 21,
+        :path => "/pub/ruby/1.8/ruby-1.8.6.tar.bz2",
+        :typecode => "i"
+      }
+    end
   end
-  
+
+  ruby_version_is "1.8.7" do
+    it "populates the components of a parsed URI::FTP object" do
+      components(URI.parse("ftp://anonymous@ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2;type=i")).should == {
+        :scheme => "ftp",
+        :userinfo => "anonymous",
+        :host => "ruby-lang.org",
+        :port => 21,
+        :path => "pub/ruby/1.8/ruby-1.8.6.tar.bz2",
+        :typecode => "i"
+      }
+    end
+  end
+
   it "returns a URI::LDAP object when parsing an LDAP URI" do
     #taken from http://www.faqs.org/rfcs/rfc2255.html 'cause I don't really know what an LDAP url looks like
     ldap_uris = %w{ ldap:///o=University%20of%20Michigan,c=US ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US?postalAddress ldap://host.com:6666/o=University%20of%20Michigan,c=US??sub?(cn=Babs%20Jensen) ldap://ldap.itd.umich.edu/c=GB?objectClass?one ldap://ldap.question.com/o=Question%3f,c=US?mail ldap://ldap.netscape.com/o=Babsco,c=US??(int=%5c00%5c00%5c00%5c04) ldap:///??sub??bindname=cn=Manager%2co=Foo ldap:///??sub??!bindname=cn=Manager%2co=Foo }
@@ -141,11 +156,22 @@ describe "URI.parse" do
     url = URI.parse('ftp://ftp.is.co.za/rfc/rfc1808.txt')
     url.should be_kind_of(URI::FTP)
 
-    exp = [
-      'ftp', 
-      nil, 'ftp.is.co.za', URI::FTP.default_port, 
-      'rfc/rfc1808.txt', nil,
-    ]
+    ruby_version_is "" ... "1.8.7" do
+      exp = [
+        'ftp', 
+        nil, 'ftp.is.co.za', URI::FTP.default_port, 
+        '/rfc/rfc1808.txt', nil,
+      ]
+    end
+
+    ruby_version_is "1.8.7" do
+      exp = [
+        'ftp', 
+        nil, 'ftp.is.co.za', URI::FTP.default_port, 
+        'rfc/rfc1808.txt', nil,
+      ]
+    end
+    
     ary = uri_to_ary(url)
     ary.should == exp
 

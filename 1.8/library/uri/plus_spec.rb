@@ -104,7 +104,15 @@ describe "URI#+" do
 #        ?y            =  http://a/b/c/?y
     url = @base_url.merge('?y')
     url.should be_kind_of(URI::HTTP)
-    url.to_s.should == 'http://a/b/c/d;p?y'
+    
+    ruby_version_is "" ... "1.8.7" do
+      url.to_s.should == 'http://a/b/c/?y'
+    end
+    
+    ruby_version_is "1.8.7" do
+      url.to_s.should == 'http://a/b/c/d;p?y'
+    end
+    
     url = @base_url.route_to('http://a/b/c/?y')
     url.should be_kind_of(URI::Generic)
     url.to_s.should == '?y'
@@ -260,7 +268,15 @@ describe "URI#+" do
 #        /./g          =  http://a/./g
     url = @base_url.merge('/./g')
     url.should be_kind_of(URI::HTTP)
-    url.to_s.should == 'http://a/g'
+    
+    ruby_version_is "" ... "1.8.7" do
+      url.to_s.should == 'http://a/./g'
+    end
+    
+    ruby_version_is "1.8.7" do
+      url.to_s.should == 'http://a/g'
+    end
+    
     url = @base_url.route_to('http://a/./g')
     url.should be_kind_of(URI::Generic)
     url.to_s.should == '/./g'
@@ -269,7 +285,15 @@ describe "URI#+" do
 #        /../g         =  http://a/../g
     url = @base_url.merge('/../g')
     url.should be_kind_of(URI::HTTP)
-    url.to_s.should == 'http://a/g'
+    
+    ruby_version_is "" ... "1.8.7" do
+      url.to_s.should == 'http://a/../g'
+    end
+    
+    ruby_version_is "1.8.7" do
+      url.to_s.should == 'http://a/g'
+    end
+    
     url = @base_url.route_to('http://a/../g')
     url.should be_kind_of(URI::Generic)
     url.to_s.should == '/../g'
@@ -314,7 +338,15 @@ describe "URI#+" do
 #        ../../../g    =  http://a/../g
     url = @base_url.merge('../../../g')
     url.should be_kind_of(URI::HTTP)
-    url.to_s.should == 'http://a/g'
+
+    ruby_version_is "" ... "1.8.7" do
+      url.to_s.should == 'http://a/../g'
+    end
+    
+    ruby_version_is "1.8.7" do
+      url.to_s.should == 'http://a/g'
+    end
+
     url = @base_url.route_to('http://a/../g')
     url.should be_kind_of(URI::Generic)
     url.to_s.should_not == '../../../g' # ok? yes, it confuses you
@@ -324,7 +356,15 @@ describe "URI#+" do
 #        ../../../../g =  http://a/../../g
     url = @base_url.merge('../../../../g')
     url.should be_kind_of(URI::HTTP)
-    url.to_s.should == 'http://a/g'
+
+    ruby_version_is "" ... "1.8.7" do
+      url.to_s.should == 'http://a/../../g'
+    end
+    
+    ruby_version_is "1.8.7" do
+      url.to_s.should == 'http://a/g'
+    end
+
     url = @base_url.route_to('http://a/../../g')
     url.should be_kind_of(URI::Generic)
     url.to_s.should_not == '../../../../g' # ok? yes, it confuses you
