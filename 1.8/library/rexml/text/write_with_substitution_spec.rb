@@ -9,6 +9,7 @@ describe "REXML::Text#write_with_substitution" do
   end
 
   after :each do
+    @file.close
     File.delete(@f) if File.exists?(@f)
   end
 
