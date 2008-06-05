@@ -12,12 +12,27 @@ describe "Readline::HISTORY.each" do
     Readline::HISTORY.pop
   end
   
-  it "yields each item but the first in the history" do
-    result = []
-    Readline::HISTORY.each do |x|
-      result << x
+  # This behaviour is a potential bug caused by
+  # Mac OS X use of editline instead of Readline.
+  # This bug should also exist on BSDs.
+  platform_is :darwin do
+    it "yields each item but the first in the history" do
+      result = []
+      Readline::HISTORY.each do |x|
+        result << x
+      end
+      result.should == ["2", "3"]
     end
-    result.should == ["2", "3"]
+  end
+  
+  platform_is_not :darwin do
+    it "yields each item in the history" do
+      result = []
+      Readline::HISTORY.each do |x|
+        result << x
+      end
+      result.should == ["1", "2", "3"]
+    end
   end
 
   it "yields tainted Objects" do
