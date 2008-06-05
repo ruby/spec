@@ -44,7 +44,7 @@ describe "Readline::HISTORY.[]=" do
       Readline::HISTORY[0].should == "test"
 
       Readline::HISTORY[1] = "second test"
-      Readline::HISTORY[1].should == "second_test"
+      Readline::HISTORY[1].should == "second test"
     end
     
     it "raises an IndexError when there is no item at the passed negative index" do
