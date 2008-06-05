@@ -3,7 +3,7 @@ shared :dir_pwd do |cmd|
     it "returns the current working directory" do
       # On ubuntu gutsy, for example, /bin/pwd does not
       # understand -P. With just `pwd -P`, /bin/pwd is run.
-      Dir.send(cmd).should == `/bin/sh -c "pwd -P"`.chomp
+      File.stat(Dir.send(cmd)).ino.should == File.stat(`/bin/sh -c "pwd -P"`.chomp).ino
     end
   end
 end
