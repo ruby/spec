@@ -2,9 +2,16 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'set'
 
 describe "Set#clear" do
-  it "removes all the elements and returns self" do
-    saved = set = Set[:a, :b, :c]
-    set.clear.should == saved
-    set.empty?.should == true
+  before(:each) do
+    @set = Set["one", "two", "three", "four"]
+  end
+  
+  it "removes all elements from self" do
+    @set.clear
+    @set.should be_empty
+  end
+  
+  it "returns self" do
+    @set.clear.should equal(@set)
   end
 end

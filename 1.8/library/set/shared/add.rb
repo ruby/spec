@@ -4,8 +4,13 @@ shared :set_add do |cmd|
       @set = Set.new
     end
     
-    it "adds the object to the set and returns self" do
-      @set.send(cmd, "dog").should == Set["dog"]
+    it "adds the passed Object to self" do
+      @set.send(cmd, "dog")
+      @set.should include("dog")
+    end
+    
+    it "returns self" do
+      @set.send(cmd, "dog").should equal(@set)
     end
   end
 end

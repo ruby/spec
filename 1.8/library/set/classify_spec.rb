@@ -2,16 +2,22 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'set'
 
 describe "Set#classify" do
-  it "returns a Hash" do
-    Set["a", "bb"].classify { |x| x.length }.should be_kind_of(Hash)
+  before(:each) do
+    @set = Set["one", "two", "three", "four"]
   end
   
-  it "classifies the set by the return value of the block" do
-    set = Set["one", "two", "three", "four"]
-    c = set.classify { |x| x.length }
-    c.keys.should include(3, 4, 5)
-    c[3].should == Set["one", "two"]
-    c[4].should == Set["four"]
-    c[5].should == Set["three"]
+  it "yields each Object in self" do
+    res = []
+    @set.classify { |x| res << x }
+    res.sort.should == ["one", "two", "three", "four"].sort
+  end
+  
+  it "raises a LocalJumpError when passed no block" do
+    lambda { @set.classify }.should raise_error(LocalJumpError)
+  end
+  
+  it "classifies the Objects in self based on the block's return value" do
+    classified = @set.classify { |x| x.length }
+    classified.should eql(3 => Set["one", "two"], 4 => Set["four"], 5 => Set["three"])
   end
 end

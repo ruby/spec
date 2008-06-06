@@ -11,12 +11,17 @@ describe "Set#add?" do
     @set = Set.new
   end
   
-  it "adds the object to the set and returns self" do
-    @set.add?("cat").should == Set["cat"]
+  it "adds the passed Object to self" do
+    @set.add?("cat")
+    @set.should include("cat")
   end
   
-  it "returns nil if the object is already in the set" do
+  it "returns self when the Object has not yet been added to self" do
+    @set.add?("cat").should equal(@set)
+  end
+  
+  it "returns nil when the Object has already been added to self" do
     @set.add?("cat")
-    @set.add?("cat").should == nil
+    @set.add?("cat").should be_nil
   end
 end
