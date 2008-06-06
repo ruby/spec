@@ -2,21 +2,34 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'set'
 
 describe "Set#delete" do
-  it "deletes the object and returns self" do
-    saved = set = Set[:a, :b, :c]
-    set.delete(:a).should == saved
-    set.should == Set[:b, :c]
+  it "deletes the passed Object from self" do
+    set = Set[:a, :b, :c]
+    set.delete(:a)
+    set.should_not include(:a)
+  end
+  
+  it "returns self" do
+    set = Set[:a, :b, :c]
+    set.delete(:a).should equal(set)
+
+    set.delete(:x).should equal(set)
   end
 end
 
 describe "Set#delete?" do
-  it "deletes the object and returns self" do
-    saved = set = Set[:a, :b, :c]
-    set.delete?(:b).should == saved
-    set.should == Set[:a, :c]
+  it "deletes the passed Object from self" do
+    set = Set[:a, :b, :c]
+    set.delete?(:a)
+    set.should_not include(:a)
   end
   
-  it "returns nil if the element is not in the set" do
-    Set[:a, :b, :c].delete?(:d).should == nil
+  it "returns self when the passed Object is in self" do
+    set = Set[:a, :b, :c]
+    set.delete(:a).should equal(set)
+  end
+  
+  it "returns nil when the passed Object is not in self" do
+    set = Set[:a, :b, :c]
+    set.delete?(:x).should be_nil
   end
 end
