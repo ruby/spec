@@ -211,12 +211,10 @@ shared :dir_glob do |cmd|
            subdir_two/nondotfile.ext]
     end
 
-    
-    # This spec doesn't seem to exhibit a behavior of MRI
-    # it "orders directory-based entries before files when a glob matches both" do
-    #   expected = %w[dir/filename_ordering dir_filename_ordering]
-    #   Dir.send(cmd, '**/*filename_ordering').should == expected
-    # end
+    it "orders directory-based entries before files when a glob matches both" do
+      expected = %w[dir/filename_ordering dir_filename_ordering]
+      Dir.send(cmd, '**/*filename_ordering').should == expected
+    end
 
     after(:all) do
       Dir.chdir @cwd
