@@ -7,7 +7,7 @@ describe "Set#flatten" do
     flattened_set = set.flatten
     
     flattened_set.should_not equal(set)
-    flattened_set.should eql(Set[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    flattened_set.should == Set[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   end
   
   it "raises an ArgumentError when self is recursive" do
@@ -20,7 +20,7 @@ describe "Set#flatten!" do
   it "flattens self" do
     set = Set[1, 2, Set[3, 4, Set[5, 6, Set[7, 8]]], 9, 10]
     set.flatten!
-    set.should eql(Set[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    set.should == Set[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   end
   
   it "returns self when self was modified" do

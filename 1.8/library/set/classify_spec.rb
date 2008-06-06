@@ -18,6 +18,6 @@ describe "Set#classify" do
   
   it "classifies the Objects in self based on the block's return value" do
     classified = @set.classify { |x| x.length }
-    classified.should eql(3 => Set["one", "two"], 4 => Set["four"], 5 => Set["three"])
+    classified.should == { 3 => Set["one", "two"], 4 => Set["four"], 5 => Set["three"] }
   end
 end

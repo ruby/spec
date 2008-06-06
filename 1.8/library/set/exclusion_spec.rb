@@ -7,8 +7,8 @@ describe "Set#^" do
   end
   
   it "returns a new Set containing elements that are not in both self and the passed Enumberable" do
-    (@set ^ Set[3, 4, 5]).should eql(Set[1, 2, 5])
-    (@set ^ [3, 4, 5]).should eql(Set[1, 2, 5])
+    (@set ^ Set[3, 4, 5]).should == Set[1, 2, 5]
+    (@set ^ [3, 4, 5]).should == Set[1, 2, 5]
   end
   
   it "raises an ArgumentError when passed a non-Enumerable" do
