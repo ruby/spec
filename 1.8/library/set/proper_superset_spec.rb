@@ -26,3 +26,8 @@ describe "Set#superset?" do
   end
   
 end
+
+describe "Set#proper_superset?" do
+  it "needs to be reviewed for spec completeness" do
+  end
+end
