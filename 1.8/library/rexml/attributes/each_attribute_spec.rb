@@ -6,15 +6,17 @@ describe "REXML::Attributes#each_attribute" do
     e = REXML::Element.new("root")
     name = REXML::Attribute.new("name", "Joe")
     ns_uri = REXML::Attribute.new("xmlns:ns", "http://some_uri")
+    e.add_attribute name
+    e.add_attribute ns_uri
+
     attributes = []
 
-    e.attributes.each do |attr|
-      attr.should be_kind_of(Attribute)
+    e.attributes.each_attribute do |attr|
       attributes << attr 
     end
-    
-    attributes.first.should == @name
-    attributes.last.should == @ns_uri
+
+    attributes.first.should == name
+    attributes.last.should == ns_uri
   end
 end
 
