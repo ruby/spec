@@ -3,5 +3,5 @@ require 'net/ftp'
 require File.dirname(__FILE__) + '/shared/list'
 
 describe "Net::FTP#dir" do
-  it_behaves_like :net_ftp_list
+  it_behaves_like :net_ftp_list, :dir
 end
