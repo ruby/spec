@@ -4,12 +4,14 @@ shared :set_difference do |cmd|
       @set = Set[:a, :b, :c]
     end
     
-    it "returns a new set excluding the elements in other" do
+    it "returns a new Set excluding the elements in the passed Enumerable" do
       @set.send(cmd, Set[:a, :b]).should == Set[:c]
+      @set.send(cmd, [:b, :c]).should == Set[:a]
     end
     
-    it "accepts any enumerable as other" do
-      @set.send(cmd, [:b, :c]).should == Set[:a]
+    it "raises an ArgumentError when passed a non-Enumerable" do
+      lambda { @set.send(cmd, 1) }.should raise_error(ArgumentError)
+      lambda { @set.send(cmd, Object.new) }.should raise_error(ArgumentError)
     end
   end
 end
