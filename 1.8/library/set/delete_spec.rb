@@ -1,35 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'set'
+require File.dirname(__FILE__) + '/shared/delete'
 
 describe "Set#delete" do
-  it "deletes the passed Object from self" do
-    set = Set[:a, :b, :c]
-    set.delete(:a)
-    set.should_not include(:a)
-  end
-  
-  it "returns self" do
-    set = Set[:a, :b, :c]
-    set.delete(:a).should equal(set)
-
-    set.delete(:x).should equal(set)
-  end
+  it_behaves_like :set_delete, Set
 end
 
 describe "Set#delete?" do
-  it "deletes the passed Object from self" do
-    set = Set[:a, :b, :c]
-    set.delete?(:a)
-    set.should_not include(:a)
-  end
-  
-  it "returns self when the passed Object is in self" do
-    set = Set[:a, :b, :c]
-    set.delete(:a).should equal(set)
-  end
-  
-  it "returns nil when the passed Object is not in self" do
-    set = Set[:a, :b, :c]
-    set.delete?(:x).should be_nil
-  end
+  it_behaves_like :set_delete_p, Set
 end
