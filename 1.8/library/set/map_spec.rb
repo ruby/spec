@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'set'
+require File.dirname(__FILE__) + '/shared/collect'
 
 describe "Set#map!" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it_behaves_like :set_collect_bang, :map!
 end
