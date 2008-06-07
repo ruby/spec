@@ -55,6 +55,20 @@ describe "Array#flatten" do
     y << x
     lambda { x.flatten }.should raise_error(ArgumentError)
   end
+
+  it "flattens any element which responds to #to_ary, using the return value of said method" do
+    x = mock("[3,4]")
+    x.should_receive(:to_ary).at_least(:once).and_return([3, 4])
+    [1, 2, x, 5].flatten.should == [1, 2, 3, 4, 5]
+
+    y = mock("MyArray[]")
+    y.should_receive(:to_ary).at_least(:once).and_return(ArraySpecs::MyArray[])
+    [y].flatten.should == []
+
+    z = mock("[2,x,y,5]")
+    z.should_receive(:to_ary).and_return([2, x, y, 5])
+    [1, z, 6].flatten.should == [1, 2, 3, 4, 5, 6]
+  end
   
   it "returns subclass instance for Array subclasses" do
     ArraySpecs::MyArray[].flatten.class.should == ArraySpecs::MyArray
