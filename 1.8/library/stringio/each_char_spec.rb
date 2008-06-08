@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/fixtures/classes'
+require 'stringio'
 
-describe "StringIO#closed_read?" do
+describe "StringIO#each_char" do
   it "needs to be reviewed for spec completeness" do
   end
 end
