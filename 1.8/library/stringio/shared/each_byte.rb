@@ -14,11 +14,24 @@ shared :stringio_each_byte do |cmd|
       it "returns nil" do
         @io.send(cmd) {}.should be_nil
       end
+      
+      it "yields a LocalJumpError when passed no block" do
+        lambda { @io.send(cmd) }.should raise_error(LocalJumpError)
+      end
     end
 
     ruby_version_is "1.8.7" do
       it "returns self" do
         @io.send(cmd) {}.should equal(@io)
+      end
+
+      it "returns an Enumerator when passed no block" do
+        enum = @io.send(cmd)
+        enum.instance_of?(Enumerable::Enumerator).should be_true
+        
+        seen = []
+        enum.each { |b| seen << b }
+        seen.should == [120, 121, 122]
       end
     end
 
