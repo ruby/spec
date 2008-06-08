@@ -10,7 +10,7 @@ describe "Set#divide" do
   it "yields each Object to the block" do
     ret = []
     Set["one", "two", "three", "four", "five"].divide { |x| ret << x }
-    ret.sort.should == ["one", "two", "three", "four", "five"].sort
+    ret.sort.should == ["five", "four", "one", "three", "two"]
   end
   
   # BUG: Does not raise a LocalJumpError, but a NoMethodError
@@ -23,7 +23,7 @@ end
 describe "Set#divide when passed a block with an arity of 2" do
   it "divides self into a set of subsets based on the blocks return values" do
     set = Set[1, 3, 4, 6, 9, 10, 11].divide { |x, y| (x - y).abs == 1 }
-    set.map{ |x| x.to_a }.sort.should == [[1], [11, 9, 10], [3, 4], [6]].sort
+    set.map{ |x| x.to_a.sort }.sort.should == [[1], [3, 4], [6], [9, 10, 11]]
   end
   
   it "yields each two Object to the block" do
