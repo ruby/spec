@@ -34,10 +34,16 @@ shared :stringio_each_byte do |cmd|
         seen.should == [120, 121, 122]
       end
     end
+  end
+  
+  describe "StringIO##{cmd} when in write-only mode" do
+    it "raises an IOError" do
+      io = StringIO.new("xyz", "w")
+      lambda { io.send(cmd) { |b| b } }.should raise_error(IOError)
 
-    it "raises an IOError unless the IO is open for reading" do
-      @io.close_read
-      lambda { @io.send(cmd) {|b| b } }.should raise_error(IOError)
+      io = StringIO.new("xyz")
+      io.close_read
+      lambda { io.send(cmd) { |b| b } }.should raise_error(IOError)
     end
   end
 end
