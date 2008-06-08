@@ -2,11 +2,11 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'set'
 
 describe "Set#inspect" do
-  it "returns a human readable representation of self" do
-    Set[].inspect.should == "#<Set: {}>"
-    Set[nil, false, true].inspect.should == "#<Set: {false, true, nil}>"
-    Set[1, 2, 3].inspect.should == "#<Set: {1, 2, 3}>"
-    Set["1", "2", "3"].inspect.should == %q{#<Set: {"1", "2", "3"}>}
-    Set[:a, "b", Set[?c]].inspect.should == %q{#<Set: {:a, "b", #<Set: {99}>}>}
+  it "returns a String representation of self" do
+    Set[].inspect.should be_kind_of(String)
+    Set[nil, false, true].inspect.should be_kind_of(String)
+    Set[1, 2, 3].inspect.should be_kind_of(String)
+    Set["1", "2", "3"].inspect.should be_kind_of(String)
+    Set[:a, "b", Set[?c]].inspect.should be_kind_of(String)
   end
 end
