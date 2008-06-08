@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'stringio'
+require File.dirname(__FILE__) + "/shared/each_byte"
 
 describe "StringIO#bytes" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it_behaves_like :stringio_each_byte, :bytes
 end
