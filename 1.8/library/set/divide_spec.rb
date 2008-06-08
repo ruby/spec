@@ -4,7 +4,7 @@ require 'set'
 describe "Set#divide" do
   it "divides self into a set of subsets based on the blocks return values" do
     set = Set["one", "two", "three", "four", "five"].divide { |x| x.length }
-    set.map{ |x| x.to_a.sort }.sort.should == [["five", "four"], ["one", "two"], ["three"]]
+    set.map { |x| x.to_a.sort }.sort.should == [["five", "four"], ["one", "two"], ["three"]]
   end
   
   it "yields each Object to the block" do
