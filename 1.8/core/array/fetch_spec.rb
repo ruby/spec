@@ -41,12 +41,9 @@ describe "Array#fetch" do
   end
 
   it "tries to convert the passed argument to an Integer using #to_int" do
-    a = ["a", "b", "c"]
-    a.at(0.5).should == "a"
-  
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(2)
-    a.fetch(obj).should == "c"
+    ["a", "b", "c"].fetch(obj).should == "c"
   end
   
   ruby_version_is "" ... "1.8.7" do
