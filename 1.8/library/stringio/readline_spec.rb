@@ -18,7 +18,7 @@ describe "StringIO#readline" do
 
     @io_para.readline("")
     @io_para.readline("")
-    lambda { @io.readline }.should raise_error(EOFError)
+    lambda { @io_para.readline("") }.should raise_error(EOFError)
 
     lambda {@io_empty_lines.readline("")}.should raise_error(EOFError)
   end
