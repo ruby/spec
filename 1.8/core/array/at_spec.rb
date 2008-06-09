@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Array#at" do
-  it "returns the element at index" do
+  it "returns the element at the passed index" do
     a = [1, 2, 3, 4, 5, 6]
     a.at(0).should  == 1
     a.at(-2).should == 5
