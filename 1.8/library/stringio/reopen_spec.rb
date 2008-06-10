@@ -45,6 +45,7 @@ describe "StringIO#reopen" do
       @io = StringIO.new("ice")
       lambda { @io.reopen("burn".freeze, 'w') }.should raise_error(Errno::EACCES)
       lambda { @io.reopen("burn".freeze, 'a') }.should raise_error(Errno::EACCES)
+      lambda { @io.reopen("burn".freeze, IO::TRUNC) }.should raise_error(TypeError)
     end
 
     it "does not raise IOError if a frozen string is passed in read mode" do
@@ -74,5 +75,27 @@ describe "StringIO#reopen" do
     @io.reopen(nio)
     @io.closed?.should == false
     @io.string.should == 'goodbye'
+  end
+  
+  it "obtains the position and lineno from the given StringIO argument" do
+    nio = StringIO.new("one\n\two\n\three")
+    nio.gets; nio.gets
+    new_pos = nio.pos
+    new_lineno = nio.lineno
+
+    @io.reopen(nio)
+    @io.pos.should == new_pos
+    @io.lineno.should == new_lineno
+  end
+
+  it "does not change the position and the lineno if the first argument is not a StringIO" do
+    io = StringIO.new("one\ntwo\nthree\n")
+    io.gets
+    orig_pos = io.pos
+    orig_lineno = io.lineno
+
+    io.reopen("1")
+    io.pos.should == orig_pos
+    io.lineno.should == orig_lineno
   end
 end
