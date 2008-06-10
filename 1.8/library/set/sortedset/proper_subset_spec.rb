@@ -9,7 +9,7 @@ describe "SortedSet#proper_subset?" do
   it "returns true if passed a SortedSet that self is a proper subset of" do
     SortedSet[].proper_subset?(@set).should be_true
     SortedSet[].proper_subset?(SortedSet[1, 2, 3]).should be_true
-    SortedSet[].proper_subset?(SortedSet["a", :b, ?c]).should be_true
+    SortedSet[].proper_subset?(SortedSet["a", "b", "c"]).should be_true
 
     SortedSet[1, 2, 3].proper_subset?(@set).should be_true
     SortedSet[1, 3].proper_subset?(@set).should be_true
@@ -18,7 +18,6 @@ describe "SortedSet#proper_subset?" do
     
     SortedSet[5].proper_subset?(@set).should be_false
     SortedSet[1, 5].proper_subset?(@set).should be_false
-    SortedSet[nil].proper_subset?(@set).should be_false
     SortedSet["test"].proper_subset?(@set).should be_false
     
     @set.proper_subset?(@set).should be_false

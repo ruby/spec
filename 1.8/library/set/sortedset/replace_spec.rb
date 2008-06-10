@@ -3,7 +3,7 @@ require 'set'
 
 describe "SortedSet#replace" do
   before :each do
-    @set = SortedSet[:a, :b, :c]
+    @set = SortedSet["a", "b", "c"]
   end
   
   it "replaces the contents with other and returns self" do

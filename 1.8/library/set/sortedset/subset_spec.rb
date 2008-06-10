@@ -12,7 +12,7 @@ describe "SortedSet#subset?" do
 
     SortedSet[].subset?(@set).should be_true
     SortedSet[].subset?(SortedSet[1, 2, 3]).should be_true
-    SortedSet[].subset?(SortedSet["a", :b, ?c]).should be_true
+    SortedSet[].subset?(SortedSet["a", "b", "c"]).should be_true
 
     SortedSet[1, 2, 3].subset?(@set).should be_true
     SortedSet[1, 3].subset?(@set).should be_true
@@ -21,7 +21,6 @@ describe "SortedSet#subset?" do
     
     SortedSet[5].subset?(@set).should be_false
     SortedSet[1, 5].subset?(@set).should be_false
-    SortedSet[nil].subset?(@set).should be_false
     SortedSet["test"].subset?(@set).should be_false
   end
   

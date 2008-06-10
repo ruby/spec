@@ -11,11 +11,6 @@ describe "SortedSet#flatten" do
       flattened_set.should == SortedSet[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     end
   end
-  
-  it "raises an ArgumentError when self is recursive" do
-    (set = SortedSet[]) << set
-    lambda { set.flatten }.should raise_error(ArgumentError)
-  end
 end
 
 describe "SortedSet#flatten!" do
@@ -35,10 +30,5 @@ describe "SortedSet#flatten!" do
   it "returns nil when self was not modified" do
     set = SortedSet[1, 2, 3, 4]
     set.flatten!.should be_nil
-  end
-  
-  it "raises an ArgumentError when self is recursive" do
-    (set = SortedSet[]) << set
-    lambda { set.flatten! }.should raise_error(ArgumentError)
   end
 end

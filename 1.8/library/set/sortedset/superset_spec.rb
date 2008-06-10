@@ -12,7 +12,7 @@ describe "SortedSet#superset?" do
 
     @set.superset?(SortedSet[]).should be_true
     SortedSet[1, 2, 3].superset?(SortedSet[]).should be_true
-    SortedSet["a", :b, ?c].superset?(SortedSet[]).should be_true
+    SortedSet["a", "b", "c"].superset?(SortedSet[]).should be_true
 
     @set.superset?(SortedSet[1, 2, 3]).should be_true
     @set.superset?(SortedSet[1, 3]).should be_true
@@ -21,7 +21,6 @@ describe "SortedSet#superset?" do
     
     @set.superset?(SortedSet[5]).should be_false
     @set.superset?(SortedSet[1, 5]).should be_false
-    @set.superset?(SortedSet[nil]).should be_false
     @set.superset?(SortedSet["test"]).should be_false
   end
   

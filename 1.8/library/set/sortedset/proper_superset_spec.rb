@@ -9,7 +9,7 @@ describe "SortedSet#proper_superset?" do
   it "returns true if passed a SortedSet that self is a proper superset of" do
     @set.proper_superset?(SortedSet[]).should be_true
     SortedSet[1, 2, 3].proper_superset?(SortedSet[]).should be_true
-    SortedSet["a", :b, ?c].proper_superset?(SortedSet[]).should be_true
+    SortedSet["a", "b", "c"].proper_superset?(SortedSet[]).should be_true
 
     @set.proper_superset?(SortedSet[1, 2, 3]).should be_true
     @set.proper_superset?(SortedSet[1, 3]).should be_true
@@ -18,7 +18,6 @@ describe "SortedSet#proper_superset?" do
     
     @set.proper_superset?(SortedSet[5]).should be_false
     @set.proper_superset?(SortedSet[1, 5]).should be_false
-    @set.proper_superset?(SortedSet[nil]).should be_false
     @set.proper_superset?(SortedSet["test"]).should be_false
     
     @set.proper_superset?(@set).should be_false

@@ -6,7 +6,7 @@ shared :sorted_set_collect_bang do |cmd|
 
     it "yields each Object in self in sorted order" do
       res = []
-      SortedSet["one", "two", "three"].send(cmd) { |x| res << x }
+      SortedSet["one", "two", "three"].send(cmd) { |x| res << x; x }
       res.should == ["one", "two", "three"].sort
     end
 
