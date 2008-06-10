@@ -11,6 +11,24 @@ describe "Redefining a method" do
   end
 end
 
+describe "An instance method definition" do
+  it "for 'initialize' mothod defines it as private" do
+    class DefInitializeSpec
+      def initialize
+      end
+    end
+    DefInitializeSpec.new.private_methods(false).should include('initialize')
+  end
+
+  it "for 'initialize_copy' method defines it as private" do
+    class DefInitializeCopySpec
+      def initialize_copy
+      end
+    end
+    DefInitializeCopySpec.new.private_methods(false).should include('initialize_copy')
+  end
+end
+
 describe "An instance method definition with a splat" do
   it "accepts an unnamed '*' argument" do
     def foo(*); end;
