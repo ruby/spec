@@ -17,4 +17,13 @@ describe "StringIO#truncate" do
     @io.truncate(3)
     @io.pos.should == 5
   end
+
+  it "raises an Errno::EINVAL if the length argument is negative" do
+    lambda { @io.truncate(-1)  }.should raise_error(Errno::EINVAL)
+  end
+
+  it "can grow a string to a larger size than the original size" do
+    @io.truncate(12)
+    @io.string.should == "123456789\000\000\000"
+  end
 end

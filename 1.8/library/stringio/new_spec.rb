@@ -35,4 +35,20 @@ describe "StringIO.new" do
     io.write('!')
     io.string.class.should == StringSubclass
   end
+
+  it "raises EACCES if the provided string is frozen and the mode is writable" do
+    modes = ["w", "w+", "a", "a+", IO::WRONLY, IO::RDWR]
+
+    modes.each {|mode|
+      lambda {
+        StringIO.new("".freeze, mode)
+      }.should raise_error(Errno::EACCES, /Permission denied/)
+    }
+  end
+
+  it "raises TypeError if the provided string is frozen and the mode is truncate" do
+    lambda {
+      StringIO.new("".freeze, IO::TRUNC)
+    }.should raise_error(TypeError, "can't modify frozen string")
+  end
 end
