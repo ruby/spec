@@ -21,7 +21,7 @@ describe "StringIO#initialize_copy" do
     @io.send(:initialize_copy, obj)
     @io.string.should == "converted"
   end
-  
+
   it "copies the passed StringIO's content to self" do
     @io.send(:initialize_copy, @orig_io)
     @io.string.should == "Original StringIO"
@@ -32,10 +32,19 @@ describe "StringIO#initialize_copy" do
     @io.send(:initialize_copy, @orig_io)
     @io.pos.should eql(5)
   end
-  
+
   it "taints self when the passed StringIO is tainted" do
     @orig_io.taint
     @io.send(:initialize_copy, @orig_io)
     @io.tainted?.should be_true
   end
+
+  it "does not truncate the content even when the StringIO argument is in the truncate mode" do
+    @orig_io = StringIO.new("Original StringIO", IO::RDWR|IO::TRUNC)
+    @orig_io.write("BLAH") # make sure the content is not empty
+
+    @io.send(:initialize_copy, @orig_io)
+    @io.string.should == "BLAH"
+  end
+  
 end

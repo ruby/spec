@@ -98,4 +98,20 @@ describe "StringIO#reopen" do
     io.pos.should == orig_pos
     io.lineno.should == orig_lineno
   end
+
+  it "taints self if the provided StringIO argument is tainted" do
+    new_io = StringIO.new("tainted")
+    new_io.taint
+    @io.reopen(new_io)
+    @io.tainted?.should == true
+  end
+
+  it "does not truncate the content even when the StringIO argument is in the truncate mode" do
+    orig_io = StringIO.new("Original StringIO", IO::RDWR|IO::TRUNC)
+    orig_io.write("BLAH") # make sure the content is not empty
+
+    @io.reopen(orig_io)
+    @io.string.should == "BLAH"
+  end
+
 end
