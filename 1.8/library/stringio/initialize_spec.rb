@@ -17,21 +17,6 @@ describe "StringIO#initialize when passed [Object, Integer]" do
     io.send(:initialize, "example", IO::RDWR)
     io.closed_read?.should be_false
     io.closed_write?.should be_false
-
-    io = StringIO.allocate
-    io.send(:initialize, "example", IO::APPEND)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_true
-
-    io = StringIO.allocate
-    io.send(:initialize, "example", IO::CREAT)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_true
-
-    io = StringIO.allocate
-    io.send(:initialize, "example", IO::EXCL)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_true
   end
 end
 
