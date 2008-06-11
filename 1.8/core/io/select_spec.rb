@@ -34,6 +34,16 @@ describe "IO.select" do
     lambda { IO.select(nil, [obj]) }.should raise_error(TypeError)
   end
 
+  it "raises TypeError if the specified timeout value is not Numeric" do
+    lambda { IO.select([@rd], nil, nil, Object.new) }.should raise_error(TypeError)
+  end
+
+  it "raises TypeError if the first three arguments are not Arrays" do
+    lambda { IO.select(Object.new)}.should raise_error(TypeError)
+    lambda { IO.select(nil, Object.new)}.should raise_error(TypeError)
+    lambda { IO.select(nil, nil, Object.new)}.should raise_error(TypeError)
+  end
+
   it "needs to be reviewed for spec completeness" do
   end
 
