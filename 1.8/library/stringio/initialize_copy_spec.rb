@@ -27,9 +27,15 @@ describe "StringIO#initialize_copy" do
     @io.string.should == "Original StringIO"
   end
   
-  it "copes the passed StringIO's position to self" do
+  it "copies the passed StringIO's position to self" do
     @orig_io.pos = 5
     @io.send(:initialize_copy, @orig_io)
     @io.pos.should eql(5)
+  end
+  
+  it "taints self when the passed StringIO is tainted" do
+    @orig_io.taint
+    @io.send(:initialize_copy, @orig_io)
+    @io.tainted?.should be_true
   end
 end
