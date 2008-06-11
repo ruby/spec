@@ -5,14 +5,32 @@ describe "StringIO#gets when passed [Object]" do
   before(:each) do
     @io = StringIO.new("this>is>an>example")
   end
-  
+
+  it "returns the data read till the next occurence of the passed seperator" do
+    @io.gets(">").should == "this>"
+    @io.gets(">").should == "is>"
+    @io.gets(">").should == "an>"
+    @io.gets(">").should == "example"
+  end
+
+  it "updates self's lineno based on the passed seperator" do
+    @io.gets(">")
+    @io.lineno.should eql(1)
+    
+    @io.gets(">")
+    @io.lineno.should eql(2)
+    
+    @io.gets(">")
+    @io.lineno.should eql(3)
+  end
+
   it "tries to convert the passed Object to a String using #to_str" do
     obj = mock('to_str')
     obj.should_receive(:to_str).and_return(">")
     @io.gets(obj).should == "this>"
   end
   
-  it "returns the next paragrah when passed an empty String" do
+  it "returns the next paragraph when passed an empty String" do
     io = StringIO.new("this is\n\nan example")
     io.gets("").should == "this is\n"
     io.gets("").should == "an example"
@@ -56,6 +74,17 @@ describe "StringIO#gets" do
 
     @io.gets
     @io.pos.should eql(36)
+  end
+  
+  it "updates self's lineno" do
+    @io.gets
+    @io.lineno.should eql(1)
+    
+    @io.gets
+    @io.lineno.should eql(2)
+    
+    @io.gets
+    @io.lineno.should eql(3)
   end
   
   it "returns the data read till the next occurence of $/ or till eof" do
