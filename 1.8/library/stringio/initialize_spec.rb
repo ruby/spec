@@ -93,19 +93,16 @@ describe "StringIO#initialize when passed [Object, Object]" do
   # end
 end
 
-describe "StringIO#initialize" do
+describe "StringIO#initialize when passed [Object]" do
   before(:each) do
     @io = StringIO.allocate
   end
   
-  it "is private" do
-    @io.private_methods.should include("initialize")
+  it "uses the passed Object as the StringIO backend" do
+    @io.send(:initialize, "example")
+    @io.string.should == "example"
   end
   
-  it "returns self" do
-    @io.send(:initialize, "example").should equal(@io)
-  end
-
   it "sets the mode to read-write" do
     @io.send(:initialize, "example")
     @io.closed_read?.should be_false
@@ -116,6 +113,7 @@ describe "StringIO#initialize" do
     obj = mock('to_str')
     obj.should_receive(:to_str).and_return("example")
     @io.send(:initialize, obj)
+    @io.string.should == "example"
   end
 
   ruby_version_is "" ... "1.8.7" do
@@ -124,6 +122,7 @@ describe "StringIO#initialize" do
       obj.should_receive(:respond_to?).with(:to_str).and_return(true)
       obj.should_receive(:method_missing).with(:to_str).and_return("example")
       @io.send(:initialize, obj)
+      @io.string.should == "example"
     end
   end
 
@@ -133,6 +132,7 @@ describe "StringIO#initialize" do
       obj.should_receive(:respond_to?).with(:to_str, true).and_return(true)
       obj.should_receive(:method_missing).with(:to_str).and_return("example")
       @io.send(:initialize, obj)
+      @io.string.should == "example"
     end
   end
   
@@ -144,11 +144,30 @@ describe "StringIO#initialize" do
       lambda { @io.send(:initialize, str, "a") }.should raise_error(Errno::EACCES)
     end
     
-    it "automatically sets the mode when passed a frozen string to read-only" do
+    it "automatically sets the mode to read-only when passed a frozen string" do
       (str = "example").freeze
       @io.send(:initialize, str)
       @io.closed_read?.should be_false
       @io.closed_write?.should be_true
     end
+  end
+end
+
+describe "StringIO#initialize" do
+  before(:each) do
+    @io = StringIO.allocate
+  end
+  
+  it "is private" do
+    @io.private_methods.should include("initialize")
+  end
+  
+  it "uses an empty String as the StringIO backend" do
+    @io.send(:initialize)
+    @io.string.should == ""
+  end
+  
+  it "returns self" do
+    @io.send(:initialize).should equal(@io)
   end
 end
