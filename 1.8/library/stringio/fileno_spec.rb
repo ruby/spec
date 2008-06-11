@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "StringIO#fileno" do
   it "is nil" do
-    @io = StringIO.new("nuffin")
-    @io.fileno.should == nil
+    StringIO.new("nuffin").fileno.should be_nil
   end
 end
