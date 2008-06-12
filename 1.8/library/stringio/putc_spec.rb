@@ -25,7 +25,7 @@ describe "StringIO#putc when passed [String]" do
     @io = StringIO.new('example')
   end
   
-  it "overwrites the character after the current position" do
+  it "overwrites the character at the current position" do
     @io.putc("t")
     @io.string.should == "txample"
     
