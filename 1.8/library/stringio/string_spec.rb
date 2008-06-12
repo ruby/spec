@@ -3,10 +3,8 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "StringIO#string" do
   it "returns the underlying string" do
-    str = "hello"
-    @io = StringIO.new(str)
-    @io.string.should == str
-    @io.string.object_id.should == str.object_id
+    io = StringIO.new(str = "hello")
+    io.string.should equal(str)
   end
 end
 
@@ -18,23 +16,18 @@ describe "StringIO#string=" do
   it "changes the underlying string" do
     str = "hello"
     @io.string = str
-    @io.string.should == str
-    @io.string.object_id.should == str.object_id
+    @io.string.should equal(str)
   end
 
   it "resets the position" do
-    @io.read(1)
-    @io.pos.should == 1
+    @io.pos = 1
     @io.string = "other"
-    @io.pos.should == 0
-    @io.read(1).should == 'o'
+    @io.pos.should eql(0)
   end
 
   it "resets the line number" do
-    @io.gets
-    @io.lineno.should == 1
+    @io.lineno = 1
     @io.string = "other"
-    @io.lineno.should == 0
-    @io.gets.should == "other"
+    @io.lineno.should eql(0)
   end
 end
