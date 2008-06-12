@@ -42,7 +42,21 @@ describe "Kernel#caller" do
   # more entries than exist in the array returned.
 end
 
-describe "Kernel.caller" do
-  it "needs to be reviewed for spec completeness" do
+describe "Kernel#caller in a Proc or eval" do
+  it "should return the definition trace of a block when evaluated in a Proc binding" do
+    stack = CallerFixture.caller_of(CallerFixture.block)
+    stack[0].should =~ /caller_fixture1\.rb:4/
+    stack[1].should =~ /caller_fixture1\.rb:4:in `require'/
+  end
+
+  it "should return the definition trace of a Proc" do
+    pr = Proc.new do
+      1 + 1
+      2 + 2
+    end
+
+    stack = CallerFixture.caller_of(CallerFixture.example_proc)
+    stack[0].should =~ /caller_fixture1\.rb:13:in `example_proc'/
+    stack[1].should =~ /caller_fixture1\.rb:13/
   end
 end
