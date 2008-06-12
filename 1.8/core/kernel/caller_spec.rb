@@ -64,7 +64,7 @@ describe "Kernel#caller in a Proc or eval" do
   it "should return the correct definition line for a complex Proc trace" do
     stack = CallerFixture.caller_of(CallerFixture.entry_point)
     stack[0].should =~ /caller_fixture1\.rb:29:in `third'/
-    ruby_bug("#", "1.8.7") do
+    ruby_bug("http://redmine.ruby-lang.org/issues/show/146", "1.8.7") do
       stack[1].should =~ /caller_fixture1\.rb:25:in `second'/
     end
   end
