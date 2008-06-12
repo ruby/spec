@@ -53,7 +53,7 @@ describe "StringIO#puts when passed [Array, ...]" do
     it "checks each Array element whether it responds to #to_ary" do
       obj = mock('method_missing to_ary')
       obj.should_receive(:respond_to?).with(:to_ary).and_return(true)
-      obj.should_receive(:method_missing).with(:to_ary).and_return("to_ary")
+      obj.should_receive(:method_missing).with(:to_ary).and_return(["to_ary"])
       @io.puts([obj])
       @io.string.should == "to_ary\n"
     end
@@ -122,7 +122,7 @@ describe "StringIO#puts when passed [Object, ...]" do
     it "checks each Object whether it responds to #to_ary" do
       obj = mock('method_missing to_ary')
       obj.should_receive(:respond_to?).with(:to_ary).and_return(true)
-      obj.should_receive(:method_missing).with(:to_ary).and_return("to_ary")
+      obj.should_receive(:method_missing).with(:to_ary).and_return(["to_ary"])
       @io.puts(obj)
       @io.string.should == "to_ary\n"
     end
