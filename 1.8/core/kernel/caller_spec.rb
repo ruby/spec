@@ -46,7 +46,7 @@ describe "Kernel#caller in a Proc or eval" do
   it "should return the definition trace of a block when evaluated in a Proc binding" do
     stack = CallerFixture.caller_of(CallerFixture.block)
     stack[0].should =~ /caller_fixture1\.rb:4/
-    stack[1].should =~ /caller_fixture1\.rb:4:in `require'/
+    stack[1].should =~ /caller_fixture1\.rb:4:in `.+'/
   end
 
   it "should return the definition trace of a Proc" do
