@@ -18,6 +18,14 @@ describe "StringIO#initialize when passed [Object, Integer]" do
     io.closed_read?.should be_false
     io.closed_write?.should be_false
   end
+
+  not_compliant_on :rubinius do
+    it "raises a TypeError when passed a frozen string in truncate mode" do
+      (str = "example").freeze
+      io = StringIO.allocate
+      lambda { io.send(:initialize, str, IO::TRUNC) }.should raise_error(TypeError)
+    end
+  end
 end
 
 describe "StringIO#initialize when passed [Object, Object]" do
@@ -136,7 +144,7 @@ describe "StringIO#initialize when passed [Object]" do
     end
   end
   
-  compliant_on :ruby, :jruby do
+  not_compliant_on :rubinius do
     it "raises an Errno::EACCES error when passed a frozen string with a write-mode" do
       (str = "example").freeze
       lambda { @io.send(:initialize, str, "r+") }.should raise_error(Errno::EACCES)
