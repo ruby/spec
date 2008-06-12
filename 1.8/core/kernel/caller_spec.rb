@@ -43,29 +43,48 @@ describe "Kernel#caller" do
 end
 
 describe "Kernel#caller in a Proc or eval" do
-  it "should return the definition trace of a block when evaluated in a Proc binding" do
+  it "returns the definition trace of a block when evaluated in a Proc binding" do
     stack = CallerFixture.caller_of(CallerFixture.block)
     stack[0].should =~ /caller_fixture1\.rb:4/
     stack[1].should =~ /caller_fixture1\.rb:4:in `.+'/
   end
 
-  it "should return the definition trace of a Proc" do
+  it "returns the definition trace of a Proc" do
     stack = CallerFixture.caller_of(CallerFixture.example_proc)
     stack[0].should =~ /caller_fixture1\.rb:14:in `example_proc'/
     stack[1].should =~ /caller_fixture1\.rb:14/
   end
 
-  it "should return the correct caller line from a called Proc" do
+  it "returns the correct caller line from a called Proc" do
     stack = CallerFixture.entry_point.call
     stack[0].should =~ /caller_fixture1\.rb:31:in `third'/
     stack[1].should =~ /caller_spec\.rb:59/
   end
 
-  it "should return the correct definition line for a complex Proc trace" do
+  it "returns the correct definition line for a complex Proc trace" do
     stack = CallerFixture.caller_of(CallerFixture.entry_point)
     stack[0].should =~ /caller_fixture1\.rb:29:in `third'/
     ruby_bug("http://redmine.ruby-lang.org/issues/show/146", "1.8.7") do
       stack[1].should =~ /caller_fixture1\.rb:25:in `second'/
     end
+  end
+
+  it "begins with (eval) for caller(0) in eval" do
+    stack = CallerFixture.eval_caller(0)
+    stack[0].should == "(eval):1:in `eval_caller'"
+    stack[1].should =~ /caller_spec\.rb:73/
+  end
+
+  it "begins with the eval's sender's sender for caller(1) in eval" do
+    stack = CallerFixture.eval_caller(1)
+    stack[0].should =~ /caller_spec\.rb:79/
+  end
+
+  it "shows the current line in the calling block twice when evaled" do
+    stack = CallerFixture.eval_caller(0)
+    stack[0].should == "(eval):1:in `eval_caller'"
+    stack[1].should =~/caller_spec\.rb:84/
+    stack[2].should =~/caller_fixture2\.rb:23/
+    stack[3].should =~/caller_spec\.rb:84/
   end
 end

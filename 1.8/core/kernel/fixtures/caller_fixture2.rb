@@ -18,4 +18,9 @@ module CallerFixture
     eval("caller(0)", block.binding)
   end
   module_function :caller_of
+
+  def eval_caller(depth)
+    eval("caller(#{depth})")
+  end
+  module_function :eval_caller
 end
