@@ -1,17 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "StringIO#print when in read-only mode" do
-  it "raises an IOError" do
-    io = StringIO.new("test", "r")
-    lambda { io.print("test") }.should raise_error(IOError)
-
-    io = StringIO.new("test")
-    io.close_write
-    lambda { io.print("test") }.should raise_error(IOError)
-  end
-end
-
 describe "StringIO#print" do
   before(:each) do
     @io = StringIO.new('')
@@ -54,5 +43,16 @@ describe "StringIO#print" do
     ensure
       $\ = old_rs
     end
+  end
+end
+
+describe "StringIO#print when self is not writable" do
+  it "raises an IOError" do
+    io = StringIO.new("test", "r")
+    lambda { io.print("test") }.should raise_error(IOError)
+
+    io = StringIO.new("test")
+    io.close_write
+    lambda { io.print("test") }.should raise_error(IOError)
   end
 end

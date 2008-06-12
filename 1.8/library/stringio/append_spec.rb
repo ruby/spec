@@ -40,7 +40,7 @@ describe "StringIO#<<" do
   # end
 end
 
-describe "StringIO#<< when in read-only mode" do
+describe "StringIO#<< when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new("test", "r")
     lambda { io << "test" }.should raise_error(IOError)

@@ -1,17 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "StringIO#printf when in read-only mode" do
-  it "raises an IOError" do
-    io = StringIO.new("test", "r")
-    lambda { io.putc(?a) }.should raise_error(IOError)
-
-    io = StringIO.new("test")
-    io.close_write
-    lambda { io.putc("t") }.should raise_error(IOError)
-  end
-end
-
 describe "StringIO#printf when in append mode" do
   it "appends to the end of self" do
     io = StringIO.new("test", "a")
@@ -93,5 +82,16 @@ describe "StringIO#putc when passed [Object]" do
   
   it "raises a TypeError when the passed argument can't be coerced to Integer" do
     lambda { @io.putc(Object.new) }.should raise_error(TypeError)
+  end
+end
+
+describe "StringIO#printf when self is not writable" do
+  it "raises an IOError" do
+    io = StringIO.new("test", "r")
+    lambda { io.putc(?a) }.should raise_error(IOError)
+
+    io = StringIO.new("test")
+    io.close_write
+    lambda { io.putc("t") }.should raise_error(IOError)
   end
 end

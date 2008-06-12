@@ -38,7 +38,7 @@ shared :stringio_getc do |cmd|
     end
   end
 
-  describe "StringIO##{cmd} when in write-only mode" do
+  describe "StringIO##{cmd} when self is not readable" do
     it "raises an IOError" do
       io = StringIO.new("xyz", "w")
       lambda { io.send(cmd) }.should raise_error(IOError)
