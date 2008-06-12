@@ -50,13 +50,22 @@ describe "Kernel#caller in a Proc or eval" do
   end
 
   it "should return the definition trace of a Proc" do
-    pr = Proc.new do
-      1 + 1
-      2 + 2
-    end
-
     stack = CallerFixture.caller_of(CallerFixture.example_proc)
-    stack[0].should =~ /caller_fixture1\.rb:13:in `example_proc'/
-    stack[1].should =~ /caller_fixture1\.rb:13/
+    stack[0].should =~ /caller_fixture1\.rb:14:in `example_proc'/
+    stack[1].should =~ /caller_fixture1\.rb:14/
+  end
+
+  it "should return the correct caller line from a called Proc" do
+    stack = CallerFixture.entry_point.call
+    stack[0].should =~ /caller_fixture1\.rb:31:in `third'/
+    stack[1].should =~ /caller_spec\.rb:59/
+  end
+
+  it "should return the correct definition line for a complex Proc trace" do
+    stack = CallerFixture.caller_of(CallerFixture.entry_point)
+    stack[0].should =~ /caller_fixture1\.rb:29:in `third'/
+    ruby_bug("#", "1.8.7") do
+      stack[1].should =~ /caller_fixture1\.rb:25:in `second'/
+    end
   end
 end
