@@ -6,7 +6,7 @@ describe "StringIO#sysread" do
   it_behaves_like :stringio_read, :sysread
 end
 
-describe "StringIO#read when passed [length]" do
+describe "StringIO#sysread when passed [length]" do
   before(:each) do
     @io = StringIO.new("example")
   end

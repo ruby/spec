@@ -5,7 +5,10 @@ shared :stringio_read do |cmd|
     end
 
     it "returns the passed buffer String" do
-      @io.send(cmd, 7, buffer = "").should equal(buffer)
+      # Note: Rubinius bug:
+      # @io.send(cmd, 7, buffer = "").should equal(buffer)
+      ret = @io.send(cmd, 7, buffer = "")
+      ret.should equal(buffer)
     end
 
     it "reads length bytes and writes them to the buffer String" do
@@ -14,7 +17,7 @@ shared :stringio_read do |cmd|
     end
 
     it "tries to convert the passed buffer Object to a String using #to_str" do
-      obj = mock("to_s")
+      obj = mock("to_str")
       obj.should_receive(:to_str).and_return(buffer = "")
 
       @io.send(cmd, 7, obj)
@@ -46,7 +49,7 @@ shared :stringio_read do |cmd|
     end
 
     not_compliant_on :rubinius do
-      it "raises an error when passed a frozen String" do
+      it "raises an error when passed a frozen String as buffer" do
         lambda { @io.send(cmd, 7, "".freeze) }.should raise_error(TypeError)
       end
     end
@@ -74,13 +77,13 @@ shared :stringio_read do |cmd|
       @io.pos.should eql(7)
     end
 
-    it "tries to convert the passed length Object to an Integer using #to_int" do
+    it "tries to convert the passed length to an Integer using #to_int" do
       obj = mock("to_int")
       obj.should_receive(:to_int).and_return(7)
       @io.send(cmd, obj).should == "example"
     end
 
-    it "raises a TypeError when the passed length Object can't be converted to an Integer" do
+    it "raises a TypeError when the passed length can't be converted to an Integer" do
       lambda { @io.send(cmd, Object.new) }.should raise_error(TypeError)
     end
 
@@ -89,7 +92,7 @@ shared :stringio_read do |cmd|
     end
 
     ruby_version_is "" ... "1.8.7" do
-      it "checks whether the passed buffer Object responds to #to_int" do
+      it "checks whether the passed length Object responds to #to_int" do
         obj = mock('method_missing to_int')
         obj.should_receive(:respond_to?).with(:to_int).and_return(true)
         obj.should_receive(:method_missing).with(:to_int).and_return(7)
@@ -98,7 +101,7 @@ shared :stringio_read do |cmd|
     end
 
     ruby_version_is "1.8.7" do
-      it "checks whether the passed buffer Object responds to #to_int (including private methods)" do
+      it "checks whether the passed length Object responds to #to_int (including private methods)" do
         obj = mock('method_missing to_int')
         obj.should_receive(:respond_to?).with(:to_int, true).and_return(true)
         obj.should_receive(:method_missing).with(:to_int).and_return(7)
@@ -112,7 +115,7 @@ shared :stringio_read do |cmd|
       @io = StringIO.new("example")
     end
 
-    it "reads the whole content from the current position" do
+    it "reads the whole content starting from the current position" do
       @io.send(cmd).should == "example"
 
       @io.pos = 3
@@ -122,13 +125,6 @@ shared :stringio_read do |cmd|
     it "correctly updates the current position" do
       @io.send(cmd)
       @io.pos.should eql(7)
-    end
-
-    ruby_bug "#", "1.8.7.17" do
-      it "returns  when self is at the end" do
-        @io.pos = 7
-        @io.send(cmd).should be_nil
-      end
     end
   end
 

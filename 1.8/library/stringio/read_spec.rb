@@ -20,3 +20,12 @@ describe "StringIO#read when passed [length]" do
     @io.read(0).should == ""
   end
 end
+
+describe "StringIO#read when passed no arguments" do
+  ruby_bug "#", "1.8.7.17" do
+    it "returns nil when self is at the end" do
+      @io.pos = 7
+      @io.send(cmd).should be_nil
+    end
+  end
+end

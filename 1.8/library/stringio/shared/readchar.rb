@@ -24,4 +24,15 @@ shared :stringio_readchar do |cmd|
       lambda { @io.send(cmd) }.should raise_error(EOFError)
     end
   end
+
+  describe "StringIO##{cmd} when self is not readable" do
+    it "raises an IOError" do
+      io = StringIO.new("a b c d e", "w")
+      lambda { io.send(cmd) }.should raise_error(IOError)
+
+      io = StringIO.new("a b c d e")
+      io.close_read
+      lambda { io.send(cmd) }.should raise_error(IOError)
+    end
+  end
 end
