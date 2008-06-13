@@ -49,6 +49,12 @@ describe "YAML.load" do
     YAML.load("[a, b, c]").should == expected
   end
 
+  it "parses start markers" do
+    YAML.load("---\n").should == nil
+    YAML.load("--- ---\n").should == "---"
+    YAML.load("--- abc").should == "abc"
+  end
+
   # Commenting this while we fetch the newest version of RbYAML in Rubinius.
   #   it "loads a symbol key that contains spaces" do
   #     string = ":user name: This is the user name."
