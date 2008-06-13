@@ -42,6 +42,13 @@ describe "YAML.load" do
     YAML.load( "--- :locked" ).should == :locked
   end
 
+  it "accepts collections" do
+    expected = ["a", "b", "c"]
+    YAML.load("--- \n- a\n- b\n- c\n").should == expected
+    YAML.load("--- [a, b, c]").should == expected
+    YAML.load("[a, b, c]").should == expected
+  end
+
   # Commenting this while we fetch the newest version of RbYAML in Rubinius.
   #   it "loads a symbol key that contains spaces" do
   #     string = ":user name: This is the user name."
