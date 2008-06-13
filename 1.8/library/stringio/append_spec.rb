@@ -16,9 +16,16 @@ describe "StringIO#<<" do
   end
   
   it "taints self's String when the passed argument is tainted" do
-    obj = "test"
-    obj.taint
-    (@io << obj).string.tainted?.should be_true
+    (@io << "test".taint).string.tainted?.should be_true
+  end
+  
+  it "does not taint self when the passed argument is tainted" do
+    (@io << "test".taint).tainted?.should be_false
+  end
+  
+  it "updates self's position" do
+    @io << "test"
+    @io.pos.should eql(4)
   end
   
   # NOTE: This IS NOT what Ruby's Core Libs do!
@@ -28,16 +35,6 @@ describe "StringIO#<<" do
     
     (@io << obj).string.should == "Testple"
   end
-
-  # NOTE: This does not work
-  #
-  # it "checks whether the passed argument does respond to #to_s" do
-  #   obj = mock("to_s")
-  #   obj.should_receive(:respond_to?).with(:to_s).and_return(true)
-  #   obj.should_receive(:method_missing).with(:to_s).and_return("Test")
-  #   
-  #   (@io << obj).string#.should == "Testple"
-  # end
 end
 
 describe "StringIO#<< when self is not writable" do
@@ -59,5 +56,10 @@ describe "StringIO#<< when in append mode" do
   it "appends the passed argument to the end of self" do
     (@io << ", just testing").string.should == "example, just testing"
     (@io << " and more testing").string.should == "example, just testing and more testing"
+  end
+  
+  it "correctly updates self's position" do
+    @io << ", testing"
+    @io.pos.should eql(16)
   end
 end
