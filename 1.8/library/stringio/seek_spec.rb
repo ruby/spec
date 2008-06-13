@@ -69,9 +69,11 @@ describe "StringIO#seek" do
 end
 
 describe "StringIO#seek when self is closed" do
-  it "raises an IOError" do
-    io = StringIO.new("example")
-    io.close
-    lambda { io.seek(5) }.should raise_error(IOError)
+  ruby_bug "#", "1.8.6.169" do
+    it "raises an IOError" do
+      io = StringIO.new("example")
+      io.close
+      lambda { io.seek(5) }.should raise_error(IOError)
+    end
   end
 end
