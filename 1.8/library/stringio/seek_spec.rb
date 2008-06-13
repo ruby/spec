@@ -69,11 +69,21 @@ describe "StringIO#seek" do
 end
 
 describe "StringIO#seek when self is closed" do
-  ruby_bug "#", "1.8.6.169" do
+  before(:each) do
+    @io = StringIO.new("example")
+    @io.close
+  end
+  
+  ruby_version_is "" ... "1.8.7" do
+    it "does not raise an IOError" do
+      @io.seek(5)
+      @io.pos.should eql(5)
+    end
+  end
+  
+  ruby_version_is "1.8.7" do
     it "raises an IOError" do
-      io = StringIO.new("example")
-      io.close
-      lambda { io.seek(5) }.should raise_error(IOError)
+      lambda { @io.seek(5) }.should raise_error(IOError)
     end
   end
 end
