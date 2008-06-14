@@ -22,7 +22,25 @@ describe "StringIO#printf" do
     @io.printf("%d %04x", 123, 123)
     @io.pos.should eql(16)
    end
+end
 
+describe "StringIO#printf when in append mode" do
+  before(:each) do
+    @io = StringIO.new("example", "a")
+  end
+
+  it "appends the passed argument to the end of self" do
+    @io.printf("%d %04x", 123, 123)
+    @io.string.should == "example123 007b"
+    
+    @io.printf("%d %04x", 123, 123)
+    @io.string.should == "example123 007b123 007b"
+  end
+
+  it "correctly updates self's position" do
+    @io.printf("%d %04x", 123, 123)
+    @io.pos.should eql(15)
+  end
 end
 
 describe "StringIO#printf when self is not writable" do
