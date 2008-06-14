@@ -178,6 +178,25 @@ describe "StringIO#puts when passed no arguments" do
   end
 end
 
+describe "StringIO#puts when in append mode" do
+  before(:each) do
+    @io = StringIO.new("example", "a")
+  end
+
+  it "appends the passed argument to the end of self" do
+    @io.puts(", just testing")
+    @io.string.should == "example, just testing\n"
+    
+    @io.puts(" and more testing")
+    @io.string.should == "example, just testing\n and more testing\n"
+  end
+
+  it "correctly updates self's position" do
+    @io.puts(", testing")
+    @io.pos.should eql(17)
+  end
+end
+
 describe "StringIO#puts when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new("test", "r")
