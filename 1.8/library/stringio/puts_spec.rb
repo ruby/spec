@@ -178,7 +178,7 @@ describe "StringIO#puts when passed no arguments" do
   end
 end
 
-describe "StringIO#read when self is not writable" do
+describe "StringIO#puts when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new("test", "r")
     lambda { io.puts }.should raise_error(IOError)
