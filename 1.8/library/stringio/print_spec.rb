@@ -46,6 +46,25 @@ describe "StringIO#print" do
   end
 end
 
+describe "StringIO#print when in append mode" do
+  before(:each) do
+    @io = StringIO.new("example", "a")
+  end
+
+  it "appends the passed argument to the end of self" do
+    @io.print(", just testing")
+    @io.string.should == "example, just testing"
+    
+    @io.print(" and more testing")
+    @io.string.should == "example, just testing and more testing"
+  end
+
+  it "correctly updates self's position" do
+    @io.print(", testing")
+    @io.pos.should eql(16)
+  end
+end
+
 describe "StringIO#print when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new("test", "r")
