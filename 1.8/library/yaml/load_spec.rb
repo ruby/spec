@@ -55,10 +55,17 @@ describe "YAML.load" do
     YAML.load("--- abc").should == "abc"
   end
 
-  # Commenting this while we fetch the newest version of RbYAML in Rubinius.
-  #   it "loads a symbol key that contains spaces" do
-  #     string = ":user name: This is the user name."
-  #     expected = { :"user name" => "This is the user name."}
-  #     YAML.load(string).should == expected
-  #   end
+  it "does not escape symbols" do
+    YAML.load("foobar: >= 123").should == { "foobar" => ">= 123"}
+    YAML.load("foobar: |= 567").should == { "foobar" => "|= 567"}
+    YAML.load("--- \n*.rb").should == "*.rb"
+    YAML.load("--- \n&.rb").should == "&.rb"
+  end
+
+  
+  it "loads a symbol key that contains spaces" do
+    string = ":user name: This is the user name."
+    expected = { :"user name" => "This is the user name."}
+       YAML.load(string).should == expected
+  end
 end
