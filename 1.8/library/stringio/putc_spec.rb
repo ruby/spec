@@ -1,14 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "StringIO#printf when in append mode" do
-  it "appends to the end of self" do
-    io = StringIO.new("test", "a")
-    io.putc(?t)
-    io.string.should == "testt"
-  end
-end
-
 describe "StringIO#putc when passed [String]" do
   before(:each) do
     @io = StringIO.new('example')
@@ -85,7 +77,15 @@ describe "StringIO#putc when passed [Object]" do
   end
 end
 
-describe "StringIO#printf when self is not writable" do
+describe "StringIO#putc when in append mode" do
+  it "appends to the end of self" do
+    io = StringIO.new("test", "a")
+    io.putc(?t)
+    io.string.should == "testt"
+  end
+end
+
+describe "StringIO#putc when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new("test", "r")
     lambda { io.putc(?a) }.should raise_error(IOError)
