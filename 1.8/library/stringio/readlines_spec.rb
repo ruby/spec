@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-
 describe "StringIO#readlines when passed [seperator]" do
   before(:each) do
     @io = StringIO.new("this>is>an>example")
