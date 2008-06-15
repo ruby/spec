@@ -71,6 +71,19 @@ describe "StringIO#ungetc when passed [char]" do
   end
 end
 
+describe "StringIO#ungetc when self is not readable" do
+  it "raises an IOError" do
+    io = StringIO.new("test", "w")
+    io.pos = 1
+    lambda { io.ungetc(?A) }.should raise_error(IOError)
+
+    io = StringIO.new("test")
+    io.pos = 1
+    io.close_read
+    lambda { io.ungetc(?A) }.should raise_error(IOError)
+  end
+end
+
 # Note: This is incorrect.
 #
 # describe "StringIO#ungetc when self is not writable" do
