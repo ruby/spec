@@ -1,5 +1,5 @@
 shared :strscan_peek do |cmd|
-  describe "StringScanner#peek" do
+  describe "StringScanner##{cmd}" do
     before :each do
       @s = StringScanner.new('This is a test')
     end
@@ -20,7 +20,7 @@ shared :strscan_peek do |cmd|
       lambda { @s.send(cmd, -2) }.should raise_error(ArgumentError)
     end
 
-    it "raises a RangeError when the passed argument is a BigNum" do
+    it "raises a RangeError when the passed argument is a Bignum" do
       lambda { @s.send(cmd, bignum_value) }.should raise_error(RangeError)
     end
   end

@@ -22,7 +22,7 @@ describe "StringScanner#initialize_copy" do
     @s.pos.should eql(5)
   end
 
-  it "don't taints self when the passed StringScanner is tainted" do
+  it "does not taint self when the passed StringScanner is tainted" do
     @orig_s.taint
     @s.send(:initialize_copy, @orig_s)
     @s.tainted?.should be_false
