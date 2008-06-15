@@ -14,7 +14,13 @@ describe "StringIO#readlines when passed [seperator]" do
     @io.readlines(">")
     @io.lineno.should eql(4)
   end
-  
+
+  it "does not change $_" do
+    $_ = "test"
+    @io.readlines(">")
+    $_.should == "test"
+  end
+
   it "returns an array containing all paragraphs when the passed seperator is an empty String" do
     io = StringIO.new("this is\n\nan example")
     io.readlines("").should == ["this is\n", "an example"]
@@ -75,6 +81,12 @@ describe "StringIO#readlines when passed no argument" do
     @io.lineno.should eql(3)
   end
 
+  it "does not change $_" do
+    $_ = "test"
+    @io.readlines(">")
+    $_.should == "test"
+  end
+  
   it "returns an empty string when self is at the end" do
     @io.pos = 41
     @io.readlines.should == []

@@ -13,6 +13,14 @@ describe "StringIO#readline when passed [seperator]" do
     @io.readline(">").should == "an>"
     @io.readline(">").should == "example"
   end
+  
+  it "does not change $_" do
+    $_ = "test"
+    @io.readline(">")
+    $_.should == "test"
+    @io.readline(">")
+    $_.should == "test"
+  end
 
   it "updates self's lineno by one" do
     @io.readline(">")
@@ -79,7 +87,15 @@ describe "StringIO#readline when passed no argument" do
       $/ = old_sep
     end
   end
-  
+
+  it "does not change $_" do
+    $_ = "test"
+    @io.readline
+    $_.should == "test"
+    @io.readline
+    $_.should == "test"
+  end
+
   it "updates self's position" do
     @io.readline
     @io.pos.should eql(8)

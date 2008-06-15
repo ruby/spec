@@ -13,6 +13,19 @@ describe "StringIO#gets when passed [seperator]" do
     @io.gets(">").should == "example"
   end
 
+  it "sets $_ to the read content" do
+    @io.gets(">")
+    $_.should == "this>"
+    @io.gets(">")
+    $_.should == "is>"
+    @io.gets(">")
+    $_.should == "an>"
+    @io.gets(">")
+    $_.should == "example"
+    @io.gets(">")
+    $_.should be_nil
+  end
+
   it "updates self's lineno by one" do
     @io.gets(">")
     @io.lineno.should eql(1)
@@ -78,7 +91,18 @@ describe "StringIO#gets when passed no argument" do
       $/ = old_sep
     end
   end
-  
+
+  it "sets $_ to the read content" do
+    @io.gets
+    $_.should == "this is\n"
+    @io.gets
+    $_.should == "an example\n"
+    @io.gets
+    $_.should == "for StringIO#gets"
+    @io.gets
+    $_.should be_nil
+  end
+
   it "updates self's position" do
     @io.gets
     @io.pos.should eql(8)
