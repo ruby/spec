@@ -14,7 +14,7 @@ describe "StringIO#readline when passed [seperator]" do
     @io.readline(">").should == "example"
   end
   
-  ruby_bug "#", "1.8.7.17" do
+  ruby_bug "http://redmine.ruby-lang.org/issues/show/159", "1.8.7.17" do
     it "sets $_ to the read content" do
       @io.readline(">")
       $_.should == "this>"
@@ -93,7 +93,7 @@ describe "StringIO#readline when passed no argument" do
     end
   end
 
-  ruby_bug "#", "1.8.7.17" do
+  ruby_bug "http://redmine.ruby-lang.org/issues/show/159", "1.8.7.17" do
     it "sets $_ to the read content" do
       @io.readline
       $_.should == "this is\n"
