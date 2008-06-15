@@ -100,7 +100,7 @@ describe "StringIO#readline when passed no argument" do
       @io.readline
       $_.should == "an example\n"
       @io.readline
-      $_.should == "for StringIO#gets"
+      $_.should == "for StringIO#readline"
     end
   end
 
