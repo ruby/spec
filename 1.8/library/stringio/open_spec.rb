@@ -3,7 +3,8 @@ require 'stringio'
 
 describe "StringIO.open when passed [Object, mode]" do
   it "uses the passed Object as the StringIO backend" do
-    StringIO.open(str = "example", "r").string.should equal(str)
+    io = StringIO.open(str = "example", "r")
+    io.string.should equal(str)
   end
   
   it "yields self to the passed block" do
@@ -137,7 +138,8 @@ end
 
 describe "StringIO.open when passed [Object]" do
   it "uses the passed Object as the StringIO backend" do
-    StringIO.open(str = "example").string.should equal(str)
+    io = StringIO.open(str = "example")
+    io.string.should equal(str)
   end
   
   it "yields self to the passed block" do

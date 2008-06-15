@@ -3,7 +3,8 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "StringIO#string" do
   it "returns the underlying string" do
-    StringIO.new(str = "hello").string.should equal(str)
+    io = StringIO.new(str = "hello")
+    io.string.should equal(str)
   end
 end
 

@@ -9,7 +9,7 @@ describe "StringIO#puts when passed [Array, ...]" do
   it "writes each element of the passed Array to self, seperated by a newline" do
     @io.puts([1, 2, 3, 4])
     @io.string.should == "1\n2\n3\n4\n"
-
+  
     @io.puts([1, 2], [3, 4])
     @io.string.should == "1\n2\n3\n4\n1\n2\n3\n4\n"
   end
@@ -20,7 +20,8 @@ describe "StringIO#puts when passed [Array, ...]" do
   end
   
   it "handles self-recursive arrays correctly" do
-    (ary = [5]) << ary
+    (ary = [5])
+    ary << ary
     @io.puts(ary)
     @io.string.should == "5\n[...]\n"
   end
