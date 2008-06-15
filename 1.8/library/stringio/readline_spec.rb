@@ -14,12 +14,17 @@ describe "StringIO#readline when passed [seperator]" do
     @io.readline(">").should == "example"
   end
   
-  it "does not change $_" do
-    $_ = "test"
-    @io.readline(">")
-    $_.should == "test"
-    @io.readline(">")
-    $_.should == "test"
+  ruby_bug "#", "1.8.7.17" do
+    it "sets $_ to the read content" do
+      @io.readline(">")
+      $_.should == "this>"
+      @io.readline(">")
+      $_.should == "is>"
+      @io.readline(">")
+      $_.should == "an>"
+      @io.readline(">")
+      $_.should == "example"
+    end
   end
 
   it "updates self's lineno by one" do
@@ -88,12 +93,15 @@ describe "StringIO#readline when passed no argument" do
     end
   end
 
-  it "does not change $_" do
-    $_ = "test"
-    @io.readline
-    $_.should == "test"
-    @io.readline
-    $_.should == "test"
+  ruby_bug "#", "1.8.7.17" do
+    it "sets $_ to the read content" do
+      @io.readline
+      $_.should == "this is\n"
+      @io.readline
+      $_.should == "an example\n"
+      @io.readline
+      $_.should == "for StringIO#gets"
+    end
   end
 
   it "updates self's position" do
