@@ -10,6 +10,6 @@ describe "StringScanner#check_until" do
     @s.check_until(/a/).should == "This is a"
     @s.pos.should == 0
     @s.matched.should == "a"
-    @s.check_until(/test/).should == @s.scan_until(/test/)
+    @s.check_until(/test/).should == "This is a test"
   end
 end
