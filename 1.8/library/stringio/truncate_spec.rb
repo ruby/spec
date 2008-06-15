@@ -39,7 +39,7 @@ describe "StringIO#truncate when passed [length]" do
     lambda { @io.truncate(-10) }.should raise_error(Errno::EINVAL)
   end
 
-  it "tries to convert the passed length to an Integer using #to_str" do
+  it "tries to convert the passed length to an Integer using #to_int" do
     obj = mock("to_int")
     obj.should_receive(:to_int).and_return(4)
     
@@ -58,7 +58,7 @@ describe "StringIO#truncate when passed [length]" do
   end
   
   ruby_version_is "" ... "1.8.7" do
-    it "checks whether the passed length responds to #to_str" do
+    it "checks whether the passed length responds to #to_int" do
       obj = mock('method_missing to_int')
       obj.should_receive(:respond_to?).with(:to_int).and_return(true)
       obj.should_receive(:method_missing).with(:to_int).and_return(4)

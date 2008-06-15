@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "StringIO#<<" do
+describe "StringIO#<< when passed [Object]" do
   before(:each) do
     @io = StringIO.new("example")
   end
@@ -11,8 +11,16 @@ describe "StringIO#<<" do
   end
 
   it "writes the passed argument onto self" do
-    (@io << "just testing").string.should == "just testing"
-    (@io << " and more testing").string.should == "just testing and more testing"
+    (@io << "just testing")
+    @io.string.should == "just testing"
+    (@io << " and more testing")
+    @io.string.should == "just testing and more testing"
+  end
+  
+  it "writes the passed argument at the current position" do
+    @io.pos = 5
+    @io << "<test>"
+    @io.string.should == "examp<test>"
   end
   
   it "pads self with \\000 when the current position is after the end" do
@@ -22,11 +30,13 @@ describe "StringIO#<<" do
   end
   
   it "taints self's String when the passed argument is tainted" do
-    (@io << "test".taint).string.tainted?.should be_true
+    (@io << "test".taint)
+    @io.string.tainted?.should be_true
   end
   
   it "does not taint self when the passed argument is tainted" do
-    (@io << "test".taint).tainted?.should be_false
+    (@io << "test".taint)
+    @io.tainted?.should be_false
   end
   
   it "updates self's position" do
@@ -34,7 +44,6 @@ describe "StringIO#<<" do
     @io.pos.should eql(4)
   end
   
-  # NOTE: This IS NOT what Ruby's Core Libs do!
   it "tries to convert the passed argument to a String using #to_s" do
     obj = mock("to_s")
     obj.should_receive(:to_s).and_return("Test")
@@ -59,9 +68,13 @@ describe "StringIO#<< when in append mode" do
     @io = StringIO.new("example", "a")
   end
 
-  it "appends the passed argument to the end of self" do
-    (@io << ", just testing").string.should == "example, just testing"
-    (@io << " and more testing").string.should == "example, just testing and more testing"
+  it "appends the passed argument to the end of self, ignoring current position" do
+    (@io << ", just testing")
+    @io.string.should == "example, just testing"
+    
+    @io.pos = 3
+    (@io << " and more testing")
+    @io.string.should == "example, just testing and more testing"
   end
   
   it "correctly updates self's position" do

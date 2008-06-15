@@ -6,9 +6,21 @@ describe "StringIO#print" do
     @io = StringIO.new('example')
   end
 
+  it "prints 'nil' when passed no arguments" do
+    @io.print
+    @io.string.should == "nilmple"
+  end
+
   it "prints the passed arguments to self" do
     @io.print(5, 6, 7, 8)
     @io.string.should == "5678ple"
+  end
+  
+  it "tries to convert the passed Object to a String using #to_s" do
+    obj = mock("to_s")
+    obj.should_receive(:to_s).and_return("to_s")
+    @io.print(obj)
+    @io.string.should == "to_sple"
   end
   
   it "returns nil" do

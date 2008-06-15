@@ -11,9 +11,9 @@ describe "StringIO#sysread when passed [length]" do
     @io = StringIO.new("example")
   end
   
-  it "raises an IO::EOFError when self's position is at the end" do
+  it "raises an EOFError when self's position is at the end" do
     @io.pos = 7
-    lambda { @io.sysread(10) }.should raise_error(IO::EOFError)
+    lambda { @io.sysread(10) }.should raise_error(EOFError)
   end
 
   ruby_bug "http://redmine.ruby-lang.org/projects/ruby-18/issues/show?id=156", "1.8.7.17" do
