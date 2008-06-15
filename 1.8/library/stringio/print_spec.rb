@@ -6,9 +6,16 @@ describe "StringIO#print" do
     @io = StringIO.new('example')
   end
 
-  it "prints 'nil' when passed no arguments" do
+  it "prints $_ when passed no arguments" do
     @io.print
     @io.string.should == "nilmple"
+    old, $_ = $_, "blah"
+    begin
+      @io.print
+      @io.string.should == "nilblah"
+    ensure
+      $_ = old
+    end
   end
 
   it "prints the passed arguments to self" do
