@@ -3,16 +3,22 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "StringIO#print" do
   before(:each) do
-    @io = StringIO.new('')
+    @io = StringIO.new('example')
   end
 
   it "prints the passed arguments to self" do
     @io.print(5, 6, 7, 8)
-    @io.string.should == "5678"
+    @io.string.should == "5678ple"
   end
   
   it "returns nil" do
     @io.print(1, 2, 3).should be_nil
+  end
+
+  it "pads self with \\000 when the current position is after the end" do
+    @io.pos = 10
+    @io.print(1, 2, 3)
+    @io.string.should == "example\000\000\000123"
   end
 
   it "honors the output record separator global" do
@@ -20,7 +26,7 @@ describe "StringIO#print" do
     
     begin
       @io.print(5, 6, 7, 8)
-      @io.string.should == '5678x'
+      @io.string.should == '5678xle'
     ensure
       $\ = old_rs
     end

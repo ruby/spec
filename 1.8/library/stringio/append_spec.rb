@@ -15,7 +15,7 @@ describe "StringIO#<<" do
     (@io << " and more testing").string.should == "just testing and more testing"
   end
   
-  it "pads with \\000 when the current position is after the end" do
+  it "pads self with \\000 when the current position is after the end" do
     @io.pos = 15
     @io << "just testing"
     @io.string.should == "example\000\000\000\000\000\000\000\000just testing"

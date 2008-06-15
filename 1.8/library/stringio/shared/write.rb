@@ -26,7 +26,7 @@ shared :stringio_write do |cmd|
       @io.string.should == '12x75'
     end
 
-    it "pads with null bytes if the current position is after the end" do
+    it "pads self with \\000 when the current position is after the end" do
       @io.pos = 8
       @io.send(cmd, 'x')
       @io.string.should == "12345\000\000\000x"

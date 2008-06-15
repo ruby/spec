@@ -7,10 +7,51 @@ describe "StringIO.open when passed [Object, mode]" do
     io.string.should equal(str)
   end
   
+  it "returns the blocks return value when yielding" do
+    ret = StringIO.open("example", "r") { :test }
+    ret.should equal(:test)
+  end
+  
   it "yields self to the passed block" do
     io = nil
-    ret = StringIO.open("example", "r") { |strio| io = strio }
-    io.should equal(ret)
+    StringIO.open("example", "r") { |strio| io = strio }
+    io.should be_kind_of(StringIO)
+  end
+  
+  it "closes self after yielding" do
+    io = nil
+    StringIO.open("example", "r") { |strio| io = strio }
+    io.closed?.should be_true
+  end
+  
+  it "even closes self when an exception is raised while yielding" do
+    io = nil
+    begin
+      StringIO.open("example", "r") do |strio|
+        io = strio
+        raise "Error"
+      end
+    rescue
+    end
+    io.closed?.should be_true
+  end
+
+  it "sets self's string to nil after yielding" do
+    io = nil
+    StringIO.open("example", "r") { |strio| io = strio }
+    io.string.should be_nil
+  end
+
+  it "even sets self's string to nil when an exception is raised while yielding" do
+    io = nil
+    begin
+      StringIO.open("example", "r") do |strio|
+        io = strio
+        raise "Error"
+      end
+    rescue
+    end
+    io.string.should be_nil
   end
 
   it "sets the mode based on the passed mode" do

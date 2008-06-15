@@ -45,6 +45,12 @@ describe "StringIO#putc when passed [Object]" do
     @io.string.should == "M>ample"
   end
 
+  it "pads self with \\000 when the current position is after the end" do
+    @io.pos = 10
+    @io.putc(?A)
+    @io.string.should == "example\000\000\000A"
+  end
+
   it "tries to convert the passed argument to an Integer using #to_int" do
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(?t)

@@ -3,11 +3,17 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "StringIO#printf" do
   before(:each) do
-    @io = StringIO.new('')
+    @io = StringIO.new('example')
   end
 
   it "returns nil" do
     @io.printf("%d %04x", 123, 123).should be_nil
+  end
+
+  it "pads self with \\000 when the current position is after the end" do
+    @io.pos = 10
+    @io.printf("%d", 123)
+    @io.string.should == "example\000\000\000123"
   end
 
   it "performs format conversion" do
