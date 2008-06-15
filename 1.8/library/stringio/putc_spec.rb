@@ -19,6 +19,11 @@ describe "StringIO#putc when passed [String]" do
     @io.putc("test")
     @io.string.should == "txample"
   end
+  
+  it "returns the passed String" do
+    str = "test"
+    @io.putc(str).should equal(str)
+  end
 
   it "correctly updates the current position" do
     @io.putc("t")
