@@ -29,7 +29,7 @@ describe "StringIO#putc when passed [String]" do
     @io.putc("t")
     @io.pos.should == 1
     
-    @io.putc("t")
+    @io.putc("test")
     @io.pos.should == 2
     
     @io.putc("t")
