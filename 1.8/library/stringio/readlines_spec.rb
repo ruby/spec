@@ -6,11 +6,16 @@ describe "StringIO#readlines when passed [seperator]" do
     @io = StringIO.new("this>is>an>example")
   end
 
-  it "returns an array containing lines based on the passed seperator" do
+  it "returns an Array containing lines based on the passed seperator" do
     @io.readlines(">").should == ["this>", "is>", "an>", "example"]
   end
 
-  it "updates self's lineno" do
+  it "updates self's position based on the number of read bytes" do
+    @io.readlines(">")
+    @io.pos.should eql(18)
+  end
+
+  it "updates self's lineno based on the number of read lines" do
     @io.readlines(">")
     @io.lineno.should eql(4)
   end
@@ -21,7 +26,7 @@ describe "StringIO#readlines when passed [seperator]" do
     $_.should == "test"
   end
 
-  it "returns an array containing all paragraphs when the passed seperator is an empty String" do
+  it "returns an Array containing all paragraphs when the passed seperator is an empty String" do
     io = StringIO.new("this is\n\nan example")
     io.readlines("").should == ["this is\n", "an example"]
   end
@@ -62,7 +67,7 @@ describe "StringIO#readlines when passed no argument" do
     @io = StringIO.new("this is\nan example\nfor StringIO#readlines")
   end
   
-  it "returns an array containing lines based on $/" do
+  it "returns an Array containing lines based on $/" do
     begin
       old_sep, $/ = $/, " "
       @io.readlines.should == ["this ", "is\nan ", "example\nfor ", "StringIO#readlines"]
@@ -71,12 +76,12 @@ describe "StringIO#readlines when passed no argument" do
     end
   end
   
-  it "updates self's position" do
+  it "updates self's position based on the number of read bytes" do
     @io.readlines
     @io.pos.should eql(41)
   end
   
-  it "updates self's lineno" do
+  it "updates self's lineno based on the number of read lines" do
     @io.readlines
     @io.lineno.should eql(3)
   end
@@ -87,7 +92,7 @@ describe "StringIO#readlines when passed no argument" do
     $_.should == "test"
   end
   
-  it "returns an empty string when self is at the end" do
+  it "returns an empty Array when self is at the end" do
     @io.pos = 41
     @io.readlines.should == []
   end
