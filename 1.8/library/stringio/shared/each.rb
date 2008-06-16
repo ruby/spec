@@ -9,6 +9,12 @@ shared :stringio_each do |cmd|
       @io.send(cmd, " ") {|s| seen << s}
       seen.should == ["a ", "b ", "c ", "d ", "e\n1 ", "2 ", "3 ", "4 ", "5"]
     end
+    
+    it "does not change $_" do
+      $_ = "test"
+      @io.send(cmd, " ") { |s| s}
+      $_.should == "test"
+    end
 
     it "returns self" do
       @io.send(cmd) {|l| l }.should equal(@io)
@@ -80,7 +86,13 @@ shared :stringio_each do |cmd|
       @io.send(cmd) {|s| seen << s }
       seen.should == ["c d e\n", "1 2 3 4 5"]
     end
-    
+
+    it "does not change $_" do
+      $_ = "test"
+      @io.send(cmd) { |s| s}
+      $_.should == "test"
+    end
+
     it "uses $/ as the default line seperator" do
       seen = []
       begin
