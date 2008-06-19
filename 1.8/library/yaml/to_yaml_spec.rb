@@ -66,4 +66,9 @@ describe "Object#to_yaml" do
     true_klass.should be_kind_of(TrueClass)
     true_klass.to_yaml.should == "--- true\n"
   end  
+
+  it "returns the YAML representation of an array of hashes" do
+    players = [{"a" => "b"}, {"b" => "c"}]
+    players.to_yaml.should == "--- \n- a: b\n- b: c\n"
+  end
 end
