@@ -110,10 +110,24 @@ describe "Array#slice!" do
     a.slice!(from .. to).should == [2, 3, 4]
   end
 
-  # TODO: MRI behaves inconsistently here. I'm trying to find out what it should
-  # do at ruby-core right now. -- flgr
-  # See http://groups.google.com/group/ruby-core-google/t/af70e3d0e9b82f39
-  ruby_bug "", "1.8.6.222" do
+  ruby_version_is "" ... "1.8.7" do
+    # See http://groups.google.com/group/ruby-core-google/t/af70e3d0e9b82f39
+    it "expands self when indices are out of bounds" do
+      a = [1, 2]
+      a.slice!(4).should == nil
+      a.should == [1, 2]
+      a.slice!(4, 0).should == nil
+      a.should == [1, 2, nil, nil]
+      a.slice!(6, 1).should == nil
+      a.should == [1, 2, nil, nil, nil, nil]
+      a.slice!(8...8).should == nil
+      a.should == [1, 2, nil, nil, nil, nil, nil, nil]
+      a.slice!(10..10).should == nil
+      a.should == [1, 2, nil, nil, nil, nil, nil, nil, nil, nil]
+    end
+  end
+
+  ruby_version_is "1.8.7" do
     it "does not expand array with indices out of bounds" do
       a = [1, 2]
       a.slice!(4).should == nil
