@@ -20,4 +20,16 @@ describe "YAML.dump" do
   it "returns the same string that #to_yaml on objects" do
     ["a", "b", "c"].to_yaml.should == YAML.dump(["a", "b", "c"])
   end
+
+  it "dumps strings into YAML strings" do
+    YAML.dump("str").should == "--- str\n"
+  end
+
+  it "dumps hashes into YAML key-values" do
+    YAML.dump({ "a" => "b" }).should ==  "--- \na: b\n"
+  end
+
+  it "dumps Arrays into YAML collection" do
+    YAML.dump(["a", "b", "c"]).should == "--- \n- a\n- b\n- c\n"
+  end
 end

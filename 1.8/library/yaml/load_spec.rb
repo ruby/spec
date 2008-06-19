@@ -34,13 +34,17 @@ describe "YAML.load" do
     end
   end  
 
-  it "does not return a hash on empty strings" do
-    YAML.load("").should_not be_kind_of(Hash)
-    YAML.load("# nothing\n# still nothing").should_not be_kind_of(Hash)
+  it "fails on invalid keys" do
+    lambda { YAML.load("key1: value\ninvalid_key") }.should raise_error(ArgumentError)
   end
 
   it "accepts symbols" do
     YAML.load( "--- :locked" ).should == :locked
+  end
+
+  it "accepts numbers" do
+    YAML.load("47").should == 47
+    YAML.load("-1").should == -1
   end
 
   it "accepts collections" do
