@@ -22,3 +22,15 @@ $to_yaml_hash =
   hr: 63
   name: Sammy Sosa
 EOY
+
+$multidocument = <<EOY
+---
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
+
+# Team ranking
+---
+- Chicago Cubs
+- St Louis Cardinals
+EOY
