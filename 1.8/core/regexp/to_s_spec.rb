@@ -6,5 +6,6 @@ describe "Regexp#to_s" do
     /xyz/.to_s.should == "(?-mix:xyz)"
     /jis/s.to_s.should == "(?-mix:jis)"
     /(?=5)/.to_s.should == "(?-mix:(?=5))"
+    /(?:.)/.to_s.should == "(?-mix:.)"
   end
 end
