@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require 'tempfile'
+require File.dirname(__FILE__) + "/shared/length"
 
 describe "Tempfile#length" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it_behaves_like :tempfile_length, :length
 end
