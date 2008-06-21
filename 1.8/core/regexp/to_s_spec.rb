@@ -31,11 +31,19 @@ describe "Regexp#to_s" do
     /(?i:nothing outside this group)/.to_s.should == "(?i-mx:nothing outside this group)"
   end
 
+  it "deals properly with uncaptured groups" do
+    /whatever(?:0d)/ix.to_s.should == "(?ix-m:whatever(?:0d))"
+  end
+
+  it "deals properly with the two types of lookahead groups" do
+    /(?=5)/.to_s.should == "(?-mix:(?=5))"
+    /(?!5)/.to_s.should == "(?-mix:(?!5))"
+  end
+
   it "returns a string in (?xxx:yyy) notation" do
     /ab+c/ix.to_s.should == "(?ix-m:ab+c)"
     /jis/s.to_s.should == "(?-mix:jis)"
     /(?i:.)/.to_s.should == "(?i-mx:.)"
     /(?:.)/.to_s.should == "(?-mix:.)"
-    /(?=5)/.to_s.should == "(?-mix:(?=5))"
   end
 end
