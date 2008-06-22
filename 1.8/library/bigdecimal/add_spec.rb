@@ -1,4 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/fixtures/classes'
+
 require 'bigdecimal'
 
 describe "BigDecimal#add" do
@@ -71,6 +73,54 @@ describe "BigDecimal#add" do
 #    BigDecimal("0.88").add(0.0, 1).should == BigDecimal("0.9")
 #  end
 
+  it "favors the precision specified in the second argument over the global limit" do
+    BigDecimalSpecs::with_limit(1) do
+      BigDecimal('0.888').add(@zero, 3).should == BigDecimal('0.888')
+    end
+
+    BigDecimalSpecs::with_limit(2) do
+      BigDecimal('0.888').add(@zero, 1).should == BigDecimal('0.9')
+    end
+  end
+
+  it "uses the current rounding mode if rounding is needed" do
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_UP) do
+      BigDecimal('0.111').add(@zero, 1).should == BigDecimal('0.2')
+      BigDecimal('-0.111').add(@zero, 1).should == BigDecimal('-0.2')
+    end
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_DOWN) do
+      BigDecimal('0.999').add(@zero, 1).should == BigDecimal('0.9')
+      BigDecimal('-0.999').add(@zero, 1).should == BigDecimal('-0.9')
+    end
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_HALF_UP) do
+      BigDecimal('0.85').add(@zero, 1).should == BigDecimal('0.9')
+      BigDecimal('-0.85').add(@zero, 1).should == BigDecimal('-0.9')
+    end
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_HALF_DOWN) do
+      BigDecimal('0.85').add(@zero, 1).should == BigDecimal('0.8')
+      BigDecimal('-0.85').add(@zero, 1).should == BigDecimal('-0.8')
+    end
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_HALF_EVEN) do
+      BigDecimal('0.75').add(@zero, 1).should == BigDecimal('0.8')
+      BigDecimal('0.85').add(@zero, 1).should == BigDecimal('0.8')
+      BigDecimal('-0.75').add(@zero, 1).should == BigDecimal('-0.8')
+      BigDecimal('-0.85').add(@zero, 1).should == BigDecimal('-0.8')
+    end
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_CEILING) do
+      BigDecimal('0.85').add(@zero, 1).should == BigDecimal('0.9')
+      BigDecimal('-0.85').add(@zero, 1).should == BigDecimal('-0.8')
+    end
+    BigDecimalSpecs::with_rounding(BigDecimal::ROUND_FLOOR) do
+      BigDecimal('0.85').add(@zero, 1).should == BigDecimal('0.8')
+      BigDecimal('-0.85').add(@zero, 1).should == BigDecimal('-0.9')
+    end
+  end
+
+  it "uses the default ROUND_HALF_UP rounding if it wasn't explicitly changed" do
+    BigDecimal('0.85').add(@zero, 1).should == BigDecimal('0.9')
+    BigDecimal('-0.85').add(@zero, 1).should == BigDecimal('-0.9')
+  end
+
   it "returns NaN if NaN is involved" do
     @one.add(@nan, 10000).nan?.should == true
     @nan.add(@one, 1).nan?.should == true
@@ -109,6 +159,9 @@ describe "BigDecimal#add" do
   it "raises TypeError when adds nil" do
     lambda {
       @one.add(nil, 10)
+    }.should raise_error(TypeError)
+    lambda {
+      @one.add(nil, 0)
     }.should raise_error(TypeError)
   end
 
