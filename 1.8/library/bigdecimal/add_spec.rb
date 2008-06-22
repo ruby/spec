@@ -16,6 +16,8 @@ describe "BigDecimal#add" do
     @one_minus = BigDecimal("-1")
     @frac_1 = BigDecimal("1E-99999")
     @frac_2 = BigDecimal("0.9E-99999")
+    @frac_3 = BigDecimal("12345E10")
+    @frac_4 = BigDecimal("98765E10")
   end
 
   it "returns a + b with given precision" do
@@ -27,6 +29,13 @@ describe "BigDecimal#add" do
     @zero.add(@one, 1).should == @one
     @frac_2.add(@frac_1, 10000).should == BigDecimal("1.9E-99999")
     @frac_1.add(@frac_1, 10000).should == BigDecimal("2E-99999")
+    @frac_3.add(@frac_4, 0).should == BigDecimal("0.11111E16")
+    @frac_3.add(@frac_4, 1).should == BigDecimal("0.1E16")    
+    @frac_3.add(@frac_4, 2).should == BigDecimal("0.11E16")
+    @frac_3.add(@frac_4, 3).should == BigDecimal("0.111E16")
+    @frac_3.add(@frac_4, 4).should == BigDecimal("0.1111E16")
+    @frac_3.add(@frac_4, 5).should == BigDecimal("0.11111E16")
+    @frac_3.add(@frac_4, 6).should == BigDecimal("0.11111E16")
   end
 
   it "returns NaN if NaN is involved" do
