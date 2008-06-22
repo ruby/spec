@@ -8,9 +8,11 @@ shared :tempfile_unlink do |cmd|
       @tempfile.close
     end
     
-    it "unlinks self" do
-      File.should_receive(:unlink).with(@tempfile.path)
-      @tempfile.send(cmd)
+    ruby_bug "", "1.8.6" do
+      it "unlinks self" do
+        File.should_receive(:unlink).with(@tempfile.path)
+        @tempfile.send(cmd)
+      end
     end
   end
 end
