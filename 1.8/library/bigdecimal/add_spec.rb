@@ -36,7 +36,40 @@ describe "BigDecimal#add" do
     @frac_3.add(@frac_4, 4).should == BigDecimal("0.1111E16")
     @frac_3.add(@frac_4, 5).should == BigDecimal("0.11111E16")
     @frac_3.add(@frac_4, 6).should == BigDecimal("0.11111E16")
+    @dot_ones = BigDecimal("0.1111111111")
   end
+
+  it "returns a + [Fixnum value] with given precision" do
+    (1..10).each {|precision|
+      @dot_ones.add(0, precision).should == BigDecimal("0." + "1" * precision)
+    }
+    BigDecimal("0.88").add(0, 1).should == BigDecimal("0.9")
+  end
+
+  it "returns a + [Bignum value] with given precision" do
+    bignum = 10000000000000000000
+    (1..20).each {|precision|
+      @dot_ones.add(bignum, precision).should == BigDecimal("0.1E20")
+    }
+    (21..30).each {|precision|
+      @dot_ones.add(bignum, precision).should == BigDecimal(
+        "0.10000000000000000000" + "1" * (precision - 20) + "E20")
+    }
+  end
+
+#  TODO:
+#  http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17374
+#
+#  This doesn't work on MRI and looks like a bug to me:
+#  one can use BigDecimal + Float, but not Bigdecimal.add(Float)
+#
+#  it "returns a + [Float value] with given precision" do
+#    (1..10).each {|precision|
+#      @dot_ones.add(0.0, precision).should == BigDecimal("0." + "1" * precision)
+#    }
+#
+#    BigDecimal("0.88").add(0.0, 1).should == BigDecimal("0.9")
+#  end
 
   it "returns NaN if NaN is involved" do
     @one.add(@nan, 10000).nan?.should == true
@@ -73,4 +106,15 @@ describe "BigDecimal#add" do
     @infinity_minus.add(@infinity, 10000).nan?.should == true
   end
 
+  it "raises TypeError when adds nil" do
+    lambda {
+      @one.add(nil, 10)
+    }.should raise_error(TypeError)
+  end
+
+  it "raises TypeError when precision parameter is nil" do
+    lambda {
+      @one.add(@one, nil)
+    }.should raise_error(TypeError)
+  end
 end
