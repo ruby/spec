@@ -117,4 +117,10 @@ describe "BigDecimal#add" do
       @one.add(@one, nil)
     }.should raise_error(TypeError)
   end
+
+  it "raises ArgumentError when precision parameter is negative" do
+    lambda {
+      @one.add(@one, -10)
+    }.should raise_error(ArgumentError)
+  end
 end
