@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/http'
+require File.dirname(__FILE__) + '/shared/version_1_1'
 
 describe "Net::HTTP.version_1_1" do
   it "turns on net/http 1.1 features" do
@@ -15,9 +16,5 @@ describe "Net::HTTP.version_1_1" do
 end
 
 describe "Net::HTTP.version_1_1?" do
-  it "returns the state of net/http 1.1 features" do
-    Net::HTTP.version_1_1?.should be_false
-    Net::HTTP.version_1_1
-    Net::HTTP.version_1_1?.should be_true
-  end
+  it_behaves_like :net_http_version_1_1_p, :version_1_1?
 end
