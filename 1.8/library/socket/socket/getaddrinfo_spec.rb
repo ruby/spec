@@ -2,6 +2,9 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'socket'
 
 describe "Socket#getaddrinfo" do
+  before :each do
+    BasicSocket.do_not_reverse_lookup = false
+  end
   it "gets the address information" do
     expected = []
     host = Socket.getaddrinfo("127.0.0.1", nil)[0][2]
