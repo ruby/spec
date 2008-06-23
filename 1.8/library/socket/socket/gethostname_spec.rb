@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/fixtures/classes'
+require File.dirname(__FILE__) + '/../../../spec_helper'
+require File.dirname(__FILE__) + '/../fixtures/classes'
 
 describe "Socket.gethostname" do
   # This currently works in Unix and Windows. Feel free to add guards
