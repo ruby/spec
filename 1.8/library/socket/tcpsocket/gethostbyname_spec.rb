@@ -16,7 +16,7 @@ describe "TCPSocket#gethostbyname" do
   end
 
   it "returns any aliases to the address as second value" do
-    @host_info[1].should == []
+    @host_info[1].should be_kind_of(Array)
   end
 
   not_compliant_on :jruby do
