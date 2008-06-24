@@ -1,12 +1,15 @@
 shared :net_http_started_p do |cmd|
   describe "Net::HTTP##{cmd}" do
-    before(:each) do
+    before(:all) do
       NetHTTPSpecs.start_server
-      @net = Net::HTTP.new("localhost", 3333)
+    end
+    
+    after(:all) do
+      NetHTTPSpecs.stop_server
     end
 
-    after(:each) do
-      NetHTTPSpecs.stop_server
+    before(:each) do
+      @net = Net::HTTP.new("localhost", 3333)
     end
 
     it "returns true when self has been started" do

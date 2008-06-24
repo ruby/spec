@@ -3,11 +3,11 @@ require 'net/http'
 require File.dirname(__FILE__) + '/fixtures/http_server'
 
 describe "Net::HTTP.get_print when passed URI" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
   end
 
@@ -19,11 +19,11 @@ describe "Net::HTTP.get_print when passed URI" do
 end
 
 describe "Net::HTTP.get_print when passed host, path, port" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
   end
 

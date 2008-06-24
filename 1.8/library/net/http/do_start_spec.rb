@@ -3,15 +3,18 @@ require 'net/http'
 require File.dirname(__FILE__) + '/fixtures/http_server'
 
 describe "Net::HTTP#do_start" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
-    @http = Net::HTTP.new("localhost", 3333)
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
   end
-  
+
+  before(:each) do
+    @http = Net::HTTP.new("localhost", 3333)
+  end
+
   it "is private" do
     Net::HTTP.private_instance_methods.should include("do_start")
   end

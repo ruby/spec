@@ -3,13 +3,16 @@ require 'net/http'
 require File.dirname(__FILE__) + '/fixtures/http_server'
 
 describe "Net::HTTP#finish" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
-    @http = Net::HTTP.new("localhost", 3333)
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
+  end
+
+  before(:each) do
+    @http = Net::HTTP.new("localhost", 3333)
   end
 
   it "closes the tcp connection" do
@@ -20,13 +23,16 @@ describe "Net::HTTP#finish" do
 end
 
 describe "Net::HTTP#finish when self has not been started yet" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
-    @http = Net::HTTP.new("localhost", 3333)
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
+  end
+
+  before(:each) do
+    @http = Net::HTTP.new("localhost", 3333)
   end
 
   it "raises an IOError" do

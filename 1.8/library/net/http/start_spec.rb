@@ -3,11 +3,11 @@ require 'net/http'
 require File.dirname(__FILE__) + '/fixtures/http_server'
 
 describe "Net::HTTP.start" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
   end
 
@@ -24,14 +24,14 @@ describe "Net::HTTP.start" do
 end
 
 describe "Net::HTTP.start when passed a block" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
   end
-  
+
   it "returns the blocks return value" do
     Net::HTTP.start("localhost", 3333) { :test }.should == :test
   end
@@ -57,13 +57,16 @@ describe "Net::HTTP.start when passed a block" do
 end
 
 describe "Net::HTTP#start" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
-    @http = Net::HTTP.new("localhost", 3333)
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
+  end
+  
+  before(:each) do
+    @http = Net::HTTP.new("localhost", 3333)
   end
   
   it "returns self" do
@@ -77,13 +80,16 @@ describe "Net::HTTP#start" do
 end
 
 describe "Net::HTTP#start when self has already been started" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
-    @http = Net::HTTP.new("localhost", 3333)
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
+  end
+
+  before(:each) do
+    @http = Net::HTTP.new("localhost", 3333)
   end
 
   it "raises an IOError" do
@@ -93,13 +99,16 @@ describe "Net::HTTP#start when self has already been started" do
 end
 
 describe "Net::HTTP#start when passed a block" do
-  before(:each) do
+  before(:all) do
     NetHTTPSpecs.start_server
-    @http = Net::HTTP.new("localhost", 3333)
   end
   
-  after(:each) do
+  after(:all) do
     NetHTTPSpecs.stop_server
+  end
+
+  before(:each) do
+    @http = Net::HTTP.new("localhost", 3333)
   end
 
   it "returns the blocks return value" do
