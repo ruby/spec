@@ -76,7 +76,7 @@ describe "Net::HTTP#start" do
   end
 end
 
-describe "Net:HTTP#start when self has already been started" do
+describe "Net::HTTP#start when self has already been started" do
   before(:each) do
     NetHTTPSpecs.start_server
     @http = Net::HTTP.new("localhost", 3333)
