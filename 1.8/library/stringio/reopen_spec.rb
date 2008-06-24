@@ -45,7 +45,7 @@ describe "StringIO#reopen when passed [Object, Integer]" do
   
   it "checks whether the passed Object responds to #to_str" do
     obj = mock('method_missing to_str')
-    obj.should_receive(:respond_to?).with(:to_str).and_return(true)
+    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
     obj.should_receive(:method_missing).with(:to_str).and_return("reopened")
     @io.reopen(obj, IO::RDONLY)
     @io.string.should == "reopened"
@@ -122,7 +122,7 @@ describe "StringIO#reopen when passed [Object, Object]" do
   
   it "checks whether the passed Object responds to #to_str" do
     obj = mock('method_missing to_str')
-    obj.should_receive(:respond_to?).with(:to_str).and_return(true)
+    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
     obj.should_receive(:method_missing).with(:to_str).and_return("reopened")
     @io.reopen(obj, "r")
     @io.string.should == "reopened"
@@ -153,7 +153,7 @@ describe "StringIO#reopen when passed [Object, Object]" do
   
   it "checks whether the passed mode-Object responds to #to_str" do
     obj = mock('method_missing to_str')
-    obj.should_receive(:respond_to?).with(:to_str).and_return(true)
+    obj.should_receive(:respond_to?).any_number_of_times.with(:to_str).and_return(true)
     obj.should_receive(:method_missing).with(:to_str).and_return("r")
     @io.reopen("reopened", obj)
   end
@@ -240,7 +240,7 @@ describe "StringIO#reopen when passed [Object]" do
 
   it "checks whether the passed Object responds to #to_strio" do
     obj = mock('method_missing to_str')
-    obj.should_receive(:respond_to?).with(:to_strio).and_return(true)
+    obj.should_receive(:respond_to?).with(:to_strio).any_number_of_times.and_return(true)
     obj.should_receive(:method_missing).with(:to_strio).and_return(StringIO.new("reopened"))
     @io.reopen(obj)
     @io.string.should == "reopened"

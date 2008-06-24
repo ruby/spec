@@ -30,7 +30,7 @@ shared :stringio_read do |cmd|
 
     it "checks whether the passed buffer Object responds to #to_str" do
       obj = mock('method_missing to_str')
-      obj.should_receive(:respond_to?).with(:to_str).and_return(true)
+      obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
       obj.should_receive(:method_missing).with(:to_str).and_return(buffer = "")
       @io.send(cmd, 7, obj)
       buffer.should == "example"
@@ -81,7 +81,7 @@ shared :stringio_read do |cmd|
 
     it "checks whether the passed length Object responds to #to_int" do
       obj = mock('method_missing to_int')
-      obj.should_receive(:respond_to?).with(:to_int).and_return(true)
+      obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
       obj.should_receive(:method_missing).with(:to_int).and_return(7)
       @io.send(cmd, obj).should == "example"
     end
