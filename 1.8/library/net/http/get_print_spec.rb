@@ -28,6 +28,7 @@ describe "Net::HTTP.get_print when passed host, path, port" do
   end
 
   it "it prints the body of the specified uri to $stdout" do
+    $stdout.should_receive(:print).with("")
     $stdout.should_receive(:print).with("This is the index page.")
     Net::HTTP.get_print 'localhost', "/", 3333
   end
