@@ -9,8 +9,8 @@ describe "Socket::BasicSocket#shutdown" do
   end
 
   after :each do
-    @s1.close if @s1
-    @s2.close if @s2
+    @s1.close unless @s1.closed?
+    @s2.close unless @s2.closed?
   end
 
   it "closes the writing end of the socket when arg is 1" do

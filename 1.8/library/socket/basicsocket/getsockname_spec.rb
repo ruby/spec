@@ -18,7 +18,6 @@ describe "Socket::BasicSocket#getsockname" do
     @server = TCPServer.new(SocketSpecs.port)
     sockaddr = Socket.unpack_sockaddr_in(@server.getsockname)
     sockaddr.should == [SocketSpecs.port, "0.0.0.0"]
-    
     @server.close
   end
 

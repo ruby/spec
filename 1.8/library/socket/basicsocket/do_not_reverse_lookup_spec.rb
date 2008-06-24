@@ -10,8 +10,8 @@ describe "BasicSocket.do_not_reverse_lookup" do
   
   after(:each) do
     BasicSocket.do_not_reverse_lookup = false
-    @server.close if @server
-    @socket.close if @socket
+    @server.close unless @server.closed?
+    @socket.close unless @socket.closed?
   end
 
   it "causes 'peeraddr' to avoid name lookups" do
