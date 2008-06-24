@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/http'
 
 describe "Net::HTTP#address" do
-  it "needs to be reviewed for spec completeness" do
+  it "returns the current host name" do
+    net = Net::HTTP.new("localhost")
+    net.address.should == "localhost"
   end
 end
