@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/http'
 
 describe "Net::HTTP.socket_type" do
-  it "needs to be reviewed for spec completeness" do
+  it "returns BufferedIO" do
+    Net::HTTP.socket_type.should == Net::BufferedIO
   end
 end
