@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/http'
 
 describe "Net::HTTP#use_ssl?" do
-  it "needs to be reviewed for spec completeness" do
+  it "returns false" do
+    http = Net::HTTP.new("localhost")
+    http.use_ssl?.should be_false
   end
 end
