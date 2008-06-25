@@ -5,7 +5,11 @@ shared :dir_glob do |cmd|
       @cwd = Dir.pwd
       Dir.chdir DirSpecs.mock_dir
     end
-    
+
+    after(:all) do
+      Dir.chdir @cwd
+    end
+
     it "matches non-dotfiles with '*'" do
       expected = %w[
         deeply
@@ -185,7 +189,7 @@ shared :dir_glob do |cmd|
       begin
         Dir.glob('foo?bar').should == %w|foo*bar|
         Dir.glob('foo\?bar').should == []
-        Dir.glob('nond\otfile').should == %w|nondotfile| 
+        Dir.glob('nond\otfile').should == %w|nondotfile|
       ensure
         Dir.rmdir 'foo*bar'
       end
@@ -209,15 +213,6 @@ shared :dir_glob do |cmd|
            subdir_two/nondotfile
            subdir_two/nondotfile.ext
            subdir_two/nondotfile.ext]
-    end
-
-    it "orders directory-based entries before files when a glob matches both" do
-      expected = %w[dir/filename_ordering dir_filename_ordering]
-      Dir.send(cmd, '**/*filename_ordering').should == expected
-    end
-
-    after(:all) do
-      Dir.chdir @cwd
     end
   end
 
