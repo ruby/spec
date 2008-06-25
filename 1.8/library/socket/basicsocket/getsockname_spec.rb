@@ -9,6 +9,7 @@ describe "Socket::BasicSocket#getsockname" do
 
   it "returns the sockaddr associacted with the socket" do
     @socket = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
+    @socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_REUSEADDR, true)
     @socket.bind(Socket.pack_sockaddr_in(SocketSpecs.port, "127.0.0.1"))
     sockaddr = Socket.unpack_sockaddr_in(@socket.getsockname)
     sockaddr.should == [SocketSpecs.port, "127.0.0.1"]
