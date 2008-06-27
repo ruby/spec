@@ -42,4 +42,9 @@ describe "Regexp#to_s" do
     /(?i:.)/.to_s.should == "(?i-mx:.)"
     /(?:.)/.to_s.should == "(?-mix:.)"
   end
+
+  it "handles abusive option groups" do
+    /(?mmmmix-miiiix:)/.to_s.should == '(?-mix:)'
+  end
+
 end
