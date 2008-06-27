@@ -176,15 +176,17 @@ describe "String#%" do
 
     ("%*.*f" % [w, p, 1]).should == "   1.00000"
   end
-  
-  it "doesn't call to_ary on its argument" do
-    obj = mock('[1,2]')
-    def obj.to_ary() [1, 2] end
-    def obj.to_s() "obj" end
-    lambda { "%s %s" % obj }.should raise_error(ArgumentError)
-    ("%s" % obj).should == "obj"
+
+  ruby_bug "#", "1.8.6.228" do
+    it "tries to convert the argument to Array by calling #to_ary" do
+      obj = mock('[1,2]')
+      def obj.to_ary() [1, 2] end
+      def obj.to_s() "obj" end
+      ("%s %s" % obj).should == "1 2"
+      ("%s" % obj).should == "1"
+    end
   end
-  
+
   it "doesn't return subclass instances when called on a subclass" do
     universal = mock('0')
     def universal.to_int() 0 end
