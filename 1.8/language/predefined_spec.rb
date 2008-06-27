@@ -135,6 +135,43 @@ describe "Predefined globals $1..N" do
   end
 end
 
+describe "Predefined global $stdout" do
+  before(:each) do
+    @old_stdout = $stdout
+  end
+
+  after(:each) do
+    $stdout = @old_stdout
+  end
+
+  it "is the same as $defout" do
+    $stdout.should == $defout
+
+    $stdout = IOStub.new
+    $stdout.should == $defout
+  end
+
+  it "is the same as $DEFAULT_OUTPUT from 'English' library" do
+    require 'English'
+    $stdout.should == $DEFAULT_OUTPUT
+
+    $stdout = IOStub.new
+    $stdout.should == $DEFAULT_OUTPUT
+  end
+
+  it "raises TypeError error if assigned to nil" do
+    lambda { $stdout = nil }.should raise_error(TypeError)
+  end
+
+  it "raises TypeError error if assigned to object that doesn't respond to #write" do
+    obj = mock('object')
+    lambda { $stdout = obj }.should raise_error(TypeError)
+
+    obj.should_receive(:respond_to?).with(:write).and_return(true);
+    lambda { $stdout = obj }.should_not raise_error()
+  end
+end
+
 =begin
 Input/Output Variables 
 ---------------------------------------------------------------------------------------------------
