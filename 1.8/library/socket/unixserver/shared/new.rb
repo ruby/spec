@@ -13,13 +13,6 @@ shared :new do |cmd|
         unix.path.should == path
         unix.addr.should == ["AF_UNIX", path]
       end
-
-      it "is not connected" do
-        path = tmp("unixserver_spec")
-        File.unlink(path) if File.exists?(path)
-        unix = UNIXServer.new(path)
-        lambda { unix.peeraddr }.should raise_error
-      end
     end
   end
 end
