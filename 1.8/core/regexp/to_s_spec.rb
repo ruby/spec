@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Regexp#to_s" do
-  def parts_for(regex)
-    Regexp::SourceParser.new(regex.source).parts.map{|part| part.source}
-  end
-
   it "should display options if included" do
      /abc/mxi.to_s.should == "(?mix:abc)"
    end
