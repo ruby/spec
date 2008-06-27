@@ -114,20 +114,23 @@ describe "Process.kill" do
       $?.exitstatus.should == 99
     end
 
-    it "sends the given signal to the specified process" do
-      Process.kill("HUP", @pid).should == 1
-    end
+    # if run indirectly (eg via CI), kills the runner. TODO: needs guard
+    if STDIN.tty? then
+      it "sends the given signal to the specified process" do
+        Process.kill("HUP", @pid).should == 1
+      end
 
-    it "kills process groups if signal is negative" do
-      Process.kill(-1, Process.getpgid(@pid)).should == 1
-    end
+      it "kills process groups if signal is negative" do
+        Process.kill(-1, Process.getpgid(@pid)).should == 1
+      end
 
-    it "kills process groups if signal starts with a minus sign" do
-      Process.kill("-HUP", Process.getpgid(@pid)).should == 1
-    end
+      it "kills process groups if signal starts with a minus sign" do
+        Process.kill("-HUP", Process.getpgid(@pid)).should == 1
+      end
 
-    it "kills process groups if signal starts with a minus sign and 'SIG'" do
-      Process.kill("-SIGHUP", Process.getpgid(@pid)).should == 1
+      it "kills process groups if signal starts with a minus sign and 'SIG'" do
+        Process.kill("-SIGHUP", Process.getpgid(@pid)).should == 1
+      end
     end
   end
 end
