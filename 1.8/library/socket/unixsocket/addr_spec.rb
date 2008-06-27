@@ -11,6 +11,7 @@ describe "UNIXSocket#addr" do
   end
 
   after :all do
+    @client.close
     @server.close
   end
 
