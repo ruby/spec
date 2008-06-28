@@ -21,7 +21,7 @@ describe "The '&&' statement" do
   it "evaluates the full set of chained conditions during assignment" do
     x, y = nil
     x = 1 && y = 2
-    # "1 && y = 2" is evaluated and assigned to x
+    # "1 && y = 2" is evaluated and then assigned to x
     x.should == 2
   end
 
