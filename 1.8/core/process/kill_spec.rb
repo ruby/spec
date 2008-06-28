@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 # if run indirectly (eg via CI), kills the runner. TODO: needs guard
-has_tty? do
-
 describe "Process.kill" do
   it "requires at least two arguments" do
     lambda { Process.kill }.should raise_error(ArgumentError)
@@ -73,20 +71,22 @@ describe "Process.kill" do
       Signal.trap("HUP", @saved_trap)
     end
 
-    it "sends the given signal to the current process if pid is zero" do
-      Process.kill("HUP", 0).should == 1
-    end
+    has_tty? do # 0 goes to the entire process group, not just current pid
+      it "sends the given signal to the current process if pid is zero" do
+        Process.kill("HUP", 0).should == 1
+      end
 
-    it "accepts integer signal numbers" do
-      Process.kill(1, 0).should == 1
-    end
+      it "accepts integer signal numbers" do
+        Process.kill(1, 0).should == 1
+      end
 
-    it "accepts POSIX signal names without 'SIG' prefix" do
-      Process.kill("HUP", 0).should == 1
-    end
+      it "accepts POSIX signal names without 'SIG' prefix" do
+        Process.kill("HUP", 0).should == 1
+      end
 
-    it "accepts POSIX signal names with 'SIG' prefix" do
-      Process.kill("SIGHUP", 0).should == 1
+      it "accepts POSIX signal names with 'SIG' prefix" do
+        Process.kill("SIGHUP", 0).should == 1
+      end
     end
   end
 end
@@ -117,6 +117,7 @@ describe "Process.kill" do
       $?.exitstatus.should == 99
     end
 
+    has_tty? do
       it "sends the given signal to the specified process" do
         Process.kill("HUP", @pid).should == 1
       end
