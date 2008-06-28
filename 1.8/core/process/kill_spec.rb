@@ -1,5 +1,8 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
+# if run indirectly (eg via CI), kills the runner. TODO: needs guard
+has_tty? do
+
 describe "Process.kill" do
   it "requires at least two arguments" do
     lambda { Process.kill }.should raise_error(ArgumentError)
@@ -114,8 +117,6 @@ describe "Process.kill" do
       $?.exitstatus.should == 99
     end
 
-    # if run indirectly (eg via CI), kills the runner. TODO: needs guard
-    if STDIN.tty? then
       it "sends the given signal to the specified process" do
         Process.kill("HUP", @pid).should == 1
       end

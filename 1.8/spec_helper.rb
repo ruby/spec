@@ -21,3 +21,9 @@ unless ENV['OUTPUT_WARNINGS']
 
   at_exit { $VERBOSE = $verbose }
 end
+
+def has_tty?
+  if STDOUT.tty? then
+    yield
+  end
+end
