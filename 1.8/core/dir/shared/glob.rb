@@ -10,6 +10,13 @@ shared :dir_glob do |cmd|
       Dir.chdir @cwd
     end
 
+    it "converts patterns with to_str" do
+      obj = mock('file_one.ext')
+      obj.should_receive(:to_str).and_return('file_one.ext')
+
+      Dir.send(cmd, obj).should == %w[file_one.ext]
+    end
+
     it "matches non-dotfiles with '*'" do
       expected = %w[
         deeply
