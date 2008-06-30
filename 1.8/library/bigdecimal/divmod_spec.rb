@@ -105,18 +105,18 @@ describe "BigDecimal#divmod" do
       values << BigDecimal('-2E55')
       values << BigDecimal('2E-5555')
       values << BigDecimal('-2E-5555')
-  
+      
 
-     values_and_zeroes = values + @zeroes
-     values_and_zeroes.each do |val1|
-       values.each do |val2|
-         res = val1.divmod(val2)
-         DivmodSpecs::check_both_bigdecimal(res)
-         res[0].should == ((val1/val2).floor)
-         res[1].should == (val1 - res[0] * val2)
-       end
-     end
-  end
+      values_and_zeroes = values + @zeroes
+      values_and_zeroes.each do |val1|
+        values.each do |val2|
+          res = val1.divmod(val2)
+          DivmodSpecs::check_both_bigdecimal(res)
+          res[0].should == ((val1/val2).floor)
+          res[1].should == (val1 - res[0] * val2)
+        end
+      end
+    end
   end
   
   it "properly handles special values" do
