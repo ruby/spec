@@ -17,7 +17,8 @@ describe "Date constants" do
     end
   end
 
-  ruby_bug "#", "1.8.6.114" do
+  # Fixed in 1.8.7
+  ruby_bug "#", "1.8.6" do
     it "should define GREGORIAN" do
       (Date::GREGORIAN <=> -Date::Infinity.new).should == 0
     end
