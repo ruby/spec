@@ -14,7 +14,7 @@ describe "ERB.new" do
 </ul>
 END
 
-  @eruby_str2 = <<'END'
+    @eruby_str2 = <<'END'
 <ul>
 % list = [1,2,3]
 %for item in list
@@ -35,21 +35,21 @@ END
     end
   end
 
-   it 'remove "\n" when trim_mode is 1 or \'>\'' do
+  it 'remove "\n" when trim_mode is 1 or \'>\'' do
     expected = "<ul>\n<li>1</li>\n<li>2</li>\n<li>3</li>\n</ul>\n"
-     [1, '>'].each do |trim_mode|
-       ERB.new(@eruby_str, nil, trim_mode).result.should == expected
-     end
-   end
+    [1, '>'].each do |trim_mode|
+      ERB.new(@eruby_str, nil, trim_mode).result.should == expected
+    end
+  end
 
-   it 'remove spaces at beginning of line and "\n" when trim_mode is 2 or \'<>\'' do
+  it 'remove spaces at beginning of line and "\n" when trim_mode is 2 or \'<>\'' do
     expected = "<ul>\n<li>1</li>\n<li>2</li>\n<li>3</li>\n</ul>\n"
     [2, '<>'].each do |trim_mode|
       ERB.new(@eruby_str, nil, trim_mode).result.should == expected
-     end
-   end
+    end
+  end
 
-   it "removes spaces around '<%- -%>' when trim_mode is '-'" do
+  it "removes spaces around '<%- -%>' when trim_mode is '-'" do
     expected = "<ul>\n  <li>1  <li>2  <li>3</ul>\n"
     input = <<'END'
 <ul>
@@ -77,11 +77,12 @@ END
     lambda { ERB.new(input, nil, '-').result }.should raise_error
   end
 
-   it "regards lines starting with '%' as '<% ... %>' when trim_mode is '%'" do
-    expected = "<ul>\n  <li>1\n  \n  <li>2\n  \n  <li>3\n  \n\n</ul>\n%%\n"
-    ERB.new(@eruby_str2, nil, "%").result.should == expected
-   end
-
+  ruby_bug "#213", "1.8.7" do 
+    it "regards lines starting with '%' as '<% ... %>' when trim_mode is '%'" do
+      expected = "<ul>\n  <li>1\n  \n  <li>2\n  \n  <li>3\n  \n\n</ul>\n%%\n"
+      ERB.new(@eruby_str2, nil, "%").result.should == expected
+    end
+  end
   it "regards lines starting with '%' as '<% ... %>' and remove \"\\n\" when trim_mode is '%>'" do
     expected = "<ul>\n  <li>1    <li>2    <li>3  </ul>\n%%\n"
     ERB.new(@eruby_str2, nil, '%>').result.should == expected
