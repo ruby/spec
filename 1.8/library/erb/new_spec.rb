@@ -209,29 +209,16 @@ END
   it "regard lines starting with '%' as '<% ... %>' and spaces around '<%- -%>' when trim_mode is '%-'" do
     input = <<'END'
 <ul>
+%list = [1,2]
 %for item in list
-%  if item
-  <li><%= item -%>
-  <%- end -%>
-<%- end -%>
-</ul>
+<li><%= item %></li>
+<% end %></ul>
 %%%
 END
-    expected = <<'END'
-_erbout = ''; _erbout.concat "<ul>\n"
-for item in list
-  if item
-_erbout.concat "  <li>"; _erbout.concat(( item ).to_s)
- end 
- end 
-_erbout.concat "</ul>\n"
-_erbout.concat "%%\n"
-_erbout
-END
-    expected.chomp!
-    ['%-'].each do |trim_mode|
-      ERB.new(input, nil, trim_mode).src.should == expected
-    end
+
+    expected = "<ul>\n<li>1</li>\n<li>2</li>\n</ul>\n%%\n"
+    trim_mode = '%-'
+    ERB.new(input, nil, trim_mode).result.should == expected
   end
 
 
