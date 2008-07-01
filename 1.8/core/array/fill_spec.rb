@@ -56,6 +56,10 @@ describe "Array#fill" do
     lambda { [1, 2, 3].fill('a', 3, -3)}.should_not raise_error(ArgumentError)
   end
 
+  # TODO: This is the behavior of MRI 1.8.6 pl 114,
+  # that was later changed (no later than pl 257), and
+  # MRI 1.9 changes it again. See:
+  # http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17480
   it "raises an ArgumentError if given an index and a negative count whose absolute value exceeds the index" do
     lambda { [1, 2, 3].fill('a', 3, -4)}.should raise_error(ArgumentError)
     lambda { [1, 2, 3].fill('a', 1, -3)}.should raise_error(ArgumentError)
