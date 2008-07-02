@@ -1,22 +1,15 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require 'uri'
-
-def components(uri)
-  result = {}
-  uri.component.each do |component|
-    result[component] = uri.send(component)
-  end
-  result
-end
+require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "URI.parse" do
+
   it "returns a URI::HTTP object when parsing an HTTP URI" do
     URI.parse("http://www.example.com/").should be_kind_of(URI::HTTP)
   end
   
   it "populates the components of a parsed URI::HTTP, setting the port to 80 by default" do
     # general case
-    components(URI.parse("http://user:pass@example.com/path/?query=val&q2=val2#fragment")).should == {
+    URISpec.components(URI.parse("http://user:pass@example.com/path/?query=val&q2=val2#fragment")).should == {
       :scheme => "http",
       :userinfo => "user:pass",
       :host => "example.com",
@@ -27,7 +20,7 @@ describe "URI.parse" do
     }
 
     # multiple paths
-    components(URI.parse("http://a/b/c/d;p?q")).should == { 
+    URISpec.components(URI.parse("http://a/b/c/d;p?q")).should == { 
       :scheme => "http",
       :userinfo => nil,
       :host => "a",
@@ -38,7 +31,7 @@ describe "URI.parse" do
     }
     
     # multi-level domain
-    components(URI.parse('http://www.math.uio.no/faq/compression-faq/part1.html')).should == { 
+    URISpec.components(URI.parse('http://www.math.uio.no/faq/compression-faq/part1.html')).should == { 
       :scheme => "http",
       :userinfo => nil,
       :host => "www.math.uio.no",
@@ -66,7 +59,7 @@ describe "URI.parse" do
       # generic, empty password.
       url = URI.parse("ftp://anonymous@ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2;type=i")
       url.should be_kind_of(URI::FTP)
-      components(url).should == {
+      URISpec.components(url).should == {
         :scheme => "ftp",
         :userinfo => "anonymous",
         :host => "ruby-lang.org",
@@ -78,7 +71,7 @@ describe "URI.parse" do
       # multidomain, no user or password
       url = URI.parse('ftp://ftp.is.co.za/rfc/rfc1808.txt')
       url.should be_kind_of(URI::FTP)
-      components(url).should == { 
+      URISpec.components(url).should == { 
         :scheme => "ftp",
         :userinfo => nil,
         :host => "ftp.is.co.za",
@@ -90,7 +83,7 @@ describe "URI.parse" do
       # empty user
       url = URI.parse('ftp://:pass@localhost/')
       url.should be_kind_of(URI::FTP)
-      components(url).should == { 
+      URISpec.components(url).should == { 
         :scheme => "ftp",
         :userinfo => ":pass",
         :host => "localhost",
@@ -108,7 +101,7 @@ describe "URI.parse" do
       # generic, empty password.
       url = URI.parse("ftp://anonymous@ruby-lang.org/pub/ruby/1.8/ruby-1.8.6.tar.bz2;type=i")
       url.should be_kind_of(URI::FTP)
-      components(url).should == {
+      URISpec.components(url).should == {
         :scheme => "ftp",
         :userinfo => "anonymous",
         :host => "ruby-lang.org",
@@ -120,7 +113,7 @@ describe "URI.parse" do
       # multidomain, no user or password
       url = URI.parse('ftp://ftp.is.co.za/rfc/rfc1808.txt')
       url.should be_kind_of(URI::FTP)
-      components(url).should == { 
+      URISpec.components(url).should == { 
         :scheme => "ftp",
         :userinfo => nil,
         :host => "ftp.is.co.za",
@@ -132,7 +125,7 @@ describe "URI.parse" do
       # empty user
       url = URI.parse('ftp://:pass@localhost/')
       url.should be_kind_of(URI::FTP)
-      components(url).should == { 
+      URISpec.components(url).should == { 
         :scheme => "ftp",
         :userinfo => ":pass",
         :host => "localhost",
@@ -155,7 +148,7 @@ describe "URI.parse" do
   end
   
   it "populates the components of a parsed URI::LDAP object" do
-    components(URI.parse("ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US?postalAddress?scope?filter?extensions")).should == {
+    URISpec.components(URI.parse("ldap://ldap.itd.umich.edu/o=University%20of%20Michigan,c=US?postalAddress?scope?filter?extensions")).should == {
       :scheme => "ldap",
       :host => "ldap.itd.umich.edu",
       :port => 389,
@@ -172,7 +165,7 @@ describe "URI.parse" do
   end
   
   it "populates the components of a parsed URI::MailTo object" do
-    components(URI.parse("mailto:spam@mailinator.com?subject=Discounts%20On%20Imported%20methods!!!&body=Exciting%20offer")).should == {
+    URISpec.components(URI.parse("mailto:spam@mailinator.com?subject=Discounts%20On%20Imported%20methods!!!&body=Exciting%20offer")).should == {
       :scheme => "mailto",
       :to => "spam@mailinator.com",
       :headers => [["subject","Discounts%20On%20Imported%20methods!!!"],
@@ -184,7 +177,7 @@ describe "URI.parse" do
   # Test registry 
   it "does its best to extract components from URI::Generic objects" do
     # generic
-    components(URI("scheme://userinfo@host/path?query#fragment")).should == {
+    URISpec.components(URI("scheme://userinfo@host/path?query#fragment")).should == {
       :scheme => "scheme",
       :userinfo => "userinfo",
       :host => "host",
@@ -200,7 +193,7 @@ describe "URI.parse" do
     gopher = URI.parse('gopher://spinaltap.micro.umn.edu/00/Weather/California/Los%20Angeles')
     gopher.should be_kind_of(URI::Generic)
 
-    components(gopher).should == { 
+    URISpec.components(gopher).should == { 
       :scheme => "gopher",
       :userinfo => nil,
       :host => "spinaltap.micro.umn.edu",
@@ -215,7 +208,7 @@ describe "URI.parse" do
     # news
     news = URI.parse('news:comp.infosystems.www.servers.unix')
     news.should be_kind_of(URI::Generic)
-    components(news).should == { 
+    URISpec.components(news).should == { 
       :scheme => "news",
       :userinfo => nil,
       :host => nil,
@@ -230,7 +223,7 @@ describe "URI.parse" do
     # telnet
     telnet = URI.parse('telnet://melvyl.ucop.edu/')
     telnet.should be_kind_of(URI::Generic)
-    components(telnet).should == { 
+    URISpec.components(telnet).should == { 
       :scheme => "telnet",
       :userinfo => nil,
       :host => "melvyl.ucop.edu",
