@@ -9,7 +9,11 @@ describe "Socket#for_fd given a file descriptor" do
     host = server.accept_nonblock
 
     new_sock = Socket.for_fd(client.fileno)
-    new_sock.should_not == nil
+    
+    # TODO: RSpec uses #send internally when calling #should == something
+    # but as Socket#send does not do what RSpex expects it to do,
+    # it fails horriby. RSpec should be using #__send__ 
+    new_sock.should_not be_nil
     new_sock.class.should == Socket
     new_sock.fileno.should == client.fileno
 
