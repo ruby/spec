@@ -669,7 +669,7 @@ describe "String#%" do
       (format % obj).should == (format % 65)
       
       obj = mock('4')
-      def obj.respond_to?(arg) true if [:to_i, :to_int].include?(arg) end
+      def obj.respond_to?(arg) [:to_i, :to_int].include?(arg) end
       def obj.method_missing(name, *args)
         name == :to_int ? 4 : 0 unless name == :to_ary
       end
