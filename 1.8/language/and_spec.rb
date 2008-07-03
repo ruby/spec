@@ -14,8 +14,8 @@ describe "The '&&' statement" do
   end
   
   it "evalutes to the last condition if all are true" do
-    ("yes" && 1).should.equal 1
-    (1 && "yes").should.equal "yes"
+    ("yes" && 1).should == 1
+    (1 && "yes").should == "yes"
   end
   
   it "evaluates the full set of chained conditions during assignment" do
@@ -40,8 +40,8 @@ describe "The 'and' statement" do
   end
   
   it "evalutes to the last condition if all are true" do
-    ("yes" and 1).should.equal 1
-    (1 and "yes").should.equal "yes"
+    ("yes" and 1).should == 1
+    (1 and "yes").should == "yes"
   end
   
   it "when used in assignment, evaluates and assigns expressions individually" do
