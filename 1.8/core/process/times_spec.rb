@@ -14,6 +14,6 @@ describe "Process.times" do
     # ensure times is at least one second larger
     t2 = Process::times
     diff = (t2.utime + t2.stime) - (t.utime + t.stime)
-    (0.7..1.0).should include(diff)
+    (0.7..1.1).should include(diff)
   end
 end
