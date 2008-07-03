@@ -62,7 +62,7 @@ describe "Date::Infinity" do
     end
   end
   
-  ruby_bug "#", "1.8.6.114" do
+  ruby_bug "#222", "1.8.6" do
     it "should be able to use -@ and +@ for Date::Infinity" do
       (Date::Infinity.new <=> +Date::Infinity.new).should == 0
       (Date::Infinity.new(-1) <=> -Date::Infinity.new).should == 0
