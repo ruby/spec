@@ -6,9 +6,8 @@ describe "TCPSocket#gethostbyname" do
   before :each do
     @host_info = TCPSocket.gethostbyname("localhost")
   end
-  it "returns an array with 4 elements of information on the hostname" do
+  it "returns an array elements of information on the hostname" do
     @host_info.should be_kind_of(Array)
-    @host_info.length.should == 4
   end
 
   it "returns the canonical name as first value" do
