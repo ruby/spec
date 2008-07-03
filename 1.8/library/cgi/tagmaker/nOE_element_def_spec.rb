@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'cgi'
 
-describe "CGI::TagMaker#nOE_element_def" do
+describe "CGI::TagMaker#nOE_element_def when passed element" do
   before(:each) do
     @obj = Object.new
     @obj.extend(CGI::TagMaker)
   end
 
-  it "returns code for an empty element represented by the passed String" do
+  it "returns code for the passed element" do
     @obj.nOE_element_def("BR").should == <<-EOS
           "<BR" + attributes.collect{|name, value|
             next unless value

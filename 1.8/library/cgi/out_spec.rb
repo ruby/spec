@@ -3,12 +3,14 @@ require 'cgi'
 
 describe "CGI#out" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.new
     $stdout, @old_stdout = IOStub.new, $stdout
   end
-  
+
   after(:each) do
     $stdout = @old_stdout
+    ENV['REQUEST_METHOD'] = @old_request_method
   end
   
   it "it writes a HTMl header based on the passed argument to $stdout" do
@@ -34,8 +36,16 @@ describe "CGI#out" do
 end
 
 describe "CGI#out when passed no block" do
+  before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
+    @cgi = CGI.new
+  end
+
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
+  end
+
   it "raises a LocalJumpError" do
-    cgi = CGI.new
-    lambda { cgi.out }.should raise_error(LocalJumpError)
+    lambda { @cgi.out }.should raise_error(LocalJumpError)
   end
 end

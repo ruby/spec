@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'cgi'
 
-describe "CGI::TagMaker#nn_element_def when passed String" do
+describe "CGI::TagMaker#nn_element_def when passed element" do
   before(:each) do
     @obj = Object.new
     @obj.extend(CGI::TagMaker)
   end
   
-  it "returns code for the element represented by the passed String with required start and end tags" do
+  it "returns code for the passed element with required start and end tags" do
     @obj.nn_element_def("A").should == <<-EOS
           "<A" + attributes.collect{|name, value|
             next unless value
@@ -27,7 +27,7 @@ describe "CGI::TagMaker#nn_element_def when passed String" do
 EOS
   end
 
-  it "automatically converts the tag to capital letters" do
+  it "automatically converts the element tag to capital letters" do
     @obj.nn_element_def("a").should == <<-EOS
           "<A" + attributes.collect{|name, value|
             next unless value

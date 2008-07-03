@@ -3,8 +3,14 @@ require 'cgi'
 
 describe "CGI#header when passed no arguments" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.new
   end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
+  end
+
   
   it "returns a HTML header specifiying the Content-Type as text/html" do
     @cgi.header.should == "Content-Type: text/html\r\n\r\n"
@@ -18,8 +24,14 @@ end
 
 describe "CGI#header when passed String" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.new
   end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
+  end
+
   
   it "returns a HTML header specifiying the Content-Type as the passed String's content" do
     @cgi.header("text/plain").should == "Content-Type: text/plain\r\n\r\n"
@@ -33,8 +45,14 @@ end
 
 describe "CGI#header when passed Hash" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.new
   end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
+  end
+
 
   it "returns a HTML header based on the Hash's key/value pairs" do
     header = @cgi.header("type" => "text/plain")

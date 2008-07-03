@@ -3,7 +3,12 @@ require 'cgi'
 
 describe "CGI::QueryExtension#request_method" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.new
+  end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
   end
   
   it "returns ENV['REQUEST_METHOD']" do

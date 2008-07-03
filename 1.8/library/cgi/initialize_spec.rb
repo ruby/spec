@@ -9,7 +9,12 @@ end
 
 describe "CGI#initialize when passed no arguments" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.allocate
+  end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
   end
 
   it "extends self with CGI::QueryExtension" do
@@ -68,8 +73,14 @@ end
 
 describe "CGI#initialize when passed type" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.allocate
   end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
+  end
+
 
   it "extends self with CGI::QueryExtension" do
     @cgi.send(:initialize, "test")
@@ -123,8 +134,14 @@ end
 
 describe "CGI#initialize when CGI_PARAMS is set" do
   before(:each) do
+    ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
     @cgi = CGI.allocate
   end
+  
+  after(:each) do
+    ENV['REQUEST_METHOD'] = @old_request_method
+  end
+
 
   it "prints out a warning" do
     begin
