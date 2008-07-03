@@ -283,13 +283,25 @@ describe "String#%" do
     ("%c" % [256 * 3 + 64]).should == ("%c" % 64)
     ("%c" % -200).should == ("%c" % 56)
   end
-  
-  it "calls to_int on argument for %c formats" do
+
+  it "calls #to_ary on argument for %c formats" do
+    obj = mock('65')
+    obj.should_receive(:to_ary).and_return([65])
+    ("%c" % obj).should == ("%c" % [65])
+
+    obj = mock('65')
+    obj.should_receive(:respond_to?).with(:to_ary).any_number_of_times.and_return(true)
+    obj.should_receive(:method_missing).with(:to_ary).and_return([65])
+    ("%c" % obj).should == "A"
+  end
+
+  it "calls #to_int on argument for %c formats, if the argument does not respond to #to_ary" do
     obj = mock('65')
     def obj.to_int() 65 end
     ("%c" % obj).should == ("%c" % obj.to_int)
 
     obj = mock('65')
+    obj.should_receive(:respond_to?).with(:to_ary).and_return(false)
     obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
     obj.should_receive(:method_missing).with(:to_int).and_return(65)
     ("%c" % obj).should == "A"
@@ -609,7 +621,7 @@ describe "String#%" do
   %w(b d i o u x X).each do |f|
     format = "%" + f
     
-    it "behaves as if calling Kernel#Integer for #{format} argument" do
+    it "behaves as if calling Kernel#Integer for #{format} argument, if it does not respond to #to_ary" do
       (format % "10").should == (format % Kernel.Integer("10"))
       (format % nil).should == (format % Kernel.Integer(nil))
       (format % "0x42").should == (format % Kernel.Integer("0x42"))
@@ -644,11 +656,13 @@ describe "String#%" do
       (format % obj).should == (format % 4)
 
       obj = mock('65')
+      obj.should_receive(:respond_to?).with(:to_ary).any_number_of_times.and_return(false)
       obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
       obj.should_receive(:method_missing).with(:to_int).and_return(65)
       (format % obj).should == (format % 65)
 
       obj = mock('65')
+      obj.should_receive(:respond_to?).with(:to_ary).any_number_of_times.and_return(false)
       obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(false)
       obj.should_receive(:respond_to?).with(:to_i).any_number_of_times.and_return(true)
       obj.should_receive(:method_missing).with(:to_i).any_number_of_times.and_return(65)
@@ -670,7 +684,14 @@ describe "String#%" do
   %w(e E f g G).each do |f|
     format = "%" + f
     
-    it "behaves as if calling Kernel#Float for #{format} arguments" do
+    it "tries to convert the passed argument to an Array using #to_ary" do
+      obj = mock('3.14')
+      obj.should_receive(:respond_to?).with(:to_ary).any_number_of_times.and_return(true)
+      obj.should_receive(:method_missing).with(:to_ary).and_return([3.14])
+      (format % obj).should == (format % [3.14])
+    end
+    
+    it "behaves as if calling Kernel#Float for #{format} arguments, when the passed argument does not respond to #to_ary" do
       (format % 10).should == (format % 10.0)
       (format % "-10.4e-20").should == (format % -10.4e-20)
       (format % ".5").should == (format % 0.5)
@@ -697,6 +718,7 @@ describe "String#%" do
       (format % obj).should == (format % 5.0)
 
       obj = mock('3.14')
+      obj.should_receive(:respond_to?).with(:to_ary).any_number_of_times.and_return(false)
       obj.should_receive(:respond_to?).with(:to_f).any_number_of_times.and_return(true)
       obj.should_receive(:method_missing).with(:to_f).and_return(3.14)
       (format % obj).should == (format % 3.14)
