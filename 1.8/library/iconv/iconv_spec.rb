@@ -58,27 +58,40 @@ describe "Iconv#iconv" do
     end
   end
 
-  # The current spec (this one and below) test for the current MRI
-  # behavior, which is out of sync with the ruby-doc.
-  # TODO: MRI 1.9 apparently changed this behavior, to be in sync
-  # with the docs that state that the second argument is *length*.
-  # See http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17092
-  it "when given a positive end position treats it as exclusive" do
-    # i.e. string[start...end]
-    Iconv.open "us-ascii", "us-ascii" do |conv|
-      conv.iconv("testing", 0, 4).should == "test"
-      conv.iconv("testing", 4, 6).should == "in"
-      conv.iconv("substring", -6, 6).should == "str"
+
+  ruby_version_is "".."1.8.6.230" do
+    it "when given a positive end position treats it as exclusive" do
+      Iconv.open "us-ascii", "us-ascii" do |conv|
+        conv.iconv("testing", 0, 4).should == "test"
+        conv.iconv("testing", 4, 6).should == "in"
+        conv.iconv("substring", -6, 6).should == "str"
+      end
+    end
+
+    it "when given a negative end position treats it as inclusive" do
+      Iconv.open "us-ascii", "us-ascii" do |conv|
+        conv.iconv("testing", 0, -1).should == "testing"
+        conv.iconv("testing", 2, -4).should == "st"
+        conv.iconv("substring", -6, -4).should == "str"
+      end
     end
   end
+  
+  ruby_version_is "1.8.6.238".."1.9" do
+    it "when given a positive end position treats it as exclusive" do
+      Iconv.open "us-ascii", "us-ascii" do |conv|
+        conv.iconv("testing", 0, 4).should == "test"
+        conv.iconv("testing", 4, 6).should == "ing"
+        conv.iconv("substring", -6, 6).should == "string"
+      end
+    end
 
-  # TODO: see the comment above
-  it "when given a negative end position treats it as inclusive" do
-    # i.e. string[start..end]
-    Iconv.open "us-ascii", "us-ascii" do |conv|
-      conv.iconv("testing", 0, -1).should == "testing"
-      conv.iconv("testing", 2, -4).should == "st"
-      conv.iconv("substring", -6, -4).should == "str"
+    it "when given a negative end position treats it as inclusive" do
+      Iconv.open "us-ascii", "us-ascii" do |conv|
+        conv.iconv("testing", 0, -1).should == "testing"
+        conv.iconv("testing", 2, -4).should == "sting"
+        conv.iconv("substring", -6, -4).should == "string"
+      end
     end
   end
 
