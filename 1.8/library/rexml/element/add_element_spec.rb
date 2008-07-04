@@ -27,10 +27,7 @@ describe "REXML::Element#add_element" do
     @root.add_element "name"
     @root.elements["name"].name.should == "name"
     @root.elements["name"].attributes.should == {}
-
-    # FIXME: this fails in MRI since nil is returned,
-    # is that correct behavior or not?
-    # @root.elements["name"].context.should == {}
+    @root.elements["name"].context.should == nil
   end
 
   it "returns the added child" do
