@@ -160,13 +160,26 @@ describe "The 'utf-8' encoder" do
 end
 
 describe "The 'utf-16' encoder" do
-  it "emits an empty string when the source input is empty" do
-    Iconv.iconv("utf-16", "us-ascii", "", "").should == ["", ""]
-    Iconv.open "utf-16", "utf-8" do |conv|
-      conv.iconv("").should == ""
-      conv.iconv("test", 1, 1).should == ""
-      conv.iconv("test", 3, -3).should == ""
-      conv.iconv("test", 1, -4).should == ""
+
+  ruby_version_is "".."1.8.6p230" do
+    it "emits an empty string when the source input is empty" do
+      Iconv.iconv("utf-16", "us-ascii", "", "").should == ["", ""]
+      Iconv.open "utf-16", "utf-8" do |conv|
+        conv.iconv("").should == ""
+        conv.iconv("test", 1, 1).should == ""
+        conv.iconv("test", 3, -3).should == ""
+        conv.iconv("test", 1, -4).should == ""
+      end
+    end
+  end
+
+  ruby_version_is "1.8.6p238".."1.9" do
+    it "emits an empty string when the source input is empty" do
+      Iconv.iconv("utf-16", "us-ascii", "", "").should == ["", ""]
+      Iconv.open "utf-16", "utf-8" do |conv|
+        conv.iconv("").should == ""
+        conv.iconv("test", 1, 0).should == ""
+      end
     end
   end
 
