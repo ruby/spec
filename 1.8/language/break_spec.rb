@@ -25,8 +25,87 @@ describe "The break statement" do
   end
 end
 
+describe "The break statement in the method's block" do
+  it "returns from that singleton method" do
+    obj = Object.new
+    def obj.meth_with_block
+      yield
+      fail("break didn't break from the singleton method")
+    end
+    obj.meth_with_block do
+      break
+    end
+  end
+
+  it "returns from the method" do
+    class BreakTest
+      def self.meth_with_block
+        yield
+        fail("break didn't break from the method")
+      end
+    end
+    BreakTest.meth_with_block do
+      break
+    end
+  end
+
+  it "returns from the method, and with the specified value" do
+    class BreakTest
+      def self.meth_with_block
+        yield
+      end
+    end
+    res = BreakTest.meth_with_block do
+      break :return_value
+    end
+    res.should == :return_value
+  end
+
+  # Discovered in JRuby (see JRUBY-2756)
+  it "returns from the original method associated with the block even in case of chained calls" do
+    class BreakTest
+      def self.blocks_yielder(&b)
+        yield
+      end
+      def self.call_yielder(&b)
+        blocks_yielder(&b)
+        fail("break didn't return from 'blocks_yielder' method to the proper place")
+      end
+
+      def self.blocks_caller(&b)
+        b.call
+      end
+      def self.call_caller(&b)
+        blocks_caller(&b)
+        fail("break didn't return from 'blocks_caller' method to the proper place")
+      end
+    end
+
+    # this calls a method that calls another method that yields to the block
+    BreakTest.call_yielder do
+      break
+    end
+
+    # this calls a method that calls another method that calls the block
+    BreakTest.call_caller do
+      break
+    end
+
+    res = BreakTest.call_yielder do
+      break :return_value
+    end
+    res.should == :return_value
+
+    res = BreakTest.call_caller do
+      break :return_value
+    end
+    res.should == :return_value
+
+  end
+end
+
 describe "Breaking out of a loop with a value" do
-  
+
   it "assigns objects" do
     a = loop do break; end;          a.should == nil
     a = loop do break nil; end;      a.should == nil
@@ -65,7 +144,7 @@ describe "Breaking out of a loop with a value" do
     *a = loop do break [1,2]; end;    a.should == [[1,2]]
     *a = loop do break [*[]]; end;    a.should == [[]]
     *a = loop do break [*[1]]; end;   a.should == [[1]]
-    *a = loop do break [*[1,2]]; end; a.should == [[1,2]]    
+    *a = loop do break [*[1,2]]; end; a.should == [[1,2]]
   end
 
   it "assigns splatted objects to a splatted reference" do
@@ -78,7 +157,7 @@ describe "Breaking out of a loop with a value" do
     *a = loop do break *[1,2]; end;    a.should == [[1,2]]
     *a = loop do break *[*[]]; end;    a.should == [nil]
     *a = loop do break *[*[1]]; end;   a.should == [1]
-    *a = loop do break *[*[1,2]]; end; a.should == [[1,2]]    
+    *a = loop do break *[*[1,2]]; end; a.should == [[1,2]]
   end
 
   it "assigns splatted objects to a splatted reference from a splatted loop" do
@@ -91,7 +170,7 @@ describe "Breaking out of a loop with a value" do
     *a = *loop do break *[1,2]; end;    a.should == [1,2]
     *a = *loop do break *[*[]]; end;    a.should == [nil]
     *a = *loop do break *[*[1]]; end;   a.should == [1]
-    *a = *loop do break *[*[1,2]]; end; a.should == [1,2]    
+    *a = *loop do break *[*[1,2]]; end; a.should == [1,2]
   end
 
   it "assigns objects to multiple block variables" do
@@ -118,7 +197,7 @@ describe "Breaking out of a loop with a value" do
     a,b,*c = loop do break *[1,2]; end;    [a,b,c].should == [1,2,[]]
     a,b,*c = loop do break *[*[]]; end;    [a,b,c].should == [nil,nil,[]]
     a,b,*c = loop do break *[*[1]]; end;   [a,b,c].should == [1,nil,[]]
-    a,b,*c = loop do break *[*[1,2]]; end; [a,b,c].should == [1,2,[]]    
+    a,b,*c = loop do break *[*[1,2]]; end; [a,b,c].should == [1,2,[]]
   end
 
   it "stops any loop type at the correct spot" do
@@ -141,4 +220,5 @@ describe "Breaking out of a loop with a value" do
     break_test {|i| break i if i == 1 }
     i.should == 1
   end
+
 end
