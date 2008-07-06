@@ -25,8 +25,8 @@ describe "The break statement" do
   end
 end
 
-describe "The break statement in the method's block" do
-  it "returns from that singleton method" do
+describe "Executing break from within a block" do
+  it "returns from the invoking singleton method" do
     obj = Object.new
     def obj.meth_with_block
       yield
@@ -37,7 +37,7 @@ describe "The break statement in the method's block" do
     end
   end
 
-  it "returns from the method" do
+  it "returns from the invoking method" do
     class BreakTest
       def self.meth_with_block
         yield
@@ -49,7 +49,7 @@ describe "The break statement in the method's block" do
     end
   end
 
-  it "returns from the method, and with the specified value" do
+  it "returns from the invoking method, with the specified value" do
     class BreakTest
       def self.meth_with_block
         yield
@@ -62,42 +62,50 @@ describe "The break statement in the method's block" do
   end
 
   # Discovered in JRuby (see JRUBY-2756)
-  it "returns from the original method associated with the block even in case of chained calls" do
+  it "returns from the original invoking method even in case of chained calls" do
     class BreakTest
-      def self.blocks_yielder(&b)
+      # case #1: yield
+      def self.meth_with_yield(&b)
         yield
+        fail("break returned from yield to wrong place")
       end
-      def self.call_yielder(&b)
-        blocks_yielder(&b)
-        fail("break didn't return from 'blocks_yielder' method to the proper place")
+      def self.invoking_method(&b)
+        meth_with_yield(&b)
+        fail("break returned from 'meth_with_yield' method to wrong place")
       end
 
-      def self.blocks_caller(&b)
+      # case #2: block.call
+      def self.meth_with_block_call(&b)
         b.call
+        fail("break returned from b.call to wrong place")
       end
-      def self.call_caller(&b)
-        blocks_caller(&b)
-        fail("break didn't return from 'blocks_caller' method to the proper place")
+      def self.invoking_method2(&b)
+        meth_with_block_call(&b)
+        fail("break returned from 'meth_with_block_call' method to wrong place")
       end
     end
 
     # this calls a method that calls another method that yields to the block
-    BreakTest.call_yielder do
+    BreakTest.invoking_method do
       break
+      fail("break didn't, well, break")
     end
 
     # this calls a method that calls another method that calls the block
-    BreakTest.call_caller do
+    BreakTest.invoking_method2 do
       break
+      fail("break didn't, well, break")
     end
 
-    res = BreakTest.call_yielder do
+    res = BreakTest.invoking_method do
       break :return_value
+      fail("break didn't, well, break")
     end
     res.should == :return_value
 
-    res = BreakTest.call_caller do
+    res = BreakTest.invoking_method2 do
       break :return_value
+      fail("break didn't, well, break")
     end
     res.should == :return_value
 
