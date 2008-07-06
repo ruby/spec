@@ -5,7 +5,7 @@ require 'stringio'
 describe "CGI::QueryExtension#read_from_cmdline when the ARGV Array contains values" do
   before(:each) do
     ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
-    @old_argv, ARGV = ARGV, ["one=value", "two=other_value", "three"]
+    @old_argv = ARGV
     @cgi = CGI.new
   end
   
@@ -15,6 +15,7 @@ describe "CGI::QueryExtension#read_from_cmdline when the ARGV Array contains val
   end
 
   it "returns the ARGV array converted to a HTTP Query String" do
+    ARGV = ["one=value", "two=other_value", "three"]
     @cgi.send(:read_from_cmdline).should == "one=value&two=other_value&three"
   end
   
@@ -27,12 +28,17 @@ end
 describe "CGI::QueryExtension#read_from_cmdline when the ARGV Array contains no values" do
   before(:each) do
     ENV['REQUEST_METHOD'], @old_request_method = "GET", ENV['REQUEST_METHOD']
+    
+    @old_argv = ARGV.dup
+    ARGV.replace([])
+    
     @old_stdin = $stdin
     @cgi = CGI.new
   end
   
   after(:each) do
     ENV['REQUEST_METHOD'] = @old_request_method
+    ARGV.replace(@old_argv)
     $stdin = @old_stdin
   end
 
