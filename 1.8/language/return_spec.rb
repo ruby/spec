@@ -11,8 +11,15 @@ describe "Assignment via return" do
     def r; return [*[]]; end;    a = r(); a.should == []
     def r; return [*[1]]; end;   a = r(); a.should == [1]
     def r; return [*[1,2]]; end; a = r(); a.should == [1,2]
+
+    # return with expressions separated by commas
+    def r; return 1, 2, 3; end;
+    a  =  r(); a.should == [1, 2, 3]
+    a  = *r(); a.should == [1, 2, 3]
+    *a =  r(); a.should == [[1, 2, 3]]
+    *a = *r(); a.should == [1, 2, 3]
   end
-  
+
   it "assigns splatted objects to block variables" do
     def r; return *nil; end;     a = r(); a.should == nil
     def r; return *1; end;       a = r(); a.should == 1
@@ -35,7 +42,7 @@ describe "Assignment via return" do
     def r; return [1,2]; end;    a = *r(); a.should == [1,2]
     def r; return [*[]]; end;    a = *r(); a.should == nil
     def r; return [*[1]]; end;   a = *r(); a.should == 1
-    def r; return [*[1,2]]; end; a = *r(); a.should == [1,2]    
+    def r; return [*[1,2]]; end; a = *r(); a.should == [1,2]
   end
   
   it "assigns objects to splatted block variables that include the splat operator inside the block" do
@@ -47,7 +54,7 @@ describe "Assignment via return" do
     def r; return *[[]]; end;     *a = r(); a.should == [[]]
     def r; return *[*[]]; end;    *a = r(); a.should == [nil]
     def r; return *[*[1]]; end;   *a = r(); a.should == [1]
-    def r; return *[*[1,2]]; end; *a = r(); a.should == [[1,2]]    
+    def r; return *[*[1,2]]; end; *a = r(); a.should == [[1,2]]
   end
   
   it "assigns objects to splatted block variables that include the splat operator inside the block" do
