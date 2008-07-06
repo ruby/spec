@@ -177,6 +177,28 @@ describe "Executing return from within a block" do
 
     enclosing_method.should == :return_value
   end
+
+  it "returns from the lexically enclosing method even in case of chained calls" do
+    class ChainedReturnTest
+      def self.meth_with_yield(&b)
+        yield
+        fail("returned from yield to wrong place")
+      end
+      def self.invoking_method(&b)
+        meth_with_yield(&b)
+        fail("returned from 'meth_with_yield' method to wrong place")
+      end
+      def self.enclosing_method
+        invoking_method do
+          return :return_value
+          fail("return didn't, well, return")
+        end
+        fail("return should not behave like break")
+      end
+    end
+
+    ChainedReturnTest.enclosing_method.should == :return_value
+  end
 end
 
 describe "The return statement" do
