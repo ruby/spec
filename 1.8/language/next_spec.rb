@@ -37,7 +37,7 @@ describe "The next statement from within the block" do
     NextSpecs.yielding_method(nil) { next }.should == :method_return_value
   end
 
-  it "returns from the invoking method, with the specified value" do
+  it "returns to the invoking method, with the specified value" do
     NextSpecs.yielding_method(nil) {
       next nil;
       fail("next didn't end the block execution")
@@ -53,6 +53,27 @@ describe "The next statement from within the block" do
       fail("next didn't end the block execution")
     }.should == :method_return_value
   end
+
+  it "returns to the currently yielding method in case of chained calls" do
+    class ChainedNextTest
+      def self.meth_with_yield(&b)
+        yield.should == :next_return_value
+        :method_return_value
+      end
+      def self.invoking_method(&b)
+        meth_with_yield(&b)
+      end
+      def self.enclosing_method
+        invoking_method do
+          next :next_return_value
+          :wrong_return_value
+        end
+      end
+    end
+
+    ChainedNextTest.enclosing_method.should == :method_return_value
+  end
+
 end
 
 describe "Assignment via next" do
