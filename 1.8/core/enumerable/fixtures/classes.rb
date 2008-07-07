@@ -12,6 +12,19 @@ module EnumerableSpecs
     end      
   end
 
+  class Empty
+    include Enumerable
+    def each
+    end
+  end
+
+  class ThrowingEach
+    include Enumerable
+    def each
+      raise "from each"
+    end
+  end
+
   # (Legacy form rubycon)
   class EachDefiner
 
