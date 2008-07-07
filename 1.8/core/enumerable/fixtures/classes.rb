@@ -25,6 +25,10 @@ module EnumerableSpecs
     end
   end
 
+  class NoEach
+    include Enumerable
+  end
+
   # (Legacy form rubycon)
   class EachDefiner
 
