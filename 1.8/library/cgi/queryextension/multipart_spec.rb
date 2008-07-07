@@ -4,8 +4,11 @@ require "stringio"
 
 describe "CGI::QueryExtension#multipart?" do
   before(:each) do
-    @old_env = ENV.dup
     @old_stdin = $stdin
+    
+    @old_request_method = ENV['REQUEST_METHOD']
+    @old_content_type = ENV['CONTENT_TYPE']
+    @old_content_length = ENV['CONTENT_LENGTH']
     
     ENV['REQUEST_METHOD'] = "POST"
     ENV["CONTENT_TYPE"] = "multipart/form-data; boundary=---------------------------1137522503144128232716531729"
@@ -24,8 +27,11 @@ EOS
   end
   
   after(:each) do
-    ENV = @old_env
     $stdin = @old_stdin
+  
+    ENV['REQUEST_METHOD'] = @old_request_method
+    ENV['CONTENT_TYPE'] = @old_content_type
+    ENV['CONTENT_LENGTH'] = @old_content_length
   end
   
   it "returns true if the current Request is a multipart request" do
