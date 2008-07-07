@@ -15,12 +15,7 @@ unless ENV['MSPEC_RUNNER']
   end
 end
 
-unless ENV['OUTPUT_WARNINGS']
-  $verbose = $VERBOSE
-  $VERBOSE = nil
-
-  at_exit { $VERBOSE = $verbose }
-end
+$VERBOSE = nil unless ENV['OUTPUT_WARNINGS']
 
 def has_tty?
   if STDOUT.tty? then
