@@ -3,7 +3,7 @@ require 'logger'
 module LoggerSpecs
 
   def self.strip_date(str)
-    str[39..-1]
+    str[38..-1].lstrip
   end
   class TestApp < Logger::Application
     def initialize(appname, log_file=nil)
