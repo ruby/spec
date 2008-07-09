@@ -31,7 +31,7 @@ shared :document_add do |cmd|
       @doc.doctype.name.should == "transitional"
     end
 
-    ruby_bug "#19058", "1.8.6" do
+    ruby_bug "#19058", "1.8" do
       # MRI 1.8.x and 1.9 bug. A patch has been submitted.
       # http://rubyforge.org/tracker/index.php?func=detail&aid=19058&group_id=426&atid=1698
       it "overwrites existing DocType" do

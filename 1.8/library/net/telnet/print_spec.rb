@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
-require 'cgi'
+require 'net/telnet'
 
-describe "CGI::QueryExtension#read_from_cmdline" do
+describe "Net::Telnet#print" do
   it "needs to be reviewed for spec completeness" do
   end
 end

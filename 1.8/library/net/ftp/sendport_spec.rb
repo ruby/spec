@@ -13,8 +13,11 @@ describe "Net::FTP#sendport when using IPv4" do
   end
   
   it "sends a HOST-PORT specification for the passed host and port using the PORT command" do
-    @socket.should_receive(:write).with("PORT 192,168,0,1,4,210\r\n")
-    @ftp.send(:sendport, "192.168.0.1", 1234)
+    # Guard against the Mathn library
+    conflicts_with :Prime do
+      @socket.should_receive(:write).with("PORT 192,168,0,1,4,210\r\n")
+      @ftp.send(:sendport, "192.168.0.1", 1234)
+    end
   end
   
   it "raises a Net::FTPPermError when the response code is 500" do

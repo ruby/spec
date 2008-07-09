@@ -129,7 +129,12 @@ describe "Operators" do
 
   it "* / % are left-associative" do
     (2*1/2).should     == (2*1)/2
-    (2*1/2).should_not == 2*(1/2)
+    # Guard against the Mathn library
+    # TODO: Make these specs not rely on specific behaviour / result values
+    # by using mocks.
+    conflicts_with :Prime do
+      (2*1/2).should_not == 2*(1/2)
+    end
 
     (10/7/5).should     == (10/7)/5
     (10/7/5).should_not == 10/(7/5)

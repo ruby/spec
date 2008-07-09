@@ -57,8 +57,10 @@ describe "Array#fill" do
   end
 
   # See: http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17481
-  it "returns self when given an index and a negative count whose absolute value exceeds the index" do
+  it "returns self when given an index and a negative count" do
+    [1, 2, 3].fill('a', 3, -2).should == [1, 2, 3]
     [1, 2, 3].fill('a', 3, -4).should == [1, 2, 3]
+    [1, 2, 3].fill('a', 2, -1).should == [1, 2, 3]
     [1, 2, 3].fill('a', 1, -3).should == [1, 2, 3]
     [1, 2, 3].fill('a', 1, -1).should == [1, 2, 3]
     [1, 2, 3].fill('a', 1, -300000).should == [1, 2, 3]
