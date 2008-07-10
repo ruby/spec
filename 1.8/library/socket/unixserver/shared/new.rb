@@ -12,6 +12,7 @@ shared :new do |cmd|
         unix = UNIXServer.new(path)
         unix.path.should == path
         unix.addr.should == ["AF_UNIX", path]
+        File.unlink(path) 
       end
     end
   end
