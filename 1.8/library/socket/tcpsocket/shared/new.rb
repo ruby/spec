@@ -13,7 +13,7 @@ shared :new do |cmd|
     it "refuses the connection when there is no server to connect to" do
       lambda { TCPSocket.new('127.0.0.1', SocketSpecs.port) }.should raise_error(Errno::ECONNREFUSED)
     end
-    
+
     it "connects to a listening server" do
       thread = Thread.new do
         server = TCPServer.new(SocketSpecs.port)
@@ -45,7 +45,7 @@ shared :new do |cmd|
       # platforms such as OpenBSD setup the 
       # localhost as localhost.domain.com
       sock.addr[2].should =~ /^#{@hostname}/
-        sock.addr[3].should == "127.0.0.1"
+      sock.addr[3].should == "127.0.0.1"
       sock.close
       thread.join
     end
