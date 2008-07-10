@@ -64,14 +64,14 @@ describe "Socket#getaddrinfo" do
    end
 
    it "accepts empty addresses for IPv4 non-passive sockets" do
-    BasicSocket.do_not_reverse_lookup = false
+    BasicSocket.do_not_reverse_lookup = true
      res = Socket::getaddrinfo(nil, "http", 
                                Socket::AF_INET, 
                                Socket::SOCK_STREAM, 
                                Socket::IPPROTO_TCP,
                                0)  
 
-     expected = [["AF_INET", 80, SocketSpecs.hostname, "127.0.0.1", Socket::AF_INET, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]]
+     expected = [["AF_INET", 80, "127.0.0.1", "127.0.0.1", Socket::AF_INET, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]]
      res.should == expected
    end
 
