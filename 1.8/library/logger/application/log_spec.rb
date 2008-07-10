@@ -49,3 +49,23 @@ describe "Logger::Application#log" do
     temp.should == 1
   end
 end
+
+describe "Logger::Application#log=" do
+  before :each do
+    @file_path = tmp("test_log.log")
+    @log_file = File.open(@file_path, "w+")
+    @app = LoggerSpecs::TestApp.new("TestApp", @log_file)
+    @app.start
+  end
+
+  after :all do
+    File.unlink(@file_path) if File.exists?(@file_path)
+  end
+
+  it "sets the log device" do
+    regex = /STDERR Message/
+    @app.log = STDERR
+    lambda { @app.log(Logger::WARN, "STDERR Message") }.should output_to_fd(regex, STDERR)
+  end
+end
+
