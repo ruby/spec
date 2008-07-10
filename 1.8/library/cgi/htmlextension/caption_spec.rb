@@ -12,7 +12,9 @@ describe "CGI::HtmlExtension#caption when passed a String" do
   it "returns a 'caption'-element, using the passed String for the 'align'-attribute" do
     expected = '<CAPTION ALIGN="left"></CAPTION>'
     @html.caption("left").should == expected
-
+  end
+  
+  it "includes the passed block's return value when passed a block" do
     expected = '<CAPTION ALIGN="left">Capital Cities</CAPTION>'
     @html.caption("left") { "Capital Cities" }.should == expected
   end
@@ -29,7 +31,10 @@ describe "CGI::HtmlExtension#caption when passed a Hash" do
   it "returns a 'caption'-element, using the passed Hash for attributes" do
     expected = '<CAPTION ID="test" ALIGN="left"></CAPTION>'
     @html.caption("ALIGN" => "left", "ID" => "test").should == expected
-
+  end
+  
+  it "includes the passed block's return value when passed a block" do
     expected = '<CAPTION ID="test" ALIGN="left">Capital Cities</CAPTION>'
-    @html.caption("ALIGN" => "left", "ID" => "test") { "Capital Cities" }.should == expected  end
+    @html.caption("ALIGN" => "left", "ID" => "test") { "Capital Cities" }.should == expected
+  end
 end
