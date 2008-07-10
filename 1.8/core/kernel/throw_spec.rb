@@ -3,10 +3,11 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Kernel.throw" do
   it "transfers control to the end of the active catch block waiting for symbol" do
-    catch :blah do
+    catch(:blah) do
+      :value
       throw :blah
       fail("throw didn't transfer the control")
-    end
+    end.should be_nil
   end
 
   it "transfers control to the innermost catch block waiting for the same sympol" do

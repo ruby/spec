@@ -32,33 +32,17 @@ describe "Executing break from within a block" do
       yield
       fail("break didn't break from the singleton method")
     end
-    obj.meth_with_block do
-      break
-    end
+    obj.meth_with_block { break :value }.should == :value
   end
 
-  it "returns from the invoking method" do
+  it "returns from the invoking method with the argument to break" do
     class BreakTest
       def self.meth_with_block
         yield
         fail("break didn't break from the method")
       end
     end
-    BreakTest.meth_with_block do
-      break
-    end
-  end
-
-  it "returns from the invoking method, with the specified value" do
-    class BreakTest
-      def self.meth_with_block
-        yield
-      end
-    end
-    res = BreakTest.meth_with_block do
-      break :return_value
-    end
-    res.should == :return_value
+    BreakTest.meth_with_block { break :value }.should == :value
   end
 
   # Discovered in JRuby (see JRUBY-2756)

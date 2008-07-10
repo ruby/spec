@@ -12,7 +12,7 @@ describe "Proc.new with an associated block" do
     a_proc = Proc.new { return } 
     res = some_method(&a_proc)
 
-    raise_error(LocalJumpError) { res.call }
+    lambda { res.call }.should raise_error(LocalJumpError)
   end
 
   it "returns from within enclosing method when 'return' is used in the block" do
@@ -29,9 +29,7 @@ end
 
 describe "Proc.new without a block" do
   it "raises an ArgumentError" do
-    raise_error(ArgumentError, "tried to create Proc object without a block") do
-      Proc.new
-    end
+    lambda { Proc.new }.should raise_error(ArgumentError)
   end
 
   it "raises an ArgumentError if invoked from within a method with no block" do

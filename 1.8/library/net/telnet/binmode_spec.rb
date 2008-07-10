@@ -74,8 +74,9 @@ describe "Net::Telnet#binmode when passed [Object]" do
   end
   
   it "does not change the Binmode" do
-    @telnet.binmode = true
+    mode = @telnet.binmode
     @telnet.binmode(Object.new) rescue nil
+    @telnet.binmode.should == mode
   end
 end
 

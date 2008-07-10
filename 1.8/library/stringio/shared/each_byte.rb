@@ -16,9 +16,9 @@ shared :stringio_each_byte do |cmd|
       seen.should == [1, 2, 3]
     end
 
-    it "does not yield anything if the current position is out of bounds" do
+    it "does not yield if the current position is out of bounds" do
       @io.pos = 1000
-      @io.send(cmd) { |b| fail("should not yield") }
+      @io.send(cmd) { |b| b }.should be_nil
     end
 
     ruby_version_is "" ... "1.8.7" do

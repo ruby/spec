@@ -187,11 +187,13 @@ end
 describe "Calling a private setter method" do
   it "permits self as a receiver" do
     class << self
+      attr_reader :foo
       attr_writer :foo
       private :foo=
     end
-    
+
     self.foo = 42
+    self.foo.should == 42
   end
 end
 
