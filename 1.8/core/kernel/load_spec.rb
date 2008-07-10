@@ -229,6 +229,5 @@ describe "Shell expansion in Kernel#load" do
 end
 
 describe "Kernel.load" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it "needs to be reviewed for spec completeness"
 end

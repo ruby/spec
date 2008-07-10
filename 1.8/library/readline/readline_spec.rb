@@ -4,12 +4,10 @@ has_tty? do # needed for CI until we figure out a better way
 require 'readline'
 
 describe "Readline#readline" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it "needs to be reviewed for spec completeness"
 end
 
 describe "Readline.readline" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it "needs to be reviewed for spec completeness"
 end
 end

@@ -277,6 +277,5 @@ describe "Shell expansion in Kernel#require" do
 end
 
 describe "Kernel.require" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it "needs to be reviewed for spec completeness"
 end

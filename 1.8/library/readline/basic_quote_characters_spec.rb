@@ -4,12 +4,10 @@ has_tty? do # needed for CI until we figure out a better way
 require 'readline'
 
 describe "Readline.basic_quote_characters" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it "needs to be reviewed for spec completeness"
 end
 
 describe "Readline.basic_quote_characters=" do
-  it "needs to be reviewed for spec completeness" do
-  end
+  it "needs to be reviewed for spec completeness"
 end
 end
