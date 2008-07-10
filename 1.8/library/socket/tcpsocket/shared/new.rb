@@ -21,7 +21,10 @@ shared :new do |cmd|
         server.close
       end
       Thread.pass until thread.status == 'sleep'
-      lambda { TCPSocket.new(@hostname, SocketSpecs.port) }.should_not raise_error(Errno::ECONNREFUSED)
+      lambda { 
+        sock = TCPSocket.new(@hostname, SocketSpecs.port) 
+        sock.close
+      }.should_not raise_error(Errno::ECONNREFUSED)
       thread.join
     end
 
@@ -40,7 +43,8 @@ shared :new do |cmd|
       # platforms such as OpenBSD setup the 
       # localhost as localhost.domain.com
       sock.addr[2].should =~ /^#{@hostname}/
-        sock.addr[3].should == "127.0.0.1"
+      sock.addr[3].should == "127.0.0.1"
+      sock.close
       thread.join
     end
   end
