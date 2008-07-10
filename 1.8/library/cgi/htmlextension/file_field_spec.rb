@@ -80,7 +80,7 @@ describe "CGI::HtmlExtension#file_field when passed a Hash" do
     @html.extend(CGI::HtmlExtension)
   end
 
-  ruby_bug "", "1.8.7.47" do
+  ruby_bug "", "1.8.7" do
     it "returns a file-'input'-element using the passed Hash for attributes" do
       expected = '<INPUT SIZE="40" NAME="test" TYPE="file">'
       @html.file_field("NAME" => "test", "SIZE" => 40).should == expected
