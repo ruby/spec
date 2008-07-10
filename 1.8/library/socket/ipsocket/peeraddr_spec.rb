@@ -24,7 +24,7 @@ describe "Socket::IPSocket#peeraddr" do
       addrinfo = @client.peeraddr
       addrinfo[0].should == "AF_INET"
       addrinfo[1].should == SocketSpecs.port
-      addrinfo[2].should == "localhost"
+      addrinfo[2].should == SocketSpecs.hostname
       addrinfo[3].should == "127.0.0.1"
     end
 
@@ -45,7 +45,7 @@ describe "Socket::IPSocket#peeraddr" do
       addrinfo = @client.peeraddr
       addrinfo[0].should == "AF_INET"
       addrinfo[1].should == SocketSpecs.port
-      addrinfo[2].should == "localhost"
+      addrinfo[2].should == SocketSpecs.hostname
       addrinfo[3].should == "127.0.0.1"
     end
 

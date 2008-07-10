@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../fixtures/classes'
 describe "Socket::IPSocket#getaddress" do
 
   it "returns the IP address of hostname" do
-    addr_local = IPSocket.getaddress("localhost")
+    addr_local = IPSocket.getaddress(SocketSpecs.hostname)
     ["127.0.0.1", "::1"].include?(addr_local).should == true
   end
 

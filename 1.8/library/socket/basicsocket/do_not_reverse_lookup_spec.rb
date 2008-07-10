@@ -21,7 +21,7 @@ ruby_version_is ""..."1.9" do
 
     it "looks for hostnames when set to false" do
       BasicSocket.do_not_reverse_lookup = false
-      @socket.peeraddr[2].should == "localhost"
+      @socket.peeraddr[2].should == SocketSpecs.hostname
     end
 
     it "looks for numeric addresses when set to true" do
@@ -50,7 +50,7 @@ ruby_version_is "1.9" do
 
     it "looks for hostnames when set to false" do
       @socket.do_not_reverse_lookup = false
-      @socket.peeraddr[2].should == "localhost"
+      @socket.peeraddr[2].should == SocketSpecs.hostname
     end
 
     it "looks for numeric addresses when set to true" do

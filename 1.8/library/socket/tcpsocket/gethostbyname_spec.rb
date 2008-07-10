@@ -4,15 +4,15 @@ require File.dirname(__FILE__) + '/../fixtures/classes'
 describe "TCPSocket#gethostbyname" do
 
   before :each do
-    @host_info = TCPSocket.gethostbyname("localhost")
+    @host_info = TCPSocket.gethostbyname(SocketSpecs.hostname)
   end
   it "returns an array elements of information on the hostname" do
     @host_info.should be_kind_of(Array)
   end
-  
+
   platform_is_not :windows do
     it "returns the canonical name as first value" do
-      @host_info[0].should == "localhost"
+    @host_info[0].should == SocketSpecs.hostname
     end
   end
 
@@ -23,6 +23,7 @@ describe "TCPSocket#gethostbyname" do
       @host_info[0].should == host
     end
   end
+
 
   it "returns any aliases to the address as second value" do
     @host_info[1].should be_kind_of(Array)

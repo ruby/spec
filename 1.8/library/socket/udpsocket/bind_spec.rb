@@ -12,13 +12,13 @@ describe "UDPSocket.bind" do
   end
 
   it "binds the socket to a port" do
-    @socket.bind("localhost", SocketSpecs.port)
+    @socket.bind(SocketSpecs.hostname, SocketSpecs.port)
 
-    lambda { @socket.bind("localhost", SocketSpecs.port) }.should raise_error
+    lambda { @socket.bind(SocketSpecs.hostname, SocketSpecs.port) }.should raise_error
   end
 
   it "receives a hostname and a port" do
-    @socket.bind("localhost", SocketSpecs.port)
+    @socket.bind(SocketSpecs.hostname, SocketSpecs.port)
     
     port, host = Socket.unpack_sockaddr_in(@socket.getsockname)
     
