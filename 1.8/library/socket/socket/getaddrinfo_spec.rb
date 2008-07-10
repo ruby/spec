@@ -64,6 +64,7 @@ describe "Socket#getaddrinfo" do
    end
 
    it "accepts empty addresses for IPv4 non-passive sockets" do
+    BasicSocket.do_not_reverse_lookup = false
      res = Socket::getaddrinfo(nil, "http", 
                                Socket::AF_INET, 
                                Socket::SOCK_STREAM, 
