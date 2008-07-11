@@ -10,6 +10,7 @@ describe "Socket::IPSocket#peeraddr" do
   after :each do
     @server.close unless @server.closed?
     @client.close unless @client.closed?
+    BasicSocket.do_not_reverse_lookup = false
   end
 
   it "raises error if socket is not connected" do

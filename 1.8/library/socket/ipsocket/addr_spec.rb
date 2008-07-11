@@ -9,6 +9,7 @@ describe "Socket::IPSocket#addr" do
 
   after :each do
     @socket.close unless @socket.closed?
+    BasicSocket.do_not_reverse_lookup = false
   end
 
   ruby_version_is ""..."1.9" do
