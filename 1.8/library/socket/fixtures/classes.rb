@@ -9,6 +9,10 @@ module SocketSpecs
     Socket.getaddrinfo("127.0.0.1", nil)[0][2]
   end
 
+  def self.hostnamev6
+    Socket.getaddrinfo("::1", nil)[0][2]
+  end
+  
   def self.port
     40001
   end

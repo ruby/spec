@@ -26,7 +26,7 @@ describe "TCPServer.new" do
       addr[3].should == '127.0.0.1'
     else
       addr[1].should be_kind_of(Fixnum)
-      addr[2].should =~ /^::1\b/
+      addr[2].should =~ /^#{SocketSpecs.hostnamev6}\b/
       addr[3].should == '::1'
     end
   end
