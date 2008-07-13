@@ -1,12 +1,10 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'cgi'
+require File.dirname(__FILE__) + "/fixtures/common"
 
 describe "CGI::HtmlExtension#checkbox_group when passed name, values ..." do
   before(:each) do
-    @html = Object.new
-    @html.extend(CGI::Html4)
-    @html.element_init
-    @html.extend(CGI::HtmlExtension)
+    @html = CGISpecs::HtmlExtension.new
   end
 
   it "returns a sequence of 'checkbox'-elements with the passed name and the passed values" do
@@ -54,10 +52,7 @@ end
 
 describe "CGI::HtmlExtension#checkbox_group when passed Hash" do
   before(:each) do
-    @html = Object.new
-    @html.extend(CGI::Html4)
-    @html.element_init
-    @html.extend(CGI::HtmlExtension)
+    @html = CGISpecs::HtmlExtension.new
   end
 
   it "uses the passed Hash to generate the checkbox sequence" do
