@@ -19,8 +19,8 @@ describe "CGI::HtmlExtension#image_button" do
     end
   end
 
-  describe "when passed name" do
-    it "returns an image-'input'-element with the passed name" do
+  describe "when passed src" do
+    it "returns an image-'input'-element with the passed src" do
       output = @html.image_button("/path/to/image.png")
       output.should equal_element("INPUT", {"SRC" => "/path/to/image.png", "TYPE" => "image"}, "", :not_closed => true)
     end
@@ -31,8 +31,8 @@ describe "CGI::HtmlExtension#image_button" do
     end
   end
 
-  describe "when passed name, value" do
-    it "returns an image-'input'-element with the passed name and value" do
+  describe "when passed src, name" do
+    it "returns an image-'input'-element with the passed src and name" do
       output = @html.image_button("/path/to/image.png", "test")
       output.should equal_element("INPUT", {"SRC" => "/path/to/image.png", "TYPE" => "image", "NAME" => "test"}, "", :not_closed => true)
     end
@@ -40,6 +40,18 @@ describe "CGI::HtmlExtension#image_button" do
     it "ignores a passed block" do
       output = @html.image_button("/path/to/image.png", "test") { "test" }
       output.should equal_element("INPUT", {"SRC" => "/path/to/image.png", "TYPE" => "image", "NAME" => "test"}, "", :not_closed => true)
+    end
+  end
+
+  describe "when passed src, name, alt" do
+    it "returns an image-'input'-element with the passed src, name and alt" do
+      output = @html.image_button("/path/to/image.png", "test", "alternative")
+      output.should equal_element("INPUT", {"SRC" => "/path/to/image.png", "TYPE" => "image", "NAME" => "test", "ALT" => "alternative"}, "", :not_closed => true)
+    end
+    
+    it "ignores a passed block" do
+      output = @html.image_button("/path/to/image.png", "test", "alternative") { "test" }
+      output.should equal_element("INPUT", {"SRC" => "/path/to/image.png", "TYPE" => "image", "NAME" => "test", "ALT" => "alternative"}, "", :not_closed => true)
     end
   end
 
