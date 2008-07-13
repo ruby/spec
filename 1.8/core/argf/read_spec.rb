@@ -4,14 +4,18 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "ARGF.read" do
   before :each do
     ARGV.clear
-    @contents_file1 = File.read(File.dirname(__FILE__) + '/fixtures/file1.txt')    
-    @contents_file2 = File.read(File.dirname(__FILE__) + '/fixtures/file2.txt')
-    @contents_stdin = File.read(File.dirname(__FILE__) + '/fixtures/stdin.txt')
+    @file1 = ARGFSpecs.fixture_file('file1.txt')
+    @file2 = ARGFSpecs.fixture_file('file2.txt')
+    @stdin = ARGFSpecs.fixture_file('stdin.txt')
+    @contents_file1 = File.read(@file1)
+    @contents_file2 = File.read(@file2)
+    @contents_stdin = File.read(@stdin)
   end
 
   after :each do
-    # Close any open file (catch exception if already closed)
-    ARGF.close rescue nil
+    # Close any open file
+    ARGF.close unless ARGF.closed?
+    ARGFSpecs.fixture_file_delete(@file1,@file2,@stdin)
   end
   
   it "reads the contents of a file" do
@@ -67,25 +71,25 @@ describe "ARGF.read" do
   
   it "reads the contents of stdin" do
     ARGFSpecs.file_args('-')
-    STDIN.reopen(File.dirname(__FILE__) + '/fixtures/stdin.txt')
+    STDIN.reopen(ARGFSpecs.fixture_file('stdin.txt'))
     ARGF.read.should ==  @contents_stdin
   end
   
   it "reads a number of bytes from stdin" do
     ARGFSpecs.file_args('-')
-    STDIN.reopen(File.dirname(__FILE__) + '/fixtures/stdin.txt')
+    STDIN.reopen(ARGFSpecs.fixture_file('stdin.txt'))
     ARGF.read(10).should ==  @contents_stdin[0,10]
   end
   
   it "reads a number of bytes from stdin" do
     ARGFSpecs.file_args('-')
-    STDIN.reopen(File.dirname(__FILE__) + '/fixtures/stdin.txt')
+    STDIN.reopen(ARGFSpecs.fixture_file('stdin.txt'))
     ARGF.read(10).should ==  @contents_stdin[0,10]
   end
   
   it "reads the contents of one file and stdin" do
     ARGFSpecs.file_args('file1.txt', '-')
-    STDIN.reopen(File.dirname(__FILE__) + '/fixtures/stdin.txt')
+    STDIN.reopen(ARGFSpecs.fixture_file('stdin.txt'))
     ARGF.read.should ==  @contents_file1 + @contents_stdin
   end
   
@@ -94,35 +98,11 @@ describe "ARGF.read" do
     ARGF.read.should ==  @contents_file1 + @contents_file1
   end
   
-  it "raises an IOError when contents read from stdin twice" do
-    ARGFSpecs.file_args('-', '-')
-    STDIN.reopen(File.dirname(__FILE__) + '/fixtures/stdin.txt')
-    str = ""
-    lambda { str = ARGF.read }.should raise_error(IOError)
-    str.should ==  ""
-  end
-  
   not_supported_on :windows do  
     it "reads the contents of a special device file" do
       ARGFSpecs.file_args('/dev/zero')
       ARGF.read(100).should ==  "\000" * 100
     end
-  end
-  
-  it "empties the files if in place edit mode is enabled and no output is generated" do
-    # create fixture files that can be altered
-    file1 = tmp('file1.txt'); file2 = tmp('file2.txt')
-    File.open(file1,'w') { |fh| fh.write(@contents_file1) }
-    File.open(file2,'w') { |fh| fh.write(@contents_file2) }
-    ARGV.concat([file1, file2])
-    $-i = ""  # activate in place edit mode
-    ARGF.read.should ==  @contents_file1 + @contents_file2
-    File.stat(file1).size.should == 0
-    File.stat(file2).size.should == 0
-    # cleanup the mess
-    [file1, file2, file1+$-i, file2+$-i].each { |f| File.delete(f) if File.exists?(f)}
-    # disable in place edit mode
-    $-i = nil
   end
   
 end

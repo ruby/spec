@@ -4,14 +4,18 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "ARGF.readline" do
   before :each do
     ARGV.clear
-    @contents_file1 = File.read(File.dirname(__FILE__) + '/fixtures/file1.txt')    
-    @contents_file2 = File.read(File.dirname(__FILE__) + '/fixtures/file2.txt')
-    @contents_stdin = File.read(File.dirname(__FILE__) + '/fixtures/stdin.txt')
+    @file1 = ARGFSpecs.fixture_file('file1.txt')
+    @file2 = ARGFSpecs.fixture_file('file2.txt')
+    @stdin = ARGFSpecs.fixture_file('stdin.txt')
+    @contents_file1 = File.read(@file1)
+    @contents_file2 = File.read(@file2)
+    @contents_stdin = File.read(@stdin)
   end
 
   after :each do
-    # Close any open file (catch exception if already closed)
-    ARGF.close rescue nil
+    # Close any open file
+    ARGF.close unless ARGF.closed?
+    ARGFSpecs.fixture_file_delete(@file1,@file2,@stdin)
   end
   
   it "reads one line of a file" do
@@ -59,70 +63,35 @@ describe "ARGF.readline" do
   # safe rename. Unfortunately there is no method in 1.8.X to test that.
   # This has been corrected in Ruby 1.9.x
   it "modifies the files when in place edit mode is on" do
-    # create fixture files that can be altered
-    file1 = tmp('file1.txt'); file2 = tmp('file2.txt'); file3 = tmp('file3.txt')
-    File.open(file1,'w') { |fh| fh.write(@contents_file1) }
-    File.open(file2,'w') { |fh| fh.write(@contents_file2) }
-    File.open(file3,'w') { } # touch
-    ARGV.concat([file1, file2, file3])
-    $-i = ""  # activate in place edit mode
     
-    modified_lines = []
-    begin
-      while line = ARGF.readline
-        modified_line = line+'.new'+$/
-        modified_lines << modified_line
-        print modified_line
+    ARGFSpecs.ruby(:options =>['-i'], :code => <<-SRC, :args => [@file1, @file2]) do |f|
+      begin
+        while line = ARGF.readline
+          puts line.chomp+'.new'
+        end
+      rescue EOFError
       end
-    rescue EOFError
-      # TODO: I could not find a way to test the changes on the last file
-      # its content seems to be written only when the ruby process terminates
-      # i tried various combination of flush, close on ARGF and STDOUT but could
-      # fix the problem. 
-      # Workaround: add a third empty file on the command line
-      contents_modified_files = File.read(file1) + File.read(file2)
-      contents_modified_files.should == modified_lines.join
-    ensure
-      # cleanup the mess
-      [file1, file2, file3].each { |f| File.delete(f) if File.exists?(f)}
-      # disable in place edit mode
-      $-i = nil      
+    SRC
+      File.read(@file1).should == @contents_file1.split($/).collect { |l| l+'.new'+$/}.join
+      File.read(@file2).should == @contents_file2.split($/).collect { |l| l+'.new'+$/}.join
     end
+    
   end
   
-    it "modifies an backups two files when in place edit mode is on" do
-    # create fixture files that can be altered
-    file1 = tmp('file1.txt'); file2 = tmp('file2.txt'); file3 = tmp('file3.txt')
-    File.open(file1,'w') { |fh| fh.write(@contents_file1) }
-    File.open(file2,'w') { |fh| fh.write(@contents_file2) }
-    File.open(file3,'w') { } # touch
-    ARGV.concat([file1, file2, file3])
-    $-i = ".bak"  # activate in place edit mode with backup
+  it "modifies and backups two files when in place edit mode is on" do
     
-    modified_lines = []
-    begin
-      while line = ARGF.readline
-        modified_line = line+'.new'+$/
-        modified_lines << modified_line
-        print modified_line
-      end
-    rescue EOFError
-      # TODO: I could not find a way to test the changes on the last file
-      # its content seems to be written only when the ruby process terminates
-      # i tried various combination of flush, close on ARGF and STDOUT but could
-      # fix the problem. 
-      # Workaround: add a third empty file on the command line
-      File.exists?(file1+$-i).should == true
-      File.exists?(file2+$-i).should == true
-      File.read(file1+$-i).should == @contents_file1
-      File.read(file2+$-i).should == @contents_file2
-      contents_modified_files = File.read(file1) + File.read(file2)
-      contents_modified_files.should == modified_lines.join
-    ensure
-      # cleanup the mess
-      [file1, file2, file3, file1+$-i, file2+$-i, file3+$-i].each { |f| File.delete(f) if File.exists?(f)}
-      # disable in place edit mode
-      $-i = nil
+    ARGFSpecs.ruby(:options =>['-i.bak'], :code => <<-SRC, :args => [@file1, @file2]) do |f|
+        begin
+          while line = ARGF.readline
+            puts line.chomp+'.new'
+          end
+        rescue EOFError
+        end
+      SRC
+      File.read(@file1).should == @contents_file1.split($/).collect { |l| l+'.new'+$/}.join
+      File.read(@file2).should == @contents_file2.split($/).collect { |l| l+'.new'+$/}.join
+      File.read(@file1+'.bak').should == @contents_file1
+      File.read(@file2+'.bak').should == @contents_file2
     end
   end
   

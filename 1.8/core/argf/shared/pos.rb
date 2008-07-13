@@ -2,10 +2,10 @@ shared :argf_pos do |cmd|
   describe "ARGF.#{cmd}" do
     before :each do
       ARGV.clear
-      @file1 = File.dirname(__FILE__) + '/../fixtures/file1.txt'
-      @file2 = File.dirname(__FILE__) + '/../fixtures/file2.txt'
-      @stdin = File.dirname(__FILE__) + '/../fixtures/stdin.txt'
-      @contents_file1 = File.read(@file1)    
+      @file1 = ARGFSpecs.fixture_file('file1.txt')
+      @file2 = ARGFSpecs.fixture_file('file2.txt')
+      @stdin = ARGFSpecs.fixture_file('stdin.txt')
+      @contents_file1 = File.read(@file1)
       @contents_file2 = File.read(@file2)
       @contents_stdin = File.read(@stdin)
     end
@@ -13,6 +13,7 @@ shared :argf_pos do |cmd|
     after :each do
       # Close any open file (catch exception if already closed)
       ARGF.close rescue nil
+      ARGFSpecs.fixture_file_delete(@file1,@file2,@stdin)
     end
   
     it "gives the correct position for each read operation" do
