@@ -10,6 +10,7 @@ describe "Socket::IPSocket#peeraddr" do
   after :each do
     @server.close unless @server.closed?
     @client.close unless @client.closed?
+    BasicSocket.do_not_reverse_lookup = false
   end
 
   it "raises error if socket is not connected" do
@@ -24,7 +25,7 @@ describe "Socket::IPSocket#peeraddr" do
       addrinfo = @client.peeraddr
       addrinfo[0].should == "AF_INET"
       addrinfo[1].should == SocketSpecs.port
-      addrinfo[2].should == "localhost"
+      addrinfo[2].should == SocketSpecs.hostname
       addrinfo[3].should == "127.0.0.1"
     end
 
@@ -45,7 +46,7 @@ describe "Socket::IPSocket#peeraddr" do
       addrinfo = @client.peeraddr
       addrinfo[0].should == "AF_INET"
       addrinfo[1].should == SocketSpecs.port
-      addrinfo[2].should == "localhost"
+      addrinfo[2].should == SocketSpecs.hostname
       addrinfo[3].should == "127.0.0.1"
     end
 

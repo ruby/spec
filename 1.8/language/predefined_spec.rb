@@ -117,9 +117,8 @@ end
 describe "Predefined global $+" do
   it "is equivalent to $~.captures.last" do
     /(f(o)o)/ =~ 'barfoobaz'
-    # causes a compiler exception as of 036b07375
-    # $+.should == $~.captures.last
-    # $+.should == 'o'
+    $+.should == $~.captures.last
+    $+.should == 'o'
   end
 end
 
@@ -346,10 +345,9 @@ describe "The predefined standard object nil" do
     nil.class.should == NilClass
   end
   
-  it "raises a SyntaxError if assigned to" do
-    # this needs to be tested with a subprocess because
-    # MRI aborts reading in the file
-  end
+  # this needs to be tested with a subprocess because
+  # MRI aborts reading in the file
+  it "raises a SyntaxError if assigned to"
 end
 
 describe "The predefined standard object true" do
@@ -357,10 +355,9 @@ describe "The predefined standard object true" do
     true.class.should == TrueClass
   end
   
-  it "raises a SyntaxError if assigned to" do
-    # this needs to be tested with a subprocess because
-    # MRI aborts reading in the file
-  end
+  # this needs to be tested with a subprocess because
+  # MRI aborts reading in the file
+  it "raises a SyntaxError if assigned to"
 end
 
 describe "The predefined standard object false" do
@@ -368,10 +365,9 @@ describe "The predefined standard object false" do
     false.class.should == FalseClass
   end
   
-  it "raises a SyntaxError if assigned to" do
-    # this needs to be tested with a subprocess because
-    # MRI aborts reading in the file
-  end
+  # this needs to be tested with a subprocess because
+  # MRI aborts reading in the file
+  it "raises a SyntaxError if assigned to"
 end
 
 =begin

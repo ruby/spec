@@ -12,7 +12,9 @@ describe "CGI::HtmlExtension#base when passed a String" do
   it "returns a 'base'-element, using the passed String as the 'href'-attribute" do
     expected = '<BASE HREF="http://www.example.com">'
     @html.base("http://www.example.com").should == expected
+  end
 
+  it "includes the passed block's return value when passed a block" do
     expected = '<BASE HREF="http://www.example.com">'
     @html.base("http://www.example.com") { "Example" }.should == expected
   end
@@ -29,7 +31,9 @@ describe "CGI::HtmlExtension#base when passed a Hash" do
   it "returns a 'base'-element, using the passed Hash for attributes" do
     expected = '<BASE HREF="http://www.example.com" ID="test">'
     @html.base("HREF" => "http://www.example.com", "ID" => "test").should == expected
+  end
 
+  it "includes the passed block's return value when passed a block" do
     expected = '<BASE HREF="http://www.example.com" ID="test">'
     @html.base("HREF" => "http://www.example.com", "ID" => "test") { "Example" }.should == expected
   end

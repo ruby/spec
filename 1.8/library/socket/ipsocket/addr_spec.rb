@@ -9,15 +9,17 @@ describe "Socket::IPSocket#addr" do
 
   after :each do
     @socket.close unless @socket.closed?
+    BasicSocket.do_not_reverse_lookup = false
   end
 
   ruby_version_is ""..."1.9" do
     it "returns an array with the socket's information" do
       BasicSocket.do_not_reverse_lookup = false
+
       addrinfo = @socket.addr
       addrinfo[0].should == "AF_INET"
       addrinfo[1].should == SocketSpecs.port
-      addrinfo[2].should == "localhost"
+      addrinfo[2].should == SocketSpecs.hostname
       addrinfo[3].should == "127.0.0.1"
     end
 
@@ -37,7 +39,7 @@ describe "Socket::IPSocket#addr" do
       addrinfo = @socket.addr
       addrinfo[0].should == "AF_INET"
       addrinfo[1].should == SocketSpecs.port
-      addrinfo[2].should == "localhost"
+      addrinfo[2].should == Socketspecs.hostname
       addrinfo[3].should == "127.0.0.1"
     end
 

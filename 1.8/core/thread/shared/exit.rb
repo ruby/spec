@@ -11,7 +11,8 @@ shared :thread_exit do |cmd|
       100.times do
         t = Thread.new { Thread.stop; Thread.current.send(cmd) }
         Thread.pass until t.status == "sleep"
-        t.wakeup; t.join
+        t.wakeup.should == t
+        t.join.should == t
       end
     end
   end
