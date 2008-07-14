@@ -38,14 +38,12 @@ describe "Logger#warn" do
     @logger.warn("test")
     @log_file.rewind
     LoggerSpecs::strip_date(@log_file.readlines.first).should == "WARN -- : test\n"
-    0.should == 0
   end
 
   it "accepts an application name with a block" do
     @logger.warn("MyApp") { "Test message" }
     @log_file.rewind
     LoggerSpecs::strip_date(@log_file.readlines.first).should == "WARN -- MyApp: Test message\n"
-    0.should == 0
   end
 
 end
