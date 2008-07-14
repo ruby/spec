@@ -13,11 +13,25 @@ describe "Logger::LogDevice#write" do
     File.unlink(@file_path) if File.exists?(@file_path)
   end
 
-
   it "writes a message to the device" do
     @device.write "This is a test message"
     @log_file.rewind
     @log_file.readlines.first.should == "This is a test message"
+  end
+
+  it "can create a file and writes empty message" do
+    path = tmp("you_should_not_see_me")
+    logdevice = Logger::LogDevice.new(path)
+    logdevice.write("")
+    logdevice.close
+    
+    File.open(path) do |f|
+      messages = f.readlines
+      messages.size.should == 1
+      messages.first.should =~ /#.*/    # only a comment
+    end
+
+    File.unlink(path)
   end
 
   it "fails if the device is already closed" do

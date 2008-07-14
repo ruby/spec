@@ -25,16 +25,17 @@ describe "Logger::LogDevice#new" do
   end
 
   it "creates a File if the IO object does not exist" do
-    l = Logger::LogDevice.new("test_log_file")
+    path = tmp("test_logger_file")
+    l = Logger::LogDevice.new(path)
     l.write("Test message")
     l.close
 
-    File.exist?("test_log_file").should be_true
-    File.open("test_log_file") do |f|
+    File.exist?(path).should be_true
+    File.open(path) do |f|
       f.readlines.should_not be_empty
     end
 
-    File.unlink("test_log_file") 
+    File.unlink(path) 
   end
   
   it "receives options via a hash as second argument" do
