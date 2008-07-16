@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../../spec_helper'
 require 'rexml/document'
 
-shared :add do |cmd|
+shared :attributes_add do |cmd|
   describe "REXML::Attributes##{cmd}" do
 
     before :each do
@@ -24,11 +24,11 @@ shared :add do |cmd|
 end
 
 describe "REXML::Attributes#add" do
- it_behaves_like(:add, "Attributes", :add)
+ it_behaves_like(:attributes_add, "Attributes", :add)
 end
 
 describe "REXML::Attributes#<<" do
- it_behaves_like(:add, "Attributes", :<<)
+ it_behaves_like(:attributes_add, "Attributes", :<<)
 end
 
 

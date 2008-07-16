@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../../spec_helper'
 require 'rexml/document'
 
-shared :to_s do |cmd|
+shared :cdata_to_s do |cmd|
   describe "REXML::CData##{cmd}" do
     it "returns the contents of the CData" do
       c = REXML::CData.new("some text")
@@ -16,10 +16,10 @@ shared :to_s do |cmd|
 end
 
 describe "REXML::CData#to_s" do
-  it_behaves_like(:to_s, "CData", :to_s)
+  it_behaves_like(:cdata_to_s, "CData", :to_s)
 end
 
 describe "REXML::CData#value" do
-  it_behaves_like(:to_s, "CData", :value)
+  it_behaves_like(:cdata_to_s, "CData", :value)
 end
 

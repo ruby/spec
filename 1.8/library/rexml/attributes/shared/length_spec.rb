@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../../spec_helper'
 require 'rexml/document'
 
-shared :length do |cmd|
+shared :attribute_length do |cmd|
   describe "REXML::Attributes##{cmd}" do
     it "returns the number of attributes" do
       e = REXML::Element.new("root")
@@ -15,9 +15,9 @@ shared :length do |cmd|
 end
 
 describe "REXML::Attributes#length" do
- it_behaves_like(:length, "Attributes", :length)
+ it_behaves_like(:attribute_length, "Attributes", :length)
 end
 
 describe "REXML::Attributes#size" do
- it_behaves_like(:length, "Attributes", :size)
+ it_behaves_like(:attribute_length, "Attributes", :size)
 end

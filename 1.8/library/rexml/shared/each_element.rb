@@ -1,7 +1,7 @@
 require 'rexml/document'
 require File.dirname(__FILE__) + '/../../../spec_helper'
  
-shared :each_element do |klass, cmd|
+shared :rexml_each_element do |klass, cmd|
   describe "REXML::#{klass}##{cmd}" do
     before :each do
       @e = REXML::Element.new "root"
@@ -30,9 +30,9 @@ shared :each_element do |klass, cmd|
 end
  
 describe "REXML::Element#each_element" do
- it_behaves_like(:each_element, "Element", :each_element)
+ it_behaves_like(:rexml_each_element, "Element", :each_element)
 end
  
 describe "REXML::Elements#each" do
-  it_behaves_like(:each_element, "Elements", :each)
+  it_behaves_like(:rexml_each_element, "Elements", :each)
 end
