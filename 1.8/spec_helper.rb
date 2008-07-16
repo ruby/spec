@@ -1,5 +1,6 @@
 unless ENV['MSPEC_RUNNER']
   begin
+    require 'mspec/version'
     require 'mspec/helpers'
     require 'mspec/guards'
     require 'mspec/runner/shared'
@@ -16,6 +17,12 @@ unless ENV['MSPEC_RUNNER']
     puts "Please install the MSpec gem to run the specs."
     exit 1
   end
+end
+
+v = MSpec::VERSION.split('.').collect { |d| "1%02d" % d.to_i }.join.to_i
+unless v >= 101104100
+  puts "Please install MSpec version >= 1.4.0 to run the specs"
+  exit 1
 end
 
 $VERBOSE = nil unless ENV['OUTPUT_WARNINGS']
