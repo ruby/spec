@@ -9,7 +9,8 @@ describe "Logger::LogDevice#write" do
     @device = Logger::LogDevice.new(@log_file)
   end
 
-  after :all do
+  after :each do
+    @log_file.close unless @log_file.closed?
     File.unlink(@file_path) if File.exists?(@file_path)
   end
 
@@ -24,7 +25,7 @@ describe "Logger::LogDevice#write" do
     logdevice = Logger::LogDevice.new(path)
     logdevice.write("")
     logdevice.close
-    
+
     File.open(path) do |f|
       messages = f.readlines
       messages.size.should == 1

@@ -8,7 +8,8 @@ describe "Logger#debug?" do
     @logger = Logger.new(@path)
   end
 
-  after :all do
+  after :each do
+    @log_file.close unless @log_file.closed?
     File.unlink(@path) if File.exists?(@path)
   end
 
@@ -30,7 +31,8 @@ describe "Logger#debug" do
     @logger = Logger.new(@path)
   end
 
-  after :all do
+  after :each do
+    @log_file.close unless @log_file.closed?
     File.unlink(@path) if File.exists?(@path)
   end
 
@@ -45,5 +47,4 @@ describe "Logger#debug" do
     @log_file.rewind
     LoggerSpecs::strip_date(@log_file.readlines.first).should == "DEBUG -- MyApp: Test message\n"
   end
-
 end

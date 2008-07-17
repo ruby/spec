@@ -8,6 +8,11 @@ describe "Logger#close" do
     @logger = Logger.new(@path)
   end
 
+  after :each do
+    @log_file.close unless @log_file.closed?
+    File.unlink(@path) if File.exists?(@path)
+  end
+
   it "closes the logging device" do
     @logger.close
     lambda { @logger.add(nil, "Foo") }.should raise_error(IOError)

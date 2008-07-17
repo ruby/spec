@@ -1,8 +1,8 @@
 describe :file_identical, :shared => true do
   before :each do
-    @file1 = 'test.txt'
-    @file2 = 'test2.txt'
-    @file3 = 'test.lnk'
+    @file1 = tmp('test.txt')
+    @file2 = tmp('test2.txt')
+    @file3 = tmp('test.lnk')
     File.delete(@file3) if File.exists?(@file3)
 
     File.open(@file1,"w+") { |f| f.puts "file1" }
@@ -14,14 +14,6 @@ describe :file_identical, :shared => true do
     File.unlink(@file3)
     File.delete(@file1) if File.exists?(@file1)
     File.delete(@file2) if File.exists?(@file2)
-    @file1 = nil
-    @file1 = nil
-    @file1 = nil
-  end
-
-  it "return a Boolean class" do
-    @object.send(@method, @file1, @file2).class.should == FalseClass
-    @object.send(@method, @file1, @file1).class.should == TrueClass
   end
 
   it "return true if they are identical" do
@@ -39,17 +31,8 @@ describe :file_identical, :shared => true do
     lambda { @object.send(@method, 1,1) }.should raise_error(TypeError)
   end
 
-  it "identical? should return true if both named files are identical" do
-    begin
-      file = tmp('i_exist')
-      file2 = tmp('i_exist_too')
-      File.open(file,'w'){|f| f.write 'rubinius'}
-      File.open(file2,'w'){|f| f.write 'ruby'}
-      @object.send(@method, file,file).should == true
-      @object.send(@method, file,file2).should == false
-    ensure
-      File.delete(file) rescue nil
-      File.delete(file2) rescue nil
-    end
+  it "returns true if both named files are identical" do
+    @object.send(@method, @file1, @file1).should be_true
+    @object.send(@method, @file1, @file2).should be_false
   end
 end

@@ -8,6 +8,11 @@ describe "Logger#datetime_format" do
     @logger = Logger.new(@path)
   end
 
+  after :each do
+    @log_file.close unless @log_file.closed?
+    File.unlink(@path) if File.exists?(@path)
+  end
+
   it "returns the date format used for the logs" do
     format = "%Y-%d"
     @logger.datetime_format = format
@@ -24,6 +29,11 @@ describe "Logger#datetime_format=" do
     @path = tmp("test_log.log")
     @log_file = File.open(@path, "w+")
     @logger = Logger.new(@path)
+  end
+
+  after :each do
+    @log_file.close unless @log_file.closed?
+    File.unlink(@path) if File.exists?(@path)
   end
 
   it "sets the date format for the logs" do

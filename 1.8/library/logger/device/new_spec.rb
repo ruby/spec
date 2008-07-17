@@ -7,7 +7,8 @@ describe "Logger::LogDevice#new" do
     @log_file = File.open(@file_path, "w+")
   end
 
-  after :all do
+  after :each do
+    @log_file.close unless @log_file.closed?
     File.unlink(@file_path) if File.exists?(@file_path)
   end
 
@@ -35,11 +36,11 @@ describe "Logger::LogDevice#new" do
       f.readlines.should_not be_empty
     end
 
-    File.unlink(path) 
+    File.unlink(path)
   end
-  
+
   it "receives options via a hash as second argument" do
-    lambda { Logger::LogDevice.new(STDERR, 
+    lambda { Logger::LogDevice.new(STDERR,
                                    { :shift_age => 8, :shift_size => 10
                                    })}.should_not raise_error
   end

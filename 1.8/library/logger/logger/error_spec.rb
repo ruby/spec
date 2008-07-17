@@ -8,7 +8,8 @@ describe "Logger#error?" do
     @logger = Logger.new(@path)
   end
 
-  after :all do
+  after :each do
+    @log_file.close unless @log_file.closed?
     File.unlink(@path) if File.exists?(@path)
   end
 
@@ -30,7 +31,8 @@ describe "Logger#error" do
     @logger = Logger.new(@path)
   end
 
-  after :all do
+  after :each do
+    @log_file.close unless @log_file.closed?
     File.unlink(@path) if File.exists?(@path)
   end
 
