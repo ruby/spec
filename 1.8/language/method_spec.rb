@@ -12,6 +12,14 @@ describe "Calling a method" do
 
     mybar.should == 100
   end
+
+  it "with an empty expression is like calling with nil argument" do
+    def foo(a)
+      a
+    end
+
+    foo(()).should be_nil
+  end
   
   it "with block as block argument is ok" do
     def foo(a,&b); [a,yield(b)] end
@@ -96,6 +104,7 @@ describe "Calling a method" do
     lambda { foo }.should raise_error(ArgumentError)
     lambda { foo(1,2) }.should raise_error(ArgumentError)
     lambda { foo(1,2,3,4) }.should raise_error(ArgumentError)
+    lambda { foo((), (), (), ()) }.should raise_error(ArgumentError)
   end
 
   # "Allows infinite arguments" is kinda hard to spec
