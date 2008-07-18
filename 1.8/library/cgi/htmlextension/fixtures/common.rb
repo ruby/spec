@@ -6,4 +6,8 @@ module CGISpecs
       self.extend(CGI::HtmlExtension)
     end
   end
+  
+  def self.split(string)
+    string.split("<").reject { |x| x.empty? }.map { |x| "<#{x}" }
+  end
 end
