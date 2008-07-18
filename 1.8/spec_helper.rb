@@ -1,5 +1,6 @@
 unless ENV['MSPEC_RUNNER']
   begin
+    require "pp"
     require 'mspec/version'
     require 'mspec/helpers'
     require 'mspec/guards'
