@@ -58,11 +58,20 @@ describe "The until expression" do
   
   it "returns nil if ended when condition became true" do
     i = 0
-    while i > 9
+    until i > 9
       i += 1
     end.should == nil
   end
-  
+
+  it "evaluates the body if expression is empty" do
+    a = []
+    until ()
+      a << :body_evaluated
+      break
+    end
+    a.should == [:body_evaluated]
+  end
+
   it "stops running body if interrupted by break" do
     i = 0
     until i > 9
