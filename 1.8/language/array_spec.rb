@@ -9,6 +9,16 @@ describe "Array literals" do
     array[1].should == 'a'
     array[2].should == nil
   end
+
+  it "[] treats empty expressions as nil elements" do
+    array = [0, (), 2, (), 4]
+    array.should be_kind_of(Array)
+    array[0].should == 0
+    array[1].should == nil
+    array[2].should == 2
+    array[3].should == nil
+    array[4].should == 4
+  end
 end
 
 describe "Bareword array literal" do

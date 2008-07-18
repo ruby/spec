@@ -15,6 +15,14 @@ describe "Basic assignment" do
     a = [*[1,2]];  a.should == [1, 2]
   end
 
+  it "assigns nil to lhs when rhs is an empty expression" do
+    a = ()
+    a.should be_nil
+
+    a = *()
+    a.should be_nil
+  end
+
   it "allows the assignment of the rhs to the lhs using the rhs splat operator" do
     a = *nil;      a.should == nil
     a = *1;        a.should == 1
@@ -665,6 +673,9 @@ describe "Single assignment" do
   it "If rhs has multiple arguments, lhs becomes an Array of them" do
     a = 1, 2, 3
     a.should == [1, 2, 3]
+
+    a = 1, (), 3
+    a.should == [1, nil, 3]
   end
 end
 
