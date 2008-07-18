@@ -20,6 +20,10 @@ describe "The break statement" do
     lambda { break 123; 456 }.call.should == 123
   end
 
+  it "causes block to return nil if an empty expression passed to break" do
+    lambda { break (); 456 }.call.should be_nil
+  end
+
   it "causes block to return nil if no value passed to break" do
     lambda { break; 456 }.call.should == nil
   end

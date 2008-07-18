@@ -29,6 +29,10 @@ describe "The next statement from within the block" do
     lambda { 123; next; 456 }.call.should == nil
   end
 
+  it "causes block to return nil if invoked with an empty expression" do
+    lambda { next (); 456 }.call.should be_nil
+  end
+
   it "returns the argument passed" do
     lambda { 123; next 234; 345 }.call.should == 234
   end

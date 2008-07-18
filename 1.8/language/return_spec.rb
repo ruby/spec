@@ -161,6 +161,18 @@ describe "Executing return from within a block" do
     lambda { f { return 5 } }.should raise_error(LocalJumpError)
   end
 
+  it "causes lambda to return nil if invoked without any arguments" do
+    lambda { return; 456 }.call.should be_nil
+  end
+
+  it "causes lambda to return nil if invoked with an empty expression" do
+    lambda { return (); 456 }.call.should be_nil
+  end
+
+  it "causes lambda to return the value passed to return" do
+    lambda { return 123; 456 }.call.should == 123
+  end
+
   it "causes the method that lexically encloses the block to return" do
     def meth_with_yield
       yield
