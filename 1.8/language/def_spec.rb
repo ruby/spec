@@ -93,6 +93,14 @@ describe "An instance method with a default argument" do
     foo(2).should == 2
   end
 
+  it "evaluates the default empty expression when no arguments are passed" do
+    def foo(a = ())
+      a
+    end
+    foo.should == nil
+    foo(2).should == 2
+  end
+
   it "assigns an empty Array to an unused splat argument" do
     def foo(a = 1, *b)
       [a,b]
