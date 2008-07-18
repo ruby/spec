@@ -24,6 +24,14 @@ describe "The || statement" do
     x = 1 || false && x = 2
     x.should == 1
   end
+
+  it "treats empty expressions as nil" do
+    (() || true).should be_true
+    (() || false).should be_false
+    (true || ()).should be_true
+    (false || ()).should be_nil
+    (() || ()).should be_nil
+  end
 end
 
 describe "The or statement" do
@@ -44,5 +52,13 @@ describe "The or statement" do
     x,y = nil
     x = true || false or y = 1
     y.should == nil
+  end
+
+  it "treats empty expressions as nil" do
+    (() or true).should be_true
+    (() or false).should be_false
+    (true or ()).should be_true
+    (false or ()).should be_nil
+    (() or ()).should be_nil
   end
 end
