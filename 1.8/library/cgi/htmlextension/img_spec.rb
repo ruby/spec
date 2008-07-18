@@ -68,7 +68,7 @@ describe "CGI::HtmlExtension#img" do
   end
   
   describe "when passed Hash" do
-    ruby_bug "", "1.8.7" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/255", "1.8.7" do
       it "returns an 'img'-element with the passed Hash as attributes" do
         attributes = { "SRC" => "src", "ALT" => "alt", "WIDTH" => 100, "HEIGHT" => 50 }
         output = @html.img(attributes)

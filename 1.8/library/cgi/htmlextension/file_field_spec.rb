@@ -56,7 +56,7 @@ describe "CGI::HtmlExtension#file_field" do
   end
   
   describe "when passed a Hash" do
-    ruby_bug "", "1.8.7" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/255", "1.8.7" do
       it "returns a file-'input'-element using the passed Hash for attributes" do
         output = @html.file_field("NAME" => "test", "SIZE" => 40)
         output.should equal_element("INPUT", {"NAME" => "test", "SIZE" => 40}, "", :not_closed => true)
