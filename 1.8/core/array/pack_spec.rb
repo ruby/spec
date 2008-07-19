@@ -725,13 +725,35 @@ describe "Array#pack" do
     ['abcdef'].pack('A4X').should == 'abc'
   end
 
-  it "converts to BER-compressed integer with ('w')" do
-    [0].pack('w').should == "\000"
-    [1].pack('w').should == "\001"
-    [9999].pack('w').should == "\316\017"
-    [2**64].pack('w').should == "\202\200\200\200\200\200\200\200\200\000"
-    lambda { [-1].pack('w') }.should raise_error(ArgumentError)
-    lambda { [-2**256].pack('w') }.should raise_error(ArgumentError)
+  describe "with ('w')" do
+    it "converts to BER-compressed integer" do
+      [0].pack('w').should == "\000"
+      [1].pack('w').should == "\001"
+      [0, 1, 2].pack('w2').should == "\000\001"
+      [0, 1, 2].pack('w*').should == "\000\001\002"
+      [9999].pack('w').should == "\316\017"
+      [2**64].pack('w').should == "\202\200\200\200\200\200\200\200\200\000"
+      lambda { [-1].pack('w') }.should raise_error(ArgumentError)
+      lambda { [-2**256].pack('w') }.should raise_error(ArgumentError)
+    end
+
+    it "raises an ArgumentError if the count is greater than the number of remaining array elements" do
+      lambda { [1].pack('w2') }.should raise_error(ArgumentError, /few/)
+      lambda { [1, 2, 3, 4, 5].pack('w10') }.should raise_error(ArgumentError, /few/)
+    end
+
+    it "calls to_int on non-integer values before packing" do
+      obj = mock('1')
+      obj.should_receive(:to_int).and_return(1)
+      [obj].pack('w').should == "\001"
+    end
+
+    it "raises TypeError on nil and non-numeric arguments" do
+      lambda { [nil].pack('w') }.should raise_error(TypeError, /nil/)
+      lambda { [()].pack('w') }.should raise_error(TypeError, /nil/)
+      lambda { ['a'].pack('w') }.should raise_error(TypeError, /String/)
+      lambda { [Object.new].pack('w') }.should raise_error(TypeError, /Object/)
+    end
   end
 
   it "with count decreases result string by count chars with ('X')" do
