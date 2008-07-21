@@ -9,7 +9,7 @@ describe "BasicSocket#send" do
 
   after :each do
     @server.closed?.should be_false
-    @socket.closed? should be_false
+    @socket.closed?.should be_false
 
     @server.close
     @socket.close
