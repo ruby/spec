@@ -13,10 +13,11 @@ describe "Socket::BasicSocket#getsockname" do
     sockaddr.should == [SocketSpecs.port, "127.0.0.1"]
  end
 
-  it "works on sockets listening in 0.0.0.0" do
+  it "works on sockets listening in ipaddr_any" do
     @socket = TCPServer.new(SocketSpecs.port)
     sockaddr = Socket.unpack_sockaddr_in(@socket.getsockname)
-    sockaddr.should == [SocketSpecs.port, "0.0.0.0"]
+    ["::", "0.0.0.0"].include?(sockaddr[1]).should be_true
+    sockaddr[0].should == SocketSpecs.port
   end
 
   it "returns empty sockaddr for unbinded sockets" do
