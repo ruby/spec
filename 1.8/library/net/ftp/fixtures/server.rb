@@ -1,10 +1,5 @@
 module NetFTPSpecs
   
-  def with_connection
-    @ftp.connect("localhost", 9921)
-    yield
-  end
-  
   # @server = DummyFTP.new
   # @server.should_receive("USER anonymous\r\n").and_respond("230 OK, password not required")
   # @server.should_receive("ABOR\r").and_respond("502 test")
