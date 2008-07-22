@@ -3,8 +3,11 @@ require 'net/ftp'
 require File.dirname(__FILE__) + "/fixtures/server.rb"
 
 describe "Net::FTP#acct" do
-  include NetFTPSpecs
-
+  def with_connection
+    @ftp.connect("localhost", 9921)
+    yield
+  end
+  
   before(:each) do
     @server = NetFTPSpecs::DummyFTP.new
     @server.serve_once
@@ -20,12 +23,12 @@ describe "Net::FTP#acct" do
 
   it "writes the ACCT command to the server" do
     @server.should_respond("230 User logged in, proceed.")
-    with_connection { @ftp.acct("my_account") }
+    lambda { with_connection { @ftp.acct("my_account") } }.should_not raise_error
   end
   
   it "does not raise any error when the response code is 230" do
     @server.should_respond("230 User logged in, proceed.")
-    with_connection { @ftp.acct("my_account") }
+    lambda { with_connection { @ftp.acct("my_account") } }.should_not raise_error
   end
   
   it "raises a Net::FTPPermError when the response code is 530" do

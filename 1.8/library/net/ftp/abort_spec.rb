@@ -3,7 +3,10 @@ require 'net/ftp'
 require File.dirname(__FILE__) + "/fixtures/server.rb"
 
 describe "Net::FTP#abort" do
-  include NetFTPSpecs
+  def with_connection
+    @ftp.connect("localhost", 9921)
+    yield
+  end
   
   before(:each) do
     @server = NetFTPSpecs::DummyFTP.new
@@ -20,7 +23,7 @@ describe "Net::FTP#abort" do
 
   it "sends the ABOR command over the socket" do
     @server.should_respond("226 Closing data connection.")
-    with_connection { @ftp.abort }
+    lambda { with_connection { @ftp.abort } }.should_not raise_error
   end
   
   it "returns the full response" do
@@ -30,12 +33,12 @@ describe "Net::FTP#abort" do
   
   it "does not raise any error when the response code is 225" do
     @server.should_respond("225 Data connection open; no transfer in progress.")
-    with_connection { @ftp.abort }
+    lambda { with_connection { @ftp.abort } }.should_not raise_error
   end
   
   it "does not raise any error when the response code is 226" do
     @server.should_respond("226 Closing data connection.")
-    with_connection { @ftp.abort }
+    lambda { with_connection { @ftp.abort } }.should_not raise_error
   end
   
   it "raises a Net::FTPProtoError when the response code is 500" do
