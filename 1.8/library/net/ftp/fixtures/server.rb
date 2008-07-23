@@ -144,10 +144,20 @@ module NetFTPSpecs
     
     def retr(file)
       self.response("125 Data transfer starting")
-      @datasocket.puts("This is the content")
-      @datasocket.puts("of the file named '#{file}'.")
+      if @restart_at && @restart_at == 20
+        @datasocket.puts("of the file named '#{file}'.")
+        @restart_at = nil
+      else
+        @datasocket.puts("This is the content")
+        @datasocket.puts("of the file named '#{file}'.")
+      end
       @datasocket.close()
       self.response("226 Closing data connection. (RETR #{file})")
+    end
+    
+    def rest(at_bytes)
+      @restart_at = at_bytes.to_i
+      self.response("350 Requested file action pending further information. (REST)")
     end
     
     def stat
