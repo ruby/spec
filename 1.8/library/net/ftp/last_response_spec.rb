@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/ftp'
-require File.dirname(__FILE__) + "/fixtures/server.rb"
+require File.dirname(__FILE__) + "/fixtures/server"
 
 describe "Net::FTP#last_response" do
   before(:each) do

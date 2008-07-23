@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/ftp'
-require File.dirname(__FILE__) + "/fixtures/server.rb"
+require File.dirname(__FILE__) + "/fixtures/server"
 
 # TODO: Add specs for using the SOCKSSocket
 describe "Net::FTP#connect" do

@@ -128,8 +128,12 @@ module NetFTPSpecs
       end
     end
     
+    def stat
+      self.response("211 System status, or system help reply. (STAT)")
+    end
+    
     def syst
-      self.response("215 FTP Dummy Server")
+      self.response("215 FTP Dummy Server (SYST)")
     end
     
     def type(type)
