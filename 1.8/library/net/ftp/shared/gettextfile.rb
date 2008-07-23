@@ -28,6 +28,14 @@ describe :net_ftp_gettextfile, :shared => :true do
     @ftp.send(@method, "test", @fixture_file)
     File.read(@fixture_file).should == "This is the content\nof the file named 'test'.\n"
   end
+  
+  describe "when passed a block" do
+    it "yields each line of the retrieved file to the passed block" do
+      res = []
+      @ftp.send(@method, "test", @fixture_file) { |line| res << line }
+      res.should == [ "This is the content", "of the file named 'test'."]
+    end
+  end
 
   describe "when the RETR command fails" do
     it "raises a Net::FTPTempError when the response code is 450" do
