@@ -132,6 +132,14 @@ module NetFTPSpecs
       self.response("200 Command okay. (NOOP)")
     end
     
+    def retr(file)
+      self.response("125 Data transfer starting")
+      @datasocket.puts("This is the content")
+      @datasocket.puts("of the file named '#{file}'.")
+      @datasocket.close()
+      self.response("226 Closing data connection. (RETR #{file})")
+    end
+    
     def stat
       self.response("211 System status, or system help reply. (STAT)")
     end
