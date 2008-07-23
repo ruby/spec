@@ -18,11 +18,11 @@ describe "Net::FTP#system" do
 
   it "sends the SYST command to the server" do
     @ftp.system
-    @ftp.last_response.should == "215 FTP Dummy Server\n"
+    @ftp.last_response.should == "215 FTP Dummy Server (SYST)\n"
   end
   
   it "returns the received information" do
-    @ftp.system.should == "FTP Dummy Server\n"
+    @ftp.system.should == "FTP Dummy Server (SYST)\n"
   end
 
   it "raises a Net::FTPPermError when the response code is 500" do
