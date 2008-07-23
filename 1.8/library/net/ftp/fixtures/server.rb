@@ -111,6 +111,14 @@ module NetFTPSpecs
       self.response("200 port opened")
     end
     
+    def help(param = :default)
+      if param == :default
+        self.response("211 System status, or system help reply. (HELP)")
+      else
+        self.response("211 System status, or system help reply. (HELP #{param})")
+      end
+    end
+    
     def list(folder)
       self.response("150 opening ASCII connection for file list")
       @datasocket.puts("-rw-r--r--  1 spec  staff  507 17 Jul 18:41 last_response_code.rb")
@@ -120,12 +128,8 @@ module NetFTPSpecs
       self.response("226 transfer complete (LIST #{folder})")
     end
     
-    def help(param = :default)
-      if param == :default
-        self.response("211 System status, or system help reply. (HELP)")
-      else
-        self.response("211 System status, or system help reply. (HELP #{param})")
-      end
+    def noop
+      self.response("200 Command okay. (NOOP)")
     end
     
     def stat
