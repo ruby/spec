@@ -3,27 +3,27 @@ require 'net/ftp'
 require File.dirname(__FILE__) + "/fixtures/server.rb"
 
 describe "Net::FTP#chdir" do
-  def with_connection
-    @ftp.connect("localhost", 9921)
-    yield
-  end
-  
   before(:each) do
     @server = NetFTPSpecs::DummyFTP.new
     @server.serve_once
 
     @ftp = Net::FTP.new
+    @ftp.connect("localhost", 9921)
   end
 
   after(:each) do
-    @ftp.quit
+    @ftp.quit rescue nil
     @server.stop
   end
   
   describe "when switching to the parent directory" do
     it "sends the 'CDUP' command to the server" do
-      @server.should_receive("CDUP\r\n").and_respond("200 Command okay")
-      lambda { with_connection { @ftp.chdir("..") } }.should_not raise_error
+      @ftp.chdir("..")
+      @ftp.last_response.should == "200 Command okay. (CDUP)\n"
+    end
+    
+    it "returns nil" do
+      @ftp.chdir("..").should be_nil
     end
 
     # BUG: These raise a NoMethodError
@@ -60,8 +60,12 @@ describe "Net::FTP#chdir" do
   end
 
   it "writes the 'CWD' command with the passed directory to the socket" do
-    @server.should_receive("CWD test\r\n").and_respond("200 Command okay")
-    lambda { with_connection { @ftp.chdir("test") } }.should_not raise_error
+    @ftp.chdir("test")
+    @ftp.last_response.should == "200 Command okay. (CWD test)\n"
+  end
+  
+  it "returns nil" do
+    @ftp.chdir("test").should be_nil
   end
 
   # BUG: These raise a NoMethodError

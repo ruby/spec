@@ -1,34 +1,15 @@
 module NetFTPSpecs
-  
-  # @server = DummyFTP.new
-  # @server.should_receive("USER anonymous\r\n").and_respond("230 OK, password not required")
-  # @server.should_receive("ABOR\r").and_respond("502 test")
-  # @server.serve_once
-  # 
-  # @ftp = Net::FTP.new
-  # @ftp.connect("localhost", 9921)
-  # 
-  # @ftp.login
-  # @ftp.abort
-  # @ftp.quit
-  # 
-  # @server.stop
   class DummyFTP
+    attr_accessor :connect_message
+    
     def initialize(port = 9921) 
       @server = TCPServer.new("localhost", port)
+      
+      @handlers = {}
       @commands = []
+      @connect_message = nil
     end
-  
-    def should_receive(data)
-      @commands << { :receive => data }
-      self
-    end
-  
-    def and_respond(data)
-      @commands.last[:respond] = data
-    end
-    alias_method :should_respond, :and_respond
-  
+    
     def serve_once
       @thread = Thread.new do
         @socket = @server.accept
@@ -38,39 +19,35 @@ module NetFTPSpecs
     end
   
     def handle_request
-      @peername = @socket.getpeername
-      response "220 Dummy FTP Server ready!"
+      # Send out the welcome message.
+      response @connect_message || "220 Dummy FTP Server ready!"
     
       begin
         loop do
-          expected_command = @commands.shift
-
           command = @socket.recv(1024)
           break if command.nil?
-        
-          if expected_command.nil?
-            if command == "QUIT\r\n"
-              self.response("221 OK, bye")
-              break
-            end
-          
-            error_response("Unexpected command: #{command.inspect}")
-          end
-    
-          if command == expected_command[:receive]
-            if expected_command[:respond]
-              self.response(expected_command[:respond])
+
+          command, argument = command.chomp.split(" ", 2)
+
+          if command == "QUIT"
+            self.response("221 OK, bye")
+            break
+          elsif proc_handler = @handlers[command.downcase.to_sym]
+            if argument.nil?
+              proc_handler.call(self)
             else
-              error_response("Received #{command.inspect}, but don't know what to respond")
-              break
+              proc_handler.call(self, argument)
             end
           else
-            error_response("Expected #{expected_command[:receive].inspect}, but received #{command.inspect}")
-            break
+            if argument.nil?
+              self.send(command.downcase.to_sym)
+            else
+              self.send(command.downcase.to_sym, argument)
+            end
           end
         end
       rescue => e
-        error_response("Exception: #{e}")
+        self.error_response("Exception: #{e} #{e.backtrace.inspect}")
       end
     end
   
@@ -79,12 +56,88 @@ module NetFTPSpecs
     end
   
     def response(text)
-      @socket.puts(text)
+      @socket.puts(text) unless @socket.closed?
     end
   
     def stop
+      @datasocket.close unless @datasocket.nil? || @datasocket.closed?
       @server.close
       @thread.join
+    end
+    
+    
+    ## 
+    def handle(sym, &block)
+      @handlers[sym] = block
+    end
+    
+    def should_receive(method)
+      @handler_for = method
+      self
+    end
+  
+    def and_respond(text)
+      @handlers[@handler_for] = lambda { |s, *args| s.response(text) }
+    end
+    
+    ##
+    # FTP methods
+    ##
+    
+    def abor
+      self.response("226 Closing data connection. (ABOR)")
+    end
+    
+    def acct(account)
+      self.response("230 User '#{account}' logged in, proceed. (ACCT)")
+    end
+    
+    def cdup
+      self.response("200 Command okay. (CDUP)")
+    end
+    
+    def cwd(dir)
+      self.response("200 Command okay. (CWD #{dir})")
+    end
+    
+    def dele(file)
+      self.response("250 Requested file action okay, completed. (DELE #{file})")
+    end
+    
+    def eprt(arg)
+      _, _, host, port = arg.split("|")
+      
+      @datasocket = TCPSocket.new(host, port)
+      self.response("200 port opened")
+    end
+    
+    def list(folder)
+      self.response("150 opening ASCII connection for file list")
+      @datasocket.puts("-rw-r--r--  1 spec  staff  507 17 Jul 18:41 last_response_code.rb")
+      @datasocket.puts("-rw-r--r--  1 spec  staff   50 17 Jul 18:41 list.rb")
+      @datasocket.puts("-rw-r--r--  1 spec  staff   48 17 Jul 18:41 pwd.rb")
+      @datasocket.close()
+      self.response("226 transfer complete (LIST #{folder})")
+    end
+    
+    def help(param = :default)
+      if param == :default
+        self.response("211 System status, or system help reply. (HELP)")
+      else
+        self.response("211 System status, or system help reply. (HELP #{param})")
+      end
+    end
+    
+    def syst
+      self.response("215 FTP Dummy Server")
+    end
+    
+    def type(type)
+      self.response("200 TYPE switched to #{type}")
+    end
+    
+    def user(name)
+      self.response("230 User logged in, proceed. (USER #{name})")
     end
   end
 end

@@ -1,20 +1,24 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require 'net/ftp'
+require File.dirname(__FILE__) + "/fixtures/server.rb"
 
 describe "Net::FTP#welcome" do
   before(:each) do
-    @socket = mock("Socket")
-    @socket.stub!(:write)
-    
+    @server = NetFTPSpecs::DummyFTP.new
+    @server.serve_once
+
     @ftp = Net::FTP.new
-    @ftp.instance_variable_set(:@sock, @socket)
+    @ftp.connect("localhost", 9921)
+  end
+
+  after(:each) do
+    @ftp.quit rescue nil
+    @server.stop
   end
   
   it "returns the server's welcome message" do
-    @socket.should_receive(:readline).and_return("230 User logged in, proceed.")
-    
     @ftp.welcome.should be_nil
     @ftp.login
-    @ftp.welcome.should == "230 User logged in, proceed.\n"
+    @ftp.welcome.should == "230 User logged in, proceed. (USER anonymous)\n"
   end
 end
