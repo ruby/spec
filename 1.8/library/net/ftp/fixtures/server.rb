@@ -132,6 +132,16 @@ module NetFTPSpecs
       self.response("200 Command okay. (NOOP)")
     end
     
+    def port(arg)
+      nums = arg.split(",")
+      
+      port = nums[4].to_i * 256 + nums[5].to_i
+      host = nums[0..3].join(".")
+      
+      @datasocket = TCPSocket.new(host, port)
+      self.response("200 port opened")
+    end
+    
     def retr(file)
       self.response("125 Data transfer starting")
       @datasocket.puts("This is the content")
