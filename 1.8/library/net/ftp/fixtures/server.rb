@@ -160,6 +160,10 @@ module NetFTPSpecs
       self.response("350 Requested file action pending further information. (REST)")
     end
     
+    def site(param)
+      self.response("200 Command okay. (SITE #{param})")
+    end
+    
     def size(filename)
       self.response("213 1024")
     end
