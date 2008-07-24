@@ -160,6 +160,10 @@ module NetFTPSpecs
       self.response("350 Requested file action pending further information. (REST)")
     end
     
+    def size(filename)
+      self.response("213 1024")
+    end
+    
     def stat
       self.response("211 System status, or system help reply. (STAT)")
     end
