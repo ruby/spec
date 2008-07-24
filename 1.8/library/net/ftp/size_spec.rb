@@ -21,7 +21,7 @@ describe "Net::FTP#size" do
     @ftp.last_response.should == "213 1024\n"
   end
   
-  it "returns the received size as Integer" do
+  it "returns the size of the passed file as Integer" do
     @ftp.size("test.file").should eql(1024)
   end
 

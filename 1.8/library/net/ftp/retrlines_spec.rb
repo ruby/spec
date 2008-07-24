@@ -15,13 +15,10 @@ describe "Net::FTP#retrlines" do
     @ftp.quit rescue nil
     @server.stop
   end
-  
-  it "puts the connection into ASCII mode" do
-    @ftp.retrlines("LIST test.dir") {}
-  end
 
   it "sends the passed command over the socket" do
     @ftp.retrlines("LIST test.dir") {}
+    @ftp.last_response.should == "226 transfer complete (LIST test.dir)\n"
   end
 
   it "yields each received line to the passed block" do
