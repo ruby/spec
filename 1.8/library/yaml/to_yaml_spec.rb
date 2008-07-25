@@ -55,7 +55,7 @@ describe "Object#to_yaml" do
 
   it "returns the YAML representation of a Struct object" do
     Person = Struct.new(:name, :gender)
-    Person.new("Jane", "female").to_yaml.should == "--- !ruby/struct:Person\nname: Jane\ngender: female\n"
+    Person.new("Jane", "female").to_yaml.should match_yaml("--- !ruby/struct:Person\nname: Jane\ngender: female\n")
   end
 
   it "returns the YAML representation of a Symbol object" do
@@ -73,7 +73,7 @@ describe "Object#to_yaml" do
   end  
 
   it "returns the YAML representation of a Error object" do
-    StandardError.new("foobar").to_yaml.should == "--- !ruby/exception:StandardError\nmessage: foobar\n"
+    StandardError.new("foobar").to_yaml.should match_yaml("--- !ruby/exception:StandardError\nmessage: foobar\n")
   end
 
   it "returns the YAML representation for Range objects" do
