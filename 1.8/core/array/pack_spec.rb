@@ -357,10 +357,51 @@ describe "Array#pack" do
       [1,1234,2].pack('i*').should == "\000\000\000\001\000\000\004\322\000\000\000\002"
     end
   end
-  
-  it "raises a RangeError when the positive integer is too big with ('i')" do
-    lambda { [2**32].pack('i') }.should raise_error(RangeError)
+
+  platform_is :wordsize => 64 do
+    it "raises a RangeError when the negative integer is too big with ('s')" do
+      lambda { [-2**64].pack('s') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the positive integer is too big with ('i')" do
+      lambda { [2**64].pack('i') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the negative integer is too big with ('l')" do
+      lambda { [-2**64].pack('l') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the positive integer is too big with ('l')" do
+      lambda { [2**64].pack('l') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the positive integer is too big with ('s')" do
+      lambda { [2**64].pack('s') }.should raise_error(RangeError)
+    end
   end
+
+  platform_is :wordsize => 32 do
+    it "raises a RangeError when the negative integer is too big with ('s')" do
+      lambda { [-2**32].pack('s') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the positive integer is too big with ('i')" do
+      lambda { [2**32].pack('i') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the negative integer is too big with ('l')" do
+      lambda { [-2**32].pack('l') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the positive integer is too big with ('l')" do
+      lambda { [2**32].pack('l') }.should raise_error(RangeError)
+    end
+
+    it "raises a RangeError when the positive integer is too big with ('s')" do
+      lambda { [2**32].pack('s') }.should raise_error(RangeError)
+    end
+  end
+
 
   it "encodes a negative integer with ('i')" do
     [-1].pack('i').should == "\377\377\377\377"
@@ -378,9 +419,6 @@ describe "Array#pack" do
     end
   end
 
-  it "raises a RangeError when the negative integer is too big with ('l')" do
-    lambda { [-2**32].pack('l') }.should raise_error(RangeError)
-  end
  
   it "encodes a positive integer with ('l')" do
     [0].pack('l').should == "\000\000\000\000"
@@ -399,10 +437,6 @@ describe "Array#pack" do
     end
   end
 
-  it "raises a RangeError when the positive integer is too big with ('l')" do
-    lambda { [2**32].pack('l') }.should raise_error(RangeError)
-  end
-
   it "encodes a negative integer with ('l')" do
     [-1].pack('l').should == "\377\377\377\377"
   end
@@ -419,10 +453,6 @@ describe "Array#pack" do
     end
   end
 
-  it "raises a RangeError when the negative integer is too big with ('l')" do
-    lambda { [-2**32].pack('l') }.should raise_error(RangeError)
-  end 
-  
   it "enocdes string with Qouted Printable encoding with ('M')" do
     ["ABCDEF"].pack('M').should == "ABCDEF=\n"
   end
@@ -606,9 +636,6 @@ describe "Array#pack" do
     end
   end
 
-  it "raises a RangeError when the positive integer is too big with ('s')" do
-    lambda { [2**32].pack('s') }.should raise_error(RangeError)
-  end
 
   it "encodes a negative integer with ('s')" do
     [-1].pack('s').should == "\377\377"
@@ -626,9 +653,6 @@ describe "Array#pack" do
     end
   end
 
-  it "raises a RangeError when the negative integer is too big with ('s')" do
-    lambda { [-2**32].pack('s') }.should raise_error(RangeError)
-  end
 
   it "converts integers into UTF-8 encoded byte sequences with ('U')" do
     numbers = [0, 1, 15, 16, 127,
