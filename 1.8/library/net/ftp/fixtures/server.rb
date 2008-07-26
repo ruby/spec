@@ -132,6 +132,10 @@ module NetFTPSpecs
       self.response("213 19980705132316")
     end
     
+    def mkd(foldername)
+      self.response("257 '#{foldername}' created.")
+    end
+    
     def noop
       self.response("200 Command okay. (NOOP)")
     end
