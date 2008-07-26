@@ -133,7 +133,7 @@ module NetFTPSpecs
     end
     
     def mkd(foldername)
-      self.response(%Q{257 "#{foldername}" created.})
+      self.response(%Q{257 "#{foldername.gsub('"', '""')}" created.})
     end
     
     def noop

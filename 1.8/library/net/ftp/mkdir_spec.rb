@@ -25,6 +25,7 @@ describe "Net::FTP#mkdir" do
     @ftp.mkdir("test.folder").should == "test.folder"
     @ftp.mkdir("/absolute/path/to/test.folder").should == "/absolute/path/to/test.folder"
     @ftp.mkdir("relative/path/to/test.folder").should == "relative/path/to/test.folder"
+    @ftp.mkdir('/usr/dm/foo"bar').should == '/usr/dm/foo"bar'
   end
   
   it "raises a Net::FTPPermError when the response code is 500" do
