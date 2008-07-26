@@ -18,11 +18,13 @@ describe "Net::FTP#mkdir" do
 
   it "sends the MKD command with the passed pathname to the server" do
     @ftp.mkdir("test.folder")
-    @ftp.last_response.should == "257 'test.folder' created.\n"
+    @ftp.last_response.should == %{257 "test.folder" created.\n}
   end
   
-  it "returns an empty String" do
-    @ftp.mkdir("test.folder").should == ""
+  it "returns the path to the newly created directory" do
+    @ftp.mkdir("test.folder").should == "test.folder"
+    @ftp.mkdir("/absolute/path/to/test.folder").should == "/absolute/path/to/test.folder"
+    @ftp.mkdir("relative/path/to/test.folder").should == "relative/path/to/test.folder"
   end
   
   it "raises a Net::FTPPermError when the response code is 500" do
