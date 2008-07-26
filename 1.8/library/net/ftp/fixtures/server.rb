@@ -172,6 +172,10 @@ module NetFTPSpecs
       self.response("350 Requested file action pending further information. (REST)")
     end
     
+    def rmd(folder)
+      self.response("250 Requested file action okay, completed. (RMD #{folder})")
+    end
+    
     def site(param)
       self.response("200 Command okay. (SITE #{param})")
     end
