@@ -176,6 +176,16 @@ module NetFTPSpecs
       self.response("250 Requested file action okay, completed. (RMD #{folder})")
     end
     
+    def rnfr(from)
+      @rename_from = from
+      self.response("350 Requested file action pending further information.")
+    end
+    
+    def rnto(to)
+      self.response("250 Requested file action okay, completed. (Renamed #{@rename_from} to #{to})")
+      @rename_from = nil
+    end
+    
     def site(param)
       self.response("200 Command okay. (SITE #{param})")
     end
