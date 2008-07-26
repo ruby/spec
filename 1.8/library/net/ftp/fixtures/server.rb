@@ -128,6 +128,10 @@ module NetFTPSpecs
       self.response("226 transfer complete (LIST #{folder})")
     end
     
+    def mdtm(filename)
+      self.response("213 19980705132316")
+    end
+    
     def noop
       self.response("200 Command okay. (NOOP)")
     end
