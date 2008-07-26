@@ -140,6 +140,10 @@ module NetFTPSpecs
       self.response("200 Command okay. (NOOP)")
     end
     
+    def pass(password)
+      self.response("230 User logged in, proceed. (PASS #{password})")
+    end
+    
     def port(arg)
       nums = arg.split(",")
       
