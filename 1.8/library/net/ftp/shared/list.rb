@@ -38,7 +38,7 @@ describe :net_ftp_list, :shared => true do
         "-rw-r--r--  1 spec  staff   48 17 Jul 18:41 pwd.rb"
       ]
       
-      @ftp.send(@method, "test.folder") == expected
+      @ftp.send(@method, "test.folder").should == expected
       
       @ftp.last_response.should == "226 transfer complete (LIST test.folder)\n"
     end
