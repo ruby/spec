@@ -163,6 +163,10 @@ module NetFTPSpecs
       self.response("200 port opened")
     end
     
+    def pwd
+      self.response('257 "/some/dir/" - current directory')
+    end
+    
     def retr(file)
       self.response("125 Data transfer starting")
       if @restart_at && @restart_at == 20
