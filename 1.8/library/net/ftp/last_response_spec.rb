@@ -13,6 +13,7 @@ describe "Net::FTP#last_response" do
 
   after(:each) do
     @ftp.quit rescue nil
+    @ftp.close
     @server.stop
   end
 

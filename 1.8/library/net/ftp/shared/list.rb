@@ -10,6 +10,7 @@ describe :net_ftp_list, :shared => true do
 
   after(:each) do
     @ftp.quit rescue nil
+    @ftp.close
     @server.stop
   end
   

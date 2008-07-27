@@ -13,6 +13,7 @@ describe "Net::FTP#site" do
 
   after(:each) do
     @ftp.quit rescue nil
+    @ftp.close
     @server.stop
   end
   

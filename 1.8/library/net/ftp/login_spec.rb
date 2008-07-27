@@ -13,6 +13,7 @@ describe "Net::FTP#login" do
 
   after(:each) do
     @ftp.quit rescue nil
+    @ftp.close
     @server.stop
   end
 

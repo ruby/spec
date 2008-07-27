@@ -14,6 +14,7 @@ describe "Net::FTP#connect" do
   after(:each) do
     @server.connect_message = nil
     @ftp.quit rescue nil
+    @ftp.close
     @server.stop
   end
   
