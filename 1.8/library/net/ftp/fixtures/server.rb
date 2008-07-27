@@ -136,6 +136,15 @@ module NetFTPSpecs
       self.response(%Q{257 "#{foldername.gsub('"', '""')}" created.})
     end
     
+    def nlst(folder = nil)
+      self.response("150 opening ASCII connection for file list")
+      @datasocket.puts("last_response_code.rb")
+      @datasocket.puts("list.rb")
+      @datasocket.puts("pwd.rb")
+      @datasocket.close()
+      self.response("226 transfer complete (NLST#{folder ? " #{folder}" : ""})")
+    end
+    
     def noop
       self.response("200 Command okay. (NOOP)")
     end
