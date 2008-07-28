@@ -4,7 +4,7 @@ describe :net_ftp_putbinaryfile, :shared => :true do
     @server.serve_once
 
     @local_fixture_file  = File.dirname(__FILE__) + "/../fixtures/putbinaryfile"
-    @remote_fixture_file = File.dirname(__FILE__) + "/../fixtures/binaryfile"
+    @remote_tmp_file = tmp("binaryfile")
     
     @ftp = Net::FTP.new
     @ftp.connect("localhost", 9921)
@@ -25,7 +25,7 @@ describe :net_ftp_putbinaryfile, :shared => :true do
   it "sends the contents of the passed local_file, without modifications" do
     @ftp.send(@method, @local_fixture_file, "binary")
     
-    remote_lines = File.readlines(@remote_fixture_file)
+    remote_lines = File.readlines(@remote_tmp_file)
     local_lines  = File.readlines(@local_fixture_file)
     
     remote_lines.should == local_lines
@@ -50,7 +50,7 @@ describe :net_ftp_putbinaryfile, :shared => :true do
 
   describe "when resuming an existing file" do
     before(:each) do
-      File.open(@remote_fixture_file, "w") do |f|
+      File.open(@remote_tmp_file, "w") do |f|
         f << "This is an example file\n"
       end
       
@@ -59,7 +59,7 @@ describe :net_ftp_putbinaryfile, :shared => :true do
     
     it "sends the remaining content of the passed local_file to the passed remote_file" do
       @ftp.send(@method, @local_fixture_file, "binary")
-      File.read(@remote_fixture_file).should == File.read(@local_fixture_file)
+      File.read(@remote_tmp_file).should == File.read(@local_fixture_file)
     end
     
     describe "and the REST command fails" do

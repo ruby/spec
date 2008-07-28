@@ -216,17 +216,13 @@ module NetFTPSpecs
     end
     
     def stor(file)
-      fixture_file = if file == "text"
-        File.dirname(__FILE__) + "/../fixtures/textfile"
-      else
-        File.dirname(__FILE__) + "/../fixtures/binaryfile"        
-      end
+      tmp_file = tmp("#{file}file")
       
       self.response("125 Data transfer starting.")
 
       mode = @restart_at ? "a" : "w"
 
-      File.open(fixture_file, mode) do |f|
+      File.open(tmp_file, mode) do |f|
         loop do
           data = @datasocket.recv(1024)
           break if !data || data.empty?

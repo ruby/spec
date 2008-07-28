@@ -4,7 +4,7 @@ describe :net_ftp_puttextfile, :shared => true do
     @server.serve_once
 
     @local_fixture_file  = File.dirname(__FILE__) + "/../fixtures/puttextfile"
-    @remote_fixture_file = File.dirname(__FILE__) + "/../fixtures/textfile"
+    @remote_tmp_file = tmp("textfile")
 
     @ftp = Net::FTP.new
     @ftp.connect("localhost", 9921)
@@ -25,7 +25,7 @@ describe :net_ftp_puttextfile, :shared => true do
   it "sends the contents of the passed local_file, using \\r\\n as the newline seperator" do
     @ftp.send(@method, @local_fixture_file, "text")
     
-    remote_lines = File.readlines(@remote_fixture_file)
+    remote_lines = File.readlines(@remote_tmp_file)
     local_lines  = File.readlines(@local_fixture_file)
     
     remote_lines.should_not == local_lines
