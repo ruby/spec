@@ -204,11 +204,38 @@ module NetFTPSpecs
     end
     
     def size(filename)
-      self.response("213 1024")
+      if filename == "binary"
+        self.response("213 24")
+      else
+        self.response("213 1024")
+      end
     end
     
     def stat
       self.response("211 System status, or system help reply. (STAT)")
+    end
+    
+    def stor(file)
+      fixture_file = if file == "text"
+        File.dirname(__FILE__) + "/../fixtures/textfile"
+      else
+        File.dirname(__FILE__) + "/../fixtures/binaryfile"        
+      end
+      
+      self.response("125 Data transfer starting.")
+
+      mode = @restart_at ? "a" : "w"
+
+      File.open(fixture_file, mode) do |f|
+        loop do
+          data = @datasocket.recv(1024)
+          break if !data || data.empty?
+          f << data
+        end
+      end
+
+      #@datasocket.close()
+      self.response("200 OK, Data received. (STOR #{file})")
     end
     
     def syst
