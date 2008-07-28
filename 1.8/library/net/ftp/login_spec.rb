@@ -24,9 +24,10 @@ describe "Net::FTP#login" do
     end
     
     it "sends the current username + hostname as a password when required" do
+      pass = ENV["USER"] + "@" + Socket.gethostname
       @server.should_receive(:user).and_respond("331 User name okay, need password.")
       @ftp.login
-      @ftp.last_response.should == "230 User logged in, proceed. (PASS arthur@Desktop.local)\n"
+      @ftp.last_response.should == "230 User logged in, proceed. (PASS #{pass})\n"
     end
     
     ruby_bug "", "1.8.7" do
