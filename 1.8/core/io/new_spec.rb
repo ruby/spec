@@ -60,6 +60,3 @@ describe "IO.new" do
   end
 end
 
-describe "IO#initialize" do
-  it "needs to be reviewed for spec completeness"
-end

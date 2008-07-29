@@ -43,7 +43,4 @@ describe "IO.select" do
     lambda { IO.select(nil, Object.new)}.should raise_error(TypeError)
     lambda { IO.select(nil, nil, Object.new)}.should raise_error(TypeError)
   end
-
-  it "needs to be reviewed for spec completeness"
-
 end
