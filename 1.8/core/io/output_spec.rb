@@ -14,11 +14,7 @@ describe "IO#<<" do
   end
 
   it "raises an error if the stream is closed" do
-    path = tmp("io-output-spec")
-    fd = IO.sysopen(path, "w")
-    io = IO.open(fd)
-    io.close
+    io = IOSpecs.closed_file
     lambda { io << "test" }.should raise_error(IOError)
-    File.unlink(path) if File.exists?(path)
   end
 end
