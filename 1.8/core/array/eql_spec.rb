@@ -21,6 +21,20 @@ describe "Array#eql?" do
     [].should eql([])
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty2 = []; empty2 << empty2
+    empty.should eql(empty.dup)
+    empty.should_not eql(empty2)
+
+    array = ArraySpecs.recursive_array
+    array.should eql(array)
+    array.should eql(array.dup)
+
+    array.should_not eql(empty)
+    array.should_not eql([1, 2])
+  end
+
   it "ignores array class differences" do
     ArraySpecs::MyArray[1, 2, 3].should eql([1, 2, 3])
     ArraySpecs::MyArray[1, 2, 3].should eql(ArraySpecs::MyArray[1, 2, 3])

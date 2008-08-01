@@ -23,6 +23,19 @@ describe "Array#==" do
     [obj].should_not == []
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty2 = []; empty2 << empty2
+    (empty == empty.dup).should be_true
+    (empty == empty2).should be_false
+
+    array = ArraySpecs.recursive_array
+    (array == array).should be_true
+    (array == array.dup).should be_true
+    (array == empty).should be_false
+    (array == [1, 2]).should be_false
+  end
+
   # Broken in MRI as well. See MRI bug #11585:
   # http://rubyforge.org/tracker/index.php?func=detail&aid=11585&group_id=426&atid=1698
   compliant_on :r19, :jruby do
