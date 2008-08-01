@@ -41,7 +41,8 @@ describe "Array#<=>" do
 
     (ArraySpecs.recursive_array <=> ArraySpecs.empty_recursive_array).should == nil
 
-    (ArraySpecs.recursive_array <=> ArraySpecs.recursive_array).should == 0
+    array = ArraySpecs.recursive_array
+    (array <=> array).should == 0
   end
 
   it "tries to convert the passed argument to an Array using #to_ary" do
