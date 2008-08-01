@@ -18,6 +18,16 @@ describe "Array#*" do
     (x * ":").should == x.join(":")
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    (empty * 3).should == [empty, empty, empty]
+    (empty * ",").should == "[...]"
+
+    array = [1, 2]; array << array
+    (array * ",").should == "1,2,1,2,[...]"
+    (array * 0).should == []
+  end
+
   it "calls to_str on its argument" do
     obj = mock('x')
     def obj.to_str() "x" end

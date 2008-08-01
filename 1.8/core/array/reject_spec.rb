@@ -11,6 +11,16 @@ describe "Array#reject" do
     ary.reject { |i| i < 3 }.should == [3, 4, 5]
     ary.reject { |i| i % 2 == 0 }.should == [1, 3, 5]
   end
+
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.reject { false }.should == [empty]
+    empty.reject { true }.should == []
+
+    array = ArraySpecs.recursive_array
+    array.reject { false }.should == [1, 'two', 3.0, array, array, array, array, array]
+    array.reject { true }.should == []
+  end
   
   # Returns ArraySpecs::MyArray on MRI 1.8 which is inconsistent with select.
   # It has been changed on 1.9 however.
@@ -43,7 +53,27 @@ describe "Array#reject!" do
     a.reject! { true }
     a.should == []
   end
-  
+
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty_dup = empty.dup
+    empty.reject! { false }.should == nil
+    empty.should == empty_dup
+
+    empty = ArraySpecs.empty_recursive_array
+    empty.reject! { true }.should == []
+    empty.should == []
+
+    array = ArraySpecs.recursive_array
+    array_dup = array.dup
+    array.reject! { false }.should == nil
+    array.should == array_dup
+
+    array = ArraySpecs.recursive_array
+    array.reject! { true }.should == []
+    array.should == []
+  end
+
   it "returns nil if no changes are made" do
     a = [1, 2, 3]
     

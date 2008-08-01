@@ -517,6 +517,14 @@ describe "Array#pack" do
     ["ABC", "DEF", "GHI"].pack('M*').should == ["ABC"].pack('M')
   end
 
+  it "properly handles recursive arrays with ('M')" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.pack('M').should == "[...]=\n"
+
+    array = ArraySpecs.recursive_array
+    array.pack('M').should == "1=\n"
+  end
+
   it "encodes string with Base64 encoding with ('m')" do
     ["ABCDEF"].pack('m').should == "QUJDREVG\n"
   end

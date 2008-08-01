@@ -22,6 +22,14 @@ describe "Array#last" do
   it "returns an empty array when count == 0" do
     [1, 2, 3, 4, 5].last(0).should == []
   end
+
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.last.should == empty
+
+    array = ArraySpecs.recursive_array
+    array.last.should == array
+  end
   
   it "raises an ArgumentError when count is negative" do
     lambda { [1, 2].last(-1) }.should raise_error(ArgumentError)

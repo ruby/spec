@@ -13,6 +13,17 @@ describe :array_replace, :shared => true do
     a.should == []
   end
 
+  it "properly handles recursive arrays" do
+    orig = [1, 2, 3]
+    empty = ArraySpecs.empty_recursive_array
+    orig.send(@method, empty)
+    orig.should == empty
+
+    array = ArraySpecs.recursive_array
+    orig.send(@method, array)
+    orig.should == array
+  end
+
   it "tries to convert the passed argument to an Array using #to_ary" do
     obj = mock('to_ary')
     obj.stub!(:to_ary).and_return([1, 2, 3])

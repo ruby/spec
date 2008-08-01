@@ -11,6 +11,14 @@ describe "Array#hash" do
     end
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.hash.should be_kind_of(Integer)
+
+    array = ArraySpecs.recursive_array
+    array.hash.should be_kind_of(Integer)
+  end
+
   #  Too much of an implementation detail? -rue
   compliant_on :ruby, :jruby do
     it "calls to_int on result of calling hash on each element" do

@@ -22,6 +22,14 @@ describe "Array#pop" do
     [].pop.should == nil
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.pop.should == []
+
+    array = ArraySpecs.recursive_array
+    array.pop.should == [1, 'two', 3.0, array, array, array, array]
+  end
+
   compliant_on :ruby, :jruby do
     it "raises a TypeError on a frozen array" do
       lambda { ArraySpecs.frozen_array.pop }.should raise_error(TypeError)
