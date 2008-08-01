@@ -5,6 +5,18 @@ module ArraySpecs
     @frozen_array
   end
 
+  def self.recursive_array
+    a = [1, 'two', 3.0]
+    5.times { a << a }
+    a
+  end
+
+  def self.empty_recursive_array
+    a = []
+    a << a
+    a
+  end
+
   class MyArray < Array; end
 
   class Sexp < Array

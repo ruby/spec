@@ -23,6 +23,16 @@ describe "Array#&" do
     a.should == [1, 1, 3, 5]
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    (empty & empty).should == empty
+
+    (ArraySpecs.recursive_array & []).should == []
+    ([] & ArraySpecs.recursive_array).should == []
+
+    (ArraySpecs.recursive_array & ArraySpecs.recursive_array).should == [1, 'two', 3.0]
+  end
+
   it "tries to convert the passed argument to an Array using #to_ary" do
     obj = mock('[1,2,3]')
     obj.should_receive(:to_ary).and_return([1, 2, 3])
