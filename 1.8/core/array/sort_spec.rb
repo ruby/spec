@@ -47,6 +47,14 @@ describe "Array#sort" do
     a.sort.should == [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.sort.should == empty
+
+    array = [[]]; array << array
+    array.sort.should == [[], array]
+  end
+
   it "does not deal with exceptions raised by unimplemented or incorrect #<=>" do
     o = Object.new
 
@@ -96,6 +104,14 @@ describe "Array#sort!" do
   it "sorts array in place using block value" do
     a = [0, 15, 2, 3, 4, 6, 14, 5, 7, 12, 8, 9, 1, 10, 11, 13]
     a.sort! { |x, y| y <=> x }.should == (0..15).to_a.reverse
+  end
+
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.sort!.should == empty
+
+    array = [[]]; array << array
+    array.sort!.should == array
   end
 
   it "does not call #<=> on contained objects when invoked with a block" do
