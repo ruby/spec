@@ -34,9 +34,8 @@ describe "Net::FTP#login" do
       @ftp.last_response.should == "230 User logged in, proceed. (PASS #{pass})\n"
     end
     
-    ruby_bug "", "1.8.7" do
-      # I have no idea how this should work. It currently raises an error.
-      it "should description" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
+      it "correctly handles the case when the server requests an account" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @server.should_receive(:pass).and_respond("332 Need account for login.")
         @ftp.login
@@ -51,16 +50,14 @@ describe "Net::FTP#login" do
       @ftp.last_response.should == "230 User logged in, proceed. (USER rubyspec)\n"
     end
     
-    # TODO: No idea how this hsould work. Raises an error.
-    ruby_bug "", "1.8.7" do
-      it "should description" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
+      it "correctly handles the case when the server requests a password, but none was given" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @ftp.login("rubyspec")
         @ftp.last_response.should == ""
       end
 
-      # I have no idea how this should work. It currently raises an error.
-      it "should description" do
+      it "correctly handles the case when the server requests an account, but none was given" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @server.should_receive(:pass).and_respond("332 Need account for login.")
         @ftp.login("rubyspec")
@@ -81,9 +78,8 @@ describe "Net::FTP#login" do
       @ftp.last_response.should == "230 User logged in, proceed. (PASS rocks)\n"
     end
     
-    ruby_bug "", "1.8.7" do
-      # I have no idea how this should work. It currently raises an error.
-      it "should description" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
+      it "correctly handles the case when the server requests an account" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @server.should_receive(:pass).and_respond("332 Need account for login.")
         @ftp.login("rubyspec", "rocks")
