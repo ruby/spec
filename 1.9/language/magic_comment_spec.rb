@@ -29,13 +29,11 @@ __ENCODING__
 EOS
   end
 
-  ruby_bug("#383", "1.9.0") do
-    it "must be at the first of line" do
-      eval(<<EOS.force_encoding("US-ASCII")).should == Encoding::US_ASCII
+  it "must be at the first of line" do
+    eval(<<EOS.force_encoding("US-ASCII")).should == Encoding::US_ASCII
 1+1 # coding: ASCII-8BIT
 __ENCODING__
 EOS
-    end
   end
 
   it "can be after the shebang" do
