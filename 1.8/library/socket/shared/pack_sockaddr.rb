@@ -1,7 +1,9 @@
 describe :socket_pack_sockaddr_in, :shared => true do
   it "packs and unpacks" do
     sockaddr_in = Socket.pack_sockaddr_in 0, nil
-    Socket.unpack_sockaddr_in(sockaddr_in).should == [0, '127.0.0.1']
+    port, addr = Socket.unpack_sockaddr_in(sockaddr_in)
+    ["0.0.0.0", "::1"].include?(addr).should == true
+    port.should == 0
 
     sockaddr_in = Socket.pack_sockaddr_in 0, ''
     Socket.unpack_sockaddr_in(sockaddr_in).should == [0, '0.0.0.0']
