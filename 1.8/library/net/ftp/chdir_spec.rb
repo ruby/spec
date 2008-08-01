@@ -27,10 +27,10 @@ describe "Net::FTP#chdir" do
       @ftp.chdir("..").should be_nil
     end
 
-    ruby_bug "", "1.8.7" do
-      it "raises a Net::FTPPermError when the response code is 500" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/384", "1.8.7" do
+      it "does not raise a Net::FTPPermError when the response code is 500" do
         @server.should_receive(:cdup).and_respond("500 Syntax error, command unrecognized.")
-        lambda { @ftp.chdir("..") }.should raise_error(Net::FTPPermError)
+        lambda { @ftp.chdir("..") }.should_not raise_error(Net::FTPPermError)
       end
 
       it "raises a Net::FTPPermError when the response code is 501" do
