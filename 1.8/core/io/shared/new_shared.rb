@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/../fixtures/classes'
+
 describe :io_new, :shared => true do
   before :all do
     @filename = tmp("rubinius-spec-io-new-#{$$}.txt")
