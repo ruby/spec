@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'ST
+require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#stat" do
