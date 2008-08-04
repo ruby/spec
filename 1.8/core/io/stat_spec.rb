@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'ST
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#stat" do
@@ -7,7 +7,7 @@ describe "IO#stat" do
   end
 
   it "returns a File::Stat object for the stream" do
-    io = IO.new STDERR.fileno
+    io = IO.new $stderr.fileno
     io.stat.class.should == File::Stat
   end
 end
