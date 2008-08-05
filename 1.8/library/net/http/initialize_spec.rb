@@ -5,42 +5,42 @@ describe "Net::HTTP#initialize" do
   it "is private" do
     Net::HTTP.private_instance_methods.should include("initialize")
   end
-end
+  
+  describe "when passed address" do
+    before(:each) do
+      @net = Net::HTTP.allocate
+      @net.send(:initialize, "localhost")
+    end
 
-describe "Net::HTTP#initialize when passed address" do
-  before(:each) do
-    @net = Net::HTTP.allocate
-    @net.send(:initialize, "localhost")
-  end
-  
-  it "sets the new Net::HTTP instance's address to the passed address" do
-    @net.address.should == "localhost"
-  end
-  
-  it "sets the new Net::HTTP instance's port to the default HTTP port" do
-    @net.port.should eql(Net::HTTP.default_port)
-  end
-  
-  it "does not start the new Net::HTTP instance" do
-    @net.started?.should be_false
-  end
-end
+    it "sets the new Net::HTTP instance's address to the passed address" do
+      @net.address.should == "localhost"
+    end
 
-describe "Net::HTTP#initialize when passed address, port" do
-  before(:each) do
-    @net = Net::HTTP.allocate
-    @net.send(:initialize, "localhost", 3333)
+    it "sets the new Net::HTTP instance's port to the default HTTP port" do
+      @net.port.should eql(Net::HTTP.default_port)
+    end
+
+    it "does not start the new Net::HTTP instance" do
+      @net.started?.should be_false
+    end
   end
   
-  it "sets the new Net::HTTP instance's address to the passed address" do
-    @net.address.should == "localhost"
-  end
-  
-  it "sets the new Net::HTTP instance's port to the passed port" do
-    @net.port.should eql(3333)
-  end
-  
-  it "does not start the new Net::HTTP instance" do
-    @net.started?.should be_false
+  describe "when passed address, port" do
+    before(:each) do
+      @net = Net::HTTP.allocate
+      @net.send(:initialize, "localhost", 3333)
+    end
+
+    it "sets the new Net::HTTP instance's address to the passed address" do
+      @net.address.should == "localhost"
+    end
+
+    it "sets the new Net::HTTP instance's port to the passed port" do
+      @net.port.should eql(3333)
+    end
+
+    it "does not start the new Net::HTTP instance" do
+      @net.started?.should be_false
+    end
   end
 end
