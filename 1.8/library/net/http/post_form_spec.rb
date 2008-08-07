@@ -12,7 +12,7 @@ describe "Net::HTTP.post_form when passed URI" do
   end
   
   it "POSTs the passed form data to the given uri" do
-    uri = URI.parse('http://localhost:3333/form')
+    uri = URI.parse('http://localhost:3333/request/body')
     data = { :test => :data }
     
     res = Net::HTTP.post_form(uri, data)

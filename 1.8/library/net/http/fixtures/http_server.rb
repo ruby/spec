@@ -38,12 +38,15 @@ module NetHTTPSpecs
         res.content_type = "text/plain"
         res.body = "This is the index page."
       end
-      @server.mount_proc("/form") do |req, res|
+      @server.mount('/request', RequestServlet)
+      @server.mount_proc("/request/body") do |req, res|
         res.content_type = "text/plain"
         res.body = req.body
       end
-      @server.mount('/request', RequestServlet)
-
+      @server.mount_proc("/request/header") do |req, res|
+        res.content_type = "text/plain"
+        res.body = req.header.inspect
+      end
       
       @server.start
     end
