@@ -17,7 +17,10 @@ describe "Net::HTTP#trace" do
   
   it "sends a TRACE request to the passed path and returns the response" do
     response = @http.trace("/request")
-    response.should be_kind_of(Net::HTTPResponse)
     response.body.should == "Request type: TRACE"
+  end
+  
+  it "returns a Net::HTTPResponse" do
+    @http.trace("/request").should be_kind_of(Net::HTTPResponse)
   end
 end

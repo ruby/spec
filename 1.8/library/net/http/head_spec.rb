@@ -17,8 +17,11 @@ describe "Net::HTTP#head" do
   
   it "sends a HEAD request to the passed path and returns the response" do
     response = @http.head("/request")
-    response.should be_kind_of(Net::HTTPResponse)
     # HEAD requests have no responses
     response.body.should be_nil
+  end
+
+  it "returns a Net::HTTPResponse" do
+    @http.head("/request").should be_kind_of(Net::HTTPResponse)
   end
 end
