@@ -163,4 +163,14 @@ describe "IO#gets" do
   it "raises IOError on closed stream" do
     lambda { IOSpecs.closed_file.gets }.should raise_error(IOError)
   end
+
+  it "fails on already opened streams" do
+    f = File.open(tmp("gets_specs"), "w")
+    f.puts("heh")
+    g = IO.new(f.fileno)
+    f.fileno.should == g.fileno
+    lambda { g.gets }.should raise_error(IOError)
+    g.close
+    File.unlink(tmp("gets_specs"))
+  end
 end
