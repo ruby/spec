@@ -100,4 +100,8 @@ describe :io_new, :shared => true do
     @file = File.open @filename, 'r'
     lambda { IO.new(@file.fileno) }.should_not raise_error()
   end
+
+  it "cannot open an IO with incompatible flags" do
+    lambda { IO.new(@file.fileno, "r") }.should raise_error
+  end
 end
