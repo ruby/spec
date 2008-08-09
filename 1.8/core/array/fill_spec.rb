@@ -108,10 +108,20 @@ describe "Array#fill" do
     lambda { [].fill 'a', true }.should raise_error(TypeError)
   end
   
-  it "raises an ArgumentError or RangeError for too-large sizes" do
-    arr = [1, 2, 3]
-    lambda { arr.fill(10, 1, 2**31 - 1) }.should raise_error(ArgumentError)
-    lambda { arr.fill(10, 1, 2**31) }.should raise_error(RangeError)
+  platform_is :wordsize => 32 do
+    it "raises an ArgumentError or RangeError for too-large sizes" do
+      arr = [1, 2, 3]
+      lambda { arr.fill(10, 1, 2**31 - 1) }.should raise_error(ArgumentError)
+      lambda { arr.fill(10, 1, 2**31) }.should raise_error(RangeError)
+    end
+  end
+
+  platform_is :wordsize => 64 do
+    it "raises an ArgumentError or RangeError for too-large sizes" do
+      arr = [1, 2, 3]
+      lambda { arr.fill(10, 1, 2**63 - 1) }.should raise_error(ArgumentError)
+      lambda { arr.fill(10, 1, 2**63) }.should raise_error(RangeError)
+    end
   end
 
   it "raises a TypeError with range and length argument" do
