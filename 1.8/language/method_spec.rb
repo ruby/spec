@@ -195,14 +195,44 @@ end
 
 describe "Calling a private setter method" do
   it "permits self as a receiver" do
-    class << self
-      attr_reader :foo
-      attr_writer :foo
-      private :foo=
+    module MethodSpecs
+      class PrivateSetter
+        attr_reader :foo
+        attr_writer :foo
+        private :foo=
+        
+        def call_self_foo_equals(value)
+          self.foo = value
+        end
+      end
     end
 
-    self.foo = 42
-    self.foo.should == 42
+    receiver = MethodSpecs::PrivateSetter.new
+    receiver.call_self_foo_equals(42)
+    receiver.foo.should == 42
+  end
+end
+
+describe "Calling a private getter method" do
+  it "does not permit self as a receiver" do
+    module MethodSpecs
+      class PrivateGetter
+        attr_reader :foo
+        private :foo
+
+        def call_self_foo
+          self.foo
+        end
+        
+        def call_self_foo_or_equals(value)
+          self.foo ||= 6
+        end
+      end
+    end
+
+    receiver = MethodSpecs::PrivateGetter.new
+    lambda { receiver.call_self_foo }.should raise_error(NoMethodError)
+    lambda { receiver.call_self_foo_or_equals(6) }.should raise_error(NoMethodError)
   end
 end
 
