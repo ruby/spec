@@ -45,8 +45,8 @@ describe "Bignum#<<" do
   platform_is :wordsize => 64 do
     it "raises a RangeError when the given argument is a Bignum" do
       # check against 2**64 for 64-bit machines.
-      lambda { @bignum << bignum_value << 1 }.should raise_error(RangeError)
-      lambda { -@bignum << bignum_value << 1 }.should raise_error(RangeError)
+      lambda { @bignum << (bignum_value << 1) }.should raise_error(RangeError)
+      lambda { -@bignum << (bignum_value << 1) }.should raise_error(RangeError)
       
       obj = mock("Converted to Integer")
       obj.should_receive(:to_int).exactly(2).times.and_return(bignum_value << 1)
