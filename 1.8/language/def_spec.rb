@@ -11,16 +11,18 @@ describe "Redefining a method" do
   end
 end
 
-describe "An instance method definition" do
-  it "for 'initialize' mothod defines it as private" do
+describe "Defining an 'initialize' method" do
+  it "should make it private" do
     class DefInitializeSpec
       def initialize
       end
     end
     DefInitializeSpec.new.private_methods(false).should include('initialize')
   end
+end
 
-  it "for 'initialize_copy' method defines it as private" do
+describe "Defining an 'initialize_copy' method" do
+  it "should make it private" do
     class DefInitializeCopySpec
       def initialize_copy
       end
