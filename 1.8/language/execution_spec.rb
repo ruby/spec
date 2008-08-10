@@ -12,5 +12,7 @@ describe "Execution literal" do
     %x(echo disc #{ip}).should == "disc world\n"
   end
 
-  # NOTE: %X doesn't exist.
+  it "%X doesn't exist" do
+    lambda { eval '%X(echo disc)' }.should raise_error(SyntaxError)
+  end
 end
