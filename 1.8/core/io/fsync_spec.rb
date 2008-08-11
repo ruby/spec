@@ -13,8 +13,6 @@ describe "IO#fsync" do
       lambda { 
         ret = f.fsync
       }.should_not raise_error
-
-      f.close
     end
 
     # it returns nil on unsupported systems
