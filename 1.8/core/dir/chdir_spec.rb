@@ -44,8 +44,8 @@ describe "Dir.chdir" do
   end
 
   it "raises a SystemCallError if the original directory no longer exists" do
-    dir1 = File.dirname(__FILE__) + '/testdir1'
-    dir2 = File.dirname(__FILE__) + '/testdir2'
+    dir1 = tmp('/testdir1')
+    dir2 = tmp('/testdir2')
     File.exist?(dir1).should == false
     File.exist?(dir2).should == false
     Dir.mkdir dir1
