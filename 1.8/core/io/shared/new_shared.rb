@@ -97,11 +97,16 @@ describe :io_new, :shared => true do
   it "accepts only one argument" do
     # By default, IO.new without an arg assumes RO
     @file.close
+    io = ""
     @file = File.open @filename, 'r'
-    lambda { IO.new(@file.fileno) }.should_not raise_error()
+    lambda { 
+      io = IO.new(@file.fileno) 
+    }.should_not raise_error()
+
+    io.close
   end
 
-  it "cannot open an IO with incompatible flags" do
-    lambda { IO.new(@file.fileno, "r") }.should raise_error
-  end
+    it "cannot open an IO with incompatible flags" do
+      lambda { IO.new(@file.fileno, "r") }.should raise_error
+    end
 end
