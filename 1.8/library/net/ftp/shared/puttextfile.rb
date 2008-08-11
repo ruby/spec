@@ -17,6 +17,10 @@ describe :net_ftp_puttextfile, :shared => true do
     @server.stop
   end
 
+  after :all do
+    File.unlink(tmp("textfile")) if File.exists?(tmp("textfile"))
+  end
+
   it "sends the STOR command to the server" do
     @ftp.send(@method, @local_fixture_file, "text")
     @ftp.last_response.should == "200 OK, Data received. (STOR text)\n"
