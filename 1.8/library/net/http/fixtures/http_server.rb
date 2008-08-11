@@ -21,6 +21,32 @@ module NetHTTPSpecs
       alias_method method.to_sym, :do_GET
     end
   end
+
+  class RequestBodyServlet < WEBrick::HTTPServlet::AbstractServlet
+    def do_GET(req, res)
+      res.content_type = "text/plain"
+      res.body = req.body
+    end
+    
+    %w{ do_HEAD do_POST do_PUT do_PROPPATCH do_LOCK do_UNLOCK
+        do_OPTIONS do_PROPFIND do_DELETE do_MOVE do_COPY
+        do_MKCOL do_TRACE }.each do |method|
+      alias_method method.to_sym, :do_GET
+    end
+  end
+
+  class RequestHeaderServlet < WEBrick::HTTPServlet::AbstractServlet
+    def do_GET(req, res)
+      res.content_type = "text/plain"
+      res.body = req.header.inspect
+    end
+    
+    %w{ do_HEAD do_POST do_PUT do_PROPPATCH do_LOCK do_UNLOCK
+        do_OPTIONS do_PROPFIND do_DELETE do_MOVE do_COPY
+        do_MKCOL do_TRACE }.each do |method|
+      alias_method method.to_sym, :do_GET
+    end
+  end
   
   class << self
     def start_server
@@ -39,14 +65,8 @@ module NetHTTPSpecs
         res.body = "This is the index page."
       end
       @server.mount('/request', RequestServlet)
-      @server.mount_proc("/request/body") do |req, res|
-        res.content_type = "text/plain"
-        res.body = req.body
-      end
-      @server.mount_proc("/request/header") do |req, res|
-        res.content_type = "text/plain"
-        res.body = req.header.inspect
-      end
+      @server.mount("/request/body", RequestBodyServlet)
+      @server.mount("/request/header", RequestHeaderServlet)
       
       @server.start
     end
