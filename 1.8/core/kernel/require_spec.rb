@@ -34,16 +34,13 @@ describe "Kernel#require" do
   before :all do
     Dir.mkdir($require_tmp_dir)
     Dir.chdir($require_tmp_dir) { 
-      `touch require_spec_dummy.#{Config::CONFIG['DLEXT']}`
-      `touch require_spec_dummy.rb`
+      FileUtils.touch("require_spec_dummy.#{Config::CONFIG['DLEXT']}")
+      FileUtils.touch("require_spec_dummy.rb")
     }
   end
 
   after :all do
-    Dir.chdir($require_tmp_dir) { 
-      `rm *`
-    }
-    Dir.rmdir $require_tmp_dir
+    FileUtils.rm_rf($require_tmp_dir)
   end
 
   # The files used below just contain code that assigns
