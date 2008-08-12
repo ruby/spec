@@ -1,18 +1,18 @@
-describe :net_httpheader_each_header, :shared => true do
+describe :net_httpheader_each_capitalized, :shared => true do
   before(:each) do
     @headers = NetHTTPHeaderSpecs::Example.new
-    @headers["My-Header"] = "test"
-    @headers.add_field("My-Other-Header", "a")
-    @headers.add_field("My-Other-Header", "b")
+    @headers["my-header"] = "test"
+    @headers.add_field("my-Other-Header", "a")
+    @headers.add_field("My-Other-header", "b")
   end
   
   describe "when passed a block" do
-    it "yields each header entry to the passed block (keys in lower case, values joined)" do
+    it "yields each header entry to the passed block (capitalized keys, values joined)" do
       res = []
       @headers.send(@method) do |key, value|
         res << [key, value]
       end
-      res.should == [["my-header", "test"], ["my-other-header", "a, b"]]
+      res.should == [["My-Header", "test"], ["My-Other-Header", "a, b"]]
     end
   end
 
