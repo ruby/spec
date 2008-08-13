@@ -291,6 +291,15 @@ module ModuleSpecs
     end
   end
 
+  module MA; end
+  module MB
+    include MA
+  end
+  module MC; end
+
+  class MultipleIncludes
+    include MB
+  end
 end
 
 ModuleSpecs::Nesting[:root_level] = Module.nesting
