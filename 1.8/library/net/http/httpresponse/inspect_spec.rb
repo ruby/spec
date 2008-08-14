@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../../../spec_helper'
 require 'net/http'
+require "stringio"
 
 describe "Net::HTTPResponse#inspect" do
   it "returns a String representation of self" do

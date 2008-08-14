@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../../../spec_helper'
 require 'net/http'
+require "stringio"
 
 describe "Net::HTTPResponse#to_ary" do
   before(:each) do
