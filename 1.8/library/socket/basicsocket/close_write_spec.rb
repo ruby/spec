@@ -20,4 +20,9 @@ describe "Socket::BasicSocket#close_write" do
     lambda { @server.close_write }.should_not raise_error(Exception)
     lambda { @server.write("foo") }.should raise_error(IOError)
   end
+
+  it "does not close the socket" do
+    @server.close_write
+    @server.closed?.should be_false
+  end
 end
