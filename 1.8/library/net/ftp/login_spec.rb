@@ -35,11 +35,10 @@ describe "Net::FTP#login" do
     end
     
     ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
-      it "correctly handles the case when the server requests an account" do
+      it "raises a Net::FTPReplyError when the server requests an account" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @server.should_receive(:pass).and_respond("332 Need account for login.")
-        @ftp.login
-        @ftp.last_response.should == ""
+        lambda { @ftp.login }.should raise_error(Net::FTPReplyError)
       end
     end
   end
@@ -51,17 +50,15 @@ describe "Net::FTP#login" do
     end
     
     ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
-      it "correctly handles the case when the server requests a password, but none was given" do
+      it "raises a Net::FTPReplyError when the server requests a password, but none was given" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
-        @ftp.login("rubyspec")
-        @ftp.last_response.should == ""
+        lambda { @ftp.login("rubyspec") }.should raise_error(Net::FTPReplyError)
       end
 
-      it "correctly handles the case when the server requests an account, but none was given" do
+      it "raises a Net::FTPReplyError when the server requests an account, but none was given" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @server.should_receive(:pass).and_respond("332 Need account for login.")
-        @ftp.login("rubyspec")
-        @ftp.last_response.should == ""
+        lambda { @ftp.login("rubyspec") }.should raise_error(Net::FTPReplyError)
       end
     end
   end
@@ -79,11 +76,10 @@ describe "Net::FTP#login" do
     end
     
     ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
-      it "correctly handles the case when the server requests an account" do
+      it "raises a Net::FTPReplyError when the server requests an account" do
         @server.should_receive(:user).and_respond("331 User name okay, need password.")
         @server.should_receive(:pass).and_respond("332 Need account for login.")
-        @ftp.login("rubyspec", "rocks")
-        @ftp.last_response.should == ""
+        lambda { @ftp.login("rubyspec", "rocks") }.should raise_error(Net::FTPReplyError)
       end
     end
   end

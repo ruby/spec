@@ -30,7 +30,7 @@ describe "CGI::HtmlExtension#checkbox_group" do
     end
 
     # TODO: CGI does not like passing false instead of true.
-    ruby_bug "", "1.8.7" do
+    ruby_bug "http://redmine.ruby-lang.org/issues/show/443", "1.8.7" do
       it "allows passing a value as an Array containing the value, a label and the checked state" do
         output = CGISpecs.split(@html.checkbox_group("test", ["foo", "label for foo", true], ["bar", "label for bar", false], ["baz", "label for baz", true]))
         output[0].should equal_element("INPUT", {"CHECKED" => true, "NAME" => "test", "TYPE" => "checkbox", "VALUE" => "foo"}, "label for foo", :not_closed => true)

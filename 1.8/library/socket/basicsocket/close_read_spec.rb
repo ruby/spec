@@ -20,5 +20,10 @@ describe "Socket::BasicSocket#close_read" do
     lambda { @server.close_read }.should_not raise_error(Exception)
     lambda { @server.read }.should raise_error(IOError)
   end
+
+  it "does not close the socket" do
+    @server.close_read
+    @server.closed?.should be_false
+  end
 end
 
