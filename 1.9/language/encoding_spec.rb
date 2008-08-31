@@ -7,16 +7,16 @@ describe "The __ENCODING__ pseudo-variable" do
     __ENCODING__.should be_kind_of(Encoding)
   end
 
-  it "equals US-ASCII" do
+  it "is US-ASCII by default" do
     __ENCODING__.should == Encoding::US_ASCII
   end
 
-  it "equals the evaluated strings's one inside an eval" do
+  it "is the evaluated strings's one inside an eval" do
     eval("__ENCODING__".force_encoding("US-ASCII")).should == Encoding::US_ASCII
     eval("__ENCODING__".force_encoding("ASCII-8BIT")).should == Encoding::ASCII_8BIT
   end
 
-  it "equals the specified encoding when a magic comment exists" do
+  it "is equal to the specified encoding when a magic comment exists" do
     eval("# coding: ASCII-8BIT\n__ENCODING__".force_encoding("US-ASCII")).should == Encoding::ASCII_8BIT
     eval("# coding: US-ASCII\n__ENCODING__".force_encoding("ASCII-8BIT")).should == Encoding::US_ASCII
   end
