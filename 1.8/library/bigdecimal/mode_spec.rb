@@ -16,6 +16,7 @@ describe "BigDecimal.mode" do
     BigDecimal("0").add(BigDecimal("Infinity"),0).should == BigDecimal("Infinity")
     BigDecimal("1").quo(BigDecimal("0")).should == BigDecimal("Infinity")
     BigDecimal("1E11111111111111111111").zero?.should == true
+    (BigDecimal("1E11111111111")*BigDecimal("1E11111111111")).zero?.should == true
   end
 
   it "raise an exception if the flag is true" do
@@ -27,5 +28,6 @@ describe "BigDecimal.mode" do
     lambda { BigDecimal("1").quo(BigDecimal("0")) }.should raise_error(FloatDomainError)
     BigDecimal::mode(BigDecimal::EXCEPTION_OVERFLOW, true)
     lambda { BigDecimal("1E11111111111111111111") }.should raise_error(FloatDomainError)
+    lambda { (BigDecimal("1E11111111111")*BigDecimal("1E11111111111")) }.should raise_error(FloatDomainError)
   end
 end

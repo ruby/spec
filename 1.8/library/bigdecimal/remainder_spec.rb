@@ -30,10 +30,10 @@ describe "BigDecimal#remainder" do
   end
 
   it "Otherwise, it is the modulus minus the value divided by" do
-    @mixed.remainder(@neg_frac).should == (@mixed % @neg_frac) * -1
-    @pos_int.remainder(@neg_frac).should == (@pos_int % @neg_frac) * -1
-    @neg_frac.remainder(@pos_int).should == @neg_frac % (@pos_int * -1)
-    @neg_int.remainder(@pos_frac).should == (@neg_int % @pos_frac) * -1
+    @mixed.remainder(@neg_frac).should == (@mixed % @neg_frac) - @neg_frac
+    @pos_int.remainder(@neg_frac).should == (@pos_int % @neg_frac) - @neg_frac
+    @neg_frac.remainder(@pos_int).should == (@neg_frac % @pos_int) - @pos_int
+    @neg_int.remainder(@pos_frac).should == (@neg_int % @pos_frac) - @pos_frac
   end
 
   it "returns NaN used with zero" do
@@ -70,6 +70,11 @@ describe "BigDecimal#remainder" do
     @infinity_minus.remainder(@infinity).nan?.should == true
   end
   
+  it "coerces arguments to BigDecimal if possible" do
+    @one.remainder(2).should == @one
+  end
+
+
   it "raises TypeError if the argument cannot be coerced to BigDecimal" do
     lambda {
       @one.remainder('2')

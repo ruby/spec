@@ -39,7 +39,7 @@ describe "BigDecimal#to_f" do
     @zero.to_f.to_s.should == "0.0"
 
     @zero_neg.to_f.should == 0
-    @zero_neg.to_f.to_s.should == "-0.0"
+    @zero_neg.to_f.to_s.should == "0.0"
 
     @nan.to_f.nan?.should == true
 
