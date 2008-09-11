@@ -106,4 +106,11 @@ describe "IO#reopen" do
     File.readlines(@name1_w).should == ["line1-F1\n", "line2-F1\n", "line2-F2\n"]
     File.readlines(@name2_w).should == ["line1-F2\n"]
   end
+
+  it "reassociates STDIN with new a new stream after some reads" do
+    STDIN.reopen(@file2)
+    STDIN.gets
+    STDIN.gets
+    STDIN.reopen(@file2).gets.should == "Line 1: One\n"
+  end
 end
