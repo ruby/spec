@@ -183,6 +183,22 @@ describe "A singleton method definition" do
   end
 end
 
+describe "Redefining a singleton method" do
+  it "does not inherit a previously set visibility " do
+    o = Object.new
+
+    class << o; private; def foo; end; end;
+
+    class << o; private_instance_methods.include?("foo").should == true; end
+
+    class << o; def foo; end; end;
+
+    class << o; private_instance_methods.include?("foo").should == false; end
+    class << o; instance_methods.include?("foo").should == true ; end
+
+  end
+end
+
 describe "A method defined with extreme default arguments" do
   it "can redefine itself when the default is evaluated" do
     class DefSpecs
