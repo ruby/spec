@@ -1,1 +1,0 @@
-../1.8/spec_helper.rb
