@@ -24,7 +24,7 @@ describe "Time#_load" do
     t = Time.local(2000, 1, 15, 20, 1, 1, 203)
     timestamp = t.to_i
     
-    high = timestamp
+    high = timestamp & ((1 << 31) - 1)
 
     low =  t.usec
 
