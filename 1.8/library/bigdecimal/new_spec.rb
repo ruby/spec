@@ -48,7 +48,9 @@ describe "BigDecimal.new" do
 
   it "allows omitting the integer part" do
     BigDecimal.new(".123").should == BigDecimal.new("0.123")
+    ruby_version_is "1.8.6.5000" do
     BigDecimal.new("-.123").should == BigDecimal.new("-0.123")
+  end
   end
 
   it "allows for underscores in all parts" do
