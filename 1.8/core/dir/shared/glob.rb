@@ -227,8 +227,8 @@ describe :dir_glob_recursive, :shared => true do
     @mock_dir = File.expand_path tmp('dir_glob_mock')
 
     %w[
-      a/x/b/y/c
-      a/x/b/y/b/z/c
+      a/x/b/y/e
+      a/x/b/y/b/z/e
     ].each do |path|
       file = File.join @mock_dir, path
       FileUtils.mkdir_p File.dirname(file)
@@ -245,10 +245,10 @@ describe :dir_glob_recursive, :shared => true do
 
   it "matches multiple recursives" do
     expected = %w[
-      a/x/b/y/b/z/c
-      a/x/b/y/c
+      a/x/b/y/b/z/e
+      a/x/b/y/e
     ]
 
-    Dir.send(@method, 'a/**/b/**/c').sort.should == expected
+    Dir.send(@method, 'a/**/b/**/e').sort.should == expected
   end
 end
