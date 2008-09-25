@@ -7,10 +7,10 @@ describe "Time#_dump" do
     @s = @t._dump
     @t = @t.gmtime
   end
-  
+
   it "dumps a Time object to a bytestring" do
     @s.should be_kind_of(String)
-    @s.should == [2149122561, 68157440].pack("LL")
+    @s.should == [2149122564, 68157440].pack("LL")
   end
 
   it "dumps an array with a date as first element" do
@@ -31,3 +31,4 @@ describe "Time#_dump" do
     low.should == @s.unpack("LL").last
   end
 end
+
