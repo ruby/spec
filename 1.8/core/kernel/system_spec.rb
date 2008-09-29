@@ -36,6 +36,22 @@ describe "Kernel#system" do
   it "is a private method" do
     Kernel.private_instance_methods.should include("system")
   end
+  
+  it "expands shell variables when given a single string argument" do
+    ENV['TEST_SH_EXPANSION'] = 'foo'
+    helper_script = File.dirname(__FILE__) + '/fixtures/check_expansion.rb'
+    shell_var = platform_is(:windows) ? '%TEST_SH_EXPANSION%' : '$TEST_SH_EXPANSION'
+    result = system("ruby #{helper_script} #{shell_var} foo")
+    result.should == true
+  end
+  
+  it "does not expand shell variables when given multiples arguments" do
+    ENV['TEST_SH_EXPANSION'] = 'foo'
+    helper_script = File.dirname(__FILE__) + '/fixtures/check_expansion.rb'
+    shell_var = platform_is(:windows) ? '%TEST_SH_EXPANSION%' : '$TEST_SH_EXPANSION'
+    result = system("ruby", helper_script, shell_var, "foo")
+    result.should == false
+  end
 end
 
 describe "Kernel.system" do
