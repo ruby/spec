@@ -3,14 +3,14 @@ require File.dirname(__FILE__) + '/fixtures/methods'
 
 describe "Time#_dump" do
   before :each do
-    @t = Time.local(2000, 1, 15, 20, 1, 1)
+    @t = Time.at(946812800)
     @s = @t._dump
     @t = @t.gmtime
   end
 
   it "dumps a Time object to a bytestring" do
     @s.should be_kind_of(String)
-    @s.should == [2149122564, 68157440].pack("LL")
+    @s.should == [2149122123, 2235564032].pack("LL")
   end
 
   it "dumps an array with a date as first element" do
