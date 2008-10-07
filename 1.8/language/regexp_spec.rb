@@ -10,4 +10,22 @@ describe "Literal Regexps" do
 
     (true if /foo/).should == true
   end
+
+  it "allow substitution of strings" do
+    str = "o?$"
+    (/fo#{str}/ =~ "foo?").should == nil
+    (/fo#{str}/ =~ "foo").should == 0
+  end
+
+  it "allow substitution of literal regexps" do
+    str = /o?$/
+    (/fo#{str}/ =~ "foo?").should == nil
+    (/fo#{str}/ =~ "foo").should == 0
+  end
+  
+  it "matches . to newlines if Regexp::MULTILINE is specified" do
+    str = "abc\ndef"
+    (str =~ /.def/).should == nil 
+    (str =~ /.def/m).should == 3
+  end
 end

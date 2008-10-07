@@ -132,6 +132,16 @@ describe "Predefined globals $1..N" do
 
     [$1, $2, $3, $4].should == ['f', 'o', 'o', nil]
   end
+
+  it "are nil unless a match group occurs" do
+    def test(arg)
+      case arg
+      when /-(.)?/
+        $1
+      end
+    end
+    test("-").should == nil
+  end
 end
 
 describe "Predefined global $stdout" do
@@ -307,7 +317,26 @@ $VERBOSE         Object          Set to true if the -v, --version, -W, or -w opt
 $-v              Object          Synonym for $VERBOSE. 
 $-w              Object          Synonym for $VERBOSE. 
 =end
+describe "Execution variable $:" do
+  it "is initialized to an array of strings" do
+    $:.is_a?(Array).should == true
+    ($:.length > 0).should == true
+  end
 
+  it "includes the current directory" do
+    $:.should include(".")
+  end
+
+  it "is the same object as $LOAD_PATH and $-I" do
+    $:.__id__.should == $LOAD_PATH.__id__
+    $:.__id__.should == $-I.__id__
+  end
+  
+  it "can be changed via <<" do
+    $: << "foo"
+    $:.should include("foo")
+  end
+end
 =begin
 Standard Objects 
 ---------------------------------------------------------------------------------------------------
