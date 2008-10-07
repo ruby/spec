@@ -20,6 +20,9 @@ describe "Integer#downto [stop] when self and stop are Fixnums" do
   end
 
   ruby_version_is "" ... "1.8.7" do
+    it "does not require a block if self is less than stop" do
+      1.downto(2).should equal(1)
+    end
     it "raises a LocalJumpError when no block given" do
       lambda { 5.downto(2) }.should raise_error(LocalJumpError)
     end
