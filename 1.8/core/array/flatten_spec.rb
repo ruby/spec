@@ -133,7 +133,7 @@ describe "Array#flatten!" do
     lambda { x.flatten! }.should raise_error(ArgumentError)
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on frozen arrays when modification would take place" do
       nested_ary = [1, 2, []]
       nested_ary.freeze

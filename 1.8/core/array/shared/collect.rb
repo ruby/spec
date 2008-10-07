@@ -17,7 +17,7 @@ describe :array_collect_b, :shared => true do
     a.should == [6, 8, 2, 4]
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array" do
       lambda { ArraySpecs.frozen_array.send(@method) {} }.should raise_error(TypeError)
     end

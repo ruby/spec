@@ -35,7 +35,7 @@ describe "Array#compact!" do
     [1, 2, false, 3].compact!.should == nil
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array" do
       lambda { ArraySpecs.frozen_array.compact! }.should raise_error(TypeError)
     end

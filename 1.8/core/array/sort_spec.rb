@@ -128,7 +128,7 @@ describe "Array#sort!" do
     a.sort! { -1 }.class.should == Array
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array" do
       lambda { ArraySpecs.frozen_array.sort! }.should raise_error(TypeError)
     end

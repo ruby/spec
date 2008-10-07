@@ -23,7 +23,7 @@ describe "Array#delete" do
     [].delete('a') {:not_found}.should == :not_found
   end
   
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array if a modification would take place" do
       lambda { [1, 2, 3].freeze.delete(1) }.should raise_error(TypeError)
     end

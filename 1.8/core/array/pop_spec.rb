@@ -30,7 +30,7 @@ describe "Array#pop" do
     array.pop.should == [1, 'two', 3.0, array, array, array, array]
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array" do
       lambda { ArraySpecs.frozen_array.pop }.should raise_error(TypeError)
     end

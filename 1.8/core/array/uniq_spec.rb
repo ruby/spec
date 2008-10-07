@@ -111,7 +111,7 @@ describe "Array#uniq!" do
     [ "a", "b", "c" ].uniq!.should == nil
   end
   
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array if modification would take place" do
       dup_ary = [1, 1, 2]
       dup_ary.freeze

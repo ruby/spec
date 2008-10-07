@@ -63,7 +63,7 @@ describe "Array#initialize" do
     [1, 2].send(:initialize, obj, :a).should == [:a]
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on frozen arrays even if the array would not be 'modified'" do
       # This is true at least 1.8.6p111 onwards 
       lambda { ArraySpecs.frozen_array.instance_eval { initialize } }.should raise_error(TypeError)

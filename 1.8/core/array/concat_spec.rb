@@ -34,7 +34,7 @@ describe "Array#concat" do
     [].concat(obj).should == [5, 6, 7]
   end
   
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError when Array is frozen and modification occurs" do
       lambda { ArraySpecs.frozen_array.concat [1] }.should raise_error(TypeError)
     end

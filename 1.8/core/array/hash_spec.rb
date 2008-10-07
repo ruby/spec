@@ -20,7 +20,7 @@ describe "Array#hash" do
   end
 
   #  Too much of an implementation detail? -rue
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "calls to_int on result of calling hash on each element" do
       ary = Array.new(5) do
         # Can't use should_receive here because it calls hash()

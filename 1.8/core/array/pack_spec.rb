@@ -687,7 +687,7 @@ describe "Array#pack" do
   it "converts big integers into UTF-8 encoded byte sequences with ('U')" do 
     #these are actually failing on String#unpack
     #  they are not passing the 'utf8_regex_strict' test
-    compliant_on :ruby, :jruby do
+    compliant_on :ruby, :jruby, :ir do
       numbers = [ 2048, 4096, 2**16 -1, 2**16, 2**16 + 1, 2**30]
       numbers.each do |n|
         [n].pack('U').unpack('U').should == [n]

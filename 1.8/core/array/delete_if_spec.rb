@@ -8,7 +8,7 @@ describe "Array#delete_if" do
     a.should == ["a"]
   end
 
-  compliant_on :ruby, :jruby do
+  compliant_on :ruby, :jruby, :ir do
     it "raises a TypeError on a frozen array" do
       lambda { ArraySpecs.frozen_array.delete_if {} }.should raise_error(TypeError)
     end
