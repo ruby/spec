@@ -11,13 +11,6 @@ module EnvSpecs
   end
 
   def self.get_current_user
-    user = ""
-    platform_is_not :windows do
-      user = `whoami`.strip
-    end
-    platform_is :windows do
-      user = `cmd.exe /C ECHO %USERNAME%`.strip
-    end
-    user
+    `whoami`.strip.split("\\").last
   end
 end
