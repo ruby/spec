@@ -66,11 +66,21 @@ describe "The unpacking splat operator (*)" do
     alphabet_1 = ['a'..'z'].to_a
     alphabet_2 = alphabet_1.dup
     start_and_count_args = [1, 10]
-    
+
     alphabet_1[1, 10] = 'a'
     alphabet_2[*start_and_count_args] = 'a'
-    
+
     alphabet_1.should == alphabet_2
+  end
+
+  it "unpacks arguments as if they were listed statically" do
+    static = [1,2,3,4]
+    receiver = static.dup
+    args = [0,1]
+    static[0,1] = []
+    static.should == [2,3,4]
+    receiver[*args] = []
+    receiver.should == static
   end
 
   it "unpacks a literal array into arguments in a method call" do
