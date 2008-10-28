@@ -90,6 +90,14 @@ describe "Module#include" do
 
     IncludeSpecsClass.new.value.should == 6
   end
+
+  it "detects cyclic includes" do
+    lambda {
+      module ModuleSpecs::M
+        include ModuleSpecs::M
+      end
+    }.should raise_error(ArgumentError)
+  end
 end
 
 describe "Module#include?" do
