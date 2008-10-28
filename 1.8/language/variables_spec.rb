@@ -517,6 +517,77 @@ describe "Operator assignment 'obj.meth op= expr'" do
     (x ||= y.do_side_effect).should == 5
     y.side_effect.should == true
   end
+
+  it "evaluates lhs one time" do
+    x = VariablesSpecs::OpAsgn.new
+    x.a = 5
+    (x.do_more_side_effects.a += 5).should == 15
+    x.a.should == 15
+
+    x.a = 5 
+    (x.do_more_side_effects.a -= 4).should == 6
+    x.a.should == 6
+
+    x.a = 2
+    (x.do_more_side_effects.a *= 5).should == 35
+    x.a.should == 35
+
+    x.a = 31
+    (x.do_more_side_effects.a /= 9).should == 4
+    x.a.should == 4
+
+    x.a = 18
+    (x.do_more_side_effects.a %= 5).should == 3
+    x.a.should == 3
+
+    x.a = 0
+    (x.do_more_side_effects.a **= 3).should == 125
+    x.a.should == 125
+
+    x.a = -1
+    (x.do_more_side_effects.a |= 3).should == 7
+    x.a.should == 7
+
+    x.a = 1
+    (x.do_more_side_effects.a &= 3).should == 2
+    x.a.should == 2
+
+    # XOR
+    x.a = -3
+    (x.do_more_side_effects.a ^= 3).should == 1
+    x.a.should == 1
+
+    x.a = 12
+    (x.do_more_side_effects.a <<= 3).should == 136
+    x.a.should == 136
+
+    x.a = 0
+    (x.do_more_side_effects.a >>= 1).should == 2
+    x.a.should == 2
+
+    x.a = nil
+    x.b = 0
+    (x.do_bool_side_effects.a ||= 17).should == 17
+    x.a.should == 17
+    x.b.should == 1
+
+    x.a = false
+    x.b = 0
+    (x.do_bool_side_effects.a &&= true).should == false
+    x.a.should == false
+    x.b.should == 1
+    (x.do_bool_side_effects.a &&= false).should == false
+    x.a.should == false
+    x.b.should == 2
+    x.a = true
+    x.b = 0
+    (x.do_bool_side_effects.a &&= true).should == true
+    x.a.should == true
+    x.b.should == 1
+    (x.do_bool_side_effects.a &&= false).should == false
+    x.a.should == false  
+    x.b.should == 2
+  end
 end
 
 describe "Operator assignment 'obj[idx] op= expr'" do

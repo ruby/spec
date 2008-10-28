@@ -16,11 +16,21 @@ module VariablesSpecs
   end
 
   class OpAsgn
-    attr_accessor :a, :side_effect
+    attr_accessor :a, :b, :side_effect
     
     def do_side_effect
       self.side_effect = true
       return @a
+    end
+
+    def do_more_side_effects
+      @a += 5
+      self
+    end
+
+    def do_bool_side_effects
+      @b += 1
+      self
     end
   end
 
