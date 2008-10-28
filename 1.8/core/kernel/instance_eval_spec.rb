@@ -14,6 +14,17 @@ describe "Kernel#instance_eval" do
     "hola".instance_eval { |o| o.size }.should == 4
   end
   
+  it "only binds the eval to the receiver" do
+    f = Object.new
+    f.instance_eval do 
+      def foo
+        1
+      end
+    end
+    f.foo.should == 1
+    lambda { Object.new.foo }.should raise_error(NoMethodError)
+  end
+
   it "binds self to the receiver" do
     s = "hola"
     (s == s.instance_eval { self }).should == true
