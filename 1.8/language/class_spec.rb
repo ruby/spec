@@ -149,6 +149,16 @@ describe "Reopening a class" do
   it "raises a TypeError when superclasses mismatch" do
     lambda { class ClassSpecs::A < Array; end }.should raise_error(TypeError)
   end
+
+  it "adds new methods to subclasses" do
+    lambda { ClassSpecs::M.m }.should raise_error(NoMethodError)
+    class ClassSpecs::L
+      def self.m
+        1
+      end
+    end
+    ClassSpecs::M.m.should == 1
+  end  
 end
 
 describe "class provides hooks" do
