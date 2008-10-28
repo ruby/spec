@@ -1,6 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 class AliasObject
+  attr :foo
+  attr_reader :bar
+  attr_accessor :baz
+  
+  def prep; @foo = 3; @bar = 4; end
   def value; 5; end
   def false_value; 6; end
 end
@@ -61,5 +66,19 @@ describe "The alias keyword" do
 
     @obj.__value.should == 5
     lambda { AliasObject.new.__value }.should raise_error(NoMethodError)
+  end
+
+  it "operates on methods defined via attr, attr_reader, and attr_accessor" do
+    @obj.prep
+    @obj.instance_eval do
+      alias afoo foo
+      alias abar bar
+      alias abaz baz
+    end
+
+    @obj.afoo.should == 3
+    @obj.abar.should == 4
+    @obj.baz = 5
+    @obj.abaz.should == 5
   end
 end
