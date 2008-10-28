@@ -208,6 +208,7 @@ describe "String#gsub with pattern and block" do
   it "returns a copy of self with all occurrences of pattern replaced with the block's return value" do
     "hello".gsub(/./) { |s| s.succ + ' ' }.should == "i f m m p "
     "hello!".gsub(/(.)(.)/) { |*a| a.inspect }.should == '["he"]["ll"]["o!"]'
+    "hello".gsub('l') { 'x'}.should == 'hexxo'
   end
   
   it "sets $~ for access from the block" do
