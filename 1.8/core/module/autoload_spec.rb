@@ -169,7 +169,7 @@ describe "Module#autoload" do
 
       # trigger load:
       $m.const_get(:AAA)
-      ruby_bug("redmine 620", "1.8.6") do
+      ruby_bug("redmine 620", "1.8.7.72") do
         $n.autoload?(:AAA).should == nil
         lambda { $n.const_get(:AAA) }.should raise_error(NameError) 
       end
@@ -191,7 +191,7 @@ describe "Module#autoload" do
     end
   end
   
-  ruby_bug("see [ruby-core:19127]","1.8.6") do
+  ruby_bug("see [ruby-core:19127]", "1.8.7.72") do
     it "with constant lookup in class definition behaves correctly on autoloaded constant" do
       protect_loaded_features do
         module ModuleSpecs::AutoloadTestModule2
