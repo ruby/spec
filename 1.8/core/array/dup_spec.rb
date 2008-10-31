@@ -23,9 +23,9 @@ describe "Array#dup" do
     aa = a.dup
     bb = b.dup
 
-    a.should respond_to(:a_singleton_method)
-    b.should_not respond_to(:a_singleton_method)
-    aa.should_not respond_to(:a_singleton_method)
-    bb.should_not respond_to(:a_singleton_method)
+    a.respond_to?(:a_singleton_method).should be_true
+    b.respond_to?(:a_singleton_method).should be_false
+    aa.respond_to?(:a_singleton_method).should be_false
+    bb.respond_to?(:a_singleton_method).should be_false
   end
 end
