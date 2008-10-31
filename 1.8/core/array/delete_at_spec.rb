@@ -43,8 +43,15 @@ describe "Array#delete_at" do
   end
 
   compliant_on :ruby, :jruby,:ir do
-    it "raises a TypeError on a frozen array" do
-      lambda { [1,2,3].freeze.delete_at(0) }.should raise_error(TypeError)
+    ruby_version_is '' ... '1.9' do
+      it "raises a TypeError on a frozen array" do
+        lambda { [1,2,3].freeze.delete_at(0) }.should raise_error(TypeError)
+      end
+    end
+    ruby_version_is '1.9' do
+      it "raises a RuntimeError on a frozen array" do
+        lambda { [1,2,3].freeze.delete_at(0) }.should raise_error(RuntimeError)
+      end
     end
   end
 
@@ -56,5 +63,17 @@ describe "Array#delete_at" do
     ary.tainted?.should be_true
     ary.delete_at(0) # now empty
     ary.tainted?.should be_true
+  end
+
+  ruby_version_is '1.9' do
+    it "keeps untrusted status" do
+      ary = [1, 2]
+      ary.untrust
+      ary.untrusted?.should be_true
+      ary.delete_at(0)
+      ary.untrusted?.should be_true
+      ary.delete_at(0) # now empty
+      ary.untrusted?.should be_true
+    end
   end
 end

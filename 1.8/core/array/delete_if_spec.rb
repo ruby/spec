@@ -21,7 +21,6 @@ describe "Array#delete_if" do
       lambda { @a.delete_if }.should raise_error(LocalJumpError, /no block given/)
     end
   end
-
   ruby_version_is "1.8.7" ... "1.9" do
     it "returns an Enumerable::Enumerator if no block given, and the enumerator can modify the original array" do
       enum = @a.delete_if
@@ -31,10 +30,26 @@ describe "Array#delete_if" do
       @a.should be_empty
     end
   end
+  ruby_version_is '1.9' do
+    it "returns an Enumerator if no block given, and the enumerator can modify the original array" do
+      enum = @a.delete_if
+      enum.should be_kind_of(Enumerator)
+      @a.should_not be_empty
+      enum.each { true }
+      @a.should be_empty
+    end
+  end
 
   compliant_on :ruby, :jruby, :ir do
-    it "raises a TypeError on a frozen array" do
-      lambda { ArraySpecs.frozen_array.delete_if {} }.should raise_error(TypeError)
+    ruby_version_is '' ... '1.9' do
+      it "raises a TypeError on a frozen array" do
+        lambda { ArraySpecs.frozen_array.delete_if {} }.should raise_error(TypeError)
+      end
+    end
+    ruby_version_is '1.9' do
+      it "raises a RuntimeError on a frozen array" do
+        lambda { ArraySpecs.frozen_array.delete_if {} }.should raise_error(RuntimeError)
+      end
     end
   end
 
@@ -43,5 +58,14 @@ describe "Array#delete_if" do
     @a.tainted?.should be_true
     @a.delete_if{ true }
     @a.tainted?.should be_true
+  end
+
+  ruby_version_is '1.9' do
+    it "keeps untrusted status" do
+      @a.untrust
+      @a.untrusted?.should be_true
+      @a.delete_if{ true }
+      @a.untrusted?.should be_true
+    end
   end
 end
