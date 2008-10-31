@@ -2,17 +2,42 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Array#==" do
+  it "return true if the other is self" do
+    a = [1, 2, 3]
+    a.should == a
+  end
+
   it "returns true if each element is == to the corresponding element in the other array" do
     [].should == []
     ["a", "c", 7].should == ["a", "c", 7]
+
+    [1, 2, 3].should == [1.0, 2.0, 3.0]
 
     obj = mock('5')
     def obj.==(other) true end
     [obj].should == [5]
   end
+
+  it "returns false if the other is shorter than self" do
+    a = [1, 2, 3]
+    b = [1, 2]
+    a.should_not == b
+  end
+  
+  it "returns false if the other is longer than self" do
+    a = [1, 2, 3]
+    b = [1, 2, 3, 4]
+    a.should_not == b
+  end
   
   it "returns false if any element is not == to the corresponding element in the other the array" do
-    ([ "a", "c" ] == [ "a", "c", 7 ]).should == false
+    a = ["a", "b", "c"]
+    b = ["a", "b", "not equal value"]
+    a.should_not == b
+
+    c = "c"
+    def c.==(x); false end
+    ["a", "b", c].should_not == a
   end
   
   it "returns false immediately when sizes of the arrays differ" do
@@ -55,5 +80,12 @@ describe "Array#==" do
     ArraySpecs::MyArray[1, 2, 3].should == [1, 2, 3]
     ArraySpecs::MyArray[1, 2, 3].should == ArraySpecs::MyArray[1, 2, 3]
     [1, 2, 3].should == ArraySpecs::MyArray[1, 2, 3]
+  end
+
+  it "can be assymetric (but should not)" do
+    bad_array = ArraySpecs::MyArray[1, 2, 3]
+    def bad_array.==(x) false end
+    [1, 2, 3].should == bad_array
+    bad_array.should_not == [1, 2, 3]
   end
 end
