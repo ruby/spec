@@ -24,16 +24,16 @@ describe "Array#delete" do
     [].delete('a') {:not_found}.should == :not_found
   end
   
-  compliant_on :ruby, :jruby, :ir do
-    it "raises a TypeError on a frozen array if a modification would take place" do
-      lambda { [1, 2, 3].freeze.delete(1) }.should raise_error(TypeError)
+  compliant_on :ruby, :jruby do
+    it "raises a RuntimeError on a frozen array if a modification would take place" do
+      lambda { [1, 2, 3].freeze.delete(1) }.should raise_error(RuntimeError)
     end
 
     it "returns false on a frozen array if a modification does not take place" do
       [1, 2, 3].freeze.delete(0).should == nil
     end
   end
-
+  
   it "keeps tainted status" do
     a = [1, 2]
     a.taint
@@ -42,5 +42,15 @@ describe "Array#delete" do
     a.tainted?.should be_true
     a.delete(1) # now empty
     a.tainted?.should be_true
+  end
+  
+  it "keeps untrusted status" do
+    a = [1, 2]
+    a.untrust
+    a.untrusted?.should be_true
+    a.delete(2)
+    a.untrusted?.should be_true
+    a.delete(1) # now empty
+    a.untrusted?.should be_true
   end
 end
