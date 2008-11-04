@@ -47,6 +47,14 @@ describe "Array#first" do
     ary.should == [1, 2, 3, 4, 5]
   end
 
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    empty.first.should equal(empty)
+
+    ary = ArraySpecs.head_recursive_array
+    ary.first.should equal(ary)
+  end
+
   it "tries to convert the passed argument to an Integer using #to_int" do
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(2)
