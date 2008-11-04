@@ -68,23 +68,29 @@ describe "Array#join" do
     a.join(sep).should == ""
   end
 
+  # detail of joining recursive arrays is implementation depended. [ruby-dev:37021]
   it "handles recursive arrays" do
     x = []
     x << x
-    x.join(":").should == '[...]'
+    x.join(':').should be_kind_of(String)
 
     x = ["one", "two"]
     x << x
-    x.join('/').should == 'one/two/one/two/[...]'
+    str = x.join('/')
+    str.should include("one/two")
 
     x << "three"
     x << "four"
-    x.join('/').should == 'one/two/one/two/[...]/three/four/three/four'
+    str = x.join('/')
+    str.should include("one/two")
+    str.should include("three/four")
 
     # nested and recursive
     x = [["one", "two"], ["three", "four"]]
     x << x
-    x.join('/').should == 'one/two/three/four/one/two/three/four/[...]'
+    str = x.join('/')
+    str.should include("one/two")
+    str.should include("three/four")
     
     x = []
     y = []
@@ -92,10 +98,10 @@ describe "Array#join" do
     x << 1 << x << 2 << y << 3
     # representations when recursing from x
     # these are here to make it easier to understand what is happening
-    y_rec = '9:[...]:8:9:[...]:8:[...]:7:7'
-    x_rec = '1:[...]:2:' + y_rec + ':3'
-    x.join(":").should == '1:' + x_rec + ':2:' + y_rec + ':3'
-
+    str = x.join(':')
+    str.should include('1')
+    str.should include('2')
+    str.should include('3')
   end
 
   it "does not consider taint of either the array or the separator when the array is empty" do
