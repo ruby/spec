@@ -12,7 +12,7 @@ describe "The throw keyword" do
     end    
     i.should == 5
   end
-
+  
   it "supports a second parameter" do
     msg = catch(:exit) do
       throw :exit,:msg
@@ -27,43 +27,17 @@ describe "The throw keyword" do
     msg.should == nil
   end
 
-  it "returns the last value of catch if it nothing is thrown" do
-    catch(:exit) do      
-      :noexit
-    end.should == :noexit
-  end
-  
-  it "supports nesting" do
-    i = []
-    catch(:exita) do
-      i << :a
-      catch(:exitb) do
-        i << :b
-        throw :exita
-        i << :after_throw
-      end
-      i << :b_exit
-    end
-    i << :a_exit
-
-    i.should == [:a,:b,:a_exit]
+  it "only allows symbols and strings as it's argument" do
+    lambda { throw 1 }.should raise_error(ArgumentError)    
+    lambda { throw Object.new }.should raise_error(TypeError)    
   end
 
-  it "supports nesting with the same name" do
-    i = []
-    catch(:exit) do
-      i << :a
-      catch(:exit) do
-        i << :b
-        throw :exit,:msg
-      end.should == :msg
-      i << :b_exit
-    end.should == [:a,:b,:b_exit]
-    i << :a_exit
-
-    i.should == [:a,:b,:b_exit,:a_exit]
+  it "converts strings to a symbol" do
+    lambda { catch(:exit) { throw "exit" } }.should_not raise_error
+    a = "exit"
+    lambda { catch(:exit) { throw a } }.should_not raise_error
   end
-
+    
   it "unwinds stack from within a method" do
     def throw_method(handler,val)
       throw handler,val
@@ -72,6 +46,11 @@ describe "The throw keyword" do
     catch(:exit) do
       throw_method(:exit,5)
     end.should == 5
+  end
+
+  it "unwinds stack from within a lambda" do
+    c = lambda { throw :foo, :msg }
+    catch(:foo) { c.call }.should == :msg
   end
   
   it "raises a name error if outside of scope of a matching catch" do    
@@ -89,4 +68,3 @@ describe "The throw keyword" do
     }.should raise_error(ThreadError)
   end    
 end
-
