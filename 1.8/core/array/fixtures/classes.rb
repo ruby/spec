@@ -11,6 +11,13 @@ module ArraySpecs
     a
   end
 
+  def self.head_recursive_array
+    a =  []
+    5.times { a << a }
+    a << 1 << 'two' << 3.0
+    a
+  end
+
   def self.empty_recursive_array
     a = []
     a << a

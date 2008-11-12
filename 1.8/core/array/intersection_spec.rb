@@ -46,8 +46,7 @@ describe "Array#&" do
     ([1, 2] & obj).should == [1, 2]
   end
 
-  # MRI follows hashing semantics here, so doesn't actually call eql?/hash for Fixnum/Symbol
-  it "acts as if using an  intermediate hash to collect values" do
+  it "determines equivalence between elements in the sense of eql?" do
     ([5.0, 4.0] & [5, 4]).should == []
     str = "x"
     ([str] & [str.dup]).should == [str]
