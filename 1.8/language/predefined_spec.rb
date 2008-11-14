@@ -442,20 +442,14 @@ TRUE                 TrueClass   Synonym for true.
 
 describe "The predefined global constants" do
   it "includes DATA when main script contains __END__" do
-    ruby = IO.popen(RUBY_NAME, "w+")
-    ruby.puts(
-      "puts Object.const_defined?(:DATA)",
-      "__END__"
-    )
-    ruby.close_write
-    ruby.gets.chomp.should == 'true'
+    ruby_exe(<<-EOF).chomp.should == 'true'
+    puts Object.const_defined?(:DATA)
+    __END__
+    EOF
   end
 
   it "does not include DATA when main script contains no __END__" do
-    ruby = IO.popen(RUBY_NAME, "w+")
-    ruby.puts("puts Object.const_defined?(:DATA)")
-    ruby.close_write
-    ruby.gets.chomp.should == 'false'
+    ruby_exe("puts Object.const_defined?(:DATA)").chomp.should == 'false'
   end
 
   it "includes TRUE" do
