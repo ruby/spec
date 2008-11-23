@@ -442,7 +442,7 @@ TRUE                 TrueClass   Synonym for true.
 
 describe "The predefined global constants" do
   it "includes DATA when main script contains __END__" do
-    ruby_exe("fixtures/predefined.rb").chomp.should == "true"
+    ruby_exe(File.dirname(__FILE__) + "/fixtures/predefined.rb").chomp.should == "true"
   end
 
   it "does not include DATA when main script contains no __END__" do
