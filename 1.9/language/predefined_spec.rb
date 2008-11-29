@@ -415,7 +415,6 @@ NIL                  NilClass    Synonym for nil.
 RUBY_PLATFORM        String      The identifier of the platform running this program. This string 
                                  is in the same form as the platform identifier used by the GNU 
                                  configure utility (which is not a coincidence). 
-PLATFORM             String      Same as RUBY_PLATFORM.
 RUBY_RELEASE_DATE    String      The date of this release. 
 RUBY_VERSION         String      The version number of the interpreter. 
 STDERR               IO          The actual standard error stream for the program. The initial 
