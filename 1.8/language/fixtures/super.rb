@@ -65,6 +65,20 @@ module Super
       end
     end
   end
+  
+  module S4
+    class A
+      def foo(a)
+        a << "A#foo"
+      end
+    end
+    class B < A
+      def foo(a, b)
+        a << "B#foo(a,#{b})"
+        super(a)
+      end
+    end
+  end
 
   module MS1
     module ModA

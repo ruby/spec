@@ -51,4 +51,9 @@ describe "The super keyword" do
   it "calls the correct method when the method visibility is modified" do
     Super::MS4::A.new.example.should == 5
   end
+  
+  it "calls the correct method when the superclass argument list is different from the subclass" do
+    Super::S4::A.new.foo([]).should == ["A#foo"]
+    Super::S4::B.new.foo([],"test").should == ["B#foo(a,test)", "A#foo"]
+  end
 end
