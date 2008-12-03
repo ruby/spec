@@ -1,105 +1,107 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "ARGF.gets" do
-  
   before :each do
-    ARGV.clear
-    @file1 = ARGFSpecs.fixture_file('file1.txt')
-    @file2 = ARGFSpecs.fixture_file('file2.txt')
-    @stdin = ARGFSpecs.fixture_file('stdin.txt')
-    @contents_file1 = File.read(@file1)
-    @contents_file2 = File.read(@file2)
-    @contents_stdin = File.read(@stdin)
+    @file1_name = fixture __FILE__, "file1.txt"
+    @file2_name = fixture __FILE__, "file2.txt"
+    @stdin_name = fixture __FILE__, "stdin.txt"
+
+    @file1 = File.readlines @file1_name
+    @file2 = File.readlines @file2_name
+    @stdin = File.read @stdin_name
   end
 
   after :each do
     ARGF.close
-    ARGFSpecs.fixture_file_delete(@file1,@file2,@stdin)
   end
 
   it "reads one line of a file" do
-    ARGFSpecs.file_args('file1.txt')
-    ARGF.gets().should == @contents_file1.split($/).first+$/
+    argv [@file1_name] do
+      ARGF.gets.should == @file1.first
+    end
   end
 
   it "reads all lines of a file" do
-    ARGFSpecs.file_args('file1.txt')
-    number_of_lines = @contents_file1.split($/).size
-    all_lines = []
-    for i in 1..number_of_lines
-      all_lines << ARGF.gets()
+    argv [@file1_name] do
+      lines = []
+      @file1.size.times { lines << ARGF.gets }
+      lines.should == @file1
     end
-    all_lines.should == @contents_file1.split($/).collect { |l| l+$/ }
   end
 
   it "reads all lines of stdin" do
-    ARGFSpecs.ruby(:options => [], :code => <<-SRC, :args => ['-', "< #{@stdin}"]) do |f|
-        while line = ARGF.gets
-          print line
-        end
-      SRC
-      f.read.should == @contents_stdin
-    end
+    stdin = ruby_exe("while line = ARGF.gets do print line end",
+                     :args => "< #{@stdin_name}")
+    stdin.should == @stdin
   end
 
   it "reads all lines of two files" do
-    ARGFSpecs.file_args('file1.txt', 'file2.txt')
-    number_of_lines = @contents_file1.split($/).size + @contents_file2.split($/).size
-    all_lines = []
-    for i in 1..number_of_lines
-      all_lines << ARGF.gets()
+    argv [@file1_name, @file2_name] do
+      total = @file1.size + @file2.size
+      lines = []
+      total.times { lines << ARGF.gets }
+      lines.should == @file1 + @file2
     end
-    all_lines.should == (@contents_file1+ @contents_file2).split($/).collect { |l| l+$/ }
   end
 
   it "returns nil when reaching end of files" do
-    ARGFSpecs.file_args('file1.txt', 'file2.txt')
-    number_of_lines = @contents_file1.split($/).size + @contents_file2.split($/).size
-    for i in 1..number_of_lines
-      ARGF.gets()
+    argv [@file1_name, @file2_name] do
+      total = @file1.size + @file2.size
+      total.times { ARGF.gets }
+      ARGF.gets.should == nil
     end
-    ARGF.gets.should == nil
   end
 
   it "sets $_ global variable with each line read" do
-    ARGFSpecs.file_args('file1.txt', 'file2.txt')
-    while line = ARGF.gets
-      $_.should == line
+    argv [@file1_name, @file2_name] do
+      while line = ARGF.gets
+        $_.should == line
+      end
     end
   end
+end
 
+describe "ARGF.gets" do
+  before :each do
+    @file1_name = fixture __FILE__, "file1.txt"
+    @file2_name = fixture __FILE__, "file2.txt"
 
-#  # TODO: reactivate this code when in place edit mode works ok in argf.rb
-#  # Note: this test will only work on platforms that is capable of doing
-#  # safe rename. Unfortunately there is no method in 1.8.X to test that.
-#  # This has been corrected in Ruby 1.9.x
-#  it "modifies the files when in place edit mode is on" do
-#
-#    ARGFSpecs.ruby(:options =>['-i'], :code => <<-SRC, :args => [@file1, @file2]) do |f|
-#          while line = ARGF.gets
-#            puts line.chomp+'.new'
-#          end
-#      SRC
-#      File.read(@file1).should == @contents_file1.split($/).collect { |l| l+'.new'+$/}.join
-#      File.read(@file2).should == @contents_file2.split($/).collect { |l| l+'.new'+$/}.join
-#    end
-#
-#  end
-#    
-#  # TODO: reactivate this code when in place edit mode works ok in argf.rb
-#  it "modifies and backups two files when in place edit mode is on" do
-#
-#    ARGFSpecs.ruby(:options =>['-i.bak'], :code => <<-SRC, :args => [@file1, @file2]) do |f|
-#          while line = ARGF.gets
-#            puts line.chomp+'.new'
-#          end
-#      SRC
-#      File.read(@file1).should == @contents_file1.split($/).collect { |l| l+'.new'+$/}.join
-#      File.read(@file2).should == @contents_file2.split($/).collect { |l| l+'.new'+$/}.join
-#      File.read(@file1+'.bak').should == @contents_file1
-#      File.read(@file2+'.bak').should == @contents_file2
-#    end
-#  end
+    @tmp1_name  = tmp "file1.txt"
+    @tmp2_name  = tmp "file2.txt"
 
+    @tmp1_name_bak = @tmp1_name + ".bak"
+    @tmp2_name_bak = @tmp2_name + ".bak"
+
+    FileUtils.cp @file1_name, @tmp1_name
+    FileUtils.cp @file2_name, @tmp2_name
+  end
+
+  after :each do
+    File.delete @tmp1_name if File.exists? @tmp1_name
+    File.delete @tmp2_name if File.exists? @tmp2_name
+
+    File.delete @tmp1_name_bak if File.exists? @tmp1_name_bak
+    File.delete @tmp2_name_bak if File.exists? @tmp2_name_bak
+  end
+
+  it "modifies the files when in place edit mode is on" do
+    ruby_exe("while line = ARGF.gets do puts 'x' end",
+             :options => "-i",
+             :args => "#{@tmp1_name} #{@tmp2_name}")
+
+    File.read(@tmp1_name).should == "x\nx\n"
+    File.read(@tmp2_name).should == "x\nx\n"
+  end
+
+  it "modifies and backups two files when in place edit mode is on" do
+    ruby_exe("while line = ARGF.gets do puts 'x' end",
+             :options => "-i.bak",
+             :args => "#{@tmp1_name} #{@tmp2_name}")
+
+    File.read(@tmp1_name).should == "x\nx\n"
+    File.read(@tmp2_name).should == "x\nx\n"
+
+    File.read(@tmp1_name_bak).should == "file1.1\nfile1.2\n"
+    File.read(@tmp2_name_bak).should == "line2.1\nline2.2\n"
+  end
 end
