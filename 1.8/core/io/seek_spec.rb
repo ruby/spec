@@ -49,4 +49,25 @@ describe "IO#seek" do
   it "raises IOError on closed stream" do
     lambda { IOSpecs.closed_file.seek(0) }.should raise_error(IOError)
   end
+
+  it "moves the read position and clears EOF with SEEK_SET" do
+    value = @io.read
+    @io.seek(0, IO::SEEK_SET)
+    @io.eof?.should == false
+    value.should == @io.read
+  end
+
+  it "moves the read position and clears EOF with SEEK_CUR" do
+    value = @io.read
+    @io.seek(-1, IO::SEEK_CUR)
+    @io.eof?.should == false
+    value[-1].should == @io.read[0]
+  end
+
+  it "moves the read position and clears EOF with SEEK_END" do
+    value = @io.read
+    @io.seek(-1, IO::SEEK_END)
+    @io.eof?.should == false
+    value[-1].should == @io.read[0]
+  end
 end

@@ -20,6 +20,13 @@ describe "IO#rewind" do
     @io.readline.should == "Voici la ligne une.\n"
   end
 
+  it "positions the instance to the beginning of input and clears EOF" do
+    value = @io.read
+    @io.rewind
+    @io.eof?.should == false
+    value.should == @io.read
+  end
+
   it "sets lineno to 0" do
     @io.readline.should == "Voici la ligne une.\n"
     @io.lineno.should == 1
