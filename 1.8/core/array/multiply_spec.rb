@@ -91,10 +91,19 @@ describe "Array#* with an integer" do
     (ArraySpecs::MyArray[1, 2, 3] * 2).class.should == ArraySpecs::MyArray
   end
 
-  it "does not copy the taint status of the original array if the passed count is 0" do
-    ary = [1, 2, 3]
-    ary.taint
-    (ary * 0).tainted?.should == false
+  ruby_version_is '' ... '1.8' do
+    it "does not copy the taint status of the original array if the passed count is 0" do
+      ary = [1, 2, 3]
+      ary.taint
+      (ary * 0).tainted?.should == false
+    end
+  end
+  ruby_version_is '1.9' do
+    it "copies the taint status of the original array even if the passed count is 0" do
+      ary = [1, 2, 3]
+      ary.taint
+      (ary * 0).tainted?.should == true
+    end
   end
 
   it "copies the taint status of the original array even if the array is empty" do
@@ -111,10 +120,10 @@ describe "Array#* with an integer" do
   end
 
   ruby_version_is '1.9' do
-    it "does not copy the untrusted status of the original array if the passed count is 0" do
+    it "copies the untrusted status of the original array even if the passed count is 0" do
       ary = [1, 2, 3]
       ary.untrust
-      (ary * 0).untrusted?.should == false
+      (ary * 0).untrusted?.should == true
     end
 
     it "copies the untrusted status of the original array even if the array is empty" do
