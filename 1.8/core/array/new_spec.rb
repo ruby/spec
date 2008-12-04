@@ -5,6 +5,9 @@ describe "Array.new" do
   it "returns a new array when not passed arguments" do
     a = Array.new
     a.class.should == Array
+  end
+
+  it "returns an instance of the subclass when called for a subclass of Array" do
     b = ArraySpecs::MyArray.new
     b.class.should == ArraySpecs::MyArray
   end
@@ -12,12 +15,28 @@ describe "Array.new" do
   it "raises an ArgumentError when passed a negative size" do
     lambda { Array.new(-1) }.should raise_error(ArgumentError)
   end
-  
+
+  platform_is :wordsize => 32 do
+    it "raises an ArgumentError when passed a too large size" do
+      enough_large_size = 2**32/4 + 1
+      lambda { Array.new(enough_large_size) }.should raise_error(ArgumentError)
+    end
+  end
+  platform_is :wordsize => 64 do
+    it "raises an ArgumentError when passed a too large size" do
+      enough_large_size = 2**64/8 + 1
+      lambda { Array.new(enough_large_size) }.should raise_error(ArgumentError)
+    end
+  end
+
   it "returns a new array of size with nil elements" do
     Array.new(5).should == [nil, nil, nil, nil, nil]
+
     a = ArraySpecs::MyArray.new(5)
     a.class.should == ArraySpecs::MyArray
-    a.inspect.should == [nil, nil, nil, nil, nil].inspect
+    (1...5).each do |i|
+      a[0].should == nil
+    end
   end
 
   it "tries to convert the passed arguments to Arrays using #to_ary" do
@@ -50,15 +69,18 @@ describe "Array.new" do
   it "returns a new array of size default objects" do
     Array.new(4, true).should == [true, true, true, true]
 
-    # Shouldn't copy object
-    str = "x"
-    ary = Array.new(4, str)
-    str << "y"
-    ary.should == [str, str, str, str]
-
     a = ArraySpecs::MyArray.new(4, true)
     a.class.should == ArraySpecs::MyArray
     a.inspect.should == [true, true, true, true].inspect
+  end
+
+  it "does not copy the object given as default" do
+    str = "x"
+    ary = Array.new(4, str)
+    ary[0].object_id.should == str.object_id
+    ary[1].object_id.should == str.object_id
+    ary[2].object_id.should == str.object_id
+    ary[3].object_id.should == str.object_id
   end
   
   it "does not call to_ary on Array subclasses when passed an array-like argument" do
@@ -78,7 +100,11 @@ describe "Array.new" do
     
     a = ArraySpecs::MyArray.new(5) { |i| i + 1 }
     a.class.should == ArraySpecs::MyArray
-    a.inspect.should == [1, 2, 3, 4, 5].inspect
+    a[0].should == 1
+    a[1].should == 2
+    a[2].should == 3
+    a[3].should == 4
+    a[4].should == 5
   end  
 
   it "will fail if a to_ary is supplied as the first argument and a second argument is given" do
