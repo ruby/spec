@@ -23,10 +23,10 @@ describe "IO#write on a file" do
     written = @file.write("abcde")
     written.should == 5
     File.open(@filename) do |file|
-      file.sysread(10).should_not == "abcde56789"
-      file.seek(0)
+      file.read.should == "012345678901234567890123456789"
       @file.fsync
-      file.sysread(10).should == "abcde56789"
+      file.rewind
+      file.read.should == "abcde5678901234567890123456789"
     end
   end
 
