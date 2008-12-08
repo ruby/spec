@@ -103,10 +103,7 @@ describe "Array#pack" do
 
     it "returns a string in encoding of common to the concatenated results" do
       ["\u{3042 3044 3046 3048}", 0x2000B].pack("A*U").encoding.should == Encoding::UTF_8
-      ruby_bug('#833', '1.9.1') do
-        # under discussion [ruby-dev:37295]
-        ["abcde\xd1", "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == Encoding::ISO_8859_1
-      end
+      ["abcde\xd1", "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == Encoding::ISO_8859_1
       ["abcde".encode(Encoding::US_ASCII), "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == Encoding::US_ASCII
       # under discussion [ruby-dev:37294]
       #   ["\u{3042 3044 3046 3048}", 1].pack("A*N").encoding.should == Encoding::ASCII_8BIT
@@ -188,8 +185,9 @@ describe "Array#pack with ASCII-string format", :shared => true do
 
   ruby_version_is '1.9' do
     it "treats a multibyte character just as a byte sequence" do
-      s = "\u3042"
+      s = "\u3042\u3044\u3046\u3048"
       [s].pack(format('*')).bytes.to_a.should == s.bytes.to_a
+      [s].pack(format('3')).bytesize.should == 3
 
       # example of dummy encoding
       s = "\u3042".encode(Encoding::UTF_32BE)
@@ -250,10 +248,13 @@ describe "Array#pack with format 'B'" do
     ["011000010110001001100011"].pack('B24').should == binary('abc')
   end
 
-  # under discussion [ruby-dev:37279] 
-  compliant_on :ruby, :jruby, :ir, :rbx do
-    it "may accept characters other than 0 or 1" do
-      lambda{ ["abbbbccddefffgghiijjjkkl"].pack('b24') }.should_not raise_error
+  # [ruby-dev:37279]
+  it "accepts characters other than 0 or 1 for compatibility to perl" do
+    lambda{ ["abbbbccddefffgghiijjjkkl"].pack('B24') }.should_not raise_error
+  end
+  ruby_version_is '1.9' do
+    it "treats the pack argument as a byte sequence when its characters are other than 0 or 1" do
+      ["\u3042"*8].pack('B*').length.should == "\u3042".bytesize * 8 / 8
     end
   end
 
@@ -352,10 +353,13 @@ describe "Array#pack with format 'b'" do
     ["0000000010000000000000011111111100000000"].pack('b40').should == binary("\x00\x01\x80\xFF\x00")
   end
 
-  # under discussion [ruby-dev:37279] 
-  compliant_on :ruby, :jruby, :ir, :rbx do
-    it "may accept characters other than 0 or 1" do
-      lambda{ ["abbbbccddefffgghiijjjkkl"].pack('b24') }.should_not raise_error
+  # [ruby-dev:37279]
+  it "accepts characters other than 0 or 1 for compatibility to perl" do
+    lambda{ ["abbbbccddefffgghiijjjkkl"].pack('b24') }.should_not raise_error
+  end
+  ruby_version_is '1.9' do
+    it "treats the pack argument as a byte sequence when its characters are other than 0 or 1" do
+      ["\u3042"*8].pack('b*').length.should == "\u3042".bytesize * 8 / 8
     end
   end
 
@@ -435,7 +439,6 @@ describe "Array#pack with format 'H'" do
     ["4142"].pack("H7").should == binary("\x41\x42\x00\x00")
   end
 
-  # under discussion [ruby-dev:37283]
   it "fills low-nibble of the last byte with 0 when count is odd even if pack argument has insufficient length" do 
     ["414"].pack("H3").should == binary("\x41\x40")
     ["414"].pack("H4").should == binary("\x41\x40")
@@ -508,7 +511,6 @@ describe "Array#pack with format 'h'" do
     ["1424"].pack("h7").should == binary("\x41\x42\x00\x00")
   end
 
-  # under discussion [ruby-dev:37283]
   it "fills high-nibble of the last byte with 0 when count is odd even if pack argument has insufficient length" do 
     ["142"].pack("h3").should == binary("\x41\x02")
     ["142"].pack("h4").should == binary("\x41\x02")
