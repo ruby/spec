@@ -34,6 +34,15 @@ describe "IO.select" do
     result.should == [[@rd], [], []]
   end
 
+  it "returns supplied objects correctly even when monitoring the same object in different arrays" do
+    filename = tmp("IO_select_pipe_file") + $$.to_s
+    io = File.open(filename, 'w+')
+    result = IO.select [io], [io], nil, 0
+    result.should == [[io], [io], []]
+    io.close
+    File.delete(filename)
+  end
+
   it "invokes to_io on supplied objects that are not IO" do
     # make some data available
     @wr.write("foobar")
