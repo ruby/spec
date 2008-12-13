@@ -10,6 +10,30 @@ describe "IO.select" do
     @wr.close unless @wr.closed?
   end
 
+  it "blocks for duration of timeout if there are no objects ready for I/O" do
+    timeout = 0.5
+    start = Time.now
+    IO.select [@rd], nil, nil, timeout
+    (Time.now - start).should be_close(timeout, 0.05)
+  end
+
+  it "returns immediately all objects that are ready for I/O when timeout is 0" do
+    @wr.write("be ready")
+    result = IO.select [@rd], [@wr], nil, 0
+    result.should == [[@rd], [@wr], []]
+  end
+
+  it "returns nil after timeout if there are no objects ready for I/O" do
+    result = IO.select [@rd], nil, nil, 0
+    result.should == nil
+  end
+
+  it "returns supplied objects when they are ready for I/O" do
+    Thread.new { sleep 0.5; @wr.write "be ready" }
+    result = IO.select [@rd], nil, nil, nil
+    result.should == [[@rd], [], []]
+  end
+
   it "invokes to_io on supplied objects that are not IO" do
     # make some data available
     @wr.write("foobar")
