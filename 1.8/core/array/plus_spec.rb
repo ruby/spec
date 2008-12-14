@@ -9,6 +9,11 @@ describe "Array#+" do
     ([] + []).should == []
   end
 
+  it "can concatenate an array with itself" do
+    ary = [1, 2, 3]
+    (ary + ary).should == [1, 2, 3, 1, 2, 3]
+  end
+
   it "tries to convert the passed argument to an Array using #to_ary" do
     obj = mock('["x", "y"]')
     obj.should_receive(:to_ary).and_return(["x", "y"])
@@ -41,5 +46,21 @@ describe "Array#+" do
 
   it "does not call to_ary on array subclasses" do
     ([5, 6] + ArraySpecs::ToAryArray[1, 2]).should == [5, 6, 1, 2]
+  end
+
+  it "does not infected even if an original array is tainted" do
+    ([1, 2] + [3, 4]).tainted?.should be_false
+    ([1, 2].taint + [3, 4]).tainted?.should be_false
+    ([1, 2] + [3, 4].taint).tainted?.should be_false
+    ([1, 2].taint + [3, 4].taint).tainted?.should be_false
+  end
+
+  ruby_version_is '1.9' do
+    it "does not infected even if an original array is untrusted" do
+      ([1, 2] + [3, 4]).untrusted?.should be_false
+      ([1, 2].untrust + [3, 4]).untrusted?.should be_false
+      ([1, 2] + [3, 4].untrust).untrusted?.should be_false
+      ([1, 2].untrust + [3, 4].untrust).untrusted?.should be_false
+    end
   end
 end
