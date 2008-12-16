@@ -51,5 +51,10 @@ describe "Executing a Continuation" do
       Kernel.callcc {|cc| cc.call 1}.should == Kernel.callcc {|cc| cc[1]}
       Kernel.callcc {|cc| cc.call 1, 2, 3}.should == Kernel.callcc {|cc| cc[1, 2, 3]} 
     end
+
+    it "closes over lexical environments" do
+      def f; a = 1; Kernel.callcc {|c| a = 2; c.call }; a; end
+      f().should == 2
+    end
   end
 end
