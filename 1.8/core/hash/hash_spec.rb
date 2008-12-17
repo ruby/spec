@@ -15,4 +15,10 @@ describe "Hash#hash" do
       end
     end
   end
+
+  it "generates a hash for recursive hash structures" do
+    h = {}
+    h[:a] = h
+    (h.hash == h[:a].hash).should == true
+  end
 end

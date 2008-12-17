@@ -118,6 +118,13 @@ describe "Hash#==" do
     a[1].tainted?.should == true
   end
 
+  it "computes equality for recursive hashes" do
+    h = {}
+    h[:a] = h
+    h.eql?(h[:a]).should == true
+    (h == h[:a]).should == true
+  end
+
   it "compares values with == semantics" do
     { "x" => 1.0 }.should == { "x" => 1 }
   end
