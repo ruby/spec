@@ -51,4 +51,20 @@ describe "The private keyword" do
       end
     }.should raise_error(NoMethodError)
   end
+  
+  it "defines a new method rather than changing visibility of an existing one" do
+    Module.new do
+      class A
+        def foo
+        end
+      end
+    
+      class B < A
+        private :foo
+      end
+    
+      A.new.foo
+      lambda { B.new.foo }.should raise_error(NoMethodError)
+    end
+  end
 end
