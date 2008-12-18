@@ -16,7 +16,6 @@ describe "Thread::list" do
   it "includes waiting threads" do
     c = Channel.new
     t = Thread.new { c.receive }
-    t.run
     begin
       Thread.list.should include(t)
     ensure
