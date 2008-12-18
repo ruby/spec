@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../fixtures/classes'
+require File.dirname(__FILE__) + '/../../../fixtures/env/classes'
 
 describe :env_store, :shared => true do
   it "sets the environment variable to the given value" do
