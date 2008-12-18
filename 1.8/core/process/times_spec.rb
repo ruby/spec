@@ -24,6 +24,6 @@ describe "Process.times" do
     # words, this is a very fuzzy test.
     t2 = Process::times
     diff = (t2.utime + t2.stime) - (t.utime + t.stime)
-    diff.should >= 1.0
+    diff.should > 0
   end
 end
