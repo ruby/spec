@@ -1,4 +1,6 @@
-require 'generator'
+not_supported_on :ironruby do
+  require 'generator'
+end
 
 module GeneratorSpecs
   def self.empty
