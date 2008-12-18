@@ -68,12 +68,14 @@ describe "Array#pack" do
     ["abc", "def"].pack("A*#junk junk junk junk junk\rA10").should == "abc"
   end
 
-  it "returns a tainted string when the format is tainted" do
-    ["abcd", 0x20].pack("A3C".taint).tainted?.should be_true
-  end
+  ruby_version_is '1.8.8' do
+    it "returns a tainted string when the format is tainted" do
+      ["abcd", 0x20].pack("A3C".taint).tainted?.should be_true
+    end
 
-  it "returns a tainted string when the format is tainted even if the given format is empty" do
-    ["abcd", 0x20].pack("".taint).tainted?.should be_true
+    it "returns a tainted string when the format is tainted even if the given format is empty" do
+      ["abcd", 0x20].pack("".taint).tainted?.should be_true
+    end
   end
 
   it "returns a tainted string when a pack argument is tainted" do
@@ -439,11 +441,13 @@ describe "Array#pack with format 'H'" do
     ["4142"].pack("H7").should == binary("\x41\x42\x00\x00")
   end
 
-  it "fills low-nibble of the last byte with 0 when count is odd even if pack argument has insufficient length" do 
-    ["414"].pack("H3").should == binary("\x41\x40")
-    ["414"].pack("H4").should == binary("\x41\x40")
-    ["414"].pack("H5").should == binary("\x41\x40\x00")
-    ["414"].pack("H6").should == binary("\x41\x40\x00")
+  ruby_bug("[ruby-dev:37283]", "1.8.7.73") do
+    it "fills low-nibble of the last byte with 0 when count is odd even if pack argument has insufficient length" do 
+      ["414"].pack("H3").should == binary("\x41\x40")
+      ["414"].pack("H4").should == binary("\x41\x40")
+      ["414"].pack("H5").should == binary("\x41\x40\x00")
+      ["414"].pack("H6").should == binary("\x41\x40\x00")
+    end
   end
 
   it "considers count = 1 if count omited" do
@@ -511,11 +515,13 @@ describe "Array#pack with format 'h'" do
     ["1424"].pack("h7").should == binary("\x41\x42\x00\x00")
   end
 
-  it "fills high-nibble of the last byte with 0 when count is odd even if pack argument has insufficient length" do 
-    ["142"].pack("h3").should == binary("\x41\x02")
-    ["142"].pack("h4").should == binary("\x41\x02")
-    ["142"].pack("h5").should == binary("\x41\x02\x00")
-    ["142"].pack("h6").should == binary("\x41\x02\x00")
+  ruby_bug("[ruby-dev:37283]", "1.8.7.73") do
+    it "fills high-nibble of the last byte with 0 when count is odd even if pack argument has insufficient length" do 
+      ["142"].pack("h3").should == binary("\x41\x02")
+      ["142"].pack("h4").should == binary("\x41\x02")
+      ["142"].pack("h5").should == binary("\x41\x02\x00")
+      ["142"].pack("h6").should == binary("\x41\x02\x00")
+    end
   end
 
   it "considers count = 1 if count omited" do
@@ -1987,8 +1993,10 @@ describe "Array#pack with format 'M'" do
     ["abcdef", "ghijkl"].pack('M3M3').should == "abcd=\nef=\nghij=\nkl=\n"
   end
 
-  it "ignores star parameter" do
-    ["X"*150, "not used", "not used", "not used"].pack('M*').should == ["X"*150].pack('M')
+  ruby_bug("[ruby-dev:37289]", "1.8.7.73") do
+    it "ignores star parameter" do
+      ["X"*150, "not used", "not used", "not used"].pack('M*').should == ["X"*150].pack('M')
+    end
   end
 
   it "properly handles recursive arrays" do
@@ -2072,9 +2080,11 @@ describe "Array#pack with format 'm'" do
     ["ABC", "DEF"].pack('m3m3').should == "QUJD\nREVG\n"
   end
 
-  it "ignores star parameter" do
-    ["ABC"*150, 'not used', 'not used', 'not used'].pack('m*').should == ["ABC"*150].pack('m')
-    ["ABC"*150, 0x41, 0x42].pack('m*CC').should == ["ABC"*150].pack('m') + "\x41\x42"
+  ruby_bug("[ruby-dev:37289]", "1.8.7.73") do
+    it "ignores star parameter" do
+      ["ABC"*150, 'not used', 'not used', 'not used'].pack('m*').should == ["ABC"*150].pack('m')
+      ["ABC"*150, 0x41, 0x42].pack('m*CC').should == ["ABC"*150].pack('m') + "\x41\x42"
+    end
   end
 
   it "encodes 6-bit char less than 26 with capital letters" do
@@ -2136,7 +2146,7 @@ describe "Array#pack with format 'U'" do
       chr = [cp].pack('U')
       binary(chr)[0,1].should == cp.chr
     end
-    ascii.to_a.pack('U*').should == ("\x00" .. "\x7F").to_a.join
+    ascii.to_a.pack('U*').should == (0x00 .. 0x7F).map{|c| eval('"\x%02x"' % c)}.join
 
     codepoints = [
       0x80, 0x7FF, 0x800, 0xFFFF,          # BMP
@@ -2618,9 +2628,11 @@ describe "Array#pack with format 'P'" do
     ary.pack('P2P').should == [ary[0]].pack('P') + [ary[1]].pack('P')
   end
 
-  it "ignores '*' parameter" do 
-    ary = ["abc", "def", "ghi", "jkl"]
-    ary.pack('P*').should == [ary[0]].pack('P')
+  ruby_bug("[ruby-dev:37289]", "1.8.7.73") do
+    it "ignores '*' parameter" do 
+      ary = ["abc", "def", "ghi", "jkl"]
+      ary.pack('P*').should == [ary[0]].pack('P')
+    end
   end
 
   it "returns a pointer to zero-length byte sequence if count = 0 with" do
