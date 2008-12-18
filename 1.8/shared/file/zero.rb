@@ -50,6 +50,20 @@ describe :file_zero, :shared => true do
       File.delete(file) rescue nil
     end
   end
+
+  platform_is_not :windows do
+    it "zero? returns false for a directory" do
+      lambda { @object.send(@method, @dir) }.should == false
+    end
+  end
+
+  platform_is :windows do
+    ruby_bug("redmine #449", "1.8.6") do
+      it "zero? returns false for a directory" do
+        @object.send(@method, @dir).should == false
+      end
+    end
+  end
 end
 
 describe :file_zero_missing, :shared => true do
