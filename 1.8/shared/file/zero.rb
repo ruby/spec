@@ -53,7 +53,7 @@ describe :file_zero, :shared => true do
 
   platform_is_not :windows do
     it "zero? returns false for a directory" do
-      lambda { @object.send(@method, @dir) }.should == false
+      @object.send(@method, @dir).should == false
     end
   end
 
