@@ -1,9 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-
-require 'resolv'
 require 'socket'
 
 describe "Resolv#getaddress" do
+  before(:all) do
+    require 'resolv'
+  end
+
   it 'resolves localhost' do
 
     localhost = Socket.getaddrinfo("127.0.0.1", nil)[0][2]
