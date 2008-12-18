@@ -1,10 +1,13 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Process.times" do
+  it "returns a Struct::Tms" do
+    Process::times.class.should == Struct::Tms
+  end
+
   it "returns current cpu times" do
 
     t = Process::times
-    t.class.should == Struct::Tms
 
     # Stall for 1 second, but do work instead of sleeping
     # because process times won't increase.
