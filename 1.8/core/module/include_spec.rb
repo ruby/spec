@@ -91,6 +91,42 @@ describe "Module#include" do
     IncludeSpecsClass.new.value.should == 6
   end
 
+  it "doesn't include module if it is included in a super class" do
+    module ModuleSpecs::M1
+      module M; end
+      class A; include M; end
+      class B < A; include M; end
+      
+      all = [A,B,M]
+      
+      (B.ancestors & all).should == [B, A, M]
+    end
+  end
+  
+  it "recursively includes new mixins" do
+    module ModuleSpecs::M1
+      module U; end
+      module V; end
+      module W; end
+      module X; end
+      module Y; end
+      class A; include X; end;
+      class B < A; include U, V, W; end;
+      
+      all = [U,V,W,X,Y,A,B]
+      
+      # update V
+      module V; include X, U, Y; end
+      
+      (B.ancestors & all).should == [B, U, V, W, A, X]
+      
+      class B; include V; end
+      
+      # the only new module is Y, it is added after U since it follows U in V mixin list:
+      (B.ancestors & all).should == [B, U, Y, V, W, A, X]
+    end
+  end
+  
   it "detects cyclic includes" do
     lambda {
       module ModuleSpecs::M

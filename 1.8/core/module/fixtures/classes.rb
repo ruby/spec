@@ -302,6 +302,10 @@ module ModuleSpecs
   class MultipleIncludes
     include MB
   end
+  
+  # empty modules
+  module M1; end
+  module M2; end
 end
 
 ModuleSpecs::Nesting[:root_level] = Module.nesting
