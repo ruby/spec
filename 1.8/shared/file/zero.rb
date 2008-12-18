@@ -2,6 +2,7 @@ describe :file_zero, :shared => true do
   before :each do
     @zero_file    = 'test.txt'
     @nonzero_file = 'test2.txt'
+    @dir = File.dirname(__FILE__)
 
     File.open(@zero_file, "w") {} # Touch
     File.open(@nonzero_file, "w") { |f| f.puts "hello" }
@@ -14,8 +15,11 @@ describe :file_zero, :shared => true do
     @nonzero_file = nil
   end
 
-  it "return true if the length of a file its zero, otherwise true" do
+  it "returns true if the file is empty" do
     @object.send(@method, @zero_file).should == true
+  end
+
+  it "returns false if the file is not empty" do
     @object.send(@method, @nonzero_file).should == false
   end
 
@@ -42,24 +46,21 @@ describe :file_zero, :shared => true do
     lambda { @object.send(@method, false) }.should raise_error(TypeError)
   end
 
-  it "zero? should return true if the named file exists and has a zero size." do
-    begin
-      file = tmp('i_exist')
-      File.open(file,'w') { @object.send(@method, file).should == true }
-    ensure
-      File.delete(file) rescue nil
+  it "returns true inside a block opening a file if it is empty" do
+    File.open(@zero_file,'w') do
+      @object.send(@method, @zero_file).should == true
     end
   end
 
   platform_is_not :windows do
-    it "zero? returns false for a directory" do
+    it "returns false for a directory" do
       @object.send(@method, @dir).should == false
     end
   end
 
   platform_is :windows do
     ruby_bug("redmine #449", "1.8.6") do
-      it "zero? returns false for a directory" do
+      it "returns false for a directory" do
         @object.send(@method, @dir).should == false
       end
     end
