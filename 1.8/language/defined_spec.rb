@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe "The defined? keyword" do
   class LanguageDefinedSpecs
     SomeConst = 5
+    
+    attr_accessor :ivar
 
     def no_args
     end
@@ -13,6 +15,11 @@ describe "The defined? keyword" do
       x = 1
       defined?(x)
     end
+    
+    def ivar_definition
+      defined? @ivar
+    end
+    
   end
   
   class LanguageDefinedSubclass < LanguageDefinedSpecs
@@ -174,6 +181,28 @@ describe "The defined? keyword" do
       ret.should == 'local-variable(in-block)'
     end
 
+  end
+  
+  # From Rick DeNatale dynamic instance variable definition
+  it "returns nil for an instance variable not yet accessed" do
+    instance = LanguageDefinedSpecs.new
+    ret = instance.ivar_definition
+    ret.should == nil    
+  end
+  
+  # From Rick DeNatale dynamic instance variable definition
+  it "returns nil for an instance variable read but not yet assigned" do
+    instance = LanguageDefinedSpecs.new
+    read_value = instance.ivar
+    ret = instance.ivar_definition
+    ret.should == nil    
+  end
+  
+  it "returns 'instance-variable' for an instance variable defined in an instance" do
+    instance = LanguageDefinedSpecs.new
+    instance.ivar = 2
+    ret = instance.ivar_definition
+    ret.should == 'instance-variable'    
   end
 end
 
