@@ -180,17 +180,14 @@ describe "The defined? keyword" do
       ret = block.call(1)
       ret.should == 'local-variable(in-block)'
     end
-
   end
   
-  # From Rick DeNatale dynamic instance variable definition
   it "returns nil for an instance variable not yet accessed" do
     instance = LanguageDefinedSpecs.new
     ret = instance.ivar_definition
     ret.should == nil    
   end
   
-  # From Rick DeNatale dynamic instance variable definition
   it "returns nil for an instance variable read but not yet assigned" do
     instance = LanguageDefinedSpecs.new
     read_value = instance.ivar
