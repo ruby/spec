@@ -22,5 +22,30 @@ describe "Syslog::Constants" do
     end
 
   end
+
+  # The masks are defined in <syslog.h>
+
+  describe "Syslog::Constants.LOG_MASK" do
+    it "returns the mask value for a priority" do
+      Syslog::Constants.LOG_MASK(Syslog::LOG_DEBUG).should == 128
+      Syslog::Constants.LOG_MASK(Syslog::LOG_WARNING).should == 16
+    end
+    
+    it "works on undefined constants" do
+      Syslog::Constants.LOG_MASK(1337).should == 33554432
+      Syslog::Constants.LOG_MASK(7331).should == 8
+    end
+  end
+
+  describe "Syslog::Constants.LOG_UPTO" do
+    it "returns a mask for the priorities up to a given argument" do
+      Syslog::Constants.LOG_UPTO(Syslog::LOG_ALERT).should == 3
+      Syslog::Constants.LOG_UPTO(Syslog::LOG_DEBUG).should == 255
+    end
+
+    it "works on undefined constants" do
+      Syslog::Constants.LOG_UPTO(1337).should == 67108863
+    end
+  end
 end
   
