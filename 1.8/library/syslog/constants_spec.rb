@@ -1,18 +1,26 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require 'syslog'
 
 describe "Syslog::Constants" do
   not_supported_on :windows do
+
     before :all do
-      require 'syslog'
+      
+    @constants = %w(LOG_AUTHPRIV LOG_USER LOG_LOCAL2 LOG_NOTICE LOG_NDELAY 
+                    LOG_SYSLOG LOG_ALERT LOG_FTP LOG_LOCAL5 LOG_ERR LOG_AUTH 
+                    LOG_LOCAL1 LOG_ODELAY LOG_NEWS LOG_DAEMON LOG_LOCAL4 
+                    LOG_CRIT LOG_INFO LOG_PERROR LOG_LOCAL0 LOG_CONS LOG_LPR 
+                    LOG_LOCAL7 LOG_WARNING LOG_CRON LOG_LOCAL3 LOG_EMERG 
+                    LOG_NOWAIT LOG_UUCP LOG_PID LOG_KERN LOG_MAIL LOG_LOCAL6 
+                    LOG_DEBUG)
     end
-  
-    it 'should be included' do
-      Syslog::Constants::LOG_USER.should == Syslog::LOG_USER
-      Syslog::Constants::LOG_EMERG.should == Syslog::LOG_EMERG
-      Syslog::Constants::LOG_CRIT.should == Syslog::LOG_CRIT
-      Syslog::Constants::LOG_ERR.should == Syslog::LOG_ERR
-      Syslog::Constants::LOG_MAIL.should == Syslog::LOG_MAIL
-      Syslog::Constants::LOG_WARNING.should == Syslog::LOG_WARNING
+
+    it 'includes the Syslog constants' do
+      @constants.each do |c|
+        Syslog::Constants.constants.include?(c).should be_true
+      end
     end
+
   end
 end
+  
