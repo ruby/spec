@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/shared/reopen'
 require 'syslog'
 
 describe "Syslog.open" do
@@ -79,5 +80,5 @@ describe "Syslog.open" do
 end
 
 describe "Syslog.open!" do
-  it "needs to be reviewed for spec completeness"
+  it_behaves_like :syslog_reopen, :open!
 end
