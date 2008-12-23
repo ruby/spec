@@ -23,7 +23,7 @@ describe "Syslog.facility" do
       Syslog.facility.should == nil
     end
 
-    it "is defaulted to LOG_USER" do
+    it "defaults to LOG_USER" do
       Syslog.open
       Syslog.facility.should == Syslog::LOG_USER
       Syslog.close
