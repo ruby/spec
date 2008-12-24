@@ -1,30 +1,12 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/fixtures/classes'
+require File.dirname(__FILE__) + '/../../fixtures/constants'
 
 describe "Module#const_missing" do
-  it "is invoked when an undefined constant is referenced in the scope of self" do
-    begin
-      A = Module.new do
-        const_set(:A, "test")
-        
-        def self.const_missing(mod)
-          $missing_const = mod
-          return 123
-        end
-      end
+  it "is called when an undefined constant is referenced via literal form" do
+    ConstantSpecs::ClassA::CS_CONSTX.should == :CS_CONSTX
+  end
 
-      A::NotExistant.should == 123
-      $missing_const.should == :NotExistant
-      
-      A.const_get(:NotExistantToo).should == 123
-      $missing_const.should == :NotExistantToo
-
-      A::A.should == "test"
-      A.const_get(:A).should == "test"
-      
-      $missing_const.should == :NotExistantToo
-    ensure
-      $missing_const = nil
-    end
+  it "is called when an undefined constant is referenced via #const_get" do
+    ConstantSpecs::ClassA.const_get(:CS_CONSTX).should == :CS_CONSTX
   end
 end
