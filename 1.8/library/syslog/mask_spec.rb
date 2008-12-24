@@ -12,6 +12,11 @@ describe "Syslog.mask" do
       Syslog.opened?.should be_false
     end
 
+    # make sure we return the mask to the default value
+    after :all do
+      Syslog.open { |s| s.mask = 255 }
+    end
+
     it "returns the log priority mask" do
       Syslog.open("rubyspec")
       Syslog.mask.should == 255
@@ -57,6 +62,11 @@ describe "Syslog.mask=" do
 
     after :each do
       Syslog.opened?.should be_false
+    end
+
+    # make sure we return the mask to the default value
+    after :all do
+      Syslog.open { |s| s.mask = 255 }
     end
 
     it "sets the log priority mask" do
