@@ -56,5 +56,47 @@ describe "Executing a Continuation" do
       def f; a = 1; Kernel.callcc {|c| a = 2; c.call }; a; end
       f().should == 2
     end
+
+    it "escapes an inner ensure block" do
+      a = []
+      cont = nil
+      a << :pre_callcc
+      Kernel.callcc do |cc|
+        a << :in_callcc
+        cont = cc
+      end
+      a << :post_callcc
+      unless a.include? :pre_call
+        begin
+          a << :pre_call
+          cont.call
+          a << :post_call
+        ensure
+          a << :ensure
+        end
+      end
+      a.should == [:pre_callcc,:in_callcc,:post_callcc,:pre_call,:post_callcc]
+    end
+
+    it "executes an outer ensure block" do
+      a = []
+      cont = nil
+      begin
+        a << :pre_callcc
+        Kernel.callcc do |cc|
+          a << :in_callcc
+          cont = cc
+        end
+        a << :post_callcc
+        unless a.include? :pre_call
+          a << :pre_call
+          cont.call
+          a << :post_call
+        end
+      ensure
+        a << :ensure
+      end
+      a.should == [:pre_callcc,:in_callcc,:post_callcc,:pre_call,:post_callcc,:ensure]
+    end
   end
 end
