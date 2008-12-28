@@ -25,8 +25,8 @@ describe "ARGF.gets" do
   it "returns nil when reaching end of files" do
     argv [@file1_name, @file2_name] do
       total = @file1.size + @file2.size
-      total.times { ARGF.send(@method) }
-      ARGF.send(@method).should == nil
+      total.times { ARGF.gets }
+      ARGF.gets.should == nil
     end
   end
 end
