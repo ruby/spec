@@ -107,9 +107,6 @@ describe "Module#const_get" do
       ConstantSpecs::ParentA::CS_CONST301 = :const301_3
       ConstantSpecs::ParentA.const_get(:CS_CONST301).should == :const301_3
 
-      ConstantSpecs::ContainerA::CS_CONST301 = :const301_4
-      ConstantSpecs::ContainerA.const_get(:CS_CONST301).should == :const301_4
-
       ConstantSpecs::ContainerA::ChildA::CS_CONST301 = :const301_5
       ConstantSpecs::ContainerA::ChildA.const_get(:CS_CONST301).should == :const301_5
     end
