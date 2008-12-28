@@ -21,4 +21,12 @@ describe "Hash#hash" do
     h[:a] = h
     (h.hash == h[:a].hash).should == true
   end
+
+  ruby_version_is "" .. "1.8.6" do
+    it "computes recursive hash keys with identical hashes" do
+      h = {}
+      h[h] = h
+      (h.hash == h[h].hash).should == true
+    end
+  end
 end
