@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
-require 'timeout'
+require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/shared/each'
+require 'timeout'
 
 # force reload for Prime::method_added and Prime::instance
 Object.send(:remove_const, :Prime) if defined?(Prime)

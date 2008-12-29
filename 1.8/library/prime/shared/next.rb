@@ -1,6 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../spec_helper'
 require 'stringio'
-require 'prime'
 
 describe :prime_next, :shared => true do
   before(:all) do

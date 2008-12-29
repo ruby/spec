@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'
 require 'prime'
 
 describe "Prime.instance" do
@@ -6,7 +6,7 @@ describe "Prime.instance" do
     Prime.instance.class.should == Prime
   end
 
-  it "returns a object with no obsolete featrues" do
+  it "returns a object with no obsolete features" do
     Prime.instance.should_not be_kind_of(Prime::OldCompatibility)
     Prime.instance.should_not respond_to(:succ)
     Prime.instance.should_not respond_to(:next)
