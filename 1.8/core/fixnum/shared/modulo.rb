@@ -5,6 +5,9 @@ describe :fixnum_modulo, :shared => true do
 
     13.send(@method, 4.0).should == 1
     4.send(@method, 13.0).should == 4
+    
+    (-200).send(@method, 256).should == 56
+    (-1000).send(@method, 1024).should == 24
 
     1.send(@method, 2.0).should == 1.0
     200.send(@method, bignum_value).should == 200
