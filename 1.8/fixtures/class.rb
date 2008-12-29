@@ -74,8 +74,28 @@ module ClassSpecs
     class J < self 
     end
   end
-  
+
+  class K
+    def example_instance_method
+    end
+    def self.example_class_method
+    end
+  end
+
   class L; end
 
   class M < L; end
+end
+
+class Class
+  def example_instance_method_of_class; end
+  def self.example_class_method_of_class; end
+end
+class << Class
+  def example_instance_method_of_metaclass; end
+  def self.example_class_method_of_metaclass; end
+end
+class Object
+  def example_instance_method_of_object; end
+  def self.example_class_method_of_object; end
 end

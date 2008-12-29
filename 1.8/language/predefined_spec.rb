@@ -153,11 +153,13 @@ describe "Predefined global $stdout" do
     $stdout = @old_stdout
   end
 
-  it "is the same as $defout" do
-    $stdout.should == $defout
+  ruby_version_is "" ... "1.9" do
+    it "is the same as $defout" do
+      $stdout.should == $defout
 
-    $stdout = IOStub.new
-    $stdout.should == $defout
+      $stdout = IOStub.new
+      $stdout.should == $defout
+    end
   end
 
   it "is the same as $DEFAULT_OUTPUT from 'English' library" do
@@ -422,7 +424,7 @@ NIL                  NilClass    Synonym for nil.
 RUBY_PLATFORM        String      The identifier of the platform running this program. This string 
                                  is in the same form as the platform identifier used by the GNU 
                                  configure utility (which is not a coincidence). 
-PLATFORM             String      Same as RUBY_PLATFORM.
+PLATFORM             String      Same as RUBY_PLATFORM (only in 1.8).
 RUBY_RELEASE_DATE    String      The date of this release. 
 RUBY_VERSION         String      The version number of the interpreter. 
 STDERR               IO          The actual standard error stream for the program. The initial 
@@ -442,7 +444,7 @@ TRUE                 TrueClass   Synonym for true.
 
 describe "The predefined global constants" do
   it "includes DATA when main script contains __END__" do
-    ruby_exe(File.dirname(__FILE__) + "/fixtures/predefined.rb").chomp.should == "true"
+    ruby_exe(fixture(__FILE__, "predefined.rb")).chomp.should == "true"
   end
 
   it "does not include DATA when main script contains no __END__" do
@@ -488,9 +490,11 @@ describe "The predefined global constants" do
     Object.const_defined?(:RUBY_PLATFORM).should == true
   end
 
-  it "includes PLATFORM" do
-    Object.const_defined?(:PLATFORM).should == true
-    RUBY_PLATFORM == PLATFORM
+  ruby_version_is "" ... "1.9" do
+    it "includes PLATFORM" do
+      Object.const_defined?(:PLATFORM).should == true
+      RUBY_PLATFORM == PLATFORM
+    end
   end
 
   it "includes TOPLEVEL_BINDING" do
