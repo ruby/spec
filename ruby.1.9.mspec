@@ -17,15 +17,14 @@ class MSpecScript
   spec_dirs = File.dirname(__FILE__) + '/1.8/library/*'
   ruby_1_8_compatible_libraries = Dir.glob(spec_dirs).select{|path|
     path.gsub!(File::PATH_SEPARATOR, '/')
-    %r[.*/1.8/library/([^/]*)] =~ path and !libs_to_ignore.include?($1)
+    %r[.*/library/([^/]*)] =~ path and !libs_to_ignore.include?($1)
   }
 
   # An ordered list of the directories containing specs to run
   set :files, [
-    '1.8/language',
-    '1.8/core',
-    ruby_1_8_compatible_libraries,
-    '1.9',
+    'language',
+    'core',
+    ruby_1_8_compatible_libraries
   ].flatten
 
   # The default implementation to run the specs.
