@@ -13,18 +13,17 @@ describe "ARGF.close" do
     ARGF.close
   end
 
-  it "closes the current file and read the next one" do
+  it "closes the current open stream" do
     argv [@file1_name, @file2_name] do
+      io = ARGF.to_io
       ARGF.close
-      ARGF.read.should == @file2
+      io.closed?.should be_true
     end
   end
-
-  it "reads one line from the first file, closes it and read the next one" do
+  
+  it "returns self" do
     argv [@file1_name, @file2_name] do
-      ARGF.gets.should == @file1.first
-      ARGF.close
-      ARGF.read.should == @file2
+      ARGF.close.should equal(ARGF)
     end
   end
 end
