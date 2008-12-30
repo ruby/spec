@@ -27,7 +27,8 @@ unless ENV['MSPEC_RUNNER']
       elsif ENV['USERPROFILE']
         ENV['HOME'] = ENV['USERPROFILE']
       else
-        puts "No suitable HOME environment found. This means that all of HOME, HOMEDIR, HOMEDRIVE, and USERPROFILE are not set"
+        puts "No suitable HOME environment found. This means that all of"
+        puts "HOME, HOMEDIR, HOMEDRIVE, and USERPROFILE are not set"
         exit 1
       end
     end
@@ -39,9 +40,9 @@ unless ENV['MSPEC_RUNNER']
   end
 end
 
-v = MSpec::VERSION.split('.').collect { |d| "1%02d" % d.to_i }.join.to_i
-unless v >= 101105104
-  puts "Please install MSpec version >= 1.5.4 to run the specs"
+minimum_version = "1.5.5"
+unless MSpec::VERSION >= minimum_version
+  puts "Please install MSpec version >= #{minimum_version} to run the specs"
   exit 1
 end
 
