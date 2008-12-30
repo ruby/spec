@@ -4,9 +4,6 @@ describe "ARGF.closed?" do
   before :each do
     @file1_name = fixture __FILE__, "file1.txt"
     @file2_name = fixture __FILE__, "file2.txt"
-
-    @file1 = File.readlines @file1_name
-    @file2 = File.read @file2_name
   end
 
   after :each do
