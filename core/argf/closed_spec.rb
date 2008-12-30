@@ -13,16 +13,11 @@ describe "ARGF.closed?" do
     ARGF.close
   end
 
-  # NOTE: this test assumes that fixtures files have two lines each
-  it "returns true if the file is closed" do
-    argv [@file1_name, @file2_name, @file1_name] do
-      3.times do
-        ARGF.closed?.should be_false
-        ARGF.gets
-        ARGF.gets
-      end
-      ARGF.closed?.should be_false
-      ARGF.gets
+  it "returns true if the current stream has been closed" do
+    argv [@file1_name, @file2_name] do
+      stream = ARGF.to_io
+      stream.close
+      
       ARGF.closed?.should be_true
     end
   end
