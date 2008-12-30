@@ -71,7 +71,7 @@ describe "Process.kill" do
       Signal.trap("HUP", @saved_trap)
     end
 
-    has_tty? do # 0 goes to the entire process group, not just current pid
+    with_tty do # 0 goes to the entire process group, not just current pid
       it "sends the given signal to the current process if pid is zero" do
         Process.kill("HUP", 0).should == 1
       end
@@ -117,7 +117,7 @@ describe "Process.kill" do
       $?.exitstatus.should == 99
     end
 
-    has_tty? do
+    with_tty do
       it "sends the given signal to the specified process" do
         Process.kill("HUP", @pid).should == 1
       end

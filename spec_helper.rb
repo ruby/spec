@@ -46,9 +46,3 @@ unless v >= 101105104
 end
 
 $VERBOSE = nil unless ENV['OUTPUT_WARNINGS']
-
-def has_tty?
-  if STDOUT.tty? then
-    yield
-  end
-end
