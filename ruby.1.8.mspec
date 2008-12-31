@@ -4,7 +4,18 @@ class MSpecScript
     'language',
     'core',
     'library',
-    '^library/prime'
+
+    # 1.9 feature
+    '^library/cmath',
+    '^library/continuation',
+    '^library/coverage',
+    '^library/fiber',
+    '^library/json',
+    '^library/minitest',
+    '^library/prime',
+    '^library/ripper',
+    '^library/rake',
+    '^library/rubygems',
   ]
 
   # The default implementation to run the specs.
