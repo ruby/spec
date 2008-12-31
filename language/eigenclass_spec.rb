@@ -19,13 +19,6 @@ describe "self in an eigenclass body (class << obj)" do
     lambda { class << 1; self; end }.should raise_error(TypeError)
   end
 
-  ruby_bug("#601", "1.9") do
-    it "raises a TypeError for Bignum's" do
-      (1<<1024).should be_kind_of(Bignum)
-      lambda { class << (1<<1024); self; end }.should raise_error(TypeError)
-    end
-  end
-
   it "raises a TypeError for symbols" do
     lambda { class << :symbol; self; end }.should raise_error(TypeError)
   end
@@ -82,6 +75,13 @@ describe "self in an eigenclass body (class << obj)" do
     it "has the object's class as superclass" do
       cls = class << "blah"; self; end
       cls.superclass.should == String
+    end
+
+    ruby_bug("#601", "1.9") do
+      it "raises a TypeError for Bignum's" do
+        (1<<1024).should be_kind_of(Bignum)
+        lambda { class << (1<<1024); self; end }.should raise_error(TypeError)
+      end
     end
   end
 
