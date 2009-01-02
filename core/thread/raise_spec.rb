@@ -24,16 +24,19 @@ describe "Thread#raise on a sleeping thread" do
 
   it "raises a RuntimeError if no exception class is given" do
     @thr.raise
+    Thread.pass while @thr.status
     ScratchPad.recorded.should be_kind_of(RuntimeError)
   end
 
   it "raises the given exception" do
     @thr.raise Exception
+    Thread.pass while @thr.status
     ScratchPad.recorded.class.should == Exception
   end
 
   it "raises the given exception with the given message" do
     @thr.raise Exception, "get to work"
+    Thread.pass while @thr.status
     ScratchPad.recorded.class.should == Exception
     ScratchPad.recorded.message.should == "get to work"
   end
@@ -71,16 +74,19 @@ describe "Thread#raise on a running thread" do
 
   it "raises a RuntimeError if no exception class is given" do
     @thr.raise
+    Thread.pass while @thr.status
     ScratchPad.recorded.should be_kind_of(RuntimeError)
   end
 
   it "raises the given exception" do
     @thr.raise Exception
+    Thread.pass while @thr.status
     ScratchPad.recorded.class.should == Exception
   end
 
   it "raises the given exception with the given message" do
     @thr.raise Exception, "get to work"
+    Thread.pass while @thr.status
     ScratchPad.recorded.class.should == Exception
     ScratchPad.recorded.message.should == "get to work"
   end
