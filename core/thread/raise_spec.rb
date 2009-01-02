@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/../kernel/shared/raise'
 describe "Thread#raise" do
   it "ignores dead threads" do
     t = Thread.new { :dead }    
-    Thread.pass while t.status
+    Thread.pass while t.alive?
     lambda {t.raise("Kill the thread")}.should_not raise_error
     lambda {t.value}.should_not raise_error
   end
@@ -15,6 +15,7 @@ describe "Thread#raise on a sleeping thread" do
   before :each do
     ScratchPad.clear
     @thr = ThreadSpecs.sleeping_thread
+    Thread.pass while (@thr.alive? && @thr.status != "sleep")
   end
 
   after :each do
@@ -65,6 +66,7 @@ describe "Thread#raise on a running thread" do
   before :each do
     ScratchPad.clear
     @thr = ThreadSpecs.running_thread
+    Thread.pass while (t.alive? && t.status != "run")
   end
 
   it "raises a RuntimeError if no exception class is given" do
