@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
-require File.dirname(__FILE__) + '/../kernel/shared/raise'
+require File.dirname(__FILE__) + '/../../shared/kernel/raise'
 
 describe "Thread#raise" do
   it "ignores dead threads" do
-    t = Thread.new { :dead }    
+    t = Thread.new { :dead }
     Thread.pass while t.alive?
     lambda {t.raise("Kill the thread")}.should_not raise_error
     lambda {t.value}.should_not raise_error
@@ -58,7 +58,7 @@ describe "Thread#raise on a sleeping thread" do
         sleep
       end
     end
-    
+
     Thread.pass while t.status != "sleep"
     t.raise
     lambda {t.value}.should raise_error(ZeroDivisionError)
@@ -90,7 +90,7 @@ describe "Thread#raise on a running thread" do
     ScratchPad.recorded.class.should == Exception
     ScratchPad.recorded.message.should == "get to work"
   end
-  
+
   it "can go unhandled" do
     t = Thread.new do
       loop {}
