@@ -19,11 +19,11 @@ describe "Array#initialize" do
     lambda { [1, 2].send(:initialize, 1, 'x'){} }.should_not raise_error(ArgumentError)
     lambda { [1, 2].send(:initialize, 1, 'x', true){} }.should raise_error(ArgumentError)
   end
-  
+
   compliant_on :ruby, :jruby, :ir do
     ruby_version_is '' ... '1.9' do
       it "raises a TypeError on frozen arrays even if the array would not be 'modified'" do
-        # This is true at least 1.8.6p111 onwards 
+        # This is true at least 1.8.6p111 onwards
         lambda { ArraySpecs.frozen_array.send(:initialize) }.should raise_error(TypeError)
 
         lambda { ArraySpecs.frozen_array.send(:initialize, 1) }.should raise_error(TypeError)
@@ -73,7 +73,7 @@ describe "Array#initialize with (size, object)" do
   it "sets the array to size and fills with nil when object is omitted" do
     [].send(:initialize, 3).should == [nil, nil, nil]
   end
-  
+
   it "raises an ArgumentError if size is negative" do
     lambda { [].send(:initialize, -1, :a) }.should raise_error(ArgumentError)
     lambda { [1, 2, 3].send(:initialize, -1) }.should raise_error(ArgumentError)
@@ -81,12 +81,12 @@ describe "Array#initialize with (size, object)" do
 
   platform_is :wordsize => 32 do
     it "raises an ArgumentError if size is too large" do
-      lambda { [].send(:initialize, 2**32/4+1) }.should raise_error(ArgumentError, /size/)
+      lambda { [].send(:initialize, 2**32/4+1) }.should raise_error(ArgumentError)
     end
   end
   platform_is :wordsize => 64 do
     it "raises an ArgumentError if size is too large" do
-      lambda { [].send(:initialize, 2**64/8+1) }.should raise_error(ArgumentError, /size/)
+      lambda { [].send(:initialize, 2**64/8+1) }.should raise_error(ArgumentError)
     end
   end
 
@@ -138,21 +138,21 @@ describe "Array#initialize with (array)" do
     a = [1, o, 3]
     ary = Array.new a
     ary[1].special.should == 1
-    
+
     b = [1, [2], 3]
     ary.send :initialize, b
-    
+
     b.==(ary).should == true
     lambda { b[1].special }.should raise_error(NoMethodError)
     lambda { ary[1].special }.should raise_error(NoMethodError)
   end
-  
+
   it "is called on subclasses" do
     b = ArraySpecs::SubArray.new [1,2,3]
     b.special.should == [1,2,3]
     b.should == []
   end
-  
+
   it "does nothing when passed self" do
     ary = [1, 2, 3]
     ary.send(:initialize, ary)
