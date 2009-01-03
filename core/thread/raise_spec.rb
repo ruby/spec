@@ -101,14 +101,17 @@ describe "Thread#raise on a running thread" do
   end
 
   it "re-raises active exception" do
+    raised = false
     t = Thread.new do
       begin
         1/0
       rescue ZeroDivisionError
+        raised = true
         loop {}
       end
     end
-    
+
+    Thread.pass until raised || !t.alive?
     t.raise
     lambda {t.value}.should raise_error(ZeroDivisionError)
   end
