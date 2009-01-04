@@ -17,6 +17,24 @@ describe "Kernel.srand" do
     srand(10)
     rand.should == x
   end
+
+  it "defaults number to a random value" do
+    lambda { srand }.should_not raise_error
+    srand.should_not == 0
+  end
+
+  it "calls #to_i on number" do
+    srand(3.8)
+    srand.should == 3
+  end
+
+  ruby_bug "#979", "1.9" do
+    it "calls uses the absolute value of number" do
+      number = -3
+      srand(number)
+      srand.should == number.to_i.abs
+    end
+  end
 end
 
 describe "Kernel#srand" do
