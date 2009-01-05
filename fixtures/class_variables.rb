@@ -14,7 +14,7 @@ module ClassVariablesSpec
 
   class ClassB < ClassA; end
 
-  # Extended in ClassC
+  # Extended in ClassC 
   module ModuleM
     @@cvar_m = :value
 
@@ -27,6 +27,22 @@ module ClassVariablesSpec
     end
   end
 
+  # Extended in ModuleO
+  module ModuleN
+    @@cvar_n = :value
+
+    def cvar_n
+      @@cvar_n
+    end
+    
+    def cvar_n=(val)
+      @@cvar_n = val
+    end
+  end
+
+  module ModuleO
+    extend ModuleN
+  end
 
   class ClassC
     extend ModuleM
