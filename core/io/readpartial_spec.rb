@@ -55,7 +55,7 @@ describe "IO#readpartial" do
     buffer.should == "hello world"
   end
 
-  it "should raise EOFError on EOF" do
+  it "raises EOFError on EOF" do
     @wr.write("abc")
     @wr.close
     @rd.readpartial(10).should == 'abc'
