@@ -27,14 +27,6 @@ describe "Kernel.srand" do
     srand(3.8)
     srand.should == 3
   end
-
-  ruby_bug "#979", "1.9" do
-    it "calls uses the absolute value of number" do
-      number = -3
-      srand(number)
-      srand.should == number.to_i.abs
-    end
-  end
 end
 
 describe "Kernel#srand" do
