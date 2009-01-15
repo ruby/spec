@@ -7,6 +7,14 @@ describe :queue_deq, :shared => true do
     q.size.should == 0
   end
 
+  it "should return items in the order they were added" do
+    q = Queue.new
+    q << 1
+    q << 2
+    q.send(@method).should == 1
+    q.send(@method).should == 2
+  end
+
   it "should block the thread until there are items in the queue" do
     q = Queue.new
     v = 0
