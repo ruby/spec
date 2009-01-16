@@ -4,6 +4,12 @@ describe "Fixnum#<<" do
   it "returns self shifted the given amount of bits to the left" do
     (7 << 2).should == 28
     (9 << 4).should == 144
+    (1 <<31).should == 2147483648
+    (1 <<32).should == 4294967296
+    (-1<<32).should == -4294967296
+    (1 <<62).should == 4611686018427387904
+    (1 <<63).should == 9223372036854775808
+    (-1<<63).should == -9223372036854775808
   end
 
   it "performs a right-shift if given a negative value" do
