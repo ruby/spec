@@ -22,27 +22,10 @@ describe "Array#zip" do
     b.zip(b).should == [ [b[0], b[0]], [b[1], b[1]] ]
   end
 
-  # MRI 1.8.6 uses to_ary, but it's been fixed in 1.9
-  ruby_version_is "" ... "1.9" do
-    it "calls #to_ary to convert the argument to an Array" do
-      obj = mock('[3,4]')
-      obj.should_receive(:to_ary).and_return([3, 4])
-      [1, 2].zip(obj).should == [[1, 3], [2, 4]]
-    end
-  end
-
-  # TODO: Fix this spec and/or the one above based on the outcome
-  # of http://redmine.ruby-lang.org/issues/show/1024
-  ruby_version_is "1.9" do
-    it "calls #to_a to convert the arguments to an Array" do
-      [1, 2, 3].zip("f" .. "z", 1 .. 9).should ==
-        [[1, "f", 1], [2, "g", 2], [3, "h", 3]]
-
-      obj = mock('[3,4]')
-      obj.should_receive(:to_a).and_return([3, 4])
-
-      [1, 2].zip(obj).should == [[1, 3], [2, 4]]
-    end
+  it "calls #to_ary to convert the argument to an Array" do
+    obj = mock('[3,4]')
+    obj.should_receive(:to_ary).and_return([3, 4])
+    [1, 2].zip(obj).should == [[1, 3], [2, 4]]
   end
 
   it "calls block if supplied" do
