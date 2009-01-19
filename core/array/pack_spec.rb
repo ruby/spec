@@ -172,13 +172,6 @@ describe "Array#pack with ASCII-string format", :shared => true do
     [obj].pack(format).should == "a"
   end
 
-  it "checks whether the pack argument responds to #to_str" do
-    obj = mock("method_missing to_str")
-    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_str).and_return("abc")
-    [obj].pack(format).should == "a"
-  end
-
   it "raises a TypeError if array item is not String with ('A<count>')" do
     lambda { [123].pack(format(5)) }.should raise_error(TypeError)
     lambda { [:hello].pack(format(5)) }.should raise_error(TypeError)
@@ -474,13 +467,6 @@ describe "Array#pack with format 'H'" do
     [obj].pack('H2').should == "\x41"
   end
 
-  it "checks whether the pack argument responds to #to_str" do
-    obj = mock("method_missing to_str")
-    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_str).and_return("41")
-    [obj].pack('H2').should == "\x41"
-  end
-
   ruby_version_is '1.9' do
     it "returns an ASCII-8BIT string" do
       ["41"].pack("H").encoding.should == Encoding::ASCII_8BIT
@@ -548,13 +534,6 @@ describe "Array#pack with format 'h'" do
     [obj].pack('h2').should == "\x41"
   end
 
-  it "checks whether the pack argument responds to #to_str" do
-    obj = mock("method_missing to_str")
-    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_str).and_return("14")
-    [obj].pack('h2').should == "\x41"
-  end
-
   ruby_version_is '1.9' do
     it "returns an ASCII-8BIT string" do
       ["14"].pack("h").encoding.should == Encoding::ASCII_8BIT
@@ -618,13 +597,6 @@ describe "Array#pack with integer format (8bit)", :shared => true do
 
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x05")
-  end
-
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
     [obj].pack(format).should == binary("\x05")
   end
 
@@ -760,13 +732,6 @@ describe "Array#pack with integer format (16bit, little endian)", :shared => tru
     [obj].pack(format).should == binary("\x05\x00")
   end
 
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x05\x00")
-  end
-
   it "raises a TypeError if a pack argument can't be coerced to Integer" do
     lambda { ["5"].pack(format) }.should raise_error(TypeError)
 
@@ -892,13 +857,6 @@ describe "Array#pack with integer format (16bit, big endian)", :shared => true d
     end
   end
 
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x00\x05")
-  end
-
   it "raises a TypeError if a pack argument can't be coerced to Integer" do
     lambda { ["5"].pack(format) }.should raise_error(TypeError)
 
@@ -996,13 +954,6 @@ describe "Array#pack with integer format (32bit, little endian)", :shared => tru
 
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x05\x00\x00\x00")
-  end
-
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
     [obj].pack(format).should == binary("\x05\x00\x00\x00")
   end
 
@@ -1106,13 +1057,6 @@ describe "Array#pack with integer format (32bit, big endian)", :shared => true d
     [obj].pack(format).should == binary("\x00\x00\x00\x05")
   end
 
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x00\x00\x00\x05")
-  end
-
   it "raises a TypeError if a pack argument can't be coerced to Integer" do
     lambda { ["5"].pack(format) }.should raise_error(TypeError)
 
@@ -1195,13 +1139,6 @@ describe "Array#pack with integer format (64bit, little endian)", :shared => tru
 
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x05\x00\x00\x00\x00\x00\x00\x00")
-  end
-
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
     [obj].pack(format).should == binary("\x05\x00\x00\x00\x00\x00\x00\x00")
   end
 
@@ -1297,13 +1234,6 @@ describe "Array#pack with integer format (64bit, big endian)", :shared => true d
 
     obj = mock('to_int')
     obj.should_receive(:to_int).and_return(5)
-    [obj].pack(format).should == binary("\x00\x00\x00\x00\x00\x00\x00\x05")
-  end
-
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(5)
     [obj].pack(format).should == binary("\x00\x00\x00\x00\x00\x00\x00\x05")
   end
 
@@ -1623,13 +1553,6 @@ describe "Array#pack with float format", :shared => true do
   it "tries to convert the pack argument to a Float using #to_f" do
     obj = mock('to_f')
     obj.should_receive(:to_f).and_return(1.5)
-    lambda{ [obj].pack(format) }.should_not raise_error
-  end
-
-  it "checks whether the pack argument responds to #to_str" do
-    obj = mock("method_missing to_f")
-    obj.should_receive(:respond_to?).with(:to_f).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_f).and_return(1.5)
     lambda{ [obj].pack(format) }.should_not raise_error
   end
 
@@ -2119,13 +2042,6 @@ describe "Array#pack with format 'm'" do
     [obj].pack('m').should == "QUJD\n"
   end
 
-  it "checks whether the pack argument responds to #to_str" do
-    obj = mock("method_missing to_str")
-    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_str).and_return("ABC")
-    [obj].pack('m').should == "QUJD\n"
-  end
-
   it "raises a TypeError if corresponding array item is not string" do
     lambda { [123].pack('m') }.should raise_error(TypeError)
     lambda { [:hello].pack('m') }.should raise_error(TypeError)
@@ -2288,13 +2204,6 @@ describe "Array#pack with format 'u'" do
     [obj].pack('u').should == "#04)#\n"
   end
 
-  it "checks whether the pack argument responds to #to_str" do
-    obj = mock("method_missing to_str")
-    obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_str).and_return("ABC")
-    [obj].pack('u').should == "#04)#\n"
-  end
-
   it "raises a TypeError if corresponding array item is not string" do
     lambda { [123].pack('u') }.should raise_error(TypeError)
     lambda { [:hello].pack('u') }.should raise_error(TypeError)
@@ -2333,14 +2242,6 @@ describe "Array#pack with format 'w'" do
     obj.should_receive(:to_int).and_return(1)
     [obj].pack('w').should == binary("\001")
   end
-
-  it "checks whether the pack argument responds to #to_int" do
-    obj = mock("method_missing to_int")
-    obj.should_receive(:respond_to?).with(:to_int).any_number_of_times.and_return(true)
-    obj.should_receive(:method_missing).with(:to_int).and_return(1)
-    [obj].pack('w').should == binary("\001")
-  end
-
 
   it "raises TypeError on nil and non-numeric arguments" do
     lambda { [nil].pack('w') }.should raise_error(TypeError)
@@ -2550,13 +2451,6 @@ describe "Array#pack with format 'p'" do
       lambda{ [obj].pack('p') }.should_not raise_error
     end
 
-    it "checks whether the pack argument responds to #to_str" do
-      obj = mock("method_missing to_str")
-      obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-      obj.should_receive(:method_missing).with(:to_str).and_return("41")
-      lambda{ [obj].pack('p') }.should_not raise_error
-    end
-
     it "raises a TypeError if corresponding array item is not String" do
       lambda { [123].pack('p') }.should raise_error(TypeError)
       lambda { [:data].pack('p') }.should raise_error(TypeError)
@@ -2610,13 +2504,6 @@ describe "Array#pack with format 'P'" do
     it "tries to convert the pack argument to a String using #to_str" do
       obj = mock('to_str')
       obj.should_receive(:to_str).any_number_of_times.and_return("abc")
-      lambda{ [obj].pack('P') }.should_not raise_error
-    end
-
-    it "checks whether the pack argument responds to #to_str" do
-      obj = mock("method_missing to_str")
-      obj.should_receive(:respond_to?).with(:to_str).any_number_of_times.and_return(true)
-      obj.should_receive(:method_missing).with(:to_str).any_number_of_times.and_return("41")
       lambda{ [obj].pack('P') }.should_not raise_error
     end
 
