@@ -16,31 +16,42 @@ describe "ConditionVariable#signal" do
       end
     end
 
-    cv.signal.should == cv
+    # ensures that th grabs m before current thread
+    Thread.pass until th.status == "sleep"
+
+    m.synchronize { cv.signal }.should == cv
   end
 
   it "wakes up the first thread waiting in line for this resource" do
     m = Mutex.new
     cv = ConditionVariable.new
-    threads = []
     r1 = []
     r2 = []
 
     # large number to attempt to cause race conditions
-    100.times do |i|
-      threads << Thread.new(i) do |tid|
-        r1 << tid
+    threads = (0..100).map do |i|
+      Thread.new(i) do |tid|
         m.synchronize do
+          r1 << tid
           cv.wait(m)
           r2 << tid
         end
       end
     end
 
-    r1.size.should == threads.size
-    r2.should be_empty
-    threads.each { cv.signal }
+    # wait for all threads to acquire the mutex the first time
+    Thread.pass until m.synchronize { r1.size == threads.size }
+    # wait until all threads are sleeping (ie waiting)
+    Thread.pass until threads.all? {|th| th.status == "sleep" }
+
+    m.synchronize do
+      r2.should be_empty
+      threads.each { cv.signal }
+    end
+
     threads.each {|t| t.join }
-    r2.should == r1
+
+    # ensure that all the threads that went into the cv.wait came out of it
+    r2.sort.should == r1.sort
   end
 end
