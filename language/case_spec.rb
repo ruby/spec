@@ -285,4 +285,18 @@ describe "The 'case'-construct with no target expression" do
       else 'bar'
     end.should == 'foo'
   end
+
+  it "evaluates true as only 'true' when true is the first clause" do
+    case 1
+      when true; "bad"
+      when Integer; "good"
+    end.should == "good"
+  end
+
+  it "evaluates false as only 'false' when false is the first clause" do
+    case nil
+      when false; "bad"
+      when nil; "good"
+    end.should == "good"
+  end
 end
