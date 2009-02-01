@@ -26,7 +26,7 @@ describe "StringIO#puts when passed [Array, ...]" do
     @io.string.should == "5\n[...]\n"
   end
 
-  it "does not honor the global output record seperator $\\" do
+  it "does not honor the global output record separator $\\" do
     begin
       old_rs, $\ = $\, "test"
       @io.puts([1, 2, 3, 4])
@@ -56,7 +56,7 @@ describe "StringIO#puts when passed [Object, ...]" do
     @io = StringIO.new
   end
 
-  it "does not honor the global output record seperator $\\" do
+  it "does not honor the global output record separator $\\" do
     begin
       old_rs, $\ = $\, "test"
       @io.puts(1, 2, 3, 4)
@@ -100,7 +100,7 @@ describe "StringIO#puts when passed no arguments" do
     @io.string.should == "\n"
   end
   
-  it "does not honor the global output record seperator $\\" do
+  it "does not honor the global output record separator $\\" do
     begin
       old_rs, $\ = $\, "test"
       @io.puts
