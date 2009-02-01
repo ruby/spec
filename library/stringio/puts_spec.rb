@@ -6,7 +6,7 @@ describe "StringIO#puts when passed [Array, ...]" do
     @io = StringIO.new
   end
   
-  it "writes each element of the passed Array to self, seperated by a newline" do
+  it "writes each element of the passed Array to self, separated by a newline" do
     @io.puts([1, 2, 3, 4])
     @io.string.should == "1\n2\n3\n4\n"
   

@@ -3,7 +3,7 @@
 # FIXME: Add error case
 
 # Why so many fixed arg tests?  JRuby and I assume other Ruby impls have
-# seperate call paths for simple fixed arity methods.  Testing up to five
+# separate call paths for simple fixed arity methods.  Testing up to five
 # will verify special and generic arity code paths for all impls.
 #
 # Method naming conventions:
