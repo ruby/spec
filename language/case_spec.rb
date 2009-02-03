@@ -299,4 +299,11 @@ describe "The 'case'-construct with no target expression" do
       when nil; "good"
     end.should == "good"
   end
+
+  it "treats a literal array as its own when argument, rather than a list of arguments" do
+    case 'foo'
+    when ['foo', 'foo']; 'bad'
+    when 'foo'; 'good'
+    end.should == 'good'
+  end
 end
