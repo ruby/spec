@@ -150,14 +150,15 @@ describe "Calling a method" do
     (foo 1,2,3).should == [1,2,3]
   end
 
-  it "with range in () should give higher priority to range" do
-    def myfoo(x); end
-
-    def mybar(n)
-      myfoo (0..n).map { }
+  it "with a space separating method name and parenthesis treats expression in parenthesis as first argument" do
+    def myfoo(x); x * 2 end
+    def mybar
+      # means myfoo((5).to_s)
+      # NOT   (myfoo(5)).to_s
+      myfoo (5).to_s
     end
 
-    mybar(10).should == nil
+    mybar().should == "55"
   end
 
   it "with invalid argument count raises an ArgumentError" do
