@@ -1,10 +1,4 @@
 describe "Calling a method" do
-  it "just works" do
-    def foo(a,b,c); [a,b,c] end
-
-    foo(1,2,3).should == [1,2,3]
-  end
-  
   it "with lambda as block argument is ok" do
     def foo(a,&b); [a,yield(b)] end
 
