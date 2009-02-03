@@ -29,11 +29,6 @@ describe "Calling a method" do
     fooP1O1RQ0B(1, 2, 3, 4) { |z| z }.should == [1, 2, [3, 4], 5]
   end
 
-  it "with an empty expression is like calling with nil argument" do
-    def foo(a); a end
-    foo(()).should be_nil
-  end
-  
 #   it "with lambda as block argument is ok" do
 #     def foo(a,&b); [a,yield(b)] end
 
@@ -56,16 +51,6 @@ describe "Calling a method" do
 #       [:abc, { 'rbx' => 'cool', 'specs' => 'fail sometimes'}, 500]
 #   end
 
-  it "with range in () should give higher priority to range" do
-    def myfoo(x); end
-
-    def mybar(n)
-      myfoo (0..n).map { }
-    end
-
-    mybar(10).should == nil
-  end
-  
 #  it "with ambiguous missing parens, arguments go with innermost call" do
 #    def f(*a); a.length; end
     

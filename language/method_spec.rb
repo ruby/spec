@@ -75,6 +75,11 @@ describe "Calling a method" do
     fooP1O1R(1,2,3).should == [1, 2, [3]]
   end
 
+  it "with an empty expression is like calling with nil argument" do
+    def foo(a); a end
+    foo(()).should be_nil
+  end
+
   it "with block as block argument is ok" do
     def foo(a,&b); [a,yield(b)] end
 
@@ -143,6 +148,16 @@ describe "Calling a method" do
     def foo(a,b,c); [a,b,c] end
 
     (foo 1,2,3).should == [1,2,3]
+  end
+
+  it "with range in () should give higher priority to range" do
+    def myfoo(x); end
+
+    def mybar(n)
+      myfoo (0..n).map { }
+    end
+
+    mybar(10).should == nil
   end
 
   it "with invalid argument count raises an ArgumentError" do
