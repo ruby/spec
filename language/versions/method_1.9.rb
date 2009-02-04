@@ -88,4 +88,24 @@ describe "Calling a method" do
     fooP0R(*obj).should == 1
     fooP0R(1,2,*obj,3).should == 4
   end
+
+  it "accepts additional arguments after splat expansion" do
+    def fooP4(a,b,c,d); a+b+c+d end
+
+    a = [1,2]
+    fooP4(*a,3,4).should == 10
+    fooP4(0,*a,3).should == 6
+  end
+
+  it "accepts multiple splat expansions in the same argument list" do
+    def fooP0R(*args); args.length end
+
+    a = [1,2,3]
+    b = 7
+    c = "pseudo-array"
+    def c.to_a; [0,0] end
+    fooP0R(*a,*[4,5],6,*b).should == 7
+    fooP0R(*a,*a,*a).should == 9
+    fooP0R(0,*a,4,*5,6,7,*c,-1).should == 11
+  end
 end
