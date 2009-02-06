@@ -47,7 +47,7 @@ class MSpecScript
   # The default implementation to run the specs.
   # TODO: this needs to be more sophisticated since the
   # executable is not consistently named.
-  set :target, 'ruby19'
+  set :target, 'ruby1.9'
 
   set :tags_patterns, [
                         [%r(language/), 'tags/1.9/language/'],
