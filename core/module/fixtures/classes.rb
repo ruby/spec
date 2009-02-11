@@ -306,6 +306,9 @@ module ModuleSpecs
   # empty modules
   module M1; end
   module M2; end
+
+  module Autoload
+  end
 end
 
 ModuleSpecs::Nesting[:root_level] = Module.nesting
@@ -324,5 +327,3 @@ ensure
   $".clear
   $".concat($old_features)
 end
-
-autoload :ModuleSpecAutoloadToplevel, File.join(File.dirname(__FILE__), "autoload_toplevel.rb")
