@@ -13,6 +13,10 @@ describe "Module#autoload?" do
 end
 
 describe "Module#autoload" do
+  before :all do
+    @non_existent = fixture __FILE__, "no_autoload.rb"
+  end
+
   before :each do
     @loaded_features = $".dup
 
@@ -24,12 +28,12 @@ describe "Module#autoload" do
   end
 
   it "registers a file to load the first time the named constant is accessed" do
-    ModuleSpecs::Autoload.autoload :A, "autoload.rb"
-    ModuleSpecs::Autoload.autoload?(:A).should == "autoload.rb"
+    ModuleSpecs::Autoload.autoload :A, @non_existent
+    ModuleSpecs::Autoload.autoload?(:A).should == @non_existent
   end
 
   it "sets the autoload constant in the constants table" do
-    ModuleSpecs::Autoload.autoload :B, "autoload.rb"
+    ModuleSpecs::Autoload.autoload :B, @non_existent
     ModuleSpecs::Autoload.should have_constant(:B)
   end
 
@@ -127,7 +131,7 @@ describe "Module#autoload" do
   end
 
   it "removes the constant from the constant table if load fails" do
-    ModuleSpecs::Autoload.autoload :Fail, "autoload.rb"
+    ModuleSpecs::Autoload.autoload :Fail, @non_existent
     ModuleSpecs::Autoload.should have_constant(:Fail)
 
     lambda { ModuleSpecs::Autoload::Fail }.should raise_error(LoadError)
@@ -143,13 +147,13 @@ describe "Module#autoload" do
   end
 
   it "does not load the file when accessing the constants table of the module" do
-    ModuleSpecs::Autoload.autoload :P, "autoload.rb"
+    ModuleSpecs::Autoload.autoload :P, @non_existent
     ModuleSpecs::Autoload.const_defined?(:P).should be_true
   end
 
   it "does not load the file when removing an autoload constant" do
     module ModuleSpecs::Autoload::Q
-      autoload :R, "autoload.rb"
+      autoload :R, fixture(__FILE__, "autoload.rb")
       defined?(R).should == "constant"
       remove_const :R
     end
@@ -158,7 +162,7 @@ describe "Module#autoload" do
 
   it "does not load the file when refering to the constant in defined?" do
     module ModuleSpecs::Autoload::Q
-      autoload :R, "autoload.rb"
+      autoload :R, fixture(__FILE__, "autoload.rb")
       defined?(R).should == "constant"
     end
     ModuleSpecs::Autoload::Q.should have_constant(:R)
@@ -196,15 +200,15 @@ describe "Module#autoload" do
   end
 
   it "raises a NameError when the constant name starts with a lower case letter" do
-    lambda { ModuleSpecs.autoload "a", "auto.rb" }.should raise_error(NameError)
+    lambda { ModuleSpecs.autoload "a", @non_existent }.should raise_error(NameError)
   end
 
   it "raises a NameError when the constant name starts with a number" do
-    lambda { ModuleSpecs.autoload "1two", "auto.rb" }.should raise_error(NameError)
+    lambda { ModuleSpecs.autoload "1two", @non_existent }.should raise_error(NameError)
   end
 
   it "raises a NameError when the constant name has a space in it" do
-    lambda { ModuleSpecs.autoload "a name", "auto.rb" }.should raise_error(NameError)
+    lambda { ModuleSpecs.autoload "a name", @non_existent }.should raise_error(NameError)
   end
 
   ruby_bug "redmine #620", "1.8.6.322" do
