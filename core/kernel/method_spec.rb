@@ -24,6 +24,7 @@ describe "Kernel#method" do
     lambda { KernelSpecs::Foo.method(:baz) }.should raise_error(NameError)
   end
 
+  # This may be a bug; see http://redmine.ruby-lang.org/issues/show/1151
   ruby_version_is "" ... "1.9" do
     it "changes the method called for super on a target aliased method" do
       c1 = Class.new do
