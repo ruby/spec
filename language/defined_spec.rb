@@ -201,5 +201,23 @@ describe "The defined? keyword" do
     ret = instance.ivar_definition
     ret.should == 'instance-variable'
   end
+
+  it "follows normal lexical and hierarchical scoping for constants" do
+    o = Object.new
+    class << o
+      module Foo
+        Bar = 1
+      end
+      class Baz; include Foo; end
+      class Baz;
+        def self.foo_defined; defined? Foo; end
+        def self.bar_defined; defined? Bar; end
+      end
+      def baz; Baz; end
+    end
+
+    o.baz.foo_defined.should == "constant";
+    o.baz.bar_defined.should == "constant";
+  end
 end
 
