@@ -302,7 +302,7 @@ module ModuleSpecs
   class MultipleIncludes
     include MB
   end
-  
+
   # empty modules
   module M1; end
   module M2; end
@@ -312,18 +312,3 @@ module ModuleSpecs
 end
 
 ModuleSpecs::Nesting[:root_level] = Module.nesting
-
-class TopLevelConst
-end
-
-module AutoLoadSubject
-  def self.message; "failure"; end
-end
-
-def protect_loaded_features
-  $old_features = $".dup
-  yield
-ensure
-  $".clear
-  $".concat($old_features)
-end
