@@ -2530,4 +2530,15 @@ describe "Array#pack with format 'P'" do
   end
 end
 
+describe "String#unpack with 'w' directive" do
+  it "produces a BER-compressed integer" do
+    [88].pack('w').should == 'X'
+    [88,89,90].pack('www').should == 'XYZ'
+    [88,89,90].pack('w3').should == 'XYZ'
+    [92,48,48,49].pack('w4').should == '\001'
+    [104,101,108,108,111,32,119,111,114,108,100].pack('w*').should == 'hello world'
+    [1234567890].pack('w').should == "\204\314\330\205R"
+  end
+end
+
 # vim:fileencoding=iso-8859-1
