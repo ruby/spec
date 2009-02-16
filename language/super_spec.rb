@@ -56,4 +56,25 @@ describe "The super keyword" do
     Super::S4::A.new.foo([]).should == ["A#foo"]
     Super::S4::B.new.foo([],"test").should == ["B#foo(a,test)", "A#foo"]
   end
+
+  it "raises an error error when super method does not exist" do
+    sup = Class.new
+    sub_normal = Class.new(sup) do
+      def foo
+        super()
+      end
+    end
+    sub_zsuper = Class.new(sup) do
+      def foo
+        super
+      end
+    end
+
+    lambda {sub_normal.new.foo}.should raise_error(NoMethodError) do |nme|
+      nme.message.should =~ "super"
+    end
+    lambda {sub_zsuper.new.foo}.should raise_error(NoMethodError) do |nme|
+      nme.message.should =~ "super"
+    end
+  end
 end
