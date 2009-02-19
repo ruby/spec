@@ -70,11 +70,7 @@ describe "The super keyword" do
       end
     end
 
-    lambda {sub_normal.new.foo}.should raise_error(NoMethodError) do |nme|
-      nme.message.should =~ "super"
-    end
-    lambda {sub_zsuper.new.foo}.should raise_error(NoMethodError) do |nme|
-      nme.message.should =~ "super"
-    end
+    lambda {sub_normal.new.foo}.should raise_error(NoMethodError, /super/)
+    lambda {sub_zsuper.new.foo}.should raise_error(NoMethodError, /super/)
   end
 end
