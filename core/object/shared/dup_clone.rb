@@ -54,9 +54,9 @@ describe :object_dup_clone, :shared => true do
 
   it "preserves tainted state from the original" do
     o = ObjectSpecDupInitCopy.new
-    o2 = o.clone
+    o2 = o.send(@method)
     o.taint
-    o3 = o.clone
+    o3 = o.send(@method)
 
     o2.tainted?.should == false
     o3.tainted?.should == true
@@ -65,9 +65,9 @@ describe :object_dup_clone, :shared => true do
   ruby_version_is "1.9" do
     it "preserves untrusted state from the original" do
       o = ObjectSpecDupInitCopy.new
-      o2 = o.clone
+      o2 = o.send(@method)
       o.untrust
-      o3 = o.clone
+      o3 = o.send(@method)
 
       o2.untrusted?.should == false
       o3.untrusted?.should == true
