@@ -157,6 +157,28 @@ describe "String#gsub with pattern and replacement" do
     hello.gsub(//.taint, "foo").tainted?.should == false
   end
 
+  ruby_version_is "1.9" do
+    it "untrusts the result if the original string or replacement is untrusted" do
+      hello = "hello"
+      hello_t = "hello"
+      a = "a"
+      a_t = "a"
+      empty = ""
+      empty_t = ""
+
+      hello_t.untrust; a_t.untrust; empty_t.untrust
+
+      hello_t.gsub(/./, a).untrusted?.should == true
+      hello_t.gsub(/./, empty).untrusted?.should == true
+
+      hello.gsub(/./, a_t).untrusted?.should == true
+      hello.gsub(/./, empty_t).untrusted?.should == true
+      hello.gsub(//, empty_t).untrusted?.should == true
+
+      hello.gsub(//.untrust, "foo").untrusted?.should == false
+    end
+  end
+
   it "tries to convert pattern to a string using to_str" do
     pattern = mock('.')
     def pattern.to_str() "." end
@@ -281,7 +303,7 @@ describe "String#gsub with pattern and block" do
     "hello".gsub(/.+/) { obj }.should == "ok"
   end
   
-  it "taints the result if the original string or replacement is tainted" do
+  it "untrusts the result if the original string or replacement is untrusted" do
     hello = "hello"
     hello_t = "hello"
     a = "a"
@@ -289,16 +311,16 @@ describe "String#gsub with pattern and block" do
     empty = ""
     empty_t = ""
     
-    hello_t.taint; a_t.taint; empty_t.taint
+    hello_t.untrust; a_t.untrust; empty_t.untrust
     
-    hello_t.gsub(/./) { a }.tainted?.should == true
-    hello_t.gsub(/./) { empty }.tainted?.should == true
+    hello_t.gsub(/./) { a }.untrusted?.should == true
+    hello_t.gsub(/./) { empty }.untrusted?.should == true
 
-    hello.gsub(/./) { a_t }.tainted?.should == true
-    hello.gsub(/./) { empty_t }.tainted?.should == true
-    hello.gsub(//) { empty_t }.tainted?.should == true
+    hello.gsub(/./) { a_t }.untrusted?.should == true
+    hello.gsub(/./) { empty_t }.untrusted?.should == true
+    hello.gsub(//) { empty_t }.untrusted?.should == true
     
-    hello.gsub(//.taint) { "foo" }.tainted?.should == false
+    hello.gsub(//.untrust) { "foo" }.untrusted?.should == false
   end  
 end
 
@@ -309,10 +331,10 @@ describe "String#gsub! with pattern and replacement" do
     a.should == "h*ll*"
   end
 
-  it "taints self if replacement is tainted" do
+  it "untrusts self if replacement is untrusted" do
     a = "hello"
-    a.gsub!(/./.taint, "foo").tainted?.should == false
-    a.gsub!(/./, "foo".taint).tainted?.should == true
+    a.gsub!(/./.untrust, "foo").untrusted?.should == false
+    a.gsub!(/./, "foo".untrust).untrusted?.should == true
   end
   
   it "returns nil if no modifications were made" do
@@ -339,10 +361,18 @@ describe "String#gsub! with pattern and block" do
     a.should == "h*ll*"
   end
 
-  it "taints self if block's result is tainted" do
+  it "untrusts self if block's result is untrusted" do
     a = "hello"
-    a.gsub!(/./.taint) { "foo" }.tainted?.should == false
-    a.gsub!(/./) { "foo".taint }.tainted?.should == true
+    a.gsub!(/./.untrust) { "foo" }.untrusted?.should == false
+    a.gsub!(/./) { "foo".untrust }.untrusted?.should == true
+  end
+
+  ruby_version_is "1.9" do
+    it "untrusts self if block's result is untrusted" do
+      a = "hello"
+      a.gsub!(/./.untrust) { "foo" }.untrusted?.should == false
+      a.gsub!(/./) { "foo".untrust }.untrusted?.should == true
+    end
   end
   
   it "returns nil if no modifications were made" do
