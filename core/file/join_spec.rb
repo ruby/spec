@@ -25,6 +25,25 @@ describe "File.join" do
     end
   end
 
+  it "flattens nested arrays" do
+    File.join(["a", "b", "c"]).should == "a/b/c"
+    File.join(["a", ["b", ["c"]]]).should == "a/b/c"
+  end
+  
+  it "inserts the separator in between empty strings and arrays" do  
+    File.join("").should == ""
+    File.join("", "").should == "/"
+    File.join(["", ""]).should == "/"
+    File.join("a", "").should == "a/"
+    File.join("", "a").should == "/a"
+
+    File.join([]).should == ""
+    File.join([], []).should == "/"
+    File.join([[], []]).should == "/"
+    File.join("a", []).should == "a/"
+    File.join([], "a").should == "/a"
+  end
+
   it "handles leading parts edge cases" do
     File.join("/bin")     .should == "/bin"
     File.join("", "bin")  .should == "/bin"
@@ -46,7 +65,8 @@ describe "File.join" do
     File.join("usr",   "", "/bin").should == "usr/bin"
     File.join("usr/",  "", "/bin").should == "usr/bin"
   end
-
+  
+  # TODO: Repeating items in recursive array seems like a bug.
   it "handles recursive arrays" do
     parts = []
     parts << parts
