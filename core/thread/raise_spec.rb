@@ -55,13 +55,14 @@ describe "Thread#raise on a sleeping thread" do
       begin
         1/0
       rescue ZeroDivisionError
-        sleep
+        sleep 3
       end
     end
 
     Thread.pass while t.status != "sleep"
     t.raise
     lambda {t.value}.should raise_error(ZeroDivisionError)
+    t.kill
   end
 end
 
@@ -70,6 +71,10 @@ describe "Thread#raise on a running thread" do
     ScratchPad.clear
     @thr = ThreadSpecs.running_thread
     Thread.pass while (@thr.alive? && @thr.status != "run")
+  end
+  
+  after :each do
+    @thr.kill
   end
 
   it "raises a RuntimeError if no exception class is given" do
@@ -107,7 +112,7 @@ describe "Thread#raise on a running thread" do
         1/0
       rescue ZeroDivisionError
         raised = true
-        loop {}
+        loop { }
       end
     end
 
