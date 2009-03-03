@@ -7,7 +7,7 @@ describe "Hash#keys" do
     {}.keys.class.should == Array
     Hash.new(5).keys.should == []
     Hash.new { 5 }.keys.should == []
-    { 1 => 2, 2 => 4, 4 => 8 }.keys.should == [1, 2, 4]
+    { 1 => 2, 2 => 4, 4 => 8 }.keys.sort.should == [1, 2, 4]
     { 1 => 2, 2 => 4, 4 => 8 }.keys.class.should == Array
     { nil => nil }.keys.should == [nil]
   end

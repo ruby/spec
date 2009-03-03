@@ -6,7 +6,7 @@ describe "Hash#delete_if" do
   it "yields two arguments: key and value" do
     all_args = []
     {1 => 2, 3 => 4}.delete_if { |*args| all_args << args }
-    all_args.should == [[1, 2], [3, 4]]
+    all_args.sort.should == [[1, 2], [3, 4]]
   end
 
   it "removes every entry for which block is true and returns self" do
