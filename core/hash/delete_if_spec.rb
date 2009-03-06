@@ -27,10 +27,20 @@ describe "Hash#delete_if" do
     each_pairs.should == delete_pairs
   end
 
-  it "raises a TypeError if called on a frozen instance" do
-    lambda { HashSpecs.frozen_hash.delete_if { false } }.should raise_error(TypeError)
-    lambda { HashSpecs.empty_frozen_hash.delete_if { true } }.should raise_error(TypeError)
+  ruby_version_is "" ... "1.9" do
+    it "raises an TypeError if called on a frozen instance" do
+      lambda { HashSpecs.frozen_hash.delete_if { false } }.should raise_error(TypeError)
+      lambda { HashSpecs.empty_frozen_hash.delete_if { true } }.should raise_error(TypeError)
+    end
   end
+
+  ruby_version_is "1.9" do
+    it "raises an RuntimeError if called on a frozen instance" do
+      lambda { HashSpecs.frozen_hash.delete_if { false } }.should raise_error(RuntimeError)
+      lambda { HashSpecs.empty_frozen_hash.delete_if { true } }.should raise_error(RuntimeError)
+    end
+  end
+
 
   it_behaves_like(:hash_iteration_method, :delete_if)
   it_behaves_like(:hash_iteration_no_block, :delete_if)
