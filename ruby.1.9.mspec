@@ -3,7 +3,11 @@ class MSpecScript
   set :language, [ 'language' ]
 
   # Core library specs
-  set :core, [ 'core' ]
+  set :core, [
+    'core',
+
+    '^core/continuation'
+  ]
 
   # Standard library specs
   set :library, [
@@ -50,9 +54,10 @@ class MSpecScript
   set :target, 'ruby1.9'
 
   set :tags_patterns, [
-                        [%r(language/), 'tags/1.9/language/'],
-                        [%r(core/),     'tags/1.9/core/'],
-                        [%r(library/),  'tags/1.9/library/'],
-                        [/_spec.rb$/,   '_tags.txt']
+                        [%r(language/),     'tags/1.9/language/'],
+                        [%r(core/),         'tags/1.9/core/'],
+                        [%r(command_line/), 'tags/1.9/command_line/'],
+                        [%r(library/),      'tags/1.9/library/'],
+                        [/_spec.rb$/,       '_tags.txt']
                       ]
 end
