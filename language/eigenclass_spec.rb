@@ -44,7 +44,7 @@ describe "self in an eigenclass body (class << obj)" do
       temp << sc
       sc = sc.superclass
     end
-    temp.include?(Class).should be_true
+    temp.should include(Class)
   end
 
   ruby_version_is "1.9" do
