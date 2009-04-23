@@ -30,6 +30,11 @@ describe "self in an eigenclass body (class << obj)" do
     cls.should_not equal(Object)
     mock.is_a?(cls).should be_true
   end
+  
+  it "is a Class for classes" do
+    cls = class << ClassSpecs::A;self;end
+    cls.is_a?(Class).should be_true
+  end
 
   ruby_version_is "1.9" do
     it "is a metaclass for classes" do
