@@ -31,13 +31,7 @@ describe "Kernel.loop" do
   it "raises a LocalJumpError if no block given" do
     lambda { loop }.should raise_error(LocalJumpError)
   end
-end
 
-describe "Kernel#loop" do
-  it "needs to be reviewed for spec completeness"
-end
-
-describe "Kernel#loop in 1.9" do
   ruby_version_is "1.9" do
     it "rescues StopIteration" do
       n = 42
@@ -56,10 +50,8 @@ describe "Kernel#loop in 1.9" do
       42.should == 42
     end
 
-    it "does not rescue ArgumentError" do
-      lambda{ loop do raise ArgumentError end }.should raise_error( ArgumentError )
+    it "does not rescue other errors" do
+      lambda{ loop do raise StandardError end }.should raise_error( StandardError )
     end
-
-    it "loops forever elsewise, just kidding"
   end
 end
