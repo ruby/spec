@@ -36,3 +36,30 @@ end
 describe "Kernel#loop" do
   it "needs to be reviewed for spec completeness"
 end
+
+describe "Kernel#loop in 1.9" do
+  ruby_version_is "1.9" do
+    it "rescues StopIteration" do
+      n = 42
+      loop do
+	raise StopIteration
+      end
+      42.should == 42
+    end
+
+    it "rescues StopIteration's subclasses" do
+      finish = Class::new StopIteration
+      n = 42
+      loop do
+	raise finish
+      end
+      42.should == 42
+    end
+
+    it "does not rescue ArgumentError" do
+      lambda{ loop do raise ArgumentError end }.should raise_error( ArgumentError )
+    end
+
+    it "loops forever elsewise, just kidding"
+  end
+end
