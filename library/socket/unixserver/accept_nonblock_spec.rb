@@ -1,10 +1,11 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require File.dirname(__FILE__) + '/../fixtures/classes'
 
-describe "UNIXSocket#recvfrom" do
+describe "UNIXServer#recvfrom" do
 
   platform_is_not :windows do
     before :each do
+      FileUtils.rm(SocketSpecs.socket_path, :force => true)
       @path = SocketSpecs.socket_path
 
       @server = UNIXServer.open(@path)
