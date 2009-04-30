@@ -1,15 +1,16 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require File.dirname(__FILE__) + '/../fixtures/classes'
 
-describe "UNIXServer#recvfrom" do
+describe "UNIXServer#accept_nonblock" do
 
   platform_is_not :windows do
     before :each do
-      FileUtils.rm(SocketSpecs.socket_path, :force => true)
       @path = SocketSpecs.socket_path
+      File.unlink(@path) if File.exists?(@path)
 
       @server = UNIXServer.open(@path)
       @client = UNIXSocket.open(@path)
+
       @socket = @server.accept_nonblock
       @client.send("foobar", 0)
     end
