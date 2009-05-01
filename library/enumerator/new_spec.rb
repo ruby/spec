@@ -16,7 +16,7 @@ describe "Enumerator.new" do
     Enumerable::Enumerator.new(1, :upto, 3).map{|x|x}.should == [1,2,3]
   end
   
-  it "should require only one argument" do
-    Enumerable::Enumerator.new(1..2).to_a.should == [1,2]
+  it "aliases the second argument to :each" do
+    Enumerable::Enumerator.new(1..2).to_a.should == Enumerable::Enumerator.new(1..2, :each).to_a
   end
 end
