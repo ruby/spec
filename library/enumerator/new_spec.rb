@@ -15,4 +15,8 @@ describe "Enumerator.new" do
   it "creates a new custom enumerator that runs correctly" do
     Enumerable::Enumerator.new(1, :upto, 3).map{|x|x}.should == [1,2,3]
   end
+  
+  it "should require only one argument" do
+    Enumerable::Enumerator.new(1..2).to_a.should == [1,2]
+  end
 end
