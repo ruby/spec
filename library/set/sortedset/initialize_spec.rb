@@ -3,7 +3,7 @@ require 'set'
 
 describe "SortedSet#initialize" do
   it "is private" do
-    SortedSet[].private_methods.should include("initialize")
+    SortedSet.should have_private_instance_method("initialize")
   end
   
   it "adds all elements of the passed Enumerable to self" do
