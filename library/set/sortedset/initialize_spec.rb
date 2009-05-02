@@ -21,4 +21,8 @@ describe "SortedSet#initialize" do
     s.should include(4)
     s.should include(9)
   end
+
+  it "takes only comparable values" do
+    lambda { SortedSet[3, 4, SortedSet[5, 6]] }.should raise_error(ArgumentError)
+  end
 end
