@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "Hash#initialize" do
   it "is private" do
-    {}.private_methods.map { |m| m.to_s }.include?("initialize").should == true
+    Hash.should have_private_instance_method("initialize")
   end
 
   it "can be used to reset default_proc" do
