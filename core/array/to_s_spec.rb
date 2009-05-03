@@ -27,7 +27,7 @@ describe "Array#to_s" do
     end
   end
 
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "is equivalent to Array#inspect" do
       a = [1, 2, 3, 4]
       a.to_s.should == a.inspect
