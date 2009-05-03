@@ -10,21 +10,21 @@ describe "Array#frozen?" do
   end
 
   ruby_version_is "" .. "1.9" do
-    it "returns true if array is temporarily frozen while being sort!ed" do
+    it "returns true for an array being sorted by #sort!" do
       a = [1, 2, 3]
       a.sort! { |x,y| a.frozen?.should == true; x <=> y }
     end
   end
 
   ruby_version_is "1.9" do
-    it "returns false if array is temporarily frozen while being sort!ed" do
+    it "returns false for an array being sorted by #sort!" do
       a = [1, 2, 3]
       a.sort! { |x,y| a.frozen?.should == false; x <=> y }
     end
   end
 
 
-  it "returns false for arrays being sorted (they aren't temporarily frozen)" do
+  it "returns false for an array being sorted by #sort" do
     a = [1, 2, 3]
     a.sort { |x,y| a.frozen?.should == false; x <=> y }
   end
