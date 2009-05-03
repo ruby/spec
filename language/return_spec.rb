@@ -240,6 +240,26 @@ describe "The return keyword" do
 
       ChainedReturnTest.enclosing_method.should == :return_value
     end
+
+    it "returns from the lexically enclosing method even in case of chained calls(in yield)" do
+      class ChainedYieldReturnTest
+        def self.meth_with_yield(&b)
+          yield
+          fail("returned from yield to wrong place")
+        end
+        def self.enclosing_method
+          meth_with_yield do
+            meth_with_yield do
+              return :return_value
+              fail("return didn't, well, return")
+            end
+          end
+          fail("return should not behave like break")
+        end
+      end
+
+      ChainedYieldReturnTest.enclosing_method.should == :return_value
+    end
   end
 
   describe "within two blocks" do
