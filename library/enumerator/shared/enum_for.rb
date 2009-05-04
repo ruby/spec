@@ -10,7 +10,7 @@ describe :enumerator_enum_for, :shared => true do
   end
 
    it "defaults the first argument to :each" do
-    enum = [1,2].send(@method, :each)
+    enum = [1,2].send(@method)
     enum.map { |v| v }.should == [1,2].each { |v| v }
   end
 end
