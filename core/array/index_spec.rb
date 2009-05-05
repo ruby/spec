@@ -21,4 +21,15 @@ describe "Array#index" do
   it "returns nil if no element == to object" do
     [2, 1, 1, 1, 1].index(3).should == nil
   end
+  
+  ruby_version_is "1.8.7" do
+    it "accepts a block instead of an argument" do
+      [4, 2, 1, 5, 1, 3].index{|x| x < 2}.should == 2
+    end
+
+    it "ignore the block if there is an argument" do
+      [4, 2, 1, 5, 1, 3].index(5){|x| x < 2}.should == 3
+    end
+
+  end
 end
