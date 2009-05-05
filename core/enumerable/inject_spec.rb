@@ -15,10 +15,22 @@ describe "Enumerable#inject" do
     a.should == [[0, 1], [1, 2]]
   end
   
-  it "only takes one argument" do
-    lambda { EnumerableSpecs::Numerous.new.inject(0, 1) { |memo, i| i } }.should raise_error(ArgumentError)
+  ruby_version_is ''...'1.8.7' do
+    it "only takes one argument" do
+      lambda { EnumerableSpecs::Numerous.new.inject(0, 1) { |memo, i| i } }.should raise_error(ArgumentError)
+    end
   end
-    
+  
+  ruby_version_is '1.8.7' do
+    it "can take two argument" do
+      EnumerableSpecs::Numerous.new(1, 2, 3).inject(10, :-).should == 4
+    end
+
+    it "can take a symbol argument" do
+      EnumerableSpecs::Numerous.new(10, 1, 2, 3).inject(:-).should == 4
+    end
+  end
+  
   it "inject without argument takes a block with an accumulator (with first element as initial value) and the current element. Value of block becomes new accumulator" do
     a = []
     EnumerableSpecs::Numerous.new.inject { |memo, i| a << [memo, i]; i }
@@ -38,7 +50,7 @@ describe "Enumerable#inject" do
     EnumerableSpecs::EachDefiner.new('a','b','c').inject("z") {|result, i| i+result}.should == "cbaz"
   end
   
-  it "inject withou inject arguments(legacy rubycon)" do
+  it "inject without inject arguments(legacy rubycon)" do
     # no inject argument
     EnumerableSpecs::EachDefiner.new(2).inject {|acc,x| 999 } .should == 2
     EnumerableSpecs::EachDefiner.new(2).inject {|acc,x| acc }.should == 2

@@ -98,8 +98,8 @@ module EnumerableSpecs
       @values
     end
     
-    def to_arr
-      self.called = :to_arr
+    def to_ary
+      self.called = :to_ary
       @values
     end
   end
