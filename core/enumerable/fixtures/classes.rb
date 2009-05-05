@@ -122,4 +122,17 @@ module EnumerableSpecs
     end
   end
 
+  class ReverseComparable
+    def initialize(num)
+      @num = num
+    end
+
+    attr_accessor :num
+
+    # Reverse comparison
+    def <=>(other)
+      other.num <=> @num
+    end
+  end
+
 end # EnumerableSpecs utility classes

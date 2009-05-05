@@ -92,7 +92,7 @@ describe :stringio_each_no_arguments, :shared => true do
   ruby_version_is "1.8.7" do
     it "returns an Enumerator when passed no block" do
       enum = @io.send(@method)
-      enum.should be_instance_of(enumerator_class)
+      enum.instance_of?(enumerator_class).should be_true
 
       seen = []
       enum.each { |b| seen << b }
