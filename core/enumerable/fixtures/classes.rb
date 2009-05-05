@@ -123,6 +123,7 @@ module EnumerableSpecs
   end
 
   class ReverseComparable
+    include Comparable
     def initialize(num)
       @num = num
     end
@@ -132,6 +133,17 @@ module EnumerableSpecs
     # Reverse comparison
     def <=>(other)
       other.num <=> @num
+    end
+  end
+  
+  class ComparableWithFixnum
+    include Comparable
+    def initialize(num)
+      @num = num
+    end
+
+    def <=>(fixnum)
+      @num <=> fixnum
     end
   end
 
