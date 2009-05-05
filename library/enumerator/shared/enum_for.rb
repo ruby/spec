@@ -6,10 +6,10 @@ describe :enumerator_enum_for, :shared => true do
   end
 
   it "returns a new enumerator" do
-    "abc".send(@method).should be_kind_of(Enumerable::Enumerator)
+    "abc".send(@method).should be_kind_of(enumerator_class)
   end
 
-   it "defaults the first argument to :each" do
+  it "defaults the first argument to :each" do
     enum = [1,2].send(@method)
     enum.map { |v| v }.should == [1,2].each { |v| v }
   end

@@ -42,11 +42,11 @@ describe "Hash#select" do
 
   ruby_version_is "1.8.7" do
     it "returns an Enumerator when called on a non-empty hash without a block" do
-      @hsh.select.should be_kind_of(Enumerable::Enumerator)
+      @hsh.select.should be_kind_of(enumerator_class)
     end
 
     it "returns an Enumerator when called on an empty hash without a block" do
-      @empty.select.should be_kind_of(Enumerable::Enumerator)
+      @empty.select.should be_kind_of(enumerator_class)
     end
   end
 

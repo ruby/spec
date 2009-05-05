@@ -29,7 +29,7 @@ describe :stringio_each_char, :shared => true do
 
     it "returns an Enumerator when passed no block" do
       enum = @io.send(@method)
-      enum.instance_of?(Enumerable::Enumerator).should be_true
+      enum.should be_instance_of(enumerator_class)
 
       seen = []
       enum.each { |c| seen << c }

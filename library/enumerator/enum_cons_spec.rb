@@ -7,7 +7,7 @@ describe "Enumerator#enum_cons" do
     a = []
     enum = EnumSpecs::Numerous.new.enum_cons(3)
     enum.each {|x| a << x}
-    enum.kind_of?(Enumerable::Enumerator).should == true
+    enum.should be_kind_of(enumerator_class)
     a.should == [[2, 5, 3], [5, 3, 6], [3, 6, 1], [6, 1, 4]]
   end  
 end
