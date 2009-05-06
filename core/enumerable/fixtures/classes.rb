@@ -2,13 +2,30 @@ module EnumerableSpecs
 
   class Numerous
     include Enumerable
-    
     def initialize(*list)
       @list = list.empty? ? [2, 5, 3, 6, 1, 4] : list
     end
     
     def each
       @list.each { |i| yield i }
+    end      
+  end
+
+  class EachCounter < Numerous
+    attr_reader :times_called, :times_yielded
+    def initialize(max_times, *list)
+      super(*list)
+      @max_times = max_times
+      @times_called = 0
+      @times_yielded = 0
+    end
+    
+    def each
+      @times_called += 1
+      @list.each do |i|
+        @times_yielded +=1 
+        yield i
+      end
     end      
   end
 
