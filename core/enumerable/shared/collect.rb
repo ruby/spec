@@ -19,4 +19,19 @@ describe :enumerable_collect, :shared => true do
       multi.send(@method) {|e| e}.should == [1,3,6]
     end
   end
+
+  ruby_version_is "" ... "1.9" do
+    it "returns to_a when no block given" do
+      EnumerableSpecs::Numerous.new.send(@method).should == [2, 5, 3, 6, 1, 4]
+    end
+  end
+  ruby_version_is "1.9" do
+    it "returns an enumerator when no block given" do
+      enum = EnumerableSpecs::Numerous.new.send(@method)
+      enum.should be_kind_of(enumerator_class)
+      enum.each { |i| -i }.should == [-2, -5, -3, -6, -1, -4]
+    end
+  end
+
+
 end
