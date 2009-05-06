@@ -49,6 +49,12 @@ describe :enumerable_find, :shared => true do
     it "returns an enumerator when no block given" do
       @numerous.send(@method).should be_kind_of(enumerator_class)
     end
+    
+    it "passes the ifnone proc to the enumerator" do
+      times = 0
+      fail_proc = lambda { times += 1; raise if times > 1; "cheeseburgers" }
+      @numerous.send(@method, fail_proc).each {|e| false }.should == "cheeseburgers"
+    end
   end
   
 end
