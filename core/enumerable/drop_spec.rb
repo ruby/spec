@@ -25,6 +25,11 @@ describe "Enumerable#drop" do
         @enum.drop(obj).to_a.should == [1, :go]
       end
 
+      it "returns [] for empty enumerables" do
+        EnumerableSpecs::Empty.new.drop(0).to_a.should == []
+        EnumerableSpecs::Empty.new.drop(2).to_a.should == []
+      end
+
       it "raises a TypeError when the passed n can be coerced to Integer" do
         lambda{ @enum.drop("hat") }.should raise_error(TypeError)
         lambda{ @enum.drop(nil) }.should raise_error(TypeError)

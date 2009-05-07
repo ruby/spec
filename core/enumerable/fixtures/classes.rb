@@ -13,9 +13,8 @@ module EnumerableSpecs
 
   class EachCounter < Numerous
     attr_reader :times_called, :times_yielded
-    def initialize(max_times, *list)
+    def initialize(*list)
       super(*list)
-      @max_times = max_times
       @times_called = 0
       @times_yielded = 0
     end
