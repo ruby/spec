@@ -23,5 +23,9 @@ describe "Enumerable#count" do
     it "uses a block for comparison" do
       @numerous.count{|x| x%2==0 }.should == 3
     end
+
+    it "ignores the block when given an argument" do
+      @numerous.count(4){|x| x%2==0 }.should == 1
+    end
   end
 end
