@@ -14,8 +14,8 @@ describe "Array#shuffle" do
       different.should be_true # Will fail once in a blue moon (4!^10)
     end
 
-    it "does not return subclass instances with Array subclass" do
-      ArraySpecs::MyArray[1, 2, 3].shuffle.class.should == Array
+    it "returns subclass instances with Array subclass" do
+      ArraySpecs::MyArray[1, 2, 3].shuffle.class.should == ArraySpecs::MyArray
     end
   
     it "is not destructive" do
