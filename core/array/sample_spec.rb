@@ -65,6 +65,10 @@ describe "Array#sample" do
         [].sample(1).should == []
         [1,2,3].sample(0).should == []
       end
+      
+      it "does not return subclass instances with Array subclass" do
+        ArraySpecs::MyArray[1, 2, 3].sample(2).class.should == Array
+      end      
     end
   end
 end
