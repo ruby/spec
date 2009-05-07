@@ -118,10 +118,11 @@ describe "Array#flatten!" do
       [ 1, 2, [3, [4, 5] ] ].flatten!(1).should == [1, 2, 3, [4, 5]]
     end
 
-    # NOTE: This is inconsistent behaviour, it should return nil
-    it "returns self when the level of recursion is 0" do
-      a = [ 1, 2, [3, [4, 5] ] ]
-      a.flatten!(0).should equal(a)
+    ruby_bug "redmine #1440", "1.9.2" do
+      it "returns nil when the level of recursion is 0" do
+        a = [ 1, 2, [3, [4, 5] ] ]
+        a.flatten!(0).should == nil
+      end
     end
 
     it "ignores negative levels" do
