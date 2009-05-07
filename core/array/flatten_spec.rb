@@ -118,7 +118,7 @@ describe "Array#flatten!" do
       [ 1, 2, [3, [4, 5] ] ].flatten!(1).should == [1, 2, 3, [4, 5]]
     end
 
-    ruby_bug "redmine #1440", "1.9.2" do
+    ruby_bug "redmine #1440", "1.9.1" do
       it "returns nil when the level of recursion is 0" do
         a = [ 1, 2, [3, [4, 5] ] ]
         a.flatten!(0).should == nil
