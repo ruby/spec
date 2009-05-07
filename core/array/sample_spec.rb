@@ -19,5 +19,9 @@ describe "Array#sample" do
     it "returns nil for empty arrays" do
       [].sample.should be_nil
     end
+
+    it "raises ArgumentError for a negative sample number" do
+      lambda { [1, 2].sample(-1) }.should raise_error(ArgumentError)
+    end
   end
 end
