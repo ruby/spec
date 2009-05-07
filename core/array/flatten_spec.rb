@@ -125,7 +125,7 @@ describe "Array#flatten!" do
       end
     end
 
-    it "ignores negative levels" do
+    it "treats negative levels as no arguments" do
       [ 1, 2, [ 3, 4, [5, 6] ] ].flatten!(-1).should == [1, 2, 3, 4, 5, 6]
       [ 1, 2, [ 3, 4, [5, 6] ] ].flatten!(-10).should == [1, 2, 3, 4, 5, 6]
     end
