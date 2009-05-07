@@ -10,7 +10,7 @@ describe "Array#sample" do
 
   ruby_version_is "1.9" do
     it "selects a random value from the array" do
-      a = [1,2,3,4]
+      a = [1, 2, 3, 4]
       10.times {
         a.include?(a.sample).should be_true
       }
@@ -26,7 +26,7 @@ describe "Array#sample" do
       end
 
       it "returns different random values from the array" do
-        a = [1,2,3,4]
+        a = [1, 2, 3, 4]
         sum = []
         42.times {
           pair = a.sample(2)
@@ -34,18 +34,10 @@ describe "Array#sample" do
           (pair - a).should == []
           pair[0].should_not == pair[1]
         }
-        a.should == [1,2,3,4]
+        a.should == [1, 2, 3, 4]
         (a - sum).should == []  # Might fail once every 2^40 times ...
       end
 
-      it "does not return self even when it returns whole elements" do
-        a = [1, 2, 3, 4, 5]
-        a.pop(5).should_not equal(a)
-
-        a = [1, 2, 3, 4, 5]
-        a.pop(6).should_not equal(a)
-      end
-      
       it "tries to convert n to an Integer using #to_int" do
         a = [1, 2, 3, 4]
         a.sample(2.3).size.should == 2
@@ -56,19 +48,19 @@ describe "Array#sample" do
       end
 
       it "returns all values with n big enough" do
-        a = [1,2,3,4]
+        a = [1, 2, 3, 4]
         a.sample(4).sort.should == a
         a.sample(5).sort.should == a
       end
 
       it "returns [] for empty arrays or if n <= 0" do
         [].sample(1).should == []
-        [1,2,3].sample(0).should == []
+        [1, 2, 3].sample(0).should == []
       end
-      
+
       it "does not return subclass instances with Array subclass" do
         ArraySpecs::MyArray[1, 2, 3].sample(2).class.should == Array
-      end      
+      end
     end
   end
 end
