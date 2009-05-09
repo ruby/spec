@@ -125,6 +125,21 @@ describe "Hash#==" do
     (h == h[:a]).should == true
   end
 
+  ruby_bug "redmine #2448", "1.9.1" do
+    it "computes equality for complex recursive hashes" do
+      a, b = {}, {}
+      a.merge :self => a, :other => b
+      b.merge :self => b, :other => a
+      a.eql?(b).should == true # subtle, but they both have the same structure!
+
+      c = {}
+      c.merge :other => c, :self => c
+      c.eql?(a).should == true # subtle, but they both have the same structure!
+      c[:delta] = 42
+      c.eql?(a).should == false
+    end
+  end
+
   it "compares values with == semantics" do
     new_hash("x" => 1.0).should == new_hash("x" => 1)
   end
