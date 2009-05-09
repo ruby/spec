@@ -83,8 +83,8 @@ describe :array_equal, :shared => true do
   end
 
   it "ignores array class differences" do
-    ArraySpecs::MyArray[1, 2, 3].should eql([1, 2, 3])
-    ArraySpecs::MyArray[1, 2, 3].should eql(ArraySpecs::MyArray[1, 2, 3])
-    [1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3])
+    ArraySpecs::MyArray[1, 2, 3].send(@method, [1, 2, 3]).should be_true
+    ArraySpecs::MyArray[1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3]).should be_true
+    [1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3]).should be_true
   end
 end

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 require File.dirname(__FILE__) + '/shared/equal'
 
 describe "Array#==" do
-  it_behaves_like :array_equal, :eql?
+  it_behaves_like :array_equal, :==
 
   it "returns false if any corresponding elements are not #==" do
     a = ["a", "b", "c"]
