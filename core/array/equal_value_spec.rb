@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
-require File.dirname(__FILE__) + '/shared/equal'
+require File.dirname(__FILE__) + '/shared/eql'
 
 describe "Array#==" do
-  it_behaves_like :array_equal, :==
+  it_behaves_like :array_eql, :==
 
   it "returns false if any corresponding elements are not #==" do
     a = ["a", "b", "c"]
