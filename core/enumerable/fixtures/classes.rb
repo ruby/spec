@@ -12,15 +12,16 @@ module EnumerableSpecs
   end
 
   class EachCounter < Numerous
-    attr_reader :times_called, :times_yielded
+    attr_reader :times_called, :times_yielded, :arguments_passed
     def initialize(*list)
       super(*list)
       @times_yielded = @times_called = 0
     end
     
-    def each
+    def each(*arg)
       @times_called += 1
       @times_yielded = 0
+      @arguments_passed = arg
       @list.each do |i|
         @times_yielded +=1 
         yield i
