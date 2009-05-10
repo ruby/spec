@@ -15,12 +15,12 @@ module EnumerableSpecs
     attr_reader :times_called, :times_yielded
     def initialize(*list)
       super(*list)
-      @times_called = 0
-      @times_yielded = 0
+      @times_yielded = @times_called = 0
     end
     
     def each
       @times_called += 1
+      @times_yielded = 0
       @list.each do |i|
         @times_yielded +=1 
         yield i
