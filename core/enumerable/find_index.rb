@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-describe "Enumerable#find_by_index" do  
+describe "Enumerable#find_index" do  
   ruby_version_is "1.8.7" do
     before :each do
       @elements = [2, 4, 6, 8, 10]
