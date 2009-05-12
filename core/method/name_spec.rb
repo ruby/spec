@@ -11,6 +11,7 @@ describe "Method#name" do
       obj = MethodSpecs::Methods.new
       obj.method(:foo).name.should == :foo
       obj.method(:bar).name.should == :bar
+      obj.method(:bar).unbind.bind(obj).name.should == :bar
     end
   end
 end
