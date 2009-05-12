@@ -11,7 +11,6 @@ describe "Enumerable#minmax_by" do
       EnumerableSpecs::Empty.new.minmax_by {|o| o.nonesuch }.should == [nil, nil]
     end
 
-
     it "returns the object for whom the value returned by block is the largest" do
       EnumerableSpecs::Numerous.new(*%w[1 2 3]).minmax_by {|obj| obj.to_i }.should == ['1', '3']
       EnumerableSpecs::Numerous.new(*%w[three five]).minmax_by {|obj| obj.length }.should == ['five', 'three']

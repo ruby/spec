@@ -13,7 +13,7 @@ describe "Enumerable#minmax" do
       @enum.minmax.should == [4, 10]
       @strs.minmax.should == ["1010", "60" ]
     end
-  
+
     it "return nil when error" do
       EnumerableSpecs::Empty.new.minmax.should == [nil, nil]
       lambda {
@@ -26,7 +26,7 @@ describe "Enumerable#minmax" do
         EnumerableSpecs::Numerous.new(11,12,22,33).minmax{|a, b| nil}
       }.should raise_error(ArgumentError)
     end
-  
+
     it "return the minimun when using a block rule" do
       @enum.minmax {|a,b| b <=> a }.should == [10, 4]
       @strs.minmax {|a,b| a.length <=> b.length }.should == ["2", "55555"]

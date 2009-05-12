@@ -15,12 +15,12 @@ describe "Enumerable#take_while" do
       @enum.take_while{true}.should == @enum.to_a
       @enum.take_while{false}.should == []
     end
-    
+
     it "accepts returns other than true/false" do
       @enum.take_while{1}.should == @enum.to_a
       @enum.take_while{nil}.should == []
     end
-  
+
     it "passes elements to the block until the first false" do
       a = []
       @enum.take_while{|obj| (a << obj).size < 3}.should == [3, 2]
