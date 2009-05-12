@@ -56,6 +56,12 @@ describe :hash_eql, :shared => true do
     (h == h[:a]).should == true
   end
   
+  it "doesn't call to_hash on objects" do
+    mock_hash = mock("fake hash")
+    def mock_hash.to_hash() new_hash end
+    new_hash.send(@method, mock_hash).should be_false
+  end
+    
   ruby_bug "redmine #2448", "1.9.1" do
     it "computes equality for complex recursive hashes" do
       a, b = {}, {}
