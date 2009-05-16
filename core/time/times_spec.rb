@@ -9,6 +9,8 @@ describe 'Time.times' do
   end
 
   ruby_version_is "1.9" do
-    lambda { Time.times }.should raise_error(NoMethodError)
+    it "is no longer exist" do
+      lambda { Time.times }.should raise_error(NoMethodError)
+    end
   end
 end
