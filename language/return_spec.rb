@@ -28,7 +28,6 @@ describe "The return keyword" do
     end
   end
 
-
   describe "when passed a splat" do
     it "returns nil when the ary is empty" do
       def r; ary = []; return *ary; end
@@ -242,4 +241,14 @@ describe "The return keyword" do
       ChainedReturnTest.enclosing_method.should == :return_value
     end
   end
+
+  describe "within two blocks" do
+    it "causes the method that lexically encloses the block to return" do
+      def f
+        1.times { 1.times {return true}; false}; false
+      end
+      f.should be_true
+    end
+  end
+
 end
