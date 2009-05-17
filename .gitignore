@@ -6,3 +6,5 @@
 .\#*\#
 /default.mspec
 /nbproject/private
+*.orig
+*.rej
