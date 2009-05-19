@@ -87,6 +87,14 @@ describe "Marshal.dump" do
     lambda { Marshal.dump(Hash.new {}) }.should raise_error(TypeError)
   end
 
+  it "raises a TypeError if marshalling a Method instance" do
+    lambda { Marshal.dump(Marshal.method(:dump)) }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError if marshalling a Proc" do
+    lambda { Marshal.dump(proc {}) }.should raise_error(TypeError)
+  end
+
   it "dumps an extended_user_hash_default" do
     h = UserHash.new(:Meths).extend(Meths)
     h['three'] = 3
