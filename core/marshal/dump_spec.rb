@@ -95,6 +95,15 @@ describe "Marshal.dump" do
     lambda { Marshal.dump(proc {}) }.should raise_error(TypeError)
   end
 
+  it "raises a TypeError if dumping a IO/File instance" do
+    lambda { Marshal.dump(STDIN) }.should raise_error(TypeError)
+    lambda { File.open(__FILE__) { |f| Marshal.dump(f) } }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError if dumping a MatchData instance" do
+    lambda { "foo" =~ /(.)/; Marshal.dump($~) }.should raise_error(TypeError)
+  end
+
   it "dumps an extended_user_hash_default" do
     h = UserHash.new(:Meths).extend(Meths)
     h['three'] = 3
