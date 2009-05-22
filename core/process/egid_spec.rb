@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "Process.egid" do
   it "returns the effective group ID for this process" do
-    Process.egid.class.should == Fixnum
+    Process.egid.class.should == Integer
   end
 
   it "also goes by Process::GID.eid" do
