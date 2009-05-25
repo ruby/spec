@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 ruby_version_is '1.8.7' do
-  describe "IO#bytes" do
+  describe "IO#chars" do
     before :each do
       @original = $KCODE
       $KCODE = "UTF-8"
@@ -15,22 +15,24 @@ ruby_version_is '1.8.7' do
       $KCODE = @original
     end
 
-    it "returns an enumerator of the next bytes from the stream" do
-      enum = @io.bytes
+    it "returns an enumerator of the next chars from the stream" do
+      enum = @io.chars
       enum.should be_kind_of(enumerator_class)
       @io.readline.should == "Voici la ligne une.\n"
-      enum.first(5).should == [81, 117, 105, 32, 195]
+      enum.first(5).should == ["Q", "u", "i", " ", "è"]
     end
 
-    it "ignores a block" do
-      @io.bytes{ raise "oups" }.should be_kind_of(enumerator_class)
+    ruby_version_is '1.9' do
+      it "ignores a block" do
+        @io.chars{ raise "oups" }.should be_kind_of(enumerator_class)
+      end
     end
 
     it "raises IOError on closed stream" do
-      enum = IOSpecs.closed_file.bytes
+      enum = IOSpecs.closed_file.chars
       lambda { enum.first }.should raise_error(IOError)
-      enum = @io.bytes
-      enum.first.should == 86
+      enum = @io.chars
+      enum.first.should == "V"
       @io.close
       lambda { enum.first }.should raise_error(IOError)      
     end
