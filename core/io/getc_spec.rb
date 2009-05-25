@@ -23,7 +23,7 @@ describe "IO#getc" do
     end
   end
 
-  ruby_version_is ''...'1.9' do
+  ruby_version_is '1.9' do
     it "returns the next character from the stream" do
       @file.readline.should == "Voici la ligne une.\n"
       letters = @file.getc, @file.getc, @file.getc, @file.getc, @file.getc
