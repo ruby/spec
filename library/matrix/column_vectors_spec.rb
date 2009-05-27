@@ -19,6 +19,8 @@ describe "Matrix#column_vectors" do
     @vectors.should == [Vector[1,3], Vector[2,4]]
   end
 
+  # See Ruby bug #1526 for discussion of inconsistency between
+  # #column_vectors and #row_vectors
   it "returns an empty Array for empty matrices" do
     Matrix[ [] ].column_vectors.should == []
   end
