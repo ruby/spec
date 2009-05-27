@@ -114,6 +114,8 @@ end
 
 describe "Matrix.[] with an invalid argument" do
   it "raises an ArgumentError unless passed Arrays of numbers, or a single number" do
+    lambda{ Matrix[] }.should raise_error(ArgumentError)
+    lambda{ Matrix[[]] }.should raise_error(ArgumentError)
     lambda{ Matrix[ "foo" ] }.should raise_error(ArgumentError)
     lambda{ Matrix[ Hash.new ]}.should raise_error(ArgumentError)
   end  
