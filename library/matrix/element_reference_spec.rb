@@ -53,7 +53,32 @@ describe "Matrix.[] with a Float-like argument" do
   end  
 end
 
-# TODO: Handle Rationals?
+describe "Matrix.[] with a Rational-like argument" do
+  # Matrix.[] is really a constructor, not an element reference function...
+
+  before(:each) do
+    @number = Rational(4,3)
+    @m = Matrix[@number]
+  end
+  
+  it "returns an object of type Matrix" do
+    @m.class.should == Matrix
+  end
+  
+  it "coerces its argument into an Array" do
+    @m.should == Matrix[[@number]]
+  end
+
+  it "creates a 1x1 Matrix" do  
+    @m.row_size.should == 1
+    @m.column_size.should == 1
+  end
+
+  it "sets the 0th column in the 0th row to the argument" do
+    @m[0,0].should == @number
+  end  
+end
+
 # TODO: Accept non-square matrices?
 describe "Matrix.[] with at least one Array" do
   # Matrix.[] is really a constructor, not an element reference function...
