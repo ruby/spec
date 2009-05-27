@@ -4,4 +4,5 @@ require 'matrix'
 
 describe "Matrix#inverse" do
   it_behaves_like(:inverse, :inverse)
+
 end
