@@ -6,8 +6,4 @@ describe "Matrix#row_size" do
     data =  [[1,2], [3, 4]]
     Matrix[ *data ].row_size.should == 2
   end
-
-  it "returns 0 for an empty Matrix" do
-    Matrix[].row_size.should == 0
-  end
 end
