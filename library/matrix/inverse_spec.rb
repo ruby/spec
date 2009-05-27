@@ -24,4 +24,10 @@ describe "Matrix#inverse" do
       [-24, 18, 5], [20, -15, -4], [-5, 4, 1]
     ]
   end 
+
+  it "raises a ErrDimensionMismatch if the Matrix is not square" do
+    lambda{ Matrix[ [1,2], [1] ].inverse }.should 
+      raise_error(Matrix::ErrDimensionMismatch)
+  end  
+
 end
