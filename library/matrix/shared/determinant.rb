@@ -11,24 +11,24 @@ describe :determinant, :shared => true do
   ruby_bug "#1516", "1.8.7" do
     it "returns the determinant of a square Matrix" do
       m = Matrix[ [7,6], [3,9] ]
-      m.determinant.should == 45 
+      m.send(@method).should == 45 
 
       m = Matrix[ [9, 8], [6,5] ]
-      m.determinant.should == -3
+      m.send(@method).should == -3
 
       m = Matrix[ [9,8,3], [4,20,5], [1,1,1] ]
-      m.determinant.should == 95
+      m.send(@method).should == 95
     end
   end  
   
   it "returns the determinant of a single-element Matrix" do  
     m = Matrix[ [2] ]
-    m.determinant.should == 2
+    m.send(@method).should == 2
   end
 
   it "returns 0 for an empty Matrix" do
     m = Matrix[ [] ]
-    m.determinant.should == 0
+    m.send(@method).should == 0
   end
 
   # Matrix#square? returns true if the first row of the matrix has the same
@@ -38,9 +38,9 @@ describe :determinant, :shared => true do
   # in the #square? test. The examples below deliberately avoid this condition. 
   it "returns 0 when the Matrix is not square" do 
     m = Matrix[ [1], [2,3] ] 
-    m.determinant.should == 0
+    m.send(@method).should == 0
 
     m = Matrix[ [1,2,3], [4,2] ]
-    m.determinant.should == 0
+    m.send(@method).should == 0
   end  
 end
