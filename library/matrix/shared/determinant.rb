@@ -26,9 +26,9 @@ describe :determinant, :shared => true do
     m.send(@method).should == 2
   end
 
-  it "returns 0 for an empty Matrix" do
+  it "returns 1 for an empty Matrix" do
     m = Matrix[ [] ]
-    m.send(@method).should == 0
+    m.send(@method).should == 1
   end
 
   # Matrix#square? returns true if the first row of the matrix has the same
