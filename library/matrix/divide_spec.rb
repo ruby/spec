@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/spec_helper'
 require 'matrix'
 
 describe "Matrix#/" do
@@ -10,8 +11,7 @@ describe "Matrix#/" do
 
   conflicts_with :Prime do
     it "returns the result of dividing self by another Matrix" do
-      (@a / @b).should == Matrix[ [-2, 0], [-4, 0] ]
-      ((@a / @b) / @b).should == Matrix[ [0,0], [0,0] ]
+      (@a / @b).should be_close_to_matrix([[2.5, -1.5], [1.5, -0.5]])
     end
   end
 
