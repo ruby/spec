@@ -26,3 +26,11 @@ describe "Matrix#[]" do
     end
   end
 end
+
+describe "Matrix.[] without arguments" do
+  it "creates an empty Matrix" do
+    Matrix[].should == Matrix[[]]
+    Matrix[].column_size.should == 0
+    Matrix[].row_size.should == 0
+  end
+end  
