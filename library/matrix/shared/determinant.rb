@@ -27,7 +27,7 @@ describe :determinant, :shared => true do
   end
 
   it "returns 1 for an empty Matrix" do
-    m = Matrix[ [] ]
+    m = Matrix[ ]
     m.send(@method).should == 1
   end
 

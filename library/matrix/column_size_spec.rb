@@ -2,8 +2,12 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require 'matrix'
 
 describe "Matrix#column_size" do
-  it "returns the number of elements in the first column" do
-    Matrix[ [1,2] ].column_size.should == 2
-    Matrix[ [1,2,3],[1,2] ].column_size.should == 3
+  it "returns the number of columns" do
+    Matrix[ [1,2], [3,4] ].column_size.should == 2
+  end
+
+  it "returns 0 for empty matrices" do
+    Matrix[ [], [] ].column_size.should == 0
+    Matrix[ ].column_size.should == 0
   end
 end

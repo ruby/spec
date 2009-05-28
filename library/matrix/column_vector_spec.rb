@@ -12,19 +12,8 @@ describe "Matrix.column_vector" do
   it "returns an empty Matrix when called with an empty Array" do
     m = Matrix.column_vector([])
     m.should be_an_instance_of(Matrix)
-    m.should == Matrix[]
-  end
-
-  it "returns a single column Matrix when called with a Fixnum" do
-    m = Matrix.column_vector(4)
-    m.should be_an_instance_of(Matrix)
-    m.should == Matrix[ [4] ]
-  end
-  
-  it "returns a single column Matrix when called with a Float" do  
-    m = Matrix.column_vector(0.98887)
-    m.should be_an_instance_of(Matrix)
-    m.should == Matrix[ [0.98887] ]
+    m.row_size.should == 0
+    m.column_size.should == 1
   end
 
 end

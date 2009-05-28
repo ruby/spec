@@ -7,10 +7,6 @@ describe "Matrix#regular?" do
   # from writing a complete specification here. 
   it "needs to be reviewed for spec completeness"
 
-  it "returns false if the Matrix is ragged" do
-    Matrix[ [1,2], [3], [2,1] ].regular?.should be_false
-  end
-
   # On Ruby 1.9.1 the below tests cause hangs, presumably due to bug #1020.
   # They pass in 1.8.7. When #1020 is fixed, we can determine whether it was
   # the cause of this failure...
