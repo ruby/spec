@@ -14,14 +14,11 @@ describe :inverse, :shared => true do
       [7, -3, -3],   [-1, 1, 0], [-1, 0, 1]
     ]
 
-    # FIXME: This example fails on 1.8.7 without 'mathn' being required.
-    # Embarrassingly, it works on JRuby. Ask brixen what to do here
     Matrix[ 
       [1, 2, 3],    [0, 1, 4],     [5, 6, 0] 
-    ].send(@method).should == 
-    Matrix[
+    ].send(@method).should be_close_to_matrix([
       [-24, 18, 5], [20, -15, -4], [-5, 4, 1]
-    ]
+    ])
   end 
 
   it "raises a ErrDimensionMismatch if the Matrix is not square" do
