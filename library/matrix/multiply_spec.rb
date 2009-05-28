@@ -33,4 +33,20 @@ describe "Matrix#*" do
   it "raises a Matrix::ErrDimensionMismatch if the matrices are different sizes" do
     lambda { @a * Matrix[ [1] ] }.should raise_error(Matrix::ErrDimensionMismatch)
   end
+  
+  it "returns a zero matrix if (nx0) * (0xn)" do
+    (Matrix[[],[],[]] * Matrix.columns([[],[],[]])).should == Matrix.zero(3)
+  end
+
+  it "returns an empty matrix if (0xn) * (nx0)" do
+    (Matrix.columns([[],[],[]]) * Matrix[[],[],[]]).should == Matrix[]
+  end
+
+  it "returns a mx0 matrix if (mxn) * (nx0)" do
+    (Matrix[[1,2],[3,4],[5,6]] * Matrix[[],[]]).should == Matrix[[],[],[]]
+  end
+  
+  it "returns a 0xm matrix if (0xm) * (mxn)" do
+    (Matrix.columns([[], [], []]) * Matrix[[1,2],[3,4],[5,6]]).should == Matrix.columns([[],[]])
+  end
 end
