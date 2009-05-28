@@ -47,7 +47,7 @@ describe "Matrix.[] with Arrays" do
     Matrix[ [1] ].should be_an_instance_of(Matrix)
   end
   
-  it "treats each Array as a row in the Matrix" do  
+  it "can create an nxn Matrix" do  
     m = Matrix[ [20,30], [40.5, 9] ]
     m.row_size.should == 2
     m.column_size.should == 2
@@ -56,6 +56,21 @@ describe "Matrix.[] with Arrays" do
     m.row(0).should == Vector[20, 30]
     m.row(1).should == Vector[40.5, 9]
   end
+
+  it "can create a nx0 Matrix" do
+    m = Matrix[ [0], [1], [2] ]
+    m.row_size.should == 3
+    m.column_size.should == 1
+    m.column(0).should == Vector[0, 1, 2]
+  end
+
+  it "can create a 0xn Matrix" do
+    m = Matrix[ [0, 1, 2] ]
+    m.row_size.should == 1
+    m.column_size.should == 3
+    m.row(0).should == Vector[0, 1, 2]
+  end
+
 end  
 
 describe "Matrix.[] with a non-Array" do
