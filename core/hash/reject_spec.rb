@@ -97,5 +97,4 @@ describe "Hash#reject!" do
     end
   end
 
-  it_behaves_like(:hash_iteration_method, :reject!)
 end

@@ -1,20 +1,3 @@
-describe :hash_iteration_method, :shared => true do
-  hsh = new_hash(1 => 2, 3 => 4, 5 => 6)
-  big_hash = new_hash
-  64.times { |k| big_hash[k.to_s] = k }
-
-  # # This specification seems arbitrary, but describes the behavior of MRI
-  # it "raises if more than 63 new entries are added from block" do
-  #   h = hsh.dup
-  #   args = @method.to_s[/merge|update/] ? [h] : []
-  #
-  #   lambda {
-  #     h.send(@method, *args) { |*x| h.merge!(big_hash) }
-  #   }.should raise_error(RuntimeError)
-  # end
-
-end
-
 describe :hash_iteration_modifying, :shared => true do
   hsh = new_hash(1 => 2, 3 => 4, 5 => 6)
   big_hash = new_hash

@@ -50,6 +50,5 @@ describe "Hash#select" do
     end
   end
 
-  it_behaves_like(:hash_iteration_method, :select)
   it_behaves_like(:hash_iteration_modifying, :select)
 end
