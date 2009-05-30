@@ -1,23 +1,8 @@
 describe :hash_iteration_method, :shared => true do
-  # These are the only ones that actually have the exceptions on MRI 1.8.
-  # sort and reject don't raise!
-  #
-  #   delete_if each each_key each_pair each_value merge merge! reject!
-  #   select update
-  #
   hsh = new_hash(1 => 2, 3 => 4, 5 => 6)
   big_hash = new_hash
   64.times { |k| big_hash[k.to_s] = k }
 
-  # it "raises a RuntimeError if #rehash is called from block" do
-  #   h = hsh.dup
-  #   args = @method.to_s[/merge|update/] ? [h] : []
-  #
-  #   lambda {
-  #     h.send(@method, *args) { h.rehash }
-  #   }.should raise_error(RuntimeError)
-  # end
-  #
   # # This specification seems arbitrary, but describes the behavior of MRI
   # it "raises if more than 63 new entries are added from block" do
   #   h = hsh.dup
