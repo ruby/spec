@@ -1,9 +1,10 @@
 describe :hash_iteration_modifying, :shared => true do
-  hsh = new_hash(1 => 2, 3 => 4, 5 => 6)
-  big_hash = new_hash
-  100.times { |k| big_hash[k.to_s] = k }
-
+  # TODO: Revise this test as per the outcome of
+  # http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/23630
   it "does not affect yielded items by removing the current element" do
+    hsh = new_hash(1 => 2, 3 => 4, 5 => 6)
+    big_hash = new_hash
+    100.times { |k| big_hash[k.to_s] = k }
     n = 3
 
     h = Array.new(n) { hsh.dup }
