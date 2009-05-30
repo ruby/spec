@@ -7,11 +7,11 @@ describe :hash_index, :shared => true do
   end
 
   it "returns nil if the value is not found" do
-    new_hash(:a => -1, :b => 3.14, :c => 2.718).send(@method, 1).should == nil
+    new_hash(:a => -1, :b => 3.14, :c => 2.718).send(@method, 1).should be_nil
   end
 
   it "doesn't return default value if the value is not found" do
-    new_hash(5).send(@method, 5).should == nil
+    new_hash(5).send(@method, 5).should be_nil
   end
 
   it "compares values using ==" do
