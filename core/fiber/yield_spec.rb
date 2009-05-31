@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 ruby_version_is "1.9" do
-  describe "Fiber#yield" do
+  describe "Fiber.yield" do
 
     it "passes control to the Fiber's caller" do
       step = 0
