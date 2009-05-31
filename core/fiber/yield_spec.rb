@@ -28,7 +28,7 @@ ruby_version_is "1.9" do
       fiber.resume :caller
     end
     
-    it "raises a FiberError if called outside of a Fiber" do
+    it "raises a FiberError if called from the root Fiber" do
       lambda{ Fiber.yield }.should raise_error(FiberError)
     end  
   end
