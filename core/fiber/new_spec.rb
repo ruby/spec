@@ -16,5 +16,9 @@ ruby_version_is "1.9" do
       fiber = Fiber.new { invoked = true }
       invoked.should be_false
     end
+
+    it "raises a SyntaxError when the block contains a retry statement" do
+      lambda { eval 'Fiber.new { retry; }' }.should raise_error(SyntaxError)
+    end  
   end
 end
