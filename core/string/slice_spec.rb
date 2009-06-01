@@ -63,9 +63,11 @@ describe "String#slice! with index" do
   end
 
   ruby_version_is "1.9" do 
-    it "doesn't raise a RuntimeError if self is frozen and idx is outside of self" do
-      "hello".freeze.slice!(10).should be_nil
-      "".freeze.slice!(0).should be_nil
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a RuntimeError if self is frozen and idx is outside of self" do
+        "hello".freeze.slice!(10).should be_nil
+        "".freeze.slice!(0).should be_nil
+      end
     end
   end
 
@@ -125,13 +127,15 @@ describe "String#slice! with index, length" do
       lambda { "hello".freeze.slice!(1, 2) }.should raise_error(TypeError)
     end
 
-    it "doesn't raise a TypeError if self is frozen but the given position is out of self" do
-      "hello".freeze.slice!(10, 3).should be_nil
-      "hello".freeze.slice!(-10, 3).should be_nil
-    end
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a TypeError if self is frozen but the given position is out of self" do
+        "hello".freeze.slice!(10, 3).should be_nil
+        "hello".freeze.slice!(-10, 3).should be_nil
+      end
 
-    it "doesn't raise a TypeError if self is frozen but length is negative" do
-      "hello".freeze.slice!(4, -3).should be_nil
+      it "doesn't raise a TypeError if self is frozen but length is negative" do
+        "hello".freeze.slice!(4, -3).should be_nil
+      end
     end
   end
 
@@ -140,13 +144,15 @@ describe "String#slice! with index, length" do
       lambda { "hello".freeze.slice!(1, 2) }.should raise_error(RuntimeError)
     end
 
-    it "doesn't raise a RuntimeError if self is frozen but the given position is out of self" do
-      "hello".freeze.slice!(10, 3).should be_nil
-      "hello".freeze.slice!(-10, 3).should be_nil
-    end
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a RuntimeError if self is frozen but the given position is out of self" do
+        "hello".freeze.slice!(10, 3).should be_nil
+        "hello".freeze.slice!(-10, 3).should be_nil
+      end
 
-    it "doesn't raise a RuntimeError if self is frozen but length is negative" do
-      "hello".freeze.slice!(4, -3).should be_nil
+      it "doesn't raise a RuntimeError if self is frozen but length is negative" do
+        "hello".freeze.slice!(4, -3).should be_nil
+      end
     end
   end
 
@@ -247,8 +253,10 @@ describe "String#slice! Range" do
       lambda { "hello".freeze.slice!(1..3) }.should raise_error(TypeError)
     end
 
-    it "doesn't raise a TypeError if self is frozen but the given range is out of self" do
-      "hello".freeze.slice!(10..20).should == nil
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a TypeError if self is frozen but the given range is out of self" do
+        "hello".freeze.slice!(10..20).should == nil
+      end
     end
   end
 
@@ -257,8 +265,10 @@ describe "String#slice! Range" do
       lambda { "hello".freeze.slice!(1..3) }.should raise_error(RuntimeError)
     end
 
-    it "doesn't raise a RuntimeError if self is frozen but the given range is out of self" do
-      "hello".freeze.slice!(10..20).should == nil
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a RuntimeError if self is frozen but the given range is out of self" do
+        "hello".freeze.slice!(10..20).should == nil
+      end
     end
   end
 end
@@ -323,8 +333,10 @@ describe "String#slice! with Regexp" do
       lambda { "this is a string".freeze.slice!(/s.*t/) }.should raise_error(TypeError)
     end
 
-    it "doesn't raise a TypeError if self is frozen but there is no match" do
-      "this is a string".freeze.slice!(/zzz/).should == nil
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a TypeError if self is frozen but there is no match" do
+        "this is a string".freeze.slice!(/zzz/).should == nil
+      end
     end
   end
 
@@ -333,8 +345,10 @@ describe "String#slice! with Regexp" do
       lambda { "this is a string".freeze.slice!(/s.*t/) }.should raise_error(RuntimeError)
     end
 
-    it "doesn't raise a RuntimeError if self is frozen but there is no match" do
-      "this is a string".freeze.slice!(/zzz/).should == nil
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a RuntimeError if self is frozen but there is no match" do
+        "this is a string".freeze.slice!(/zzz/).should == nil
+      end
     end
   end
 end
@@ -431,12 +445,14 @@ describe "String#slice! with Regexp, index" do
       lambda { "this is a string".freeze.slice!(/s.*t/) }.should raise_error(RuntimeError)
     end
 
-    it "doesn't raise a RuntimeError if self is frozen but there is no match" do
-      "this is a string".freeze.slice!(/zzz/, 0).should == nil
-    end
+    ruby_bug "#1551", "1.9.2" do
+      it "doesn't raise a RuntimeError if self is frozen but there is no match" do
+        "this is a string".freeze.slice!(/zzz/, 0).should == nil
+      end
 
-    it "doesn't raise a RuntimeError if self is frozen but there is no capture for idx" do
-      "this is a string".freeze.slice!(/(.)/, 2).should == nil
+      it "doesn't raise a RuntimeError if self is frozen but there is no capture for idx" do
+        "this is a string".freeze.slice!(/(.)/, 2).should == nil
+      end
     end
   end
 end
@@ -495,8 +511,10 @@ describe "String#slice! with String" do
       lambda { "hello hello".freeze.slice!('llo') }.should raise_error(TypeError)
     end
 
-    it "doesn't raise a TypeError if self is frozen but self does not contain other" do
-      "this is a string".freeze.slice!('zzz').should == nil
+    ruby_bug "#1551", "1.9." do
+      it "doesn't raise a TypeError if self is frozen but self does not contain other" do
+        "this is a string".freeze.slice!('zzz').should == nil
+      end
     end
   end
 
@@ -505,8 +523,10 @@ describe "String#slice! with String" do
       lambda { "hello hello".freeze.slice!('llo') }.should raise_error(RuntimeError)
     end
 
-    it "doesn't raise a RuntimeError if self is frozen but self does not contain other" do
-      "this is a string".freeze.slice!('zzz').should == nil
+    ruby_bug "#1551" do
+      it "doesn't raise a RuntimeError if self is frozen but self does not contain other" do
+        "this is a string".freeze.slice!('zzz').should == nil
+      end
     end
   end
 end
