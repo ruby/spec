@@ -46,11 +46,13 @@ describe "String#lstrip!" do
   end
 
   ruby_version_is "1.9" do 
-    it "raises a RuntimeError if self is frozen" do
-      "hello".freeze.lstrip! # ok, nothing changed
-      "".freeze.lstrip! # ok, nothing changed
+    ruby_bug "#1550", "1.9.2" do
+      it "raises a RuntimeError if self is frozen" do
+        "hello".freeze.lstrip! # ok, nothing changed
+        "".freeze.lstrip! # ok, nothing changed
 
-      lambda { "  hello  ".freeze.lstrip! }.should raise_error(RuntimeError)
+        lambda { "  hello  ".freeze.lstrip! }.should raise_error(RuntimeError)
+      end
     end
   end
 end
