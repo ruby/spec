@@ -36,6 +36,14 @@ describe :string_concat, :shared => true do
     end
   end
 
+  ruby_version_is "1.9" do
+    it "raises ArgumentError for negative length argument" do
+      lambda do
+        'glark'.force_encoding('UTF-8').send(@method, -200) 
+      end.should raise_error(ArgumentError)
+    end
+  end
+
   it "works when given a subclass instance" do
     a = "hello"
     a << StringSpecs::MyString.new(" world")
