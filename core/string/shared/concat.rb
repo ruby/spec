@@ -59,10 +59,12 @@ describe :string_concat_fixnum, :shared => true do
     b.should == "hello world!\x00"
   end
 
-  it "raises a TypeError when the given Fixnum is not between 0 and 255" do
-    lambda { "hello world".send(@method, 333) }.should raise_error(TypeError)
-    lambda { "".send(@method, (256 * 3 + 64)) }.should raise_error(TypeError)
-    lambda { "".send(@method, -200)           }.should raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "raises a TypeError when the given Fixnum is not between 0 and 255" do
+      lambda { "hello world" << 333 }.should raise_error(TypeError)
+      lambda { "".send(@method, (256 * 3 + 64)) }.should raise_error(TypeError)
+      lambda { "".send(@method, -200)           }.should raise_error(TypeError)
+    end
   end
 
   it "doesn't call to_int on its argument" do
