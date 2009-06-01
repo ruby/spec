@@ -312,6 +312,12 @@ describe "String#index with Regexp" do
     "blaxbla".index(/..x/, 2).should == nil
   end
 
+  ruby_bug "#1553", "1.9.2" do
+    it "returns nil if the Regexp matches the empty string and the offset is out of range" do
+      "ruby".index(//,12).should be_nil
+    end
+  end
+
   it "supports \\G which matches at the given start offset" do
     "helloYOU.".index(/\GYOU/, 5).should == 5
     "helloYOU.".index(/\GYOU/).should == nil
