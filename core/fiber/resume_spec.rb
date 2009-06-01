@@ -58,6 +58,15 @@ ruby_version_is "1.9" do
       fiber2.resume
       lambda { fiber2.resume }.should raise_error(FiberError)
     end
+    
+    it "raises a LocalJumpError if the block includes a return statement" do
+      fiber = Fiber.new { return; }
+      lambda { fiber.resume }.should raise_error(LocalJumpError)
+    end 
 
+    it "raises a LocalJumpError if the block includes a break statement" do
+      fiber = Fiber.new { break; }
+      lambda { fiber.resume }.should raise_error(LocalJumpError)
+    end 
   end
 end
