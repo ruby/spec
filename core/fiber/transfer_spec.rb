@@ -102,9 +102,9 @@ ruby_version_is "1.9" do
     end
 
     ruby_bug "#1548", "1.9.2" do
-      it "doesn't segfault when transferring to a Fiber which resumes itself" do
+      it "raises a FiberError when transferring to a Fiber which resumes itself" do
         fiber = Fiber.new { fiber.resume }
-        fiber.transfer
+        lambda { fiber.transfer }.should raise_error(FiberError)
       end
     end  
   end
