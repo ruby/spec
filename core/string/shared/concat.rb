@@ -13,7 +13,7 @@ describe :string_concat, :shared => true do
   end
 
   it "raises a TypeError if the given argument can't be converted to a String" do
-    lambda { a = 'hello '.send(@method, :world)    }.should raise_error(TypeError)
+    lambda { a = 'hello '.send(@method, [])        }.should raise_error(TypeError)
     lambda { a = 'hello '.send(@method, mock('x')) }.should raise_error(TypeError)
   end
 
