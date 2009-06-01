@@ -61,6 +61,15 @@ ruby_version_is "1.9" do
       lambda { fiber2.resume }.should raise_error(FiberError)
     end
 
+    it "raises a LocalJumpError if the block includes a return statement" do
+      fiber = Fiber.new { return; }
+      lambda { fiber.resume }.should raise_error(LocalJumpError)
+    end 
+
+    it "raises a LocalJumpError if the block includes a break statement" do
+      fiber = Fiber.new { break; }
+      lambda { fiber.resume }.should raise_error(LocalJumpError)
+    end 
     it "transfers control from one Fiber to another when called from a Fiber" do
       fiber1 = Fiber.new { :fiber1 }
       fiber2 = Fiber.new { fiber1.transfer }
