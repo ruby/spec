@@ -76,14 +76,16 @@ describe "String#chop!" do
   end
 
   ruby_version_is "1.9" do
-    it "raises a RuntimeError when self is frozen" do
-      a = "string\n\r"
-      a.freeze
-      lambda { a.chop! }.should raise_error(RuntimeError)
+    ruby_bug "[ruby-core:23666]", "1.9.2" do
+      it "raises a RuntimeError when self is frozen" do
+        a = "string\n\r"
+        a.freeze
+        lambda { a.chop! }.should raise_error(RuntimeError)
 
-      a = ""
-      a.freeze
-      a.chop! # ok, no change
+        a = ""
+        a.freeze
+        lambda { a.chop! }.should raise_error(RuntimeError)
+      end
     end
   end
 end
