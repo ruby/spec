@@ -23,7 +23,7 @@ describe "String#replace" do
 
   it "raises a TypeError if other can't be converted to string" do
     lambda { "hello".replace(123)       }.should raise_error(TypeError)
-    lambda { "hello".replace(:test)     }.should raise_error(TypeError)
+    lambda { "hello".replace([])     }.should raise_error(TypeError)
     lambda { "hello".replace(mock('x')) }.should raise_error(TypeError)
   end
 
