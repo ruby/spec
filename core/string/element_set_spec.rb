@@ -168,7 +168,7 @@ describe "String#[]= with String" do
   end
 
   it "raises a TypeError if other_str can't be converted to a String" do
-    lambda { "test"[1] = :test     }.should raise_error(TypeError)
+    lambda { "test"[1] = []        }.should raise_error(TypeError)
     lambda { "test"[1] = mock('x') }.should raise_error(TypeError)
     lambda { "test"[1] = nil       }.should raise_error(TypeError)
   end
@@ -245,7 +245,7 @@ describe "String#[]= with index, count" do
 
   it "raises a TypeError if other_str is a type other than String" do
     lambda { "hello"[0, 2] = nil  }.should raise_error(TypeError)
-    lambda { "hello"[0, 2] = :bob }.should raise_error(TypeError)
+    lambda { "hello"[0, 2] = []   }.should raise_error(TypeError)
     lambda { "hello"[0, 2] = 33   }.should raise_error(TypeError)
   end
 end
