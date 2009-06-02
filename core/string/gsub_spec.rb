@@ -368,13 +368,15 @@ describe "String#gsub! with pattern and replacement" do
   end
 
   ruby_version_is "1.9" do
-    it "raises a RuntimeError when self is frozen" do
-      s = "hello"
-      s.freeze
-    
-      s.gsub!(/ROAR/, "x") # ok
-      lambda { s.gsub!(/e/, "e")       }.should raise_error(RuntimeError)
-      lambda { s.gsub!(/[aeiou]/, '*') }.should raise_error(RuntimeError)
+    ruby_bug "[ruby-core:23666]", "1.9.2" do
+      it "raises a RuntimeError when self is frozen" do
+        s = "hello"
+        s.freeze
+      
+        lambda { s.gsub!(/ROAR/, "x")    }.should raise_error(RuntimeError)
+        lambda { s.gsub!(/e/, "e")       }.should raise_error(RuntimeError)
+        lambda { s.gsub!(/[aeiou]/, '*') }.should raise_error(RuntimeError)
+      end
     end
   end
 end
@@ -407,12 +409,14 @@ describe "String#gsub! with pattern and block" do
     a.should == "hello"
   end
   
-  it "raises a RuntimeError when self is frozen" do
-    s = "hello"
-    s.freeze
+  ruby_bug "[ruby-core:23663]", "1.9" do
+    it "raises a RuntimeError when self is frozen" do
+      s = "hello"
+      s.freeze
 
-    s.gsub!(/ROAR/) { "x" } # ok
-    lambda { s.gsub!(/e/) { "e" }       }.should raise_error(RuntimeError)
-    lambda { s.gsub!(/[aeiou]/) { '*' } }.should raise_error(RuntimeError)
+      lambda { s.gsub!(/ROAR/)    { "x" } }.should raise_error(RuntimeError)
+      lambda { s.gsub!(/e/)       { "e" } }.should raise_error(RuntimeError)
+      lambda { s.gsub!(/[aeiou]/) { '*' } }.should raise_error(RuntimeError)
+    end
   end
 end
