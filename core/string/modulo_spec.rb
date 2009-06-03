@@ -633,7 +633,6 @@ describe "String#%" do
 
     it "behaves as if calling Kernel#Integer for #{format} argument, if it does not respond to #to_ary" do
       (format % "10").should == (format % Kernel.Integer("10"))
-      (format % nil).should == (format % Kernel.Integer(nil))
       (format % "0x42").should == (format % Kernel.Integer("0x42"))
       (format % "0b1101").should == (format % Kernel.Integer("0b1101"))
       (format % "0b1101_0000").should == (format % Kernel.Integer("0b1101_0000"))
@@ -660,6 +659,17 @@ describe "String#%" do
       obj.stub!(:to_i).and_return(5)
       obj.should_receive(:to_int).and_return(6)
       (format % obj).should == (format % 6)
+    end
+    
+    # 1.9 raises a TypeError for Kernel.Integer(nil), so we version guard this
+    # case
+    ruby_version_is ""..."1.9" do
+      it "behaves as if calling Kernel#Integer(nil) for format argument, if it does not respond to #to_ary" do
+        %w(b d i o u x X).each do |f|
+          format = "%" + f
+          (format % nil).should == (format % Kernel.Integer(nil))
+        end
+      end   
     end
 
     it "doesn't taint the result for #{format} when argument is tainted" do
