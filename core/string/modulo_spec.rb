@@ -491,7 +491,7 @@ describe "String#%" do
     ("%*G" % [10, 9]).should == "         9"
   end
 
-  it "supports octal formats using %o" do
+  it "supports octal formats using %o for positive numbers" do
     ("%o" % 10).should == "12"
     ("% o" % 10).should == " 12"
     ("%1$o" % [10, 20]).should == "12"
@@ -500,18 +500,38 @@ describe "String#%" do
     ("%-9o" % 10).should == "12       "
     ("%05o" % 10).should == "00012"
     ("%*o" % [10, 6]).should == "         6"
+  end
 
-    # These are incredibly wrong. -05 == -5, not 7177777...whatever
-    ("%o" % -5).should == "..73"
-    ("%0o" % -5).should == "73"
-    ("%.4o" % 20).should == "0024"
-    ("%.1o" % -5).should == "73"
-    ("%.7o" % -5).should == "7777773"
-    ("%.10o" % -5).should == "7777777773"
+  ruby_version_is ""..."1.9" do
+    it "supports octal formats using %o for negative numbers" do
+      # These are incredibly wrong. -05 == -5, not 7177777...whatever
+      ("%o" % -5).should == "..73"
+      ("%0o" % -5).should == "73"
+      ("%.4o" % 20).should == "0024"
+      ("%.1o" % -5).should == "73"
+      ("%.7o" % -5).should == "7777773"
+      ("%.10o" % -5).should == "7777777773"
 
-    ("% o" % -26).should == "-32"
-    ("%+o" % -26).should == "-32"
-    ("%o" % -(2 ** 64 + 5)).should == "..75777777777777777777773"
+      ("% o" % -26).should == "-32"
+      ("%+o" % -26).should == "-32"
+      ("%o" % -(2 ** 64 + 5)).should == "..75777777777777777777773"
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "supports octal formats using %o for negative numbers" do
+      # These are incredibly wrong. -05 == -5, not 7177777...whatever
+      ("%o" % -5).should == "..73"
+      ("%0o" % -5).should == "..73"
+      ("%.4o" % 20).should == "0024"
+      ("%.1o" % -5).should == "..73"
+      ("%.7o" % -5).should == "..77773"
+      ("%.10o" % -5).should == "..77777773"
+
+      ("% o" % -26).should == "-32"
+      ("%+o" % -26).should == "-32"
+      ("%o" % -(2 ** 64 + 5)).should == "..75777777777777777777773"
+    end
   end
 
   it "supports inspect formats using %p" do
