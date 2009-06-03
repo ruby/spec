@@ -216,7 +216,7 @@ describe "String#%" do
     end
   end
 
-  it "supports binary formats using %b" do
+  it "supports binary formats using %b for positive numbers" do
     ("%b" % 10).should == "1010"
     ("% b" % 10).should == " 1010"
     ("%1$b" % [10, 20]).should == "1010"
@@ -226,17 +226,36 @@ describe "String#%" do
     ("%05b" % 10).should == "01010"
     ("%*b" % [10, 6]).should == "       110"
     ("%*b" % [-10, 6]).should == "110       "
-
-    ("%b" % -5).should == "..1011"
-    ("%0b" % -5).should == "1011"
     ("%.4b" % 2).should == "0010"
-    ("%.1b" % -5).should == "1011"
-    ("%.7b" % -5).should == "1111011"
-    ("%.10b" % -5).should == "1111111011"
-    ("% b" % -5).should == "-101"
-    ("%+b" % -5).should == "-101"
-    ("%b" % -(2 ** 64 + 5)).should ==
-    "..101111111111111111111111111111111111111111111111111111111111111011"
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "supports binary formats using %b for negative numbers" do
+      ("%b" % -5).should == "..1011"
+      ("%0b" % -5).should == "1011"
+      ("%.4b" % 2).should == "0010"
+      ("%.1b" % -5).should == "1011"
+      ("%.7b" % -5).should == "1111011"
+      ("%.10b" % -5).should == "1111111011"
+      ("% b" % -5).should == "-101"
+      ("%+b" % -5).should == "-101"
+      ("%b" % -(2 ** 64 + 5)).should ==
+      "..101111111111111111111111111111111111111111111111111111111111111011"
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "supports binary formats using %b for negative numbers" do
+      ("%b" % -5).should == "..1011"
+      ("%0b" % -5).should == "..1011"
+      ("%.1b" % -5).should == "..1011"
+      ("%.7b" % -5).should == "..11011"
+      ("%.10b" % -5).should == "..11111011"
+      ("% b" % -5).should == "-101"
+      ("%+b" % -5).should == "-101"
+      ("%b" % -(2 ** 64 + 5)).should ==
+      "..101111111111111111111111111111111111111111111111111111111111111011"
+    end
   end
 
   it "supports binary formats using %B with same behaviour as %b except for using 0B instead of 0b for #" do
@@ -565,7 +584,7 @@ describe "String#%" do
     end
   end
 
-  it "supports hex formats using %x" do
+  it "supports hex formats using %x for positive numbers" do
     ("%x" % 10).should == "a"
     ("% x" % 10).should == " a"
     ("%1$x" % [10, 20]).should == "a"
@@ -574,20 +593,39 @@ describe "String#%" do
     ("%-9x" % 10).should == "a        "
     ("%05x" % 10).should == "0000a"
     ("%*x" % [10, 6]).should == "         6"
-
-    ("%x" % -5).should == "..fb"
-    ("%0x" % -5).should == "fb"
     ("%.4x" % 20).should == "0014"
-    ("%.1x" % -5).should == "fb"
-    ("%.7x" % -5).should == "ffffffb"
-    ("%.10x" % -5).should == "fffffffffb"
-    ("% x" % -26).should == "-1a"
-    ("%+x" % -26).should == "-1a"
     ("%x" % 0xFFFFFFFF).should == "ffffffff"
-    ("%x" % -(2 ** 64 + 5)).should == "..fefffffffffffffffb"
   end
 
-  it "supports hex formats using %X" do
+  ruby_version_is ""..."1.9" do
+    it "supports hex formats using %x for negative numbers" do
+      ("%x" % -5).should == "..fb"
+      ("%0x" % -5).should == "fb"
+      ("%.4x" % 20).should == "0014"
+      ("%.1x" % -5).should == "fb"
+      ("%.7x" % -5).should == "ffffffb"
+      ("%.10x" % -5).should == "fffffffffb"
+      ("% x" % -26).should == "-1a"
+      ("%+x" % -26).should == "-1a"
+      ("%x" % 0xFFFFFFFF).should == "ffffffff"
+      ("%x" % -(2 ** 64 + 5)).should == "..fefffffffffffffffb"
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "supports hex formats using %x for negative numbers" do
+      ("%x" % -5).should == "..fb"
+      ("%0x" % -5).should == "..fb"
+      ("%.1x" % -5).should == "..fb"
+      ("%.7x" % -5).should == "..ffffb"
+      ("%.10x" % -5).should == "..fffffffb"
+      ("% x" % -26).should == "-1a"
+      ("%+x" % -26).should == "-1a"
+      ("%x" % -(2 ** 64 + 5)).should == "..fefffffffffffffffb"
+    end
+  end
+
+  it "supports hex formats using %X for positive numbers" do
     ("%X" % 10).should == "A"
     ("% X" % 10).should == " A"
     ("%1$X" % [10, 20]).should == "A"
@@ -596,16 +634,34 @@ describe "String#%" do
     ("%-9X" % 10).should == "A        "
     ("%05X" % 10).should == "0000A"
     ("%*X" % [10, 6]).should == "         6"
-
-    ("%X" % -5).should == "..FB"
-    ("%0X" % -5).should == "FB"
-    ("%.1X" % -5).should == "FB"
-    ("%.7X" % -5).should == "FFFFFFB"
-    ("%.10X" % -5).should == "FFFFFFFFFB"
-    ("% X" % -26).should == "-1A"
-    ("%+X" % -26).should == "-1A"
     ("%X" % 0xFFFFFFFF).should == "FFFFFFFF"
-    ("%X" % -(2 ** 64 + 5)).should == "..FEFFFFFFFFFFFFFFFB"
+  end
+
+  ruby_version_is "" ... "1.9" do
+    it "supports hex formats using %X for negative numbers" do
+      ("%X" % -5).should == "..FB"
+      ("%0X" % -5).should == "FB"
+      ("%.1X" % -5).should == "FB"
+      ("%.7X" % -5).should == "FFFFFFB"
+      ("%.10X" % -5).should == "FFFFFFFFFB"
+      ("% X" % -26).should == "-1A"
+      ("%+X" % -26).should == "-1A"
+      ("%X" % 0xFFFFFFFF).should == "FFFFFFFF"
+      ("%X" % -(2 ** 64 + 5)).should == "..FEFFFFFFFFFFFFFFFB"
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "supports hex formats using %X for negative numbers" do
+      ("%X" % -5).should == "..FB"
+      ("%0X" % -5).should == "..FB"
+      ("%.1X" % -5).should == "..FB"
+      ("%.7X" % -5).should == "..FFFFB"
+      ("%.10X" % -5).should == "..FFFFFFFB"
+      ("% X" % -26).should == "-1A"
+      ("%+X" % -26).should == "-1A"
+      ("%X" % -(2 ** 64 + 5)).should == "..FEFFFFFFFFFFFFFFFB"
+    end
   end
 
   ruby_version_is "1.9" do
