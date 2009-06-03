@@ -211,7 +211,7 @@ end
 
 describe "String#sub with pattern and block" do
   it "returns a copy of self with the first occurrences of pattern replaced with the block's return value" do
-    "hi".sub(/./) { |s| s[0].to_s + ' ' }.should == "104 i"
+    "hi".sub(/./) { |s| s + ' ' }.should == "h i"
     "hi!".sub(/(.)(.)/) { |*a| a.inspect }.should == '["hi"]!'
   end
 
