@@ -408,19 +408,39 @@ describe "String#%" do
       end
     end
     
-    platform_is :darwin do
-      it "pads with zeros using %E with Inf, -Inf, and NaN" do
-        ("%010E" % -1e1020).should == "-000000INF"
-        ("%010E" % 1e1020).should == "0000000INF"
-        ("%010E" % (0.0/0)).should == "0000000NAN"
+    ruby_version_is ""..."1.9" do
+      platform_is :darwin do
+        it "pads with zeros using %E with Inf, -Inf, and NaN" do
+          ("%010E" % -1e1020).should == "-000000INF"
+          ("%010E" % 1e1020).should == "0000000INF"
+          ("%010E" % (0.0/0)).should == "0000000NAN"
+        end
+      end
+
+      platform_is_not :darwin do
+        it "pads with spaces for %E with Inf, -Inf, and NaN" do
+          ("%010E" % -1e1020).should == "      -INF"
+          ("%010E" % 1e1020).should == "       INF"
+          ("%010E" % (0.0/0)).should == "       NAN"
+        end
       end
     end
+    
+    ruby_version_is "1.9" do
+      platform_is :darwin do
+        it "pads with zeros using %E with Inf, -Inf, and NaN" do
+          ("%010E" % -1e1020).should == "-000000Inf"
+          ("%010E" % 1e1020).should == "0000000Inf"
+          ("%010E" % (0.0/0)).should == "0000000NaN"
+        end
+      end
 
-    platform_is_not :darwin do
-      it "pads with spaces for %E with Inf, -Inf, and NaN" do
-        ("%010E" % -1e1020).should == "      -INF"
-        ("%010E" % 1e1020).should == "       INF"
-        ("%010E" % (0.0/0)).should == "       NAN"
+      platform_is_not :darwin do
+        it "pads with spaces for %E with Inf, -Inf, and NaN" do
+          ("%010E" % -1e1020).should == "      -Inf"
+          ("%010E" % 1e1020).should == "       Inf"
+          ("%010E" % (0.0/0)).should == "       NaN"
+        end
       end
     end
   end
