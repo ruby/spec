@@ -349,12 +349,14 @@ describe "String#%" do
     ("%*e" % [10, 9]).should == "9.000000e+00"
   end
 
-  not_compliant_on :rubinius, :jruby do
-    it "supports float formats using %e, and downcases -Inf, Inf, and NaN" do
-      ("%e" % 1e1020).should == "inf"
-      ("%e" % -1e1020).should == "-inf"
-      ("%e" % (0.0/0)).should == "nan"
-      ("%e" % (-0e0/0)).should == "nan"
+  ruby_version_is ""..."1.9" do
+    not_compliant_on :rubinius, :jruby do
+      it "supports float formats using %e, and downcases -Inf, Inf, and NaN" do
+        ("%e" % 1e1020).should == "inf"
+        ("%e" % -1e1020).should == "-inf"
+        ("%e" % (0.0/0)).should == "nan"
+        ("%e" % (-0e0/0)).should == "nan"
+      end
     end
   end
 
@@ -394,16 +396,18 @@ describe "String#%" do
   end
 
   not_compliant_on :rubinius, :jruby do
-    it "supports float formats using %E, and upcases Inf, -Inf, and NaN" do
-      ("%E" % 1e1020).should == "INF"
-      ("%E" % -1e1020).should == "-INF"
-      ("%-10E" % 1e1020).should == "INF       "
-      ("%+E" % 1e1020).should == "+INF"
-      ("% E" % 1e1020).should == " INF"
-      ("%E" % (0.0/0)).should == "NAN"
-      ("%E" % (-0e0/0)).should == "NAN"
+    ruby_version_is ""..."1.9" do
+      it "supports float formats using %E, and upcases Inf, -Inf, and NaN" do
+        ("%E" % 1e1020).should == "INF"
+        ("%E" % -1e1020).should == "-INF"
+        ("%-10E" % 1e1020).should == "INF       "
+        ("%+E" % 1e1020).should == "+INF"
+        ("% E" % 1e1020).should == " INF"
+        ("%E" % (0.0/0)).should == "NAN"
+        ("%E" % (-0e0/0)).should == "NAN"
+      end
     end
-
+    
     platform_is :darwin do
       it "pads with zeros using %E with Inf, -Inf, and NaN" do
         ("%010E" % -1e1020).should == "-000000INF"
