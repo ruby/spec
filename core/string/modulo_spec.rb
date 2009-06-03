@@ -280,19 +280,33 @@ describe "String#%" do
     ("%#B" % 10).should == "0B1010"
   end
 
-  it "supports character formats using %c" do
-    ("%c" % 10).should == "\n"
-    ("%2$c" % [10, 11, 14]).should == "\v"
-    ("%-4c" % 10).should == "\n   "
-    ("%*c" % [10, 3]).should == "         \003"
-    ("%c" % (256 + 42)).should == "*"
+  ruby_version_is ""..."1.9" do
+    it "supports character formats using %c" do
+      ("%c" % 10).should == "\n"
+      ("%2$c" % [10, 11, 14]).should == "\v"
+      ("%-4c" % 10).should == "\n   "
+      ("%*c" % [10, 3]).should == "         \003"
+      ("%c" % (256 + 42)).should == "*"
 
-    lambda { "%c" % Object }.should raise_error(TypeError)
+      lambda { "%c" % Object }.should raise_error(TypeError)
+    end
+
+    it "uses argument % 256" do
+      ("%c" % [256 * 3 + 64]).should == ("%c" % 64)
+      ("%c" % -200).should == ("%c" % 56)
+    end
   end
 
-  it "uses argument % 256" do
-    ("%c" % [256 * 3 + 64]).should == ("%c" % 64)
-    ("%c" % -200).should == ("%c" % 56)
+  ruby_version_is "1.9" do
+    it "supports character formats using %c" do
+      ("%c" % 10).should == "\n"
+      ("%2$c" % [10, 11, 14]).should == "\v"
+      ("%-4c" % 10).should == "\n   "
+      ("%*c" % [10, 3]).should == "         \003"
+      ("%c" % 42).should == "*"
+
+      lambda { "%c" % Object }.should raise_error(TypeError)
+    end
   end
 
   ruby_version_is "1.8.6.278" do
