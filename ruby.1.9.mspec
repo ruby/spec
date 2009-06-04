@@ -60,6 +60,8 @@ class MSpecScript
   # executable is not consistently named.
   set :target, 'ruby1.9'
 
+  set :backtrace_filter, /mspec\//
+
   set :tags_patterns, [
                         [%r(language/),     'tags/1.9/language/'],
                         [%r(core/),         'tags/1.9/core/'],
