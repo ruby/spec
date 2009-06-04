@@ -3,11 +3,18 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
 describe "String#inspect" do
-  # Older versions of MRI wrongly print \b as \010
-  it "returns a string with nonprinting charaters replaced by escaped-numeric notation" do
-    ("\000".."A").to_a.to_s.inspect.should == "\"\\000\\001\\002\\003\\004\\005\\006\\a\\b\\t\\n\\v\\f\\r\\016\\017\\020\\021\\022\\023\\024\\025\\026\\027\\030\\031\\032\\e\\034\\035\\036\\037 !\\\"\\\#$%&'()*+,-./0123456789\""
+  ruby_version_is ""..."1.9" do
+    # Older versions of MRI wrongly print \b as \010
+    it "returns a string with nonprinting charaters replaced by escaped-numeric notation" do
+      ("\000".."A").to_a.to_s.inspect.should == "\"\\000\\001\\002\\003\\004\\005\\006\\a\\b\\t\\n\\v\\f\\r\\016\\017\\020\\021\\022\\023\\024\\025\\026\\027\\030\\031\\032\\e\\034\\035\\036\\037 !\\\"\\\#$%&'()*+,-./0123456789\""
+    end
   end
-  
+  ruby_version_is "1.9" do
+    it "returns a string with nonprinting charaters replaced by \\x notation" do
+      ("\000".."A").to_a.join('').should == "\x00\x01\x02\x03\x04\x05\x06\a\b\t\n\v\f\r\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\e\x1C\x1D\x1E\x1F !\"\#$%&'()*+,-./0123456789:;<=>?@A"
+    end
+  end
+
   it "produces different output based on $KCODE" do
     old_kcode = $KCODE
 
