@@ -174,7 +174,7 @@ describe "Array#pack with ASCII-string format", :shared => true do
 
   it "raises a TypeError if array item is not String with ('A<count>')" do
     lambda { [123].pack(format(5)) }.should raise_error(TypeError)
-    lambda { [:hello].pack(format(5)) }.should raise_error(TypeError)
+    lambda { [[]].pack(format(5)) }.should raise_error(TypeError)
     lambda { [mock('not string')].pack(format(5)) }.should raise_error(TypeError)
   end
 
@@ -309,7 +309,7 @@ describe "Array#pack with format 'B'" do
 
   it "raises a TypeError if corresponding array item is not String" do
     lambda { [123].pack('B8') }.should raise_error(TypeError)
-    lambda { [:data].pack('B8') }.should raise_error(TypeError)
+    lambda { [[]].pack('B8') }.should raise_error(TypeError)
     lambda { [mock('not string')].pack('B8') }.should raise_error(TypeError)
   end
 
@@ -394,7 +394,7 @@ describe "Array#pack with format 'b'" do
 
   it "raises a TypeError if corresponding array item is not String" do
     lambda { [123].pack('b8') }.should raise_error(TypeError)
-    lambda { [:data].pack('b8') }.should raise_error(TypeError)
+    lambda { [[]].pack('b8') }.should raise_error(TypeError)
     lambda { [mock('not string')].pack('b8') }.should raise_error(TypeError)
   end
 
@@ -2035,7 +2035,7 @@ describe "Array#pack with format 'm'" do
 
   it "raises a TypeError if corresponding array item is not string" do
     lambda { [123].pack('m') }.should raise_error(TypeError)
-    lambda { [:hello].pack('m') }.should raise_error(TypeError)
+    lambda { [[]].pack('m') }.should raise_error(TypeError)
     lambda { [mock('not string')].pack('m') }.should raise_error(TypeError)
   end
 
@@ -2195,7 +2195,7 @@ describe "Array#pack with format 'u'" do
 
   it "raises a TypeError if corresponding array item is not string" do
     lambda { [123].pack('u') }.should raise_error(TypeError)
-    lambda { [:hello].pack('u') }.should raise_error(TypeError)
+    lambda { [[]].pack('u') }.should raise_error(TypeError)
     lambda { [mock('not string')].pack('u') }.should raise_error(TypeError)
   end
 
