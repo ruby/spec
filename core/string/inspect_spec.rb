@@ -15,29 +15,32 @@ describe "String#inspect" do
     end
   end
 
-  it "produces different output based on $KCODE" do
-    old_kcode = $KCODE
+  # $KCODE is deprecated/removed on 1.9
+  ruby_version_is ""..."1.9" do
+    it "produces different output based on $KCODE" do
+      old_kcode = $KCODE
 
-    begin
-      $KCODE = "NONE"
-      "äöü".inspect.should == "\"\\303\\244\\303\\266\\303\\274\""
+      begin
+        $KCODE = "NONE"
+        "äöü".inspect.should == "\"\\303\\244\\303\\266\\303\\274\""
 
-      $KCODE = "UTF-8"
-      "äöü".inspect.should == "\"äöü\""
-    ensure
-      $KCODE = old_kcode
+        $KCODE = "UTF-8"
+        "äöü".inspect.should == "\"äöü\""
+      ensure
+        $KCODE = old_kcode
+      end
     end
-  end
 
-  it "can handle malformed UTF-8 string when $KCODE is UTF-8" do
-    old_kcode = $KCODE
+    it "can handle malformed UTF-8 string when $KCODE is UTF-8" do
+      old_kcode = $KCODE
 
-    begin
-      $KCODE = "UTF-8"
-      # malformed UTF-8 sequence
-      "\007äöüz\303".inspect.should == "\"\\aäöüz\\303\""
-    ensure
-      $KCODE = old_kcode
+      begin
+        $KCODE = "UTF-8"
+        # malformed UTF-8 sequence
+        "\007äöüz\303".inspect.should == "\"\\aäöüz\\303\""
+      ensure
+        $KCODE = old_kcode
+      end
     end
   end
 
