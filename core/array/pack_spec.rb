@@ -1551,9 +1551,11 @@ describe "Array#pack with float format", :shared => true do
   end
 
   it "tries to convert the pack argument to a Float using #to_f" do
-    obj = mock('to_f')
-    obj.should_receive(:to_f).and_return(1.5)
-    lambda{ [obj].pack(format) }.should_not raise_error
+    # 1.9 requires that the object actually be Numeric before calling #to_f on
+    # it; 1.8 doesn't care.
+    num = mock_numeric('number')
+    num.should_receive(:to_f).and_return(1.5)
+    lambda{ [num].pack(format) }.should_not raise_error
   end
 
   it "accepts a string representation of real number as the pack argument" do
