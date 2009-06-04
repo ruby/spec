@@ -1558,9 +1558,11 @@ describe "Array#pack with float format", :shared => true do
     lambda{ [num].pack(format) }.should_not raise_error
   end
 
-  it "accepts a string representation of real number as the pack argument" do
-    lambda{ ["1.3333"].pack(format) }.should_not raise_error(TypeError)
-    lambda{ ["-1.3333"].pack(format) }.should_not raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "accepts a string representation of real number as the pack argument" do
+      lambda{ ["1.3333"].pack(format) }.should_not raise_error(TypeError)
+      lambda{ ["-1.3333"].pack(format) }.should_not raise_error(TypeError)
+    end
   end
 
   it "accepts an integer as the pack argument" do
