@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "IO::foreach" do
@@ -109,4 +110,3 @@ describe "IO::foreach" do
     lines.should == @content_with_r
   end
 end
-
