@@ -51,11 +51,13 @@ describe "Time#+" do
     lambda { Time.now + nil }.should raise_error(TypeError)
   end
 
-  it "tracks microseconds" do
-    time = Time.at(0)
-    time += 0.123456
-    time.usec.should == 123456
-    time += 0.654321
-    time.usec.should == 777777
+  ruby_bug "[ruby-dev:38446]", "1.9.2" do
+    it "tracks microseconds" do
+      time = Time.at(0)
+      time += 0.123456
+      time.usec.should == 123456
+      time += 0.654321
+      time.usec.should == 777777
+    end  
   end
 end
