@@ -132,10 +132,6 @@ describe :hash_eql_additional, :shared => true do
   end
 
   it "returns true if other Hash has the same number of keys and each key-value pair matches" do
-    new_hash(5).send(@method, new_hash(1)).should be_true
-    new_hash {|h, k| 1}.send(@method, new_hash {}).should be_true
-    new_hash {|h, k| 1}.send(@method, new_hash(2)).should be_true
-
     a = new_hash(:a => 5)
     b = new_hash
     a.send(@method, b).should be_false
@@ -145,12 +141,6 @@ describe :hash_eql_additional, :shared => true do
 
     c = new_hash("a" => 5)
     a.send(@method, c).should be_false
-
-    d = new_hash {|h, k| 1}
-    e = new_hash {}
-    d[1] = 2
-    e[1] = 2
-    d.send(@method, e).should be_true
   end
 
   it "does not call to_hash on hash subclasses" do
@@ -205,5 +195,21 @@ describe :hash_eql_additional, :shared => true do
     new_hash(a[0] => 1).send(@method, new_hash(a[1] => 1)).should be_true
     a[0].tainted?.should be_true
     a[1].tainted?.should be_true
+  end
+end
+
+describe :hash_eql_additional_more, :shared => true do
+  it "returns true if other Hash has the same number of keys and each key-value pair matches" do
+    new_hash(5).send(@method, new_hash(1)).should be_true
+    new_hash {|h, k| 1}.send(@method, new_hash {}).should be_true
+    new_hash {|h, k| 1}.send(@method, new_hash(2)).should be_true
+  end
+
+  it "returns true if other Hash has the same number of keys and each key-value pair matches" do
+    d = new_hash {|h, k| 1}
+    e = new_hash {}
+    d[1] = 2
+    e[1] = 2
+    d.send(@method, e).should be_true
   end
 end
