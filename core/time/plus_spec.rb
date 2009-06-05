@@ -26,7 +26,7 @@ describe "Time#+" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9.2" do
     it "increments the time by the specified amount as rational numbers" do
       (Time.at(1.1) + 0.9).should_not == Time.at(2)
     end

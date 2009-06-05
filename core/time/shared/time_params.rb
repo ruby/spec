@@ -25,7 +25,7 @@ describe :time_params, :shared => true do
     Time.send(@method, 1.0, 15.0, 20.0, 1.0, 1.0, 2000.0, :ignored, :ignored, :ignored, :ignored).should == Time.send(@method, 1, 15, 20, 1, 1, 2000, :ignored, :ignored, :ignored, :ignored)
   end
 
-  ruby_version_is ""..."1.9" do
+  ruby_version_is ""..."1.9.1" do
     it "should accept various year ranges" do
       Time.send(@method, 1901, 12, 31, 23, 59, 59, 0).wday.should == 2
       Time.send(@method, 2037, 12, 31, 23, 59, 59, 0).wday.should == 4
@@ -66,12 +66,13 @@ describe :time_params, :shared => true do
     end
   end
 
-  # MRI 1.9 relaxes 1.8's restriction's on allowed years.
-  ruby_version_is "1.9" do
+  # MRI 1.9.2 relaxes 1.8's restriction's on allowed years.
+  ruby_version_is "1.9.2" do
     it "should accept various year ranges" do
       Time.send(@method, 1801, 12, 31, 23, 59, 59, 0).wday.should == 4
       Time.send(@method, 3000, 12, 31, 23, 59, 59, 0).wday.should == 3
     end  
+
     it "raises an ArgumentError for out of range values" do
       # year-based Time.local(year (, month, day, hour, min, sec, usec))
       # Year range only fails on 32 bit archs
