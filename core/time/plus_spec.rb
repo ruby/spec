@@ -36,9 +36,11 @@ describe "Time#+" do
       (Time.at(100) + obj).should == Time.at(110)
     end
 
-    it "raises TypeError on argument that can't be coerced into Rational" do
-      lambda { Time.now + Object.new }.should raise_error(TypeError)
-      lambda { Time.now + "stuff" }.should raise_error(TypeError)
+    ruby_bug "#1583", "1.9.2" do
+      it "raises TypeError on argument that can't be coerced into Rational" do
+        lambda { Time.now + Object.new }.should raise_error(TypeError)
+        lambda { Time.now + "stuff" }.should raise_error(TypeError)
+      end
     end
   end
 
