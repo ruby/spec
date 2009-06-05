@@ -131,7 +131,7 @@ describe :hash_eql_additional, :shared => true do
     new_hash(1.0 => "x").send(@method, new_hash(1 => "x")).should be_false
   end
 
-  it "returns true if other Hash has the same number of keys and each key-value pair matches" do
+  it "returns true iff other Hash has the same number of keys and each key-value pair matches" do
     a = new_hash(:a => 5)
     b = new_hash
     a.send(@method, b).should be_false
@@ -199,13 +199,11 @@ describe :hash_eql_additional, :shared => true do
 end
 
 describe :hash_eql_additional_more, :shared => true do
-  it "returns true if other Hash has the same number of keys and each key-value pair matches" do
+  it "returns true if other Hash has the same number of keys and each key-value pair matches, even though the default-value are not same" do
     new_hash(5).send(@method, new_hash(1)).should be_true
     new_hash {|h, k| 1}.send(@method, new_hash {}).should be_true
     new_hash {|h, k| 1}.send(@method, new_hash(2)).should be_true
-  end
 
-  it "returns true if other Hash has the same number of keys and each key-value pair matches" do
     d = new_hash {|h, k| 1}
     e = new_hash {}
     d[1] = 2
