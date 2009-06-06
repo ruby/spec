@@ -232,19 +232,11 @@ describe :kernel_float, :shared => true do
 end
 
 describe "Kernel.Float" do
-  before :each do
-    @object = Kernel
-  end
-
-  it_behaves_like :kernel_float, :Float
+  it_behaves_like :kernel_float, :Float, Kernel
 end
 
 describe "Kernel#Float" do
-  before :each do
-    @object = Object.new
-  end
-
-  it_behaves_like :kernel_float, :Float
+  it_behaves_like :kernel_float, :Float, mock("receiver for Float()")
 end
 
 describe "Kernel#Float" do
