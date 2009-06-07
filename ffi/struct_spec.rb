@@ -134,36 +134,46 @@ describe "Struct tests" do
       mp.get_int64(ll_off).should == 0xfee1deadbeef
       end
   end
+
   it "Can use Struct subclass as parameter type" do
-    module StructParam
-      extend FFI::Library
-      ffi_lib TestLibrary::PATH
-      class TestStruct < FFI::Struct
-        layout :c, :char
+    lambda {
+      module StructParam
+        extend FFI::Library
+        ffi_lib TestLibrary::PATH
+        class TestStruct < FFI::Struct
+          layout :c, :char
+        end
+        attach_function :struct_field_s8, [ TestStruct ], :char
       end
-      attach_function :struct_field_s8, [ TestStruct ], :char
-    end
+    }.should_not raise_error
   end
+
   it "Can use Struct subclass as IN parameter type" do
-    module StructParam
-      extend FFI::Library
-      ffi_lib TestLibrary::PATH
-      class TestStruct < FFI::Struct
-        layout :c, :char
+    lambda {
+      module StructParam
+        extend FFI::Library
+        ffi_lib TestLibrary::PATH
+        class TestStruct < FFI::Struct
+          layout :c, :char
+        end
+        attach_function :struct_field_s8, [ TestStruct.in ], :char
       end
-      attach_function :struct_field_s8, [ TestStruct.in ], :char
-    end
+    }.should_not raise_error
   end
+
   it "Can use Struct subclass as OUT parameter type" do
-    module StructParam
-      extend FFI::Library
-      ffi_lib TestLibrary::PATH
-      class TestStruct < FFI::Struct
-        layout :c, :char
+    lambda {
+      module StructParam
+        extend FFI::Library
+        ffi_lib TestLibrary::PATH
+        class TestStruct < FFI::Struct
+          layout :c, :char
+        end
+        attach_function :struct_field_s8, [ TestStruct.out ], :char
       end
-      attach_function :struct_field_s8, [ TestStruct.out ], :char
-    end
+    }.should_not raise_error
   end
+
   it "can be passed directly as a :pointer parameter" do
     class TestStruct < FFI::Struct
       layout :i, :int

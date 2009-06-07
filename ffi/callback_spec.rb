@@ -216,7 +216,7 @@ describe "Callback" do
 
   describe "When the callback is considered optional by the underlying library" do
     it "should handle receiving 'nil' in place of the closure" do
-      LibTest.testOptionalCallbackCrV(nil, 13)
+      lambda { LibTest.testOptionalCallbackCrV(nil, 13) }.should_not raise_error
     end
   end
 
@@ -231,14 +231,15 @@ describe "Callback" do
   end
 
   describe "as return value" do
-
     it "should not blow up when a callback is defined that returns a callback" do
-      module LibTest
-        extend FFI::Library
-        callback :cb_return_type_1, [ :short ], :short
-        callback :cb_lookup_1, [ :short ], :cb_return_type_1
-        attach_function :testReturnsCallback_1, :testReturnsClosure, [ :cb_lookup_1, :short ], :cb_return_type_1
-      end      
+      lambda {
+        module LibTest
+          extend FFI::Library
+          callback :cb_return_type_1, [ :short ], :short
+          callback :cb_lookup_1, [ :short ], :cb_return_type_1
+          attach_function :testReturnsCallback_1, :testReturnsClosure, [ :cb_lookup_1, :short ], :cb_return_type_1
+        end
+      }.should_not raise_error
     end
 
     it "should return a callback" do
@@ -266,14 +267,18 @@ describe "Callback" do
       lookup_proc_called.should be_true
       return_proc_called.should be_true
     end
+
     it 'should not blow up when a callback takes a callback as argument' do
-      module LibTest
-        extend FFI::Library
-        callback :cb_argument, [ :int ], :int
-        callback :cb_with_cb_argument, [ :cb_argument, :int ], :int
-        attach_function :testCallbackAsArgument, :testArgumentClosure, [ :cb_with_cb_argument, :int ], :int
-      end   
+      lambda {
+        module LibTest
+          extend FFI::Library
+          callback :cb_argument, [ :int ], :int
+          callback :cb_with_cb_argument, [ :cb_argument, :int ], :int
+          attach_function :testCallbackAsArgument, :testArgumentClosure, [ :cb_with_cb_argument, :int ], :int
+        end
+      }.should_not raise_error
     end
+
     it 'should be able to use the callback argument' do
       module LibTest
         extend FFI::Library

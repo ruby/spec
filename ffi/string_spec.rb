@@ -1,7 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe "String tests" do
-  include FFI
   module LibTest
     extend FFI::Library
     ffi_lib TestLibrary::PATH
@@ -37,9 +36,11 @@ describe "String tests" do
     rescue SecurityError => e
     end
   end if false
+
   it "casts nil as NULL pointer" do
-    LibTest.string_dummy(nil)
+    lambda { LibTest.string_dummy(nil) }.should_not raise_error
   end
+
   it "reads an array of strings until encountering a NULL pointer" do
     strings = ["foo", "bar", "baz", "testing", "ffi"]
     ptrary = MemoryPointer.new(:pointer, 6)

@@ -177,15 +177,17 @@ describe "AutoPointer" do
     AutoPointerTestHelper.gc_everything loop_count
   end
 end
+
 describe "AutoPointer#new" do
   it "MemoryPointer argument raises ArgumentError" do
     lambda { FFI::AutoPointer.new(FFI::MemoryPointer.new(:int))}.should raise_error(ArgumentError)
   end
+
   it "AutoPointer argument raises ArgumentError" do
     lambda { FFI::AutoPointer.new(FFI::AutoPointer.new(LibTest.ptr_from_address(0))) }.should raise_error(ArgumentError)
   end
+
   it "Buffer argument raises ArgumentError" do
     lambda { FFI::AutoPointer.new(FFI::Buffer.new(:int))}.should raise_error(ArgumentError)
   end
-
 end

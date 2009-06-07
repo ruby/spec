@@ -3,6 +3,7 @@ require 'spec'
 
 $:.unshift File.join(File.dirname(__FILE__), "..", "..", "lib"), File.join(File.dirname(__FILE__), "..", "..", "build", RUBY_VERSION) if ENV["MRI_FFI"]
 require "ffi"
+include FFI
 
 module TestLibrary
   PATH = "/Users/eloy/code/MacRuby/ruby-ffi/build/libtest.#{FFI::Platform::LIBSUFFIX}"
