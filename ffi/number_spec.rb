@@ -1,4 +1,5 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+require File.expand_path('../spec_helper', __FILE__)
+
 describe "Function with primitive integer arguments" do
   module LibTest
     extend FFI::Library

@@ -5,7 +5,7 @@ $:.unshift File.join(File.dirname(__FILE__), "..", "..", "lib"), File.join(File.
 require "ffi"
 
 module TestLibrary
-  PATH = "build/libtest.#{FFI::Platform::LIBSUFFIX}"
+  PATH = "/Users/eloy/code/MacRuby/ruby-ffi/build/libtest.#{FFI::Platform::LIBSUFFIX}"
 end
 module LibTest
   extend FFI::Library

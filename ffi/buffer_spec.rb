@@ -1,11 +1,11 @@
-require "rubygems"
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+require File.expand_path('../spec_helper', __FILE__)
 include FFI
+
 LongSize = FFI::Platform::LONG_SIZE / 8
 
 describe "Buffer#total" do
   [1,2,3].each do |i|
-    { :char => 1, :uchar => 1, :short => 2, :ushort => 2, :int => 4, 
+    { :char => 1, :uchar => 1, :short => 2, :ushort => 2, :int => 4,
       :uint => 4, :long => LongSize, :ulong => LongSize, 
       :long_long => 8, :ulong_long => 8, :float => 4, :double => 8
     }.each_pair do |t, s|

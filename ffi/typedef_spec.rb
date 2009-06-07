@@ -1,4 +1,5 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+require File.expand_path('../spec_helper', __FILE__)
+
 describe "Custom type definitions" do
   it "attach_function with custom typedef" do
     module CustomTypedef
