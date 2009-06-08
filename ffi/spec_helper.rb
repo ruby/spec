@@ -7,16 +7,18 @@ unless defined? FFI
   end
 end
 
-include FFI
+module FFISpecs
+  include FFI
 
-module TestLibrary
+  LongSize = FFI::Platform::LONG_SIZE / 8
+
   FIXTURE_DIR = File.expand_path("../fixtures", __FILE__)
-  PATH = File.join(FIXTURE_DIR, "build/libtest/libtest.#{FFI::Platform::LIBSUFFIX}")
-  
+  LIBRARY = File.join(FIXTURE_DIR, "build/libtest/libtest.#{FFI::Platform::LIBSUFFIX}")
+
   def self.need_to_compile_fixtures?
-    !File.exist?(PATH) or Dir.glob(File.join(FIXTURE_DIR, "*")).any? { |f| File.mtime(f) > File.mtime(PATH) }
+    !File.exist?(LIBRARY) or Dir.glob(File.join(FIXTURE_DIR, "*")).any? { |f| File.mtime(f) > File.mtime(LIBRARY) }
   end
-  
+
   if need_to_compile_fixtures?
     puts "[!] Compiling Ruby-FFI fixtures"
     Dir.chdir(File.dirname(FIXTURE_DIR)) do
@@ -25,9 +27,9 @@ module TestLibrary
       end
     end
   end
-end
 
-module LibTest
-  extend FFI::Library
-  ffi_lib TestLibrary::PATH
+  module LibTest
+    extend FFI::Library
+    ffi_lib LIBRARY
+  end
 end
