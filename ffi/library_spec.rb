@@ -4,59 +4,42 @@ module FFISpecs
   describe "Library" do
     it "attach_function with no library specified" do
       lambda {
-        Module.new do |m|
-          m.extend Library
-          attach_function :getpid, [ ], :uint
-        end
+        new_module { attach_function :getpid, [ ], :uint }
       }.should_not raise_error
     end
 
     it "attach_function :getpid from this process" do
       lambda {
-        Module.new do |m|
-          m.extend Library
-          attach_function :getpid, [ ], :uint
-        end.getpid.should == Process.pid
+        mod = new_module { attach_function :getpid, [ ], :uint }
+        mod.getpid.should == Process.pid
       }.should_not raise_error
     end
 
     it "attach_function :getpid from [ 'c', 'libc.so.6'] " do
       lambda {
-        Module.new do |m|
-          m.extend Library
-          ffi_lib 'c', 'libc.so.6'
-          attach_function :getpid, [ ], :uint
-        end.getpid.should == Process.pid
+        mod = new_module('c', 'libc.so.6') { attach_function :getpid, [ ], :uint }
+        mod.getpid.should == Process.pid
       }.should_not raise_error
     end
 
     it "attach_function :getpid from [ 'libc.so.6', 'c' ] " do
       lambda {
-        Module.new do |m|
-          m.extend Library
-          ffi_lib 'libc.so.6', 'c'
-          attach_function :getpid, [ ], :uint
-        end.getpid.should == Process.pid
+        mod = new_module('libc.so.6', 'c') { attach_function :getpid, [ ], :uint }
+        mod.getpid.should == Process.pid
       }.should_not raise_error
     end
 
     it "attach_function :getpid from [ 'libfubar.so.0xdeadbeef', nil, 'c' ] " do
       lambda {
-        Module.new do |m|
-          m.extend Library
-          ffi_lib 'libfubar.so.0xdeadbeef', nil, 'c'
-          attach_function :getpid, [ ], :uint
-        end.getpid.should == Process.pid
+        mod = new_module('libfubar.so.0xdeadbeef', nil, 'c') { attach_function :getpid, [ ], :uint }
+        mod.getpid.should == Process.pid
       }.should_not raise_error
     end
 
     it "attach_function :getpid from [ 'libfubar.so.0xdeadbeef' ] " do
       lambda {
-        Module.new do |m|
-          m.extend Library
-          ffi_lib 'libfubar.so.0xdeadbeef'
-          attach_function :getpid, [ ], :uint
-        end.getpid.should == Process.pid
+        mod = new_module('libfubar.so.0xdeadbeef') { attach_function :getpid, [ ], :uint }
+        mod.getpid.should == Process.pid
       }.should raise_error(LoadError)
     end
 
@@ -144,10 +127,16 @@ module FFISpecs
       end
     end
 
+    def new_module(*libs, &block)
+      Module.new do
+        extend Library
+        ffi_lib(*libs) unless libs.empty?
+        module_eval(&block)
+      end
+    end
+
     def gvar_lib(name, type)
-      Module.new do |m|
-        m.extend Library
-        ffi_lib FFISpecs::LIBRARY
+      new_module FFISpecs::LIBRARY do
         attach_variable :gvar, "gvar_#{name}", type
         attach_function :get, "gvar_#{name}_get", [], type
         attach_function :set, "gvar_#{name}_set", [ type ], :void
