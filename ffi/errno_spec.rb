@@ -1,10 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module FFISpecs
-  module LibTest
-    attach_function :setLastError, [ :int ], :void
-  end
-
   describe "FFI.errno" do
     it "FFI.errno contains errno from last function" do
       LibTest.setLastError(0)

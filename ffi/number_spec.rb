@@ -1,25 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module FFISpecs
-  module LibTest
-    attach_function :ret_s8, [ :char ], :char
-    attach_function :ret_u8, [ :uchar ], :uchar
-    attach_function :ret_s16, [ :short ], :short
-    attach_function :ret_u16, [ :ushort ], :ushort
-    attach_function :ret_s32, [ :int ], :int
-    attach_function :ret_u32, [ :uint ], :uint
-    attach_function :ret_s64, [ :long_long ], :long_long
-    attach_function :ret_u64, [ :ulong_long ], :ulong_long
-    attach_function :ret_long, [ :long ], :long
-    attach_function :ret_ulong, [ :ulong ], :ulong
-    attach_function :set_s8, [ :char ], :void
-    attach_function :get_s8, [ ], :char
-    attach_function :set_float, [ :float ], :void
-    attach_function :get_float, [ ], :float
-    attach_function :set_double, [ :double ], :void
-    attach_function :get_double, [ ], :double
-  end
-
   describe "Function with primitive integer arguments" do
     it "int8.size" do
       TYPE_INT8.size.should == 1
@@ -189,53 +170,16 @@ module FFISpecs
   end
 
   describe "Three different size Integer arguments" do
-    TYPE_MAP = {
-      's8' => :char, 'u8' => :uchar, 's16' => :short, 'u16' => :ushort,
-      's32' => :int, 'u32' => :uint, 's64' => :long_long, 'u64' => :ulong_long,
-      'sL' => :long, 'uL' => :ulong, 'f32' => :float, 'f64' => :double
-    }
-    TYPES = TYPE_MAP.keys
-
-    module LibTest
-      [ 's32', 'u32', 's64', 'u64' ].each do |rt|
-        TYPES.each do |t1|
-          TYPES.each do |t2|
-            TYPES.each do |t3|
-              begin
-                attach_function "pack_#{t1}#{t2}#{t3}_#{rt}",
-                  [ TYPE_MAP[t1], TYPE_MAP[t2], TYPE_MAP[t3], :buffer_out ], :void
-              rescue FFI::NotFoundError
-              end
-            end
-          end
-        end
+    def self.verify(p, off, t, v)
+      if t == 'f32'
+        p.get_float32(off).should == v
+      elsif t == 'f64'
+        p.get_float64(off).should == v
+      else
+        p.get_int64(off).should == v
       end
     end
 
-    PACK_VALUES = {
-      's8' => [ 0x12  ],
-      'u8' => [ 0x34  ],
-      's16' => [ 0x5678 ],
-      'u16' => [ 0x9abc ],
-      's32' => [ 0x7654321f ],
-      'u32' => [ 0xfee1babe ],
-      'sL' => [ 0x1f2e3d4c ],
-      'uL' => [ 0xf7e8d9ca ],
-      's64' => [ 0x1eafdeadbeefa1b2 ],
-      #'f32' => [ 1.234567 ], # TODO: Why is this disabled?
-      'f64' => [ 9.87654321 ]
-    }
-    module Number
-      def self.verify(p, off, t, v)
-        if t == 'f32'
-          p.get_float32(off).should == v
-        elsif t == 'f64'
-          p.get_float64(off).should == v
-        else
-          p.get_int64(off).should == v
-        end
-      end
-    end
     PACK_VALUES.keys.each do |t1|
       PACK_VALUES.keys.each do |t2|
         PACK_VALUES.keys.each do |t3|
@@ -245,9 +189,9 @@ module FFISpecs
                 it "call(#{TYPE_MAP[t1]} (#{v1}), #{TYPE_MAP[t2]} (#{v2}), #{TYPE_MAP[t3]} (#{v3}))" do
                   p = Buffer.new :long_long, 3
                   LibTest.send("pack_#{t1}#{t2}#{t3}_s64", v1, v2, v3, p)
-                  Number.verify(p, 0, t1, v1)
-                  Number.verify(p, 8, t2, v2)
-                  Number.verify(p, 16, t3, v3)
+                  verify(p, 0, t1, v1)
+                  verify(p, 8, t2, v2)
+                  verify(p, 16, t3, v3)
                 end
               end
             end

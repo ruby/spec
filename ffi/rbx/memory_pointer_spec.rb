@@ -1,10 +1,11 @@
 require File.expand_path('../../spec_helper', __FILE__)
 
 module FFISpecs
-  module CTest
-    extend FFI::Library
-    attach_function :strcat, [:pointer, :pointer], :pointer
-  end
+  # TODO: Why is this needed? Seems to work fine without it.
+  # module CTest
+  #   extend FFI::Library
+  #   attach_function :strcat, [:pointer, :pointer], :pointer
+  # end
 
   describe "MemoryPointer" do
     it "makes a pointer from a string" do

@@ -1,12 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module FFISpecs
-  module LibTest
-    attach_function :ptr_ret_pointer, [ :pointer, :int], :string
-    attach_function :string_equals, [ :string, :string ], :int
-    attach_function :string_dummy, [ :string ], :void
-  end
-
   describe "String tests" do
     it "MemoryPointer#get_string returns a tainted string" do
       mp = MemoryPointer.new 1024

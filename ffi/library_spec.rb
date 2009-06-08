@@ -127,7 +127,7 @@ module FFISpecs
       end
     end
 
-    def new_module(*libs, &block)
+    def self.new_module(*libs, &block)
       Module.new do
         extend Library
         ffi_lib(*libs) unless libs.empty?
@@ -135,7 +135,7 @@ module FFISpecs
       end
     end
 
-    def gvar_lib(name, type)
+    def self.gvar_lib(name, type)
       new_module FFISpecs::LIBRARY do
         attach_variable :gvar, "gvar_#{name}", type
         attach_function :get, "gvar_#{name}_get", [], type
@@ -143,7 +143,7 @@ module FFISpecs
       end
     end
 
-    def gvar_test(name, type, val)
+    def self.gvar_test(name, type, val)
       lib = gvar_lib(name, type)
       lib.set(val)
       lib.gvar.should == val

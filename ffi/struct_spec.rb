@@ -1,34 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module FFISpecs
-  StructTypes = {
-    's8' => :char,
-    's16' => :short,
-    's32' => :int,
-    's64' => :long_long,
-    'long' => :long,
-    'f32' => :float,
-    'f64' => :double
-  }
-
-  module LibTest
-    attach_function :ptr_ret_pointer, [ :pointer, :int], :string
-    attach_function :ptr_ret_int32_t, [ :pointer, :int ], :int
-    attach_function :ptr_from_address, [ :ulong ], :pointer
-    attach_function :string_equals, [ :string, :string ], :int
-    [ 's8', 's16', 's32', 's64', 'f32', 'f64', 'long' ].each do |t|
-      attach_function "struct_align_#{t}", [ :pointer ], StructTypes[t]
-    end
-  end
-
-  class PointerMember < FFI::Struct
-    layout :pointer, :pointer
-  end
-
-  class StringMember < FFI::Struct
-    layout :string, :string
-  end
-
   describe "Struct tests" do
     it "Struct#[:pointer]" do
       magic = 0x12345678
@@ -92,41 +64,53 @@ module FFISpecs
     end
 
     it "Struct#layout works with :name, :type pairs" do
-      class PairLayout < FFI::Struct
+      pair_layout = Class.new(FFI::Struct) do
         layout :a, :int, :b, :long_long
       end
+
       ll_off = (FFI::TYPE_UINT64.alignment == 4 ? 4 : 8)
-      PairLayout.size.should == (ll_off + 8)
-      mp = FFI::MemoryPointer.new(PairLayout.size)
-      s = PairLayout.new mp
+      pair_layout.size.should == (ll_off + 8)
+
+      mp = FFI::MemoryPointer.new(pair_layout.size)
+      s = pair_layout.new(mp)
+
       s[:a] = 0x12345678
       mp.get_int(0).should == 0x12345678
+
       s[:b] = 0xfee1deadbeef
       mp.get_int64(ll_off).should == 0xfee1deadbeef
     end
 
     it "Struct#layout works with :name, :type, offset tuples" do
-      class PairLayout < FFI::Struct
+      pair_layout = Class.new(FFI::Struct) do
         layout :a, :int, 0, :b, :long_long, 4
       end
-      PairLayout.size.should == (FFI::TYPE_UINT64.alignment == 4 ? 12 : 16)
-      mp = FFI::MemoryPointer.new(PairLayout.size)
-      s = PairLayout.new mp
+
+      pair_layout.size.should == (FFI::TYPE_UINT64.alignment == 4 ? 12 : 16)
+
+      mp = FFI::MemoryPointer.new(pair_layout.size)
+      s = pair_layout.new(mp)
+
       s[:a] = 0x12345678
       mp.get_int(0).should == 0x12345678
+
       s[:b] = 0xfee1deadbeef
       mp.get_int64(4).should == 0xfee1deadbeef
     end
 
     it "Struct#layout works with mixed :name,:type and :name,:type,offset" do
-      class MixedLayout < FFI::Struct
+      mixed_layout = Class.new(FFI::Struct) do
         layout :a, :int, :b, :long_long, 4
       end
-      MixedLayout.size.should == (FFI::TYPE_UINT64.alignment == 4 ? 12 : 16)
-      mp = FFI::MemoryPointer.new(MixedLayout.size)
-      s = MixedLayout.new mp
+
+      mixed_layout.size.should == (FFI::TYPE_UINT64.alignment == 4 ? 12 : 16)
+
+      mp = FFI::MemoryPointer.new(mixed_layout.size)
+      s = mixed_layout.new(mp)
+
       s[:a] = 0x12345678
       mp.get_int(0).should == 0x12345678
+
       s[:b] = 0xfee1deadbeef
       mp.get_int64(4).should == 0xfee1deadbeef
     end
@@ -134,15 +118,19 @@ module FFISpecs
     rb_maj, rb_min = RUBY_VERSION.split('.')
     if rb_maj.to_i >= 1 && rb_min.to_i >= 9 || RUBY_PLATFORM =~ /java/
       it "Struct#layout withs with a hash of :name => type" do
-        class HashLayout < FFI::Struct
+        hash_layout = Class.new(FFI::Struct) do
           layout :a => :int, :b => :long_long
         end
+
         ll_off = (FFI::TYPE_UINT64.alignment == 4? 4 : 8)
-        HashLayout.size.should == (ll_off + 8)
-        mp = FFI::MemoryPointer.new(HashLayout.size)
-        s = HashLayout.new mp
+        hash_layout.size.should == (ll_off + 8)
+
+        mp = FFI::MemoryPointer.new(hash_layout.size)
+        s = hash_layout.new(mp)
+
         s[:a] = 0x12345678
         mp.get_int(0).should == 0x12345678
+
         s[:b] = 0xfee1deadbeef
         mp.get_int64(ll_off).should == 0xfee1deadbeef
         end
@@ -150,126 +138,132 @@ module FFISpecs
 
     it "Can use Struct subclass as parameter type" do
       lambda {
-        module StructParam
+        Module.new do
           extend FFI::Library
           ffi_lib LIBRARY
-          class TestStruct < FFI::Struct
-            layout :c, :char
-          end
-          attach_function :struct_field_s8, [ TestStruct ], :char
+
+          struct = Class.new(FFI::Struct) { layout :c, :char }
+          attach_function :struct_field_s8, [ struct ], :char
         end
       }.should_not raise_error
     end
 
     it "Can use Struct subclass as IN parameter type" do
       lambda {
-        module StructParam
+        Module.new do
           extend FFI::Library
           ffi_lib LIBRARY
-          class TestStruct < FFI::Struct
-            layout :c, :char
-          end
-          attach_function :struct_field_s8, [ TestStruct.in ], :char
+
+          struct = Class.new(FFI::Struct) { layout :c, :char }
+          attach_function :struct_field_s8, [ struct.in ], :char
         end
       }.should_not raise_error
     end
 
     it "Can use Struct subclass as OUT parameter type" do
       lambda {
-        module StructParam
+        Module.new do
           extend FFI::Library
           ffi_lib LIBRARY
-          class TestStruct < FFI::Struct
-            layout :c, :char
-          end
-          attach_function :struct_field_s8, [ TestStruct.out ], :char
+
+          struct = Class.new(FFI::Struct) { layout :c, :char }
+          attach_function :struct_field_s8, [ struct.out ], :char
         end
       }.should_not raise_error
     end
 
     it "can be passed directly as a :pointer parameter" do
-      class TestStruct < FFI::Struct
+      struct = Class.new(FFI::Struct) do
         layout :i, :int
       end
-      s = TestStruct.new
+
+      s = struct.new
       s[:i] = 0x12
       LibTest.ptr_ret_int32_t(s, 0).should == 0x12
     end
 
     it ":char member aligned correctly" do
-      class AlignChar < FFI::Struct
+      align_char = Class.new(FFI::Struct) do
         layout :c, :char, :v, :char
       end
-      s = AlignChar.new
+
+      s = align_char.new
       s[:v] = 0x12
       LibTest.struct_align_s8(s.pointer).should == 0x12
     end
 
     it ":short member aligned correctly" do
-      class AlignShort < FFI::Struct
+      align_short = Class.new(FFI::Struct) do
         layout :c, :char, :v, :short
       end
-      s = AlignShort.alloc_in
+
+      s = align_short.alloc_in
       s[:v] = 0x1234
       LibTest.struct_align_s16(s.pointer).should == 0x1234
     end
 
     it ":int member aligned correctly" do
-      class AlignInt < FFI::Struct
+      align_int = Class.new(FFI::Struct) do
         layout :c, :char, :v, :int
       end
-      s = AlignInt.alloc_in
+
+      s = align_int.alloc_in
       s[:v] = 0x12345678
       LibTest.struct_align_s32(s.pointer).should == 0x12345678
     end
 
     it ":long_long member aligned correctly" do
-      class AlignLongLong < FFI::Struct
+      align_long_long = Class.new(FFI::Struct) do
         layout :c, :char, :v, :long_long
       end
-      s = AlignLongLong.alloc_in
+
+      s = align_long_long.alloc_in
       s[:v] = 0x123456789abcdef0
       LibTest.struct_align_s64(s.pointer).should == 0x123456789abcdef0
     end
 
     it ":long member aligned correctly" do
-      class AlignLong < FFI::Struct
+      align_long = Class.new(FFI::Struct) do
         layout :c, :char, :v, :long
       end
-      s = AlignLong.alloc_in
+
+      s = align_long.alloc_in
       s[:v] = 0x12345678
       LibTest.struct_align_long(s.pointer).should == 0x12345678
     end
 
     it ":float member aligned correctly" do
-      class AlignFloat < FFI::Struct
+      align_float = Class.new(FFI::Struct) do
         layout :c, :char, :v, :float
       end
-      s = AlignFloat.alloc_in
+
+      s = align_float.alloc_in
       s[:v] = 1.23456
       (LibTest.struct_align_f32(s.pointer) - 1.23456).abs.should < 0.00001
     end
 
     it ":double member aligned correctly" do
-      class AlignDouble < FFI::Struct
+      align_double = Class.new(FFI::Struct) do
         layout :c, :char, :v, :double
       end
-      s = AlignDouble.alloc_in
+
+      s = align_double.alloc_in
       s[:v] = 1.23456789
       (LibTest.struct_align_f64(s.pointer) - 1.23456789).abs.should < 0.00000001
     end
 
     it ":ulong, :pointer struct" do
-      class ULPStruct < FFI::Struct
+      ulp_struct = Class.new(FFI::Struct) do
         layout :ul, :ulong, :p, :pointer
       end
-      s = ULPStruct.alloc_in
+
+      s = ulp_struct.alloc_in
       s[:ul] = 0xdeadbeef
       s[:p] = LibTest.ptr_from_address(0x12345678)
       s.pointer.get_ulong(0).should == 0xdeadbeef
     end
 
-    def test_num_field(type, v)
+    def self.test_num_field(type, v)
       klass = Class.new(FFI::Struct)
       klass.layout :v, type, :dummy, :long
 
@@ -325,41 +319,27 @@ module FFISpecs
       (s.pointer.get_double(0) - value).abs.should < 0.0001
     end
 
-    module CallbackMember
-      extend FFI::Library
-      ffi_lib LIBRARY
-      callback :add, [ :int, :int ], :int
-      callback :sub, [ :int, :int ], :int
-      class TestStruct < FFI::Struct
-        layout :add, :add,
-          :sub, :sub
-      end
-      attach_function :struct_call_add_cb, [TestStruct, :int, :int], :int
-      attach_function :struct_call_sub_cb, [TestStruct, :int, :int], :int
-    end
-
     it "Can have CallbackInfo struct field" do
-        s = CallbackMember::TestStruct.new
-        add_proc = lambda { |a, b| a+b }
-        sub_proc = lambda { |a, b| a-b }
-        s[:add] = add_proc
-        s[:sub] = sub_proc
-        CallbackMember.struct_call_add_cb(s.pointer, 40, 2).should == 42
-        CallbackMember.struct_call_sub_cb(s.pointer, 44, 2).should == 42
+      s = CallbackMember::TestStruct.new
+      add_proc = lambda { |a, b| a+b }
+      sub_proc = lambda { |a, b| a-b }
+      s[:add] = add_proc
+      s[:sub] = sub_proc
+      CallbackMember.struct_call_add_cb(s.pointer, 40, 2).should == 42
+      CallbackMember.struct_call_sub_cb(s.pointer, 44, 2).should == 42
     end
 
     it "Can return its members as a list" do
-      class TestStruct < FFI::Struct
-        layout :a, :int, :b, :int, :c, :int
-      end
-      TestStruct.members.should include(:a, :b, :c)
+      klass = Class.new(FFI::Struct)
+      klass.layout :a, :int, :b, :int, :c, :int
+      klass.members.should include(:a, :b, :c)
     end
 
     it "Can return its instance members and values as lists" do
-      class TestStruct < FFI::Struct
-        layout :a, :int, :b, :int, :c, :int
-      end
-      s = TestStruct.new
+      klass = Class.new(FFI::Struct)
+      klass.layout :a, :int, :b, :int, :c, :int
+
+      s = klass.new
       s.members.should include(:a, :b, :c)
       s[:a] = 1
       s[:b] = 2
@@ -368,33 +348,22 @@ module FFISpecs
     end
 
     it 'should return an ordered field/offset pairs array' do
-      class TestStruct < FFI::Struct
-        layout :a, :int, :b, :int, :c, :int
-      end
-      s = TestStruct.new
+      klass = Class.new(FFI::Struct)
+      klass.layout :a, :int, :b, :int, :c, :int
+
+      s = klass.new
       s.offsets.should == [[:a, 0], [:b, 4], [:c, 8]]
-      TestStruct.offsets.should == [[:a, 0], [:b, 4], [:c, 8]]
+      klass.offsets.should == [[:a, 0], [:b, 4], [:c, 8]]
     end
 
     it "Struct#offset_of returns offset of field within struct" do
-      class TestStruct < FFI::Struct
-        layout :a, :int, :b, :int, :c, :int
-      end
-      TestStruct.offset_of(:a).should == 0
-      TestStruct.offset_of(:b).should == 4
-      TestStruct.offset_of(:c).should == 8
-    end
-  end
+      klass = Class.new(FFI::Struct)
+      klass.layout :a, :int, :b, :int, :c, :int
 
-  module LibTest
-    class NestedStruct < FFI::Struct
-      layout :i, :int
+      klass.offset_of(:a).should == 0
+      klass.offset_of(:b).should == 4
+      klass.offset_of(:c).should == 8
     end
-    class ContainerStruct < FFI::Struct
-      layout :first, :char, :ns, NestedStruct
-    end
-    attach_function :struct_align_nested_struct, [ :pointer ], :int
-    attach_function :struct_make_container_struct, [ :int ], :pointer
   end
 
   describe FFI::Struct, ' with a nested struct field'  do
@@ -425,14 +394,6 @@ module FFISpecs
       @cs[:ns][:i] = 456
       LibTest.struct_align_nested_struct(@cs.to_ptr).should == 456
     end
-  end
-
-  module LibTest
-    class StructWithArray < FFI::Struct
-      layout :first, :char, :a, [:int, 5]
-    end
-    attach_function :struct_make_struct_with_array, [:int, :int, :int, :int, :int], :pointer
-    attach_function :struct_field_array, [:pointer], :pointer
   end
 
   describe FFI::Struct, ' with an array field'  do
@@ -469,19 +430,6 @@ module FFISpecs
     end
   end
 
-  module LibTest
-    class BuggedStruct < FFI::Struct
-      layout :visible, :uchar,
-              :x, :uint,
-              :y, :uint,
-              :rx, :short,
-              :ry, :short,
-              :order, :uchar,
-              :size, :uchar
-    end
-    attach_function :bugged_struct_size, [], :uint
-  end
-
   describe 'BuggedStruct' do
     it 'should return its correct size' do
       LibTest::BuggedStruct.size.should == LibTest.bugged_struct_size
@@ -505,27 +453,26 @@ module FFISpecs
   end
 
   describe "Struct allocation" do
+    before :all do
+      @klass = Class.new(FFI::Struct)
+      @klass.layout :i, :uint
+    end
+
     it "MemoryPointer.new(Struct, 2)" do
-      class S < FFI::Struct
-        layout :i, :uint
-      end
-      p = FFI::MemoryPointer.new(S, 2)
+      p = FFI::MemoryPointer.new(@klass, 2)
       p.total.should == 8
       p.type_size.should == 4
       p.put_uint(4, 0xdeadbeef)
-      S.new(p[1])[:i].should == 0xdeadbeef
+      @klass.new(p[1])[:i].should == 0xdeadbeef
       p[1].address.should == (p[0].address + 4)
     end
 
     it "Buffer.new(Struct, 2)" do
-      class S < FFI::Struct
-        layout :i, :uint
-      end
-      p = FFI::Buffer.new(S, 2)
+      p = FFI::Buffer.new(@klass, 2)
       p.total.should == 8
       p.type_size.should == 4
       p.put_uint(4, 0xdeadbeef)
-      S.new(p[1])[:i].should == 0xdeadbeef
+      @klass.new(p[1])[:i].should == 0xdeadbeef
     end
   end
 end

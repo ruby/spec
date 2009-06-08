@@ -3,7 +3,7 @@ require File.expand_path('../spec_helper', __FILE__)
 module FFISpecs
   describe FFI::Struct, ' with an initialize function' do
     it "should call the initialize function" do
-      class StructWithInitialize < FFI::Struct
+      struct_with_initialize = Class.new(FFI::Struct) do
         layout :string, :string
         attr_accessor :magic
         def initialize
@@ -11,13 +11,14 @@ module FFISpecs
           self.magic = 42
         end
       end
-      StructWithInitialize.new.magic.should == 42
+
+      struct_with_initialize.new.magic.should == 42
     end
   end
 
   describe FFI::ManagedStruct, ' with an initialize function' do
     it "should call the initialize function" do
-      class ManagedStructWithInitialize < FFI::ManagedStruct
+      managed_struct_with_initialize = Class.new(FFI::ManagedStruct) do
         layout :string, :string
         attr_accessor :magic
         def initialize
@@ -26,7 +27,8 @@ module FFISpecs
         end
         def self.release;end
       end
-      ManagedStructWithInitialize.new.magic.should == 42
+
+      managed_struct_with_initialize.new.magic.should == 42
     end
   end
 end

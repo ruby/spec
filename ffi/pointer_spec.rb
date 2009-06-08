@@ -1,42 +1,13 @@
 require File.expand_path('../spec_helper', __FILE__)
-require 'delegate'
-require 'java' if RUBY_PLATFORM =~ /java/
 
 module FFISpecs
-  module LibTest
-    attach_function :ptr_ret_int32_t, [ :pointer, :int ], :int
-    attach_function :ptr_from_address, [ FFI::Platform::ADDRESS_SIZE == 32 ? :uint : :ulong_long ], :pointer
-    attach_function :ptr_set_pointer, [ :pointer, :int, :pointer ], :void
-    attach_function :ptr_ret_pointer, [ :pointer, :int ], :pointer
-  end
-
   describe "Pointer" do
-    include FFI
-    class ToPtrTest
-      def initialize(ptr)
-        @ptr = ptr
-      end
-      def to_ptr
-        @ptr
-      end
-    end
-
     it "Any object implementing #to_ptr can be passed as a :pointer parameter" do
       memory = FFI::MemoryPointer.new :long_long
       magic = 0x12345678
       memory.put_int32(0, magic)
       tp = ToPtrTest.new(memory)
       LibTest.ptr_ret_int32_t(tp, 0).should == magic
-    end
-
-    class PointerDelegate < DelegateClass(FFI::Pointer)
-      def initialize(ptr)
-        super
-        @ptr = ptr
-      end
-      def to_ptr
-        @ptr
-      end
     end
 
     it "A DelegateClass(Pointer) can be passed as a :pointer parameter" do
@@ -55,8 +26,8 @@ module FFISpecs
       lambda { LibTest.ptr_ret_int32(0xfee1deadbeefcafebabe, 0) }.should raise_error
     end
 
+    # TODO: Shouldn't these use #it ?
     describe "pointer type methods" do
-
       describe "#read_pointer" do
         memory = FFI::MemoryPointer.new :pointer
         LibTest.ptr_set_pointer(memory, 0, LibTest.ptr_from_address(0xdeadbeef))
@@ -93,7 +64,6 @@ module FFISpecs
           array[j].address.should == address
         end
       end
-    
     end
 
     describe 'NULL' do
@@ -101,59 +71,39 @@ module FFISpecs
         null_ptr = FFI::Pointer::NULL
         null_ptr.null?.should be_true
       end
+
       it 'should be obtained passing address 0 to constructor' do
         FFI::Pointer.new(0).null?.should be_true
       end
+
       it 'should raise an error when attempting read/write operations on it' do
         null_ptr = FFI::Pointer::NULL
         lambda { null_ptr.read_int }.should raise_error(FFI::NullPointerError)
         lambda { null_ptr.write_int(0xff1) }.should raise_error(FFI::NullPointerError)
       end
     end
-
   end
 
   describe "AutoPointer" do
-    loop_count = 30
-    wiggle_room = 2 # GC rarely cleans up all objects. we can get most of them, and that's enough to determine if the basic functionality is working.
-    magic = 0x12345678
+    before :all do
+      @loop_count = 30
+      @wiggle_room = 2 # GC rarely cleans up all objects. we can get most of them, and that's enough to determine if the basic functionality is working.
+      @magic = 0x12345678
+    end
 
-    class AutoPointerTestHelper
-      @@count = 0
-      def self.release
-        @@count += 1 if @@count > 0
-      end
-      def self.reset
-        @@count = 0
-      end
-      def self.gc_everything(count)
-        loop = 5
-        while @@count < count && loop > 0
-          loop -= 1
-          if RUBY_PLATFORM =~ /java/
-            java.lang.System.gc
-          else
-            GC.start
-          end
-          sleep 0.05 unless @@count == count
-        end
-        @@count = 0
-      end
-      def self.finalizer
-        self.method(:release).to_proc
-      end
+    after :each do
+      AutoPointerTestHelper.gc_everything @loop_count
     end
 
     it "cleanup via default release method" do
-      FFI::AutoPointer.should_receive(:release).at_least(loop_count-wiggle_room).times
+      FFI::AutoPointer.should_receive(:release).at_least(@loop_count - @wiggle_room).times
       AutoPointerTestHelper.reset
-      loop_count.times do
+      @loop_count.times do
         # note that if we called
         # AutoPointerTestHelper.method(:release).to_proc inline, we'd
         # have a reference to the pointer and it would never get GC'd.
-        ap = FFI::AutoPointer.new(LibTest.ptr_from_address(magic))
+        ap = FFI::AutoPointer.new(LibTest.ptr_from_address(@magic))
       end
-      AutoPointerTestHelper.gc_everything loop_count
     end
 
     it "cleanup when passed a proc" do
@@ -165,37 +115,41 @@ module FFISpecs
       #
       #  we'd have a reference to the pointer and it would
       #  never get GC'd.
-      AutoPointerTestHelper.should_receive(:release).at_least(loop_count-wiggle_room).times
+      AutoPointerTestHelper.should_receive(:release).at_least(@loop_count - @wiggle_room).times
       AutoPointerTestHelper.reset
-      loop_count.times do
-        ap = FFI::AutoPointer.new(LibTest.ptr_from_address(magic),
+      @loop_count.times do
+        ap = FFI::AutoPointer.new(LibTest.ptr_from_address(@magic),
                                   AutoPointerTestHelper.finalizer)
       end
-      AutoPointerTestHelper.gc_everything loop_count
     end
 
     it "cleanup when passed a method" do
-      AutoPointerTestHelper.should_receive(:release).at_least(loop_count-wiggle_room).times
+      AutoPointerTestHelper.should_receive(:release).at_least(@loop_count - @wiggle_room).times
       AutoPointerTestHelper.reset
-      loop_count.times do
-        ap = FFI::AutoPointer.new(LibTest.ptr_from_address(magic),
+      @loop_count.times do
+        ap = FFI::AutoPointer.new(LibTest.ptr_from_address(@magic),
                                   AutoPointerTestHelper.method(:release))
       end
-      AutoPointerTestHelper.gc_everything loop_count
     end
   end
 
   describe "AutoPointer#new" do
     it "MemoryPointer argument raises ArgumentError" do
-      lambda { FFI::AutoPointer.new(FFI::MemoryPointer.new(:int))}.should raise_error(ArgumentError)
+      lambda {
+        FFI::AutoPointer.new(FFI::MemoryPointer.new(:int))
+      }.should raise_error(ArgumentError)
     end
 
     it "AutoPointer argument raises ArgumentError" do
-      lambda { FFI::AutoPointer.new(FFI::AutoPointer.new(LibTest.ptr_from_address(0))) }.should raise_error(ArgumentError)
+      lambda {
+        FFI::AutoPointer.new(FFI::AutoPointer.new(LibTest.ptr_from_address(0)))
+      }.should raise_error(ArgumentError)
     end
 
     it "Buffer argument raises ArgumentError" do
-      lambda { FFI::AutoPointer.new(FFI::Buffer.new(:int))}.should raise_error(ArgumentError)
+      lambda {
+        FFI::AutoPointer.new(FFI::Buffer.new(:int))
+      }.should raise_error(ArgumentError)
     end
   end
 end

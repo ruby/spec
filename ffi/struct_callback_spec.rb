@@ -4,16 +4,18 @@ module FFISpecs
   describe FFI::Struct, ' with inline callback functions' do
     it 'should be able to define inline callback field' do
       lambda {
-        module CallbackMember
+        Module.new do
           extend FFI::Library
           ffi_lib LIBRARY
-          class TestStruct < FFI::Struct
+
+          struct = Class.new(FFI::Struct) do
             layout \
               :add, callback([ :int, :int ], :int),
               :sub, callback([ :int, :int ], :int)
-            end
-          attach_function :struct_call_add_cb, [TestStruct, :int, :int], :int
-          attach_function :struct_call_sub_cb, [TestStruct, :int, :int], :int
+          end
+
+          attach_function :struct_call_add_cb, [struct, :int, :int], :int
+          attach_function :struct_call_sub_cb, [struct, :int, :int], :int
         end
       }.should_not raise_error
     end

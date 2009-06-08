@@ -16,7 +16,7 @@ module FFISpecs
   LIBRARY = File.join(FIXTURE_DIR, "build/libtest/libtest.#{FFI::Platform::LIBSUFFIX}")
 
   def self.need_to_compile_fixtures?
-    !File.exist?(LIBRARY) or Dir.glob(File.join(FIXTURE_DIR, "*")).any? { |f| File.mtime(f) > File.mtime(LIBRARY) }
+    !File.exist?(LIBRARY) or Dir.glob(File.join(FIXTURE_DIR, "*.c")).any? { |f| File.mtime(f) > File.mtime(LIBRARY) }
   end
 
   if need_to_compile_fixtures?
@@ -33,3 +33,5 @@ module FFISpecs
     ffi_lib LIBRARY
   end
 end
+
+require File.join(FFISpecs::FIXTURE_DIR, 'classes')

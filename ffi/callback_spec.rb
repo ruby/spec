@@ -29,42 +29,6 @@ module FFISpecs
   #    end
   #    args.should == [ 1, 2 ]
   #  end
-    module LibTest
-      callback :cbVrS8, [ ], :char
-      callback :cbVrU8, [ ], :uchar
-      callback :cbVrS16, [ ], :short
-      callback :cbVrU16, [ ], :ushort
-      callback :cbVrS32, [ ], :int
-      callback :cbVrU32, [ ], :uint
-      callback :cbVrL, [ ], :long
-      callback :cbVrUL, [ ], :ulong
-      callback :cbVrS64, [ ], :long_long
-      callback :cbVrU64, [ ], :ulong_long
-      callback :cbVrP, [], :pointer
-      callback :cbCrV, [ :char ], :void
-      callback :cbSrV, [ :short ], :void
-      callback :cbIrV, [ :int ], :void
-      callback :cbLrV, [ :long ], :void
-      callback :cbULrV, [ :ulong ], :void
-      callback :cbLrV, [ :long_long ], :void
-
-      attach_function :testCallbackVrS8, :testClosureVrB, [ :cbVrS8 ], :char
-      attach_function :testCallbackVrU8, :testClosureVrB, [ :cbVrU8 ], :uchar
-      attach_function :testCallbackVrS16, :testClosureVrS, [ :cbVrS16 ], :short
-      attach_function :testCallbackVrU16, :testClosureVrS, [ :cbVrU16 ], :ushort
-      attach_function :testCallbackVrS32, :testClosureVrI, [ :cbVrS32 ], :int
-      attach_function :testCallbackVrU32, :testClosureVrI, [ :cbVrU32 ], :uint
-      attach_function :testCallbackVrL, :testClosureVrL, [ :cbVrL ], :long
-      attach_function :testCallbackVrUL, :testClosureVrL, [ :cbVrUL ], :ulong
-      attach_function :testCallbackVrS64, :testClosureVrLL, [ :cbVrS64 ], :long_long
-      attach_function :testCallbackVrU64, :testClosureVrLL, [ :cbVrU64 ], :ulong_long
-      attach_function :testCallbackVrP, :testClosureVrP, [ :cbVrP ], :pointer
-      attach_function :testCallbackCrV, :testClosureBrV, [ :cbCrV, :char ], :void
-      attach_variable :cbVrS8, :gvar_pointer, :cbVrS8
-      attach_variable :pVrS8, :gvar_pointer, :pointer
-      attach_function :testGVarCallbackVrS8, :testClosureVrB, [ :pointer ], :char
-      attach_function :testOptionalCallbackCrV, :testOptionalClosureBrV, [ :cbCrV, :char ], :void
-    end
 
     it "function with Callback plus another arg should raise error if no arg given" do
       lambda { LibTest.testCallbackCrV { |*a| } }.should raise_error
@@ -264,9 +228,6 @@ module FFISpecs
 
     describe 'when inlined' do
       it 'could be anonymous' do
-        module LibTest
-          attach_function :testCallbackVrS8, :testClosureVrB, [ callback([ ], :char) ], :char
-        end
         LibTest.testCallbackVrS8 { 0 }.should == 0
       end
     end
@@ -274,7 +235,7 @@ module FFISpecs
     describe "as return value" do
       it "should not blow up when a callback is defined that returns a callback" do
         lambda {
-          module LibTest
+          LibTest.module_eval do
             callback :cb_return_type_1, [ :short ], :short
             callback :cb_lookup_1, [ :short ], :cb_return_type_1
             attach_function :testReturnsCallback_1, :testReturnsClosure, [ :cb_lookup_1, :short ], :cb_return_type_1
@@ -283,12 +244,6 @@ module FFISpecs
       end
 
       it "should return a callback" do
-        module LibTest
-          callback :cb_return_type, [ :int ], :int
-          callback :cb_lookup, [ ], :cb_return_type
-          attach_function :testReturnsCallback, :testReturnsClosure, [ :cb_lookup, :int ], :int
-        end
-
         lookup_proc_called = false
         return_proc_called = false
 
@@ -309,7 +264,7 @@ module FFISpecs
 
       it 'should not blow up when a callback takes a callback as argument' do
         lambda {
-          module LibTest
+          LibTest.module_eval do
             callback :cb_argument, [ :int ], :int
             callback :cb_with_cb_argument, [ :cb_argument, :int ], :int
             attach_function :testCallbackAsArgument, :testArgumentClosure, [ :cb_with_cb_argument, :int ], :int
@@ -318,13 +273,16 @@ module FFISpecs
       end
 
       it 'should be able to use the callback argument' do
+        # TODO: Moving this to fixtures/classes.rb breaks
         module LibTest
           callback :cb_argument, [ :int ], :int
           callback :cb_with_cb_argument, [ :cb_argument, :int ], :int
           attach_function :testCallbackAsArgument, :testArgumentClosure, [ :cb_with_cb_argument, :cb_argument, :int ], :int
         end
+
         callback_arg_called = false
         callback_with_callback_arg_called = false
+
         callback_arg = Proc.new do |val|
           callback_arg_called = true
           val * 2
@@ -333,17 +291,15 @@ module FFISpecs
           callback_with_callback_arg_called = true
           cb.call(val)
         end
+
         val = LibTest.testCallbackAsArgument(callback_with_callback_arg, callback_arg, 0xff1)
+
         val.should == 0xff1 * 2
         callback_arg_called.should be_true
         callback_with_callback_arg_called.should be_true
       end
 
       it 'function returns callable object' do
-        module LibTest
-          callback :funcptr, [ :int ], :int
-          attach_function :testReturnsFunctionPointer, [  ], :funcptr
-        end
         f = LibTest.testReturnsFunctionPointer
         f.call(3).should == 6
       end
@@ -351,35 +307,6 @@ module FFISpecs
   end
 
   describe "primitive argument" do
-    #
-    # Test callbacks that take an argument, returning void
-    #
-    module LibTest
-      callback :cbS8rV, [ :char ], :void
-      callback :cbU8rV, [ :uchar ], :void
-      callback :cbS16rV, [ :short ], :void
-      callback :cbU16rV, [ :ushort ], :void
-
-      callback :cbS32rV, [ :int ], :void
-      callback :cbU32rV, [ :uint ], :void
-
-      callback :cbLrV, [ :long ], :void
-      callback :cbULrV, [ :ulong ], :void
-
-      callback :cbS64rV, [ :long_long ], :void
-      attach_function :testCallbackCrV, :testClosureBrV, [ :cbS8rV, :char ], :void
-      attach_function :testCallbackU8rV, :testClosureBrV, [ :cbU8rV, :uchar ], :void
-      attach_function :testCallbackSrV, :testClosureSrV, [ :cbS16rV, :short ], :void
-      attach_function :testCallbackU16rV, :testClosureSrV, [ :cbU16rV, :ushort ], :void
-      attach_function :testCallbackIrV, :testClosureIrV, [ :cbS32rV, :int ], :void
-      attach_function :testCallbackU32rV, :testClosureIrV, [ :cbU32rV, :uint ], :void
-
-      attach_function :testCallbackLrV, :testClosureLrV, [ :cbLrV, :long ], :void
-      attach_function :testCallbackULrV, :testClosureULrV, [ :cbULrV, :ulong ], :void
-
-      attach_function :testCallbackLLrV, :testClosureLLrV, [ :cbS64rV, :long_long ], :void
-    end
-
     it ":char (0) argument" do
       v = 0xdeadbeef
       LibTest.testCallbackCrV(0) { |i| v = i }

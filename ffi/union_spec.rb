@@ -1,36 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module FFISpecs
-  module LibTest
-    Types = {
-      's8' => [:char, :c, 1],
-      's16' => [:short, :s, 0xff0],
-      's32' => [:int, :i, 0xff00],
-      's64' => [:long_long, :j, 0xffff00],
-      'long' => [:long, :l, 0xffff],
-      'f32' => [:float, :f, 1.0001],
-      'f64' => [:double, :d, 1.000000001]
-    }
-
-    class TestUnion < FFI::Union
-      layout( :a, [:char, 10],
-              :i, :int, 
-              :f, :float,
-              :d, :double,
-              :s, :short,
-              :l, :long,
-              :j, :long_long,
-              :c, :char )
-    end
-
-    Types.keys.each do |k|
-      attach_function "union_align_#{k}", [ :pointer ], Types[k][0]
-      attach_function "union_make_union_with_#{k}", [ Types[k][0] ], :pointer
-    end
-
-    attach_function :union_size, [], :uint
-  end
-
   describe 'Union' do
     before do
       @u = LibTest::TestUnion.new

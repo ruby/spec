@@ -1,37 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module FFISpecs
-  module TestEnum0
-    extend FFI::Library
-  end
-
-  module TestEnum1
-    extend FFI::Library
-    ffi_lib LIBRARY
-
-    enum [:c1, :c2, :c3, :c4]
-    enum [:c5, 42, :c6, :c7, :c8]
-    enum [:c9, 42, :c10, :c11, 4242, :c12]
-    enum [:c13, 42, :c14, 4242, :c15, 424242, :c16, 42424242]
-
-    attach_function :test_untagged_enum, [:int], :int
-  end
-
-  module TestEnum3
-    extend FFI::Library
-    ffi_lib LIBRARY
-
-    enum :enum_type1, [:c1, :c2, :c3, :c4]
-    enum :enum_type2, [:c5, 42, :c6, :c7, :c8]
-    enum :enum_type3, [:c9, 42, :c10, :c11, 4242, :c12]
-    enum :enum_type4, [:c13, 42, :c14, 4242, :c15, 424242, :c16, 42424242]
-
-    attach_function :test_tagged_typedef_enum1, [:enum_type1], :enum_type1
-    attach_function :test_tagged_typedef_enum2, [:enum_type2], :enum_type2
-    attach_function :test_tagged_typedef_enum3, [:enum_type3], :enum_type3
-    attach_function :test_tagged_typedef_enum4, [:enum_type4], :enum_type4
-  end
-
   describe "A library with no enum defined" do
     it "returns nil when asked for an enum" do
       TestEnum0.enum_type(:foo).should == nil
