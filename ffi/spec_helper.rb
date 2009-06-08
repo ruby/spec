@@ -1,13 +1,25 @@
 require 'rubygems'
 require 'spec'
 
-$:.unshift File.join(File.dirname(__FILE__), "..", "..", "lib"), File.join(File.dirname(__FILE__), "..", "..", "build", RUBY_VERSION) if ENV["MRI_FFI"]
 require "ffi"
 include FFI
 
 module TestLibrary
-  PATH = "/Users/eloy/code/MacRuby/ruby-ffi/build/libtest.#{FFI::Platform::LIBSUFFIX}"
+  FIXTURE_DIR = File.expand_path("../fixtures", __FILE__)
+  PATH = File.join(FIXTURE_DIR, "build/libtest/libtest.#{FFI::Platform::LIBSUFFIX}")
+  
+  def self.need_to_compile_fixtures?
+    !File.exist?(PATH) or Dir.glob(File.join(FIXTURE_DIR, "*")).any? { |f| File.mtime(f) > File.mtime(PATH) }
+  end
+  
+  if need_to_compile_fixtures?
+    puts "[!] Compiling Ruby-FFI fixtures"
+    unless system("make -f #{File.join(FIXTURE_DIR, 'GNUmakefile')}")
+      raise "Failed to compile Ruby-FFI fixtures"
+    end
+  end
 end
+
 module LibTest
   extend FFI::Library
   ffi_lib TestLibrary::PATH
