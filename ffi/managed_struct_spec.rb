@@ -2,29 +2,28 @@ require File.expand_path('../spec_helper', __FILE__)
 require 'java' if RUBY_PLATFORM =~ /java/
 
 describe "Managed Struct" do
-  include FFI
   module LibTest
-    extend FFI::Library
+    extend Library
     ffi_lib TestLibrary::PATH
-    attach_function :ptr_from_address, [ FFI::Platform::ADDRESS_SIZE == 32 ? :uint : :ulong_long ], :pointer
+    attach_function :ptr_from_address, [ Platform::ADDRESS_SIZE == 32 ? :uint : :ulong_long ], :pointer
   end
+
   it "should raise an error if release() is not defined" do
-    class NoRelease < FFI::ManagedStruct ; layout :i, :int; end
+    class NoRelease < ManagedStruct ; layout :i, :int; end
     lambda { NoRelease.new(LibTest.ptr_from_address(0x12345678)) }.should raise_error(NoMethodError)
   end
 
   it "should be the right class" do
-    class WhatClassAmI < FFI::ManagedStruct
+    class WhatClassAmI < ManagedStruct
       layout :i, :int
-      def self.release
-      end
-    end    
+      def self.release; end
+    end
 
     WhatClassAmI.new(LibTest.ptr_from_address(0x12345678)).class.should == WhatClassAmI
   end
 
   it "should release memory properly" do
-    class PleaseReleaseMe < FFI::ManagedStruct
+    class PleaseReleaseMe < ManagedStruct
       layout :i, :int
       @@count = 0
       def self.release

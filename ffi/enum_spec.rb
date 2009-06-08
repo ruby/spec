@@ -1,23 +1,23 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 module TestEnum0
-  extend FFI::Library
+  extend Library
 end
 
 module TestEnum1
-  extend FFI::Library
+  extend Library
   ffi_lib TestLibrary::PATH
 
   enum [:c1, :c2, :c3, :c4]
   enum [:c5, 42, :c6, :c7, :c8]
   enum [:c9, 42, :c10, :c11, 4242, :c12]
   enum [:c13, 42, :c14, 4242, :c15, 424242, :c16, 42424242]
-  
+
   attach_function :test_untagged_enum, [:int], :int
 end
 
 module TestEnum3
-  extend FFI::Library
+  extend Library
   ffi_lib TestLibrary::PATH
 
   enum :enum_type1, [:c1, :c2, :c3, :c4]
@@ -65,12 +65,14 @@ describe "A tagged typedef enum" do
     TestEnum3.enum_type(:enum_type3).should_not == nil
     TestEnum3.enum_type(:enum_type4).should_not == nil
   end
+
   it "contains enum constants" do
     TestEnum3.enum_type(:enum_type1).symbols.length.should == 4
     TestEnum3.enum_type(:enum_type2).symbols.length.should == 4
     TestEnum3.enum_type(:enum_type3).symbols.length.should == 4
     TestEnum3.enum_type(:enum_type4).symbols.length.should == 4
   end
+
   it "constants can be used as function parameters and return value" do
     TestEnum3.test_tagged_typedef_enum1(:c1).should == :c1
     TestEnum3.test_tagged_typedef_enum1(:c2).should == :c2
@@ -103,6 +105,7 @@ describe "All enums" do
     TestEnum3.enum_value(:c3).should == 2
     TestEnum3.enum_value(:c4).should == 3
   end
+
   it "can have an explicit first constant and autonumbered subsequent constants" do
     TestEnum1.enum_value(:c5).should == 42
     TestEnum1.enum_value(:c6).should == 43
@@ -114,6 +117,7 @@ describe "All enums" do
     TestEnum3.enum_value(:c7).should == 44
     TestEnum3.enum_value(:c8).should == 45
   end
+
   it "can have a mix of explicit and autonumbered constants" do
     TestEnum1.enum_value(:c9).should  == 42
     TestEnum1.enum_value(:c10).should == 43
@@ -125,6 +129,7 @@ describe "All enums" do
     TestEnum3.enum_value(:c11).should == 4242
     TestEnum3.enum_value(:c12).should == 4243
   end
+
   it "can have all its constants explicitely valued" do
     TestEnum1.enum_value(:c13).should == 42
     TestEnum1.enum_value(:c14).should == 4242
@@ -136,6 +141,7 @@ describe "All enums" do
     TestEnum3.enum_value(:c15).should == 424242
     TestEnum3.enum_value(:c16).should == 42424242
   end
+
   it "return the constant corresponding to a specific value" do
     enum = TestEnum3.enum_type(:enum_type1)
     enum[0].should == :c1
