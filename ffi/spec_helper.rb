@@ -14,8 +14,10 @@ module TestLibrary
   
   if need_to_compile_fixtures?
     puts "[!] Compiling Ruby-FFI fixtures"
-    unless system("make -f #{File.join(FIXTURE_DIR, 'GNUmakefile')}")
-      raise "Failed to compile Ruby-FFI fixtures"
+    Dir.chdir(File.dirname(FIXTURE_DIR)) do
+      unless system("make -f fixtures/GNUmakefile")
+        raise "Failed to compile Ruby-FFI fixtures"
+      end
     end
   end
 end
