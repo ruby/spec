@@ -14,6 +14,11 @@ module FFISpecs
       sp = MemoryPointer.new 1024
       sp.put_string(0, "test")
       mp.put_pointer(0, sp)
+
+      # TODO: Have to define this manually because setting it in the fixture
+      # classes will override it with different function definitions.
+      LibTest.attach_function :ptr_ret_pointer, [ :pointer, :int], :string
+
       str = LibTest.ptr_ret_pointer(mp, 0)
       str.should == "test"
       str.tainted?.should == true

@@ -37,6 +37,11 @@ module FFISpecs
       describe "#write_pointer" do
         memory = FFI::MemoryPointer.new :pointer
         memory.write_pointer(LibTest.ptr_from_address(0xdeadbeef))
+
+        # TODO: Have to define this manually because setting it in the fixture
+        # classes will override it with different function definitions.
+
+        LibTest.attach_function :ptr_ret_pointer, [ :pointer, :int ], :pointer
         LibTest.ptr_ret_pointer(memory, 0).address.should == 0xdeadbeef
       end
 

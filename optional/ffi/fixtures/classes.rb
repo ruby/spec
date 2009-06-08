@@ -216,7 +216,6 @@ module FFISpecs
     attach_function :ptr_ret_int32_t, [ :pointer, :int ], :int
     attach_function :ptr_from_address, [ FFI::Platform::ADDRESS_SIZE == 32 ? :uint : :ulong_long ], :pointer
     attach_function :ptr_set_pointer, [ :pointer, :int, :pointer ], :void
-    attach_function :ptr_ret_pointer, [ :pointer, :int ], :pointer
   end
 
   class ToPtrTest
