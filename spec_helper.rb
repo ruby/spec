@@ -12,6 +12,14 @@ unless ENV['MSPEC_RUNNER']
     require 'mspec/matchers/equal_element'
     require 'mspec/matchers/equal_utf16'
     require 'mspec/matchers/match_yaml'
+    require 'mspec/matchers/have_class_variable'
+    require 'mspec/matchers/have_constant'
+    require 'mspec/matchers/have_instance_method'
+    require 'mspec/matchers/have_instance_variable'
+    require 'mspec/matchers/have_method'
+    require 'mspec/matchers/have_private_instance_method'
+    require 'mspec/matchers/have_protected_instance_method'
+    require 'mspec/matchers/have_public_instance_method'
 
     # Code to setup HOME directory correctly on Windows
     # This duplicates Ruby 1.9 semantics for defining HOME

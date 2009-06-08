@@ -67,7 +67,7 @@ describe "Kernel.String" do
 end
 
 describe "Kernel#String" do
-  it_behaves_like :kernel_String, :String, mock("receiver for String()")
+  it_behaves_like :kernel_String, :String, Object.new
 
   it "is a private method" do
     Kernel.should have_private_instance_method(:String)
