@@ -1,8 +1,10 @@
-begin
-  require "ffi"
-rescue LoadError
-  require "rubygems"
-  require "ffi"
+unless defined? FFI
+  begin
+    require "ffi"
+  rescue LoadError
+    require "rubygems"
+    require "ffi"
+  end
 end
 
 include FFI
