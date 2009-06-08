@@ -8,4 +8,4 @@
 /nbproject/private
 *.orig
 *.rej
-ffi/fixtures/build
+optional/ffi/fixtures/build
