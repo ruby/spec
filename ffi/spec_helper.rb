@@ -1,7 +1,10 @@
-require 'rubygems'
-require 'spec'
+begin
+  require "ffi"
+rescue LoadError
+  require "rubygems"
+  require "ffi"
+end
 
-require "ffi"
 include FFI
 
 module TestLibrary
