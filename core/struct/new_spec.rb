@@ -26,11 +26,34 @@ describe "Struct.new" do
     struct.name.should == "Struct::Foo"
   end
 
-  it "creates a new anonymous class with nil first argument" do
-    struct = Struct.new(nil, :foo)
-    struct.new("bar").foo.should == "bar"
-    struct.class.should == Class
-    struct.name.should == ""
+  ruby_version_is ""..."1.9" do
+    it "creates a new anonymous class with nil first argument" do
+      struct = Struct.new(nil, :foo)
+      struct.new("bar").foo.should == "bar"
+      struct.class.should == Class
+      struct.name.should == ""
+    end
+
+    it "creates a new anonymous class with symbol arguments" do
+      struct = Struct.new(:make, :model)
+      struct.class.should == Class
+      struct.name.should == ""
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "creates a new anonymous class with nil first argument" do
+      struct = Struct.new(nil, :foo)
+      struct.new("bar").foo.should == "bar"
+      struct.class.should == Class
+      struct.name.should be_nil
+    end
+
+    it "creates a new anonymous class with symbol arguments" do
+      struct = Struct.new(:make, :model)
+      struct.class.should == Class
+      struct.name.should == nil
+    end
   end
 
   it "does not create a constant with symbol as first argument" do
@@ -38,11 +61,6 @@ describe "Struct.new" do
     struct.should_not == Struct::Animal
   end
 
-  it "creates a new anonymous class with symbol arguments" do
-    struct = Struct.new(:make, :model)
-    struct.class.should == Class
-    struct.name.should == ""
-  end
 
   it "fails with invalid constant name as first argument" do
     lambda { Struct.new('animal', :name, :legs, :eyeballs) }.should raise_error(NameError)
