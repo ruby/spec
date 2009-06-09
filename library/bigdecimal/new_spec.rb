@@ -19,7 +19,8 @@ describe "BigDecimal.new" do
 
   ruby_bug "1589", "1.8.6.368" do
     it "doesn't segfault when using a very large string to build the number" do
-      BigDecimal.new("1" + "0"*10000000)._dump.should == "10000008:0.1E10000001"
+      b = BigDecimal.new("1" + "0"*10000000)
+      b._dump.should == "#{b.precs[1]}:0.1E10000001"
     end
   end
 
