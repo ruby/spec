@@ -66,15 +66,17 @@ describe "Struct.new" do
   end
 
   not_compliant_on :rubinius do
-    it "accepts Fixnums as Symbols unless fixnum.to_sym.nil?" do
-      num = :foo.to_i
-      Struct.new(nil, num).new("bar").foo.should == "bar"
-    end
+    ruby_version_is ""..."1.9" do
+      it "accepts Fixnums as Symbols unless fixnum.to_sym.nil?" do
+        num = :foo.to_i
+        Struct.new(nil, num).new("bar").foo.should == "bar"
+      end
 
-    it "raises an ArgumentError if fixnum#to_sym is nil" do
-      num = 10000
-      num.to_sym.should == nil  # if this fails, we need a new Fixnum to test
-      lambda { Struct.new(:animal, num) }.should raise_error(ArgumentError)
+      it "raises an ArgumentError if fixnum#to_sym is nil" do
+        num = 10000
+        num.to_sym.should == nil  # if this fails, we need a new Fixnum to test
+        lambda { Struct.new(:animal, num) }.should raise_error(ArgumentError)
+      end
     end
   end
 
