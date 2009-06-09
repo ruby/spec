@@ -78,9 +78,18 @@ describe "Struct.new" do
     end
   end
 
-  it "instance_eval's a passed block" do
-    klass = Struct.new(:something) { @something_else = 'something else entirely!' }
-    klass.instance_variables.should include('@something_else')
+  ruby_version_is ""..."1.9" do
+    it "instance_eval's a passed block" do
+      klass = Struct.new(:something) { @something_else = 'something else entirely!' }
+      klass.instance_variables.should include('@something_else')
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "instance_eval's a passed block" do
+      klass = Struct.new(:something) { @something_else = 'something else entirely!' }
+      klass.instance_variables.should include(:@something_else)
+    end
   end
 
   it "creates a constant in subclass' namespace" do
