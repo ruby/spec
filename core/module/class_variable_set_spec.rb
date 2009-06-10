@@ -26,13 +26,26 @@ describe "Module#class_variable_set" do
     end
   end
 
-  it "raises a TypeError when self is frozen" do
-    lambda {
-      Class.new.freeze.send(:class_variable_set, :@@test, "test")
-    }.should raise_error(TypeError)
-    lambda {
-      Module.new.freeze.send(:class_variable_set, :@@test, "test")
-    }.should raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "raises a TypeError when self is frozen" do
+      lambda {
+        Class.new.freeze.send(:class_variable_set, :@@test, "test")
+      }.should raise_error(TypeError)
+      lambda {
+        Module.new.freeze.send(:class_variable_set, :@@test, "test")
+      }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises a RuntimeError when self is frozen" do
+      lambda {
+        Class.new.freeze.send(:class_variable_set, :@@test, "test")
+      }.should raise_error(RuntimeError)
+      lambda {
+        Module.new.freeze.send(:class_variable_set, :@@test, "test")
+      }.should raise_error(RuntimeError)
+    end
   end
 
   it "raises a NameError when the given name is not allowed" do
