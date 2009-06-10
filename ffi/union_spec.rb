@@ -1,39 +1,37 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-module FFISpecs
-  describe 'Union' do
-    before do
-      @u = LibTest::TestUnion.new
-    end
+describe 'Union' do
+  before do
+    @u = FFISpecs::LibTest::TestUnion.new
+  end
 
-    it 'should place all the fields at offset 0' do
-      LibTest::TestUnion.members.all? { |m| LibTest::TestUnion.offset_of(m) == 0 }.should be_true
-    end
+  it 'should place all the fields at offset 0' do
+    FFISpecs::LibTest::TestUnion.members.all? { |m| FFISpecs::LibTest::TestUnion.offset_of(m) == 0 }.should be_true
+  end
 
-    LibTest::Types.each do |k, type|
-      it "should correctly align/write a #{type[0]} value" do
-        @u[type[1]] = type[2]
-        if k == 'f32' or k == 'f64'
-          (@u[type[1]] - LibTest.send("union_align_#{k}", @u.to_ptr)).abs.should < 0.00001
-        else
-          @u[type[1]].should == LibTest.send("union_align_#{k}", @u.to_ptr)
-        end
+  FFISpecs::LibTest::Types.each do |k, type|
+    it "should correctly align/write a #{type[0]} value" do
+      @u[type[1]] = type[2]
+      if k == 'f32' or k == 'f64'
+        (@u[type[1]] - FFISpecs::LibTest.send("union_align_#{k}", @u.to_ptr)).abs.should < 0.00001
+      else
+        @u[type[1]].should == FFISpecs::LibTest.send("union_align_#{k}", @u.to_ptr)
       end
     end
+  end
 
-    LibTest::Types.each do |k, type|
-      it "should read a #{type[0]} value from memory" do
-        @u = LibTest::TestUnion.new(LibTest.send("union_make_union_with_#{k}", type[2]))
-        if k == 'f32' or k == 'f64'
-          (@u[type[1]] - type[2]).abs.should < 0.00001
-        else
-          @u[type[1]].should == type[2]
-        end
+  FFISpecs::LibTest::Types.each do |k, type|
+    it "should read a #{type[0]} value from memory" do
+      @u = FFISpecs::LibTest::TestUnion.new(FFISpecs::LibTest.send("union_make_union_with_#{k}", type[2]))
+      if k == 'f32' or k == 'f64'
+        (@u[type[1]] - type[2]).abs.should < 0.00001
+      else
+        @u[type[1]].should == type[2]
       end
     end
+  end
 
-    it 'should return a size equals to the size of the biggest field' do
-      LibTest::TestUnion.size.should == LibTest.union_size
-    end
+  it 'should return a size equals to the size of the biggest field' do
+    FFISpecs::LibTest::TestUnion.size.should == FFISpecs::LibTest.union_size
   end
 end
