@@ -95,13 +95,26 @@ describe "A constant on a metaclass" do
     end.should raise_error(NameError)
   end
 
-  it "appears in the metaclass constant list" do
-    constants = class << @object; constants; end 
-    constants.should include("CONST")
+  ruby_version_is ""..."1.9" do
+    it "appears in the metaclass constant list" do
+      constants = class << @object; constants; end 
+      constants.should include("CONST")
+    end
+
+    it "does not appear in the object's class constant list" do
+      @object.class.constants.should_not include("CONST")
+    end
   end
 
-  it "does not appear in the object's class constant list" do
-    @object.class.constants.should_not include("CONST")
+  ruby_version_is "1.9" do
+    it "appears in the metaclass constant list" do
+      constants = class << @object; constants; end 
+      constants.should include(:CONST)
+    end
+
+    it "does not appear in the object's class constant list" do
+      @object.class.constants.should_not include(:CONST)
+    end
   end
 
   it "is not preserved when the object is duped" do
