@@ -65,14 +65,26 @@ describe "Kernel.throw" do
     }.should raise_error(ArgumentError)
   end
 
-  it "raises TypeError if the first argument is not a symbol" do
-    lambda {
-      catch :blah do
-        throw Object.new
-      end
-    }.should raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "raises TypeError if the first argument is not a symbol" do
+      lambda {
+        catch :blah do
+          throw Object.new
+        end
+      }.should raise_error(TypeError)
+    end
   end
 
+  ruby_version_is "1.9" do
+    it "can throw an object" do
+      lambda {
+        obj = Object.new
+        catch obj do
+          throw obj
+        end
+      }.should_not raise_error(NameError)
+    end
+  end
 end
 
 describe "Kernel#throw" do
