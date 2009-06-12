@@ -76,11 +76,22 @@ describe "Kernel#require" do
   end
 
   ruby_version_is "1.9" do
+    it "can load .rb files from relative paths" do
+      Dir.chdir($require_fixture_dir) do |dir|
+        abs_path = File.expand_path('./../require/require_spec_1.rb')
+        $LOADED_FEATURES.delete abs_path
+        $require_spec_1 = nil
+        require('../../fixtures/require/require_spec_1.rb').should be_true
+        $require_spec_1.should_not be_nil
+        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+      end
+    end
+
     it "normalises .rb paths before storing them in $LOADED_FEATURES" do
       Dir.chdir($require_fixture_dir) do |dir|
         abs_path = File.expand_path('./../require/require_spec_1.rb')
         #File has already been required with an absolute path:
-        $require_spec_1.nil?.should be_false
+        $require_spec_1 = nil
         $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
         $LOADED_FEATURES.delete abs_path
         
@@ -89,17 +100,18 @@ describe "Kernel#require" do
         # Verify that it's been stored in $LOADED_FEATURES with an absolute
         # path
         $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
-        $require_spec_1.nil?.should be_false
+        $require_spec_1.should_not be_nil
 
         # Requiring it again with a different relative path should have no effect
         require('../../fixtures/require/require_spec_1.rb').should be_false
         # And it should still only appear in $LOADED_FEATURES once with an
         # absolute path
         $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
-        $require_spec_1.nil?.should == false
+        $require_spec_1.should_not be_nil
       end
     end
   end
+
   it "loads an unqualified .rb by looking in $LOAD_PATH and returns true" do
     require('require_spec_2.rb').should == true
     $require_spec_2.nil?.should == false
