@@ -60,17 +60,10 @@ describe "Kernel.catch" do
     [one, two, three].should == [1, 2, 3]
   end
 
-  # On 1.9 catch doesn't require any arguments; a bug report has been filed to
-  # ascertain why.
-  ruby_bug "#1618", "1.9.2" do
-    it "raises ArgumentError if the number of arguments is not one" do
-      lambda {
-        catch {}
-      }.should raise_error(ArgumentError)
-      lambda {
-        catch(:one, :two) {}
-      }.should raise_error(ArgumentError)
-    end
+  it "raises ArgumentError if more than one arguments are given" do
+    lambda {
+      catch(:one, :two) {}
+    }.should raise_error(ArgumentError)
   end
 
   ruby_version_is ""..."1.9" do
@@ -79,6 +72,10 @@ describe "Kernel.catch" do
         catch Object.new {}
       }.should raise_error(TypeError)
     end
+
+    it "raises ArgumentError if called without argument" do
+      lambda { catch {} }.should raise_error(ArgumentError)
+    end  
   end
 
   ruby_version_is "1.9" do
@@ -87,6 +84,10 @@ describe "Kernel.catch" do
         catch Object.new do end
       }.should_not raise_error
     end
+
+    it "yields a new, unique object when called without arguments" do
+      catch {|obj| obj.should be_an_instance_of(Object) }
+    end    
   end
 
   it "raises LocalJumpError if no block is given" do
