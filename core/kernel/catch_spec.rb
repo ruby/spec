@@ -60,13 +60,17 @@ describe "Kernel.catch" do
     [one, two, three].should == [1, 2, 3]
   end
 
-  it "raises ArgumentError if the number of arguments is not one" do
-    lambda {
-      catch {}
-    }.should raise_error(ArgumentError)
-    lambda {
-      catch(:one, :two) {}
-    }.should raise_error(ArgumentError)
+  # On 1.9 catch doesn't require any arguments; a bug report has been filed to
+  # ascertain why.
+  ruby_bug "#1618", "1.9.2" do
+    it "raises ArgumentError if the number of arguments is not one" do
+      lambda {
+        catch {}
+      }.should raise_error(ArgumentError)
+      lambda {
+        catch(:one, :two) {}
+      }.should raise_error(ArgumentError)
+    end
   end
 
   ruby_version_is ""..."1.9" do
