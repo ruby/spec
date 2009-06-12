@@ -69,10 +69,20 @@ describe "Kernel.catch" do
     }.should raise_error(ArgumentError)
   end
 
-  it "raises TypeError if the argument is not a symbol" do
-    lambda {
-      catch Object.new {}
-    }.should raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "raises TypeError if the argument is not a symbol" do
+      lambda {
+        catch Object.new {}
+      }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "accepts an object as an argument" do
+      lambda {
+        catch Object.new do end
+      }.should_not raise_error
+    end
   end
 
   it "raises LocalJumpError if no block is given" do
