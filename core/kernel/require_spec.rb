@@ -61,18 +61,45 @@ describe "Kernel#require" do
     $require_spec_1.nil?.should == false
   end
 
-  it "loads a .rb from a relative path and returns true" do
-    Dir.chdir($require_fixture_dir) do |dir|
-      $require_spec_1 = nil
-      require('../../fixtures/require/require_spec_1.rb').should == true
-      $require_spec_1.nil?.should == false
+  ruby_version_is ""..."1.9" do
+    it "loads a .rb from a relative path and returns true" do
+      Dir.chdir($require_fixture_dir) do |dir|
+        $require_spec_1 = nil
+        require('../../fixtures/require/require_spec_1.rb').should == true
+        $require_spec_1.nil?.should == false
 
-      $require_spec_1 = nil
-      require('./../require/require_spec_1.rb').should == true
-      $require_spec_1.nil?.should == false
+        $require_spec_1 = nil
+        require('./../require/require_spec_1.rb').should == true
+        $require_spec_1.nil?.should == false
+      end
     end
   end
 
+  ruby_version_is "1.9" do
+    it "normalises .rb paths before storing them in $LOADED_FEATURES" do
+      Dir.chdir($require_fixture_dir) do |dir|
+        abs_path = File.expand_path('./../require/require_spec_1.rb')
+        #File has already been required with an absolute path:
+        $require_spec_1.nil?.should be_false
+        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        $LOADED_FEATURES.delete abs_path
+        
+        # Require it again with a relative path
+        require('../../fixtures/require/require_spec_1.rb').should be_true
+        # Verify that it's been stored in $LOADED_FEATURES with an absolute
+        # path
+        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        $require_spec_1.nil?.should be_false
+
+        # Requiring it again with a different relative path should have no effect
+        require('../../fixtures/require/require_spec_1.rb').should be_false
+        # And it should still only appear in $LOADED_FEATURES once with an
+        # absolute path
+        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        $require_spec_1.nil?.should == false
+      end
+    end
+  end
   it "loads an unqualified .rb by looking in $LOAD_PATH and returns true" do
     require('require_spec_2.rb').should == true
     $require_spec_2.nil?.should == false
