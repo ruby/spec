@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/../../core/kernel/fixtures/classes'
+require File.dirname(__FILE__) + '/../../fixtures/kernel/classes'
 
 describe :method_missing, :shared => true do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:method_missing)
+    @object.should have_private_instance_method(:method_missing)
   end
   
   it "is not called when a defined method is called" do
