@@ -41,15 +41,17 @@ describe "Kernel.throw" do
     res.should == :return_value
   end
 
-  # 1.9 raises an ArgumentError in this case, despite the documentation's
-  # assertion to the contrary. This matter was originally raised in 
-  # http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17629 
-  # and later filed as a bug report nearly a year later.
-  ruby_bug "#1617", "1.9.2" do
+  ruby_version_is ""..."1.9" do
     it "raises a NameError if there is no catch block for the symbol" do
       lambda { throw :blah }.should raise_error(NameError)
     end
-  end
+  end  
+
+  ruby_version_is "1.9" do
+    it "raises an ArgumentError if there is no catch block for the symbol" do
+      lambda { throw :blah }.should raise_error(ArgumentError)
+    end
+  end  
 
   it "raises ArgumentError if 3 or more arguments provided" do
     lambda {
