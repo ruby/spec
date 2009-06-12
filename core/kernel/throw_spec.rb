@@ -41,23 +41,14 @@ describe "Kernel.throw" do
     res.should == :return_value
   end
 
-  it "raises NameError if there is no catch block for the symbol" do
-    proc {
-      throw :blah
-    }.should raise_error(NameError) { |error|
-      # TODO:
-      # See: http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17629
-      #
-      # The ruby docs are not clear whether NameError#name should
-      # retrun String or Symbol. Well, the docs state the *String*
-      # should be returned, but the actual MRI behavior is to return Symbol.
-      # And in MRI 1.9, even different Exception raised altogether.
-
-      # So, instead of checking that error.name == :blah, we perform
-      # more generic test, suitable for different implementations
-      # (like JRuby, since JRuby follows the ruby-doc, and returns String).
-      error.name.to_s.should == "blah"
-    }
+  # 1.9 raises an ArgumentError in this case, despite the documentation's
+  # assertion to the contrary. This matter was originally raised in 
+  # http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/17629 
+  # and later filed as a bug report nearly a year later.
+  ruby_bug "#1617", "1.9.2" do
+    it "raises a NameError if there is no catch block for the symbol" do
+      lambda { throw :blah }.should raise_error(NameError)
+    end
   end
 
   it "raises ArgumentError if 3 or more arguments provided" do
