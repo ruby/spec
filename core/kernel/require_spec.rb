@@ -433,10 +433,20 @@ describe "Kernel#require" do
     lambda { require "nonesuch#{$$}#{Time.now.to_f}" }.should raise_error LoadError
   end
 
-  it "only accepts strings" do
-    lambda { require(nil) }.should raise_error(TypeError)
-    lambda { require(42)  }.should raise_error(TypeError)
-    lambda { require([])  }.should raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "only accepts strings" do
+      lambda { require(nil) }.should raise_error(TypeError)
+      lambda { require(42)  }.should raise_error(TypeError)
+      lambda { require([])  }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "only accepts strings or objects with #to_path" do
+      lambda { require(nil) }.should raise_error(TypeError)
+      lambda { require(42)  }.should raise_error(TypeError)
+      lambda { require([])  }.should raise_error(TypeError)
+    end
   end
 
   ruby_version_is ""..."1.9" do
@@ -463,6 +473,16 @@ describe "Kernel#require" do
       $LOADED_FEATURES.include?(abs_path).should be_true
       $require_spec_recursive.should_not be_nil
     end
+    
+    it "calls #to_path on non-String arguments" do
+      abs_path = File.expand_path(
+        File.join($require_fixture_dir, 'require_spec.rb'))
+      path = mock('path')
+      path.should_receive(:to_path).and_return('require_spec.rb')
+      $LOADED_FEATURES.delete abs_path
+      require(path).should be_true
+      $LOADED_FEATURES.include?(abs_path).should be_true
+    end  
   end
 end
 
