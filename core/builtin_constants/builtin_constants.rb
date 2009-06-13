@@ -19,3 +19,11 @@ ruby_version_is "1.8.7" do
     end
   end
 end
+
+ruby_version_is "1.8.7" do
+  describe "RUBY_DESCRIPTION" do
+    it "is a String" do
+      RUBY_DESCRIPTION.should be_kind_of(String)
+    end
+  end
+end
