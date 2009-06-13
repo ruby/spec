@@ -1,9 +1,13 @@
 * Decide a way to test methods that are only visible given a specific
 command-line option. For example, Kernel#gsub with -n/-p on 1.9.
 * Decide how to guard bugs that are regressions. IOW, if a bug appears in 1.9
-but not in 1.8, we should be able to guard it from 1.9 while still yielding
-to 1.8.
-* Look at automating discovery of guarded bugs which have been fixed.
+but not in 1.8, we should be able to guard it from 1.9 while still yielding to
+1.8.
+* Look at automating discovery of guarded bugs which have been fixed.  Use
+* mocks for all Math functions that coerce with #to_f; currently a fixture
+is used.
+* Rational and Complex moved from library/ to core/ in 1.9. Where do we locate
+* the tests?
 
 # 1.9
 =========
@@ -18,11 +22,15 @@ determining whether this outcome is intentional?
 
 ## Rational
 ===========
+
+ (All questions below were posed in:
+<http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/23843>) 
+
 * Determine whether Rational::Unify was intentionally removed.
 * Determine whether Rational#new! was intentionally removed. If not, will
 there be a method to construct a Rational object without simplifying its
 arguments?
-* Determine whether Rational#coerce is supposed to call #to_f/#to_r on non-numeric
+* Determine whether Rational#coerce is supposed to call #to_f on non-numeric
 argument. 1.8 does.
 * Determine whether Rational.allocate has intentionally been removed. Presumably
 so because on 1.8 it creates Rational(nil, nil), which is illegal on 1.9.
@@ -30,4 +38,3 @@ so because on 1.8 it creates Rational(nil, nil), which is illegal on 1.9.
 so because Rational() serves the same function.
 * Determine whether Rational#inspect and #to_s are intentionally different on
 1.9
-* Rational moved from library/ to core/ in 1.9. Where do we locate the tests?
