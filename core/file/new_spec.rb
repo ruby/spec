@@ -129,6 +129,15 @@ describe "File.new" do
     File.exists?(@file).should == true
   end
 
+  ruby_version_is "1.9" do
+    it "coerces filename using #to_path" do
+      name = mock("file")
+      name.should_receive(:to_path).and_return(@file)
+      File.new(name, "w") { }
+      File.exists?(@file).should == true
+    end
+  end
+
   specify  "expected errors " do
     lambda { File.new(true)  }.should raise_error(TypeError)
     lambda { File.new(false) }.should raise_error(TypeError)
