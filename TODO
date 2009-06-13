@@ -8,6 +8,8 @@ but not in 1.8, we should be able to guard it from 1.9 while still yielding to
 is used.
 * Rational and Complex moved from library/ to core/ in 1.9. Where do we locate
 * the tests?
+* Confirm that 1.9 tags can be removed when the corresponding tests pass on
+1.9 trunk.
 
 # 1.9
 =========
