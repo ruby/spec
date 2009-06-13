@@ -11,3 +11,11 @@ describe "RUBY_PATCHLEVEL" do
 		RUBY_PATCHLEVEL.should be_kind_of(Fixnum)
 	end
 end
+
+ruby_version_is "1.8.7" do
+  describe "RUBY_COPYRIGHT" do
+    it "is a String" do
+      RUBY_COPYRIGHT.should be_kind_of(String)
+    end
+  end
+end
