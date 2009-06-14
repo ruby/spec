@@ -30,6 +30,9 @@
 * Use the variable matchers which take into consideration the difference of the
   returned type of variable name. Which is String on 1.8 and Symbol on 1.9.
   Examples include: have_constant, have_instance_variable, etc.
+* Ascertain backport policy for 1.9.2 -> 1.9.1 -> 1.8.7. Are bug fixes merged
+  backwards by default, or is it all case by case? The answer will inform how
+  we handle ruby_bug guards that pass on HEAD, but fail on earlier versions.
 
 # Windows
 ==========
