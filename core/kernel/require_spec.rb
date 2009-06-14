@@ -89,31 +89,34 @@ describe "Kernel#require" do
     $require_spec_1.should_not be_nil
   end
 
+  # Has been fixed on 1.9.2 HEAD; not backported yet
+  ruby_bug "#1627", "1.9.2" do
   ruby_version_is "1.9" do
-    platform_is_not :windows do
-      it "collapses '../' inside an absolute path" do
-        abs_path = File.expand_path(
-          File.join($require_fixture_dir, 'require_spec_1.rb'))
-        require(abs_path).should be_true
-        # Create an absolute path (beginning at a child of the filesystem
-        # root), containing '../' (to move to the root), then the real
-        # absolute path.
-        require("/tmp/../#{abs_path}")
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+      platform_is_not :windows do
+        it "collapses '../' inside an absolute path" do
+          abs_path = File.expand_path(
+            File.join($require_fixture_dir, 'require_spec_1.rb'))
+          require(abs_path).should be_true
+          # Create an absolute path (beginning at a child of the filesystem
+          # root), containing '../' (to move to the root), then the real
+          # absolute path.
+          require("/tmp/../#{abs_path}")
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        end
       end
-    end
-      
-    # This is untested because I don't have access to a Windows box.
-    platform_is :windows do
-      it "collapses '../' inside an absolute path" do
-        abs_path = File.expand_path(
-          File.join($require_fixture_dir, 'require_spec_1.rb'))
-        require(abs_path).should be_true
-        # Create an absolute path (beginning at a child of the filesystem
-        # root), containing '../' (to move to the root), then the real
-        # absolute path.
-        require("C:\Windows\..\#{abs_path}")
-        $require_spec_1.should_not be_nil
+        
+      # This is untested because I don't have access to a Windows box.
+      platform_is :windows do
+        it "collapses '../' inside an absolute path" do
+          abs_path = File.expand_path(
+            File.join($require_fixture_dir, 'require_spec_1.rb'))
+          require(abs_path).should be_true
+          # Create an absolute path (beginning at a child of the filesystem
+          # root), containing '../' (to move to the root), then the real
+          # absolute path.
+          require("C:\Windows\..\#{abs_path}")
+          $require_spec_1.should_not be_nil
+        end
       end
     end
   end
@@ -148,77 +151,80 @@ describe "Kernel#require" do
 # PATH CANONICALIZATION
 #######################################
 
-  ruby_version_is "1.9" do
-    it "stores relative paths as absolute paths in $LOADED_FEATURES" do
-      Dir.chdir($require_fixture_dir) do |dir|
-        abs_path = File.expand_path('../require/require_spec_1.rb')
-        require(abs_path).should be_true
-        require("../require/require_spec_1.rb").should be_false
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+  # This bug has been fixed on 1.9.2 HEAD.
+  ruby_bug "#1627", "1.9.2" do
+    ruby_version_is "1.9" do
+      it "stores relative paths as absolute paths in $LOADED_FEATURES" do
+        Dir.chdir($require_fixture_dir) do |dir|
+          abs_path = File.expand_path('../require/require_spec_1.rb')
+          require(abs_path).should be_true
+          require("../require/require_spec_1.rb").should be_false
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        end
       end
-    end
-    
-    it "stores ./file paths as absolute paths in $LOADED_FEATURES" do
-      Dir.chdir($require_fixture_dir) do |dir|
-        abs_path = File.expand_path('./require_spec_1.rb')
-        require(abs_path).should be_true
-        require("./require_spec_1.rb").should be_false
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+      
+      it "stores ./file paths as absolute paths in $LOADED_FEATURES" do
+        Dir.chdir($require_fixture_dir) do |dir|
+          abs_path = File.expand_path('./require_spec_1.rb')
+          require(abs_path).should be_true
+          require("./require_spec_1.rb").should be_false
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        end
       end
-    end
 
-    it "performs tilde expansion before storing paths in $LOADED_FEATURES" do
-      begin
-        original_home = ENV['HOME'].dup
-        ENV['HOME'] = $require_fixture_dir
-        abs_path = File.expand_path(
-          File.join($require_fixture_dir, 'require_spec_1.rb'))
-        tilde_path = File.join('~', 'require_spec_1.rb')
-        require(tilde_path).should be_true
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
-      ensure
-        ENV['HOME'] = original_home
-      end  
-    end
-
-    it "collapses multiple consecutive path separators before storing in $LOADED_FEATURES" do
-      Dir.chdir($require_fixture_dir) do |dir|
-        abs_path = File.expand_path('../require/require_spec_1.rb')
-        path_parts = File.split(abs_path)
-        require([
-          path_parts[0], File::Separator, path_parts[1]
-        ].join(File::Separator)).should be_true
-
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+      it "performs tilde expansion before storing paths in $LOADED_FEATURES" do
+        begin
+          original_home = ENV['HOME'].dup
+          ENV['HOME'] = $require_fixture_dir
+          abs_path = File.expand_path(
+            File.join($require_fixture_dir, 'require_spec_1.rb'))
+          tilde_path = File.join('~', 'require_spec_1.rb')
+          require(tilde_path).should be_true
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        ensure
+          ENV['HOME'] = original_home
+        end  
       end
-    end
 
-    platform_is_not :windows do
-      it "collapses '../' inside an absolute path before storing in $LOADED_FEATURES" do
-        abs_path = File.expand_path(
-          File.join($require_fixture_dir, '/require_spec_1.rb'))
-        require(abs_path).should be_true
-        # Create an absolute path (beginning at a child of the filesystem
-        # root), containing '../' (to move to the root), then the real
-        # absolute path.
-        require("/tmp/../#{abs_path}")
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+      it "collapses multiple consecutive path separators before storing in $LOADED_FEATURES" do
+        Dir.chdir($require_fixture_dir) do |dir|
+          abs_path = File.expand_path('../require/require_spec_1.rb')
+          path_parts = File.split(abs_path)
+          require([
+            path_parts[0], File::Separator, path_parts[1]
+          ].join(File::Separator)).should be_true
+
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        end
       end
-    end
-    
-    # This is untested because I don't have access to a Windows box.
-    platform_is :windows do
-      it "collapses '../' inside an absolute path before storing in $LOADED_FEATURES" do
-        abs_path = File.expand_path(
-          File.join($require_fixture_dir, '/require_spec_1.rb'))
-        require(abs_path).should be_true
-        # Create an absolute path (beginning at a child of the filesystem
-        # root), containing '../' (to move to the root), then the real
-        # absolute path.
-        require("C:\Windows\..\#{abs_path}")
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+
+      platform_is_not :windows do
+        it "collapses '../' inside an absolute path before storing in $LOADED_FEATURES" do
+          abs_path = File.expand_path(
+            File.join($require_fixture_dir, '/require_spec_1.rb'))
+          require(abs_path).should be_true
+          # Create an absolute path (beginning at a child of the filesystem
+          # root), containing '../' (to move to the root), then the real
+          # absolute path.
+          require("/tmp/../#{abs_path}")
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        end
       end
-    end
+      
+      # This is untested because I don't have access to a Windows box.
+      platform_is :windows do
+        it "collapses '../' inside an absolute path before storing in $LOADED_FEATURES" do
+          abs_path = File.expand_path(
+            File.join($require_fixture_dir, '/require_spec_1.rb'))
+          require(abs_path).should be_true
+          # Create an absolute path (beginning at a child of the filesystem
+          # root), containing '../' (to move to the root), then the real
+          # absolute path.
+          require("C:\Windows\..\#{abs_path}")
+          $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+        end
+      end
+    end    
   end
 
   it "stores a non-extensioned file with its located suffix" do
