@@ -26,6 +26,7 @@ update failing tests in core/argf/skip_spec.rb.
 test is executed in the same run as other ARGF tests the #lineno value isn't
 reset. This can be fixed by explicitly reseting #lineno in the test, but
 that could mask another bug... Figure out who's to blame here.
+* Refactor Kernel.require specification; it's messy and ungainly.
 
 # 1.9
 =========
