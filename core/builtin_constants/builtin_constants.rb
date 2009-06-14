@@ -41,3 +41,9 @@ describe "RUBY_PLATFORM" do
     RUBY_PLATFORM.should be_kind_of(String)
   end
 end
+
+describe "RUBY_RELEASE_DATE" do
+  it "is a String" do
+    RUBY_RELEASE_DATE.should be_kind_of(String)
+  end
+end
