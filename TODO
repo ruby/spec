@@ -13,6 +13,9 @@ is used.
 * File ticket about ARGF#each_char and ARGF#each_byte returning nil on 1.9.
 * Consider filing ticket about 1.8.6's ARGF#readlines returning nil at the end
 of a stream. 1.8.7+ returns an empty Array, as the rdoc since 1.8.6 implies.
+* File ticket: $ ruby86 -e 'p ARGF.skip'
+-e:1:in `skip': undefined method `close' for false:FalseClass (NoMethodError)
+  from -e:1
 
 # 1.9
 =========
