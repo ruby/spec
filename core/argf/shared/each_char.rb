@@ -6,8 +6,6 @@ describe :argf_each_char, :shared => true do
     @chars = []
     File.read(@file1_name).each_char { |c| @chars << c }
     File.read(@file2_name).each_char { |c| @chars << c }
-    ARGV.replace [$0]
-    puts "Before: ARGV=#{ARGV}"
   end
 
   after :each do
@@ -17,9 +15,6 @@ describe :argf_each_char, :shared => true do
   it "yields each char of all streams to the passed block" do
     argv [@file1_name, @file2_name] do
       chars = []
-      puts "Current file: #{ARGF.filename}"
-      puts "ARGF.closed? = #{ARGF.closed?}"
-      puts "ARGV = #{ARGV}"
       ARGF.send(@method) { |c| chars << c }
       chars.should == @chars
     end
