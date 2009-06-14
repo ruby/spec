@@ -30,9 +30,6 @@
 * Use the variable matchers which take into consideration the difference of the
   returned type of variable name. Which is String on 1.8 and Symbol on 1.9.
   Examples include: have_constant, have_instance_variable, etc.
-=======
-* File ticket for Kernel.require raising "LoadError: no such file to load --
-  /tmp/nope.rb"when said file is simply inaccessible.
 
 # 1.9
 =========
