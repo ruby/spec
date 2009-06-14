@@ -17,10 +17,21 @@ describe :argf_readlines, :shared => true do
     end
   end
 
-  it "returns nil when end of stream reached" do
-    argv [@file1, @file2] do
-      ARGF.read
-      ARGF.send(@method).should == nil
+  ruby_version_is ""..."1.9" do
+    it "returns nil when end of stream reached" do
+      argv [@file1, @file2] do
+        ARGF.read
+        ARGF.send(@method).should == nil
+      end
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "returns an empty Array when end of stream reached" do
+      argv [@file1, @file2] do
+        ARGF.read
+        ARGF.send(@method).should == []
+      end
     end
   end
 end
