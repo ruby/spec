@@ -17,12 +17,13 @@
   of a stream. 1.8.7+ returns an empty Array, as the rdoc since 1.8.6 implies.
 * File ticket: $ ruby86 -e 'p ARGF.skip'
   -e:1:in `skip': undefined method `close' for false:FalseClass (NoMethodError)
-  from -e:1
+  from -e:1 (Reported as bug #1653; update spec based on outcome).
 * File ticket: "ruby -e 'p ARGF.read; ARGF.skip'" raises "closed stream
   (IOError)" when two files are given. ARGF#skip should be a no-op when there
-  are no more files.
+  are no more files. (Reported as bug #1653; update spec based on outcome).
 * Determine correct behaviour of ARGF#skip, file ticket if necessary, then
-  update failing tests in core/argf/skip_spec.rb.
+  update failing tests in core/argf/skip_spec.rb. (Reported as bug #1653;
+  update spec based on outcome).
 * The failing ARGF#lineno tests are due to a race-ish condition whereby if the
   test is executed in the same run as other ARGF tests the #lineno value isn't
   reset. This can be fixed by explicitly reseting #lineno in the test, but
