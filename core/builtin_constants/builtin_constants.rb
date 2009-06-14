@@ -35,3 +35,9 @@ ruby_version_is "1.9" do
     end
   end
 end
+
+describe "RUBY_PLATFORM" do
+  it "is a String" do
+    RUBY_PLATFORM.should be_kind_of(String)
+  end
+end
