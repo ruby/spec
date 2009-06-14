@@ -516,6 +516,7 @@ describe "Shell expansion in Kernel#require" do
     ENV["HOME"] = $require_fixture_dir
     @rs_short = "~/require_spec_1.rb"
     @rs_long  = "#{$require_fixture_dir}/require_spec_1.rb"
+    @rs_abs = File.expand_path(@rs_long)
   end
 
   after :all do
@@ -523,8 +524,9 @@ describe "Shell expansion in Kernel#require" do
   end
 
   before :each do
-    $LOADED_FEATURES.delete @rs_long
-    $LOADED_FEATURES.delete @rs_short
+    [@rs_long, @rs_short, @rs_abs].each do |path|
+      $LOADED_FEATURES.delete path
+    end      
   end
 
   it "expands a preceding ~/ to the user's home directory for building the path to search" do
@@ -538,7 +540,9 @@ describe "Shell expansion in Kernel#require" do
     require(@rs_short).should == true
     $require_spec_1.nil?.should == false
 
-    $LOADED_FEATURES.find {|f| f == @rs_short || f == @rs_long }.nil?.should == false
+    $LOADED_FEATURES.find {|f| 
+      f == @rs_short || f == @rs_long || f == @rs_abs
+    }.nil?.should == false
   end
 end
 
