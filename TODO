@@ -21,6 +21,10 @@ of a stream. 1.8.7+ returns an empty Array, as the rdoc since 1.8.6 implies.
 are no more files.
 * Determine correct behaviour of ARGF#skip, file ticket if necessary, then
 update failing tests in core/argf/skip_spec.rb.
+* The failing ARGF#lineno tests are due to a race-ish condition whereby if the
+test is executed in the same run as other ARGF tests the #lineno value isn't
+reset. This can be fixed by explicitly reseting #lineno in the test, but
+that could mask another bug... Figure out who's to blame here.
 
 # 1.9
 =========
