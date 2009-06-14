@@ -10,6 +10,7 @@ is used.
 * the tests?
 * Confirm that 1.9 tags can be removed when the corresponding tests pass on
 1.9 trunk.
+* File ticket about ARGF#each_char and ARGF#each_byte returning nil on 1.9.
 
 # 1.9
 =========
