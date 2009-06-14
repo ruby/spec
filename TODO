@@ -31,6 +31,12 @@
   returned type of variable name. Which is String on 1.8 and Symbol on 1.9.
   Examples include: have_constant, have_instance_variable, etc.
 
+# Windows
+==========
+* Run core/kernel/require_spec.rb on Windows, check all tests pass; fix as
+  necessary.
+* Confirm that core/dir/home_spec.rb passes on Windows under 1.9.
+
 # 1.9
 =========
 * Methods expecting filenames or paths should call #to_path on non-String
