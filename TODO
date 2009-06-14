@@ -10,7 +10,8 @@ is used.
 * the tests?
 * Confirm that 1.9 tags can be removed when the corresponding tests pass on
 1.9 trunk.
-* File ticket about ARGF#each_char and ARGF#each_byte returning nil on 1.9.
+* File ticket about ARGF#each_char, ARGF#each_byte, ARGF#chars, and ARGF#bytes
+* returning nil on 1.9.
 * Consider filing ticket about 1.8.6's ARGF#readlines returning nil at the end
 of a stream. 1.8.7+ returns an empty Array, as the rdoc since 1.8.6 implies.
 * File ticket: $ ruby86 -e 'p ARGF.skip'
