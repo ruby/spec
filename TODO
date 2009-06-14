@@ -51,6 +51,8 @@
 * The inclusion of 'rational' by default has resulted in ZeroDivisionErrors
   being raised where they previously weren't. What is the rule of thumb in
   determining whether this outcome is intentional?
+* Discover why core/kernel/caller_spec.rb has failures on 1.9. What's the
+  cause of this behaviour?
 
 ## Rational
 ===========
