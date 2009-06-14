@@ -16,6 +16,9 @@ of a stream. 1.8.7+ returns an empty Array, as the rdoc since 1.8.6 implies.
 * File ticket: $ ruby86 -e 'p ARGF.skip'
 -e:1:in `skip': undefined method `close' for false:FalseClass (NoMethodError)
   from -e:1
+* File ticket: "ruby -e 'p ARGF.read; ARGF.skip'" raises "closed stream
+(IOError)" when two files are given. ARGF#skip should be a no-op when there
+are no more files.
 
 # 1.9
 =========
