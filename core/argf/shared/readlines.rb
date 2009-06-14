@@ -8,7 +8,7 @@ describe :argf_readlines, :shared => true do
   end
 
   after :each do
-    ARGF.close
+    ARGF.close unless ARGF.closed?
   end
 
   it "reads all lines of all files" do
