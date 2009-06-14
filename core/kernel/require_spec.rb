@@ -87,27 +87,51 @@ describe "Kernel#require" do
       end
     end
 
-    it "normalises .rb paths before storing them in $LOADED_FEATURES" do
+    it "collapses consecutive path separators" do
       Dir.chdir($require_fixture_dir) do |dir|
         abs_path = File.expand_path('./../require/require_spec_1.rb')
-        #File has already been required with an absolute path:
-        $require_spec_1 = nil
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
-        $LOADED_FEATURES.delete abs_path
-        
-        # Require it again with a relative path
-        require('../../fixtures/require/require_spec_1.rb').should be_true
-        # Verify that it's been stored in $LOADED_FEATURES with an absolute
-        # path
-        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
-        $require_spec_1.should_not be_nil
+        $LOADED_FEATURES.delete_if {|p| p =~ /require_spec_1\.rb$/ }
+        # Put the absolute path into $LOADED_FEATURES
+        require(abs_path).should be_true
+        path_parts = File.split(abs_path)
+        # Mangle the absolute path so it contains multiple consecutive separator
+        # characters, then require it. We've already require'd the canonical
+        # form of this path, so this should return false
+        require([
+          path_parts[0], File::Separator, path_parts[1]
+        ].join(File::Separator)).should be_false
 
-        # Requiring it again with a different relative path should have no effect
-        require('../../fixtures/require/require_spec_1.rb').should be_false
-        # And it should still only appear in $LOADED_FEATURES once with an
-        # absolute path
+        # $LOADED_FEATURES should only contain the absolute path
         $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
-        $require_spec_1.should_not be_nil
+      end
+    end
+
+    it "collapses '../' inside an absolute path" do
+      Dir.chdir($require_fixture_dir) do |dir|
+        abs_path = File.expand_path('./../require/require_spec_1.rb')
+        $LOADED_FEATURES.delete_if {|p| p =~ /require_spec_1\.rb$/ }
+        # Put the absolute path into $LOADED_FEATURES
+        require(abs_path).should be_true
+        # Create an absolute path (beginning at the filesystem root), containing
+        # '../', then the real absolute path.
+        #FIXME: Fix to work on Windows. :-(
+        require("/tmp/../#{abs_path}").should be_false
+
+        # $LOADED_FEATURES should only contain the absolute path
+        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
+      end
+    end
+
+    it "canonicalizes relative paths" do
+      Dir.chdir($require_fixture_dir) do |dir|
+        abs_path = File.expand_path('../require/require_spec_1.rb')
+        $LOADED_FEATURES.delete_if {|p| p =~ /require_spec_1\.rb$/ }
+        # Put the absolute path into $LOADED_FEATURES
+        require(abs_path).should be_true
+        require("../require/require_spec_1.rb").should be_false
+
+        # $LOADED_FEATURES should only contain the absolute path
+        $LOADED_FEATURES.grep(/require_spec_1\.rb/).should == [abs_path]
       end
     end
   end
