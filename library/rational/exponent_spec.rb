@@ -3,22 +3,45 @@ require 'rational'
 
 describe "Rational#** when passed [Rational]" do
   conflicts_with :Prime do
-    it "converts self to a Float and returns it raised to the passed argument" do
-      (Rational(3, 4) ** Rational(4, 3)).should be_close(0.681420222312052, TOLERANCE)
-      (Rational(3, 4) ** Rational(-4, 3)).should be_close(1.46752322173095, TOLERANCE)
-      (Rational(3, 4) ** Rational(4, -3)).should be_close(1.46752322173095, TOLERANCE)
+    ruby_version_is ""..."1.9" do
+      it "converts self to a Float and returns it raised to the passed argument" do
+        (Rational(3, 4) ** Rational(4, 3)).should be_close(0.681420222312052, TOLERANCE)
+        (Rational(3, 4) ** Rational(-4, 3)).should be_close(1.46752322173095, TOLERANCE)
+        (Rational(3, 4) ** Rational(4, -3)).should be_close(1.46752322173095, TOLERANCE)
 
-      (Rational(3, 4) ** Rational(0, 3)).should eql(1.0)
-      (Rational(-3, 4) ** Rational(0, 3)).should eql(1.0)
-      (Rational(3, -4) ** Rational(0, 3)).should eql(1.0)
-      (Rational(3, 4) ** Rational(0, -3)).should eql(1.0)
+        (Rational(3, 4) ** Rational(0, 3)).should eql(1.0)
+        (Rational(-3, 4) ** Rational(0, 3)).should eql(1.0)
+        (Rational(3, -4) ** Rational(0, 3)).should eql(1.0)
+        (Rational(3, 4) ** Rational(0, -3)).should eql(1.0)
 
-      (Rational(bignum_value, 4) ** Rational(0, 3)).should eql(1.0)
-      (Rational(3, -bignum_value) ** Rational(0, 3)).should eql(1.0)
-      (Rational(3, 4) ** Rational(0, bignum_value)).should eql(1.0)
-      (Rational(3, 4) ** Rational(0, -bignum_value)).should eql(1.0)
+        (Rational(bignum_value, 4) ** Rational(0, 3)).should eql(1.0)
+        (Rational(3, -bignum_value) ** Rational(0, 3)).should eql(1.0)
+        (Rational(3, 4) ** Rational(0, bignum_value)).should eql(1.0)
+        (Rational(3, 4) ** Rational(0, -bignum_value)).should eql(1.0)
+      end
     end
 
+    ruby_version_is "1.9" do
+      it "returns self raised to the argument as a Rational if possible" do
+
+        (Rational(3, 4) ** Rational(0, 3)).should == Rational(1, 1)
+        (Rational(-3, 4) ** Rational(0, 3)).should == Rational(1, 1)
+        (Rational(3, -4) ** Rational(0, 3)).should == Rational(1, 1)
+        (Rational(3, 4) ** Rational(0, -3)).should == Rational(1, 1)
+
+        (Rational(bignum_value, 4) ** Rational(0, 3)).should == Rational(1, 1)
+        (Rational(3, -bignum_value) ** Rational(0, 3)).should == Rational(1, 1)
+        (Rational(3, 4) ** Rational(0, bignum_value)).should == Rational(1, 1)
+        (Rational(3, 4) ** Rational(0, -bignum_value)).should == Rational(1, 1)
+      end
+
+      it "returns self raised to the argument as a Float if necessary" do
+        (Rational(3, 4) ** Rational(4, 3)).should be_close(0.681420222312052, TOLERANCE)
+        (Rational(3, 4) ** Rational(-4, 3)).should be_close(1.46752322173095, TOLERANCE)
+        (Rational(3, 4) ** Rational(4, -3)).should be_close(1.46752322173095, TOLERANCE)
+      end
+    end
+    
     it "returns NaN when self is negative and the passed argument is not 0" do
       (Rational(-3, 4) ** Rational(-4, 3)).nan?.should be_true
     end
