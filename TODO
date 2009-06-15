@@ -53,23 +53,3 @@
   determining whether this outcome is intentional?
 * Discover why core/kernel/caller_spec.rb has failures on 1.9. What's the
   cause of this behaviour?
-
-## Rational
-===========
-
- (All questions below were posed in:
-<http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-core/23843>) 
-
-* Determine whether Rational::Unify was intentionally removed.
-* Determine whether Rational#new! was intentionally removed. If not, will
-  there be a method to construct a Rational object without simplifying its
-  arguments?
-* Determine whether Rational#coerce is supposed to call #to_f on non-numeric
-  argument. 1.8 does.
-* Determine whether Rational.allocate has intentionally been removed.
-  Presumably so because on 1.8 it creates Rational(nil, nil), which is illegal
-  on 1.9.
-* Determine whether Rational.reduce has intentionally been removed. Presumably
-  so because Rational() serves the same function.
-* Determine whether Rational#inspect and #to_s are intentionally different on
-  1.9
