@@ -53,17 +53,19 @@ conflicts_with :Prime do
     end
   end
 
-  describe "Rational when passed Integer and Rational::Unify is defined" do
-    after :each do
-      Rational.send :remove_const, :Unify
-    end
+  ruby_version_is ""..."1.9" do  
+    describe "Rational when passed Integer and Rational::Unify is defined" do
+      after :each do
+        Rational.send :remove_const, :Unify
+      end
 
-    it "returns the passed Integer when Rational::Unify is defined" do
-      Rational::Unify = true
+      it "returns the passed Integer when Rational::Unify is defined" do
+        Rational::Unify = true
 
-      Rational(1).should eql(1)
-      Rational(-3).should eql(-3)
-      Rational(bignum_value).should eql(bignum_value)
+        Rational(1).should eql(1)
+        Rational(-3).should eql(-3)
+        Rational(bignum_value).should eql(bignum_value)
+      end
     end
   end
 end
