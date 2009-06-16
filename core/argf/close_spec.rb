@@ -23,4 +23,16 @@ describe "ARGF.close" do
       ARGF.close.should equal(ARGF)
     end
   end
+
+  # This passes on 1.8.6 and 1.8.7 but fails on 1.9. matz confirmed that it
+  # should pass in the referenced bug report
+  ruby_bug "#1633", "1.9.2" do
+    it "can close STDIN" do
+      argv [] do
+        ARGV.size.should == 0
+        ARGF.close.should == ARGF
+        ARGF.closed?.should be_true
+      end
+    end   
+  end
 end
