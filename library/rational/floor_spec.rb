@@ -1,5 +1,7 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../shared/rational/floor'
 
-describe "Rational#floor" do
-  it "needs to be reviewed for spec completeness"
+ruby_version_is ""..."1.9" do
+  describe "Rational#floor" do
+    it_behaves_like(:rational_floor, :floor)
+  end
 end
