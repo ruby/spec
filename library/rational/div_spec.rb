@@ -1,5 +1,7 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../shared/rational/div'
 
-describe "Rational#div" do
-  it "needs to be reviewed for spec completeness"
+ruby_version_is ""..."1.9" do
+  describe "Rational#div" do
+    it_behaves_like(:rational_div, :div)
+  end
 end
