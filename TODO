@@ -41,6 +41,10 @@
   necessary.
 * Confirm that core/dir/home_spec.rb passes on Windows under 1.9.
 
+# 1.8
+=========
+* File ticket about Rational(1, 2) != Rational.new!(4, 8) on 1.8...
+
 # 1.9
 =========
 * Methods expecting filenames or paths should call #to_path on non-String
