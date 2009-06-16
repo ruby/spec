@@ -27,7 +27,7 @@ describe "ARGF.close" do
   # This passes on 1.9, but fails on 1.8. matz claims to have fixed it in the
   # attached ticket. The actual exception raised may differ; this will need
   # checking.
-  ruby_bug "#1633" do
+  ruby_bug "#1633", "1.8" do
     it "raises an IOError if called on a closed stream" do
       argv [@file1_name] do
         lambda { ARGF.close }.should_not raise_error
