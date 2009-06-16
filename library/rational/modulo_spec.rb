@@ -32,3 +32,7 @@ describe "Rational#%" do
     lambda { Rational(3, 5) % 0.0 }.should raise_error(FloatDomainError)
   end
 end
+
+describe "Rational#modulo" do
+  it "needs to be reviewed for spec completeness"
+end
