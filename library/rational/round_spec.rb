@@ -1,5 +1,7 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../shared/rational/round'
 
-describe "Rational#round" do
-  it "needs to be reviewed for spec completeness"
+ruby_version_is ""..."1.9" do
+  describe "Rational#round" do
+    it_behaves_like(:rational_round, :round)
+  end
 end
