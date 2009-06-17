@@ -8,7 +8,7 @@ describe :numeric_rect, :shared => true do
       Rational(3, 4), # Rational
       99999999**99, # Bignum
       Float::MAX * 2, # Infinity
-      1/0.0           # NaN
+      0/0.0           # NaN
     ] 
   end
 
