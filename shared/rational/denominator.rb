@@ -8,4 +8,8 @@ describe :rational_denominator, :shared => true do
     
     Rational(1, bignum_value).denominator.should == bignum_value
   end
+
+  it "returns 1 if no denominator was given" do
+    Rational(80).denominator.should == 1
+  end  
 end
