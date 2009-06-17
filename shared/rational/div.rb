@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
+require 'rational'
 
 describe :rational_div_rat, :shared => true do
   it "performs integer division and returns the result" do 
