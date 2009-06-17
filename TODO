@@ -6,24 +6,11 @@
 * Look at automating discovery of guarded bugs which have been fixed.  Use
   mocks for all Math functions that coerce with #to_f; currently a fixture
   is used.
-* Rational and Complex moved from library/ to core/ in 1.9. Where do we locate
-  the tests?
-* Confirm that 1.9 tags can be removed when the corresponding tests pass on
-  1.9 trunk.
-* File ticket about ARGF#each_char, ARGF#each_byte, ARGF#chars, and ARGF#bytes
-  returning nil on 1.9. (Done: http://redmine.ruby-lang.org/issues/show/1632 .
-  Update specs based on ticket outcome.
 * Consider filing ticket about 1.8.6's ARGF#readlines returning nil at the end
   of a stream. 1.8.7+ returns an empty Array, as the rdoc since 1.8.6 implies.
 * File ticket: $ ruby86 -e 'p ARGF.skip'
   -e:1:in `skip': undefined method `close' for false:FalseClass (NoMethodError)
   from -e:1 (Reported as bug #1653; update spec based on outcome).
-* File ticket: "ruby -e 'p ARGF.read; ARGF.skip'" raises "closed stream
-  (IOError)" when two files are given. ARGF#skip should be a no-op when there
-  are no more files. (Reported as bug #1653; update spec based on outcome).
-* Determine correct behaviour of ARGF#skip, file ticket if necessary, then
-  update failing tests in core/argf/skip_spec.rb. (Reported as bug #1653;
-  update spec based on outcome).
 * The failing ARGF#lineno tests are due to a race-ish condition whereby if the
   test is executed in the same run as other ARGF tests the #lineno value isn't
   reset. This can be fixed by explicitly reseting #lineno in the test, but
