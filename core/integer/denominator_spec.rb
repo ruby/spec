@@ -1,11 +1,22 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "Integer#denominator" do
-  ruby_version_is "1.9" do
-    it "always returns 1" do
-      20.denominator.should == 1
-      0.denominator.should == 1
-      389877777262.denominator.should == 1
+ruby_version_is "1.9" do
+  describe "Integer#denominator" do
+    # The Numeric child classes override this method, so their behaviour is
+    # specified in the appropriate place
+    before(:each) do
+      @numbers = [
+        20,             # Integer
+        -2709,          # Negative Integer
+        99999999**99,   # Bignum
+        -99999**621,    # Negative BigNum
+        0,
+        1
+      ] 
     end
+
+    it "returns 1" do
+      @numbers.each {|number| number.denominator.should == 1}
+    end  
   end
 end
