@@ -16,6 +16,11 @@ describe :rational_coerce, :shared => true do
     result.last.is_a?(Rational).should be_true
   end
 
+  # This failed on 1.9 as reported in bug #1636. It was fixed in revision 23718
+  it "returns [argument, self] when given a Rational" do
+    Rational(3, 7).coerce(Rational(9, 2)).should == [Rational(9, 2), Rational(3, 7)]
+  end
+
   ruby_version_is ""..."1.9" do
     it "tries to convert the passed argument into a Float (using #to_f)" do
       obj = mock("something")
