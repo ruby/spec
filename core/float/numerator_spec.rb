@@ -42,5 +42,6 @@ ruby_version_is "1.9" do
       inf.infinite?.should == -1
       inf.numerator.infinite?.should == -1
     end  
+
   end
 end
