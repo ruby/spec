@@ -12,21 +12,44 @@ describe "Float#<=>" do
     ((bignum_value*1.1) <=> bignum_value).should == 1
   end
 
-  # The 4 tests below are taken from matz's revision 23730 for Ruby trunk
-  #
-  it "returns 1 when self is Infinity and other is a Bignum" do
-    (@inf <=> Float::MAX.to_i*2).should == 1
-  end  
+  # TODO: Remove duplicate ruby_bug guards when ruby_bug is fixed.
+  ruby_bug "[ruby-dev:38672] [Bug #1645]", "1.8.6.369" do
+    # The 4 tests below are taken from matz's revision 23730 for Ruby trunk
+    #
+    it "returns 1 when self is Infinity and other is a Bignum" do
+      (@inf <=> Float::MAX.to_i*2).should == 1
+    end  
 
-  it "returns 1 when self is negative and other is Infinty" do
-    (-Float::MAX.to_i*2 <=> @inf).should == 1
-  end  
+    it "returns 1 when self is negative and other is Infinty" do
+      (-Float::MAX.to_i*2 <=> @inf).should == 1
+    end  
 
-  it "returns -1 when self is -Infinity and other is negative" do
-    (-@inf <=> -Float::MAX.to_i*2).should == -1
+    it "returns -1 when self is -Infinity and other is negative" do
+      (-@inf <=> -Float::MAX.to_i*2).should == -1
+    end
+
+    it "returns -1 when self is negative and other is -Infinity" do
+      (-@inf <=> -Float::MAX.to_i*2).should == -1
+    end
   end
 
-  it "returns -1 when self is negative and other is -Infinity" do
-    (-@inf <=> -Float::MAX.to_i*2).should == -1
+  ruby_bug "[ruby-dev:38672] [Bug #1645]", "1.8.7.174" do
+    # The 4 tests below are taken from matz's revision 23730 for Ruby trunk
+    #
+    it "returns 1 when self is Infinity and other is a Bignum" do
+      (@inf <=> Float::MAX.to_i*2).should == 1
+    end  
+
+    it "returns 1 when self is negative and other is Infinty" do
+      (-Float::MAX.to_i*2 <=> @inf).should == 1
+    end  
+
+    it "returns -1 when self is -Infinity and other is negative" do
+      (-@inf <=> -Float::MAX.to_i*2).should == -1
+    end
+
+    it "returns -1 when self is negative and other is -Infinity" do
+      (-@inf <=> -Float::MAX.to_i*2).should == -1
+    end
   end
 end
