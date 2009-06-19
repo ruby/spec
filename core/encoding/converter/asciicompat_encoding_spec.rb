@@ -20,10 +20,8 @@ ruby_version_is "1.9" do
     end
 
     it "returns a corresponding ASCII compatible encoding for ASCII-incompatible encodings" do
-      Encoding::Converter.asciicompat_encoding('UTF-16BE')
-        .should == Encoding::UTF_8
-      Encoding::Converter.asciicompat_encoding("ISO-2022-JP")
-        .should == Encoding.find("stateless-ISO-2022-JP")
+      Encoding::Converter.asciicompat_encoding('UTF-16BE').should == Encoding::UTF_8
+      Encoding::Converter.asciicompat_encoding("ISO-2022-JP").should == Encoding.find("stateless-ISO-2022-JP")
     end
 
     it "returns nil when the given encoding is ASCII compatible" do
