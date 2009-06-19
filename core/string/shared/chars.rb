@@ -32,10 +32,8 @@ describe :string_chars, :shared => true do
   
   ruby_version_is "1.9" do
     it "returns characters in the same encoding as self" do
-      "&%".force_encoding('Shift_JIS').chars.to_a
-        .all? {|c| c.encoding.name.should == 'Shift_JIS'}
-      "&%".encode('ASCII-8BIT').chars.to_a
-        .all? {|c| c.encoding.name.should == 'ASCII-8BIT'}
+      "&%".force_encoding('Shift_JIS').chars.to_a.all? {|c| c.encoding.name.should == 'Shift_JIS'}
+      "&%".encode('ASCII-8BIT').chars.to_a.all? {|c| c.encoding.name.should == 'ASCII-8BIT'}
     end
 
     it "works with multibyte characters" do
