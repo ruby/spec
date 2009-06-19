@@ -23,6 +23,12 @@ ruby_version_is "1.9" do
       end
     end
     
+    it "calls #* on self" do
+      number = mock_numeric('numeric')
+      number.should_receive(:*).and_return(:result)
+      number.abs2.should == :result
+    end
+
     it "returns NaN when self is NaN" do
       (0/0.0).abs2.nan?.should be_true
     end
