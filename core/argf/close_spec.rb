@@ -24,14 +24,26 @@ describe "ARGF.close" do
     end
   end
 
-  # This passes on 1.9, but fails on 1.8. matz claims to have fixed it in the
-  # attached ticket. The actual exception raised may differ; this will need
-  # checking.
-  ruby_bug "#1633", "1.8" do
-    it "raises an IOError if called on a closed stream" do
-      argv [@file1_name] do
-        lambda { ARGF.close }.should_not raise_error
-        lambda { ARGF.close }.should raise_error(IOError)
+  ruby_version_is ""..."1.8.6" do
+    # This passes on 1.9 and 1.8 HEAD, but fails on 1.8.7 and 1.8.6
+    ruby_bug "#1633", "1.8.6.369" do
+      it "raises an IOError if called on a closed stream" do
+        argv [@file1_name] do
+          lambda { ARGF.close }.should_not raise_error
+          lambda { ARGF.close }.should raise_error(IOError)
+        end
+      end
+    end
+  end
+
+  ruby_version_is "1.8.6"..."1.8.7" do
+    # This passes on 1.9 and 1.8 HEAD, but fails on 1.8.7 and 1.8.6
+    ruby_bug "#1633", "1.8.7.174" do
+      it "raises an IOError if called on a closed stream" do
+        argv [@file1_name] do
+          lambda { ARGF.close }.should_not raise_error
+          lambda { ARGF.close }.should raise_error(IOError)
+        end
       end
     end
   end
