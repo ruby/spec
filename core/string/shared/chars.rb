@@ -36,5 +36,14 @@ describe :string_chars, :shared => true do
       s.bytesize.should == 3
       s.send(@method).to_a.should == [s]
     end
+
+    it "uses the String's encoding to determine what characters it contains" do
+      s = "\u{287}"
+      s.force_encoding('UTF-8').chars.to_a.should == [s.force_encoding('UTF-8')]
+      s.force_encoding('BINARY').chars.to_a.should == [
+        "\xCA".force_encoding('BINARY'), "\x87".force_encoding('BINARY')]
+      s.force_encoding('SJIS').chars.to_a.should == [
+        "\xCA".force_encoding('SJIS'), "\x87".force_encoding('SJIS')]
+    end
   end
 end  
