@@ -21,6 +21,7 @@
 * Ascertain backport policy for 1.9.2 -> 1.9.1 -> 1.8.7. Are bug fixes merged
   backwards by default, or is it all case by case? The answer will inform how
   we handle ruby_bug guards that pass on HEAD, but fail on earlier versions.
+* Replace Infinity/NaN hacks with the new helpers.
 
 # Windows
 ==========
