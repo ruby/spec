@@ -22,10 +22,19 @@ describe :string_chars, :shared => true do
     enum.to_a.should == ['h', 'e', 'l', 'l', 'o']
   end
 
+
   it "is unicode aware" do
     before = $KCODE
     $KCODE = "UTF-8"
     "\303\207\342\210\202\303\251\306\222g".send(@method).to_a.should == ["\303\207", "\342\210\202", "\303\251", "\306\222", "g"]
     $KCODE = before
   end
-end
+  
+  ruby_version_is "1.9" do
+    it "works with multibyte characters" do
+      s = "\u{8987}".force_encoding("UTF-8")
+      s.bytesize.should == 3
+      s.send(@method).to_a.should == [s]
+    end
+  end
+end  
