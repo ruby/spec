@@ -31,6 +31,21 @@ describe "ObjectSpace.define_finalizer" do
       rd.close
     else
       rd.close
+      handler = Proc.new { wr.write "finalized"; wr.close }
+      obj = "Test"
+      ObjectSpace.define_finalizer(obj, handler)
+      exit 0
+    end
+  end
+
+  it "doesn't call self-referencing finalizers" do
+    rd, wr = IO.pipe
+    if Kernel::fork then
+      wr.close
+      rd.read.should_not == "finalized"
+      rd.close
+    else
+      rd.close
       obj = "Test"
       handler = Proc.new { wr.write "finalized"; wr.close }
       ObjectSpace.define_finalizer(obj, handler)
