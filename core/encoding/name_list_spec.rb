@@ -10,14 +10,6 @@ ruby_version_is "1.9" do
       Encoding.name_list.each {|e| e.should be_an_instance_of(String) }
     end
 
-    # The rdoc claims it won't return dummy encodings, but this is incorrect.
-    # Reported as bug #1658
-    it "does not return dummy encodings" do
-      Encoding.name_list.each do |enc|
-        Encoding.find(enc).dummy?.should be_false
-      end
-    end
-
     it "includes all aliases" do
       Encoding.aliases.keys.each do |enc_alias|
         Encoding.name_list.include?(enc_alias).should be_true
