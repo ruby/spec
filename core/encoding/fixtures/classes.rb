@@ -20,4 +20,26 @@ module EncodingSpecs
       end
     end
   end
+
+  class InvalidByteSequenceError
+    def self.exception
+      ec = Encoding::Converter.new("utf-8", "iso-8859-1")
+      begin
+        ec.convert("\xf1abcd")
+      rescue Encoding::InvalidByteSequenceError => e
+        e
+      end
+    end
+  end
+  
+  class InvalidByteSequenceErrorIndirect
+    def self.exception
+      ec = Encoding::Converter.new("EUC-JP", "ISO-8859-1")
+      begin
+        ec.convert("abc\xA1\xFFdef")
+      rescue Encoding::InvalidByteSequenceError => e
+        e
+      end
+    end
+  end
 end
