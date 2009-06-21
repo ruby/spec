@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 
 ruby_version_is "1.9" do
-  describe "Encoding::Converter#last_error" do
+  describe "Encoding::Converter#primitive_errinfo" do
     it "returns [:source_buffer_empty,nil,nil,nil,nil] when no conversion has been attempted" do
       ec = Encoding::Converter.new('ascii','utf-8')
       ec.primitive_errinfo.should == [:source_buffer_empty, nil, nil, nil, nil]
