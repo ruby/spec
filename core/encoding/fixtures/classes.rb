@@ -27,7 +27,9 @@ module EncodingSpecs
       begin
         ec.convert("\xf1abcd")
       rescue Encoding::InvalidByteSequenceError => e
-        e
+        # Return the exception object and the discarded bytes reported by
+        # #primitive_errinfo
+        [e, ec.primitive_errinfo[-2]]
       end
     end
   end
@@ -38,7 +40,9 @@ module EncodingSpecs
       begin
         ec.convert("abc\xA1\xFFdef")
       rescue Encoding::InvalidByteSequenceError => e
-        e
+        # Return the exception object and the discarded bytes reported by
+        # #primitive_errinfo
+        [e, ec.primitive_errinfo[-2]]
       end
     end
   end
