@@ -42,5 +42,9 @@ describe "Exception" do
     it "is a superclass of SecurityError" do
       Exception.should be_ancestor_of(SecurityError)
     end
+
+    it "is a superclass of EncodingError" do
+      Exception.should be_ancestor_of(EncodingError)
+    end
   end
 end
