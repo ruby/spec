@@ -15,4 +15,12 @@ end
 
 module ExceptionSpecs
   class Exceptional < Exception; end
+  class UnExceptional < Exception
+    def backtrace
+      nil
+    end
+    def message
+      nil
+    end
+  end
 end  
