@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../fixtures/classes'
 ruby_version_is "1.9" do
   describe "Encoding::InvalidByteSequenceError#source_encoding" do
     before(:each) do
-      @exception = EncodingSpecs::InvalidByteSequenceError.exception
-      @exception2 = EncodingSpecs::InvalidByteSequenceErrorIndirect.exception
+      @exception, = EncodingSpecs::InvalidByteSequenceError.exception
+      @exception2, = EncodingSpecs::InvalidByteSequenceErrorIndirect.exception
     end
 
     it "returns an Encoding object" do

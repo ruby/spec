@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../fixtures/classes'
 ruby_version_is "1.9" do
   describe "Encoding::UndefinedConversionError#source_encoding_name" do
     before(:each) do
-      @exception = EncodingSpecs::UndefinedConversionError.exception
-      @exception2 = EncodingSpecs::UndefinedConversionErrorIndirect.exception
+      @exception, = EncodingSpecs::UndefinedConversionError.exception
+      @exception2, = EncodingSpecs::UndefinedConversionErrorIndirect.exception
     end
 
     it "returns a String" do
