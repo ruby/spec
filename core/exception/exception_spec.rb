@@ -48,3 +48,22 @@ describe "Exception" do
     end
   end
 end
+
+describe "Exception#exception" do
+  it "returns self when passed no argument" do
+    e = RuntimeError.new
+    e.should == e.exception
+  end
+
+  it "returns self when passed self as an argument" do
+    e = RuntimeError.new
+    e.should == e.exception(e)
+  end
+
+  it "returns an exception of the same class as self with the message given as argument" do
+    e = RuntimeError.new
+    e2 = e.exception(:message)
+    e2.should be_an_instance_of(RuntimeError)
+    e2.message.should == :message
+  end
+end
