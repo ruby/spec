@@ -20,12 +20,18 @@ ruby_version_is '1.9' do
       "hello".encode('UTF-8').ascii_only?.should be_true
     end
     
-    it "returns true for all single-character US-ASCII strings" do
+    it "returns true for all single-character US-ASCII Strings" do
       0.upto(127) do |n|
         n.chr.ascii_only?.should be_true
       end
     end
 
+    it "returns false for the first non-US-ASCII single-character String" do
+      chr = 128.chr
+      chr.encoding.should == Encoding::ASCII_8BIT
+      chr.ascii_only?.should be_false
+    end
+    
     it "returns false if the String contains only non-US-ASCII characters" do
       "\u{6666}".ascii_only?.should be_false
     end
