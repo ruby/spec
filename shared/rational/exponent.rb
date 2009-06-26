@@ -87,17 +87,17 @@ describe :rational_exponent_float, :shared => true do
     (Rational(3, 1) ** -1.5).should be_close(0.192450089729875, TOLERANCE)
   end
   
-  it "returns 1.0 when the passed argument is 0" do
-    (Rational(3, 4) ** 0.0).should eql(1.0)
-    (Rational(-3, 4) ** 0.0).should eql(1.0)
-    (Rational(-3, 4) ** 0.0).should eql(1.0)
-  end
-  
   ruby_version_is ""..."1.9" do
     it "returns NaN if self is negative and the passed argument is not 0" do
       (Rational(-3, 2) ** 1.5).nan?.should be_true
       (Rational(3, -2) ** 1.5).nan?.should be_true
       (Rational(3, -2) ** -1.5).nan?.should be_true
+    end
+
+    it "returns 1.0 when the passed argument is 0.0" do
+      (Rational(3, 4) ** 0.0).should eql(1.0)
+      (Rational(-3, 4) ** 0.0).should eql(1.0)
+      (Rational(-3, 4) ** 0.0).should eql(1.0)
     end
   end
 
@@ -109,6 +109,12 @@ describe :rational_exponent_float, :shared => true do
         -3.374618290464398e-16, -1.8371173070873836)
       (Rational(3, -2) ** -1.5).should == Complex(
         -9.998869008783402e-17, 0.5443310539518174)
+    end
+
+    it "returns Complex(1.0) when the passed argument is 0.0" do
+      (Rational(3, 4) ** 0.0).should == Complex(1.0)
+      (Rational(-3, 4) ** 0.0).should == Complex(1.0)
+      (Rational(-3, 4) ** 0.0).should == Complex(1.0)
     end
   end
 end
