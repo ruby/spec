@@ -40,10 +40,17 @@ describe :rational_exponent_rat, :shared => true do
         (Rational(3, 4) ** Rational(-4, 3)).should be_close(1.46752322173095, TOLERANCE)
         (Rational(3, 4) ** Rational(4, -3)).should be_close(1.46752322173095, TOLERANCE)
       end
+
+      it "returns a complex number when self is negative and the passed argument is not 0" do
+        (Rational(-3, 4) ** Rational(-4, 3)).should == Complex(
+          -0.7337616108654732, 1.2709123906625817)
+      end
     end
     
-    it "returns NaN when self is negative and the passed argument is not 0" do
-      (Rational(-3, 4) ** Rational(-4, 3)).nan?.should be_true
+    ruby_version_is ""..."1.9" do
+      it "returns NaN when self is negative and the passed argument is not 0" do
+        (Rational(-3, 4) ** Rational(-4, 3)).nan?.should be_true
+      end
     end
   end
 end
@@ -86,10 +93,23 @@ describe :rational_exponent_float, :shared => true do
     (Rational(-3, 4) ** 0.0).should eql(1.0)
   end
   
-  it "returns NaN if self is negative and the passed argument is not 0" do
-    (Rational(-3, 2) ** 1.5).nan?.should be_true
-    (Rational(3, -2) ** 1.5).nan?.should be_true
-    (Rational(3, -2) ** -1.5).nan?.should be_true
+  ruby_version_is ""..."1.9" do
+    it "returns NaN if self is negative and the passed argument is not 0" do
+      (Rational(-3, 2) ** 1.5).nan?.should be_true
+      (Rational(3, -2) ** 1.5).nan?.should be_true
+      (Rational(3, -2) ** -1.5).nan?.should be_true
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "returns a complex number if self is negative and the passed argument is not 0" do
+      (Rational(-3, 2) ** 1.5).should == Complex(
+        -3.374618290464398e-16, -1.8371173070873836)
+      (Rational(3, -2) ** 1.5).should == Complex(
+        -3.374618290464398e-16, -1.8371173070873836)
+      (Rational(3, -2) ** -1.5).should == Complex(
+        -9.998869008783402e-17, 0.5443310539518174)
+    end
   end
 end
 
