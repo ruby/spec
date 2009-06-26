@@ -49,3 +49,5 @@
 * Unify treatment of bugs after conversation with brixen. Bugs that occur only
   in 1.9 shouldn't be guarded; we just tag them with the bug number, e.g. " mspec
   tag --add 'fails(#555)' -e 'the failing stuff' path/to/spec".
+* Ask Ruby core about what Array#pack should do to encoding; citing failing
+  tests as example questions.
