@@ -4,7 +4,7 @@ require "rational"
 
 describe :complex_coerce, :shared => true do
   before(:each) do
-    @one = Complex.new!(1)
+    @one = Complex(1)
   end
   
   it "returns an array containing other and self as Complex when other is an Integer" do
