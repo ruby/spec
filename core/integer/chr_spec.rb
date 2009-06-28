@@ -55,9 +55,17 @@ ruby_version_is "1.9" do
       200.chr.codepoints.to_a.should == [200]
     end
 
-    it "raises a RangeError is self is greater than 255" do
+    it "raises a RangeError is self is greater than 255 and the internal encoding is nil" do
+      Encoding.default_internal.should be_nil
       lambda { 256.chr }.should raise_error(RangeError)
       lambda { bignum_value.chr }.should raise_error(RangeError)
+    end
+
+    it "infers the encoding from Encoding.default_internal" do
+      old_internal = Encoding.default_internal
+      Encoding.default_internal = Encoding::UTF_8
+      120818.chr.should == "\u{1d7f2}"
+      Encoding.default_internal = old_internal
     end
 
     it "raises a RangeError is self is less than 0" do
