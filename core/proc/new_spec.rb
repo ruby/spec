@@ -7,6 +7,7 @@ describe "Proc.new with an associated block" do
     Proc.new { "hello" }.call.should == "hello"
   end
 
+  # This raises a ThreadError on 1.8 HEAD. Reported as bug #1707
   it "raises a LocalJumpError when context of the block no longer exists" do
     def some_method(&b) b end
     a_proc = Proc.new { return } 
