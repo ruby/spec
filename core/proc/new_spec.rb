@@ -11,8 +11,19 @@ describe "Proc.new with an associated block" do
     def some_method(&b) b end
     a_proc = Proc.new { return } 
     res = some_method(&a_proc)
+    
+    # Using raise_error here causes 1.9 to hang, so we roll our own
+    # begin/rescue block to verify that the exception is raised.
 
-    lambda { res.call }.should raise_error(LocalJumpError)
+    exception = nil  
+    
+    begin
+      res.call
+    rescue LocalJumpError => e
+      exception = e
+    end
+
+    e.should be_an_instance_of(LocalJumpError)
   end
 
   it "returns from within enclosing method when 'return' is used in the block" do
