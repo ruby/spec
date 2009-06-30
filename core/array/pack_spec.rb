@@ -208,9 +208,9 @@ describe "Array#pack with ASCII-string format", :shared => true do
 
     # This feature is under discussion - [ruby-dev:37278]
     it "cuts byte sequence even if it breaks a multibyte character" do
-      ["\u3042"].pack(format).should == utf8("\xe3")
-      ["\u3042".encode(Encoding::UTF_32BE)].pack(format(2)).should == "\x00\x00".force_encoding(Encoding::UTF_32BE)
-      ["\u3042".encode(Encoding::ISO_2022_JP)].pack(format(4)).should == "\e$B$".force_encoding(Encoding::ISO_2022_JP)
+      ["\u3042"].pack(format).should == "\xe3".force_encoding('ascii-8bit')
+      ["\u3042".encode(Encoding::UTF_32BE)].pack(format(2)).should == "\x00\x00"
+      ["\u3042".encode(Encoding::ISO_2022_JP)].pack(format(4)).should == "\e$B$"
     end
   end
 end
