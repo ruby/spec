@@ -128,8 +128,8 @@ describe "Array#pack with the empty format" do
   end
 
   ruby_version_is '1.9' do
-    it "returns an ASCII-8BIT" do
-      [1, 2, 3, true].pack("").encoding.should == Encoding::ASCII_8BIT
+    it "returns an empty String in US-ASCII" do
+      [1, 2, 3, true].pack("").encoding.should == Encoding::US_ASCII
     end
   end
 end
