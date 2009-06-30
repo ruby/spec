@@ -5,7 +5,7 @@ ruby_version_is "1.9" do
     it "returns an Encoding object if the given encodings are compatible" do
       Encoding.compatible?('a','a').should be_an_instance_of(Encoding)
     end
-    
+
     it "returns the encoding of the string that would result from concatenating the arguments" do
       [["\u{9876}".force_encoding('UTF-8'), "\u{1254}".force_encoding('UTF-8')],
       ["a".encode!('SJIS'), "b".encode!('ASCII')]].each do |pair|
@@ -15,7 +15,7 @@ ruby_version_is "1.9" do
     end
 
     it "returns nil if there is not a compatible encoding for the arguments" do
-       Encoding.compatible?("\xa1".force_encoding("iso-8859-1"), 
+       Encoding.compatible?("\xa1".force_encoding("iso-8859-1"),
                             "\xa1\xa1".force_encoding("euc-jp")).should be_nil
     end
 

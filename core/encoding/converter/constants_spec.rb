@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
 ruby_version_is "1.9" do
   describe "Encoding::Converter::INVALID_MASK" do
@@ -9,7 +10,7 @@ ruby_version_is "1.9" do
       Encoding::Converter::INVALID_MASK.should be_an_instance_of(Fixnum)
     end
   end
-       
+
   describe "Encoding::Converter::INVALID_REPLACE" do
     it "exists" do
       Encoding::Converter.should have_constant(:INVALID_REPLACE)

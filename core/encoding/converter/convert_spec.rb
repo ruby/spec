@@ -40,8 +40,7 @@ ruby_version_is "1.9" do
     it "raises an ArgumentError if called on a finished stream" do
       ec = Encoding::Converter.new('UTF-8', Encoding.find('macCyrillic'))
       ec.finish
-      lambda { ec.convert("\u{65}") }.should \
-        raise_error(ArgumentError)
+      lambda { ec.convert("\u{65}") }.should raise_error(ArgumentError)
     end
   end
 end

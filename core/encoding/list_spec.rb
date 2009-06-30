@@ -5,12 +5,12 @@ ruby_version_is "1.9" do
     it "returns an Array" do
       Encoding.list.should be_an_instance_of(Array)
     end
-    
+
     it "returns an Array of Encoding objects" do
       Encoding.list.each do |enc|
         enc.should be_an_instance_of(Encoding)
       end
-    end  
+    end
 
     it "returns each encoding only once" do
       orig = Encoding.list.map {|e| e.name}

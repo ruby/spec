@@ -2,12 +2,11 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 
 ruby_version_is "1.9" do
   describe "Encoding::Converter#putback" do
-                                      
     before(:each) do
       @ec = Encoding::Converter.new("EUC-JP", "ISO-8859-1")
       @ret = @ec.primitive_convert(@src="abc\xa1def", @dst="", nil, 10)
     end
-    
+
     it "returns a String" do
       @ec.putback.should be_an_instance_of(String)
     end

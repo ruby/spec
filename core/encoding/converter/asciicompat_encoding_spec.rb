@@ -6,7 +6,7 @@ ruby_version_is "1.9" do
       lambda { Encoding::Converter.asciicompat_encoding('UTF-8') }.
         should_not raise_error
     end
-    
+
     it "coerces non-String/Encoding objects with #to_str" do
       str = mock('string')
       str.should_receive(:to_str).twice.and_return('string')
@@ -28,7 +28,7 @@ ruby_version_is "1.9" do
       Encoding::Converter.asciicompat_encoding('ASCII').should be_nil
       Encoding::Converter.asciicompat_encoding('UTF-8').should be_nil
     end
-    
+
     quarantine! do
       # Reported as bug #1659
       it "handles encoding names who resolve to nil encodings" do

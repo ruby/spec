@@ -1808,7 +1808,7 @@ end
 
 
 describe "Array#pack with format 'M'" do
-  it "enocdes string with Qouted Printable encoding" do
+  it "encodes string with Quoted Printable encoding" do
     ["ABCDEF"].pack('M').should == "ABCDEF=\n"
   end
 

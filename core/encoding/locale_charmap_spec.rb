@@ -14,7 +14,7 @@ ruby_version_is "1.9" do
         ruby_exe("print Encoding.locale_charmap").should == 'ANSI_X3.4-1968'
         ENV['LANG'] = old_lang
       end
-    
+
       it "is unaffected by assigning to ENV['LANG'] in the same process" do
         old_charmap = Encoding.locale_charmap
         old_lang = ENV['LANG']

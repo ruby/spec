@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 
 ruby_version_is "1.9" do
   describe "Encoding::Converter#primitive_convert" do
-
     it "accepts a nil source buffer" do
       ec = Encoding::Converter.new("utf-8", "iso-8859-1")
       lambda { ec.primitive_convert(nil,"") }.should_not raise_error
@@ -79,7 +78,7 @@ ruby_version_is "1.9" do
       ec.primitive_convert("glark",dest, nil, nil)
       dest.bytesize.should == source.bytesize
     end
-    
+
     it "accepts an options hash" do
       ec = Encoding::Converter.new("utf-8", "iso-8859-1")
       ec.primitive_convert("","",nil,nil, {:after_output => true})\
