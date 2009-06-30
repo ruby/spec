@@ -104,11 +104,14 @@ describe "Array#pack" do
     end
 
     it "returns a string in encoding of common to the concatenated results" do
-      ["\u{3042 3044 3046 3048}", 0x2000B].pack("A*U").encoding.should == Encoding::UTF_8
-      ["abcde\xd1", "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == Encoding::ISO_8859_1
-      ["abcde".encode(Encoding::US_ASCII), "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == Encoding::US_ASCII
+      ["\u{3042 3044 3046 3048}", 0x2000B].pack("A*U").encoding.should == 
+        Encoding::ASCII_8BIT
+      ["abcde\xd1", "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == 
+        Encoding::ASCII_8BIT
+      ["abcde".encode(Encoding::US_ASCII), "\xFF\xFe\x81\x82"].pack("A*u").encoding.should == 
+        Encoding::ASCII_8BIT
       # under discussion [ruby-dev:37294]
-      #   ["\u{3042 3044 3046 3048}", 1].pack("A*N").encoding.should == Encoding::ASCII_8BIT
+      ["\u{3042 3044 3046 3048}", 1].pack("A*N").encoding.should == Encoding::ASCII_8BIT
     end
   end
 
