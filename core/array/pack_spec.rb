@@ -197,15 +197,13 @@ describe "Array#pack with ASCII-string format", :shared => true do
     end
 
     # This feature is under discussion - [ruby-dev:37278]
-    it "keeps encoding of source strings" do
-      # ISO-8859-1
-      ["abcd"].pack(format).encoding.should == "abcd".encoding
-      # UTF-8
-      ["\u3042"].pack(format).encoding.should == "\u3042".encoding
-      # example of dummy encoding
-      ["\u3042".encode(Encoding::UTF_32BE)].pack(format).encoding.should == Encoding::UTF_32BE
-      # example of stateful encoding
-      ["\u3042".encode(Encoding::ISO_2022_JP)].pack(format).encoding.should == Encoding::ISO_2022_JP
+    it "returns result in ASCII-8BIT" do
+      ["abcd"].pack(format).encoding.should == Encoding::ASCII_8BIT
+      ["\u3042"].pack(format).encoding.should == Encoding::ASCII_8BIT
+      ["\u3042".encode(Encoding::UTF_32BE)].pack(format).encoding.should == 
+        Encoding::ASCII_8BIT
+      ["\u3042".encode(Encoding::ISO_2022_JP)].pack(format).encoding.should == 
+        Encoding::ASCII_8BIT
     end
 
     # This feature is under discussion - [ruby-dev:37278]
