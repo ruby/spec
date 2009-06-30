@@ -38,9 +38,18 @@ describe :complex_divide_float, :shared => true do
     (Complex(15, 16) / 2.0).should be_close(Complex(7.5, 8), TOLERANCE)
   end
 
-  it "returns Complex(Infinity, Infinity) when given zero" do
-    (Complex(20, 40) / 0.0).inspect.should == "Complex(Infinity, Infinity)"
-    (Complex(-20, -40) / 0.0).inspect.should == "Complex(-Infinity, -Infinity)"
+  ruby_version_is ""..."1.9" do
+    it "returns Complex(Infinity, Infinity) when given zero" do
+      (Complex(20, 40) / 0.0).inspect.should == "Complex(Infinity, Infinity)"
+      (Complex(-20, -40) / 0.0).inspect.should == "Complex(-Infinity, -Infinity)"
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "returns (Infinity+Infinity*i) when given zero" do
+      (Complex(20, 40) / 0.0).inspect.should == "(Infinity+Infinity*i)"
+      (Complex(-20, -40) / 0.0).inspect.should == "(-Infinity-Infinity*i)"
+    end
   end
 end
 
