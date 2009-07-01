@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require 'complex'
 
 describe :complex_divide_complex, :shared => true do
   it "divides according to the usual rule for complex numbers" do
