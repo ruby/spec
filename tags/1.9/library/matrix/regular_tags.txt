@@ -1,0 +1,1 @@
+fails:Matrix#regular? returns false unless rank(A) != n
