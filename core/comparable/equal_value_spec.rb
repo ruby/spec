@@ -46,18 +46,37 @@ describe "Comparable#==" do
     (a == b).should == nil
   end
 
-  it "returns nil if calling #<=> on self raises a StandardError" do
-    a = ComparableSpecs::Weird.new(0)
-    b = ComparableSpecs::Weird.new(10)
-    
-    def a.<=>(b) raise StandardError, "test"; end
-    (a == b).should == nil
+  ruby_version_is ""..."1.9" do
+    it "returns nil if calling #<=> on self raises a StandardError" do
+      a = ComparableSpecs::Weird.new(0)
+      b = ComparableSpecs::Weird.new(10)
+      
+      def a.<=>(b) raise StandardError, "test"; end
+      (a == b).should == nil
 
-    # TypeError < StandardError
-    def a.<=>(b) raise TypeError, "test"; end
-    (a == b).should == nil
+      # TypeError < StandardError
+      def a.<=>(b) raise TypeError, "test"; end
+      (a == b).should == nil
 
-    def a.<=>(b) raise Exception, "test"; end
-    lambda { (a == b).should == nil }.should raise_error(Exception)
+      def a.<=>(b) raise Exception, "test"; end
+      lambda { (a == b).should == nil }.should raise_error(Exception)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    # Behaviour confirmed by MRI test suite
+    it "returns false if calling #<=> on self raises an Exception" do
+      a = ComparableSpecs::Weird.new(0)
+      b = ComparableSpecs::Weird.new(10)
+      
+      def a.<=>(b) raise StandardError, "test"; end
+      (a == b).should be_false
+
+      def a.<=>(b) raise TypeError, "test"; end
+      (a == b).should be_false
+
+      def a.<=>(b) raise Exception, "test"; end
+      lambda { (a == b).should be_false }.should raise_error(Exception)
+    end
   end
 end
