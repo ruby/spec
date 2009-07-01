@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../../shared/complex/multiply'
 
-ruby_version_is ""..."1.9" do
-
-  require 'complex'
+ruby_version_is "1.9" do
 
   describe "Complex#* with Complex" do
     it_behaves_like(:complex_multiply_complex, :*)
