@@ -31,9 +31,10 @@ ruby_version_is "1.9" do
     end
 
     it "accepts any object as encoding name, if it responds to #to_str" do
-      obj = Object.new
-      def obj.encoding_name=(name); @name; end
-      def obj.to_str; @name; end
+      obj = Class.new do
+        attr_writer :encoding_name
+        def to_str; @encoding_name; end
+      end.new
 
       Encoding.list.each do |enc|
         obj.encoding_name = enc.name
