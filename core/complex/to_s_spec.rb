@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../../shared/complex/to_s'
 
-ruby_version_is ""..."1.9" do
-
-  require 'complex'
+ruby_version_is "1.9" do
 
   describe "Complex#to_s when self's real component is 0" do
     it_behaves_like(:complex_to_s_0, :to_s)
