@@ -45,9 +45,9 @@ describe :complex_divide_float, :shared => true do
   end
 
   ruby_version_is "1.9" do
-    it "returns (Infinity+Infinity*i) when given zero" do
-      (Complex(20, 40) / 0.0).inspect.should == "(Infinity+Infinity*i)"
-      (Complex(-20, -40) / 0.0).inspect.should == "(-Infinity-Infinity*i)"
+    it "raises a ZeroDivisionError when given 0.0" do
+      lambda { Complex(20, 40) / 0.0 }.should raise_error(ZeroDivisionError)
+      lambda { Complex(-20, -40) / 0.0 }.should raise_error(ZeroDivisionError)
     end
   end
 end
