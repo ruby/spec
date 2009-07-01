@@ -20,9 +20,11 @@ describe :complex_to_s, :shared => true do
       Complex(1, 0).to_s.should == "1+0i"
       Complex(1, -0).to_s.should == "1+0i"
 
-      # This is a bit weird, but it's what MRI does
-      Complex(1, 0.0).to_s.should == "1+0.0i"
-      Complex(1, -0.0).to_s.should == "1+0.0i"
+      ruby_version_is ""..."1.9" do
+        # This is a bit weird, but it's what MRI does
+        Complex(1, 0.0).to_s.should == "1+0.0i"
+        Complex(1, -0.0).to_s.should == "1+0.0i"
+      end
     end
   end
 end
