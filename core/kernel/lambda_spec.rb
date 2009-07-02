@@ -10,6 +10,8 @@ describe "Kernel.lambda" do
   end
 
   it_behaves_like(:kernel_lambda, :lambda)
+  it_behaves_like(:kernel_lambda_return_like_method, :lambda)
+  
 end
 
 describe "Kernel#lambda" do
