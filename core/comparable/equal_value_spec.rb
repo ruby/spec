@@ -34,16 +34,32 @@ describe "Comparable#==" do
     (a == b).should == false
   end
   
-  it "returns nil if calling #<=> on self returns nil or a non-Integer" do
-    a = ComparableSpecs::Weird.new(0)
-    b = ComparableSpecs::Weird.new(10)
+  ruby_version_is ""..."1.9" do
+    it "returns nil if calling #<=> on self returns nil or a non-Integer" do
+      a = ComparableSpecs::Weird.new(0)
+      b = ComparableSpecs::Weird.new(10)
 
-    a.should_receive(:<=>).any_number_of_times.and_return(nil)
-    (a == b).should == nil
+      a.should_receive(:<=>).any_number_of_times.and_return(nil)
+      (a == b).should == nil
 
-    a = ComparableSpecs::Weird.new(0)
-    a.should_receive(:<=>).any_number_of_times.and_return("abc")
-    (a == b).should == nil
+      a = ComparableSpecs::Weird.new(0)
+      a.should_receive(:<=>).any_number_of_times.and_return("abc")
+      (a == b).should == nil
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "returns false if calling #<=> on self returns nil or a non-Integer" do
+      a = ComparableSpecs::Weird.new(0)
+      b = ComparableSpecs::Weird.new(10)
+
+      a.should_receive(:<=>).any_number_of_times.and_return(nil)
+      (a == b).should be_false
+
+      a = ComparableSpecs::Weird.new(0)
+      a.should_receive(:<=>).any_number_of_times.and_return("abc")
+      (a == b).should be_false
+    end
   end
 
   ruby_version_is ""..."1.9" do
