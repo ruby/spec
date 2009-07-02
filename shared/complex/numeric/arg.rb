@@ -17,8 +17,11 @@ describe :numeric_arg, :shared => true do
     end
   end  
 
-  it "returns 0 if self is NaN" do
-    nan_value.send(@method).should == 0 
+  # Unsure what this should do; fix after seeing resolution of bug report
+  ruby_bug "#1715", "1.9" do
+    it "returns 0 if self is NaN" do
+      nan_value.send(@method).should == 0 
+    end
   end
 
   it "returns Pi if negative" do
