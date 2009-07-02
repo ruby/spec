@@ -6,10 +6,10 @@ describe :numeric_imag, :shared => true do
       20,             # Integer
       398.72,         # Float
       Rational(3, 4), # Rational
-      99999999**99, # Bignum
+      bignum_value, # Bignum
       Float::MAX * 2, # Infinity
       0/0.0           # NaN
-    ] 
+    ].map{|n| [n,-n]}.flatten 
   end
 
   it "returns 0" do
