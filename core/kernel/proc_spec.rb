@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 require File.dirname(__FILE__) + '/shared/lambda'
 
+# The functionality of Proc objects is specified in core/proc
+
 describe "Kernel.proc" do
   it "is a private method" do
     Kernel.should have_private_instance_method(:proc)

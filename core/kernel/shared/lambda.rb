@@ -7,18 +7,6 @@ describe :kernel_lambda, :shared => true do
     lambda { send(@method) }.should raise_error(ArgumentError)
   end
 
-  it "raises an ArgumentError when given too many arguments" do
-    lambda {
-      send(@method) { |a, b| a + b }.call(1, 2, 5)
-    }.should raise_error(ArgumentError)
-  end
-
-  it "raises an ArgumentError when given too few arguments" do
-    lambda {
-      send(@method) { |a, b| a + b }.call(1)
-    }.should raise_error(ArgumentError)
-  end
-
   it "returns from block into caller block" do
     # More info in the pickaxe book pg. 359
     def some_method(cmd)
