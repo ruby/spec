@@ -42,11 +42,13 @@ describe :numeric_polar, :shared => true do
     end
   end  
 
-  it "treats NaN like a positive number" do
-    nan = 0/0.0
-    nan.nan?.should be_true
-    nan.polar.size.should == 2
-    nan.polar.first.nan?.should be_true
-    nan.polar.last.should == 0
-  end  
+  ruby_bug "#1715", "1.9" do
+    it "treats NaN like a positive number" do
+      nan = 0/0.0
+      nan.nan?.should be_true
+      nan.polar.size.should == 2
+      nan.polar.first.nan?.should be_true
+      nan.polar.last.should == 0
+    end
+  end
 end
