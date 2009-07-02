@@ -1,10 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/../../shared/complex/Complex'
 
-ruby_version_is ""..."1.9" do
-
-  require 'complex'
-
+ruby_version_is "1.9" do
   describe "Complex when passed [Complex, Complex]" do
     it_behaves_like(:complex_Complex_complex_complex, :Complex)
   end
