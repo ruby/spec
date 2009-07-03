@@ -17,17 +17,15 @@ describe :numeric_arg, :shared => true do
     end
   end  
 
-  # Unsure what this should do; fix after seeing resolution of bug report
-  ruby_bug "#1715", "1.9" do
-    it "returns 0 if self is NaN" do
-      nan_value.send(@method).should == 0 
+  ruby_bug "#1715", "1.8.6.369" do
+    it "returns NaN if self is NaN" do
+      (-nan_value).send(@method).nan?.should be_true
+      nan_value.send(@method).nan?.should be_true
     end
   end
 
   it "returns Pi if negative" do
     @numbers.each do |number| 
-      # NaN can't be negated
-      next if number.to_f.nan?
       (0-number).send(@method).should == Math::PI
     end
   end  
