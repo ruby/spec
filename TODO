@@ -52,3 +52,4 @@
 * Ask Ruby core about what Array#pack should do to encoding; citing failing
   tests as example questions.
 * Spec Ripper.
+* Spec 1.9 literal lambda syntax.
