@@ -23,6 +23,7 @@
   we handle ruby_bug guards that pass on HEAD, but fail on earlier versions.
 * Replace Infinity/NaN hacks with the new helpers.
 * Think about how we can support exhaustive tests of certain features.
+* Specify 'public' and 'protected' keywords.
 
 # Windows
 ==========
