@@ -94,7 +94,7 @@ describe "->(){}" do
     ->(a,*b) {b}.call(:per, :cus, :si, :on).should == [:cus, :si, :on]
   end
 
-  it "accepts a paramater prefixed with an ampersand between the parenthesis" do
+  it "accepts a parameter prefixed with an ampersand between the parenthesis" do
     lambda { ->(&a) {} }.should_not raise_error(SyntaxError)
     lambda { ->(x, &a) {} }.should_not raise_error(SyntaxError)
   end
