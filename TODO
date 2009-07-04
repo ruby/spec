@@ -52,3 +52,6 @@
 * Ask Ruby core about what Array#pack should do to encoding; citing failing
   tests as example questions.
 * Spec Ripper.
+* 1.9 defines methods such as instance_eval on BasicObject; not Kernel as in
+  1.8. Do we need to share these specs so that the methods are specified in
+  the correct place?
