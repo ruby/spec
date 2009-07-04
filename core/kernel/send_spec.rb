@@ -26,7 +26,7 @@ describe "Kernel#send" do
     KernelSpecs::Foo.send(:bar).should == 'done'
   end
 
-  it "raises a NoMethodError if the corresponding method can't be found" do
+  it "raises a NameError if the corresponding method can't be found" do
     class KernelSpecs::Foo
       def bar
         'done'
@@ -35,7 +35,7 @@ describe "Kernel#send" do
     lambda { KernelSpecs::Foo.new.send(:baz) }.should raise_error(NameError)
   end
 
-  it "raises a NoMethodError if the corresponding singleton method can't be found" do
+  it "raises a NameError if the corresponding singleton method can't be found" do
     class KernelSpecs::Foo
       def self.bar
         'done'
