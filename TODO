@@ -55,3 +55,5 @@
 * 1.9 defines methods such as instance_eval on BasicObject; not Kernel as in
   1.8. Do we need to share these specs so that the methods are specified in
   the correct place?
+* #public_send and #send could share some common functionality, but shared
+  specs use #send internally. Ask brixen what to do.
