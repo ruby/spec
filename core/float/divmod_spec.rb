@@ -13,6 +13,11 @@ describe "Float#divmod" do
     values[1].should be_close(9223372036854775808.000, TOLERANCE)
   end
 
+  # Behaviour established as correct in r23953
+  it "raises a FloatDomainError if self is NaN" do
+    lambda { nan_value.divmod(1) }.should raise_error(FloatDomainError)
+  end
+
   ruby_version_is ""..."1.9" do
     it "raises FloatDomainError if other is zero" do
       lambda { 1.0.divmod(0)   }.should raise_error(FloatDomainError)
