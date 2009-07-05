@@ -126,5 +126,5 @@ describe "Array#* with an integer" do
 end
 
 describe "Array#* with a string" do
-  it_behaves_like :array_join, :*
+  it_behaves_like :array_join, :*, ArraySpecs::NewArray
 end
