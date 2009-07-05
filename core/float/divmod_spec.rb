@@ -23,6 +23,11 @@ describe "Float#divmod" do
     lambda { 1.divmod(nan_value) }.should raise_error(FloatDomainError)
   end
 
+  # Behaviour established as correct in r23953
+  it "raises a FloatDomainError if self is Infinity" do
+    lambda { infinity_value.divmod(1) }.should raise_error(FloatDomainError)
+  end
+
   ruby_version_is ""..."1.9" do
     it "raises FloatDomainError if other is zero" do
       lambda { 1.0.divmod(0)   }.should raise_error(FloatDomainError)
