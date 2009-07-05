@@ -58,3 +58,5 @@
   the correct place?
 * #public_send and #send could share some common functionality, but shared
   specs use #send internally. Ask brixen what to do.
+* Enumerable#join shares a spec with Array#join. Ask brixen where to place the
+  shared spec.
