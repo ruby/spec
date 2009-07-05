@@ -30,6 +30,11 @@ describe :numeric_arg, :shared => true do
     end
   end  
 
+  # This was established in r23960
+  it "returns Pi if -0.0" do
+    (-0.0).send(@method).should == Math::PI
+  end
+
   it "raises an ArgumentError if given any arguments" do
    @numbers.each do |number| 
      lambda { number.send(@method, number) }.should raise_error(ArgumentError)
