@@ -61,3 +61,4 @@
 * Enumerable#join shares a spec with Array#join. Ask brixen where to place the
   shared spec.
 * Determine how we're going to specify the vast Gem module...
+* Specify require_relative
