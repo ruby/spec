@@ -32,7 +32,7 @@ describe "Kernel#send" do
         'done'
       end
     end
-    lambda { KernelSpecs::Foo.new.send(:baz) }.should raise_error(NameError)
+    lambda { KernelSpecs::Foo.new.send(:syegsywhwua) }.should raise_error(NameError)
   end
 
   it "raises a NameError if the corresponding singleton method can't be found" do
