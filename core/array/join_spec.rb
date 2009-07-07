@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
-require  File.dirname(__FILE__) + '/shared/join'
+require  File.dirname(__FILE__) + '/../../shared/array/join'
 
 describe "Array#join" do
 

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../array/shared/join'
+require File.dirname(__FILE__) + '/../../shared/array/join'
 require File.dirname(__FILE__) + '/../array/fixtures/classes'
 
 ruby_version_is "1.9" do
