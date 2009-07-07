@@ -14,9 +14,10 @@ ruby_version_is "1.9" do
       Proc.new { true }.lambda?.should be_false
     end
 
-    it "returns false if the object was created with Proc#curry" do
+    # [ruby-core:24127]
+    it "returns true if the object was created with Proc#curry" do
       l = lambda { true }
-      l.curry.lambda?.should be_false
+      l.curry.lambda?.should be_true
     end
   end
 end
