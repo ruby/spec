@@ -28,15 +28,19 @@ describe "Kernel#instance_eval" do
   # TODO: This should probably be replaced with a "should behave like" that uses
   # the many scoping/binding specs from kernel/eval_spec, since most of those
   # behaviors are the same for instance_eval. See also module_eval/class_eval.
-  it "shares a scope across sibling evals" do
-    a, b = Object.new, Object.new
+  
+  # Feature removed in 1.9
+  ruby_version_is ""..."1.9" do
+    it "shares a scope across sibling evals" do
+      a, b = Object.new, Object.new
 
-    result = nil
-    a.instance_eval "x = 1"
-    lambda do
-      b.instance_eval "result = x"
-    end.should_not raise_error
-    result.should == 1
+      result = nil
+      a.instance_eval "x = 1"
+      lambda do
+        b.instance_eval "result = x"
+      end.should_not raise_error
+      result.should == 1
+    end
   end
 
   it "binds self to the receiver" do
