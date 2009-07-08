@@ -56,7 +56,7 @@ describe "Kernel#eval" do
 
   it "does not make Proc locals visible to evaluated code" do
     bind = proc { inner = 4 }
-    lambda { eval("inner", bind) }.should raise_error(NameError)
+    lambda { eval("inner", bind.binding) }.should raise_error(NameError)
   end
 
   it "allows a binding to be captured inside an eval" do
@@ -127,8 +127,8 @@ describe "Kernel#eval" do
 
   it "allows creating a new class in a binding" do
     bind = proc {}
-    eval "class A; end", bind
-    eval("A.name", bind).should == "A"
+    eval "class A; end", bind.binding
+    eval("A.name", bind.binding).should == "A"
   end
 
   it "allows creating a new class in a binding created by #eval" do
