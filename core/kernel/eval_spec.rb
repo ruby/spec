@@ -31,16 +31,27 @@ describe "Kernel#eval" do
     A::C.name.should == "A::C"
   end
 
-  it "accepts a Proc object as a binding" do
-    x = 1
-    bind = proc {}
+  ruby_version_is ""..."1.9" do
+    it "accepts a Proc object as a binding" do
+      x = 1
+      bind = proc {}
 
-    eval("x", bind).should == 1
-    eval("y = 2", bind).should == 2
-    eval("y", bind).should == 2
+      eval("x", bind).should == 1
+      eval("y = 2", bind).should == 2
+      eval("y", bind).should == 2
 
-    eval("z = 3").should == 3
-    eval("z", bind).should == 3
+      eval("z = 3").should == 3
+      eval("z", bind).should == 3
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "doesn't accept a Proc object as a binding" do
+      x = 1
+      bind = proc {}
+
+      lambda { eval("x", bind) }.should raise_error(TypeError)
+    end
   end
 
   it "does not make Proc locals visible to evaluated code" do
