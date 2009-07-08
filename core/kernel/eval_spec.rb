@@ -59,29 +59,64 @@ describe "Kernel#eval" do
     lambda { eval("inner", bind.binding) }.should raise_error(NameError)
   end
 
-  it "allows a binding to be captured inside an eval" do
-    outer_binding = binding
-    level1 = eval("binding", outer_binding)
-    level2 = eval("binding", level1)
+  ruby_version_is ""..."1.9" do
+    it "allows a binding to be captured inside an eval" do
+      outer_binding = binding
+      level1 = eval("binding", outer_binding)
+      level2 = eval("binding", level1)
 
-    eval("w = 1")
-    eval("x = 2", outer_binding)
-    eval("y = 3", level1)
+      eval("w = 1")
+      eval("x = 2", outer_binding)
+      eval("y = 3", level1)
 
-    eval("w").should == 1
-    eval("w", outer_binding).should == 1
-    eval("w", level1).should == 1
-    eval("w", level2).should == 1
+      eval("w").should == 1
+      eval("w", outer_binding).should == 1
+      eval("w", level1).should == 1
+      eval("w", level2).should == 1
 
-    eval("x").should == 2
-    eval("x", outer_binding).should == 2
-    eval("x", level1).should == 2
-    eval("x", level2).should == 2
+      eval("x").should == 2
+      eval("x", outer_binding).should == 2
+      eval("x", level1).should == 2
+      eval("x", level2).should == 2
 
-    eval("y").should == 3
-    eval("y", outer_binding).should == 3
-    eval("y", level1).should == 3
-    eval("y", level2).should == 3
+      eval("y").should == 3
+      eval("y", outer_binding).should == 3
+      eval("y", level1).should == 3
+      eval("y", level2).should == 3
+    end
+  end
+
+  ruby_version_is "1.9" do
+    # This differs from the 1.8 example because 1.9 doesn't share scope across
+    # sibling evals
+    it "allows a binding to be captured inside an eval" do
+      outer_binding = binding
+      level1 = eval("binding", outer_binding)
+      level2 = eval("binding", level1)
+
+      eval("x = 2", outer_binding)
+      eval("y = 3", level1)
+
+      eval("w=1", outer_binding)
+      eval("w", outer_binding).should == 1
+      eval("w=1", level1).should == 1
+      eval("w", level1).should == 1
+      eval("w=1", level2).should == 1
+      eval("w", level2).should == 1
+
+      eval("x", outer_binding).should == 2
+      eval("x=2", level1)
+      eval("x", level1).should == 2
+      eval("x=2", level2)
+      eval("x", level2).should == 2
+
+      eval("y=3", outer_binding)
+      eval("y", outer_binding).should == 3
+      eval("y=3", level1)
+      eval("y", level1).should == 3
+      eval("y=3", level2)
+      eval("y", level2).should == 3
+    end
   end
 
   it "allows Proc and binding to be nested in horrible ways" do
