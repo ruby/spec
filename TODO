@@ -62,3 +62,4 @@
   shared spec.
 * Determine how we're going to specify the vast Gem module...
 * Specify require_relative
+* Share Enumerable#join with Hash#join once Enumerable#join is more stable.
