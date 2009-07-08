@@ -321,6 +321,12 @@ module ModuleSpecs
 
   module Autoload
   end
+
+  # This class isn't inherited from or included in anywhere. It exists to test
+  # 1.9's constant scoping rules
+  class Detached
+    DETATCHED_CONSTANT = :d
+  end
 end
 
 ModuleSpecs::Nesting[:root_level] = Module.nesting
