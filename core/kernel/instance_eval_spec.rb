@@ -10,10 +10,18 @@ describe "Kernel#instance_eval" do
     lambda { "hola".instance_eval(4, 5) { |a,b| a + b } }.should raise_error(ArgumentError)
   end
   
-  it "passes the object to the block" do
-    "hola".instance_eval { |o| o.size }.should == 4
+  ruby_version_is ""..."1.9" do
+    it "passes the object to the block" do
+      "hola".instance_eval { |o| o.size }.should == 4
+    end
   end
   
+  ruby_version_is "1.9" do
+    it "doesn't pass the object to the block" do
+      "hola".instance_eval { |o| o }.should be_nil
+    end
+  end
+
   it "only binds the eval to the receiver" do
     f = Object.new
     f.instance_eval do 
