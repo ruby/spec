@@ -157,6 +157,10 @@ module KernelSpecs
     end
   end
 
+  module InstEvalCVar
+    instance_eval { @@count = 2 }
+  end
+
   module InstEval
     def self.included(base)
       base.instance_eval { @@count = 2 }

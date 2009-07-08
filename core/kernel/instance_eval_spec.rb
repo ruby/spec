@@ -79,9 +79,20 @@ describe "Kernel#instance_eval" do
     prc.call(false, prc).should == 1
   end
 
-  it "sets class variables in the receiver" do
-    KernelSpecs::IncludesInstEval.class_variables.should include("@@count")
-    KernelSpecs::IncludesInstEval.send(:class_variable_get, :@@count).should == 2
+  ruby_version_is ""..."1.9" do
+    it "sets class variables in the receiver" do
+      KernelSpecs::IncludesInstEval.class_variables.should include("@@count")
+      KernelSpecs::IncludesInstEval.send(:class_variable_get, :@@count).should == 2
+    end
+  end
+
+  ruby_version_is "1.9" do
+    # On 1.9 class variables aren't inherited so we have to modify the test
+    # from 1.8
+    it "sets class variables in the receiver" do
+      KernelSpecs::InstEvalCVar.class_variables.should include(:@@count)
+      KernelSpecs::InstEvalCVar.send(:class_variable_get, :@@count).should == 2
+    end
   end
 
   it "raises a TypeError when defining methods on an immediate" do
