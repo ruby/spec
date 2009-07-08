@@ -20,6 +20,7 @@ describe "Kernel#puts" do
     Kernel.puts.should == nil
   end
 
+  # Doesn't work on 1.9; reported as bug #1748
   it "writes nil with a newline when given nil as an arg" do
     $stdout.should_receive(:write).with("nil")
     $stdout.should_receive(:write).with("\n")
