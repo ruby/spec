@@ -162,23 +162,44 @@ describe "Kernel#eval" do
     end
   end
 
-  it "allows creating a new class in a binding" do
-    bind = proc {}
-    eval "class A; end", bind.binding
-    eval("A.name", bind.binding).should == "A"
+  ruby_version_is ""..."1.9" do
+    it "allows creating a new class in a binding" do
+      bind = proc {}
+      eval "class A; end", bind.binding
+      eval("A.name", bind.binding).should == "A"
+    end
+
+    it "allows creating a new class in a binding created by #eval" do
+      bind = eval "binding"
+      eval "class A; end", bind
+      eval("A.name").should == "A"
+    end
+
+    it "allows creating a new class in a binding returned by a method defined with #eval" do
+      bind = eval "def spec_binding; binding; end; spec_binding"
+      eval "class A; end", bind
+      eval("A.name").should == "A"
+    end
   end
 
-  it "allows creating a new class in a binding created by #eval" do
-    bind = eval "binding"
-    eval "class A; end", bind
-    eval("A.name").should == "A"
+  ruby_version_is "1.9" do
+    it "allows creating a new class in a binding" do
+      bind = proc {}
+      eval("class A; end; A.name", bind.binding).should =~ /A$/
+    end
+
+    it "allows creating a new class in a binding created by #eval" do
+      bind = eval "binding"
+      eval("class A; end; A.name", bind).should =~ /A$/
+    end
+
+    it "allows creating a new class in a binding returned by a method defined with #eval" do
+      bind = eval "def spec_binding; binding; end; spec_binding"
+      eval("class A; end; A.name", bind).should =~ /A$/
+    end
   end
 
-  it "allows creating a new class in a binding returned by a method defined with #eval" do
-    bind = eval "def spec_binding; binding; end; spec_binding"
-    eval "class A; end", bind
-    eval("A.name").should == "A"
-  end
+
 
   it "includes file and line information in syntax error" do
     expected = 'speccing.rb'
