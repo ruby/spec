@@ -114,7 +114,10 @@ describe "Kernel#load" do
   it "produces __FILE__ as the given filename and __LINE__ as the source line number" do
     Dir.chdir($load_fixture_dir) do |dir|
       load('load_spec_4.rb').should == true 
-      $load_spec_4.should == [['./load_spec_4.rb', 1], ['./load_spec_4.rb', 10]]
+      $load_spec_4.first.first.should =~ /load_spec_4\.rb$/
+      $load_spec_4.first.last.should == 1
+      $load_spec_4.last.first.should =~ /load_spec_4\.rb$/
+      $load_spec_4.last.last.should == 10
 
       extended_on :rubinius do
         `rm load_spec_4.rbc`
