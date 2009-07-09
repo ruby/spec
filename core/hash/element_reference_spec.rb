@@ -74,7 +74,8 @@ describe "Hash#[]" do
   it "compares key via hash" do
     x = mock('0')
     x.should_receive(:hash).and_return(0)
-    new_hash[x] = nil
+
+    new_hash[x].should == nil
   end
 
   it "does not compare key with unknown hash codes via eql?" do
