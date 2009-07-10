@@ -85,7 +85,7 @@ describe "The super keyword" do
     sub = Class.new(sup) do
       [:a, :b].each do |name|
         define_method name do
-          super
+          super()
         end
       end
     end
