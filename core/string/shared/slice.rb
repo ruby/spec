@@ -1,3 +1,19 @@
+doc(String, :slice, :[]) do
+
+<<EOF
+    (Fixnum offset) => String or nil
+    
+Returns a substring of one character from _offset_. If _offset_ is 
+negative it's counted from the end of _self_. Returns _nil_ if _offset_
+falls outside of _self_.    
+
+
+    'Food for all'.@method(-3) #=> 'a'
+    "Moo".@method(5)           #=> nil
+    'glark'.@method(1)         #=> 'l'
+EOF
+end
+
 describe :string_slice, :shared => true do
   it "returns the character code of the character at the given index" do
     "hello".send(@method, 0).should == ?h
@@ -29,6 +45,20 @@ describe :string_slice, :shared => true do
     lambda { "hello".send(@method, {})        }.should raise_error(TypeError)
     lambda { "hello".send(@method, [])        }.should raise_error(TypeError)
   end
+end
+
+doc(String, :slice, :[]) do
+
+<<EOF
+    (Fixnum offset, Fixnum length) => String or nil
+
+Returns a substring starting at _offset_ and extending for _length_
+characters. If _offset_ is negative it's counted from the end of _self_.
+Returns _nil_ if _offset_ falls outside of _self_ or _length_ is negative.
+
+    'hello there'.@method(1,3)   #=> 'ell'
+    'hello there'.@method(-3,2)  #=> 'er'
+EOF
 end
 
 describe :string_slice_index_length, :shared => true do
@@ -143,6 +173,22 @@ describe :string_slice_index_length, :shared => true do
   end
 end
 
+doc(String, :slice, :[]) do
+<<EOF
+    (Range range) => String or nil
+
+Returns a substring containing characters at offsets given by the range.
+Returns _nil_ if no match or the begining of the range is greater than the
+end.
+
+
+    'hello there'.@method(1..3)    #=> 'ell'
+    'hello there'.@method(-4..-2)  #=> 'her'
+    'hello there'.@method(12..-1)  #=> nil
+    'hello there'.@method(-2..-4)  #=> ''
+EOF
+end
+
 describe :string_slice_range, :shared => true do
   it "returns the substring given by the offsets of the range" do
     "hello there".send(@method, 1..1).should == "e"
@@ -239,11 +285,21 @@ describe :string_slice_range, :shared => true do
   end
 end
 
+doc(String, :slice, :[]) do
+
+<<EOF  
+    (Regexp pattern) => String or nil
+
+Returns the matching portion of _self_, or _nil_ if no match.
+
+    'hello there'.@method(/[aeiou](.)\1/) #=> "ell"
+EOF
+end
+
 describe :string_slice_regexp, :shared => true do
   it "returns the matching portion of self" do
     "hello there".send(@method, /[aeiou](.)\1/).should == "ell"
-    "".send(@method, //).should == ""
-  end
+    "".send(@method, //).should == ""  end
 
   it "returns nil if there is no match" do
     "hello there".send(@method, /xyz/).should == nil
@@ -277,6 +333,20 @@ describe :string_slice_regexp, :shared => true do
     'hello'.send(@method, /not/)
     $~.should == nil
   end
+end
+
+doc(String, :slice, :[]) do
+
+<<EOF  
+    (Regexp pattern, Fixnum offset) => String or nil
+
+Matches _self_ against _pattern_ then returns the _MatchData_ component
+correspoding to _offset_. Returns _nil_ if no match.
+
+    'hello there'.@method(/[aeiou](.)\1/, 0)  #=> "ell"
+    'hello there'.@method(/[aeiou](.)\1/, 1)  #=> "l"
+    'hello there'.@method(/[aeiou](.)\1/, 2)  #=> nil
+EOF
 end
 
 describe :string_slice_regexp_index, :shared => true do
@@ -360,6 +430,18 @@ describe :string_slice_regexp_index, :shared => true do
     'hello'.send(@method, /not/, 0)
     $~.should == nil
   end
+end
+
+doc(String, :slice, :[]) do
+
+<<EOF
+    (String string) => String or nil
+  
+Returns _string_ if it occurs in _self_; otherwise returns _nil_.
+
+    'hello there'.@method("lo")  #=> "lo"
+    'hello there'.@method("bye") #=> nil
+EOF
 end
 
 describe :string_slice_string, :shared => true do

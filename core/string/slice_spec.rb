@@ -2,109 +2,28 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 require File.dirname(__FILE__) + '/shared/slice.rb'
 
-doc(String, :slice, :[]) do
-
-<<EOF
-    (Fixnum offset) => String or nil
-    
-Returns a substring of one character from _offset_. If _offset_ is 
-negative it's counted from the end of _self_. Returns _nil_ if _offset_
-falls outside of _self_.    
-
-
-    'Food for all'.@method(-3) #=> 'a'
-    "Moo".@method(5)           #=> nil
-    'glark'.@method(1)         #=> 'l'
-EOF
-end
-
 describe "String#slice" do
   it_behaves_like :string_slice, :slice
 end
 
 
-doc(String, :slice, :[]) do
-
-<<EOF
-    (Fixnum offset, Fixnum length) => String or nil
-
-Returns a substring starting at _offset_ and extending for _length_
-characters. If _offset_ is negative it's counted from the end of _self_.
-Returns _nil_ if _offset_ falls outside of _self_ or _length_ is negative.
-
-    'hello there'.@method(1,3)   #=> 'ell'
-    'hello there'.@method(-3,2)  #=> 'er'
-EOF
-end
-
 describe "String#slice with index, length" do
   it_behaves_like :string_slice_index_length, :slice
 end
 
-doc(String, :slice, :[]) do
-<<EOF
-    (Range range) => String or nil
-
-Returns a substring containing characters at offsets given by the range.
-Returns _nil_ if no match or the begining of the range is greater than the
-end.
-
-
-    'hello there'.@method(1..3)    #=> 'ell'
-    'hello there'.@method(-4..-2)  #=> 'her'
-    'hello there'.@method(12..-1)  #=> nil
-    'hello there'.@method(-2..-4)  #=> ''
-EOF
-end
 
 describe "String#slice with Range" do
   it_behaves_like :string_slice_range, :slice
-end
-
-doc(String, :slice, :[]) do
-
-<<EOF  
-    (Regexp pattern) => String or nil
-
-Returns the matching portion of _self_, or _nil_ if no match.
-
-    'hello there'.@method(/[aeiou](.)\1/) #=> "ell"
-EOF
 end
 
 describe "String#slice with Regexp" do
   it_behaves_like :string_slice_regexp, :slice
 end
 
-doc(String, :slice, :[]) do
-
-<<EOF  
-    (Regexp pattern, Fixnum offset) => String or nil
-
-Matches _self_ against _pattern_ then returns the _MatchData_ component
-correspoding to _offset_. Returns _nil_ if no match.
-
-    'hello there'.@method(/[aeiou](.)\1/, 0)  #=> "ell"
-    'hello there'.@method(/[aeiou](.)\1/, 1)  #=> "l"
-    'hello there'.@method(/[aeiou](.)\1/, 2)  #=> nil
-EOF
-end
-
 describe "String#slice with Regexp, index" do
   it_behaves_like :string_slice_regexp_index, :slice
 end
 
-doc(String, :slice, :[]) do
-
-<<EOF
-    (String string) => String or nil
-  
-Returns _string_ if it occurs in _self_; otherwise returns _nil_.
-
-    'hello there'.@method("lo")  #=> "lo"
-    'hello there'.@method("bye") #=> nil
-EOF
-end
 
 describe "String#slice with String" do
   it_behaves_like :string_slice_string, :slice
