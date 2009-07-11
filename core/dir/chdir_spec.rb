@@ -33,6 +33,10 @@ describe "Dir.chdir" do
     Dir.chdir(@original) { :block_value }.should == :block_value
   end
   
+  it "defaults to the home directory when given a block but no argument" do
+    Dir.chdir { Dir.pwd.should == ENV['HOME'] }
+  end
+
   it "changes to the specified directory for the duration of the block" do
     ar = Dir.chdir(DirSpecs.mock_dir) { |dir| [dir, Dir.pwd] }
     ar.should == [DirSpecs.mock_dir, DirSpecs.mock_dir]
