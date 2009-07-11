@@ -35,6 +35,14 @@ describe "Dir.chdir" do
     Dir.chdir(obj)
   end
 
+  ruby_version_is "1.9" do
+    it "calls #to_path on the argument if it's not a String" do
+      obj = mock('path')
+      obj.should_receive(:to_path).and_return(Dir.pwd)
+      Dir.chdir(obj)
+    end
+  end
+
   it "returns the value of the block when a block is given" do
     Dir.chdir(@original) { :block_value }.should == :block_value
   end
