@@ -29,6 +29,12 @@ describe "Dir.chdir" do
     Dir.chdir(@original).should == 0
   end
   
+  it "calls #to_str on the argument if it's not a String" do
+    obj = mock('path')
+    obj.should_receive(:to_str).and_return(Dir.pwd)
+    Dir.chdir(obj)
+  end
+
   it "returns the value of the block when a block is given" do
     Dir.chdir(@original) { :block_value }.should == :block_value
   end
