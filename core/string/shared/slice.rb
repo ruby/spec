@@ -1,4 +1,4 @@
-doc(String, :slice, :[], <<-docs)
+doc(String, :slice, :[], <<-text)
       (Fixnum offset) => String or nil
       
   Returns a substring of one character from _offset_. If _offset_ is 
@@ -9,7 +9,7 @@ doc(String, :slice, :[], <<-docs)
       'Food for all'.@method(-3) #=> 'a'
       "Moo".@method(5)           #=> nil
       'glark'.@method(1)         #=> 'l'
-docs
+text
 
 describe :string_slice, :shared => true do
   it "returns the character code of the character at the given index" do
@@ -44,7 +44,7 @@ describe :string_slice, :shared => true do
   end
 end
 
-doc(String, :slice, :[], <<-docs)
+doc(String, :slice, :[], <<-text)
       (Fixnum offset, Fixnum length) => String or nil
 
   Returns a substring starting at _offset_ and extending for _length_
@@ -53,7 +53,7 @@ doc(String, :slice, :[], <<-docs)
 
       'hello there'.@method(1,3)   #=> 'ell'
       'hello there'.@method(-3,2)  #=> 'er'
-docs
+text
 
 describe :string_slice_index_length, :shared => true do
   it "returns the substring starting at the given index with the given length" do
@@ -167,7 +167,7 @@ describe :string_slice_index_length, :shared => true do
   end
 end
 
-doc(String, :slice, :[], <<-docs)
+doc(String, :slice, :[], <<-text)
       (Range range) => String or nil
 
   Returns a substring containing characters at offsets given by the range.
@@ -179,7 +179,7 @@ doc(String, :slice, :[], <<-docs)
       'hello there'.@method(-4..-2)  #=> 'her'
       'hello there'.@method(12..-1)  #=> nil
       'hello there'.@method(-2..-4)  #=> ''
-docs
+text
 
 describe :string_slice_range, :shared => true do
   it "returns the substring given by the offsets of the range" do
@@ -277,13 +277,13 @@ describe :string_slice_range, :shared => true do
   end
 end
 
-doc(String, :slice, :[], <<-docs)  
+doc(String, :slice, :[], <<-text)  
       (Regexp pattern) => String or nil
 
   Returns the matching portion of _self_, or _nil_ if no match.
 
-      'hello there'.@method(/[aeiou](.)\1/) #=> "ell"
-docs
+      'hello there'.@method(/[aeiou](.)\\1/) #=> "ell"
+text
 
 describe :string_slice_regexp, :shared => true do
   it "returns the matching portion of self" do
@@ -324,16 +324,16 @@ describe :string_slice_regexp, :shared => true do
   end
 end
 
-doc(String, :slice, :[], <<-docs)  
+doc(String, :slice, :[], <<-text)  
       (Regexp pattern, Fixnum offset) => String or nil
 
   Matches _self_ against _pattern_ then returns the _MatchData_ component
   correspoding to _offset_. Returns _nil_ if no match.
 
-      'hello there'.@method(/[aeiou](.)\1/, 0)  #=> "ell"
-      'hello there'.@method(/[aeiou](.)\1/, 1)  #=> "l"
-      'hello there'.@method(/[aeiou](.)\1/, 2)  #=> nil
-docs
+      'hello there'.@method(/[aeiou](.)\\1/, 0)  #=> "ell"
+      'hello there'.@method(/[aeiou](.)\\1/, 1)  #=> "l"
+      'hello there'.@method(/[aeiou](.)\\1/, 2)  #=> nil
+text
 
 describe :string_slice_regexp_index, :shared => true do
   it "returns the capture for the given index" do
@@ -418,14 +418,14 @@ describe :string_slice_regexp_index, :shared => true do
   end
 end
 
-doc(String, :slice, :[], <<-docs)
+doc(String, :slice, :[], <<-text)
       (String string) => String or nil
     
   Returns _string_ if it occurs in _self_; otherwise returns _nil_.
 
       'hello there'.@method("lo")  #=> "lo"
       'hello there'.@method("bye") #=> nil
-docs
+text
 
 describe :string_slice_string, :shared => true do
   it "returns other_str if it occurs in self" do
