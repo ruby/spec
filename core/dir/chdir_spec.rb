@@ -41,6 +41,15 @@ describe "Dir.chdir" do
       obj.should_receive(:to_path).and_return(Dir.pwd)
       Dir.chdir(obj)
     end
+
+    it "prefers #to_str over #to_path" do
+      obj = Class.new do
+        def to_path; DirSpecs.mock_dir; end
+        def to_str;  Dir.pwd; end
+      end
+      Dir.chdir(obj.new)
+      Dir.pwd.should == @original
+    end
   end
 
   it "returns the value of the block when a block is given" do
