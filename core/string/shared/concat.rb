@@ -1,3 +1,12 @@
+doc(String, :concat, :<<, <<-text)
+    (String other) => String
+
+Concatenates _self_ with _other_ then returns the resultant String.         
+
+    'ring'.@method(115) #=> 'rings'
+text
+
+
 describe :string_concat, :shared => true do
   it "concatenates the given argument to self and returns self" do
     str = 'hello '
@@ -57,6 +66,30 @@ describe :string_concat, :shared => true do
     x = "x"
     x.send(@method, "y".taint).tainted?.should == true
   end
+end
+
+ruby_version_is "1.9" do
+  doc(String, :concat, :<<, <<-text)
+    (Fixnum codepoint) => String
+
+  Converts _codepoint_ to the corresponding character, concatenates it with
+  _self_, then returns the resultant String.         
+
+      'ring'.@method(115) #=> 'rings'
+      'We could build '.@method(0x2603) #=> "We could build \u{2603}"
+  text
+end
+
+ruby_version_is "".."1.9" do
+  doc(String, :concat, :<<, <<-text)
+      (Fixnum code) => String
+
+  Converts _code_ to the corresponding ASCII character, concatenates it with
+  _self_, then returns the resultant String. If _code_ is not between 0 and 255,
+  i.e. it is outside of the ASCII range, a TypeError is raised.        
+
+      'ring'.@method(115) #=> 'rings'
+  text
 end
 
 describe :string_concat_fixnum, :shared => true do
