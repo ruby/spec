@@ -3,6 +3,14 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
 ruby_version_is "1.9" do
+  doc(String, :bytesize, <<-text)
+      () => Integer
+
+  Returns the length of _self_ in bytes.    
+
+      "\u{6666}".bytesize  #=> 3
+      "hello".bytesize     #=> 5
+  text
   describe "#String#bytesize" do
     it "needs to be reviewed for spec completeness"
 
