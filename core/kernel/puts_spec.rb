@@ -20,11 +20,14 @@ describe "Kernel#puts" do
     Kernel.puts.should == nil
   end
 
-  # Doesn't work on 1.9; reported as bug #1748
-  it "writes nil with a newline when given nil as an arg" do
-    $stdout.should_receive(:write).with("nil")
-    $stdout.should_receive(:write).with("\n")
-    Kernel.puts(nil).should == nil
+  # In bug #1748, Yuki Sonada wrote that he thought this change in behaviour
+  # was intentional
+  ruby_version_is ""..."1.9" do
+    it "writes nil with a newline when given nil as an arg" do
+      $stdout.should_receive(:write).with("nil")
+      $stdout.should_receive(:write).with("\n")
+      Kernel.puts(nil).should == nil
+    end
   end
 
   it "calls to_s before writing non-string objects" do
