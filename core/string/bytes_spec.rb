@@ -2,6 +2,27 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 ruby_version_is "1.8.7" do
+  doc(String, :bytes, <<-text)
+      () => Enumerator
+
+  Returns an +Enumerator+ for each byte in _self_. A byte is a +Fixnum+
+  between 0 and 255.
+
+      "duck".bytes.to_a     #=> [100, 117, 99, 107]
+      "ȸ".bytes.to_a        #=> [200, 184]
+  text
+
+  doc(String, :bytes, <<-text)
+      () { |byte| } => self
+
+  Yields each byte in _self_ to the block provided. A byte is a +Fixnum+
+  between 0 and 255.
+
+     bytes = 0                       \\
+     "duck".bytes {|b| bytes += b }  \\
+     bytes                           #=> 423
+  text
+  
   describe "String#bytes" do
     before(:each) do
       @utf8 = "東京"
