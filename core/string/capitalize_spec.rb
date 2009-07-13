@@ -2,6 +2,28 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
+doc(String, :capitalize, <<-text)
+    () => String
+
+Returns a copy of _self_ with the first character converted to uppercase, and
+subsequent characters to lowercase.    
+
+This method does not take into account the current locale. It only uppercases
+characters in the range A-Z, and only lowercases those in the range a-z. Other
+characters are left as they were.
+
+    'ant'.capitalize #=> 'Ant'
+    'MAN'.capitalize #=> 'Man'
+    'Bee'.capitalize #=> 'Bee'
+    "BÄR".capitalize #=> 'BÄr'
+
+## See Also
+    
+* +String#capitalize!+: Capitalizes the string in-place.
+* +String#downcase+: Returns a copy of the string in lowercase.
+* +String#upcase+: Returns a copy of the string in uppercase.
+text
+
 describe "String#capitalize" do
   it "returns a copy of self with the first character converted to uppercase and the remainder to lowercase" do
     "".capitalize.should == ""
@@ -28,6 +50,31 @@ describe "String#capitalize" do
     StringSpecs::MyString.new("Hello").capitalize.class.should == StringSpecs::MyString
   end
 end
+
+doc(String, :capitalize!, <<-text)
+    () => String
+
+Converts the first character of _self_ to uppercase, and subsequent characters
+to lowercase.    
+
+This method does not take into account the current locale. It only uppercases
+characters in the range A-Z, and only lowercases those in the range a-z. Other
+characters are left as they were.
+
+    insect = 'ant'     \\
+    insect.capitalize! \\
+    insect             #=> 'Ant'
+
+    human = 'MAN'      \\
+    human.capitalize!  \\
+    human              #=> 'Man'
+
+## See Also
+    
+* +String#capitalize+: Returns a copy of the capitalized string.
+* +String#downcase+: Returns a copy of the string in lowercase.
+* +String#upcase+: Returns a copy of the string in uppercase.
+text
 
 describe "String#capitalize!" do
   it "capitalizes self in place" do
