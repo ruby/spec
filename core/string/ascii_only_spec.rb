@@ -3,6 +3,16 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
 ruby_version_is '1.9' do
+
+  doc(String, :ascii_only?, <<-text)
+      () => TrueClass or FalseClass
+
+  Returns +true+ if _self_ contains only US-ASCII characters; otherwise +false+.
+
+      'abc'.ascii_only?       #=> true
+      "ab\u{986}".ascii_only? #=> false
+  text
+
   describe "String#ascii_only?" do
     it "returns true if the String contains only US-ASCII characters" do
       "hello".ascii_only?.should be_true
