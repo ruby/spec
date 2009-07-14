@@ -1,6 +1,23 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
+doc(String, :casecmp, <<-text)
+    (String other) => -1 or 0 or 1
+
+Compares _self_ with _other_ in a case-insensitive fashion. It returns +1+ if
+_self_ is greater than _other_, +0+ if the two strings are equal, and +-1+ if
+_self_ is less than _other_.   
+    
+    "abcdef".casecmp("abcde")   #=>  1
+    "aBcDeF".casecmp("abcdef")  #=>  0
+    "abcdef".casecmp("abcdefg") #=> -1
+    "abcdef".casecmp("ABCDEF")  #=>  0
+
+## See Also
+
+* +String#<=>+: Compares two Strings case-sensitively.
+text
+
 describe "String#casecmp" do
   it "is a case-insensitive version of String#<=>" do
     "abcdef".casecmp("abcde").should == 1
