@@ -1,6 +1,33 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
+doc(String, :center, <<-text)
+    (Integer length) => String
+
+Returns a new +String+ of length _length_ with _self_ at the center. If _self_
+is shorter than _length_ it is surrounded by sufficient whitespace such that
+its length is equal to _length_. If _self_ has length less than or equal to
+_length_ it is returned unmodified
+
+    'parsimony'.center(5)         #=> 'parsimony'
+    'parsimony'.center(9)         #=> 'parsimony'
+    'parsimony'.center(13)        #=> '  parsimony  '
+text
+
+doc(String, :center, <<-text)
+    (Integer length, String padding) => String
+
+Returns a new +String+ of length _length_ with _self_ at the center. If _self_
+is shorter than _length_ it is surrounded by sufficient repetitions of
+_padding_ such that its length is equal to _length_. If _self_ has length less
+than or equal to _length_ it is returned unmodified
+
+    'parsimony'.center(13,'~')    #=> '~~parsimony~~'
+    ' parsimony '.center(17,'>>') #=> '>>> parsimony >>>' 
+    ''.center(6, "xy")            #=> 'xyxxyx'
+    "".center(1, "abcd")          #=> "a"
+text
+
 describe "String#center with length, padding" do
   it "returns a new string of specified length with self centered and padded with padstr" do
     "one".center(9, '.').should       == "...one..."
