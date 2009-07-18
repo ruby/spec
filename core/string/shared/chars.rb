@@ -2,6 +2,24 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require File.dirname(__FILE__) + '/../fixtures/classes'
 
+doc(String, :chars, :each_char, <<-text)
+    () { |char| } => self
+
+Passes each character in turn to the block as a +String+.
+
+    chars = ""                                 \\
+    "string".@method { |char| chars << char }  \\
+    chars                                      #=> "string"
+text
+
+doc(String, :chars, :each_char, <<-text)
+    () => Enumerator
+
+Returns an enumerator of each character in _self_.
+
+    "string".@method.to_a  #=> ['s', 't', 'r', 'i', 'n', 'g']
+text
+
 describe :string_chars, :shared => true do
   it "passes each char in self to the given block" do
     a = []
