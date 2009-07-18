@@ -1,6 +1,44 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
+doc(String, :chomp, <<-text)
+    (String separator) => String
+
+Returns a new String with _separator_ removed. 
+
+If _separator_ is "\\n", the following characters are also removed: "\\r" and
+"\\r\\n". If _separator_ is +nil+, _self_ is returned. If _separator_ is the
+empty string, all carriage return characters ("\\n" and "\\r\\n") are removed.
+
+When _self_ is the empty string, an empty string is returned.
+
+    "hello".chomp("llo")             #=> "he"
+    "stooge\\r".chomp("\\n")         #=> "stooge"
+    "molar\\r\\n\\r\\n\\n".chomp("") #=> "molar"     
+    "".chomp("")                     #=> ""
+text
+
+doc(String, :chomp, <<-text)
+    () => String
+
+Returns a new String with the record separator (_$/_) removed.
+
+If _$/_ is "\\n", the following characters are also removed: "\\r" and
+"\\r\\n". If _$/_ is +nil+, _self_ is returned. If _$/_ is the
+empty string, all carriage return characters ("\\n" and "\\r\\n") are removed.
+
+When _self_ is the empty string, an empty string is returned.
+
+    $/ = "llo"                    \\
+    "hello".chomp                 #=> "he"
+    $/ = "\\n"                    \\
+    "stooge\\r".chomp             #=> "stooge"
+    $/ = ""                       \\
+    "molar\\r\\n\\r\\n\\n".chomp  #=> "molar"
+    $/ = ""                       \\
+    "".chomp("")                  #=> ""
+text
+
 describe "String#chomp with separator" do
   it "returns a new string with the given record separator removed" do
     "hello".chomp("llo").should == "he"
@@ -89,6 +127,44 @@ describe "String#chomp with separator" do
     StringSpecs::MyString.new("").chomp.class.should == StringSpecs::MyString
   end
 end
+
+doc(String, :chomp!, <<-text)
+    (String separator) => String
+
+Removes _separator_ from _self_. 
+
+If _separator_ is "\\n", the following characters are also removed: "\\r" and
+"\\r\\n". If _separator_ is the empty string, all carriage return characters
+("\\n" and "\\r\\n") are removed.
+
+Returns +nil+ if no modifications were made.
+
+    greeting = "hello"               \\
+    greeting.chomp!("llo")           \\
+    greeting                         #=> "he"
+    pejorative = "stooge"            \\
+    pejorative.chomp!("\\n")         #=> nil
+text
+
+doc(String, :chomp!, <<-text)
+    () => String
+
+Removes the record separator (_$/_) from _self_.
+
+If _$/_ is "\\n", the following characters are also removed: "\\r" and
+"\\r\\n". If _$/_ is the empty string, all carriage return characters ("\\n"
+and "\\r\\n") are removed.
+
+Returns +nil+ if no modifications were made.
+
+    $/ = "llo"                    \\
+    greeting = "hello"            \\
+    greeting.chomp!               #=> "he"
+
+    $/ = "\\n"                    \\
+    pejorative = "stooge"         \\
+    pejorative.chomp!             #=> nil
+text
 
 describe "String#chomp! with separator" do
   it "modifies self in place and returns self" do
