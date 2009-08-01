@@ -90,4 +90,9 @@ describe :kernel_send, :shared => true do
       fail
     end
   end
+
+  # Confirm commit r24306 
+  it "has an arity of -1" do
+    method(:__send__).arity.should == -1
+  end
 end
