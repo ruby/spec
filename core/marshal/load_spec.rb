@@ -124,6 +124,30 @@ describe "Marshal::load" do
     end
   end
 
+  ruby_version_is "1.9" do
+    it "calls the proc for recursively visited data" do
+      a = [1]
+      a << a
+      ret = []
+      Marshal.load(Marshal.dump(a), proc { |arg| ret << arg; arg })
+      ret.first.should == 1
+      ret[1].should == [1,a]
+      ret[2].should == a
+      ret.size.should == 3
+    end
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "doesn't call the proc for recursively visited data" do
+      a = [1]
+      a << a
+      ret = []
+      Marshal.load(Marshal.dump(a), proc { |arg| ret << arg })
+      ret.first.should == 1
+      ret.size.should == 2
+    end
+  end
+
   it "loads a array containing objects having _dump method, and with proc" do
     arr = []
     proc = Proc.new { |o| arr << o }
