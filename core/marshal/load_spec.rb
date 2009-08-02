@@ -112,6 +112,12 @@ describe "Marshal::load" do
       obj
   end
 
+  ruby_version_is "1.9" do
+    it "returns the value of the proc when called with a proc" do
+      Marshal.load(Marshal.dump([1,2]), proc { [3,4] }).should ==  [3,4]
+    end
+  end
+
   it "loads a array containing objects having _dump method, and with proc" do
     arr = []
     proc = Proc.new { |o| arr << o }
