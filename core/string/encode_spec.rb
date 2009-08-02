@@ -2,6 +2,18 @@
 ruby_version_is "1.9" do
   describe "String#encode!" do
 
+    it "transcodes to the default internal encoding with no argument" do
+      begin
+        old_default_internal = Encoding.default_internal
+        Encoding.default_internal = Encoding::EUC_JP
+        str = "問か".force_encoding('utf-8')
+        str.encoding.should_not == Encoding.default_internal
+        str.encode.encoding.should == Encoding.default_internal
+      ensure
+        Encoding.default_internal = old_default_internal
+      end
+    end
+
     it "accepts a target encoding name as a String for an argument" do
       str = "Füll"
       lambda do
@@ -122,6 +134,19 @@ ruby_version_is "1.9" do
   end
 
   describe "String#encode" do
+
+    it "transcodes to the default internal encoding with no argument" do
+      begin
+        old_default_internal = Encoding.default_internal
+        Encoding.default_internal = Encoding::EUC_JP
+        str = "問か".force_encoding('utf-8')
+        str.encoding.should_not == Encoding.default_internal
+        str.encode!
+        str.encoding.should == Encoding.default_internal
+      ensure
+        Encoding.default_internal = old_default_internal
+      end
+    end
 
     it "accepts a target encoding name as a String for an argument" do
       str = "Füll"
