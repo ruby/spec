@@ -32,41 +32,59 @@ describe :array_join, :shared => true do
     @object.new(1, 2, 3, 4).send(@method, obj).should == '1::2::3::4'
   end
 
-  # This doesn't work with Enumerable.join on 1.9. See bug #1731
-  # detail of joining recursive arrays is implementation depended. [ruby-dev:37021]
-  it "handles recursive arrays" do
-    x = @object.new
-    x << x
-    x.send(@method, ':').should be_kind_of(String)
+  ruby_version_is ""..."1.9" do
+    # Detail of joining recursive arrays is implementation dependent: [ruby-dev:37021]
+    it "handles recursive arrays" do
+      x = @object.new
+      x << x
+      x.send(@method, ':').should be_kind_of(String)
 
-    x = @object.new("one", "two")
-    x << x
-    str = x.send(@method, '/')
-    str.should include("one/two")
+      x = @object.new("one", "two")
+      x << x
+      str = x.send(@method, '/')
+      str.should include("one/two")
 
-    x << "three"
-    x << "four"
-    str = x.send(@method, '/')
-    str.should include("one/two")
-    str.should include("three/four")
+      x << "three"
+      x << "four"
+      str = x.send(@method, '/')
+      str.should include("one/two")
+      str.should include("three/four")
 
-    # nested and recursive
-    x = @object.new(@object.new("one", "two"), @object.new("three", "four"))
-    x << x
-    str = x.send(@method, '/')
-    str.should include("one/two")
-    str.should include("three/four")
+      # nested and recursive
+      x = @object.new(@object.new("one", "two"), @object.new("three", "four"))
+      x << x
+      str = x.send(@method, '/')
+      str.should include("one/two")
+      str.should include("three/four")
 
-    x = @object.new
-    y = @object.new
-    y << 9 << x << 8 << y << 7
-    x << 1 << x << 2 << y << 3
-    # representations when recursing from x
-    # these are here to make it easier to understand what is happening
-    str = x.send(@method, ':')
-    str.should include('1')
-    str.should include('2')
-    str.should include('3')
+      x = @object.new
+      y = @object.new
+      y << 9 << x << 8 << y << 7
+      x << 1 << x << 2 << y << 3
+      # representations when recursing from x
+      # these are here to make it easier to understand what is happening
+      str = x.send(@method, ':')
+      str.should include('1')
+      str.should include('2')
+      str.should include('3')
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises an ArgumentError when the Array is recursive" do
+      x = @object.new
+      x << x
+      lambda { x.send(@method, ':') }.should raise_error(ArgumentError)
+
+      x = @object.new("one", "two")
+      x << x
+      lambda { x.send(@method, '/') }.should raise_error(ArgumentError)
+
+      # nested and recursive
+      x = @object.new(@object.new("one", "two"), @object.new("three", "four"))
+      x << x
+      lambda { x.send(@method, '/') }.should raise_error(ArgumentError)
+    end
   end
 
   it "does not consider taint of either the array or the separator when the array is empty" do
