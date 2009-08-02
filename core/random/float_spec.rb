@@ -56,7 +56,19 @@ ruby_version_is "1.9" do
       end.should_not raise_error(ArgumentError)
     end
 
-    it "raises a RangeError for a Complex (with imaginary part) argument" do
+    it "raises Errno::EDOM for an argument of Infinity" do
+      lambda do
+        Random.new.float(infinity_value)
+      end.should raise_error(Errno::EDOM)
+    end
+
+    it "raises Errno::EDOM for an argument of NaN" do
+      lambda do
+        Random.new.float(nan_value)
+      end.should raise_error(Errno::EDOM)
+    end
+
+   it "raises a RangeError for a Complex (with imaginary part) argument" do
       lambda do
         Random.new.float(Complex(20,3))
       end.should raise_error(RangeError)
