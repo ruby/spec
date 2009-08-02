@@ -204,28 +204,53 @@ describe "Marshal::load" do
     end
   end
 
-  it "loads an Array with proc" do
-    arr = []
-    s = 'hi'
-    s.instance_variable_set(:@foo, 5)
-    st = Struct.new("Brittle", :a).new
-    st.instance_variable_set(:@clue, 'none')
-    st.a = 0.0
-    h = Hash.new('def')
-    h['nine'] = 9
-    a = [:a, :b, :c]
-    a.instance_variable_set(:@two, 2)
-    obj = [s, 10, s, s, st, h, a]
-    obj.instance_variable_set(:@zoo, 'ant')
+  ruby_version_is ""..."1.9" do
+    it "loads an Array with proc" do
+      arr = []
+      s = 'hi'
+      s.instance_variable_set(:@foo, 5)
+      st = Struct.new("Brittle", :a).new
+      st.instance_variable_set(:@clue, 'none')
+      st.a = 0.0
+      h = Hash.new('def')
+      h['nine'] = 9
+      a = [:a, :b, :c]
+      a.instance_variable_set(:@two, 2)
+      obj = [s, 10, s, s, st, h, a]
+      obj.instance_variable_set(:@zoo, 'ant')
+      proc = Proc.new { |o| arr << o }
 
-    proc = Proc.new { |o| arr << o }
-    new_obj = Marshal.load "\004\bI[\fI\"\ahi\006:\t@fooi\ni\017@\006@\006IS:\024Struct::Brittle\006:\006af\0060\006:\n@clue\"\tnone}\006\"\tninei\016\"\bdefI[\b;\a:\006b:\006c\006:\t@twoi\a\006:\t@zoo\"\bant", proc
+      new_obj = Marshal.load "\004\bI[\fI\"\ahi\006:\t@fooi\ni\017@\006@\006IS:\024Struct::Brittle\006:\006af\0060\006:\n@clue\"\tnone}\006\"\tninei\016\"\bdefI[\b;\a:\006b:\006c\006:\t@twoi\a\006:\t@zoo\"\bant", proc
 
-    new_obj.should == obj
-    new_obj.instance_variable_get(:@zoo).should == 'ant'
+      new_obj.should == obj
+      new_obj.instance_variable_get(:@zoo).should == 'ant'
 
-    arr.should ==
-      [5, s, 10, 0.0, 'none', st, 'nine', 9, 'def', h, :b, :c, 2, a, 'ant', obj]
+      arr.should ==
+        [5, s, 10, 0.0, 'none', st, 'nine', 9, 'def', h, :b, :c, 2, a, 'ant', obj]
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "loads an Array with proc" do
+      arr = []
+      s = 'hi'
+      s.instance_variable_set(:@foo, 5)
+      st = Struct.new("Brittle", :a).new
+      st.instance_variable_set(:@clue, 'none')
+      st.a = 0.0
+      h = Hash.new('def')
+      h['nine'] = 9
+      a = [:a, :b, :c]
+      a.instance_variable_set(:@two, 2)
+      obj = [s, 10, s, s, st, a]
+      obj.instance_variable_set(:@zoo, 'ant')
+      proc = Proc.new { |o| arr << o; o}
+
+      Marshal.load("\x04\bI[\vI\"\ahi\a:\x06EF:\t@fooi\ni\x0F@\x06@\x06IS:\x14Struct::Brittle\x06:\x06af\x060\x06:\n@clueI\"\tnone\x06;\x00FI[\b;\b:\x06b:\x06c\x06:\t@twoi\a\x06:\t@zooI\"\bant\x06;\x00F", proc)
+
+      arr.should == ["hi", false, 5, 10, "hi", "hi", 0.0, st, "none", false, 
+        :b, :c, a, 2, ["hi", 10, "hi", "hi", st, [:a, :b, :c]], "ant", false]
+    end
   end
 
   it "loads a array containing the same objects" do
