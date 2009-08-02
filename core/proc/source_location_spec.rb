@@ -49,10 +49,10 @@ ruby_version_is "1.9" do
       lambda { true }.source_location.should == [__FILE__, __LINE__]
     end
 
-    it "returns the first line of a multi-line proc (i.e. the line after 'do')" do
-      ProcSpecs::SourceLocation.my_multiline_proc.source_location.last.should == 20
-      ProcSpecs::SourceLocation.my_multiline_proc_new.source_location.last.should == 34
-      ProcSpecs::SourceLocation.my_multiline_lambda.source_location.last.should ==27 
+    it "returns the first line of a multi-line proc (i.e. the line containing 'proc do')" do
+      ProcSpecs::SourceLocation.my_multiline_proc.source_location.last.should == 19
+      ProcSpecs::SourceLocation.my_multiline_proc_new.source_location.last.should == 33
+      ProcSpecs::SourceLocation.my_multiline_lambda.source_location.last.should == 26 
     end
 
     it "returns the location of the proc's body; not necessarily the proc itself" do
