@@ -148,15 +148,32 @@ describe "Marshal::load" do
     end
   end
 
-  it "loads a array containing objects having _dump method, and with proc" do
-    arr = []
-    proc = Proc.new { |o| arr << o }
-    o1 = UserDefined.new; o2 = UserDefinedWithIvar.new
-    obj = [o1, o2, o1, o2]
+  ruby_version_is ""..."1.9" do
+    it "loads a array containing objects having _dump method, and with proc" do
+      arr = []
+      proc = Proc.new { |o| arr << o }
+      o1 = UserDefined.new; 
+      o2 = UserDefinedWithIvar.new
+      obj = [o1, o2, o1, o2]
 
-    Marshal.load "\004\b[\tu:\020UserDefined\022\004\b[\a\"\nstuff@\006u:\030UserDefinedWithIvar5\004\b[\bI\"\nstuff\006:\t@foo:\030UserDefinedWithIvar\"\tmore@\a@\006@\a", proc
+      Marshal.load "\004\b[\tu:\020UserDefined\022\004\b[\a\"\nstuff@\006u:\030UserDefinedWithIvar5\004\b[\bI\"\nstuff\006:\t@foo:\030UserDefinedWithIvar\"\tmore@\a@\006@\a", proc
 
-    arr.should == [o1, o2, obj]
+      arr.should == [o1, o2, obj]
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "loads a array containing objects having _dump method, and with proc" do
+      arr = []
+      myproc = Proc.new { |o| arr << o; o }
+      o1 = UserDefined.new; 
+      o2 = UserDefinedWithIvar.new
+      obj = [o1, o2, o1, o2]
+
+      Marshal.load "\x04\b[\tu:\x10UserDefined\x18\x04\b[\aI\"\nstuff\x06:\x06EF@\x06u:\x18UserDefinedWithIvar>\x04\b[\bI\"\nstuff\a:\x06EF:\t@foo:\x18UserDefinedWithIvarI\"\tmore\x06;\x00F@\a@\x06@\a", myproc
+
+      arr.should == [o1, o2, o1, o2, obj]
+    end
   end
 
   it "loads an array containing objects having marshal_dump method, and with proc" do
