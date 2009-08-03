@@ -357,7 +357,7 @@ describe "String#gsub with pattern and block" do
         "x"
       end
 
-      $~.should == old_md
+      $~[0].should == old_md[0]
       $~.string.should == "hello"
     end
   end
