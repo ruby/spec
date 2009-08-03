@@ -32,11 +32,4 @@ describe :enum_with_index, :shared => true do
     end    
   end
   
-  ruby_version_is '1.9' do
-    it "raises an ArgumentError if passed extra arguments" do 
-      lambda do
-        @enum.send(@method, :glark)
-      end.should raise_error(ArgumentError)
-    end    
-  end
 end
