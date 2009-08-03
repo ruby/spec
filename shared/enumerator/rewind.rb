@@ -29,18 +29,4 @@ describe :enum_rewind, :shared => true do
     @enum.next.should == 1
   end
   
-  ruby_version_is "1.9" do
-    it "calls the enclosed object's rewind method if one exists" do
-      obj = mock('rewinder')
-      enum = enumerator_class.new(obj, :enum) 
-      obj.should_receive(:rewind)
-      enum.rewind
-    end
-
-    it "does nothing if the object doesn't have a #rewind method" do
-      obj = mock('rewinder')
-      enum = enumerator_class.new(obj) 
-      lambda { enum.rewind.should == enum }.should_not raise_error
-    end
-  end    
 end
