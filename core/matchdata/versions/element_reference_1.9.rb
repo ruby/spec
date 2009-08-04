@@ -1,15 +1,28 @@
 ruby_version_is "1.9" do
   describe "MatchData#[Symbol]" do
-    it "returns the corresponding named match when given a symbol" do
+    it "returns the corresponding named match when given a Symbol" do
       md = 'haystack'.match(/(?<t>t(?<a>ack))/)
       md[:a].should == 'ack'
       md[:t].should == 'tack'
     end
 
-    it "raises an IndexError if there is no named match corresponding to the symbol" do
+    it "returns the corresponding named match when given a String" do
+      md = 'haystack'.match(/(?<t>t(?<a>ack))/)
+      md['a'].should == 'ack'
+      md['t'].should == 'tack'
+    end
+
+    it "raises an IndexError if there is no named match corresponding to the Symbol" do
       md = 'haystack'.match(/(?<t>t(?<a>ack))/)
       lambda do
         md[:hay]
+      end.should raise_error(IndexError)
+    end
+
+    it "raises an IndexError if there is no named match corresponding to the String" do
+      md = 'haystack'.match(/(?<t>t(?<a>ack))/)
+      lambda do
+        md['hay']
       end.should raise_error(IndexError)
     end
 
