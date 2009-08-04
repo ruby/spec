@@ -70,7 +70,7 @@ ruby_version_is "1.9" do
       lambda { @h.compare_by_identity }.should raise_error(RuntimeError)
     end
 
-    # The following two examples fail as reported in bug #1871
+    # Behaviour confirmed in bug #1871
     it "perists over #dups" do
       @idh['foo'] = :bar
       @idh['foo'] = :glark
