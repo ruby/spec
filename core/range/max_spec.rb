@@ -48,7 +48,7 @@ ruby_version_is "1.8.7" do
       (1..3).max {|a,b| obj }
     end
 
-    it "returns the element the block determines to be the maxmimum" do
+    it "returns the element the block determines to be the maximum" do
       (1..3).max {|a,b| -3 }.should == 1
     end
   end
