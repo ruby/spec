@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
-require File.dirname(__FILE__) + '/../fixtures/classes'
 
 describe :kernel_method, :shared => true do
   it "returns a method object for a valid method" do
