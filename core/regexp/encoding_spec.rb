@@ -12,8 +12,12 @@ ruby_version_is "1.9" do
       /ASCII/.encoding.should == Encoding::US_ASCII
     end
 
-    it "returns US_ASCII if the 'n' modifier is supplied" do
+    it "returns US_ASCII if the 'n' modifier is supplied and only US-ASCII characters are present" do
       /ASCII/n.encoding.should == Encoding::US_ASCII
+    end
+
+    it "returns ASCII-8BIT if the 'n' modifier is supplied and non-US-ASCII characters are present" do
+      /#{}\xc2\xa1/n.encoding.should == Encoding::ASCII_8BIT
     end
 
     it "defaults to UTF-8 if \\u escapes appear" do
