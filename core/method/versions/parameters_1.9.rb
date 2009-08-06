@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../../spec_helper'
 require File.dirname(__FILE__) + '/../fixtures/classes'
+require File.dirname(__FILE__) + '/../fixtures/classes_1.9'
 
 ruby_version_is "1.9" do
   describe "Method#parameters" do
@@ -127,5 +128,26 @@ ruby_version_is "1.9" do
       m.parameters.should == [[:req,:a],[:req,:b],[:opt,:c],[:rest,:d],[:block,:block]]
     end
 
+    # 1.9 semantics
+    #
+    it "returns [[:rest,:a],[:req,:b]] for a method expecting a splat argument ('a') and a required argument ('b')" do
+      m = MethodSpecs::Methods.instance_method(:one_splat_one_req)
+      m.parameters.should == [[:rest,:a],[:req,:b]]
+    end
+    
+    it "returns [[:rest,:a],[:req,:b],[:req,:c]] for a method expecting a splat argument ('a') and two required arguments ('b','c')" do
+      m = MethodSpecs::Methods.instance_method(:one_splat_two_req)
+      m.parameters.should == [[:rest,:a],[:req,:b],[:req,:c]]
+    end
+
+    it "returns [[:rest,:a],[:req,:b],[:block,:c]] for a method expecting a splat argument ('a'), a required argument ('b'), and a block ('c')" do
+      m = MethodSpecs::Methods.instance_method(:one_splat_one_req_with_block)
+      m.parameters.should == [[:rest,:a],[:req,:b],[:block,:block]]
+    end
+
+    it "works with ->(){} as the value of an optional argument" do
+      m = MethodSpecs::Methods.instance_method(:one_opt_with_stabby)
+      m.parameters.should == [[:opt,:a]]
+    end
   end
 end
