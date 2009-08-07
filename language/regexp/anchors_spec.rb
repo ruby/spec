@@ -152,4 +152,12 @@ describe "Regexps with anchors" do
     end
     /foo\B/.match("foo\0").should be_nil
   end
+
+  it 'supports (?= ) (positive lookahead)' do
+    /foo.(?=bar)/.match("foo1 foo2bar").to_a.should == ["foo2"]
+  end
+  
+  it 'supports (?! ) (negative lookahead)' do
+    /foo.(?!bar)/.match("foo1bar foo2").to_a.should == ["foo2"]
+  end
 end
