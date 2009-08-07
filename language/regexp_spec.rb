@@ -95,9 +95,6 @@ describe "Literal Regexps" do
     /./m.match("\n").to_a.should == ["\n"]
   end
   
-  it 'supports ()' do
-    /(a)/.match("a").to_a.should == ["a", "a"]
-  end
   
   
   it 'supports | (alternations)' do
@@ -117,11 +114,6 @@ describe "Literal Regexps" do
     /(?>foo*)obar/.match("foooooooobar").should be_nil # it is possesive
   end
   
-  it 'supports (?: ) (non-capturing group)' do
-    /(?:foo)(bar)/.match("foobar").to_a.should == ["foobar", "bar"]
-    # Parsing precedence
-    /(?:xdigit:)/.match("xdigit:").to_a.should == ["xdigit:"]
-  end
   
   it 'supports (?imx-imx) (inline modifiers)' do
     /(?i)foo/.match("FOO").to_a.should == ["FOO"]
