@@ -75,59 +75,6 @@ describe "Literal Regexps" do
     %r[/].to_s.should == /\//.to_s
   end
   
-  #############################################################################
-  # Substitution
-  #############################################################################
-  
-  it "allow substitution of strings" do
-    str = "foo|bar"
-    /#{str}/.should == /foo|bar/
-  end
-
-  it "allow substitution of literal regexps" do
-    re = /foo|bar/
-    /#{re}/.should == /(?-mix:foo|bar)/
-  end
-  
-  it "allow substitution of any class that responds to to_s" do
-    o = LanguageSpecs::ClassWith_to_s.new
-    /#{o}/.should == /class_with_to_s/
-  end
-  
-  it "throws NoMethodError on missing to_s" do
-    o = LanguageSpecs::ClassWithout_to_s.new
-    lambda { /#{o}/ }.should raise_error(NoMethodError)
-  end
-  
-  it "allows substitution which mixes modifiers" do
-    re = /foo/i
-    /#{re} bar/m.should == /(?i-mx:foo) bar/m
-  end
-  
-  it "allows substitution to interact with other Regexp constructs" do
-    str = "foo)|(bar"
-    /(#{str})/.should == /(foo)|(bar)/
-    
-    str = "a"
-    /[#{str}-z]/.should == /[a-z]/
-  end
-  
-  it "gives precedence to escape sequences over substitution" do
-    str = "J"
-    /\c#{str}/.to_s.should == '(?-mix:\c#' + '{str})'
-  end  
-
-  it "throws RegexpError for malformed substitution" do
-    s = ""
-    lambda { /(#{s}/ }.should raise_error(RegexpError)
-    s = "("
-    lambda { /#{s}/ }.should raise_error(RegexpError)
-  end
-
-  it "allows substituion in extended mode" do
-    var = "#comment\n  foo  #comment\n  |  bar"
-    (/#{var}/x =~ "foo").should == (/foo|bar/ =~ "foo")
-  end
   
   #############################################################################
   # Specs for the matching semantics
