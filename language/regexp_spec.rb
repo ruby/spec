@@ -124,32 +124,6 @@ describe "Literal Regexps" do
   end
   
   #############################################################################
-  # Encodings
-  #############################################################################
-
-  not_compliant_on :ruby19, :macruby do
-    it 'supports /e (EUC encoding)' do
-      /./e.match("\303\251").to_a.should == ["\303\251"]
-    end
-    
-    it 'supports /n (Normal encoding)' do
-      /./n.match("\303\251").to_a.should == ["\303"]
-    end
-    
-    it 'supports /s (SJIS encoding)' do
-      /./s.match("\303\251").to_a.should == ["\303"]
-    end
-    
-    it 'supports /u (UTF8 encoding)' do
-      /./u.match("\303\251").to_a.should == ["\303\251"]
-    end
-    
-    it 'selects last of multiple encoding specifiers' do
-      /foo/ensuensuens.should == /foo/s
-    end
-  end
-
-  #############################################################################
   # Back-refs
   #############################################################################
 
