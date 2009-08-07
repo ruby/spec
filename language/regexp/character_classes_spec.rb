@@ -82,9 +82,6 @@ describe "Regexp with character classes" do
     /[[:space:]]+/.match(LanguageSpecs.white_spaces).to_a.should == [LanguageSpecs.white_spaces]
     /[[:upper:]]+/.match("123ABCabc").to_a.should == ["ABC"]
     /[[:xdigit:]]+/.match("xyz0123456789ABCDEFabcdefXYZ").to_a.should == ["0123456789ABCDEFabcdef"]
-    ruby_version_is "1.9" do
-    eval('/[[:ascii:]]/').match("a").to_a.should == ["a"]
-    end
     
     # Parsing
     /[[:lower:][:digit:]A-C]+/.match("a1ABCDEF").to_a.should == ["a1ABC"] # can be composed with other constructs in the character class
@@ -93,4 +90,7 @@ describe "Regexp with character classes" do
     /[\[:alnum:]+/.match("[:a:l:n:u:m").to_a.should == ["[:a:l:n:u:m"] # should behave like regular character class composed of the individual letters
     lambda { eval('/[[:alpha:]-[:digit:]]/') }.should raise_error(SyntaxError) # can't use character class as a start value of range
   end
+
+  language_version __FILE__, "character_classes"
 end
+
