@@ -28,5 +28,13 @@ ruby_version_is "1.9" do
       f.rationalize(0.05).should == Rational(-1,3)
       f.rationalize(0.001).should == Rational(-3,10)
     end
+
+    it "raises a FloatDomainError for Infinity" do
+      lambda {infinity_value.rationalize}.should raise_error(FloatDomainError)
+    end
+
+    it "raises a FloatDomainError for NaN" do
+      lambda { nan_value.rationalize }.should raise_error(FloatDomainError)
+    end
   end
 end
