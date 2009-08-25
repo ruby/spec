@@ -24,10 +24,10 @@ ruby_version_is ""..."1.9" do
       m2 = x.singleton_methods(true)
       m3 = y.singleton_methods(true)
 
-      m0.should == ["cls_inherited"]
-      m1.should == []
-      m2.should == ["cls_inherited"]
-      m3.should == ["cls_inherited"]
+      m0.should include "cls_inherited"
+      m1.should_not include "cls_inherited"
+      m2.should include "cls_inherited"
+      m3.should include "cls_inherited"
     end
     
     it "should handle singleton_methods call with and without argument" do
@@ -73,10 +73,10 @@ ruby_version_is "1.9" do
       m2 = x.singleton_methods(true)
       m3 = y.singleton_methods(true)
 
-      m0.should == [:cls_inherited]
-      m1.should == []
-      m2.should == [:cls_inherited]
-      m3.should == [:cls_inherited]
+      m0.should include :cls_inherited
+      m1.should_not include :cls_inherited
+      m2.should include :cls_inherited
+      m3.should include :cls_inherited
     end
     
     it "should handle singleton_methods call with and without argument" do
