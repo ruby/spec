@@ -32,4 +32,55 @@ describe "IO#initialize" do
   it "raises an Errno::EBADF when given an invalid file descriptor" do
     lambda { @io.send :initialize, -1, 'w' }.should raise_error(Errno::EBADF)
   end
+  
+  ruby_version_is '1.9' do
+    it "success when it gets the external encoding within the mode parameter" do
+      io = IO.new(2, 'w:UTF-8')
+      io.external_encoding.to_s.should == 'UTF-8'
+    end
+
+    it "success when it gets the external and the internal encoding within the mode parameter" do
+      io = IO.new(2, 'w:UTF-8:iso-8859-1')
+      io.external_encoding.to_s.should == 'UTF-8'
+      io.internal_encoding.to_s.should == 'ISO-8859-1'
+    end
+
+    it "success when it gets the external encoding as an option" do
+      io = IO.new(2, 'w', {:external_encoding => 'UTF-8'})
+      io.external_encoding.to_s.should == 'UTF-8'
+    end
+
+    it "success when it gets the internal encoding as an option" do
+      io = IO.new(2, 'w', {:internal_encoding => 'ISO-8859-1'})
+      io.internal_encoding.to_s.should == 'ISO-8859-1'
+    end
+
+    it "success when it gets the encoding splitted with colon as an option" do
+      io = IO.new(2, 'w', {:encoding => 'UTF-8:iso-8859-1'})
+      io.external_encoding.to_s.should == 'UTF-8'
+      io.internal_encoding.to_s.should == 'ISO-8859-1'
+    end
+
+    it "ingores encoding option when external encoding option is present" do
+      io = IO.new(2, 'w', {:external_encoding => 'UTF-8', :encoding => 'iso-8859-1:iso-8859-1'})
+      io.external_encoding.to_s.should == 'UTF-8'
+    end
+    
+    it "ingores encoding option when internal encoding option is present" do
+      io = IO.new(2, 'w', {:internal_encoding => 'ISO-8859-1', :encoding => 'iso-8859-1:iso-8859-1'})
+      io.internal_encoding.to_s.should == 'ISO-8859-1'
+    end
+
+    it "success when it gets the encoding within the mode option hash" do
+      io = IO.new(2, {:mode => 'w:UTF-8:iso-8859-1'})
+      io.external_encoding.to_s.should == 'UTF-8'
+      io.internal_encoding.to_s.should == 'ISO-8859-1'
+    end
+    
+    it "should ignore internal encoding when is the same as external encoding" do
+      io = IO.new(2, 'w', {:internal_encoding => 'UTF-8'})
+      io.external_encoding.to_s.should == 'UTF-8'
+      io.internal_encoding.to_s.should == ''
+    end
+  end
 end
