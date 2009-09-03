@@ -43,8 +43,8 @@ platform_is_not :windows do
           lambda { Dir.chroot('.') }.should raise_error(Errno::EPERM)
         end
 
-        it "raises an Errno::ENOENT exception if the directory doesn't exist" do
-          lambda { Dir.chroot('xgwhwhsjai2222jg') }.should raise_error(Errno::ENOENT)
+        it "raises a SystemCallError if the directory doesn't exist" do
+          lambda { Dir.chroot('xgwhwhsjai2222jg') }.should raise_error(SystemCallError)
         end
       end
     end
