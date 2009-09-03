@@ -252,7 +252,7 @@ describe "IO#read" do
         path = tmp('%s-bom.txt' % name)
         content = text.encode(name)
         File.open(path,'w') { |f| f.print content }
-        result = File.read(path, :mode => 'rb:utf-7-bom')
+        result = File.read(path, :mode => "rb:BOM|#{name}")
         content[1].force_encoding("ascii-8bit").should == result.force_encoding("ascii-8bit")
         File.unlink(path)
       end
