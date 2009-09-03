@@ -57,7 +57,11 @@ describe "Dir.chdir" do
   end
   
   it "defaults to the home directory when given a block but no argument" do
-    Dir.chdir { Dir.pwd.should == ENV['HOME'] }
+    current_dir = ""
+    Dir.chdir { current_dir = Dir.pwd }
+    
+    Dir.chdir(ENV['HOME'])
+    current_dir.should == Dir.pwd
   end
 
   it "changes to the specified directory for the duration of the block" do
