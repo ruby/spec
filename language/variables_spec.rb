@@ -856,8 +856,19 @@ describe "Multiple assignment without grouping or splatting" do
 end
 
 describe "Multiple assignments with splats" do
-  it "* on the lhs has to be applied to the last parameter" do
-    lambda { eval 'a, *b, c = 1, 2, 3' }.should raise_error(SyntaxError)
+  ruby_version_is ""..."1.9" do
+    it "* on the lhs has to be applied to the last parameter" do
+      lambda { eval 'a, *b, c = 1, 2, 3' }.should raise_error(SyntaxError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "* on the LHS has to be applied to any parameter" do
+      a, *b, c = 1, 2, 3
+      a.should == 1
+      b.should == [2]
+      c.should == 3
+    end
   end
 
   it "* on the lhs collects all parameters from its position onwards as an Array or an empty Array" do
