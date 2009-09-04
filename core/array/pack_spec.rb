@@ -2288,12 +2288,11 @@ describe "Array#pack with format 'X'" do
       ["\x01\x02"].pack("mX").encoding.should == Encoding::ASCII_8BIT
     end
 
-    it "doesn't care even if breaks a character" do
+    it "doesn't care if it breaks a character" do
       str = nil
       lambda { str = [0x3042].pack("UX") }.should_not raise_error
-      str.encoding.should == Encoding::UTF_8
+      str.encoding.should == Encoding::ASCII_8BIT
       str.bytesize.should == 2
-      str.valid_encoding?.should be_false
     end
   end
 end
