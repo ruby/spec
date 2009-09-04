@@ -14,6 +14,7 @@ describe "ARGF.lineno" do
   # TODO: break this into four specs
   it "returns the current line number on each file" do
     argv [@file1, @file2, @file1, @file2] do
+      ARGF.lineno = 0
       ARGF.gets
       ARGF.lineno.should == 1
       ARGF.gets
