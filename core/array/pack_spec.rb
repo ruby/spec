@@ -2325,9 +2325,8 @@ describe "Array#pack with '@'" do
     it "doesn't care even if breaks a character" do
       str = nil
       lambda { str = [0x3042].pack("U@2") }.should_not raise_error
-      str.encoding.should == Encoding::UTF_8
+      str.encoding.should == Encoding::ASCII_8BIT
       str.bytesize.should == 2
-      str.valid_encoding?.should be_false
     end
   end
 end
