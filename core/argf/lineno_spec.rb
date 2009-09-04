@@ -36,4 +36,17 @@ describe "ARGF.lineno" do
       end
     end
   end
+
+  it "aliases to $." do
+    argv [@file1, @file2, @file1, @file2] do
+      ARGF.gets
+      $..should == 1
+      ARGF.gets
+      $..should == 2
+      ARGF.gets
+      $..should == 3
+      ARGF.gets
+      $..should == 4
+    end
+  end
 end
