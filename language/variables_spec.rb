@@ -866,7 +866,6 @@ describe "Multiple assignments with splats" do
     e, *f = 1, 2, 3
     g, *h = 1, [2, 3]
     *i = 1, [2,3]
-    *j = [1,2,3]
     *k = 1,2,3
 
     a.should == 1
@@ -878,8 +877,21 @@ describe "Multiple assignments with splats" do
     g.should == 1
     h.should == [[2, 3]]
     i.should == [1, [2, 3]]
-    j.should == [[1,2,3]]
     k.should == [1,2,3]
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "* on the LHS returns the Array on the RHS enclosed in an Array" do
+      *j = [1,2,3]
+      j.should == [[1,2,3]]
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "* on the LHS returns the Array on the RHS without enclosing it in an Array" do
+      *j = [1,2,3]
+      j.should == [1,2,3]
+    end
   end
 end
 
