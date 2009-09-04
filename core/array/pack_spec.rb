@@ -2316,10 +2316,10 @@ describe "Array#pack with '@'" do
   end
 
   ruby_version_is '1.9' do
-    it "doesn't change encoding of the result string" do
-      [0x41, 0x42, 0x43].pack('U3@6').encoding.should == Encoding::UTF_8
+    it "returns a String in ASCII 8-bit" do
+      [0x41, 0x42, 0x43].pack('U3@6').encoding.should == Encoding::ASCII_8BIT
       [1, 2, 3].pack('w3@3').encoding.should == Encoding::ASCII_8BIT
-      ["\x01\x02"].pack("m@4").encoding.should == Encoding::US_ASCII
+      ["\x01\x02"].pack("m@4").encoding.should == Encoding::ASCII_8BIT
     end
 
     it "doesn't care even if breaks a character" do
