@@ -59,6 +59,7 @@ describe "The for expression" do
     n.should == 3
   end
 
+  # Fails on 1.9; reported as http://redmine.ruby-lang.org/issues/show/2053
   it "splats multiple arguments together if there are fewer arguments than values" do
     class OFor
       def each
