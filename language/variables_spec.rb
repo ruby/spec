@@ -883,15 +883,6 @@ describe "Multiple assignments with splats" do
     end
   end
 
-  ruby_version_is "1.9" do
-    it "* on the LHS has to be applied to any parameter" do
-      a, *b, c = 1, 2, 3
-      a.should == 1
-      b.should == [2]
-      c.should == 3
-    end
-  end
-
   it "* on the lhs collects all parameters from its position onwards as an Array or an empty Array" do
     a, *b = 1, 2
     c, *d = 1
@@ -1078,3 +1069,4 @@ describe "Scope of variables" do
     instance.check_each_block
   end
 end
+language_version __FILE__, "variables"
