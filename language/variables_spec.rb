@@ -272,60 +272,80 @@ describe "Assigning multiple values" do
     a.should == [[1]]
   end
 
-  it "calls #to_ary on rhs arg if rhs has only a single arg" do
-    x = VariablesSpecs::ParAsgn.new
-    a,b,c = x
-    a.should == 1
-    b.should == 2
-    c.should == 3
 
-    a,b,c = x,5
-    a.should == x
-    b.should == 5
-    c.should == nil
+  ruby_version_is ""..."1.9" do
+    it "calls #to_ary on rhs arg if rhs has only a single arg" do
+      x = VariablesSpecs::ParAsgn.new
+      a,b,c = x
+      a.should == 1
+      b.should == 2
+      c.should == 3
 
-    a,b,c = 5,x
-    a.should == 5
-    b.should == x
-    c.should == nil
+      a,b,c = x,5
+      a.should == x
+      b.should == 5
+      c.should == nil
 
-    a,b,*c = x,5
-    a.should == x
-    b.should == 5
-    c.should == []
+      a,b,c = 5,x
+      a.should == 5
+      b.should == x
+      c.should == nil
 
-    a,(*b),c = 5,x
-    a.should == 5
-    b.should == [x]
-    c.should == nil
+      a,b,*c = x,5
+      a.should == x
+      b.should == 5
+      c.should == []
 
-    a,(b,c) = 5,x
-    a.should == 5
-    b.should == 1
-    c.should == 2
+      a,(b,c) = 5,x
+      a.should == 5
+      b.should == 1
+      c.should == 2
 
-    a,(b,*c) = 5,x
-    a.should == 5
-    b.should == 1
-    c.should == [2,3,4]
+      a,(b,*c) = 5,x
+      a.should == 5
+      b.should == 1
+      c.should == [2,3,4]
 
-    a,(b,(*c)) = 5,x
-    a.should == 5
-    b.should == 1
-    c.should == [2]
+      a,(b,(*c)) = 5,x
+      a.should == 5
+      b.should == 1
+      c.should == [2]
 
-    a,(b,(*c),(*d)) = 5,x
-    a.should == 5
-    b.should == 1
-    c.should == [2]
-    d.should == [3]
+      a,(b,(*c),(*d)) = 5,x
+      a.should == 5
+      b.should == 1
+      c.should == [2]
+      d.should == [3]
 
-    a,(b,(*c),(d,*e)) = 5,x
-    a.should == 5
-    b.should == 1
-    c.should == [2]
-    d.should == 3
-    e.should == []
+      a,(b,(*c),(d,*e)) = 5,x
+      a.should == 5
+      b.should == 1
+      c.should == [2]
+      d.should == 3
+      e.should == []
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "calls #to_ary on RHS arg if the corresponding LHS var is a splat" do
+      x = VariablesSpecs::ParAsgn.new
+
+      a,(*b),c = 5,x
+      a.should == 5
+      b.should == x.to_ary
+      c.should == nil
+    end
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "doen't call #to_ary on RHS arg when the corresponding LHS var is a splat" do
+      x = VariablesSpecs::ParAsgn.new
+
+      a,(*b),c = 5,x
+      a.should == 5
+      b.should == [x]
+      c.should == nil
+    end
   end
 
   it "allows complex parallel assignment" do
