@@ -4,38 +4,31 @@ require File.dirname(__FILE__) + '/../fixtures/classes'
 require 'socket'
 
 describe "Socket#getnameinfo" do
-  before :each do
+  before :all do
+    @reverse_lookup = BasicSocket.do_not_reverse_lookup
+    BasicSocket.do_not_reverse_lookup = true
   end
 
-  after :each do
+  after :all do
+    BasicSocket.do_not_reverse_lookup = @reverse_lookup
   end
 
   it "gets the name information and don't resolve it" do
-    BasicSocket.do_not_reverse_lookup = true
-    expected = [ "#{SocketSpecs.port}", '127.0.0.1']
     sockaddr = Socket.sockaddr_in SocketSpecs.port, '127.0.0.1'
-    Socket.getnameinfo(sockaddr, Socket::NI_NUMERICHOST | Socket::NI_NUMERICSERV).each do |a|
-        expected.should include(a)
-    end
+    name_info = Socket.getnameinfo(sockaddr, Socket::NI_NUMERICHOST | Socket::NI_NUMERICSERV)
+    name_info.should == ['127.0.0.1', "#{SocketSpecs.port}"]
   end
 
   it "gets the name information and resolve the host" do
-    BasicSocket.do_not_reverse_lookup = true
-    expected = [ "#{SocketSpecs.port}", 'localhost']
     sockaddr = Socket.sockaddr_in SocketSpecs.port, '127.0.0.1'
-    Socket.getnameinfo(sockaddr, Socket::NI_NUMERICSERV).each do |a|
-        expected.should include(a)
-    end
+    name_info = Socket.getnameinfo(sockaddr, Socket::NI_NUMERICSERV)
+    name_info.should == ['localhost', "#{SocketSpecs.port}"]
   end
 
-  it "gets the name information and resolve the port" do
-    BasicSocket.do_not_reverse_lookup = true
-    expected = [ "http", 'localhost']
+  it "gets the name information and resolves the service" do
     sockaddr = Socket.sockaddr_in 80, '127.0.0.1'
-    Socket.getnameinfo(sockaddr).each do |a|
-        expected.should include(a)
-    end
+    name_info = Socket.getnameinfo(sockaddr)
+    name_info.should == ["localhost", "http"]
   end
-
 end
 
