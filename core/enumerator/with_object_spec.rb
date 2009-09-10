@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/../../shared/enumerator/with_object.rb'
+require File.dirname(__FILE__) + '/../../shared/enumerator/with_object'
 
 ruby_version_is "1.9" do
   describe "Enumerator#with_object" do
