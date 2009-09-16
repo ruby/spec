@@ -44,4 +44,9 @@ describe :determinant, :shared => true do
     m.send(@method).should == 0
   end
 
+  ruby_bug "#1531", "1.9.1" do
+    it "returns the determinant of a Matrices containing 0 as first entry" do
+      Matrix[[0,1],[1,0]].send(@method).should == -1
+    end
+  end
 end
