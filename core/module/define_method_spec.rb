@@ -25,6 +25,21 @@ describe "Module#define_method when given an UnboundMethod" do
     end
     klass.new.should have_method(:another_test_method)
   end
+
+  ruby_bug "redmine:2117", "1.8.7" do
+    it "works for singleton classes too" do
+      klass = Class.new
+      class << klass
+        def test_method
+          :foo
+        end
+      end
+      child = Class.new(klass)
+      sc = class << child; self; end
+      sc.send :define_method, :another_test_method, klass.method(:test_method).unbind
+      child.another_test_method.should == :foo
+    end
+  end
 end
 
 describe "Module#define_method" do
