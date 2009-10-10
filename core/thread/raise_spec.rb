@@ -105,7 +105,7 @@ describe "Thread#raise on a running thread" do
     lambda {t.value}.should raise_error(RuntimeError)
   end
 
-  it "re-raises active exception" do
+  it "re-raises active exception when called without any argument" do
     raised = false
     t = Thread.new do
       begin
@@ -120,6 +120,23 @@ describe "Thread#raise on a running thread" do
     t.raise
     lambda {t.value}.should raise_error(ZeroDivisionError)
   end
+
+  it "raise the given argument even when there is an active exception" do
+    raised = false
+    t = Thread.new do
+      begin
+        1/0
+      rescue ZeroDivisionError
+        raised = true
+        loop { }
+      end
+    end
+
+    Thread.pass until raised || !t.alive?
+    t.raise RangeError
+    lambda {t.value}.should raise_error(RangeError)
+  end
+
 end
 
 describe "Thread#raise on same thread" do
