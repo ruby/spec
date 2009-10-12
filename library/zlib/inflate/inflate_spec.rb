@@ -29,9 +29,13 @@ describe 'Zlib::Inflate#inflate' do
     data = "x\234c`\200\001\000\000\n\000\001"
 
     unzipped = @inflator.inflate data
-    @inflator.finish
+    @inflator.finish  # this is a precondition
 
-    @inflator.inflate('uncompressed_data')
+    out = @inflator.inflate('uncompressed_data')
+    out << @inflator.finish
+    out.should == 'uncompressed_data'
+
+    @inflator << ('uncompressed_data') << nil
     @inflator.finish.should == 'uncompressed_data'
   end
 
