@@ -39,6 +39,18 @@ describe "Kernel.exit" do
       ScratchPad.recorded.should be_nil
     }
   end
+
+  it "raises a SystemExit with the specified boolean status" do
+    { true => 0, false => 1 }.each { |value, status|
+      begin
+        exit(value)
+        ScratchPad.record :no_exit
+      rescue SystemExit => e
+        e.status.should == status
+      end
+      ScratchPad.recorded.should be_nil
+    }
+  end
 end
 
 describe "Kernel.exit!" do
