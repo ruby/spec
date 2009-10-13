@@ -24,6 +24,16 @@ describe "Kernel.exit" do
     end
     exception.status.should == 0
   end
+  
+  it "raises a SystemExit with the specified status" do
+    exception = nil
+    begin
+      exit(9)
+    rescue SystemExit => e
+      exception = e
+    end
+    exception.status.should == 9
+  end
 end
 
 describe "Kernel.exit!" do
