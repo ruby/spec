@@ -14,6 +14,10 @@ describe "Kernel#exit!" do
 end
 
 describe "Kernel.exit" do
+  before :each do
+    ScratchPad.clear
+  end
+
   it "raises a SystemExit with status 0" do
     begin
       exit
