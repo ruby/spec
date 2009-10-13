@@ -13,26 +13,27 @@ describe "Kernel#exit!" do
   end
 end
 
-
 describe "Kernel.exit" do
   it "raises a SystemExit with status 0" do
-    exception = nil
     begin
       exit
+      ScratchPad.record :no_exit
     rescue SystemExit => e
-      exception = e
+      e.status.should == 0
     end
-    exception.status.should == 0
+    ScratchPad.recorded.should be_nil
   end
-  
+
   it "raises a SystemExit with the specified status" do
-    exception = nil
-    begin
-      exit(9)
-    rescue SystemExit => e
-      exception = e
-    end
-    exception.status.should == 9
+    [-2**16, -2**8, -8, -1, 0, 1 , 8, 2**8, 2**16].each { |value|
+      begin
+        exit(value)
+        ScratchPad.record :no_exit
+      rescue SystemExit => e
+        e.status.should == value
+      end
+      ScratchPad.recorded.should be_nil
+    }
   end
 end
 
