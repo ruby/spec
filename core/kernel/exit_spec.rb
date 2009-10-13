@@ -15,7 +15,15 @@ end
 
 
 describe "Kernel.exit" do
-  it "needs to be reviewed for spec completeness"
+  it "raises a SystemExit with status 0" do
+    exception = nil
+    begin
+      exit
+    rescue SystemExit => e
+      exception = e
+    end
+    exception.status.should == 0
+  end
 end
 
 describe "Kernel.exit!" do
