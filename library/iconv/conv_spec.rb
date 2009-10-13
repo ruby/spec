@@ -24,17 +24,4 @@ describe "Iconv.conv" do
 
     lambda { Iconv.conv("utf-8", "utf-8", "euro \xe2") }.should raise_error(Iconv::InvalidCharacter)
   end
-
-  it "ignores invalid characters if encoding parameters contain the flag //IGNORE" do
-    Iconv.conv("utf-8//IGNORE", "utf-8", "\xa4").should == ""
-  end
-
-  it "ignores undefined characters if encoding parameters contain the flag //IGNORE" do
-    Iconv.conv("ISO-8859-1//IGNORE", "UTF-8", "ol\303\251").should == "ol\351"
-    Iconv.conv("ISO-8859-1", "UTF-8//IGNORE", "ol\303\251").should == "ol\351"
-  end
-
-  it "aproximates undefined characters if encoding parameter contain the flag //TRANSLIT" do
-    Iconv.conv("ISO-8859-1//TRANSLIT", "UTF-8", "ol\303\251").should == "ol\351"
-  end
 end
