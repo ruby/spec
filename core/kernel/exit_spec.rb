@@ -51,6 +51,36 @@ describe "Kernel.exit" do
       ScratchPad.recorded.should be_nil
     }
   end
+
+  it "tries to convert the passed argument to an Integer using #to_int" do
+    obj = mock('5')
+    obj.should_receive(:to_int).and_return(5)
+    begin
+        exit(obj)
+        ScratchPad.record :no_exit
+      rescue SystemExit => e
+        e.status.should == 5
+      end
+      ScratchPad.recorded.should be_nil
+  end
+
+  it "converts the passed Float argument to an Integer" do
+    { -2.2 => -2, -0.1 => 0, 5.5 => 5, 827.999 => 827 }.each { |value, status|
+      begin
+        exit(value)
+        ScratchPad.record :no_exit
+      rescue SystemExit => e
+        e.status.should == status
+      end
+      ScratchPad.recorded.should be_nil
+    }
+  end
+
+  it "raises TypeError if can't convert the argument to an Integer" do
+    lambda { exit(Object.new) }.should raise_error(TypeError)
+    lambda { exit('0') }.should raise_error(TypeError)
+    lambda { exit([0]) }.should raise_error(TypeError)
+  end
 end
 
 describe "Kernel.exit!" do
