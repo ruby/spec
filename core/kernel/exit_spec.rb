@@ -80,6 +80,7 @@ describe "Kernel.exit" do
     lambda { exit(Object.new) }.should raise_error(TypeError)
     lambda { exit('0') }.should raise_error(TypeError)
     lambda { exit([0]) }.should raise_error(TypeError)
+    lambda { exit(nil) }.should raise_error(TypeError)
   end
 end
 
