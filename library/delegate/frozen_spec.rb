@@ -30,9 +30,20 @@ describe "SimpleDelegator when frozen" do
   it "creates an unfrozen dup" do
     @delegate.dup.frozen?.should be_false
   end
-  
-  # --- not sure?
-  # it "cannot be reassigned" do
-  #   lambda{ @delegate.__setobj__("hola!") }.should raise_error( RuntimeError )
-  # end
+
+  ruby_version_is "" ... "1.9" do
+    it "causes mutative calls to raise TypeError" do
+      lambda{ @delegate.__setobj__("hola!") }.should raise_error( TypeError )
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "causes mutative calls to raise RuntimeError" do
+      lambda{ @delegate.__setobj__("hola!") }.should raise_error( RuntimeError )
+    end
+  end
+
+  it "returns false if only the delegated object is frozen" do
+    SimpleDelegator.new([1,2,3].freeze).frozen?.should be_false
+  end
 end
