@@ -6,16 +6,9 @@ describe :trace, :shared => true do
   end
 
   # Crashes with NoMethodError: undefined method `[]' for nil:NilClass
-  ruby_bug "???", "1.9.1.129" do
+  ruby_bug "redmine:1532", "1.8.7" do
     it "returns the sum of diagonal elements in a rectangular Matrix" do
-      Matrix[[1,2,3], [4,5,6]].trace.should == 6  
-    end
-  end
-    
-  # Crashes with NoMethodError: undefined method `[]' for nil:NilClass
-  ruby_bug "???", "1.9.1.129" do
-    it "returns the sum of diagonal elements in a single-row Matrix" do
-      Matrix[[1,2]].trace.should == 3
+      lambda{ Matrix[[1,2,3], [4,5,6]].trace}.should raise_error(Matrix::ErrDimensionMismatch)
     end
   end
 

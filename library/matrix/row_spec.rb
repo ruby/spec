@@ -10,9 +10,8 @@ describe "Matrix#row" do
     @m.row(0).should == Vector[1,2]
   end
 
-  # Seems like a bad idea...
-  it "returns an Array when called with a block" do
-    @m.row(0) { |x| x }.should == [1, 2]
+  it "returns self when called with a block" do
+    @m.row(0) { |x| x }.should equal(@m)
   end
 
   it "returns nil when out of bounds" do
