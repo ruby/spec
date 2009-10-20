@@ -6,8 +6,10 @@ describe "Matrix#column_size" do
     Matrix[ [1,2], [3,4] ].column_size.should == 2
   end
 
-  it "returns 0 for empty matrices" do
-    Matrix[ [], [] ].column_size.should == 0
-    Matrix[ ].column_size.should == 0
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "returns 0 for empty matrices" do
+      Matrix[ [], [] ].column_size.should == 0
+      Matrix[ ].column_size.should == 0
+    end
   end
 end

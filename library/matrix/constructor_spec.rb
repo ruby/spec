@@ -3,24 +3,39 @@ require 'matrix'
 
 describe "Matrix.[]" do
 
-  it "requires arrays as parameters" do
-    lambda { Matrix[5] }.should raise_error(TypeError)
-    lambda { Matrix[nil] }.should raise_error(TypeError)
-    lambda { Matrix[1..2] }.should raise_error(TypeError)
-    lambda { Matrix[[1, 2], 3] }.should raise_error(TypeError)
-  end
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "requires arrays as parameters" do
+      lambda { Matrix[5] }.should raise_error(TypeError)
+      lambda { Matrix[nil] }.should raise_error(TypeError)
+      lambda { Matrix[1..2] }.should raise_error(TypeError)
+      lambda { Matrix[[1, 2], 3] }.should raise_error(TypeError)
+    end
 
-  it "creates an empty Matrix with no arguments" do
-    m = Matrix[]
-    m.column_size.should == 0
-    m.row_size.should == 0
-  end
+    it "creates an empty Matrix with no arguments" do
+      m = Matrix[]
+      m.column_size.should == 0
+      m.row_size.should == 0
+    end
 
-  it "raises for non-rectangular matrices" do
-    lambda{ Matrix[ [0], [0,1] ] }.should
-      raise_error(ExceptionForMatrix::ErrDimensionMismatch)
-    lambda{ Matrix[ [0,1], [0,1,2], [0,1] ]}.should
-      raise_error(ExceptionForMatrix::ErrDimensionMismatch)
+    it "raises for non-rectangular matrices" do
+      lambda{ Matrix[ [0], [0,1] ] }.should \
+        raise_error(Matrix::ErrDimensionMismatch)
+      lambda{ Matrix[ [0,1], [0,1,2], [0,1] ]}.should \
+        raise_error(Matrix::ErrDimensionMismatch)
+    end
+
+    it "accepts vector arguments" do
+      a = Matrix[Vector[1, 2], Vector[3, 4]]
+      a.should be_an_instance_of(Matrix)
+      a.should == Matrix[ [1, 2], [3, 4] ]
+    end
+
+    it "tries to calls :to_ary on arguments" do
+      array = mock('ary')
+      array.should_receive(:to_ary).and_return([1,2])
+      Matrix[array, [3,4] ].should == Matrix[ [1,2], [3,4] ]
+    end
+
   end
 
   it "returns a Matrix object" do
@@ -41,18 +56,6 @@ describe "Matrix.[]" do
     m = Matrix[ [], [], [] ]
     m.row_size.should == 3
     m.column_size.should == 0
-  end
-
-  it "accepts vector arguments" do
-    a = Matrix[Vector[1, 2], Vector[3, 4]]
-    a.should be_an_instance_of(Matrix)
-    a.should == Matrix[ [1, 2], [3, 4] ]
-  end
-
-  it "tries to calls :to_ary on arguments" do
-    array = mock('ary')
-    array.should_receive(:to_ary).and_return([1,2])
-    Matrix[array, [3,4] ].should == Matrix[ [1,2], [3,4] ]
   end
 
 end

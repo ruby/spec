@@ -16,7 +16,9 @@ describe "Matrix#column" do
     end
   end
   
-  it "returns nil when out of bounds" do
-    @m.column(2).should == nil
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "returns nil when out of bounds" do
+      @m.column(2).should == nil
+    end
   end
 end

@@ -26,12 +26,14 @@ describe :determinant, :shared => true do
     m.send(@method).should == 2
   end
 
-  it "returns 1 for an empty Matrix" do
-    m = Matrix[ ]
-    m.send(@method).should == 1
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "returns 1 for an empty Matrix" do
+      m = Matrix[ ]
+      m.send(@method).should == 1
+    end
   end
 
-  ruby_bug "#1531", "1.9.1" do
+  ruby_bug "#1531", "1.8.7" do
     it "returns the determinant of a Matrices containing 0 as first entry" do
       Matrix[[0,1],[1,0]].send(@method).should == -1
     end

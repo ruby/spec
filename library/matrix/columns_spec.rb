@@ -21,15 +21,17 @@ describe "Matrix.columns" do
     m.column(1).to_a.should == @b
   end
 
-  it "handles empty matrices" do
-    e = Matrix.columns([])
-    e.row_size.should == 0
-    e.column_size.should == 0
-    e.should == Matrix[]
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "handles empty matrices" do
+      e = Matrix.columns([])
+      e.row_size.should == 0
+      e.column_size.should == 0
+      e.should == Matrix[]
     
-    v = Matrix.columns([[],[],[]])
-    v.row_size.should == 0
-    v.column_size.should == 3
-    v.should == Matrix[[], [], []].transpose
+      v = Matrix.columns([[],[],[]])
+      v.row_size.should == 0
+      v.column_size.should == 3
+      v.should == Matrix[[], [], []].transpose
+    end
   end
 end

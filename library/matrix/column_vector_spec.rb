@@ -9,11 +9,12 @@ describe "Matrix.column_vector" do
     m.should == Matrix[ [4],[5],[6] ]
   end
 
-  it "returns an empty Matrix when called with an empty Array" do
-    m = Matrix.column_vector([])
-    m.should be_an_instance_of(Matrix)
-    m.row_size.should == 0
-    m.column_size.should == 1
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "returns an empty Matrix when called with an empty Array" do
+      m = Matrix.column_vector([])
+      m.should be_an_instance_of(Matrix)
+      m.row_size.should == 0
+      m.column_size.should == 1
+    end
   end
-
 end
