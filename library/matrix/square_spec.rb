@@ -12,12 +12,19 @@ describe "Matrix#square?" do
     Matrix[ [9] ].square?.should be_true
   end
 
-  it "returns false when the Matrix is 0xn" do
+  it "returns false when the Matrix is rectangular" do
     Matrix[ [1, 2] ].square?.should be_false
   end
 
-  it "returns false when the Matrix is nx0" do
+  it "returns false when the Matrix is rectangular" do
     Matrix[ [1], [2] ].square?.should be_false
   end
-  
+
+  ruby_bug "redmine:1532", "1.8.7" do
+    it "returns handles empty matrices" do
+      Matrix[].square?.should be_true
+      Matrix[[]].square?.should be_false
+      Matrix.columns([[]]).square?.should be_false
+    end
+  end
 end  

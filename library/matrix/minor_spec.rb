@@ -21,8 +21,22 @@ describe "Matrix#minor" do
       end
 
       it "returns nil for out-of-bounds start_row/col" do
-        @matrix.minor(4,0,0,10).should == nil
-        @matrix.minor(0,10,3,9).should == nil
+        r = @matrix.row_size + 1
+        c = @matrix.column_size + 1
+        @matrix.minor(r,0,0,10).should == nil
+        @matrix.minor(0,10,c,9).should == nil
+        @matrix.minor(-r,0,0,10).should == nil
+        @matrix.minor(0,10,-c,9).should == nil
+      end
+
+      it "returns nil for negative nrows or ncols" do
+        @matrix.minor(0,1,0,-1).should == nil
+        @matrix.minor(0,-1,0,1).should == nil
+      end
+
+      it "start counting backwards for start_row or start_col below zero" do
+        @matrix.minor(0, 1, -1, 1).should == @matrix.minor(0, 1, 1, 1)
+        @matrix.minor(-1, 1, 0, 1).should == @matrix.minor(2, 1, 0, 1)
       end
     end
 
@@ -46,8 +60,22 @@ describe "Matrix#minor" do
     end
 
     ruby_bug "redmine:1532", "1.8.7" do
-      it "returns an empty Matrix if col_range or row_range don't select any elements" do
-        @matrix.minor(3..6, 3..6).should == nil
+      it "returns nil if col_range or row_range is out of range" do
+        r = @matrix.row_size + 1
+        c = @matrix.column_size + 1
+        @matrix.minor(r..6, c..6).should == nil
+        @matrix.minor(0..1, c..6).should == nil
+        @matrix.minor(r..6, 0..1).should == nil
+        @matrix.minor(-r..6, -c..6).should == nil
+        @matrix.minor(0..1, -c..6).should == nil
+        @matrix.minor(-r..6, 0..1).should == nil
+      end
+
+      it "start counting backwards for col_range or row_range below zero" do
+        @matrix.minor(0..1, -2..-1).should == @matrix.minor(0..1, 0..1)
+        @matrix.minor(0..1, -2..1).should == @matrix.minor(0..1, 0..1)
+        @matrix.minor(-2..-1, 0..1).should == @matrix.minor(1..2, 0..1)
+        @matrix.minor(-2..2, 0..1).should == @matrix.minor(1..2, 0..1)
       end
     end
   end
