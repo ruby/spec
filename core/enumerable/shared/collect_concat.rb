@@ -4,6 +4,11 @@ describe :enumerable_collect_concat, :shared => true do
     numerous.send(@method){ |i| i }.should == [1, 2, 3, 4, [5, 6], {:foo => :bar}]
   end 
 
+  it "skips elements that are empty Arrays" do
+    numerous = EnumerableSpecs::Numerous.new(1, [], 2)
+    numerous.send(@method){ |i| i }.should == [1, 2]
+  end 
+
   it "calls to_ary but not to_a" do
     obj = mock('array-like')
     obj.should_receive(:to_ary).and_return([:foo])
