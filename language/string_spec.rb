@@ -144,16 +144,18 @@ HERE
   end
 
   it "interpolates the return value of Object#to_s" do
-    object = Object.new
-    def object.to_s; '42'; end
-    "#{object}".should == '42'
+    obj = mock('to_s')
+    obj.stub!(:to_s).and_return('42')
+
+    "#{obj}".should == '42'
   end
 
-  it "interpolates the return value of Object#inspect if Object#to_s does not return a String instance" do
-    object = Object.new
-    inspect_string = object.inspect
-    def object.to_s; 42; end
-    "#{object}".should == inspect_string
+  it "interpolates the return value of Object#inspect, without ivars, if Object#to_s does not return a String instance" do
+    obj = mock('to_s')
+    obj.stub!(:to_s).and_return(42)
+    s = "#{obj}"[0..-2]
+
+    s.should == obj.inspect[0, s.size]
   end
 
   ruby_version_is '1.9' do
