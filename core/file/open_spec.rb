@@ -154,8 +154,9 @@ describe "File.open" do
   end
 
   it "opens the file when call with fd" do
-    @fh = File.open(@file)
-    @fh = File.open(@fh.fileno)
+    # store in an ivar so it doesn't GC before we go to close it in 'after'
+    @fh_orig = File.open(@file)
+    @fh = File.open(@fh_orig.fileno)
     @fh.should be_kind_of(File)
     File.exist?(@file).should == true
   end
