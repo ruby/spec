@@ -23,8 +23,7 @@ describe :kernel_method, :shared => true do
     lambda { KernelSpecs::Foo.send(@method, :baz) }.should raise_error(NameError)
   end
 
-  # This may be a bug; see http://redmine.ruby-lang.org/issues/show/1151
-  ruby_version_is "" ... "1.9" do
+  ruby_bug "redmine:1151", "1.8.7" do
     it "changes the method called for super on a target aliased method" do
       c1 = Class.new do
         def a; 'a'; end
@@ -37,7 +36,7 @@ describe :kernel_method, :shared => true do
 
       c2.new.a.should == 'a'
       c2.new.b.should == 'a'
-      c2.new.send(@method, :b).call.should == 'b'
+      c2.new.send(@method, :b).call.should == 'a'
     end
   end
 end
