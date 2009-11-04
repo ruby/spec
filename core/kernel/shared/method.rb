@@ -3,12 +3,16 @@ require File.dirname(__FILE__) + '/../../../spec_helper'
 describe :kernel_method, :shared => true do
   it "returns a method object for a valid method" do
     class KernelSpecs::Foo; def bar; 'done'; end; end
-    KernelSpecs::Foo.new.send(@method, :bar).class.should == Method
+    m = KernelSpecs::Foo.new.send(@method, :bar)
+    m.should be_an_instance_of Method
+    m.call.should == 'done'
   end
 
   it "returns a method object for a valid singleton method" do
-    class KernelSpecs::Foo; def self.bar; 'done'; end; end
-    KernelSpecs::Foo.send(@method, :bar).class.should == Method
+    class KernelSpecs::Foo; def self.bar; 'class done'; end; end
+    m = KernelSpecs::Foo.send(@method, :bar)
+    m.should be_an_instance_of Method
+    m.call.should == 'class done'
   end
 
   it "raises a NameError for an invalid method name" do
