@@ -1,12 +1,9 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
+require File.dirname(__FILE__) + '/shared/enumeratorize'
 
 describe "Array#select" do
-  ruby_version_is "1.8.7" do
-    it "returns an instance of Enumerator if no block given" do
-      [1, 2].select.should be_kind_of(enumerator_class)
-    end
-  end
+  it_behaves_like :enumeratorize, :select
 
   it "returns a new array of elements for which block is true" do
     [1, 3, 4, 5, 6, 9].select { |i| i % ((i + 1) / 2) == 0}.should == [1, 4, 6]
