@@ -1,14 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
-require File.dirname(__FILE__) + '/shared/select'
 
 describe "Array#select" do
   ruby_version_is "1.8.7" do
-    it_behaves_like(:array_select, :select, Enumerable::Enumerator)    
-  end
-
-  ruby_version_is "1.9" do
-    it_behaves_like(:array_select, :select, Enumerator)
+    it "returns an instance of Enumerator if no block given" do
+      [1, 2].select.should be_kind_of(enumerator_class)
+    end
   end
 
   it "returns a new array of elements for which block is true" do
