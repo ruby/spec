@@ -27,13 +27,18 @@ ruby_version_is "1.9" do
       @enum.with_index(1) {|e,i| acc << [e,i] }
       acc.should == [[1,1],[2,2],[3,3],[4,4]]
     end
-    
-    it "raises a TypeError when a non numeric argument is given" do
+
+    it "raises a TypeError when the argument cannot be converted to numeric" do
       lambda do
-        @enum.with_index('1') {|o, i| i}
+        @enum.with_index('1') {|i| i}
       end.should raise_error(TypeError)
     end
-    
+
+    it "converts non-numeric arguments to Integer via #to_int" do
+      (o = mock('1')).should_receive(:to_int).and_return(1)
+      @enum.with_index(o).to_a.should == [[1,1],[2,2],[3,3],[4,4]]
+    end
+
     it "coerces the given numeric argument to an Integer" do
       @enum.with_index(1.678).to_a.should == [[1,1],[2,2],[3,3],[4,4]]
     end
