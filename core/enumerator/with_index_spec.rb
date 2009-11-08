@@ -27,5 +27,15 @@ ruby_version_is "1.9" do
       @enum.with_index(1) {|e,i| acc << [e,i] }
       acc.should == [[1,1],[2,2],[3,3],[4,4]]
     end
+    
+    it "raises a TypeError when a non numeric argument is given" do
+      lambda do
+        @enum.with_index('1')
+      end.should raise(TypeError)
+    end
+    
+    it "coerces the given numeric argument to an Integer" do
+      @enum.with_index(1.678).to_a.should == [[1,1],[2,2],[3,3],[4,4]]
+    end
   end
 end
