@@ -20,28 +20,40 @@ ruby_version_is "1.8.7" do
       end
 
       it "numbers indices from the given index when given an offset but no block" do
-        @enum.with_index(1).to_a.should == [[1,1],[2,2],[3,3],[4,4]]
+        @enum.with_index(1).to_a.should == [[1,1], [2,2], [3,3], [4,4]]
       end
 
       it "numbers indices from the given index when given an offset and block" do
         acc = []
         @enum.with_index(1) {|e,i| acc << [e,i] }
-        acc.should == [[1,1],[2,2],[3,3],[4,4]]
+        acc.should == [[1,1], [2,2], [3,3], [4,4]]
       end
 
       it "raises a TypeError when the argument cannot be converted to numeric" do
         lambda do
-          @enum.with_index('1') {|i| i}
+          @enum.with_index('1') {|*i| i}
         end.should raise_error(TypeError)
       end
 
       it "converts non-numeric arguments to Integer via #to_int" do
         (o = mock('1')).should_receive(:to_int).and_return(1)
-        @enum.with_index(o).to_a.should == [[1,1],[2,2],[3,3],[4,4]]
+        @enum.with_index(o).to_a.should == [[1,1], [2,2], [3,3], [4,4]]
       end
 
       it "coerces the given numeric argument to an Integer" do
-        @enum.with_index(1.678).to_a.should == [[1,1],[2,2],[3,3],[4,4]]
+        @enum.with_index(1.678).to_a.should == [[1,1], [2,2], [3,3], [4,4]]
+
+        res = []
+        @enum.with_index(1.001) { |*x| res << x}
+        res.should == [[1,1], [2,2], [3,3], [4,4]]
+      end
+
+      it "treats nil argument as no argument" do
+        @enum.with_index(nil).to_a.should == [[1,0], [2,1], [3,2], [4,3]]
+
+        res = []
+        @enum.with_index(nil) { |*x| res << x}
+        res.should == [[1,0], [2,1], [3,2], [4,3]]
       end
     end
   end
