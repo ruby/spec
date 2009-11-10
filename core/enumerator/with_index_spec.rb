@@ -55,6 +55,14 @@ ruby_version_is "1.8.7" do
         @enum.with_index(nil) { |*x| res << x}
         res.should == [[1,0], [2,1], [3,2], [4,3]]
       end
+
+      it "accepts negative argument" do
+        @enum.with_index(-1).to_a.should == [[1,-1], [2,0], [3,1], [4,2]]
+
+        res = []
+        @enum.with_index(-1) { |*x| res << x}
+        res.should == [[1,-1], [2,0], [3,1], [4,2]]
+      end
     end
   end
 end
