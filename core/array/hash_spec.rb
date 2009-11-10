@@ -26,12 +26,17 @@ describe "Array#hash" do
       rec = []; rec << rec
       rec.hash.should == [rec].hash
       rec.hash.should == [[rec]].hash
+      # This is because rec.eql?([[rec]])
+      # Remember that if two objects are eql?
+      # then the need to have the same hash
+      # Check the Array#eql? specs!
     end
 
     it "returns the same hash for equal recursive arrays through hashes" do
       h = {} ; rec = [h] ; h[:x] = rec
       rec.hash.should == [h].hash
       rec.hash.should == [{:x => rec}].hash
+      # Like above, this is because rec.eql?([{:x => rec}])
     end
   end
 
