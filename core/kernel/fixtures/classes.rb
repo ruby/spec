@@ -173,14 +173,14 @@ module KernelSpecs
   end
 
   class InstEvalConst
-    X = 2
+    INST_EVAL_CONST_X = 2
   end
 
   module InstEvalOuter
     module Inner
       obj = InstEvalConst.new
-      X_BY_STR = obj.instance_eval("X") rescue nil
-      X_BY_BLOCK = obj.instance_eval { X } rescue nil
+      X_BY_STR = obj.instance_eval("INST_EVAL_CONST_X") rescue nil
+      X_BY_BLOCK = obj.instance_eval { INST_EVAL_CONST_X } rescue nil
     end
   end
 
