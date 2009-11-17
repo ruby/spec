@@ -103,6 +103,22 @@ describe "Kernel#instance_eval" do
     end
   end
 
+  it "gets constants in the receiver if a string given" do
+    KernelSpecs::InstEvalOuter::Inner::X_BY_STR.should == 2
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "doesn't get constants in the receiver if a block given" do
+      KernelSpecs::InstEvalOuter::Inner::X_BY_BLOCK.should == nil
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "gets constants in the receiver if a block given" do
+      KernelSpecs::InstEvalOuter::Inner::X_BY_BLOCK.should == 2
+    end
+  end
+
   it "raises a TypeError when defining methods on an immediate" do
     lambda do
       1.instance_eval { def foo; end }

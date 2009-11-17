@@ -172,6 +172,18 @@ module KernelSpecs
     include InstEval
   end
 
+  class InstEvalConst
+    X = 2
+  end
+
+  module InstEvalOuter
+    module Inner
+      obj = InstEvalConst.new
+      X_BY_STR = obj.instance_eval("X") rescue nil
+      X_BY_BLOCK = obj.instance_eval { X } rescue nil
+    end
+  end
+
   class EvalTest
     def self.eval_yield_with_binding
       eval("yield", binding)
