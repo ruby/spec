@@ -23,6 +23,10 @@ ruby_version_is "1.8.7" do
       lambda { GC.stress = true }.should_not raise_error
       lambda { GC.stress = false }.should_not raise_error
     end
+    it "returns a proper boolean result" do
+      GC.send(:stress=, true).should be_true
+      GC.send(:stress=, false).should be_false
+    end
 
   end
 end
