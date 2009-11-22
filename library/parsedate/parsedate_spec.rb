@@ -82,11 +82,6 @@ ruby_version_is ""..."1.9" do
       ParseDate.parsedate("12345678901234").should == [1234, 56, 78, 90, 12, 34, nil, nil]
     end
 
-    it "returns Array with year and month set, given a String like nn-nn" do
-      ParseDate.parsedate("08-09").should == [8,9] + [nil] * 6
-      ParseDate.parsedate("08-09",true).should == [2008,9] + [nil] * 6
-    end
-
     it "returns Array with day and hour set, given a String like n-nn" do
       ParseDate.parsedate("8-09").should == [nil,nil] + [9,8] + [nil] * 4
     end
@@ -94,5 +89,21 @@ ruby_version_is ""..."1.9" do
     it "returns Array with day and timezone set, given a String like nn-n" do
       ParseDate.parsedate("08-9").should == [nil,nil,8,nil,nil,nil,"-9",nil]
     end
+    
+    ## MRI 1.8.6 and 1.8.7 diverge in the following case (http://rubyspec.org/issues/show/163)
+    ruby_version_is ""..."1.8.7" do
+      it "returns Array with year and month set, given a String like nn-nn" do
+        ParseDate.parsedate("08-09").should == [8,9] + [nil] * 6
+        ParseDate.parsedate("08-09",true).should == [2008,9] + [nil] * 6
+      end
+    end
+    
+    ruby_version_is "1.8.7" do
+      it "returns Array with day and timezone set, given a String like nn-nn" do
+        ParseDate.parsedate("08-09").should == [nil,nil,8,nil,nil,nil,"-09",nil]
+        ParseDate.parsedate("08-09",true).should == [nil,nil,8,nil,nil,nil,"-09",nil]
+      end
+    end
+    
   end
 end
