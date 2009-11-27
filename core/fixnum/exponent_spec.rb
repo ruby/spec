@@ -37,4 +37,11 @@ describe "Fixnum#**" do
       lambda { 13 ** :symbol }.should raise_error(TypeError)
     end
   end
+  
+  ruby_version_is '1.9.2' do
+    it "returns a complex number when negative and raised to a fractional power" do
+      ((-8) ** (1.0/3)).should be_close(Complex(1, 1.73205), TOLERANCE)
+    end
+  end
+  
 end
