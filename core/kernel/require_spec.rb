@@ -394,15 +394,25 @@ describe "Kernel#require" do
   end
 
   ruby_version_is ""..."1.9" do
-    it "only accepts strings" do
+    it "only accepts strings and objects with #to_str" do
       lambda { require(nil) }.should raise_error(TypeError)
       lambda { require(42)  }.should raise_error(TypeError)
       lambda { require([])  }.should raise_error(TypeError)
+
+      # objects with to_s are not good enough
+      o = mock('require_spec_dummy');
+      o.should_receive(:to_s).any_number_of_times.and_return("require_spec_dummy")
+      lambda { require(o) }.should raise_error(TypeError)
+
+      # objects with to_path are not good enough
+      o = mock('require_spec_dummy');
+      o.should_receive(:to_path).any_number_of_times.and_return("require_spec_dummy")
+      lambda { require(o) }.should raise_error(TypeError)
     end
   end
 
   ruby_version_is "1.9" do
-    it "only accepts strings or objects with #to_path" do
+    it "only accepts string or objects with #to_path or #to_str" do
       lambda { require(nil) }.should raise_error(TypeError)
       lambda { require(42)  }.should raise_error(TypeError)
       lambda { require([])  }.should raise_error(TypeError)
@@ -415,7 +425,31 @@ describe "Kernel#require" do
       path.should_receive(:to_path).and_return('require_spec')
       require(path).should be_true
       $LOADED_FEATURES.include?(abs_path).should be_true
-    end  
+    end
+
+    it "calls #to_str on non-String objects returned by #to_path" do
+      abs_path = File.expand_path(
+        File.join($require_fixture_dir, 'require_spec.rb'))
+
+      non_string_path = mock("non_string_path")
+      non_string_path.should_receive(:to_str).and_return(abs_path)
+
+      path = mock('path')
+      path.should_receive(:to_path).and_return(non_string_path)
+
+      require(path).should be_true
+      $LOADED_FEATURES.include?(abs_path).should be_true
+    end
+  end
+
+  it "calls #to_str on non-String arguments" do
+    abs_path = File.expand_path(
+        File.join($require_fixture_dir, 'require_spec.rb'))
+    o = mock('require_spec');
+    o.should_receive(:to_str).and_return(abs_path)
+    $LOADED_FEATURES.include?(abs_path).should be_false
+    require(o).should be_true
+    $LOADED_FEATURES.include?(abs_path).should be_true
   end
 
   it "does not infinite loop on an rb file that requires itself" do
