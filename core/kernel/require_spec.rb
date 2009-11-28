@@ -421,9 +421,20 @@ describe "Kernel#require" do
     it "calls #to_path on non-String arguments" do
       abs_path = File.expand_path(
         File.join($require_fixture_dir, 'require_spec.rb'))
-      path = mock('path')
-      path.should_receive(:to_path).and_return('require_spec')
+      path = mock('abs_path')
+      path.should_receive(:to_path).and_return(abs_path)
       require(path).should be_true
+      $LOADED_FEATURES.include?(abs_path).should be_true
+    end
+
+    it "does not call #to_path on String arguments" do
+      abs_path = File.expand_path(
+        File.join($require_fixture_dir, 'require_spec.rb'))
+
+      def abs_path.to_path
+        'blah-non-existing-path'
+      end
+      require(abs_path).should be_true
       $LOADED_FEATURES.include?(abs_path).should be_true
     end
 
@@ -450,6 +461,10 @@ describe "Kernel#require" do
     $LOADED_FEATURES.include?(abs_path).should be_false
     require(o).should be_true
     $LOADED_FEATURES.include?(abs_path).should be_true
+
+    nil_mock = mock('nil')
+    nil_mock.should_receive(:to_str).at_least(1).and_return(nil)
+    lambda { require(nil_mock) }.should raise_error(TypeError)
   end
 
   it "does not infinite loop on an rb file that requires itself" do
