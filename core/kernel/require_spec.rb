@@ -379,12 +379,18 @@ describe "Kernel#require" do
     lambda { require "nonesuch#{$$}#{Time.now.to_f}" }.should raise_error LoadError
   end
 
-  it "raises a LoadError if the file exists but can't be read" do
-    abs_path = File.expand_path(
-      File.join($require_tmp_dir, 'require_spec_dummy.rb'))
-    File.exists?(abs_path).should be_true
-    File.new(abs_path).chmod(0000)
-    lambda {require(abs_path)}.should raise_error(LoadError)
+  platform_is_not :os => [:windows, :cygwin] do # can't make file unreadable
+    it "raises a LoadError if the file exists but can't be read" do
+      abs_path = File.expand_path(File.join($require_tmp_dir, 'require_spec_dummy.rb'))
+      File.exists?(abs_path).should be_true
+      file = File.new(abs_path)
+      begin
+        file.chmod(0000)
+        lambda {require(abs_path)}.should raise_error(LoadError)
+      ensure
+        file.close
+      end
+    end
   end
 
   ruby_version_is ""..."1.9" do
