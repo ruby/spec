@@ -12,6 +12,8 @@ describe "TCPSocket partial closability" do
 
   after :each do
     @server.close
+    @s1.close
+    @s2.close
   end
   
   it_should_behave_like "partially closable sockets"

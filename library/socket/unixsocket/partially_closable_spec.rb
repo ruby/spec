@@ -15,6 +15,8 @@ platform_is_not :windows do
 
     after :each do
       @server.close
+      @s1.close
+      @s2.close
       File.unlink(@path) if File.exists?(@path)
     end
     
