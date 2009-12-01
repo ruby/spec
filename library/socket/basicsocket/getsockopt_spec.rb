@@ -23,7 +23,11 @@ describe "BasicSocket#getsockopt" do
 
   it "gets a socket option Socket::SO_LINGER" do
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER)
-    n.should == [0].pack("i")
+    if (n.size == 8) # linger struct on some platforms, not just a value
+      n.should == [0, 0].pack("ii")
+    else
+      n.should == [0].pack("i")
+    end
   end
 
   it "gets a socket option Socket::SO_SNDBUF" do
