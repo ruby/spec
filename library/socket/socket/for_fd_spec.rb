@@ -5,8 +5,8 @@ require 'socket'
 describe "Socket#for_fd given a file descriptor" do
   it "adopts that descriptor into a new Socket object" do
     begin
-      server = TCPServer.new("0.0.0.0", SocketSpecs.port)
-      client = TCPSocket.open("0.0.0.0", SocketSpecs.port)
+      server = TCPServer.new("127.0.0.1", SocketSpecs.port)
+      client = TCPSocket.open("127.0.0.1", SocketSpecs.port)
       new_sock = Socket.for_fd(client.fileno)
 
       # TODO: RSpec uses #send internally when calling #should == something
