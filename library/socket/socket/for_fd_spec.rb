@@ -41,9 +41,4 @@ describe "Socket.for_fd given a file descriptor" do
       end
     end
   end
-
-  it "raises error for a bad descriptor" do
-    lambda { Socket.for_fd(9999999) }.should raise_error
-  end
 end
-
