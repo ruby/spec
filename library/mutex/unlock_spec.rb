@@ -39,6 +39,6 @@ describe "Mutex#unlock" do
   it "returns nil if successful" do
     mutex = Mutex.new
     mutex.lock
-    mutex.unlock.should.be_nil
+    mutex.unlock.should be_nil
   end
 end
