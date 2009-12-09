@@ -26,14 +26,16 @@ describe "IO#read_nonblock" do
   end
 
   not_compliant_on :rubinius, :jruby do
-    it "changes the behavior of #read to nonblocking" do
-      @write << "hello"
-      @read.read_nonblock(5)
+    ruby_version_is ""..."1.9" do
+      it "changes the behavior of #read to nonblocking" do
+        @write << "hello"
+        @read.read_nonblock(5)
 
-      # Yes, use normal IO#read here. #read_nonblock has changed the internal
-      # flags of @read to be nonblocking, so now any normal read calls raise
-      # EAGAIN if there is no data.
-      lambda { @read.read(5) }.should raise_error(Errno::EAGAIN)
+        # Yes, use normal IO#read here. #read_nonblock has changed the internal
+        # flags of @read to be nonblocking, so now any normal read calls raise
+        # EAGAIN if there is no data.
+        lambda { @read.read(5) }.should raise_error(Errno::EAGAIN)
+      end
     end
   end
 
