@@ -25,7 +25,7 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(10).should == "hello"
   end
 
-  not_compliant_on :rubinius do
+  not_compliant_on :rubinius, :jruby do
     it "changes the behavior of #read to nonblocking" do
       @write << "hello"
       @read.read_nonblock(5)
