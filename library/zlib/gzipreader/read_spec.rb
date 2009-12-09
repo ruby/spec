@@ -10,9 +10,14 @@ describe "GzipReader#read" do
     @io = StringIO.new @zip
   end
 
-  it "reads the contents of a gzip file" do
+  it "with no arguments reads the entire content of a gzip file" do
     gz = Zlib::GzipReader.new @io
     gz.read.should == @data
+  end
+
+  it "with nil length argument reads the entire content of a gzip file" do
+    gz = Zlib::GzipReader.new @io
+    gz.read(nil).should == @data
   end
 
   it "reads the contents up to a certain size" do
