@@ -15,7 +15,7 @@ describe "Array#shuffle" do
     end
 
     it "returns subclass instances with Array subclass" do
-      ArraySpecs::MyArray[1, 2, 3].shuffle.should be_kind_of(ArraySpecs::MyArray)
+      ArraySpecs::MyArray[1, 2, 3].shuffle.should be_an_instance_of(ArraySpecs::MyArray)
     end
 
     it "is not destructive" do
