@@ -37,6 +37,10 @@ describe "IO#read_nonblock" do
         lambda { @read.read(5) }.should raise_error(Errno::EAGAIN)
       end
     end
+
+    # This feature was changed in 1.9
+    # see also: [ruby-dev:25101] http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/25101
+    #   and #2469 http://redmine.ruby-lang.org/issues/show/2469
   end
 
   it "raises IOError on closed stream" do
