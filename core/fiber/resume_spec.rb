@@ -19,16 +19,17 @@ ruby_version_is "1.9" do
       lambda { fiber2.resume }.should raise_error(FiberError)
     end
 
-    # http://redmine.ruby-lang.org/issues/show/595
-    it "executes the ensure clause" do
-      fib = Fiber.new{
-        begin
-          Fiber.yield :begin
-        ensure
-          :ensure
-        end
-      }
-      fib.resume.should == :ensure
+    ruby_bug "redmine #595", "1.9" do
+      it "executes the ensure clause" do
+        fib = Fiber.new{
+          begin
+            Fiber.yield :begin
+          ensure
+            :ensure
+          end
+        }
+        fib.resume.should == :ensure
+      end
     end
   end
 end
