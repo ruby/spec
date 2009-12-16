@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-ruby_version_is "1.9.2" do
+ruby_version_is "1.9" do
   describe "Encoding#replicate" do
     it "returns a replica of ASCII" do
       e = Encoding::ASCII.replicate('RS-ASCII')
