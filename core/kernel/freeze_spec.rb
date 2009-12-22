@@ -17,7 +17,7 @@ describe "Kernel#freeze" do
     :sym.freeze.should == :sym
   end
 
-  # 1.9 allows immediates to be frozen; reported as bug #1747
+  # 1.9 allows immediates to be frozen #1747
   it "has no effect on immediate values" do
     a = nil
     b = true
@@ -29,11 +29,11 @@ describe "Kernel#freeze" do
     c.freeze
     d.freeze
     e.freeze
-    a.frozen?.should be_false
-    b.frozen?.should be_false
-    c.frozen?.should be_false
-    d.frozen?.should be_false
-    e.frozen?.should be_false
+    a.frozen?.should be_true
+    b.frozen?.should be_true
+    c.frozen?.should be_true
+    d.frozen?.should be_true
+    e.frozen?.should be_true
   end
 
   ruby_version_is "" ... "1.9" do
