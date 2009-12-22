@@ -18,7 +18,7 @@ describe "Kernel#instance_eval" do
 
   ruby_version_is "1.9" do
     it "doesn't pass the object to the block" do
-      "hola".instance_eval {|o| o }.should be_nil
+      "hola".instance_eval {|o| o }.should == "hola"
     end
   end
 
