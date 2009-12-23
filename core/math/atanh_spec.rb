@@ -14,12 +14,24 @@ describe "Math.atanh" do
   end
   
   platform_is :darwin, :freebsd, :java do
-    it "returns Infinity for 1.0" do
-      Math.atanh(1.0).infinite?.should == 1
-    end
+    ruby_version_is ""..."1.9" do
+      it "returns Infinity for 1.0" do
+        Math.atanh(1.0).infinite?.should == 1
+      end
   
-    it "returns -Infinity for -1.0" do
-      Math.atanh(-1.0).infinite?.should == -1
+      it "returns -Infinity for -1.0" do
+        Math.atanh(-1.0).infinite?.should == -1
+      end
+    end
+
+    ruby_version_is "1.9" do
+      it "raises error for 1.0" do
+        lambda { Math.atanh(1.0) }.should raise_error(Errno::EDOM)
+      end
+
+      it "raises error for -1.0" do
+        lambda { Math.atanh(-1.0) }.should raise_error(Errno::EDOM)
+      end
     end
   end
 
