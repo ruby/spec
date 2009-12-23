@@ -215,5 +215,23 @@ describe "IO#gets" do
       
       File.unlink(tmp("gets_specs"))
     end
+
+    it "accepts an integer as limit parameter which is smaller than IO size" do
+      tmp = tmp("gets_specs")
+      f = File.open(tmp, "w") { |f| f.print("A\n") }
+      File.open(tmp) do |f|
+        f.gets("", 10).should == "A\n"
+      end
+      File.unlink tmp
+    end
+
+    it "accepts an integer as limit parameter which is same as IO size" do
+      tmp = tmp("gets_specs")
+      f = File.open(tmp, "w") { |f| f.print("ABC\n") }
+      File.open(tmp) do |f|
+        f.gets("", 4).should == "ABC\n"
+      end
+      File.unlink tmp
+    end
   end
 end
