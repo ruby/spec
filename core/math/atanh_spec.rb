@@ -25,11 +25,11 @@ describe "Math.atanh" do
     end
 
     ruby_version_is "1.9" do
-      it "raises error for 1.0" do
+      it "raises an Errno::EDOM if x = 1.0" do
         lambda { Math.atanh(1.0) }.should raise_error(Errno::EDOM)
       end
 
-      it "raises error for -1.0" do
+      it "raises an Errno::EDOM if x = -1.0" do
         lambda { Math.atanh(-1.0) }.should raise_error(Errno::EDOM)
       end
     end
