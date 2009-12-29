@@ -49,4 +49,24 @@ describe "BasicSocket#recv" do
     socket.close
     data.should == 'hello'
   end
+
+  it "gets lines delimited with a custom separator"  do
+    data = ""
+    t = Thread.new do
+      client = @server.accept
+      data = client.gets("\377")
+      client.gets(nil) # this call is important
+      client.close
+    end
+    Thread.pass while t.status and t.status != "sleep"
+    t.status.should_not be_nil
+
+    socket = TCPSocket.new('127.0.0.1', SocketSpecs.port)
+    socket.write("firstline\377secondline\377")
+    socket.close
+
+    t.join
+    data.should == "firstline\377"
+  end
+
 end
