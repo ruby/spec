@@ -10,13 +10,20 @@ describe "GzipReader#rewind" do
     @io = StringIO.new @zip
   end
 
-  it "resets the position of the file pointer" do
+  it "resets the position of the stream pointer" do
     gz = Zlib::GzipReader.new @io
     gz.read
     gz.pos.should == @data.length
 
     gz.rewind
     gz.pos.should == 0
+  end
+
+  it "resets the position of the stream pointer to data previously read" do
+    gz = Zlib::GzipReader.new @io
+    first_read = gz.read
+    gz.rewind
+    first_read.should == gz.read
   end
 
   it "invokes seek method on the associated IO object" do
