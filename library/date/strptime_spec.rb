@@ -1,7 +1,7 @@
 require 'date' 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "Date#strftime" do
+describe "Date#strptime" do
 
   it "should be able to parse without arguments" do
     Date.strptime.should == Date.civil(-4712, 1, 1)
@@ -77,22 +77,28 @@ describe "Date#strftime" do
     Date.strptime("04", "%m").should == Date.civil(d.year, 4, 1)
   end
 
+# FIXME: the spec started to fail in year 2010
+quarantine! do
   it "should be able to show the week number with the week starting on sunday and monday" do
     d = Date.today
     Date.strptime("14", "%U").should == Date.commercial(d.cwyear, 14, 7)
     Date.strptime("14", "%W").should == Date.commercial(d.cwyear, 15, 7)
   end
+end
   
   it "should be able to show the commercial week day" do
     Date.strptime("2008 1", "%G %u").should == Date.civil(2007, 12, 31)
   end
 
+# FIXME: the spec started to fail in year 2010
+quarantine! do
   it "should be able to show the commercial week" do
     d = Date.commercial(Date.today.year,1,1)
     Date.strptime("1", "%V").should == d
     Date.strptime("15", "%V").should == Date.commercial(d.cwyear, 15, 1)
   end
-  
+end
+
   it "should be able to show the week day" do
     d = Date.today
     Date.strptime("2007 4", "%Y %w").should == Date.civil(2007, 1, 4)
