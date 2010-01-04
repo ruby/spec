@@ -77,12 +77,17 @@ describe "Date#strptime" do
     Date.strptime("04", "%m").should == Date.civil(d.year, 4, 1)
   end
 
-  it "should be able to show the week number with the week starting on sunday and monday" do
-    d = Date.today
-    Date.strptime("14", "%U").should == Date.commercial(d.cwyear, d.cweek, 7) + 7 * 13
-    Date.strptime("14", "%W").should == Date.commercial(d.cwyear, d.cweek, 7) + 7 * 14
+  it "parses a week number for a week starting on Sunday" do
+    Date.strptime("2010/1", "%Y/%U").should == Date.civil(2010, 1, 3)
   end
-  
+
+  # See http://redmine.ruby-lang.org/repositories/diff/ruby-19?rev=24500
+  ruby_bug "#", "1.8" do
+    it "parses a week number for a week starting on Monday" do
+      Date.strptime("2010/1", "%Y/%W").should == Date.civil(2010, 1, 4)
+    end
+  end
+
   it "should be able to show the commercial week day" do
     Date.strptime("2008 1", "%G %u").should == Date.civil(2007, 12, 31)
   end
