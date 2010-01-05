@@ -40,11 +40,11 @@ describe "Marshal::load" do
 
   it "loads a user_object" do
     obj = UserObject.new
-    Marshal.load("\004\bo:\017UserObject\000").class.should == UserObject
+    Marshal.load("\004\bo:\017UserObject\000").should be_kind_of(UserObject)
   end
 
   it "loads a object" do
-    Marshal.load("\004\bo:\vObject\000").class.should == Object
+    Marshal.load("\004\bo:\vObject\000").should be_kind_of(Object)
   end
 
   it "loads an extended Object" do

@@ -37,8 +37,8 @@ describe "Hash#merge" do
   end
 
   it "returns subclass instance for subclasses" do
-    MyHash[1 => 2, 3 => 4].merge(new_hash(1 => 2)).class.should == MyHash
-    MyHash[].merge(new_hash(1 => 2)).class.should == MyHash
+    MyHash[1 => 2, 3 => 4].merge(new_hash(1 => 2)).should be_kind_of(MyHash)
+    MyHash[].merge(new_hash(1 => 2)).should be_kind_of(MyHash)
 
     new_hash(1 => 2, 3 => 4).merge(MyHash[1 => 2]).class.should == hash_class
     new_hash.merge(MyHash[1 => 2]).class.should == hash_class
