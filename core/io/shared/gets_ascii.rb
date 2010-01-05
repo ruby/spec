@@ -6,8 +6,9 @@ describe :io_gets_ascii, :shared => true do
         file.print("this is a test\xFFit is only a test\ndoes it work?")
       end
 
-      file = File.open(tmp("gets_specs"), "rb")
-      @gets = file.gets("\xFF")
+      File.open(tmp("gets_specs"), "rb") do |file|
+        @gets = file.gets("\xFF")
+      end
     end
 
     after :each do
