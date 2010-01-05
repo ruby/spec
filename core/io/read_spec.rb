@@ -107,37 +107,6 @@ describe "IO#read" do
     @io.read(4).should == '7890'
   end
 
-  it "can read lots of data" do
-    data = "*" * (8096 * 2 + 1024) # HACK IO::BufferSize
-
-    File.open @fname, 'w' do |io| io.write data end
-
-    actual = nil
-
-    File.open @fname, 'r' do |io|
-      actual = io.read
-    end
-
-    actual.length.should == data.length
-    actual.split('').all? { |c| c == "*" }.should == true
-  end
-
-  it "can read lots of data with length" do
-    read_length = 8096 * 2 + 1024 # HACK IO::BufferSize
-    data = "*" * (read_length + 8096) # HACK same
-
-    File.open @fname, 'w' do |io| io.write data end
-
-    actual = nil
-
-    File.open @fname, 'r' do |io|
-      actual = io.read read_length
-    end
-
-    actual.length.should == read_length
-    actual.split('').all? { |c| c == "*" }.should == true
-  end
-
   it "consumes zero bytes when reading zero bytes" do
     pre_pos = @io.pos
 
@@ -262,5 +231,38 @@ describe "IO#read" do
     ensure
       $KCODE = old
     end
+  end
+end
+
+describe "IO#read with large data" do
+  before :each do
+    # TODO: what is the significance of this mystery math?
+    @data_size = 8096 * 2 + 1024
+    @data = "*" * @data_size
+
+    @fname = tmp("io_read.txt")
+    touch(@fname) { |f| f.write @data }
+
+    @io = open @fname, "r"
+  end
+
+  after :each do
+    @io.close
+    rm_r @fname
+  end
+
+  it "reads all the data at once" do
+    File.open(@fname, 'r') { |io| ScratchPad.record io.read }
+
+    ScratchPad.recorded.size.should == @data_size
+    ScratchPad.recorded.should == @data
+  end
+
+  it "reads only the requested number of bytes" do
+    read_size = @data_size / 2
+    File.open(@fname, 'r') { |io| ScratchPad.record io.read(read_size) }
+
+    ScratchPad.recorded.size.should == read_size
+    ScratchPad.recorded.should == @data[0, read_size]
   end
 end
