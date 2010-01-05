@@ -9,7 +9,7 @@ describe "SimpleDelegator" do
 
   it "can be marshalled" do
     m = Marshal.load(Marshal.dump(@delegate))
-    m.should be_kind_of(SimpleDelegator)
+    m.class.should == SimpleDelegator
     (m == @obj).should be_true
   end
 
