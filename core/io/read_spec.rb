@@ -204,21 +204,6 @@ describe "IO#read" do
   it "raises IOError on closed stream" do
     lambda { IOSpecs.closed_file.read }.should raise_error(IOError)
   end
-
-  ruby_version_is "1.9" do
-    # Example derived from test/ruby/test_io_m17n.rb on MRI
-    it "strips the BOM when given 'rb:utf-7-bom' as the mode" do
-      text = "\uFEFFT"
-      %w/UTF-8 UTF-16BE UTF-16LE UTF-32BE UTF-32LE/.each do |name|
-        path = tmp('%s-bom.txt' % name)
-        content = text.encode(name)
-        File.open(path,'w') { |f| f.print content }
-        result = File.read(path, :mode => "rb:BOM|#{name}")
-        content[1].force_encoding("ascii-8bit").should == result.force_encoding("ascii-8bit")
-        File.unlink(path)
-      end
-    end
-  end
 end
 
 describe "IO#read with encodings" do
@@ -238,6 +223,31 @@ describe "IO#read with encodings" do
     File.open(@name, 'r') do |io|
       io.readline.should == "Voici la ligne une.\n"
       io.read(5).should == "Qui " + [195].pack("C")
+    end
+  end
+end
+
+ruby_version_is "1.9" do
+  describe "IO#read with 1.9 encodings" do
+    before :each do
+      @file = tmp("io_read_bom.txt")
+      @text = "\uFEFFT"
+    end
+
+    after :each do
+      rm_r @file
+    end
+
+    # Example derived from test/ruby/test_io_m17n.rb on MRI
+    it "strips the BOM when given 'rb:utf-7-bom' as the mode" do
+      %w/UTF-8 UTF-16BE UTF-16LE UTF-32BE UTF-32LE/.each do |encoding|
+        content = @text.encode(encoding)
+        content_ascii = content[1].force_encoding("ascii-8bit")
+        touch(@file) { |f| f.print content }
+
+        result = File.read(@file, :mode => "rb:BOM|#{encoding}")
+        result.force_encoding("ascii-8bit").should == content_ascii
+      end
     end
   end
 end
