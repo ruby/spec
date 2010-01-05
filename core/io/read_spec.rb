@@ -96,16 +96,8 @@ describe "IO#read" do
   end
 
   after :each do
-    rm_r @fname
-  end
-
-  after :all do
-    # We originally closed @io after every example, but on 1.9 that led to a
-    # particularly bizarre bug where #close would raise an Errno::EBADF under
-    # certain conditions. I can't determine what these conditions are,
-    # unfortunately. I believe it's safe to only close @io here because it's
-    # instantiated anew before each example.
     @io.close
+    rm_r @fname
   end
 
   it "can be read from consecutively" do
