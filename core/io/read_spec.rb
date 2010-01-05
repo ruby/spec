@@ -219,17 +219,25 @@ describe "IO#read" do
       end
     end
   end
+end
+
+describe "IO#read with encodings" do
+  before :each do
+    @kcode = $KCODE
+
+    @name = fixture __FILE__, "readlines.txt"
+  end
+
+  after :each do
+    $KCODE = @kcode
+  end
 
   it "ignores unicode encoding" do
-    begin
-      old = $KCODE
-      $KCODE = "UTF-8"
-      File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r') do |io|
-        io.readline.should == "Voici la ligne une.\n"
-        io.read(5).should == "Qui " + [195].pack("C")
-      end
-    ensure
-      $KCODE = old
+    $KCODE = "UTF-8"
+
+    File.open(@name, 'r') do |io|
+      io.readline.should == "Voici la ligne une.\n"
+      io.read(5).should == "Qui " + [195].pack("C")
     end
   end
 end
