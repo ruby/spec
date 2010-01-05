@@ -6,7 +6,7 @@ describe "IO.read" do
   before :each do
     @fname = tmp("io_read.txt")
     @contents = "1234567890"
-    File.open(@fname, "w") { |f| f.write @contents }
+    touch(@fname) { |f| f.write @contents }
   end
 
   after :each do
@@ -69,7 +69,7 @@ end
 describe "IO.read on an empty file" do
   before :each do
     @fname = tmp("io_read_empty.txt")
-    File.open(@fname, 'w') {|f| 1 }
+    touch(@fname)
   end
 
   after :each do
