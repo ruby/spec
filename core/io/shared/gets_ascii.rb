@@ -2,28 +2,25 @@
 describe :io_gets_ascii, :shared => true do
   describe "with ASCII separator" do
     before :each do
-      File.open(tmp("gets_specs"), "wb") do |file|
-        file.print("this is a test\xFFit is only a test\ndoes it work?")
-      end
+      @name = tmp("gets_specs.txt")
+      touch(@name, "wb") { |f| f.print "this is a test\xFFtesty\ntestier" }
 
-      File.open(tmp("gets_specs"), "rb") do |file|
-        @gets = file.gets("\xFF")
-      end
+      File.open(@name, "rb") { |f| @data = f.gets("\xFF") }
     end
 
     after :each do
-      File.unlink(tmp("gets_specs"))
+      rm_r @name
     end
 
     ruby_version_is ""..."1.9" do
       it "returns the separator's number representation" do
-        @gets.should == "this is a test\377"
+        @data.should == "this is a test\377"
       end
     end
 
     ruby_version_is "1.9" do
       it "returns the separator's character representation" do
-        @gets.should == "this is a test\xFF"
+        @data.should == "this is a test\xFF"
       end
     end
   end
