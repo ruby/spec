@@ -18,17 +18,22 @@ describe "The -e command line option" do
   end
 
   #needs to test return => LocalJumpError
-end
 
-describe "The if expression with a range with two Fixnums under the -e command line option" do
-  it "considers the range as an awk-like conditional operator that the two values are compared with $. if the end value is not excluded" do
-    ruby_exe(nil, :args => %Q{-ne "print if 2..3" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2\n3"
-    ruby_exe(nil, :args => %Q{-ne "print if 2..2" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2"
+  ruby_version_is "1.8.7.248" do
+    describe "with -n and a Fixnum range" do
+      before :each do
+        @script = "-ne 'print if %s' #{fixture(__FILE__, "conditional_range.txt")}"
+      end
+
+      it "mimics an awk conditional by comparing an inclusive-end range with $." do
+        ruby_exe(nil, :args => (@script % "2..3")).should == "2\n3\n"
+        ruby_exe(nil, :args => (@script % "2..2")).should == "2\n"
+      end
+
+      it "mimics a sed conditional by comparing an exclusive-end range with $." do
+        ruby_exe(nil, :args => (@script % "2...3")).should == "2\n3\n"
+        ruby_exe(nil, :args => (@script % "2...2")).should == "2\n3\n4\n5\n"
+      end
+    end
   end
-
-  it "considers the range as a sed-like conditional operator that the two values are compared with $. if the end value is excluded" do
-    ruby_exe(nil, :args => %Q{-ne "print if 2...3" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2\n3"
-    ruby_exe(nil, :args => %Q{-ne "print if 2...2" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2\n3\n4\n5"
-  end
 end
-
