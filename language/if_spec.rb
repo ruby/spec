@@ -212,16 +212,34 @@ describe "The if expression" do
 
     if false then 123; else 456; end.should == 456
   end
-  
-  describe "with a boolean range" do
-    it "treats an inclusive range as an awk-like conditional \"flip-flop\" expression" do
-      10.times.inject([]) {|a, i| if (i == 4)..(i == 7) then a << i else a end }.should == [4, 5, 6, 7]
-      10.times.inject([]) {|a, i| if (i == 4)..(i == 4) then a << i else a end }.should == [4]
+
+  describe "with a boolean range ('flip-flop' operator)" do
+    before :each do
+      ScratchPad.record []
     end
 
-      it "treats an exclusive range as an sed-like conditional \"flip-flop\" expression" do
-      10.times.inject([]) {|a, i| if (i == 4)...(i == 4) then a << i else a end }.should == [4, 5, 6, 7, 8, 9]
-      10.times.inject([]) {|a, i| if (i == 4)...(i == 5) then a << i else a end }.should == [4, 5]
+    after :each do
+      ScratchPad.clear
+    end
+
+    it "mimics an awk conditional with a single-element inclusive-end range" do
+      10.times { |i| ScratchPad << i if (i == 4)..(i == 4) }
+      ScratchPad.recorded.should == [4]
+    end
+
+    it "mimics an awk conditional with a many-element inclusive-end range" do
+      10.times { |i| ScratchPad << i if (i == 4)..(i == 7) }
+      ScratchPad.recorded.should == [4, 5, 6, 7]
+    end
+
+    it "mimics a sed conditional with a zero-element exclusive-end range" do
+      10.times { |i| ScratchPad << i if (i == 4)...(i == 4) }
+      ScratchPad.recorded.should == [4, 5, 6, 7, 8, 9]
+    end
+
+    it "mimics a sed conditional with a many-element exclusive-end range" do
+      10.times { |i| ScratchPad << i if (i == 4)...(i == 5) }
+      ScratchPad.recorded.should == [4, 5]
     end
   end
 end
