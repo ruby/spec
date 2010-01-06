@@ -19,3 +19,16 @@ describe "The -e command line option" do
 
   #needs to test return => LocalJumpError
 end
+
+describe "The if expression with a range with two Fixnums under the -e command line option" do
+  it "considers the range as an awk-like conditional operator that the two values are compared with $. if the end value is not excluded" do
+    ruby_exe(nil, :args => %Q{-ne "print if 2..3" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2\n3"
+    ruby_exe(nil, :args => %Q{-ne "print if 2..2" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2"
+  end
+
+  it "considers the range as a sed-like conditional operator that the two values are compared with $. if the end value is excluded" do
+    ruby_exe(nil, :args => %Q{-ne "print if 2...3" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2\n3"
+    ruby_exe(nil, :args => %Q{-ne "print if 2...2" fixtures/conditional_range.txt}, :dir => File.dirname(__FILE__)).chomp.should == "2\n3\n4\n5"
+  end
+end
+
