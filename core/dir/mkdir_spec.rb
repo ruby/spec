@@ -55,6 +55,14 @@ describe "Dir.mkdir" do
   it "raises a SystemCallError if any of the directories in the path before the last does not exist" do
     lambda { Dir.mkdir "#{DirSpecs.nonexistent}/subdir" }.should raise_error(SystemCallError)
   end
+
+  it "raises Errno::EEXIST if the specified directory already exists" do
+    lambda { Dir.mkdir(File.dirname(__FILE__)) }.should raise_error(Errno::EEXIST)
+  end
+
+  it "raises Errno::EEXIST if the argument points to the existing file" do
+    lambda { Dir.mkdir(__FILE__) }.should raise_error(Errno::EEXIST)
+  end
 end
 
 # The permissions flag are not supported on Windows as stated in documentation:
