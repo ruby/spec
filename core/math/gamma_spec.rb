@@ -12,6 +12,7 @@ ruby_version_is "1.9" do
       Math.gamma(0.5).should be_close(Math.sqrt(Math::PI), TOLERANCE)
       Math.gamma(1).should be_close(1.0, TOLERANCE)
       Math.gamma(6.0).should be_close(120.0, TOLERANCE)
+      Math.gamma(1.0/0).infinite?.should == 1
     end
     
     it "returns good numerical approximations" do
@@ -24,6 +25,14 @@ ruby_version_is "1.9" do
     it "raises Domain Error on negative integers" do
       lambda { Math.gamma(-1) }.should raise_error(Errno::EDOM)
       lambda { Math.gamma(-2.0) }.should raise_error(Errno::EDOM)
+    end
+    
+    it "raises Domain Error given negative infinity" do
+      lambda { Math.gamma(-1.0/0) }.should raise_error(Errno::EDOM)
+    end
+    
+    it "returns NaN given NaN" do
+      Math.gamma(0.0/0).nan?.should be_true
     end
 
   end
