@@ -123,7 +123,7 @@ describe "File.new" do
   it "coerces filename using to_str" do
     name = mock("file")
     name.should_receive(:to_str).and_return(@file)
-    File.new(name, "w") { }
+    @fh = File.new(name, "w")
     File.exists?(@file).should == true
   end
 
@@ -131,7 +131,7 @@ describe "File.new" do
     it "coerces filename using #to_path" do
       name = mock("file")
       name.should_receive(:to_path).and_return(@file)
-      File.new(name, "w") { }
+      @fh = File.new(name, "w")
       File.exists?(@file).should == true
     end
   end
