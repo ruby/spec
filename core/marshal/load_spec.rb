@@ -286,6 +286,17 @@ describe "Marshal::load" do
       obj
   end
 
+  it "preserves hash ivars when hash contains a string having ivar" do
+    s = 'string'
+    s.instance_variable_set :@string_ivar, 'string ivar'
+    h = { :key => s }
+    h.instance_variable_set :@hash_ivar, 'hash ivar'
+
+    unmarshalled = Marshal.load Marshal.dump(h)
+    unmarshalled.instance_variable_get(:@hash_ivar).should == 'hash ivar'
+    unmarshalled[:key].instance_variable_get(:@string_ivar).should == 'string ivar'
+  end
+
   it "raises a TypeError with bad Marshal version" do
     marshal_data = '\xff\xff'
     marshal_data[0] = (Marshal::MAJOR_VERSION).chr
