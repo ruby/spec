@@ -21,10 +21,6 @@ describe :file_grpowned, :shared => true do
     end
   end
 
-  it "returns false if the file doesn't exist" do
-    @object.send(@method, "xxx-tmp-doesnt_exit-blah").should be_false
-  end
-
   platform_is :windows do
     it "returns false if the file exist" do
       @object.send(@method, @file).should be_false
