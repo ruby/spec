@@ -112,10 +112,9 @@ describe "Marshal::load" do
       obj
   end
 
-  it "throws ArgumentError when dump is truncated" do
+  it "raises an ArgumentError when the dumped data is truncated" do
     obj = {:first => 1, :second => 2, :third => 3}
-    truncated_dump = Marshal.dump(obj)[0, 5]
-    lambda {Marshal.load(truncated_dump)}.should raise_error ArgumentError, "marshal data too short"
+    lambda { Marshal.load(Marshal.dump(obj)[0, 5]) }.should raise_error(ArgumentError)
   end
 
   ruby_version_is "1.9" do
