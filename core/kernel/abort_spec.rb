@@ -1,25 +1,15 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
+require File.dirname(__FILE__) + '/shared/abort'
 
 describe "Kernel#abort" do
   it "is a private method" do
     Kernel.should have_private_instance_method(:abort)
   end
+
+  it_behaves_like :kernel_abort, :abort, KernelSpecs::AbortMethod.new
 end
 
 describe "Kernel.abort" do
-
-  it "needs to be reviewed for spec completeness"
-
-  it "raises a SystemExit" do
-    lambda { abort }.should raise_error SystemExit
-  end
-
-  it "gives a status code of 1" do
-    lambda { abort }.should raise_error { |e| e.status.should == 1 }
-  end
-
-  it "propogates the specified message" do
-    lambda { abort "a message" }.should raise_error Exception, "a message"
-  end
+  it_behaves_like :kernel_abort, :abort, Kernel
 end
