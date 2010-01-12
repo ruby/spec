@@ -38,9 +38,9 @@ ruby_version_is "1.9" do
     end
 
     ruby_version_is "1.9" do
-      it "returns correct values given +/- infinity" do
+      it "returns correct values only given - infinity" do
         lambda { Math.lgamma( 1.0/0) }.should raise_error(Errno::EDOM)
-        lambda { Math.lgamma(-1.0/0) }.should raise_error(Errno::EDOM)
+        Math.lgamma(-1.0/0).should == [1.0/0, 1]
       end
     end
 
