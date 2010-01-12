@@ -112,6 +112,11 @@ describe "Marshal::load" do
       obj
   end
 
+  it "raises an ArgumentError when the dumped data is truncated" do
+    obj = {:first => 1, :second => 2, :third => 3}
+    lambda { Marshal.load(Marshal.dump(obj)[0, 5]) }.should raise_error(ArgumentError)
+  end
+
   ruby_version_is "1.9" do
     it "returns the value of the proc when called with a proc" do
       Marshal.load(Marshal.dump([1,2]), proc { [3,4] }).should ==  [3,4]
