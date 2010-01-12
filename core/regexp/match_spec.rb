@@ -8,6 +8,11 @@ end
 describe "Regexp#match" do
   it_behaves_like(:regexp_match, :match)
 
+  it "raises TypeError when the given argument cannot be coarce to String" do
+    f = 1
+    lambda { /foo/.match(f)[0] }.should raise_error(TypeError)
+  end
+
   ruby_version_is ""..."1.9" do
     it "coerces Exceptions into strings" do
       f = Exception.new("foo")
