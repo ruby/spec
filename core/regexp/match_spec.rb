@@ -8,9 +8,18 @@ end
 describe "Regexp#match" do
   it_behaves_like(:regexp_match, :match)
 
-  it "coerces Exceptions into strings" do
-    f = Exception.new("foo")
-    /foo/.match(f)[0].should == "foo"
+  ruby_version_is ""..."1.9" do
+    it "coerces Exceptions into strings" do
+      f = Exception.new("foo")
+      /foo/.match(f)[0].should == "foo"
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises TypeError when the given argument is an Exception" do
+      f = Exception.new("foo")
+      lambda { /foo/.match(f)[0] }.should raise_error(TypeError)
+    end
   end
 end
 
