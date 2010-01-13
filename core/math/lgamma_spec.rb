@@ -30,18 +30,9 @@ ruby_version_is "1.9" do
       lg2[1].should == 1
     end
 
-    ruby_version_is ""..."1.9" do
-      it "returns correct values given +/- infinity" do
-        Math.lgamma( 1.0/0).should == [1.0/0, 1]
-        Math.lgamma(-1.0/0).should == [1.0/0, 1]
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "returns correct values only given - infinity" do
-        lambda { Math.lgamma( 1.0/0) }.should raise_error(Errno::EDOM)
-        Math.lgamma(-1.0/0).should == [1.0/0, 1]
-      end
+    it "returns correct values given +/- infinity" do
+      Math.lgamma( 1.0/0).should == [1.0/0, 1]
+      Math.lgamma(-1.0/0).should == [1.0/0, 1]
     end
 
     it "returns correct value given NaN" do
