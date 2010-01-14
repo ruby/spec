@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 ruby_version_is "1.9" do
   describe "Math.gamma" do
-    it "returns well-known values" do
+    it "returns +infinity given 0" do
       Math.gamma(0).infinite?.should == 1
     end
     
