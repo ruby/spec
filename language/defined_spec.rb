@@ -171,6 +171,16 @@ describe "The defined? keyword" do
     ret.should == 'constant'
   end
 
+  it "returns 'constant' when evaluating self::FOO in subclass's metaclass" do
+    o = Object.new
+    class << o
+      class Foo; Baz = 1; end
+      class Bar < Foo; def self.baz_defined?; defined? self::Baz; end; end
+      def bar; Bar; end
+    end
+    o.bar.baz_defined?.should == 'constant'
+  end
+
   it "returns 'constant' when defined?(File) is sent" do
     ret = defined?(File)
     ret.should == "constant"
