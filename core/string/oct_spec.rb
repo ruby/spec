@@ -18,8 +18,16 @@ describe "String#oct" do
     "0b1010".oct.should == 0b1010
     "0xFF".oct.should == 0xFF
     "0d500".oct.should == 500
+
+    "-0b0101".oct.should == -0b0101
+    "-0xEE".oct.should == -0xEE
+    "-0d500".oct.should == -500
+
+    "+0b1010".oct.should == 0b1010
+    "+0xFF".oct.should == 0xFF
+    "+0d500".oct.should == 500
   end
-  
+
   ruby_version_is "" ... "1.8.7" do
     it "accepts a sequence of underscores as part of a number" do
       "7__3".oct.should == 073
@@ -27,7 +35,7 @@ describe "String#oct" do
       "7__5".oct.should == 075
     end
   end
-  
+
   ruby_version_is "1.8.7" do
     it "does not accept a sequence of underscores as part of a number" do
       "7__3".oct.should == 07
@@ -35,12 +43,12 @@ describe "String#oct" do
       "7__5".oct.should == 07
     end
   end
-  
+
   it "takes an optional sign" do
     "-1234".oct.should == -01234
     "+1234".oct.should == 01234
   end
-  
+
   it "returns 0 on error" do
     "".oct.should == 0
     "+-5".oct.should == 0
