@@ -31,7 +31,9 @@ describe "File.new" do
     File.umask(0011)
     @fh = File.new(@file, @flags, 0755)
     @fh.should be_kind_of(File)
-    File.stat(@file).mode.to_s(8).should == "100744"
+    platform_is_not :windows do
+      File.stat(@file).mode.to_s(8).should == "100744"
+    end
     File.exists?(@file).should == true
   end
 
