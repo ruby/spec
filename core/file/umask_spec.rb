@@ -24,7 +24,7 @@ describe "File.umask" do
     end
 
     it "invokes to_int on non-integer argument" do
-      (obj = mock(022)).should_receive(:to_int).any_number_of_times.and_return(055)
+      (obj = mock(022)).should_receive(:to_int).any_number_of_times.and_return(022)
       File.umask(obj)
       File.umask(obj).should == 022
     end
