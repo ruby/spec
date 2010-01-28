@@ -59,7 +59,8 @@ describe "Kernel#open" do
   ruby_version_is "1.9" do
     it "calls #to_open on argument" do
       obj = mock('fileish')
-      obj.should_receive(:to_open).and_return(File.open(@file))
+      @file = File.open(@name)
+      obj.should_receive(:to_open).and_return(@file)
       @file = open(obj)
       @file.should be_kind_of(File)
     end
