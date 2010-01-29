@@ -7,7 +7,7 @@ describe "OpenStruct#table" do
   end
   
   it "is protected" do
-    @os.protected_methods.map {|m| m.to_s }.should include("table")
+    OpenStruct.should have_protected_instance_method(:table)
   end
   
   it "returns self's method/value table" do
