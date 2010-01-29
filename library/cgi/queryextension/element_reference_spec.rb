@@ -25,8 +25,10 @@ describe "CGI::QueryExtension#[]" do
     @cgi["one"].should be_kind_of(String)
   end
 
-  it "sets the other values in the returned value" do
-    @cgi["one"].to_a.should == ["a"]
-    @cgi["two"].to_a.should == ["b", "c"]
+  ruby_version_is "" ... "1.9" do
+    it "sets the other values in the returned value" do
+      @cgi["one"].to_a.should == ["a"]
+      @cgi["two"].to_a.should == ["b", "c"]
+    end
   end
 end
