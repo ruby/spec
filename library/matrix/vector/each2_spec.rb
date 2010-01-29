@@ -37,12 +37,10 @@ describe "Vector.each2" do
       a.should == [[1, 4], [2, 5], [3, 6]]
     end
 
-    ruby_bug "to be submitted", "1.9.1" do
-      it "yield arguments in pairs" do
-        a = []
-        @v.each2(@v2){|pair| a << pair}
-        a.should == [[1, 4], [2, 5], [3, 6]]
-      end
+    it "yield arguments in pairs" do
+      a = []
+      @v.each2(@v2){|*pair| a << pair}
+      a.should == [[1, 4], [2, 5], [3, 6]]
     end
 
     ruby_bug "to be submitted", "1.9.1" do
