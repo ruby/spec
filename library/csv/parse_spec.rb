@@ -9,9 +9,18 @@ describe "CSV.parse" do
     result.should == []
   end
 
-  it "parses '\n' into [[nil]]" do
-    result = CSV::parse "\n"
-    result.should == [[nil]]
+  ruby_version_is "" ... "1.9" do
+    it "parses '\n' into [[nil]]" do
+      result = CSV::parse "\n"
+      result.should == [[nil]]
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "parses '\n' into [[]]" do
+      result = CSV::parse "\n"
+      result.should == [[]]
+    end
   end
  
   it "parses 'foo' into [['foo']]" do
@@ -29,9 +38,18 @@ describe "CSV.parse" do
     result.should == [['foo',nil,'baz']]
   end
 
-  it "parses '\nfoo' into [[nil],['foo']]" do
-    result = CSV::parse "\nfoo"
-    result.should == [[nil],['foo']]
+  ruby_version_is "" ... "1.9" do
+    it "parses '\nfoo' into [[nil],['foo']]" do
+      result = CSV::parse "\nfoo"
+      result.should == [[nil],['foo']]
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "parses '\nfoo' into [[],['foo']]" do
+      result = CSV::parse "\nfoo"
+      result.should == [[],['foo']]
+    end
   end
 
   it "parses 'foo\n' into [['foo']]" do
@@ -59,9 +77,18 @@ describe "CSV.parse" do
     result.should == [['foo'],['bar','baz']]
   end
 
-  it "parses '\n\nbar' into [[nil],[nil],'bar']]" do
-    result = CSV::parse "\n\nbar"
-    result.should == [[nil],[nil],['bar']]
+  ruby_version_is "" ... "1.9" do
+    it "parses '\n\nbar' into [[nil],[nil],'bar']]" do
+      result = CSV::parse "\n\nbar"
+      result.should == [[nil],[nil],['bar']]
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "parses '\n\nbar' into [[],[],'bar']]" do
+      result = CSV::parse "\n\nbar"
+      result.should == [[],[],['bar']]
+    end
   end
 
   ruby_version_is "" ... "1.9" do
