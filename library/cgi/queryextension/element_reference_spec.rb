@@ -21,9 +21,8 @@ describe "CGI::QueryExtension#[]" do
     @cgi["two"].should == "b"
   end
   
-  it "returns a String that was extended with CGI::QueryExtension::Value" do
+  it "returns a String" do
     @cgi["one"].should be_kind_of(String)
-    @cgi["one"].should be_kind_of(CGI::QueryExtension::Value)
   end
 
   it "sets the other values in the returned value" do
