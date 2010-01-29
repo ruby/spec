@@ -64,18 +64,37 @@ describe "CSV.parse" do
     result.should == [[nil],[nil],['bar']]
   end
 
-  it "parses 'foo' into [['foo']] with a separator of ;" do
-    result = CSV::parse "foo", ?;
-    result.should == [['foo']]
+  ruby_version_is "" ... "1.9" do
+    it "parses 'foo' into [['foo']] with a separator of ;" do
+      result = CSV::parse "foo", ?;
+      result.should == [['foo']]
+    end
+
+    it "parses 'foo;bar' into [['foo','bar']] with a separator of ;" do
+      result = CSV::parse "foo;bar", ?;
+      result.should == [['foo','bar']]
+    end
+
+    it "parses 'foo;bar\nbaz;quz' into [['foo','bar'],['baz','quz']] with a separator of ;" do
+      result = CSV::parse "foo;bar\nbaz;quz", ?;
+      result.should == [['foo','bar'],['baz','quz']]
+    end
   end
 
-  it "parses 'foo;bar' into [['foo','bar']] with a separator of ;" do
-    result = CSV::parse "foo;bar", ?;
-    result.should == [['foo','bar']]
-  end
+  ruby_version_is "1.9" do
+    it "parses 'foo' into [['foo']] with a separator of ;" do
+      result = CSV::parse "foo", :col_sep => ?;
+      result.should == [['foo']]
+    end
 
-  it "parses 'foo;bar\nbaz;quz' into [['foo','bar'],['baz','quz']] with a separator of ;" do
-    result = CSV::parse "foo;bar\nbaz;quz", ?;
-    result.should == [['foo','bar'],['baz','quz']]
+    it "parses 'foo;bar' into [['foo','bar']] with a separator of ;" do
+      result = CSV::parse "foo;bar", :col_sep => ?;
+      result.should == [['foo','bar']]
+    end
+
+    it "parses 'foo;bar\nbaz;quz' into [['foo','bar'],['baz','quz']] with a separator of ;" do
+      result = CSV::parse "foo;bar\nbaz;quz", :col_sep => ?;
+      result.should == [['foo','bar'],['baz','quz']]
+    end
   end
 end
