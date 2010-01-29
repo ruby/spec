@@ -30,4 +30,20 @@ describe "CGI::HtmlExtension#a" do
       @html.a(attributes) { "Example" }.should equal_element("A", attributes, "Example")
     end
   end
+
+  describe "when each HTML generation" do
+    it "returns the doctype declaration for HTML3" do
+      CGISpecs.cgi_new("html3").a.should == %(<A HREF=""></A>)
+      CGISpecs.cgi_new("html3").a { "link text" }.should == %(<A HREF="">link text</A>)
+    end
+
+    it "returns the doctype declaration for HTML4" do
+      CGISpecs.cgi_new("html4").a.should == %(<A HREF=""></A>)
+      CGISpecs.cgi_new("html4").a { "link text" }.should == %(<A HREF="">link text</A>)
+    end
+    it "returns the doctype declaration for the Transitional version of HTML4" do
+      CGISpecs.cgi_new("html4Tr").a.should == %(<A HREF=""></A>)
+      CGISpecs.cgi_new("html4Tr").a { "link text" }.should == %(<A HREF="">link text</A>)
+    end
+  end
 end
