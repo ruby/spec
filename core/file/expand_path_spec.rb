@@ -134,7 +134,6 @@ describe "File.expand_path" do
       old_external = Encoding.default_external
       Encoding.default_external = Encoding::SHIFT_JIS
       File.expand_path("./a").encoding.should == Encoding::SHIFT_JIS
-      File.expand_path("./\u{9876}").encoding.should == Encoding::SHIFT_JIS
       Encoding.default_external = old_external
     end
   end
