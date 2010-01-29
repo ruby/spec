@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + "/fixtures/common"
 
 describe "CGI::HtmlExtension#html" do
   before(:each) do
-    @html = CGISpecs::HtmlExtension.new
+    @html = CGISpecs.cgi_new
     @html.stub!(:doctype).and_return("<!DOCTYPE SUPA-FUNKAY-RUBYSPEC-DOCTYPE>")
   end
 
