@@ -7,7 +7,7 @@ describe "OpenStruct#table" do
   end
   
   it "is protected" do
-    @os.protected_methods.should include("table")
+    @os.protected_methods.map {|m| m.to_s }.should include("table")
   end
   
   it "returns self's method/value table" do
