@@ -233,6 +233,11 @@ module NetFTPSpecs
       #@datasocket.close()
       self.response("200 OK, Data received. (STOR #{file})")
     end
+
+    def appe(file)
+      @restart_at = true
+      stor(file)
+    end
     
     def syst
       self.response("215 FTP Dummy Server (SYST)")
