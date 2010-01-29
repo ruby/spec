@@ -20,7 +20,7 @@ describe "Net::FTP#login" do
   describe "when passed no arguments" do
     it "sends the USER command with 'anonymous' as name to the server" do
       @ftp.login
-      @ftp.last_response.should == "230 User logged in, proceed. (USER anonymous)\n"
+      @server.login_user.should == "anonymous"
     end
     
     ruby_version_is "" ... "1.9" do
@@ -32,7 +32,7 @@ describe "Net::FTP#login" do
 	pass = ENV["USER"] + "@" + passhost 
 	@server.should_receive(:user).and_respond("331 User name okay, need password.")
 	@ftp.login
-	@ftp.last_response.should == "230 User logged in, proceed. (PASS #{pass})\n"
+	@server.login_pass.should == pass
       end
     end
     
@@ -40,7 +40,7 @@ describe "Net::FTP#login" do
       it "sends 'anonymous@' as a password when required" do
 	@server.should_receive(:user).and_respond("331 User name okay, need password.")
 	@ftp.login
-	@ftp.last_response.should == "230 User logged in, proceed. (PASS anonymous@)\n"
+	@server.login_pass.should == "anonymous@"
       end
     end
     
@@ -56,7 +56,7 @@ describe "Net::FTP#login" do
   describe "when passed name" do
     it "sends the USER command with the passed name to the server" do
       @ftp.login("rubyspec")
-      @ftp.last_response.should == "230 User logged in, proceed. (USER rubyspec)\n"
+      @server.login_user.should == "rubyspec"
     end
     
     ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
@@ -76,13 +76,13 @@ describe "Net::FTP#login" do
   describe "when passed name, password" do
     it "sends the USER command with the passed name to the server" do
       @ftp.login("rubyspec", "rocks")
-      @ftp.last_response.should == "230 User logged in, proceed. (USER rubyspec)\n"
+      @server.login_user.should == "rubyspec"
     end
     
     it "sends the passed password when required" do
       @server.should_receive(:user).and_respond("331 User name okay, need password.")
       @ftp.login("rubyspec", "rocks")
-      @ftp.last_response.should == "230 User logged in, proceed. (PASS rocks)\n"
+      @server.login_pass.should == "rocks"
     end
     
     ruby_bug "http://redmine.ruby-lang.org/issues/show/385", "1.8.7" do
@@ -97,20 +97,20 @@ describe "Net::FTP#login" do
   describe "when passed name, password, account" do
     it "sends the USER command with the passed name to the server" do
       @ftp.login("rubyspec", "rocks", "account")
-      @ftp.last_response.should == "230 User logged in, proceed. (USER rubyspec)\n"
+      @server.login_user.should == "rubyspec"
     end
     
     it "sends the passed password when required" do
       @server.should_receive(:user).and_respond("331 User name okay, need password.")
       @ftp.login("rubyspec", "rocks", "account")
-      @ftp.last_response.should == "230 User logged in, proceed. (PASS rocks)\n"
+      @server.login_pass.should == "rocks"
     end
     
     it "sends the passed account when required" do
       @server.should_receive(:user).and_respond("331 User name okay, need password.")
       @server.should_receive(:pass).and_respond("332 Need account for login.")
       @ftp.login("rubyspec", "rocks", "account")
-      @ftp.last_response.should == "230 User 'account' logged in, proceed. (ACCT)\n"
+      @server.login_acct.should == "account"
     end
   end
   
