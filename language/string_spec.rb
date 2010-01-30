@@ -150,12 +150,13 @@ HERE
     "#{obj}".should == '42'
   end
 
-  it "interpolates the return value of Object#inspect, without ivars, if Object#to_s does not return a String instance" do
+  it "interpolates an implementation depended representation of an object if the object does not return a String for #to_s and the representation of the object is not empty" do 
     obj = mock('to_s')
     obj.stub!(:to_s).and_return(42)
-    s = "#{obj}"[0..-2]
 
-    s.should == obj.inspect[0, s.size]
+    s = nil
+    lambda { s = "#{obj}" }.should_not raise_error
+    s.should_not be_empty
   end
 
   ruby_version_is '1.9' do
