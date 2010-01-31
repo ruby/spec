@@ -35,7 +35,7 @@ ruby_version_is "1.9" do
     end
 
     it "sets the child's environment variables according to a supplied hash" do
-      pid = spawn({:spawn_of_ruby => 'yes'}, "ruby -e 'print ENV[\"spawn_of_ruby\"]' >#{@f}")
+      pid = spawn({"spawn_of_ruby" => 'yes'}, "ruby -e 'print ENV[\"spawn_of_ruby\"]' >#{@f}")
       sleep 0.1
       File.exists?(@f).should be_true
       File.read(@f).should == "yes"
