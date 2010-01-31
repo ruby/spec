@@ -13,13 +13,6 @@ describe "Vector.each2" do
   end
 
   describe "given one argument" do
-    ruby_bug "redmine:2495", "1.9.1" do
-      it "requires the argument to be a Vector or an Array" do
-        lambda { @v.each2(5){}        }.should raise_error(TypeError)
-        lambda { @v.each2(nil){}      }.should raise_error(TypeError)
-      end
-    end
-
     it "accepts an Array argument" do
       a = []
       @v.each2([7, 8, 9]){|x, y| a << x << y}
