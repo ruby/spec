@@ -8,7 +8,10 @@ describe :complex_math_atanh, :shared => true do
     @object.send(:atanh, -0.2).should be_close(-0.202732554054082, TOLERANCE)
   end
 
-  platform_is :darwin, :freebsd, :java do
+  begin
+    @object.send(:atanh, 1.0)
+
+    # platforms whose atanh returns Infinity
     it "returns Infinity for 1.0" do
       @object.send(:atanh, 1.0).infinite?.should == 1
     end
@@ -16,18 +19,14 @@ describe :complex_math_atanh, :shared => true do
     it "returns -Infinity for -1.0" do
       @object.send(:atanh, -1.0).infinite?.should == -1
     end
-  end
+  rescue
+    # platforms whose atanh raises Exception
+    it "raises an Errno::EDOM if x = 1.0" do
+      lambda { @object.send(:atanh, 1.0) }.should raise_error(Errno::EDOM)
+    end
 
-  platform_is :windows, :linux, :openbsd do
-    # jruby is cross-platform and behaves as :darwin above
-    not_compliant_on :jruby do
-      it "raises an Errno::EDOM if x = 1.0" do
-        lambda { @object.send(:atanh, 1.0) }.should raise_error(Errno::EDOM)
-      end
-
-      it "raises an Errno::EDOM if x = -1.0" do
-        lambda { @object.send(:atanh, -1.0) }.should raise_error(Errno::EDOM)
-      end
+    it "raises an Errno::EDOM if x = -1.0" do
+      lambda { @object.send(:atanh, -1.0) }.should raise_error(Errno::EDOM)
     end
   end
 
