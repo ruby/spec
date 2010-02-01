@@ -12,8 +12,10 @@ describe "StringScanner#getch" do
   it "is multi-byte character sensitive" do
     begin
         old, $KCODE = $KCODE, 'EUC'
-        s = StringScanner.new("\244\242")
-        s.getch.should == "\244\242" # Japanese hira-kana "A" in EUC-JP
+        src = "\244\242" # Japanese hira-kana "A" in EUC-JP
+        src.force_encoding('EUC-JP') if ''.respond_to?(:force_encoding)
+        s = StringScanner.new(src)
+        s.getch.should == src
     ensure
       $KCODE = old
     end
