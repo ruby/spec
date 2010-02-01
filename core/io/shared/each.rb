@@ -1,9 +1,16 @@
 # encoding: utf-8
 require File.dirname(__FILE__) + '/../fixtures/classes'
 
+def _open(*arg, &block)
+  fn = arg[0]
+  mode = arg[1]
+  mode = mode ? mode + ':UTF-8' : 'r:UTF-8' if Encoding
+  File.open(fn, mode, &block)
+end
+
 describe :io_each, :shared => true do
   before(:each) do
-    @io = File.open(IOSpecs.gets_fixtures)
+    @io = _open(IOSpecs.gets_fixtures)
   end
 
   after(:each) do
@@ -88,7 +95,7 @@ end
 
 describe :io_each_separator, :shared => true do
   before(:each) do
-    @io = File.open(IOSpecs.gets_fixtures)
+    @io = _open(IOSpecs.gets_fixtures)
   end
 
   after(:each) do
@@ -136,7 +143,7 @@ describe :io_each_separator, :shared => true do
   it "yields each paragraph when passed an empty String as separator" do
     seen = []
     para_file = File.dirname(__FILE__) + '/../fixtures/paragraphs.txt'
-    File.open(para_file) do |io|
+    _open(para_file) do |io|
       io.send(@method, "") {|s| seen << s}
     end
     seen.should == ["This is\n\n", "an example\n\n", "of paragraphs."]
