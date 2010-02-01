@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../fixtures/classes'
 
 describe :io_codepoints, :shared => true do
   before(:each) do
-    @io = File.open(IOSpecs.gets_fixtures)
+    @io = File.open(IOSpecs.gets_fixtures, 'r:UTF-8')
     @enum = @io.send(@method)
   end
 
