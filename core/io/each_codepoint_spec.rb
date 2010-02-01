@@ -8,7 +8,7 @@ describe "IO#each_codepoint" do
     it_behaves_like(:io_codepoints, :codepoints)
   
     it "calls the given block" do
-      File.open(IOSpecs.gets_fixtures) do |io|
+      File.open(IOSpecs.gets_fixtures, 'r:UTF-8') do |io|
         r = []
         io.each_codepoint{|c| r << c }
         r[24].should == 232
@@ -17,7 +17,7 @@ describe "IO#each_codepoint" do
     end
 
     it "returns self" do
-      File.open(IOSpecs.gets_fixtures) do |io|
+      File.open(IOSpecs.gets_fixtures, 'r:UTF-8') do |io|
         io.each_codepoint {|l| l }.should equal(io)
       end
     end
