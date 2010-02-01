@@ -1,17 +1,6 @@
-#coding:UTF-8
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/shared/initialize_exceptions'
 require 'iconv'
-
-def force_encoding(str, enc)
-  return unless ''.respond_to?(:force_encoding)
-  case str
-  when Array
-    str.map{|x|x.force_encoding(enc)}
-  when String
-    str.force_encoding(enc)
-  end
-end
 
 # These specs assume the Iconv implementation supports at least
 # the following encodings:
@@ -120,7 +109,7 @@ end
 
 describe "Iconv.iconv" do
   it "converts a series of strings with a single converter" do
-    Iconv.iconv("utf-16be", "us-ascii", "abc", "de").should == force_encoding(["\0a\0b\0c", "\0d\0e"], 'UTF-16BE')
+    Iconv.iconv("utf-16be", "us-ascii", "abc", "de").should == ["\0a\0b\0c", "\0d\0e"]
     # BOM only on first string
     Iconv.iconv("utf-16", "utf-8", "abc", "de").should equal_utf16(["\xfe\xff\0a\0b\0c", "\0d\0e"])
   end
@@ -170,7 +159,7 @@ end
 
 describe "The 'utf-16be' decoder" do
   it "does not emit a byte-order mark" do
-    Iconv.iconv("utf-16be", "utf-8", "ab").should == force_encoding(["\0a\0b"], 'UTF-16BE')
+    Iconv.iconv("utf-16be", "utf-8", "ab").should == ["\0a\0b"]
   end
 
   it "treats possible byte-order marks as regular characters" do
@@ -181,7 +170,7 @@ end
 
 describe "The 'utf-16le' decoder" do
   it "does not emit a byte-order mark" do
-    Iconv.iconv("utf-16le", "utf-8", "ab").should == force_encoding(["a\0b\0"], 'UTF-16LE')
+    Iconv.iconv("utf-16le", "utf-8", "ab").should == ["a\0b\0"]
   end
 
   it "treats possible byte-order marks as regular characters" do

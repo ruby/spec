@@ -1,4 +1,3 @@
-# coding: UTF-8
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/shared/initialize_exceptions'
 require 'iconv'
@@ -11,9 +10,7 @@ describe "Iconv.conv" do
 
     stringlike = mock("string-like")
     stringlike.should_receive(:to_str).and_return("cacha\xc3\xa7a")
-    expected = "cacha\xe7a"
-    expected.force_encoding('iso-8859-1') if ''.respond_to?(:force_encoding)
-    Iconv.conv("iso-8859-1", "utf-8", stringlike).should == expected
+    Iconv.conv("iso-8859-1", "utf-8", stringlike).should == "cacha\xe7a"
 
     Iconv.conv("utf-16", "us-ascii", "a").should equal_utf16("\xfe\xff\0a")
     # each call is completely independent; never retain context!

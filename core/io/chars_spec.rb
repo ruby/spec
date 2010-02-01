@@ -7,7 +7,7 @@ ruby_version_is '1.8.7' do
     before :each do
       @original = $KCODE
       $KCODE = "UTF-8"
-      @io = File.open(IOSpecs.gets_fixtures, 'r:UTF-8')
+      @io = File.open(IOSpecs.gets_fixtures)
     end
 
     after :each do
@@ -34,7 +34,7 @@ ruby_version_is '1.8.7' do
       enum = @io.chars
       enum.first.should == "V"
       @io.close
-      lambda { enum.first }.should raise_error(IOError)
+      lambda { enum.first }.should raise_error(IOError)      
     end
   end
 end

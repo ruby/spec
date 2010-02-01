@@ -4,15 +4,10 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#readlines when passed no arguments" do
   before(:each) do
-    if Encoding
-      @original_defenc = Encoding.default_external
-      Encoding.default_external = 'UTF-8'
-    end
     @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt')
   end
 
   after(:each) do
-    Encoding.default_external = @original_defenc if Encoding
     @io.close
   end
 
@@ -52,15 +47,10 @@ end
 
 describe "IO#readlines when passed [separator]" do
   before(:each) do
-    if Encoding
-      @original_defenc = Encoding.default_external
-      Encoding.default_external = 'UTF-8'
-    end
     @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt')
   end
 
   after(:each) do
-    Encoding.default_external = @original_defenc if Encoding
     @io.close
   end
 
@@ -136,15 +126,7 @@ end
 
 describe "IO.readlines when passed [file_name]" do
   before(:each) do
-    if Encoding
-      @original_defenc = Encoding.default_external
-      Encoding.default_external = 'UTF-8'
-    end
     @file = File.dirname(__FILE__) + '/fixtures/readlines.txt'
-  end
-
-  after(:each) do
-    Encoding.default_external = @original_defenc if Encoding
   end
 
   it "returns an Array containing lines of file_name based on $/" do
@@ -183,15 +165,7 @@ end
 
 describe "IO#readlines when passed [file_name, separator]" do
   before(:each) do
-    if Encoding
-      @original_defenc = Encoding.default_external
-      Encoding.default_external = 'UTF-8'
-    end
     @file = File.dirname(__FILE__) + '/fixtures/readlines.txt'
-  end
-
-  after(:each) do
-    Encoding.default_external = @original_defenc if Encoding
   end
 
   it "returns an Array containing lines of file_name based on the passed separator" do

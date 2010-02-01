@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "IO#rewind" do
   before :each do
     @file = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r')
-    @io = IO.open @file.fileno, (Encoding ? 'r:UTF-8' : 'r')
+    @io = IO.open @file.fileno, 'r'
   end
 
   after :each do

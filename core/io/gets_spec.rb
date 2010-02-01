@@ -3,40 +3,33 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 require File.dirname(__FILE__) + '/shared/gets_ascii'
 
-def _open(*arg, &block)
-  fn = arg[0]
-  mode = arg[1]
-  mode = mode ? mode + ':UTF-8' : 'r:UTF-8' if Encoding
-  File.open(fn, mode, &block)
-end
-
 describe "IO#gets" do
   it "returns the next line of string that were separated by $/" do
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       IOSpecs.lines.each {|line| line.should == f.gets}
     end
   end
 
   it "returns tainted strings" do
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets(nil))
         line.tainted?.should == true
       end
     end
 
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets(""))
         line.tainted?.should == true
       end
     end
 
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets)
         line.tainted?.should == true
       end
     end
 
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets("la"))
         line.tainted?.should == true
       end
@@ -45,7 +38,7 @@ describe "IO#gets" do
 
   it "updates lineno with each invocation" do
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets(nil))
         f.lineno.should == count
         count += 1
@@ -53,7 +46,7 @@ describe "IO#gets" do
     end
 
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets(""))
         f.lineno.should == count
         count += 1
@@ -61,7 +54,7 @@ describe "IO#gets" do
     end
 
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets)
         f.lineno.should == count
         count += 1
@@ -69,7 +62,7 @@ describe "IO#gets" do
     end
 
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets("la"))
         f.lineno.should == count
         count += 1
@@ -79,7 +72,7 @@ describe "IO#gets" do
 
   it "updates $. with each invocation" do
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets(nil))
         $..should == count
         count += 1
@@ -87,7 +80,7 @@ describe "IO#gets" do
     end
 
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets(""))
         $..should == count
         count += 1
@@ -95,7 +88,7 @@ describe "IO#gets" do
     end
 
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets)
         $..should == count
         count += 1
@@ -103,7 +96,7 @@ describe "IO#gets" do
     end
 
     count = 1
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       while (line = f.gets("la"))
         $..should == count
         count += 1
@@ -112,7 +105,7 @@ describe "IO#gets" do
   end
 
   it "assigns the returned line to $_" do
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       IOSpecs.lines.each do |line|
         f.gets
         $_.should == line
@@ -121,14 +114,14 @@ describe "IO#gets" do
   end
 
   it "returns nil if called at the end of the stream" do
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       IOSpecs.lines.length.times { f.gets }
       f.gets.should == nil
     end
   end
 
   it "returns the entire content if the separator is nil" do
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       f.gets(nil).should == IOSpecs.lines.join('')
     end
   end
@@ -140,7 +133,7 @@ describe "IO#gets" do
     b = "Aqu\303\255 est\303\241 la l\303\255nea tres.\nIst hier Linie vier.\n\n"
     c = "Est\303\241 aqui a linha cinco.\nHere is line six.\n"
 
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       f.gets("").should == a
       f.gets("").should == b
       f.gets("").should == c
@@ -152,7 +145,7 @@ describe "IO#gets" do
   it "reads until the beginning of the next paragraph when the separator's length is 0" do
     # Leverage the fact that there are three newlines between the first 
     # and second paragraph
-    _open(IOSpecs.gets_fixtures, 'r') do |f|
+    File.open(IOSpecs.gets_fixtures, 'r') do |f|
       f.gets('')
 
       # This should return 'A', the first character of the next paragraph, not $/
@@ -162,8 +155,8 @@ describe "IO#gets" do
 
   it "raises an IOError if the stream is not opened for reading" do
     path = tmp("gets_spec")
-    lambda { _open(path, 'a') {|f| f.gets} }.should raise_error(IOError)
-    lambda { _open(path, 'w') {|f| f.gets} }.should raise_error(IOError)
+    lambda { File.open(path, 'a') {|f| f.gets} }.should raise_error(IOError)
+    lambda { File.open(path, 'w') {|f| f.gets} }.should raise_error(IOError)
     File.unlink(path) if File.exist?(path)
   end
 
@@ -172,7 +165,7 @@ describe "IO#gets" do
   end
 
   it "fails on cloned opened streams" do
-    f = _open(tmp("gets_specs"), "w")
+    f = File.open(tmp("gets_specs"), "w")
     f.puts("heh")
     g = IO.new(f.fileno)
     f.fileno.should == g.fileno
@@ -183,7 +176,7 @@ describe "IO#gets" do
   end
 
   it "accepts a separator" do
-    f = _open(tmp("gets_specs"), "w")
+    f = File.open(tmp("gets_specs"), "w")
     f.print("A\n\n\nB\n")
     f.close
     f = File.new(tmp("gets_specs"), "r")
@@ -212,35 +205,35 @@ ruby_version_is "1.9" do
     it "accepts an integer as first parameter to limit the output's size" do
       touch(@name) { |f| f.print("waduswadus") }
 
-      @file = _open(@name)
+      @file = File.open(@name)
       @file.gets(5).should == "wadus"
     end
 
     it "accepts an integer as second parameter to limit the output's size" do
       touch(@file) { |f| f.print("wa\n\ndus\n\nwadus") }
 
-      @file = _open(@name)
+      @file = File.open(@name)
       @file.gets('\n\n', 5).should == "wa\n\nd"
     end
 
     it "accepts an integer as limit parameter which is smaller than IO size" do
       touch(@file) { |f| f.print("ABCD\n") }
 
-      @file = _open(@name)
+      @file = File.open(@name)
       @file.gets("", 2).should == "AB"
     end
 
     it "accepts an integer as limit parameter which is same as IO size" do
       touch(@file) { |f| f.print("ABC\n") }
 
-      @file = _open(@name)
+      @file = File.open(@name)
       @file.gets("", 4).should == "ABC\n"
     end
 
     it "accepts an integer as limit parameter which is greater than IO size" do
       touch(@file) { |f| f.print("A\n") }
 
-      @file = _open(@name)
+      @file = File.open(@name)
       @file.gets("", 10).should == "A\n"
     end
   end

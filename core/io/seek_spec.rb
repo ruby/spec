@@ -4,16 +4,11 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#seek" do
   before :each do
-    if Encoding
-      @original_defenc = Encoding.default_external
-      Encoding.default_external = 'UTF-8'
-    end
     @file = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r')
-    @io = IO.open @file.fileno, (Encoding ? 'r:UTF-8' : 'r')
+    @io = IO.open @file.fileno, 'r'
   end
 
-  after(:each) do
-    Encoding.default_external = @original_defenc if Encoding
+  after :each do
     # we *must* close both in order to not leak descriptors
     @io.close unless @io.closed?
     @file.close unless @file.closed? rescue Errno::EBADF
