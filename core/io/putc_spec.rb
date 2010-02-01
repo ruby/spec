@@ -36,7 +36,7 @@ describe "IO#putc" do
     @io.putc 0
     @io.putc 255
 
-    File.read(@filename).should == "\200\000\377"
+    File.read(@filename).unpack('H*').should == "\200\000\377".unpack('H*')
   end
 
   it "write the first byte of Numerics that don't fit in a C char" do
