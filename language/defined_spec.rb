@@ -165,6 +165,16 @@ describe "The defined? keyword" do
     ret = defined?(LanguageDefinedSpecs::SomeConst)
     ret.should == "constant"
   end
+  
+  it "returns nil when defined?(LanguageDefinedSpecs::MissingConst) is sent" do
+    ret = defined?(LanguageDefinedSpecs::MissingConst)
+    ret.should == nil
+  end
+
+  it "returns nil when defined?(LanguageDefinedSpecs::MissingConst::MissingConst) is sent" do
+    ret = defined?(LanguageDefinedSpecs::MissingConst::MissingConst)
+    ret.should == nil
+  end
 
   it "returns 'constant' when evaluating self::FOO in module AAA" do
     ret = defined?(AAA::FOO)
