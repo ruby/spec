@@ -5,6 +5,10 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 ruby_version_is '1.8.7' do
   describe "IO#each_char" do
     before :each do
+      if Encoding
+        @original_defenc = Encoding.default_external
+        Encoding.default_external = 'UTF-8'
+      end
       @original = $KCODE
       $KCODE = "UTF-8"
       @io = File.open(IOSpecs.gets_fixtures)
@@ -13,6 +17,7 @@ ruby_version_is '1.8.7' do
     after :each do
       @io.close unless @io.closed?
       $KCODE = @original
+      Encoding.default_external = @original_defenc if Encoding
     end
 
     it "raises IOError on closed stream" do

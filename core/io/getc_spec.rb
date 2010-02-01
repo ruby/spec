@@ -4,6 +4,10 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#getc" do
   before :each do
+    if Encoding
+      @original_defenc = Encoding.default_external
+      Encoding.default_external = 'UTF-8'
+    end
     @original = $KCODE
     $KCODE = "UTF-8"
     @file_name = File.dirname(__FILE__) + '/fixtures/readlines.txt'
@@ -11,6 +15,7 @@ describe "IO#getc" do
   end
 
   after :each do
+    Encoding.default_external = @original_defenc if Encoding
     @file.close unless @file.closed?
     $KCODE = @original
   end

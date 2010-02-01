@@ -4,10 +4,15 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#readlines when passed no arguments" do
   before(:each) do
-    @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r:UTF-8')
+    if Encoding
+      @original_defenc = Encoding.default_external
+      Encoding.default_external = 'UTF-8'
+    end
+    @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt')
   end
 
   after(:each) do
+    Encoding.default_external = @original_defenc if Encoding
     @io.close
   end
 
@@ -47,10 +52,15 @@ end
 
 describe "IO#readlines when passed [separator]" do
   before(:each) do
-    @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt', 'r:UTF-8')
+    if Encoding
+      @original_defenc = Encoding.default_external
+      Encoding.default_external = 'UTF-8'
+    end
+    @io = File.open(File.dirname(__FILE__) + '/fixtures/readlines.txt')
   end
 
   after(:each) do
+    Encoding.default_external = @original_defenc if Encoding
     @io.close
   end
 
@@ -85,7 +95,7 @@ describe "IO#readlines when passed [separator]" do
   end
 
   it "returns an Array containing all paragraphs when the passed separator is an empty String" do
-    File.open(File.dirname(__FILE__) + '/fixtures/paragraphs.txt', 'r:UTF-8') do |io|
+    File.open(File.dirname(__FILE__) + '/fixtures/paragraphs.txt') do |io|
       io.readlines("").should == ["This is\n\n", "an example\n\n", "of paragraphs."]
     end
   end
@@ -112,11 +122,11 @@ end
 describe "IO#readlines when in write-only mode" do
   it "raises an IOError" do
     path = tmp("write_only_specs")
-    File.open(path, 'a:UTF-8') do |io|
+    File.open(path, 'a') do |io|
       lambda { io.readlines }.should raise_error(IOError)
     end
 
-    File.open(path, 'r:UTF-8') do |io|
+    File.open(path) do |io|
       io.close_read
       lambda { io.readlines }.should raise_error(IOError)
     end
@@ -126,14 +136,21 @@ end
 
 describe "IO.readlines when passed [file_name]" do
   before(:each) do
+    if Encoding
+      @original_defenc = Encoding.default_external
+      Encoding.default_external = 'UTF-8'
+    end
     @file = File.dirname(__FILE__) + '/fixtures/readlines.txt'
+  end
+
+  after(:each) do
+    Encoding.default_external = @original_defenc if Encoding
   end
 
   it "returns an Array containing lines of file_name based on $/" do
     begin
       old_sep, $/ = $/, " "
-      arg = Encoding ? {:encoding=>'UTF-8'} : $/
-      IO.readlines(@file,arg).should == ["Voici ", "la ", "ligne ", "une.\nQui ", "\303\250 ",
+      IO.readlines(@file).should == ["Voici ", "la ", "ligne ", "une.\nQui ", "\303\250 ",
         "la ", "linea ", "due.\nAqu\303\255 ", "est\303\241 ", "la ", "l\303\255nea ",
         "tres.\nIst ", "hier ", "Linie ", "vier.\nEst\303\241 ", "aqui ", "a ",
         "linha ", "cinco.\nHere ", "is ", "line ", "six.\n"]
@@ -149,16 +166,14 @@ describe "IO.readlines when passed [file_name]" do
 
   it "does not change $_" do
     $_ = "test"
-    arg = Encoding ? {:encoding=>'UTF-8'} : $/
-    IO.readlines(@file, arg)
+    IO.readlines(@file)
     $_.should == "test"
   end
 
   it "tries to convert the passed file_name to a String using #to_str" do
     obj = mock('to_str')
     obj.stub!(:to_str).and_return(@file)
-    arg = Encoding ? {:encoding=>'UTF-8'} : $/
-    IO.readlines(obj, arg).should == ["Voici la ligne une.\n",
+    IO.readlines(obj).should == ["Voici la ligne une.\n",
       "Qui \303\250 la linea due.\n",
       "Aqu\303\255 est\303\241 la l\303\255nea tres.\n",
       "Ist hier Linie vier.\n", "Est\303\241 aqui a linha cinco.\n",
@@ -168,12 +183,19 @@ end
 
 describe "IO#readlines when passed [file_name, separator]" do
   before(:each) do
+    if Encoding
+      @original_defenc = Encoding.default_external
+      Encoding.default_external = 'UTF-8'
+    end
     @file = File.dirname(__FILE__) + '/fixtures/readlines.txt'
   end
 
+  after(:each) do
+    Encoding.default_external = @original_defenc if Encoding
+  end
+
   it "returns an Array containing lines of file_name based on the passed separator" do
-    arg = Encoding ? ['r', {:encoding=>'UTF-8'}] : ['r']
-    IO.readlines(@file, *arg).should == [
+    IO.readlines(@file, 'r').should == [
       "Voici la ligne une.\nQui \303\250 la linea due.\nAqu\303\255 est\303\241 la l\303\255nea tr",
       "es.\nIst hier",
       " Linie vier",
@@ -183,8 +205,7 @@ describe "IO#readlines when passed [file_name, separator]" do
 
   it "does not change $_" do
     $_ = "test"
-    arg = Encoding ? {:encoding=>'UTF-8'} : $/
-    IO.readlines(@file, arg)
+    IO.readlines(@file, 'r')
     $_.should == "test"
   end
 
@@ -196,8 +217,7 @@ describe "IO#readlines when passed [file_name, separator]" do
   it "tries to convert the passed separator to a String using #to_str" do
     obj = mock('to_str')
     obj.stub!(:to_str).and_return("r")
-    arg = Encoding ? [obj, {:encoding=>'UTF-8'}] : [obj]
-    IO.readlines(@file, *arg).should == [
+    IO.readlines(@file, obj).should == [
       "Voici la ligne une.\nQui \303\250 la linea due.\nAqu\303\255 est\303\241 la l\303\255nea tr",
       "es.\nIst hier",
       " Linie vier",

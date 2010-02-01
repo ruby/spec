@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "IO::foreach" do
   before :all do
+    @original_defenc = Encoding.default_external
+    Encoding.default_external = 'UTF-8'
     @file = File.dirname(__FILE__) + '/fixtures/readlines.txt'
     @content = ["Voici la ligne une.\n", "Qui \303\250 la linea due.\n",
                 "Aqu\303\255 est\303\241 la l\303\255nea tres.\n", "Ist hier Linie vier.\n",
@@ -14,6 +16,7 @@ describe "IO::foreach" do
   after :all do
     @file = nil
     @content = nil
+    Encoding.default_external = @original_defenc if Encoding
   end
 
   it "yields a sequence of Strings that were separated by $/" do

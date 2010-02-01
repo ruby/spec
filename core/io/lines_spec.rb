@@ -5,11 +5,16 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 ruby_version_is '1.8.7' do
   describe "IO#lines" do
     before(:each) do
+      if Encoding
+        @original_defenc = Encoding.default_external
+        Encoding.default_external = 'UTF-8'
+      end
       @io = File.open(IOSpecs.gets_fixtures)
     end
   
     after(:each) do
       @io.close
+      Encoding.default_external = @original_defenc if Encoding
     end
 
     it "returns an Enumerator" do
