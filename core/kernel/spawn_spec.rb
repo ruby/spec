@@ -46,7 +46,7 @@ ruby_version_is "1.9" do
     end
 
     it "joins the current process group by default" do
-      pid =  spawn("ruby -e 'print Process.getpgid(Process.pid)' >#{@f}")
+      pid = spawn("ruby -e 'print Process.getpgid(Process.pid)' >#{@f}")
       Process.wait pid
       File.exists?(@f).should be_true
       pgid = File.read(@f).to_i
@@ -54,7 +54,7 @@ ruby_version_is "1.9" do
     end
 
     it "joins a new process group if :pgroup => true" do
-      pid =  spawn("ruby -e 'print Process.getpgid(Process.pid)' >#{@f}", {:pgroup => true})
+      pid = spawn("ruby -e 'print Process.getpgid(Process.pid)' >#{@f}", {:pgroup => true})
       Process.wait pid
       File.exists?(@f).should be_true
       pgid = File.read(@f).to_i
@@ -62,7 +62,7 @@ ruby_version_is "1.9" do
     end
 
     it "uses the current working directory as its working directory" do
-      pid =  spawn("ruby -e 'print Dir.pwd' >#{@f}")
+      pid = spawn("ruby -e 'print Dir.pwd' >#{@f}")
       Process.wait pid
       File.exists?(@f).should be_true
       File.read(@f).should == Dir.pwd
@@ -71,7 +71,7 @@ ruby_version_is "1.9" do
     it "uses the given working directory if :chdir => dir is supplied" do
       dir = File.expand_path('../')
       dir.should_not == Dir.pwd
-      pid =  spawn("ruby -e 'print Dir.pwd' >#{@f}", {:chdir => dir})
+      pid = spawn("ruby -e 'print Dir.pwd' >#{@f}", {:chdir => dir})
       Process.wait pid
       File.exists?(@f).should be_true
       File.read(@f).should == dir
@@ -79,13 +79,13 @@ ruby_version_is "1.9" do
 
     it "redirects STDERR to the given file descriptior if if :err => Fixnum" do
       fd = File.open(@f,'w').fileno
-      pid = spawn("ruby -e 'warn(:glark)'", {:err => fd})  
+      pid = spawn("ruby -e 'warn(:glark)'", {:err => fd})
       Process.wait pid
       File.read(@f).should =~ /glark/
     end
 
     it "redirects STDERR to the given file if :err => String" do
-      pid = spawn("ruby -e 'warn(:glark)'", {:err => @f})  
+      pid = spawn("ruby -e 'warn(:glark)'", {:err => @f})
       Process.wait pid
       File.read(@f).should =~ /glark/
     end
