@@ -17,7 +17,9 @@ describe "Iconv#close" do
   it "returns a string containing the byte sequence to change the output buffer to its initial shift state" do
     Iconv.open "ISO-2022-JP", "UTF-8" do |cd|
       cd.iconv("\343\201\262")
-      cd.close.should == "\e(B"
+      expected = "\e(B"
+      expected.force_encoding('ISO-2022-JP') if ''.respond_to?(:force_encoding)
+      cd.close.should == expected
     end
   end
 end
