@@ -38,7 +38,7 @@ describe "Class#new" do
 end
 
 describe "Class#initialize" do
-  it "should raise a TypeError" do
+  it "raises a TypeError when called on already initialized classes" do
     lambda{
       Fixnum.send :initialize
     }.should raise_error(TypeError)
