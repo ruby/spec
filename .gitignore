@@ -1,3 +1,4 @@
+*.rba
 *.rbc
 *.swp
 .DS_Store
@@ -11,3 +12,11 @@
 optional/ffi/fixtures/build
 jruby.1.8.mspec
 jruby.1.9.mspec
+
+# Do not exclude files needed by the specs.
+# This explicitly unmasks files that may be
+# masked by a parent dirs .gitignore file.
+!*.bundle
+!*.dylib
+!*.so
+!*.dll
