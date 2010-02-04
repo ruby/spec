@@ -55,4 +55,8 @@ class MSpecScript
                         [%r(library/),      'tags/1.8/library/'],
                         [/_spec.rb$/,       '_tags.txt']
                       ]
+
+  # Enable features
+  MSpec.enable_feature :continuation
+  MSpec.enable_feature :fork
 end
