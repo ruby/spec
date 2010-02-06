@@ -1,4 +1,5 @@
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
+
 module IOSpecs
   def self.lines
     [ "Voici la ligne une.\n",
@@ -11,11 +12,16 @@ module IOSpecs
       "Est\303\241 aqui a linha cinco.\n",
       "Here is line six.\n" ]
   end
-  
+
+  def self.lines_fixture
+    name = File.expand_path "../lines.txt", __FILE__
+    File.open name, fmode("r:utf-8")
+  end
+
   def self.gets_fixtures
     File.dirname(__FILE__) + '/gets.txt'
   end
-  
+
   def self.closed_file
     File.open(File.dirname(__FILE__) + '/gets.txt', 'r') { |f| f }
   end

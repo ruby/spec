@@ -1,18 +1,17 @@
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
 ruby_version_is '1.8.7' do
   describe "IO#chars" do
     before :each do
-      @original = $KCODE
-      $KCODE = "UTF-8"
-      @io = File.open(IOSpecs.gets_fixtures)
+      @kcode, $KCODE = $KCODE, "utf-8"
+      @io = IOSpecs.lines_fixture
     end
 
     after :each do
+      $KCODE = @kcode
       @io.close unless @io.closed?
-      $KCODE = @original
     end
 
     it "returns an enumerator of the next chars from the stream" do
@@ -28,13 +27,19 @@ ruby_version_is '1.8.7' do
       end
     end
 
-    it "raises IOError on closed stream" do
-      enum = IOSpecs.closed_file.chars
-      lambda { enum.first }.should raise_error(IOError)
+    it "returns an enumerator for a closed stream" do
+      IOSpecs.closed_file.chars.should be_kind_of(enumerator_class)
+    end
+
+    it "raises an IOError when an enumerator created on a closed stream is accessed" do
+      lambda { IOSpecs.closed_file.chars.first }.should raise_error(IOError)
+    end
+
+    it "raises an IOError when the stream for the enumerator is closed" do
       enum = @io.chars
       enum.first.should == "V"
       @io.close
-      lambda { enum.first }.should raise_error(IOError)      
+      lambda { enum.first }.should raise_error(IOError)
     end
   end
 end
