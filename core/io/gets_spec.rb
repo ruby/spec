@@ -149,8 +149,11 @@ describe "IO#gets" do
     rm_r @name
   end
 
-  it "raises an IOError if the stream is not opened for reading" do
+  it "raises an IOError if the stream is opened for append only" do
     lambda { File.open(@name, fmode("a:utf-8")) { |f| f.gets } }.should raise_error(IOError)
+  end
+
+  it "raises an IOError if the stream is opened for writing only" do
     lambda { File.open(@name, fmode("w:utf-8")) { |f| f.gets } }.should raise_error(IOError)
   end
 end
