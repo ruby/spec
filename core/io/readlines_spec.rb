@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#readlines" do
   before :each do
-    @io = File.open fixture(__FILE__, "readlines.txt")
+    @io = IOSpecs.io_fixture "lines.txt"
   end
 
   after :each do
@@ -26,22 +26,19 @@ describe "IO#readlines" do
     end
 
     it "returns an Array containing lines based on $/" do
-      @io.readlines.should == ["Voici ", "la ", "ligne ", "une.\nQui ", "\303\250 ",
-        "la ", "linea ", "due.\nAqu\303\255 ", "est\303\241 ", "la ", "l\303\255nea ",
-        "tres.\nIst ", "hier ", "Linie ", "vier.\nEst\303\241 ", "aqui ", "a ",
-        "linha ", "cinco.\nHere ", "is ", "line ", "six.\n"]
+      @io.readlines.should == IOSpecs.lines_space_separator
     end
   end
 
   describe "when passed no arguments" do
     it "updates self's position" do
       @io.readlines
-      @io.pos.should eql(134)
+      @io.pos.should eql(137)
     end
 
     it "updates self's lineno based on the number of lines read" do
       @io.readlines
-      @io.lineno.should eql(6)
+      @io.lineno.should eql(9)
     end
 
     it "does not change $_" do
@@ -51,33 +48,31 @@ describe "IO#readlines" do
     end
 
     it "returns an empty Array when self is at the end" do
-      @io.pos = 134
+      @io.readlines.should == IOSpecs.lines
       @io.readlines.should == []
     end
   end
 
   describe "when passed nil" do
     it "returns the remaining content as one line starting at the current position" do
-      @io.pos = 5
-      @io.readlines(nil).should == [" la ligne une.\nQui \303\250 la linea due.\n" +
-        "Aqu\303\255 est\303\241 la l\303\255nea tres.\n" +
-        "Ist hier Linie vier.\nEst\303\241 aqui a linha cinco.\nHere is line six.\n"]
+      @io.readlines(nil).should == [IOSpecs.lines.join]
+    end
+  end
+
+  describe "when passed an empty String" do
+    it "returns an Array containing all paragraphs" do
+      @io.readlines("").should == IOSpecs.paragraphs
     end
   end
 
   describe "when passed a separator" do
     it "returns an Array containing lines based on the separator" do
-      @io.readlines("r").should == [
-        "Voici la ligne une.\nQui \303\250 la linea due.\nAqu\303\255 est\303\241 la l\303\255nea tr",
-        "es.\nIst hier",
-        " Linie vier",
-        ".\nEst\303\241 aqui a linha cinco.\nHer",
-        "e is line six.\n"]
+      @io.readlines("r").should == IOSpecs.lines_r_separator
     end
 
     it "returns an empty Array when self is at the end" do
-      @io.pos = 134
-      @io.readlines.should == []
+      @io.readlines
+      @io.readlines("r").should == []
     end
 
     it "updates self's lineno based on the number of lines read" do
@@ -87,7 +82,7 @@ describe "IO#readlines" do
 
     it "updates self's position based on the number of characters read" do
       @io.readlines("r")
-      @io.pos.should eql(134)
+      @io.pos.should eql(137)
     end
 
     it "does not change $_" do
@@ -99,27 +94,8 @@ describe "IO#readlines" do
     it "tries to convert the passed separator to a String using #to_str" do
       obj = mock('to_str')
       obj.stub!(:to_str).and_return("r")
-      @io.readlines(obj).should == [
-        "Voici la ligne une.\nQui \303\250 la linea due.\nAqu\303\255 est\303\241 la l\303\255nea tr",
-        "es.\nIst hier",
-        " Linie vier",
-        ".\nEst\303\241 aqui a linha cinco.\nHer",
-        "e is line six.\n"]
+      @io.readlines(obj).should == IOSpecs.lines_r_separator
     end
-  end
-end
-
-describe "IO#readlines when passed an empty String" do
-  before(:each) do
-    @io = File.open fixture(__FILE__, "paragraphs.txt")
-  end
-
-  after(:each) do
-    @io.close unless @io.closed?
-  end
-
-  it "returns an Array containing all paragraphs" do
-    @io.readlines("").should == ["This is\n\n", "an example\n\n", "of paragraphs."]
   end
 end
 
@@ -147,10 +123,10 @@ end
 
 describe "IO.readlines" do
   before(:each) do
-    @name = fixture __FILE__, "readlines.txt"
+    @name = fixture __FILE__, "lines.txt"
   end
 
-  describe "when passed [file_name]" do
+  describe "when not passed a separator" do
     before :each do
       @sep, $/ = $/, " "
     end
@@ -160,14 +136,11 @@ describe "IO.readlines" do
     end
 
     it "returns an Array containing lines of file_name based on $/" do
-      IO.readlines(@name).should == ["Voici ", "la ", "ligne ", "une.\nQui ", "\303\250 ",
-        "la ", "linea ", "due.\nAqu\303\255 ", "est\303\241 ", "la ", "l\303\255nea ",
-        "tres.\nIst ", "hier ", "Linie ", "vier.\nEst\303\241 ", "aqui ", "a ",
-        "linha ", "cinco.\nHere ", "is ", "line ", "six.\n"]
+      IO.readlines(@name).should == IOSpecs.lines_space_separator
     end
   end
 
-  describe "when passed [file_name]" do
+  describe "when not passed a separator" do
     it "raises an Errno::ENOENT error when the passed file_name does not exist" do
       lambda { IO.readlines(tmp("nonexistent.txt")) }.should raise_error(Errno::ENOENT)
     end
@@ -181,22 +154,25 @@ describe "IO.readlines" do
     it "tries to convert the passed file_name to a String using #to_str" do
       obj = mock('IO.readlines filename')
       obj.stub!(:to_str).and_return(@name)
-      IO.readlines(obj).should == ["Voici la ligne une.\n",
-        "Qui \303\250 la linea due.\n",
-        "Aqu\303\255 est\303\241 la l\303\255nea tres.\n",
-        "Ist hier Linie vier.\n", "Est\303\241 aqui a linha cinco.\n",
-        "Here is line six.\n"]
+      IO.readlines(obj).should == IOSpecs.lines
     end
   end
 
-  describe "when passed [file_name, separator]" do
+  describe "when passed nil as a separator" do
+    it "returns the contents as a single String" do
+      IO.readlines(@name, nil).should == [IOSpecs.lines.join]
+    end
+  end
+
+  describe "when passed an empty String as a separator" do
+    it "returns an Array containing all paragraphs" do
+      IO.readlines(@name, "").should == IOSpecs.paragraphs
+    end
+  end
+
+  describe "when passed an arbitrary string separator" do
     it "returns an Array containing lines of file_name based on the passed separator" do
-      IO.readlines(@name, "r").should == [
-        "Voici la ligne une.\nQui \303\250 la linea due.\nAqu\303\255 est\303\241 la l\303\255nea tr",
-        "es.\nIst hier",
-        " Linie vier",
-        ".\nEst\303\241 aqui a linha cinco.\nHer",
-        "e is line six.\n"]
+      IO.readlines(@name, "r").should == IOSpecs.lines_r_separator
     end
 
     it "does not change $_" do
@@ -204,26 +180,13 @@ describe "IO.readlines" do
       IO.readlines(@name, "r")
       $_.should == "test"
     end
+  end
 
+  describe "when passed an object as separator" do
     it "tries to convert the passed separator to a String using #to_str" do
       obj = mock('IO.readlines filename')
       obj.stub!(:to_str).and_return("r")
-      IO.readlines(@name, obj).should == [
-        "Voici la ligne une.\nQui \303\250 la linea due.\nAqu\303\255 est\303\241 la l\303\255nea tr",
-        "es.\nIst hier",
-        " Linie vier",
-        ".\nEst\303\241 aqui a linha cinco.\nHer",
-        "e is line six.\n"]
+      IO.readlines(@name, obj).should == IOSpecs.lines_r_separator
     end
-  end
-end
-
-describe "IO.readlines when passed an empty String as separator" do
-  before :each do
-    @name = fixture __FILE__, "paragraphs.txt"
-  end
-
-  it "returns an Array containing all paragraphs" do
-    IO.readlines(@name, "").should == ["This is\n\n", "an example\n\n", "of paragraphs."]
   end
 end
