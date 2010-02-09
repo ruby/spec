@@ -92,7 +92,7 @@ describe :bigdecimal_modulo, :shared => true do
     @infinity_minus.send(@method, @infinity).nan?.should == true
   end
 
-  ruby_version_is "" ... "1.9.2" do
+  ruby_version_is "" ... "1.9" do
     it "returns NaN if the divisor is Infinity" do
       @one.send(@method, @infinity).nan?.should == true
       @one.send(@method, @infinity_minus).nan?.should == true
@@ -100,7 +100,7 @@ describe :bigdecimal_modulo, :shared => true do
     end
   end
 
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "returns the dividend if the divisor is Infinity" do
       @one.send(@method, @infinity).should == @one
       @one.send(@method, @infinity_minus).should == @one
@@ -116,7 +116,7 @@ describe :bigdecimal_modulo, :shared => true do
 end
 
 describe :bigdecimal_modulo_zerodivisionerror, :shared => true do
-  ruby_version_is "" ... "1.9.2" do
+  ruby_version_is "" ... "1.9" do
     it "does NOT raise ZeroDivisionError if other is zero" do
       bd6543 = BigDecimal.new("6543.21")
       bd5667 = BigDecimal.new("5667.19")
@@ -129,7 +129,7 @@ describe :bigdecimal_modulo_zerodivisionerror, :shared => true do
     end
   end
 
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "raises ZeroDivisionError if other is zero" do
       bd6543 = BigDecimal.new("6543.21")
       bd5667 = BigDecimal.new("5667.19")

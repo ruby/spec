@@ -35,7 +35,7 @@ describe "BigDecimal#mod_part_of_divmod" do
 
   it_behaves_like :bigdecimal_modulo, :mod_part_of_divmod
 
-  ruby_version_is "" ... "1.9.2" do
+  ruby_version_is "" ... "1.9" do
     it "does NOT raise ZeroDivisionError if other is zero" do
       bd6543 = BigDecimal.new("6543.21")
       bd5667 = BigDecimal.new("5667.19")
@@ -48,7 +48,7 @@ describe "BigDecimal#mod_part_of_divmod" do
     end
   end
 
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "raises ZeroDivisionError if other is zero" do
       bd6543 = BigDecimal.new("6543.21")
       bd5667 = BigDecimal.new("5667.19")
@@ -150,7 +150,7 @@ describe "BigDecimal#divmod" do
     end
   end
 
-  ruby_version_is "" ... "1.9.2" do
+  ruby_version_is "" ... "1.9" do
     it "properly handles special values" do
       values = @special_vals + @zeroes
       values.each do |val1|
@@ -182,7 +182,7 @@ describe "BigDecimal#divmod" do
     end
   end
 
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "returns an array of two NaNs if NaN is involved" do
       (@special_vals + @regular_vals + @zeroes).each do |val|
         DivmodSpecs::check_both_nan(val.divmod(@nan))

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes'
 
-ruby_version_is "1.9.2" do
+ruby_version_is "1.9" do
 
   describe "Array#sort_by!" do
     it "sorts array in place by passing each element to the given block" do

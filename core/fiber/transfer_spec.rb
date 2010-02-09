@@ -35,11 +35,9 @@ ruby_version_is "1.9" do
       fiber2.transfer.should == [:fiber2_start, :fiber1, :fiber2_end]
     end
 
-    ruby_bug "#1548", "1.9.2" do
-      it "raises a FiberError when transferring to a Fiber which resumes itself" do
-        fiber = Fiber.new { fiber.resume }
-        lambda { fiber.transfer }.should raise_error(FiberError)
-      end
-    end  
+    it "raises a FiberError when transferring to a Fiber which resumes itself" do
+      fiber = Fiber.new { fiber.resume }
+      lambda { fiber.transfer }.should raise_error(FiberError)
+    end
   end
 end

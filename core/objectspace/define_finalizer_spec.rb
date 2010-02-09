@@ -23,7 +23,8 @@ describe "ObjectSpace.define_finalizer" do
     ObjectSpace.define_finalizer("garbage", handler).should == [0, handler]
   end
 
-  ruby_bug "#1706", "1.9.2" do
+  # see [ruby-core:24095]
+  ruby_version_is "1.9" do
     it "calls finalizer on process termination" do
       rd, wr = IO.pipe
       if Kernel::fork then

@@ -42,7 +42,7 @@ describe "BigDecimal#div" do
     }
   end
 
-  ruby_version_is "" ... "1.9.2" do
+  ruby_version_is "" ... "1.9" do
     it "returns NaN if NaN is involved" do
       @one.div(@nan).nan?.should == true
       @nan.div(@one).nan?.should == true
@@ -54,7 +54,7 @@ describe "BigDecimal#div" do
     end
   end
 
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "raises FloatDomainError if NaN is involved" do
       lambda { @one.div(@nan) }.should raise_error(FloatDomainError)
       lambda { @nan.div(@one) }.should raise_error(FloatDomainError)
@@ -73,7 +73,7 @@ describe "BigDecimal#div" do
     @frac_2.div(@infinity, 100000).should == 0
   end
   
-  ruby_version_is "" ... "1.9.2" do
+  ruby_version_is "" ... "1.9" do
     it "returns NaN if divided by zero and no precision given" do
       @one.div(@zero).nan?.should == true
       @one.div(@zero_plus).nan?.should == true
@@ -101,7 +101,7 @@ describe "BigDecimal#div" do
     end
   end
   
-  ruby_version_is "1.9.2" do
+  ruby_version_is "1.9" do
     it "raises ZeroDivisionError if divided by zero and no precision given" do
       lambda { @one.div(@zero) }.should raise_error(ZeroDivisionError)
       lambda { @one.div(@zero_plus) }.should raise_error(ZeroDivisionError)

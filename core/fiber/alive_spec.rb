@@ -7,24 +7,21 @@ ruby_version_is "1.9" do
 
   describe "Fiber#alive?" do
 
-    # 1.9.1 returns 0 for true
-    ruby_bug "#1547", "1.9.2" do
-      it "returns true for a Fiber that hasn't had #resume called" do
-        fiber = Fiber.new { true }
-        fiber.alive?.should be_true
-      end
-      
-      # FIXME: Better description?
-      it "returns true for a Fiber that's yielded to the caller" do
-        fiber = Fiber.new { Fiber.yield }
-        fiber.resume
-        fiber.alive?.should be_true
-      end
-      
-      it "returns true when called from its Fiber" do
-        fiber = Fiber.new { fiber.alive?.should be_true }
-        fiber.resume
-      end
+    it "returns true for a Fiber that hasn't had #resume called" do
+      fiber = Fiber.new { true }
+      fiber.alive?.should be_true
+    end
+
+    # FIXME: Better description?
+    it "returns true for a Fiber that's yielded to the caller" do
+      fiber = Fiber.new { Fiber.yield }
+      fiber.resume
+      fiber.alive?.should be_true
+    end
+
+    it "returns true when called from its Fiber" do
+      fiber = Fiber.new { fiber.alive?.should be_true }
+      fiber.resume
     end
 
     it "doesn't invoke the block associated with the Fiber" do

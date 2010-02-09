@@ -84,27 +84,24 @@ describe "String#chop!" do
   
   ruby_version_is ""..."1.9" do
     it "raises a TypeError when self is frozen" do
-      a = "string\n\r"
-      a.freeze
-      lambda { a.chop! }.should raise_error(TypeError)
+      lambda { "string\n\r".freeze.chop! }.should raise_error(TypeError)
+    end
 
-      a = ""
-      a.freeze
-      a.chop! # ok, no change
+    it "does not raise an exception on a frozen instance that would not be modified" do
+      "".freeze.chop!.should be_nil
     end
   end
 
   ruby_version_is "1.9" do
-    ruby_bug "[ruby-core:23666]", "1.9.2" do
-      it "raises a RuntimeError when self is frozen" do
-        a = "string\n\r"
-        a.freeze
-        lambda { a.chop! }.should raise_error(RuntimeError)
+    it "raises a RuntimeError on a frozen instance that is modified" do
+      lambda { "string\n\r".freeze.chop! }.should raise_error(RuntimeError)
+    end
 
-        a = ""
-        a.freeze
-        lambda { a.chop! }.should raise_error(RuntimeError)
-      end
+    # see [ruby-core:23666]
+    it "raises a RuntimeError on a frozen instance that would not be modified" do
+      a = ""
+      a.freeze
+      lambda { a.chop! }.should raise_error(RuntimeError)
     end
   end
 end
