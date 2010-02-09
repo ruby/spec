@@ -57,11 +57,6 @@ module IOSpecs
     end
   end
 
-  def self.lines_fixture
-    name = File.expand_path "../lines.txt", __FILE__
-    File.open name, fmode("r:utf-8")
-  end
-
   def self.gets_fixtures
     File.dirname(__FILE__) + '/gets.txt'
   end

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 
 describe "IO#readline" do
   before :each do
-    @io = IOSpecs.lines_fixture
+    @io = IOSpecs.io_fixture "lines.txt"
   end
 
   after :each do

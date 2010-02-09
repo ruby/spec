@@ -6,7 +6,7 @@ ruby_version_is '1.8.7' do
   describe "IO#chars" do
     before :each do
       @kcode, $KCODE = $KCODE, "utf-8"
-      @io = IOSpecs.lines_fixture
+      @io = IOSpecs.io_fixture "lines.txt"
     end
 
     after :each do

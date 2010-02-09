@@ -9,7 +9,7 @@ end
 
 describe "IO#gets" do
   before :each do
-    @io = IOSpecs.lines_fixture
+    @io = IOSpecs.io_fixture "lines.txt"
     @count = 0
   end
 

@@ -10,7 +10,7 @@ ruby_version_is "1.9" do
 
   describe "IO#each_codepoint" do
     before :each do
-      @io = IOSpecs.lines_fixture
+      @io = IOSpecs.io_fixture "lines.txt"
     end
 
     after :each do
