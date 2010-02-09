@@ -65,14 +65,6 @@ module IOSpecs
     File.open(File.dirname(__FILE__) + '/gets.txt', 'r') { |f| f }
   end
 
-  def self.closed_io
-    File.open(gets_fixtures, 'r') { |file|
-      IO.open(file.fileno, 'r') { |io|
-        io
-      }
-    }
-  end
-
   class NotConvertable
     def to_io
       raise TypeError
