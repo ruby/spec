@@ -57,12 +57,8 @@ module IOSpecs
     end
   end
 
-  def self.gets_fixtures
-    File.dirname(__FILE__) + '/gets.txt'
-  end
-
   def self.closed_file
-    File.open(File.dirname(__FILE__) + '/gets.txt', 'r') { |f| f }
+    File.open(fixture(__FILE__, "lines.txt"), fmode("r:utf-8")) { |f| f }
   end
 
   class NotConvertable

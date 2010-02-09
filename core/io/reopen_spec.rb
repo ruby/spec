@@ -4,10 +4,9 @@ require File.dirname(__FILE__) + '/fixtures/classes'
 describe "IO#reopen" do
   before :each do
     # for reading
-    @name1 = IOSpecs.gets_fixtures
-    @name2 = File.dirname(__FILE__) + '/fixtures/numbered_lines.txt'
-    @file1 = File.new(@name1)
-    @file2 = File.new(@name2)
+    @name2 = fixture __FILE__,  "numbered_lines.txt"
+    @file1 = IOSpecs.io_fixture "lines.txt"
+    @file2 = IOSpecs.io_fixture @name2
 
     # for writing
     @name1_w = tmp("IO_reopen_file1") + $$.to_s
