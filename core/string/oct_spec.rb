@@ -5,27 +5,62 @@ require File.dirname(__FILE__) + '/fixtures/classes.rb'
 # allows the base to be changed by a base specifier in the string.
 # See http://groups.google.com/group/ruby-core-google/browse_frm/thread/b53e9c2003425703
 describe "String#oct" do
-  it "treats leading characters of self as a string of oct digits" do
+  it "treats numeric digits as base-8 digits by default" do
     "0".oct.should == 0
     "77".oct.should == 077
-    "78".oct.should == 7
     "077".oct.should == 077
-    "0o".oct.should == 0
+  end
 
-    "755_333".oct.should == 0755_333
-    "5678".oct.should == 0567
-
+  it "accepts numbers formatted as binary" do
     "0b1010".oct.should == 0b1010
+  end
+
+  it "accepts numbers formatted as hexadecimal" do
     "0xFF".oct.should == 0xFF
+  end
+
+  it "accepts numbers formatted as decimal" do
     "0d500".oct.should == 500
+  end
 
-    "-0b0101".oct.should == -0b0101
-    "-0xEE".oct.should == -0xEE
-    "-0d500".oct.should == -500
+  describe "with a leading minus sign" do
+    it "treats numeric digits as base-8 digits by default" do
+      "-12348".oct.should == -01234
+    end
 
-    "+0b1010".oct.should == 0b1010
-    "+0xFF".oct.should == 0xFF
-    "+0d500".oct.should == 500
+    it "accepts numbers formatted as binary" do
+      "-0b0101".oct.should == -0b0101
+    end
+
+    it "accepts numbers formatted as hexadecimal" do
+      "-0xEE".oct.should == -0xEE
+    end
+
+    it "accepts numbers formatted as decimal" do
+      "-0d500".oct.should == -500
+    end
+  end
+
+  describe "with a leading plus sign" do
+    it "treats numeric digits as base-8 digits by default" do
+      "+12348".oct.should == 01234
+    end
+
+    it "accepts numbers formatted as binary" do
+      "+0b1010".oct.should == 0b1010
+    end
+
+    it "accepts numbers formatted as hexadecimal" do
+      "+0xFF".oct.should == 0xFF
+    end
+
+    it "accepts numbers formatted as decimal" do
+      "+0d500".oct.should == 500
+    end
+  end
+
+  it "accepts a single underscore separating digits" do
+    "755_333".oct.should == 0755_333
   end
 
   ruby_version_is "" ... "1.8.7" do
@@ -44,12 +79,12 @@ describe "String#oct" do
     end
   end
 
-  it "takes an optional sign" do
-    "-1234".oct.should == -01234
-    "+1234".oct.should == 01234
+  it "ignores characters that are incorrect for the base-8 digits" do
+    "0o".oct.should == 0
+    "5678".oct.should == 0567
   end
 
-  it "returns 0 on error" do
+  it "returns 0 if no characters can be interpreted as a base-8 number" do
     "".oct.should == 0
     "+-5".oct.should == 0
     "wombat".oct.should == 0
