@@ -63,20 +63,27 @@ describe "String#initialize" do
     lambda { String.new nil }.should raise_error(TypeError)
   end
 
-  ruby_version_is ""..."1.9" do 
-    it "raises a TypeError if self is frozen" do
+  ruby_version_is ""..."1.9" do
+    it "raises a TypeError on a frozen instance that is modified" do
       a = "hello".freeze
-
-      a.send :initialize, a
       lambda { a.send :initialize, "world" }.should raise_error(TypeError)
+    end
+
+    it "does not raise an exception on a frozen instance that would not be modified" do
+      a = "hello".freeze
+      a.send(:initialize, a).should equal(a)
     end
   end
 
-  ruby_version_is "1.9" do   
-    it "raises a RuntimeError if self is frozen" do
+  ruby_version_is "1.9" do
+    it "raises a RuntimeError on a frozen instance that is modified" do
       a = "hello".freeze
-
       lambda { a.send :initialize, "world" }.should raise_error(RuntimeError)
     end
-  end  
+
+    it "raises a RuntimeError on a frozen instance that would not be modified" do
+      a = "hello".freeze
+      lambda { a.send :initialize, a }.should raise_error(RuntimeError)
+    end
+  end
 end
