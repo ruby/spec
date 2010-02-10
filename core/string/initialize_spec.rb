@@ -76,7 +76,6 @@ describe "String#initialize" do
     it "raises a RuntimeError if self is frozen" do
       a = "hello".freeze
 
-      a.send :initialize, a
       lambda { a.send :initialize, "world" }.should raise_error(RuntimeError)
     end
   end  
