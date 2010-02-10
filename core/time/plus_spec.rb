@@ -45,7 +45,7 @@ describe "Time#+" do
 
   ruby_version_is "1.9" do
     it "increments the time by the specified amount as rational numbers" do
-      (Time.at(1.1) + 0.9).should_not == Time.at(2)
+      (Time.at(Rational(11, 10)) + Rational(9, 10)).should == Time.at(2)
     end
 
     it "accepts arguments that can be coerced into Rational" do
@@ -61,9 +61,9 @@ describe "Time#+" do
     #see [ruby-dev:38446]
     it "tracks microseconds" do
       time = Time.at(0)
-      time += 0.123456
+      time += Rational(123456, 1000000)
       time.usec.should == 123456
-      time += 0.654321
+      time += Rational(654321, 1000000)
       time.usec.should == 777777
     end
   end
