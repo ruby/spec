@@ -42,9 +42,9 @@ describe "String#rstrip!" do
   end
 
   ruby_version_is "1.9" do
-      it "raises a RuntimeError on a frozen instance that is modified" do
-        lambda { "  hello  ".freeze.rstrip! }.should raise_error(RuntimeError)
-      end
+    it "raises a RuntimeError on a frozen instance that is modified" do
+      lambda { "  hello  ".freeze.rstrip! }.should raise_error(RuntimeError)
+    end
 
     # see [ruby-core:23666]
     it "raises a RuntimeError on a frozen instance that would not be modified" do
