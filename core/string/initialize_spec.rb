@@ -2,16 +2,8 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
 describe "String#initialize" do
-  ruby_version_is ""..."1.9" do
-    it "is a private method" do
-      "".private_methods.should include("initialize")
-    end
-  end
-
-  ruby_version_is "1.9" do
-    it "is a private method" do
-      "".private_methods.should include(:initialize)
-    end
+  it "is a private method" do
+    String.should have_private_instance_method(:initialize)
   end
 
   it "replaces contents of self with the passed string" do
