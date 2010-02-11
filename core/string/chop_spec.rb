@@ -2,37 +2,18 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 require File.dirname(__FILE__) + '/fixtures/classes.rb'
 
 describe "String#chop" do
-  ruby_version_is "".."1.9" do
-    it "returns a new string with the last character removed" do
-      "hello\n".chop.should == "hello"
-      "hello\x00".chop.should == "hello"
-      "hello".chop.should == "hell"
-      
-      ori_str = ""
-      256.times { |i| ori_str << i }
-      
-      str = ori_str
-      256.times do |i|
-        str = str.chop
-        str.should == ori_str[0, 255 - i]
-      end
-    end
-  end
+  it "returns a new string with the last character removed" do
+    "hello\n".chop.should == "hello"
+    "hello\x00".chop.should == "hello"
+    "hello".chop.should == "hell"
 
-  ruby_version_is "1.9" do
-    it "returns a new string with the last character removed" do
-      "hello\n".chop.should == "hello"
-      "hello\x00".chop.should == "hello"
-      "hello".chop.should == "hell"
-      
-      ori_str = ""
-      256.times { |i| ori_str.encode('UTF-8') << i }
-      
-      str = ori_str
-      256.times do |i|
-        str = str.chop
-        str.should == ori_str[0, 255 - i]
-      end
+    ori_str = encode("", "utf-8")
+    256.times { |i| ori_str << i }
+
+    str = ori_str
+    256.times do |i|
+      str = str.chop
+      str.should == ori_str[0, 255 - i]
     end
   end
 
