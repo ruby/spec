@@ -25,9 +25,9 @@ ruby_version_is "1.9" do
       end
     end
 
-    it "does not preserve the encoding of the path" do
+    it "preserves the encoding of the path" do
       path = File.new(__FILE__.encode('euc-jp')).to_path
-      path.encoding.should == Encoding.find("filesystem")
+      path.encoding.should == Encoding.find("euc-jp")
     end
   end
 end
