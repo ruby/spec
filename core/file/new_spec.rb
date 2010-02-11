@@ -97,15 +97,21 @@ describe "File.new" do
     File.exists?(@file).should == true
   end
 
-  it "raises an Errno::EINVAL error with File::APPEND" do
-    lambda { @fh = File.new(@file, File::APPEND) }.should raise_error(Errno::EINVAL)
+  ruby_bug "[ruby-dev:40397]", "1.8.8" do 
+    it "returns a new File when use File::APPEND mode" do
+      @fh = File.new(@file, File::APPEND)
+      @fh.should be_kind_of(File)
+      File.exists?(@file).should == true
+    end
+
+    it "returns a new File when use File::RDONLY|File::APPEND mode" do
+      @fh = File.new(@file, File::RDONLY|File::APPEND)
+      @fh.should be_kind_of(File)
+      File.exists?(@file).should == true
+    end
   end
 
-  it "raises an Errno::EINVAL error with File::RDONLY|File::APPEND" do
-    lambda { @fh = File.new(@file, File::RDONLY|File::APPEND) }.should raise_error(Errno::EINVAL)
-  end
-
-  it "raises an Errno::EINVAL error with File::RDONLY|File::WRONLY" do
+  it "returns a new File when use File::RDONLY|File::WRONLY mode" do
     @fh = File.new(@file, File::RDONLY|File::WRONLY)
     @fh.should be_kind_of(File)
     File.exists?(@file).should == true
