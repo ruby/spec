@@ -81,4 +81,7 @@ class MSpecScript
   MSpec.enable_feature :continuation
   MSpec.enable_feature :fork
   MSpec.enable_feature :encoding
+
+  # These are encoding-aware methods backported to 1.8.7+ (eg String#bytes)
+  MSpec.enable_feature :encoding_transition
 end

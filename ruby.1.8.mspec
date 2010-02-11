@@ -59,4 +59,9 @@ class MSpecScript
   # Enable features
   MSpec.enable_feature :continuation
   MSpec.enable_feature :fork
+
+  if SpecVersion.new(RUBY_VERSION) >= "1.8.7"
+    # These are encoding-aware methods backported to 1.8.7+ (eg String#bytes)
+    MSpec.enable_feature :encoding_transition
+  end
 end
