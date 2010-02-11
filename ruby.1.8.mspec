@@ -24,7 +24,6 @@ class MSpecScript
     '^library/cmath',
     '^library/continuation',
     '^library/coverage',
-    '^library/fiber',
     '^library/json',
     '^library/minitest',
     '^library/prime',

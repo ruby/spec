@@ -78,6 +78,7 @@ class MSpecScript
 
   # Enable features
   MSpec.enable_feature :fiber
+  MSpec.enable_feature :extended_fiber
   MSpec.enable_feature :continuation
   MSpec.enable_feature :fork
   MSpec.enable_feature :encoding

@@ -1,12 +1,9 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-ruby_version_is "1.9" do
-  not_supported_on :jruby do
-    require 'fiber'
-  end
+with_feature :extended_fiber do
+  require 'fiber'
 
   describe "Fiber#alive?" do
-
     it "returns true for a Fiber that hasn't had #resume called" do
       fiber = Fiber.new { true }
       fiber.alive?.should be_true
@@ -47,6 +44,5 @@ ruby_version_is "1.9" do
       fiber.alive?.should be_false
       fiber.alive?.should be_false
     end
-
   end
 end
