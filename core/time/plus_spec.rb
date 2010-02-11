@@ -10,21 +10,33 @@ describe "Time#+" do
     (Time.at(1.1) + 0.9).should == Time.at(0.9) + 1.1
   end
 
-  it "rounds micro seconds rather than truncates" do
-    # The use of 8.9999999 is intentional. This is because
-    # Time treats the fractional part as the number of micro seconds.
-    # Thusly it multiplies the result by 1_000_000 to go from
-    # seconds to microseconds. That conversion should be rounded
-    # properly. In this case, it's rounded up to 1,000,000, and thus
-    # contributes a full extra second to the Time object.
-    t = Time.at(0) + 8.9999999
-    t.should == Time.at(9)
-    t.usec.should == 0
+  ruby_version_is "" ... "1.9" do
+    it "rounds micro seconds rather than truncates" do
+      # The use of 8.9999999 is intentional. This is because
+      # Time treats the fractional part as the number of micro seconds.
+      # Thusly it multiplies the result by 1_000_000 to go from
+      # seconds to microseconds. That conversion should be rounded
+      # properly. In this case, it's rounded up to 1,000,000, and thus
+      # contributes a full extra second to the Time object.
+      t = Time.at(0) + 8.9999999
+      t.should == Time.at(9)
+      t.usec.should == 0
 
-    # Check the non-edge case works properly, that the fractional part
-    # contributes to #usecs
-    t2 = Time.at(0) + 8.9
-    t2.usec.should == 900000
+      # Check the non-edge case works properly, that the fractional part
+      # contributes to #usecs
+      t2 = Time.at(0) + 8.9
+      t2.usec.should == 900000
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "does NOT round" do
+      t = Time.at(0) + Rational(8_999_999_999_999_999, 1_000_000_000_000_000)
+      t.should_not == Time.at(9)
+      t.usec.should == 999_999
+      t.nsec.should == 999_999_999
+      t.subsec.should == Rational(999_999_999_999_999, 1_000_000_000_000_000)
+    end
   end
 
   ruby_version_is "" ... "1.9" do
