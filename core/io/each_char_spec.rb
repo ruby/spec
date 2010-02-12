@@ -33,7 +33,7 @@ ruby_version_is '1.8.7' do
 
     it "returns an Enumerator when passed no block" do
       enum = @io.each_char
-      enum.should be_kind_of(enumerator_class)
+      enum.should be_an_instance_of(enumerator_class)
       enum.each.first(5).should == ["V", "o", "i", "c", "i"]
     end
   end

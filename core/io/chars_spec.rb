@@ -16,19 +16,19 @@ ruby_version_is '1.8.7' do
 
     it "returns an enumerator of the next chars from the stream" do
       enum = @io.chars
-      enum.should be_kind_of(enumerator_class)
+      enum.should be_an_instance_of(enumerator_class)
       @io.readline.should == "Voici la ligne une.\n"
       enum.first(5).should == ["Q", "u", "i", " ", "è"]
     end
 
     ruby_version_is '1.9' do
       it "ignores a block" do
-        @io.chars{ raise "oups" }.should be_kind_of(enumerator_class)
+        @io.chars{ raise "oups" }.should be_an_instance_of(enumerator_class)
       end
     end
 
     it "returns an enumerator for a closed stream" do
-      IOSpecs.closed_file.chars.should be_kind_of(enumerator_class)
+      IOSpecs.closed_file.chars.should be_an_instance_of(enumerator_class)
     end
 
     it "raises an IOError when an enumerator created on a closed stream is accessed" do

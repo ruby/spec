@@ -26,7 +26,7 @@ describe "IO.foreach" do
 
   ruby_version_is "1.8.7" do
     it "returns an Enumerator when called without a block" do
-      IO.foreach(@name).should be_kind_of(enumerator_class)
+      IO.foreach(@name).should be_an_instance_of(enumerator_class)
       IO.foreach(@name).to_a.should == IOSpecs.lines
     end
   end

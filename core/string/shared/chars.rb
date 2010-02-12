@@ -18,7 +18,7 @@ describe :string_chars, :shared => true do
 
   it "returns an enumerator when no block given" do
     enum = "hello".send(@method)
-    enum.should be_kind_of(enumerator_class)
+    enum.should be_an_instance_of(enumerator_class)
     enum.to_a.should == ['h', 'e', 'l', 'l', 'o']
   end
 

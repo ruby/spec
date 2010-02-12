@@ -101,11 +101,11 @@ describe "Hash#reject!" do
 
   ruby_version_is "1.8.7" do
     it "returns an Enumerator when called on a non-empty hash without a block" do
-      @hsh.reject!.should be_kind_of(enumerator_class)
+      @hsh.reject!.should be_an_instance_of(enumerator_class)
     end
 
     it "returns an Enumerator when called on an empty hash without a block" do
-      @empty.reject!.should be_kind_of(enumerator_class)
+      @empty.reject!.should be_an_instance_of(enumerator_class)
     end
   end
 

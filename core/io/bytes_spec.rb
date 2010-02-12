@@ -16,13 +16,13 @@ ruby_version_is '1.8.7' do
 
     it "returns an enumerator of the next bytes from the stream" do
       enum = @io.bytes
-      enum.should be_kind_of(enumerator_class)
+      enum.should be_an_instance_of(enumerator_class)
       @io.readline.should == "Voici la ligne une.\n"
       enum.first(5).should == [81, 117, 105, 32, 195]
     end
 
     it "does not yield to a block" do
-      @io.bytes{ flunk }.should be_kind_of(enumerator_class)
+      @io.bytes{ flunk }.should be_an_instance_of(enumerator_class)
     end
 
     it "raises an IOError on closed stream" do

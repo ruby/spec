@@ -18,7 +18,7 @@ ruby_version_is "1.9" do
     end
 
     it "does not yield to a block" do
-      @io.codepoints{ flunk }.should be_kind_of(enumerator_class)
+      @io.codepoints{ flunk }.should be_an_instance_of(enumerator_class)
     end
   end
 end

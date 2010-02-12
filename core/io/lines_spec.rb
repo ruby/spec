@@ -23,7 +23,7 @@ ruby_version_is '1.8.7' do
     end
 
     it "ignores a given block" do
-      @io.lines{ raise "oups" }.should be_kind_of(enumerator_class)
+      @io.lines{ raise "oups" }.should be_an_instance_of(enumerator_class)
     end
   end
 end
