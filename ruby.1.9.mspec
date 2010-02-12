@@ -11,8 +11,6 @@ class MSpecScript
   # Core library specs
   set :core, [
     'core',
-
-    '^core/continuation'
   ]
 
   # Standard library specs
@@ -79,7 +77,7 @@ class MSpecScript
   # Enable features
   MSpec.enable_feature :fiber
   MSpec.enable_feature :extended_fiber
-  MSpec.enable_feature :continuation
+  MSpec.enable_feature :continuation_library
   MSpec.enable_feature :fork
   MSpec.enable_feature :encoding
 
