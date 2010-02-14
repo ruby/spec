@@ -106,4 +106,8 @@ describe "Module#define_method" do
     o = DefineMethodByProcClass.new
     o.proc_test.should be_true
   end
+
+  it "is private" do
+    Module.should have_private_instance_method(:define_method)
+  end
 end
