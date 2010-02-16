@@ -48,4 +48,22 @@ describe :hash_store, :shared => true do
       lambda { HashSpecs.frozen_hash.send(@method, 1, 2) }.should raise_error(RuntimeError)
     end
   end
+
+  # see http://redmine.ruby-lang.org/issues/show/1535
+  ruby_bug "#1535", "1.8.7.248" do
+    it "raises RuntimeErrors if attempt to add new key during iteration" do
+      hash = {1 => 2, 3 => 4, 5 => 6}
+      lambda{
+        hash.each { hash.send(@method, :foo, :bar) }
+      }.should raise_error(RuntimeError)
+    end
+  end
+
+  it "does not raise an exception even during iteration if no new key are added" do
+      hash = {1 => 2, 3 => 4, 5 => 6}
+      lambda{
+        hash.each { hash.send(@method, 1, :foo) }
+      }.should_not raise_error(RuntimeError)
+      hash.should == {1 => :foo, 3 => 4, 5 => 6}
+  end
 end

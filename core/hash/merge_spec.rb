@@ -58,17 +58,23 @@ end
 describe "Hash#merge!" do
   it_behaves_like(:hash_update, :merge!)
 
-  # This bug is far too odd to explain in a comment; see
-  # http://redmine.ruby-lang.org/issues/show/1535 for the closest I've got to
-  # an explanation.
+  # see http://redmine.ruby-lang.org/issues/show/1535
   ruby_bug "#1535", "1.8.7.248" do
-    it "shouldn't raise spurious RuntimeErrors" do
+    it "raises RuntimeErrors if attempt to add new key during iteration" do
       hash = {1 => 2, 3 => 4, 5 => 6}
-      big_hash = {}
-      64.times { |k| big_hash[k.to_s] = k }
+      hash2 = {:foo => :bar, :baz => :qux}
       lambda{
-        hash.each { hash.merge!(big_hash) }
-      }.should_not raise_error(RuntimeError)
+        hash.each { hash.merge!(hash2) }
+      }.should raise_error(RuntimeError)
     end
+  end
+
+  it "does not raise an exception even during iteration if no new key are added" do
+      hash = {1 => 2, 3 => 4, 5 => 6}
+      hash2 = {1 => :foo, 3 => :bar}
+      lambda{
+        hash.each { hash.merge!(hash2) }
+      }.should_not raise_error(RuntimeError)
+      hash.should == {1 => :foo, 3 => :bar, 5 => 6}
   end
 end
