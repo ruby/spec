@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-with_feature :extended_fiber do
+with_feature :fiber_library do
   require 'fiber'
 
   describe "Fiber#alive?" do

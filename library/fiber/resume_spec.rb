@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-with_feature :extended_fiber do
+with_feature :fiber_library do
   describe "Fiber#resume" do
     it "raises a FiberError if the Fiber has transfered control to another Fiber" do
       fiber1 = Fiber.new { true }
