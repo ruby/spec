@@ -51,7 +51,7 @@ describe :hash_store, :shared => true do
 
   # see http://redmine.ruby-lang.org/issues/show/1535
   ruby_bug "#1535", "1.8.7.248" do
-    it "raises RuntimeErrors if attempt to add new key during iteration" do
+    it "raises a RuntimeError if a new key is added during iteration" do
       hash = {1 => 2, 3 => 4, 5 => 6}
       lambda{
         hash.each { hash.send(@method, :foo, :bar) }
@@ -59,11 +59,9 @@ describe :hash_store, :shared => true do
     end
   end
 
-  it "does not raise an exception even during iteration if no new key are added" do
+  it "does not raise an exception if changing the value of an existing key during iteration" do
       hash = {1 => 2, 3 => 4, 5 => 6}
-      lambda{
-        hash.each { hash.send(@method, 1, :foo) }
-      }.should_not raise_error(RuntimeError)
+      hash.each { hash.send(@method, 1, :foo) }
       hash.should == {1 => :foo, 3 => 4, 5 => 6}
   end
 end
