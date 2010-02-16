@@ -10,12 +10,6 @@ describe "Time#+" do
     (Time.at(1.1) + 0.9).should == Time.at(0.9) + 1.1
   end
 
-  it "understands negative additions" do
-    t = Time.at(100) + -1.3
-    t.usec.should == 700000
-    t.to_i.should == 98
-  end
-
   ruby_version_is "" ... "1.9" do
     it "rounds micro seconds rather than truncates" do
       # The use of 8.9999999 is intentional. This is because
@@ -33,6 +27,12 @@ describe "Time#+" do
       t2 = Time.at(0) + 8.9
       t2.usec.should == 900000
     end
+
+    it "adds a negative Float" do
+      t = Time.at(100) + -1.3
+      t.usec.should == 700000
+      t.to_i.should == 98
+    end
   end
 
   ruby_version_is "1.9" do
@@ -42,6 +42,12 @@ describe "Time#+" do
       t.usec.should == 999_999
       t.nsec.should == 999_999_999
       t.subsec.should == Rational(999_999_999_999_999, 1_000_000_000_000_000)
+    end
+
+    it "adds a negative Float" do
+      t = Time.at(100) + -1.3
+      t.usec.should == 699999
+      t.to_i.should == 98
     end
   end
 
