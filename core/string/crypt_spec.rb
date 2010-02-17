@@ -46,7 +46,10 @@ describe "String#crypt" do
     end
 
     platform_is :freebsd do
-      # TODO: add specs for "hello".crypt("\x00\x00") and "hello".crypt("\x00a")
+      it "returns an empty string when the salt starts with NULL bytes" do
+        "hello".crypt("\x00\x00").should == ""
+        "hello".crypt("\x00a").should == ""
+      end
 
       it "ignores trailing NULL bytes in the salt but counts them for the 2 character minimum" do
         "hello".crypt("a\x00").should == "aaGJVggM8eWwo"
