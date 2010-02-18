@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/../spec_helper'
-require File.dirname(__FILE__) + '/fixtures/variables'
+require File.expand_path('../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/variables', __FILE__)
 
 # TODO: partition these specs into distinct cases based on the
 # real parsed forms, not the superficial code forms.
