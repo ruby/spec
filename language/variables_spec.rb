@@ -1081,5 +1081,23 @@ describe "Scope of variables" do
     instance.check_local_variable
     instance.check_each_block
   end
+
+  ruby_bug '#1322', '1.8.7.228' do
+    it "should share local variables with a parent define_method block" do
+      def repro_1322 # must work in new scope to reproduce bug
+        a = 1
+        k = Class.new
+        k.send :define_method, :x do |arg|
+          lambda do
+            a = 2
+          end.call
+        end
+        k.new.x(nil)  # must call with argc > 0 to reproduce bug
+        a.should == 2
+      end
+
+      repro_1322
+    end
+  end
 end
 language_version __FILE__, "variables"
