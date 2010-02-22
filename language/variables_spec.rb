@@ -1081,23 +1081,31 @@ describe "Scope of variables" do
     instance.check_local_variable
     instance.check_each_block
   end
+end
 
+describe "A local variable in a #define_method scope" do
   ruby_bug '#1322', '1.8.7.228' do
-    it "should share local variables with a parent define_method block" do
-      def repro_1322 # must work in new scope to reproduce bug
-        a = 1
-        k = Class.new
-        k.send :define_method, :x do |arg|
-          lambda do
-            a = 2
-          end.call
+    it "shares the lexical scope containing the call to #define_method" do
+      # We need a new scope to reproduce this bug.
+      handle = mock("handle for containing scope method")
+
+      def handle.produce_bug
+        local = 1
+
+        klass = Class.new
+        klass.send :define_method, :set_local do |arg|
+          lambda { local = 2 }.call
         end
-        k.new.x(nil)  # must call with argc > 0 to reproduce bug
-        a.should == 2
+
+        # We must call with at least one argument to reproduce the bug.
+        klass.new.set_local(nil)
+
+        local
       end
 
-      repro_1322
+      handle.produce_bug.should == 2
     end
   end
 end
+
 language_version __FILE__, "variables"
