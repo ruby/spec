@@ -23,7 +23,7 @@ describe :tcpsocket_new, :shared => true do
       conn.close
       server.close
     end
-    Thread.pass while thread.status and thread.status != 'sleep' && !ready
+    Thread.pass while (thread.status and thread.status != 'sleep') or !ready
     thread.status.should_not be_nil
     lambda {
       sock = TCPSocket.send(@method, @hostname, SocketSpecs.port)
@@ -42,7 +42,7 @@ describe :tcpsocket_new, :shared => true do
       conn.close
       server.close
     end
-    Thread.pass while thread.status and thread.status != 'sleep' && !ready
+    Thread.pass while (thread.status and thread.status != 'sleep') or !ready
     thread.status.should_not be_nil
     sock = TCPSocket.send(@method, '127.0.0.1', SocketSpecs.port)
     sock.addr[0].should == "AF_INET"
