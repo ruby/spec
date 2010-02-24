@@ -28,7 +28,9 @@ describe "BasicSocket#setsockopt" do
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER, linger).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER).to_s
     if (n.size == 8) # linger struct on some platforms, not just a value
-      n.should == [1, 64].pack("ii")
+      a = n.unpack('ii')
+      a[0].should_not == 0
+      a[1].should == 64
     else
       n.should == [64].pack("i")
     end
