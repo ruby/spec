@@ -39,7 +39,7 @@ describe "BasicSocket#setsockopt" do
   it "sets the socket option Socket::SO_OOBINLINE" do
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, true).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
-    n.should == [1].pack("i")
+    n.should_not == [0].pack("i")
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, false).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
@@ -47,7 +47,7 @@ describe "BasicSocket#setsockopt" do
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, 1).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
-    n.should == [1].pack("i")
+    n.should_not == [0].pack("i")
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, 0).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
@@ -55,7 +55,7 @@ describe "BasicSocket#setsockopt" do
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, 2).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
-    n.should == [1].pack("i")
+    n.should_not == [0].pack("i")
 
     platform_is_not :os => :windows do
       lambda {
@@ -65,7 +65,7 @@ describe "BasicSocket#setsockopt" do
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, "blah").should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
-    n.should == [1].pack("i")
+    n.should_not == [0].pack("i")
 
     platform_is_not :os => :windows do
       lambda {
@@ -91,7 +91,7 @@ describe "BasicSocket#setsockopt" do
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, [1].pack('i')).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
-    n.should == [1].pack("i")
+    n.should_not == [0].pack("i")
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, [0].pack('i')).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
@@ -99,7 +99,7 @@ describe "BasicSocket#setsockopt" do
 
     @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, [1000].pack('i')).should == 0
     n = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE).to_s
-    n.should == [1].pack("i")
+    n.should_not == [0].pack("i")
   end
 
   it "sets the socket option Socket::SO_SNDBUF" do
