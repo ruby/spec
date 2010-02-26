@@ -80,10 +80,12 @@ ruby_version_is "1.9" do
     end
 
     it "redirects STDERR to the given file descriptior if if :err => Fixnum" do
-      fd = File.open(@f,'w').fileno
+      file = File.open(@f,'w')
+      fd = file.fileno
       pid = spawn("ruby -e 'warn(:glark)'", {:err => fd})
       Process.wait pid
       File.read(@f).should =~ /glark/
+      file.close
     end
 
     it "redirects STDERR to the given file if :err => String" do
