@@ -11,8 +11,10 @@ describe "Process.setrlimit" do
 end
 
 describe "Process.getrlimit" do
-  it "requires one argument" do
-    lambda { Process.getrlimit }.should raise_error(ArgumentError)
+  platform_is_not :windows do
+    it "requires one argument" do
+      lambda { Process.getrlimit }.should raise_error(ArgumentError)
+    end
   end
 end
 
