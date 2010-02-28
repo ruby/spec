@@ -49,9 +49,11 @@ ruby_version_is "1.9" do
     # Note: see related issue http://redmine.ruby-lang.org/issues/show/2189
     # If you would like to see simpler Ruby behavior, lobby for Ruby to
     # have platform-independent Math functions.
-    platform_is_not :darwin do
-      it "returns [Infinity, 1] when passed Infinity" do
-        Math.lgamma(-infinity_value).should == [infinity_value, 1]
+    ruby_version_is ""..."1.9" do
+      platform_is_not :darwin do
+        it "returns [Infinity, 1] when passed Infinity" do
+          Math.lgamma(-infinity_value).should == [infinity_value, 1]
+        end
       end
     end
 
