@@ -139,6 +139,19 @@ module EnumerableSpecs
     end
   end
 
+  class YieldsMixed
+    include Enumerable
+    def each
+      yield 1
+      yield [2]
+      yield 3,4
+      yield 5,6,7
+      yield [8,9]
+      yield nil
+      yield []
+    end
+  end
+
   class ReverseComparable
     include Comparable
     def initialize(num)
