@@ -20,9 +20,15 @@ ruby_version_is '1.9' do
       e.to_a.should == @entries
     end
 
-    it "raises an Argument error when given arguments" do
+    it "raises an Argument error when extra arguments" do
       lambda { @enum.each_entry("one").to_a   }.should raise_error(ArgumentError)
       lambda { @enum.each_entry("one"){}.to_a }.should raise_error(ArgumentError)
     end
+
+    it "passes extra arguments to #each" do
+      enum = EnumerableSpecs::EachCounter.new(1, 2)
+      enum.each_entry(:foo, "bar").to_a.should == [1,2]
+      enum.arguments_passed.should == [:foo, "bar"]
+    end    
   end
 end
