@@ -182,4 +182,19 @@ module EnumerableSpecs
       nil
     end
   end
+
+  class Undupable
+    attr_reader :initialize_called, :initialize_dup_called
+    def dup
+      raise "Can't, sorry"
+    end
+
+    def initialize
+      @initialize_dup = true
+    end
+
+    def initialize_dup(arg)
+      @initialize_dup_called = true
+    end
+  end
 end # EnumerableSpecs utility classes
