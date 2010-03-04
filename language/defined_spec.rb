@@ -333,5 +333,11 @@ describe "The defined? keyword" do
     o.baz.foo_defined.should == "constant";
     o.baz.bar_defined.should == "constant";
   end
+
+  ruby_version_is "1.9" do
+    it "uses #respond_to_missing? to determine the existence of a method" do
+      defined?(DefinedSpecs::ClassWithMissingMethod.new.madness).should == 'method'
+    end
+  end
 end
 
