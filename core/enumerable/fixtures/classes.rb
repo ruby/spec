@@ -189,6 +189,10 @@ module EnumerableSpecs
       raise "Can't, sorry"
     end
 
+    def clone
+      raise "Can't, either, sorry"
+    end
+
     def initialize
       @initialize_dup = true
     end

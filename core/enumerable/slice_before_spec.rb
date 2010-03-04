@@ -43,8 +43,6 @@ ruby_version_is '1.9' do
       describe "and an argument" do
         it "calls the block with a copy of that argument" do
           arg = [:foo]
-          arg.should_not_receive(:dup)
-          arg.should_not_receive(:clone)
           e = @enum.slice_before(arg) do |i, init|
             init.should == arg
             init.should_not equal(arg)
@@ -58,13 +56,15 @@ ruby_version_is '1.9' do
           end
         end
 
-        it "duplicates the argument directly without calling dup" do
-          arg = EnumerableSpecs::Undupable.new
-          e = @enum.slice_before(arg) do |i, init|
-            init.initialize_dup_called.should be_true
-            false
+        quarantine! do # need to double-check with ruby-core. Might be wrong or too specific
+          it "duplicates the argument directly without calling dup" do
+            arg = EnumerableSpecs::Undupable.new
+            e = @enum.slice_before(arg) do |i, init|
+              init.initialize_dup_called.should be_true
+              false
+            end
+            e.to_a.should == [[7, 6, 5, 4, 3, 2, 1]]
           end
-          e.to_a.should == [[7, 6, 5, 4, 3, 2, 1]]
         end
       end
     end
