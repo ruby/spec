@@ -68,3 +68,105 @@ describe :io_write, :shared => true do
     lambda { IOSpecs.closed_file.send(@method, "hello") }.should raise_error(IOError)
   end
 end
+
+describe :io_write_sing, :shared => true do
+  before :each do
+    @file = tmp('IO.write')
+    @data = "string"
+    @original = "original"
+  end
+
+  after :each do
+    File.delete(@file) if File.exists?(@file)
+  end
+
+   it "writes the given string to the given file" do
+     IO.send(@method, @file, @data)
+     IO.read(@file).should == @data
+   end
+
+   it "truncates existing files before writing to them" do
+     File.open(@file,'w'){|f| f << @original}
+     IO.send(@method, @file, @data)
+     IO.read(@file).should == @data
+   end
+
+   it "creates the target file if necessary" do
+     File.exists?(@file).should be_false
+     IO.send(@method, @file, @data)
+     IO.read(@file).should == @data
+     File.exists?(@file).should be_true
+   end
+
+   it "raises Errno::EACCES if the OS denies write permission" do
+     lambda { IO.send(@method, '/glark', @data) }.should raise_error(Errno::EACCES)
+   end
+
+   it "raises Errno::ENOENT if the path's parent doesn't exist" do
+     lambda { IO.send(@method, tmp('ZzZ/glark'),@data) }.should raise_error(Errno::ENOENT)
+   end
+
+   it "raises Errno::EISDIR if the path is a directory" do
+     lambda { IO.send(@method, tmp(''),@data) }.should raise_error(Errno::EISDIR)
+   end
+
+   it "returns the number of bytes written" do
+     @data = (200..400).map{|o| o.chr('utf-8')}.join
+     IO.send(@method, @file, @data).should == @data.bytesize
+   end
+
+   it "skips $offset bytes if given a Fixnum offset" do
+     File.open(@file,'w'){|f| f << @original}
+     IO.send(@method, @file, @data, 2)
+     IO.read(@file).should == @original[0..1] + @data
+   end
+
+   it "writes from the beginning of the file if given an offset of 0" do
+     File.open(@file,'w'){|f| f << @original}
+     IO.send(@method, @file, @data, 0)
+     IO.read(@file).should == @data + @original[-(@original.size - @data.size)..-1]
+   end
+
+   it "raises Errno::EINVAL if given a negative offset" do
+     lambda { IO.send(@method, @file, @data, -2) }.should raise_error(Errno::EINVAL)
+   end
+
+   it "returns the number of bytes written when an offset is supplied" do
+     File.open(@file,'w'){|f| f << 'original'}
+     IO.send(@method, @file, @data, 2).should == @data.size
+   end
+
+   it "pads with null bytes if $offset exceeds the original file's length" do
+     File.open(@file,'w'){|f| f << 'date her'}
+     IO.send(@method, @file, @data, 10)
+     IO.read(@file).should ==  "date her\u0000\u0000" + @data
+   end
+
+   it "returns the number of bytes written (excluding that of any prepended nulls if $offset > file length)" do
+     IO.send(@method, @file, @data, 2).should == @data.size
+     File.size(@file).should == @data.size + 2
+   end
+
+   it "inserts $offset leading null bytes if the file doesn't already exist" do
+     IO.send(@method, @file, @data, 2)
+     IO.read(@file).should == "\u0000\u0000" + @data
+   end
+
+   it "calls #to_path on its first argument if said argument is not a string" do
+      name = mock("file")
+      name.should_receive(:to_path).and_return(@file)
+      IO.send(@method, name, @data)
+   end
+
+   it "calls #to_str on its first argument if said argument is not a string and can't to_path" do
+      name = mock("file")
+      name.should_receive(:to_str).and_return(@file)
+      IO.send(@method, name, @data)
+   end
+
+   it "calls #to_s on its second argument if said argument is not a string" do
+      str = mock("str")
+      str.should_receive(:to_s).and_return(@data)
+      IO.send(@method, @file, str)
+   end
+  end
