@@ -13,8 +13,7 @@ ruby_version_is '1.8.7' do
     end
 
     it "returns an Enumerator" do
-      enum = @io.lines
-      enum.instance_of?(enumerator_class).should be_true
+      @io.lines.should be_an_instance_of(enumerator_class)
     end
 
     it "returns a line when accessed" do
