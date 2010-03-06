@@ -49,33 +49,5 @@ end
 ruby_version_is "1.9" do
   describe "IO.write" do
     it_behaves_like :io_write_sing, :write
-
-    it "skips $offset bytes if given a Fixnum offset" do
-      File.open(@file,'w'){|f| f << @original}
-      IO.write(@file, @data, 2)
-      IO.read(@file).should == @original[0..1] + @data
-    end
-
-    it "writes from the beginning of the file if given an offset of 0" do
-      File.open(@file,'w'){|f| f << @original}
-      IO.write(@file, @data, 0)
-      IO.read(@file).should == @data + @original[-(@original.size - @data.size)..-1]
-    end
-
-    it "pads with null bytes if $offset exceeds the original file's length" do
-      File.open(@file,'w'){|f| f << 'date her'}
-      IO.write(@file, @data, 10)
-      IO.read(@file).should ==  "date her\x00\x00" + @data
-    end
-
-    it "returns the number of bytes written (excluding that of any prepended nulls if $offset > file length)" do
-      IO.write(@file, @data, 2).should == @data.size
-      File.size(@file).should == @data.size + 2
-    end
-
-    it "inserts $offset leading null bytes if the file doesn't already exist" do
-      IO.write(@file, @data, 2)
-      IO.read(@file).should == "\x00\x00" + @data
-    end
   end
 end

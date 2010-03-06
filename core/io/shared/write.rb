@@ -113,15 +113,7 @@ describe :io_write_sing, :shared => true do
   it "returns the number of bytes written" do
     @data = (200..400).map{|o| o.chr('utf-8')}.join
     IO.send(@method, @file, @data).should == @data.bytesize
-  end
-
-  it "raises Errno::EINVAL if given a negative offset" do
-    lambda { IO.send(@method, @file, @data, -2) }.should raise_error(Errno::EINVAL)
-  end
-
-  it "returns the number of bytes written when an offset is supplied" do
-    File.open(@file,'w'){|f| f << 'original'}
-    IO.send(@method, @file, @data, 2).should == @data.size
+    File.size(@file).should == @data.bytesize
   end
 
   it "calls #to_path on its first argument if said argument is not a string" do
