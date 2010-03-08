@@ -45,9 +45,3 @@ end
 describe "IO#write" do
   it_behaves_like :io_write, :write
 end
-
-ruby_version_is "1.9" do
-  describe "IO.write" do
-    it_behaves_like :io_write_sing, :write
-  end
-end
