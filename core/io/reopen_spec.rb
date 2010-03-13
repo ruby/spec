@@ -118,32 +118,11 @@ describe "IO#reopen" do
     File.readlines(@name2_w).should == ["line1-F2\n"]
   end
 
-  it "reassociates self with a new stream after some reads from self" do
+  it "reassociates self with a new stream after some reads" do
     @file1.reopen(@file2)
     @file1.gets
     @file1.gets
-    @file2.close
-    @file2 = IOSpecs.io_fixture @name2
     @file1.reopen(@file2).gets.should == "Line 1: One\n"
-  end
-
-  it "reassociates self with a new stream after some reads from the stream" do
-    @file2.gets
-    @file2.gets
-    @file1.reopen(@file2).gets.should == "Line 3: Three\n"
-  end
-
-  quarantine! do
-    # Access to multiple IOs that share the same fd or duplicated fd may cause
-    # bizarre behavior (see [ruby-core:28281], [ruby-core:28327]).
-    # This is inherent result of buffering.  It will not be fixed because
-    # buffering is important for performance.
-    it "reassociates self with a new stream after some reads" do
-      @file1.reopen(@file2)
-      @file1.gets
-      @file1.gets
-      @file1.reopen(@file2).gets.should == "unknown\n"
-    end
   end
 
   ruby_version_is "1.9" do
