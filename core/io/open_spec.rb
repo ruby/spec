@@ -6,6 +6,10 @@ describe "IO.open" do
   it_behaves_like :io_new, :open
 end
 
+describe "IO.open" do
+  it_behaves_like :io_new_errors, :open
+end
+
 # These specs use a special mock helper to avoid mock
 # methods from preventing IO#close from running and
 # which would prevent the file referenced by @fd from
