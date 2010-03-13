@@ -14,6 +14,11 @@ describe "IO.open" do
 
   after :each do
     @io.close if @io and !@io.closed?
+
+    # Make sure we somehow close stray opened descriptors,
+    # or many specs would fail on Windows.
+    IO.new(@fd).close rescue nil
+
     rm_r @name
   end
 
