@@ -15,10 +15,4 @@ module DefinedSpecs
       defined?(super)
     end
   end
-
-  class ClassWithMissingMethod
-    def respond_to_missing?(*)
-      true
-    end
-  end
 end
