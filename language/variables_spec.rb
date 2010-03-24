@@ -675,6 +675,16 @@ describe "Conditional operator assignment 'var op= expr'" do
     x.should == false
   end
 
+  it "may not assign at all, depending on the truthiness of lhs" do
+    Object.new.instance_eval do
+      @falsey = false
+      @truthy = true
+      freeze
+      lambda{ @truthy ||= 42 }.should_not raise_error
+      lambda{ @falsey &&= 42 }.should_not raise_error
+    end
+  end
+
   it "uses short-circuit arg evaluation" do
     x = 8
     y = VariablesSpecs::OpAsgn.new
@@ -768,6 +778,17 @@ describe "Conditional operator assignment 'obj.meth op= expr'" do
     @x.a.should == true
     (@x.a &&= false).should == false
     @x.a.should == false
+  end
+
+  it "may not assign at all, depending on the truthiness of lhs" do
+    m = mock("object")
+    m.should_receive(:foo).and_return(:truthy)
+    m.should_not_receive(:foo=)
+    m.foo ||= 42
+
+    m.should_receive(:bar).and_return(false)
+    m.should_not_receive(:bar=)
+    m.bar &&= 42
   end
 
   it "uses short-circuit arg evaluation" do
@@ -933,6 +954,18 @@ describe "Conditional operator assignment 'obj[idx] op= expr'" do
     x.should == [true, false, false]
     (x[0] &&= false).should == false
     x.should == [false, false, false]
+  end
+
+  it "may not assign at all, depending on the truthiness of lhs" do
+    m = mock("object")
+    m.should_receive(:[]).and_return(:truthy)
+    m.should_not_receive(:[]=)
+    m[:foo] ||= 42
+
+    m = mock("object")
+    m.should_receive(:[]).and_return(false)
+    m.should_not_receive(:[]=)
+    m[:bar] &&= 42
   end
 
   it "uses short-circuit arg evaluation" do
