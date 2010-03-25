@@ -154,11 +154,9 @@ describe "Kernel.caller" do
 
   ruby_bug("redmine:3011", "1.8.7") do
     it "returns one entry per call, even for recursive methods" do
-      def recurse(n)
-        return caller if n <= 0
-        recurse(n-1)
-      end
-      (recurse(3).size - recurse(2).size).should == 1
+      two   = CallerSpecs::recurse(2)
+      three = CallerSpecs::recurse(3)
+      (three.size - two.size).should == 1
     end
   end
 end
