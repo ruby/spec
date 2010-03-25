@@ -151,4 +151,14 @@ end
 
 describe "Kernel.caller" do
   it "needs to be reviewed for spec completeness"
+
+  ruby_bug("redmine:3011", "1.8.7") do
+    it "returns one entry per call, even for recursive methods" do
+      def recurse(n)
+        return caller if n <= 0
+        recurse(n-1)
+      end
+      (recurse(3).size - recurse(2).size).should == 1
+    end
+  end
 end
