@@ -85,8 +85,8 @@ ruby_version_is "1.9" do
         fd = file.fileno
         pid = spawn("ruby -e '#{the_method}(:glark)'", {dest.to_sym => fd})
         Process.wait pid
-        File.read(@f).should =~ /glark/
         file.close
+        File.read(@f).should =~ /glark/
       end
 
       it "redirects STD#{dest.upcase} to the given file name if :#{dest} => String" do
