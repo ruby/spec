@@ -79,29 +79,50 @@ ruby_version_is "1.9" do
       File.read(@f).should == dir
     end
 
-    {'out' => 'print', 'err' => 'warn'}.each do |dest, the_method|
-      it "redirects STD#{dest.upcase} to the given file descriptior if :#{dest} => Fixnum" do
-        file = File.open(@f, 'w')
-        fd = file.fileno
-        pid = spawn("ruby -e '#{the_method}(:glark)'", {dest.to_sym => fd})
-        Process.wait pid
-        File.read(@f).should =~ /glark/
-        file.close
-      end
+    it "redirects STDOUT to the given file descriptior if :out => Fixnum" do
+      file = File.open(@f, 'w')
+      fd = file.fileno
+      pid = spawn("ruby -e 'print(:glark)'", {:out => fd})
+      Process.wait pid
+      File.read(@f).should =~ /glark/
+      file.close
+    end
 
-      it "redirects STD#{dest.upcase} to the given file name if :#{dest} => String" do
-        pid = spawn("ruby -e '#{the_method}(:glark)'", {dest.to_sym => @f})
-        Process.wait pid
-        File.read(@f).should =~ /glark/
-      end
+    it "redirects STDOUT to the given file if :out => String" do
+      pid = spawn("ruby -e 'print(:glark)'", {:out => @f})
+      Process.wait pid
+      File.read(@f).should =~ /glark/
+    end
 
-      it "redirects STD#{dest.upcase} to the given IO if :#{dest} => IO" do
-        r, w = IO.pipe
-        pid = spawn("ruby -e '#{the_method}(:glark)'", {dest.to_sym => w})
-        Process.wait pid
-        w.close
-        r.read.should =~ /glark/
-      end
+    it "redirects STDOUT to the given file if :out => IO" do
+      r, w = IO.pipe
+      pid = spawn("ruby -e 'print(:glark)'", {:out => w})
+      Process.wait pid
+      w.close
+      r.read.should =~ /glark/
+    end
+
+    it "redirects STDERR to the given file descriptior if :err => Fixnum" do
+      file = File.open(@f, 'w')
+      fd = file.fileno
+      pid = spawn("ruby -e 'warn(:glark)'", {:err => fd})
+      Process.wait pid
+      File.read(@f).should =~ /glark/
+      file.close
+    end
+
+    it "redirects STDERR to the given file if :err => String" do
+      pid = spawn("ruby -e 'warn(:glark)'", {:err => @f})
+      Process.wait pid
+      File.read(@f).should =~ /glark/
+    end
+
+    it "redirects STDOUT to the given file if :err => IO" do
+      r, w = IO.pipe
+      pid = spawn("ruby -e 'warn(:glark)'", {:err => w})
+      Process.wait pid
+      w.close
+      r.read.should =~ /glark/
     end
   end
 end
