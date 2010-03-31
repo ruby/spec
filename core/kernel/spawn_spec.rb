@@ -89,13 +89,13 @@ ruby_version_is "1.9" do
         file.close
       end
 
-      it "redirects STD#{dest.upcase} to the given file if :#{dest} => String" do
+      it "redirects STD#{dest.upcase} to the given file name if :#{dest} => String" do
         pid = spawn("ruby -e '#{the_method}(:glark)'", {dest.to_sym => @f})
         Process.wait pid
         File.read(@f).should =~ /glark/
       end
 
-      it "redirects STD#{dest.upcase} to the given file if :#{dest} => IO" do
+      it "redirects STD#{dest.upcase} to the given IO if :#{dest} => IO" do
         r, w = IO.pipe
         pid = spawn("ruby -e '#{the_method}(:glark)'", {dest.to_sym => w})
         Process.wait pid
