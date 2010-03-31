@@ -94,6 +94,14 @@ ruby_version_is "1.9" do
       File.read(@f).should =~ /glark/
     end
 
+    it "redirects STDOUT to the given file if :out => IO" do
+      r, w = IO.pipe
+      pid = spawn("ruby -e 'print(:glark)'", {:out => w})
+      Process.wait pid
+      w.close
+      r.read.should =~ /glark/
+    end
+
     it "redirects STDERR to the given file descriptior if :err => Fixnum" do
       file = File.open(@f, 'w')
       fd = file.fileno
@@ -107,6 +115,14 @@ ruby_version_is "1.9" do
       pid = spawn("ruby -e 'warn(:glark)'", {:err => @f})
       Process.wait pid
       File.read(@f).should =~ /glark/
+    end
+
+    it "redirects STDOUT to the given file if :err => IO" do
+      r, w = IO.pipe
+      pid = spawn("ruby -e 'warn(:glark)'", {:err => w})
+      Process.wait pid
+      w.close
+      r.read.should =~ /glark/
     end
   end
 end
