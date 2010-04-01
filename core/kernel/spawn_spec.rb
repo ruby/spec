@@ -103,5 +103,27 @@ ruby_version_is "1.9" do
         r.read.should =~ /glark/
       end
     end
+
+    it "redirects both STDERR and STDOUT to the given file descriptior, name or IO" do
+      file = File.open(@f, 'w')
+      pid = spawn("ruby -e 'print(:glark); warn(:bang)'", {[:out, :err] => file.fileno})
+      Process.wait pid
+      file.close
+      File.read(@f).should =~ /glark/
+      File.read(@f).should =~ /bang/
+
+      pid = spawn("ruby -e 'print(:glark); warn(:bang)'", {[:out, :err] => @f})
+      Process.wait pid
+      File.read(@f).should =~ /glark/
+      File.read(@f).should =~ /bang/
+
+      r, w = IO.pipe
+      pid = spawn("ruby -e 'print(:glark); warn(:bang)'", {[:out, :err] => w})
+      Process.wait pid
+      w.close
+      tmp = r.read
+      tmp.should =~ /glark/
+      tmp.should =~ /bang/
+    end
   end
 end
