@@ -146,5 +146,10 @@ ruby_version_is "1.9" do
       tmp.should =~ /glark/
       tmp.should =~ /bang/
     end
+
+    it 'generates a process of a command based on the given set of strings, regarding the first as the command and the others as the arguments' do
+      Process.wait spawn('echo', 'a b', :out => @f)
+      File.read(@f).should == "a b\n"
+    end
   end
 end
