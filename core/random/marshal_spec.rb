@@ -1,11 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 ruby_version_is "1.9" do
-  describe "Random#marshall_{load,save}" do
+  describe "Random#marshal_{load,dump}" do
     before :each do
       @rnd = Random.new(42)
       1000.times{ @rnd.rand }  # exhaust the first batch of numbers
-      @rnd2 = Marshall.load(Marshall.dump(@rnd))
+      @rnd2 = Marshal.load(Marshal.dump(@rnd))
     end
 
     it "produces objects that are ==" do
