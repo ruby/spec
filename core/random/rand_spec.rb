@@ -192,6 +192,12 @@ ruby_version_is "1.9" do
       a.should == b
     end
     
+    it "eventually returns all possible values" do
+      prng = Random.new 33
+      100.times.map{ prng.rand(10..20) }.uniq.sort.should == (10..20).to_a
+      100.times.map{ prng.rand(10...20) }.uniq.sort.should == (10...20).to_a
+    end
+
     it "allows the startpoint to be an object of a different class to the endpoint" do
       lambda do
         Random.new.rand(89..100.87)
