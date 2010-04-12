@@ -850,13 +850,13 @@ describe "String#%" do
       (format % "10_1_0.5_5_5").should == (format % 1010.555)
 
       (format % "0777").should == (format % 777)
-      (format % "0xA").should == (format % 0xA)
 
       lambda { format % "" }.should raise_error(ArgumentError)
       lambda { format % "x" }.should raise_error(ArgumentError)
       lambda { format % "." }.should raise_error(ArgumentError)
       lambda { format % "10." }.should raise_error(ArgumentError)
       lambda { format % "5x" }.should raise_error(ArgumentError)
+      lambda { format % "0xA" }.should raise_error(ArgumentError)
       lambda { format % "0b1" }.should raise_error(ArgumentError)
       lambda { format % "10e10.5" }.should raise_error(ArgumentError)
       lambda { format % "10__10" }.should raise_error(ArgumentError)
