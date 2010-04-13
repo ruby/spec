@@ -327,11 +327,10 @@ describe "Marshal::load" do
     end
   end
 
-  ruby_version_is ""..."1.9" do
-    MarshalSpec::DATA.each do |description, (object, marshal, attributes)|
-      it "loads a #{description}" do
-        Marshal.load(marshal).should == object
-      end
+  # Note: Ruby 1.9 should be compatible with older marshal format
+  MarshalSpec::DATA.each do |description, (object, marshal, attributes)|
+    it "loads a #{description}" do
+      Marshal.load(marshal).should == object
     end
   end
 
