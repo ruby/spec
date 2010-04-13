@@ -6,7 +6,7 @@ describe "Digest::SHA1.file" do
   describe "when passed a path to a file that exists" do
     before :each do
       @file = tmp("md5_temp")
-      touch(@file) {|f| f.write SHA1Constants::Contents }
+      touch(@file, 'wb') {|f| f.write SHA1Constants::Contents }
     end
 
     after :each do

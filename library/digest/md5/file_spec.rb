@@ -6,7 +6,7 @@ describe "Digest::MD5.file" do
   describe "when passed a path to a file that exists" do
     before :each do
       @file = tmp("md5_temp")
-      touch(@file) {|f| f.write MD5Constants::Contents }
+      touch(@file, 'wb') {|f| f.write MD5Constants::Contents }
     end
 
     after :each do
