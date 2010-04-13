@@ -143,7 +143,7 @@ module MarshalSpec
   def self.random_data
     randomizer = Random.new(42)
     1000.times{randomizer.rand} # Make sure we exhaust his first state of 624 random words
-    dump_data = File.binread(File.expand_path('../random.dump', __FILE__))
+    dump_data = File.binread(fixture(__FILE__, 'random.dump'))
     [randomizer, dump_data]
   rescue => e
     ["Error when building Random marshal data #{e}", ""]
