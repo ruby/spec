@@ -24,7 +24,9 @@ describe "Digest::SHA1.file" do
     it "calls #to_str on an object and returns the Digest::SHA1 with the result" do
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(@file)
-      Digest::SHA1.file(obj).should be_kind_of(Digest::SHA1)
+      result = Digest::SHA1.file(obj)
+      result.should be_kind_of(Digest::SHA1)
+      result.digest.should == SHA1Constants::Digest
     end
   end
 

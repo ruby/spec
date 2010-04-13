@@ -24,7 +24,9 @@ describe "Digest::SHA256.file" do
     it "calls #to_str on an object and returns the Digest::SHA256 with the result" do
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(@file)
-      Digest::SHA256.file(obj).should be_kind_of(Digest::SHA256)
+      result = Digest::SHA256.file(obj)
+      result.should be_kind_of(Digest::SHA256)
+      result.digest.should == SHA256Constants::Digest
     end
   end
 
