@@ -30,8 +30,16 @@ describe "Digest::SHA1.file" do
     end
   end
 
-  it 'raises a Errno::EISDIR when passed a path that is a directory' do
-    lambda { Digest::SHA1.file(".") }.should raise_error(Errno::EISDIR)
+  platform_is_not :windows do
+    it 'raises a Errno::EISDIR when passed a path that is a directory' do
+      lambda { Digest::SHA1.file(".") }.should raise_error(Errno::EISDIR)
+    end
+  end
+
+  platform_is :windows do
+    it 'raises a Errno::EACCES when passed a path that is a directory' do
+      lambda { Digest::SHA1.file(".") }.should raise_error(Errno::EACCES)
+    end
   end
 
   it 'raises a Errno::ENOENT when passed a path that does not exist' do
