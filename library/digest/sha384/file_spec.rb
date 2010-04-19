@@ -30,17 +30,7 @@ describe "Digest::SHA384.file" do
     end
   end
 
-  platform_is_not :windows do
-    it 'raises a Errno::EISDIR when passed a path that is a directory' do
-      lambda { Digest::SHA384.file(".") }.should raise_error(Errno::EISDIR)
-    end
-  end
-
-  platform_is :windows do
-    it 'raises a Errno::EACCES when passed a path that is a directory' do
-      lambda { Digest::SHA384.file(".") }.should raise_error(Errno::EACCES)
-    end
-  end
+  it_behaves_like :file_read_directory, :file, Digest::SHA384
 
   it 'raises a Errno::ENOENT when passed a path that does not exist' do
     lambda { Digest::SHA384.file("") }.should raise_error(Errno::ENOENT)

@@ -1,5 +1,6 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
 require File.expand_path('../shared/constants', __FILE__)
+require File.expand_path('../../../../core/file/shared/read', __FILE__)
 
 describe "Digest::MD5.file" do
 
@@ -30,17 +31,7 @@ describe "Digest::MD5.file" do
     end
   end
 
-  platform_is_not :windows do
-    it 'raises a Errno::EISDIR when passed a path that is a directory' do
-      lambda { Digest::MD5.file(".") }.should raise_error(Errno::EISDIR)
-    end
-  end
-
-  platform_is :windows do
-    it 'raises a Errno::EACCES when passed a path that is a directory' do
-      lambda { Digest::MD5.file(".") }.should raise_error(Errno::EACCES)
-    end
-  end
+  it_behaves_like :file_read_directory, :file, Digest::MD5
 
   it 'raises a Errno::ENOENT when passed a path that does not exist' do
     lambda { Digest::MD5.file("") }.should raise_error(Errno::ENOENT)
