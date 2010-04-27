@@ -80,7 +80,8 @@ describe "File.expand_path" do
       File.expand_path('~/a','~/b').should == "#{ENV['HOME']}/a"
     end
 
-    it "doesn't replace multiple '/' at the beginning of the path with a single '/'" do
+    it "replaces multiple '/' with a single '/' unless it's at the beginning of the path" do
+      File.expand_path('/some////path').should == "/some/path"
       File.expand_path('////some/path').should == "////some/path"
     end
 
