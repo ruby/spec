@@ -231,7 +231,7 @@ describe "Module#autoload" do
   end
 
   # TODO: Remove duplicate specs (this one and that which follows it) when ruby_bug is fixed
-  ruby_bug "#1745", "1.9" do
+  ruby_bug "#1745", "1.8" do
     # [ruby-core:19127]
     it "raises a NameError when the autoload file did not define the constant and a module is opened with the same name" do
       lambda do

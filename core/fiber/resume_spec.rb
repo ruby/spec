@@ -13,7 +13,7 @@ with_feature :fiber do
       fiber2.resume.should == :fiber2
     end
 
-    ruby_bug "redmine #595", "1.9" do
+    ruby_bug "redmine #595", "1.8" do
       it "executes the ensure clause" do
         fib = Fiber.new{
           begin
