@@ -93,11 +93,10 @@ describe "self in an eigenclass body (class << obj)" do
       cls.superclass.should == String
     end
 
-    ruby_bug("#3222", "1.8") do
-      it "raises a TypeError for Bignum's" do
-        (1<<1024).should be_kind_of(Bignum)
-        lambda { class << (1<<1024); self; end }.should raise_error(TypeError)
-      end
+    it "does NOT raise a TypeError for Bignum's" do
+      # This behavior may be changed in the future, though.  [Feature #3222]
+      (1<<1024).should be_kind_of(Bignum)
+      lambda { class << (1<<1024); self; end }.should_not raise_error(TypeError)
     end
   end
 
