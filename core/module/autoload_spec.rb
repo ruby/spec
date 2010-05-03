@@ -230,10 +230,9 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload::U::V::X.should == :autoload_uvx
   end
 
-  # TODO: Remove duplicate specs (this one and that which follows it) when ruby_bug is fixed
-  ruby_bug "#1745", "1.8" do
-    # [ruby-core:19127]
-    it "raises a NameError when the autoload file did not define the constant and a module is opened with the same name" do
+  ruby_version_is "1.9" do
+    # [ruby-core:19127] [ruby-core:29941]
+    it "does NOT raise a NameError when the autoload file did not define the constant and a module is opened with the same name" do
       lambda do
         module ModuleSpecs::Autoload
           class W
@@ -243,7 +242,7 @@ describe "Module#autoload" do
             end
           end
         end
-      end.should raise_error(NameError)
+      end.should_not raise_error(NameError)
       ScratchPad.recorded.should == :loaded
     end
   end
