@@ -233,16 +233,16 @@ describe "Module#autoload" do
   ruby_version_is "1.9" do
     # [ruby-core:19127] [ruby-core:29941]
     it "does NOT raise a NameError when the autoload file did not define the constant and a module is opened with the same name" do
-      lambda do
-        module ModuleSpecs::Autoload
-          class W
-            autoload :Y, fixture(__FILE__, "autoload_w.rb")
+      module ModuleSpecs::Autoload
+        class W
+          autoload :Y, fixture(__FILE__, "autoload_w.rb")
 
-            class Y
-            end
+          class Y
           end
         end
-      end.should_not raise_error(NameError)
+      end
+
+      ModuleSpecs::Autoload::W::Y.should be_kind_of(Class)
       ScratchPad.recorded.should == :loaded
     end
   end
