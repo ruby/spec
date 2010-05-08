@@ -23,8 +23,6 @@ ruby_version_is "1.9" do
       eval(code).should == Encoding::US_ASCII
     end
 
-    it "is not assignable" do
-      lambda { eval("__ENCODING__ = nil") }.should raise_error(SyntaxError)
-    end
+    it_behaves_like :language_pseudo_variable, "__ENCODING__", nil
   end
 end
