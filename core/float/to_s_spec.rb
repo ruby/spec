@@ -35,10 +35,8 @@ describe "Float#to_s" do
     end
   end
 
-  ruby_bug "#3273", "1.8" do
-    it "outputs a minimal form to represent the float" do
-      0.56.to_s.should == "0.56"
-    end
+  it "outputs a minimal form to represent the float" do
+    0.56.to_s.should == "0.56"
   end
 
   platform_is_not :openbsd do
