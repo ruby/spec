@@ -72,13 +72,6 @@ ruby_version_is "1.9" do
       @file.size.should == 9
     end
 
-    it "returns 0 for an empty file" do
-      @file = File.open(@file.path, 'w')
-      @file.truncate(0)
-      @file.size.should == 0
-      @file.close
-    end
-
     platform_is_not :windows do
       it "follows symlinks if necessary" do
         ln_file = tmp('i_exist_ln')
@@ -95,4 +88,22 @@ ruby_version_is "1.9" do
       end
     end
   end
+
+  describe "File#size for an empty file" do
+    before :each do
+      @name = tmp('empty')
+      touch(@name)
+      @file = File.new @name
+    end
+
+    after :each do
+      @file.close unless @file.closed?
+      rm_r @name
+    end
+
+    it "returns 0" do
+      @file.size.should == 0
+    end
+  end
+
 end
