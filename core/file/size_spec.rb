@@ -72,6 +72,11 @@ ruby_version_is "1.9" do
       @file.size.should == 9
     end
 
+    it "raises an IOError on a closed file" do
+      @file.close
+      lambda { @file.size }.should raise_error(IOError)
+    end
+
     platform_is_not :windows do
       it "follows symlinks if necessary" do
         ln_file = tmp('i_exist_ln')
