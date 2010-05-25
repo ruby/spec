@@ -60,9 +60,11 @@ ruby_version_is "1.9" do
       @file.size.should == 8
     end
 
-    it "returns the cached size of the file if subsequently deleted" do
-      rm_r @file
-      @file.size.should == 8
+    platform_is_not :windows do # impossible to remove opened file on Windows
+      it "returns the cached size of the file if subsequently deleted" do
+        rm_r @file
+        @file.size.should == 8
+      end
     end
 
     it "returns the file's current size even if modified" do
