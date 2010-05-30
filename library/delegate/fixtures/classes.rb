@@ -21,6 +21,26 @@ module DelegateSpecs
     end
     private :priv
 
+    def prot
+      :protected
+    end
+    protected :prot
+  end
+
+  module Extra
+    def extra
+      :cheese
+    end
+
+    def extra_private
+      :bar
+    end
+    private :extra_private
+
+    def extra_protected
+      :baz
+    end
+    protected :extra_protected
   end
 
   class Delegator < ::Delegator
@@ -34,6 +54,10 @@ module DelegateSpecs
       super
       __setobj__(obj)
     end
+    include Extra
+  end
+
+  class DelegateClass < DelegateClass(Simple)
     include Extra
   end
 end

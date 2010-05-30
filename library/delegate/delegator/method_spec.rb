@@ -1,16 +1,46 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
 require File.expand_path('../../fixtures/classes', __FILE__)
 
-describe "SimpleDelegator#method" do
+describe "Delegator#method" do
   before :each do
     @simple = DelegateSpecs::Simple.new
-    @delegate = SimpleDelegator.new(@simple)
+    @delegate = DelegateSpecs::Delegator.new(@simple)
   end
 
-  it "returns a method object for a valid method" do
+  it "returns a method object for public methods of the delegate object" do
     m = @delegate.method(:pub)
     m.should be_an_instance_of(Method)
     m.call.should == :foo
+  end
+
+  it "returns a method object for protected methods of the delegate object" do
+    m = @delegate.method(:prot)
+    m.should be_an_instance_of(Method)
+    m.call.should == :protected
+  end
+
+  it "raises a NameError for a private methods of the delegate object" do
+    lambda {
+      @delegate.method(:priv)
+    }.should raise_error(NameError)
+  end
+
+  it "returns a method object for public methods of the Delegator class" do
+    m = @delegate.method(:extra)
+    m.should be_an_instance_of(Method)
+    m.call.should == :cheese
+  end
+
+  it "returns a method object for protected methods of the Delegator class" do
+    m = @delegate.method(:extra_protected)
+    m.should be_an_instance_of(Method)
+    m.call.should == :baz
+  end
+
+  it "returns a method object for private methods of the Delegator class" do
+    m = @delegate.method(:extra_private)
+    m.should be_an_instance_of(Method)
+    m.call.should == :bar
   end
 
   it "raises a NameError for an invalid method name" do

@@ -11,6 +11,10 @@ describe "SimpleDelegator.new" do
     @delegate.pub.should == :foo
   end
 
+  it "forwards protected method calls" do
+    @delegate.prot.should == :protected
+  end
+
   it "doesn't forward private method calls" do
     lambda{ @delegate.priv }.should raise_error( NoMethodError )
   end
