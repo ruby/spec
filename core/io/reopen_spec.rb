@@ -96,9 +96,11 @@ describe "IO#reopen with a String" do
     @io.gets.should == "Line 1: One\n"
   end
 
-  it "passes all mode flags through" do
-    @io.reopen(@name, "ab")
-    (@io.fcntl(Fcntl::F_GETFL) & File::APPEND).should == File::APPEND
+  platform_is_not :windows do
+    it "passes all mode flags through" do
+      @io.reopen(@name, "ab")
+      (@io.fcntl(Fcntl::F_GETFL) & File::APPEND).should == File::APPEND
+    end
   end
 
   it "effects exec/system/fork performed after it" do
