@@ -102,8 +102,8 @@ describe "IO#reopen with a String" do
   end
 
   it "effects exec/system/fork performed after it" do
-    ruby_exe("STDOUT.reopen('#{@tmp_file}'); system 'echo \"from system\"'; exec 'echo \"from exec\"'")
-    File.read(@tmp_file).should == "from system\nfrom exec\n"
+    ruby_exe fixture(__FILE__, "reopen_stdout.rb"), :args => @tmp_file
+    @tmp_file.should have_data("from system\nfrom exec", "r")
   end
 
   ruby_version_is "1.9" do
