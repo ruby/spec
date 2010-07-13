@@ -67,12 +67,11 @@ describe "IO#reopen with a String" do
     @io = IOSpecs.io_fixture "lines.txt"
 
     @tmp_file = tmp("reopen")
-    @rb_file = tmp("io_reopen.rb")
   end
 
   after :each do
     @io.close unless @io.closed?
-    rm_r @other_name, @tmp_file, @rb_file
+    rm_r @other_name, @tmp_file
   end
 
   it "does not raise an exception when called on a closed stream with a path" do
@@ -103,13 +102,8 @@ describe "IO#reopen with a String" do
   end
 
   it "effects exec/system/fork performed after it" do
-    touch(@rb_file) do |f|
-      f.puts %Q{STDOUT.reopen('#{@tmp_file}')}
-      f.puts %q{system 'echo from_system'}
-      f.puts %q{exec 'echo from_exec'}
-    end
-    ruby_exe(@rb_file)
-    File.read(@tmp_file).should == "from_system\nfrom_exec\n"
+    ruby_exe("STDOUT.reopen('#{@tmp_file}'); system 'echo \"from system\"'; exec 'echo \"from exec\"'")
+    File.read(@tmp_file).should == "from system\nfrom exec\n"
   end
 
   ruby_version_is "1.9" do
