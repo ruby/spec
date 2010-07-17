@@ -12,11 +12,7 @@ with_feature :encoding do
         old_lc_all = ENV['LC_ALL']
         ENV['LC_ALL'] = 'C'
         ruby_exe("print Encoding.locale_charmap").should == 'ANSI_X3.4-1968'
-        if old_lc_all == nil
-          ENV.delete('LC_ALL')
-        else
-          ENV['LC_ALL'] = old_lc_all
-        end
+        ENV['LC_ALL'] = old_lc_all
       end
     end
 
@@ -25,11 +21,7 @@ with_feature :encoding do
         old_lc_all = ENV['LC_ALL']
         ENV['LC_ALL'] = 'C'
         ruby_exe("print Encoding.locale_charmap").should == 'US-ASCII'
-        if old_lc_all == nil
-          ENV.delete('LC_ALL')
-        else
-          ENV['LC_ALL'] = old_lc_all
-        end
+        ENV['LC_ALL'] = old_lc_all
       end
     end
 
@@ -39,11 +31,7 @@ with_feature :encoding do
         old_lc_all = ENV['LC_ALL']
         ENV['LC_ALL'] = 'C'
         Encoding.locale_charmap.should == old_charmap
-        if old_lc_all == nil
-          ENV.delete('LC_ALL')
-        else
-          ENV['LC_ALL'] = old_lc_all
-        end
+        ENV['LC_ALL'] = old_lc_all
       end
     end
   end
