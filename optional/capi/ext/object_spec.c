@@ -226,6 +226,13 @@ static VALUE object_spec_rb_to_int(VALUE self, VALUE obj) {
 }
 #endif
 
+#ifdef HAVE_RB_OBJ_INSTANCE_EVAL
+static VALUE object_spec_rb_obj_instance_eval(VALUE self, VALUE obj) {
+  return rb_obj_instance_eval(0, NULL, obj);
+}
+#endif
+
+
 void Init_object_spec() {
   VALUE cls;
   cls = rb_define_class("CApiObjectSpecs", rb_cObject);
@@ -349,6 +356,11 @@ void Init_object_spec() {
 #ifdef HAVE_RB_TO_INT
   rb_define_method(cls, "rb_to_int", object_spec_rb_to_int, 1);
 #endif
+
+#ifdef HAVE_RB_OBJ_INSTANCE_EVAL
+  rb_define_method(cls, "rb_obj_instance_eval", object_spec_rb_obj_instance_eval, 1);
+#endif
+
 }
 
 #ifdef __cplusplus

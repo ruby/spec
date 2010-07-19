@@ -250,6 +250,15 @@ describe "CApiObject" do
     end
   end
 
+  describe "rb_obj_instance_eval" do
+    it "evaluates the block in the object context, that includes private methods" do
+      obj = ObjectTest
+      lambda do
+        @o.rb_obj_instance_eval(obj) { include Kernel }
+      end.should_not raise_error(NoMethodError)
+    end
+  end
+
   extended_on :rubinius do
     describe "rb_obj_frozen_p" do
       it "returns true if object passed to it is frozen" do
