@@ -25,6 +25,12 @@ static VALUE class_spec_rbclass2name(VALUE self, VALUE klass) {
 }
 #endif
 
+#ifdef HAVE_RB_PATH2CLASS
+static VALUE class_spec_rb_path2class(VALUE self, VALUE path) {
+  return rb_path2class(RSTRING_PTR(path));
+}
+#endif
+
 #ifdef HAVE_RB_CLASS_INHERITED
 static VALUE class_spec_rb_class_inherited(VALUE self, VALUE super, VALUE klass) {
   if(super == Qfalse) {
@@ -137,6 +143,10 @@ void Init_class_spec() {
 
 #ifdef HAVE_RB_CLASS2NAME
   rb_define_method(cls, "rb_class2name", class_spec_rbclass2name, 1);
+#endif
+
+#ifdef HAVE_RB_PATH2CLASS
+  rb_define_method(cls, "rb_path2class", class_spec_rb_path2class, 1);
 #endif
 
 #ifdef HAVE_RB_CLASS_INHERITED

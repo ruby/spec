@@ -137,6 +137,12 @@ describe "C-API Class function" do
     end
   end
 
+  describe "rb_path2class" do
+    it "returns the class" do
+      @s.rb_path2class("CApiClassSpecs::Sub").should == CApiClassSpecs::Sub
+    end
+  end
+
   describe "rb_cvar_defined" do
     it "returns false when the class variable is not defined" do
       @s.rb_cvar_defined(CApiClassSpecs::CVars, "@@nocvar").should be_false
