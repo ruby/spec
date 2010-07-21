@@ -11,6 +11,12 @@ describe "the URI method" do
     Kernel::URI("http://ruby-lang.org").should == result
   end
 
+  it "converts its argument with to_str" do
+    str = mock('string-like')
+    str.should_receive(:to_str).and_return("http://ruby-lang.org")
+    URI(str).should == URI.parse("http://ruby-lang.org")
+  end
+
   ruby_bug "redmine:3505", "1.9.2" do
     it "returns the argument if it is a URI object" do
       result = URI.parse("http://ruby-lang.org")

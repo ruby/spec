@@ -11,4 +11,12 @@ describe "URI#merge" do
   it "accepts URI objects as argument" do
     URI("http://localhost/").merge(URI("main.rbx")).should == URI.parse("http://localhost/main.rbx")
   end
+
+  ruby_bug "redmine:3506", "1.9.2" do
+    it "accepts a string-like argument" do
+      str = mock('string-like')
+      str.should_receive(:to_str).and_return("foo/bar")
+      URI("http://localhost/").merge(str).should == URI.parse("http://localhost/foo/bar")
+    end
+  end
 end
