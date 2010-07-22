@@ -105,6 +105,12 @@ static VALUE array_spec_rb_ary_delete(VALUE self, VALUE array, VALUE item) {
 }
 #endif
 
+#ifdef HAVE_RB_ARY_DELETE_AT
+static VALUE array_spec_rb_ary_delete_at(VALUE self, VALUE array, VALUE index) {
+  return rb_ary_delete_at(array, NUM2LONG(index));
+}
+#endif
+
 #ifdef HAVE_RB_ARY_DUP
 static VALUE array_spec_rb_ary_dup(VALUE self, VALUE array) {
   return rb_ary_dup(array);
@@ -239,6 +245,10 @@ void Init_array_spec() {
 
 #ifdef HAVE_RB_ARY_DELETE
   rb_define_method(cls, "rb_ary_delete", array_spec_rb_ary_delete, 2);
+#endif
+
+#ifdef HAVE_RB_ARY_DELETE_AT
+  rb_define_method(cls, "rb_ary_delete_at", array_spec_rb_ary_delete_at, 2);
 #endif
 
 #ifdef HAVE_RB_ARY_DUP

@@ -9,6 +9,7 @@
 #define HAVE_RB_ARY_AREF                   1
 #define HAVE_RB_ARY_CLEAR                  1
 #define HAVE_RB_ARY_DELETE                 1
+#define HAVE_RB_ARY_DELETE_AT              1
 #define HAVE_RB_ARY_DUP                    1
 #define HAVE_RB_ARY_ENTRY                  1
 #define HAVE_RB_ARY_INCLUDES               1

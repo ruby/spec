@@ -263,4 +263,12 @@ describe "C-API Array function" do
       ary.should == [1, 2, 3, 4]
     end
   end
+
+  describe "rb_ary_delete_at" do
+    it "removes an element from an array at the specified index" do
+      ary = [1, 2, 3, 4]
+      @s.rb_ary_delete_at(ary, ary.size - 1).should == 4
+      ary.should == [1, 2, 3]
+    end
+  end
 end
