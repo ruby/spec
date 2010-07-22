@@ -19,6 +19,12 @@ describe "C-API Array function" do
     end
   end
 
+  describe "rb_ary_new4" do
+    it "returns returns an array with the passed values" do
+      @s.rb_ary_new4(1,2,3).should == [1,2,3]
+    end
+  end
+
   describe "rb_ary_push" do
     it "adds an element to the array" do
       @s.rb_ary_push([], 4).should == [4]
