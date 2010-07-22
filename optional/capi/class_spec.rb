@@ -137,6 +137,12 @@ describe "C-API Class function" do
     end
   end
 
+  describe "rb_class_name" do
+    it "returns the class name" do
+      @s.rb_class2name(CApiClassSpecs).should == "CApiClassSpecs"
+    end
+  end
+
   describe "rb_path2class" do
     it "returns the class" do
       @s.rb_path2class("CApiClassSpecs::Sub").should == CApiClassSpecs::Sub

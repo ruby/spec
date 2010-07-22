@@ -37,6 +37,7 @@
 
 /* Class */
 #define HAVE_RB_CALL_SUPER                 1
+#define HAVE_RB_CLASS_NAME                 1
 #define HAVE_RB_CLASS2NAME                 1
 #define HAVE_RB_PATH2CLASS                 1
 #define HAVE_RB_CLASS_INHERITED            1

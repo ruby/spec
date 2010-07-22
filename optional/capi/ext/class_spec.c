@@ -19,6 +19,12 @@ static VALUE class_spec_define_call_super_method(VALUE self, VALUE obj, VALUE st
 }
 #endif
 
+#ifdef HAVE_RB_CLASS_NAME
+static VALUE class_spec_rbclass_name(VALUE self, VALUE klass) {
+  return rb_class_name(klass);
+}
+#endif
+
 #ifdef HAVE_RB_CLASS2NAME
 static VALUE class_spec_rbclass2name(VALUE self, VALUE klass) {
   return rb_str_new2( rb_class2name(klass) );
@@ -139,6 +145,10 @@ void Init_class_spec() {
 
 #ifdef HAVE_RB_CALL_SUPER
   rb_define_method(cls, "define_call_super_method", class_spec_define_call_super_method, 2);
+#endif
+
+#ifdef HAVE_RB_CLASS_NAME
+  rb_define_method(cls, "rb_class_name", class_spec_rbclass_name, 1);
 #endif
 
 #ifdef HAVE_RB_CLASS2NAME
