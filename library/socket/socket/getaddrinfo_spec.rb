@@ -89,8 +89,11 @@ describe "Socket#getaddrinfo" do
                                Socket::IPPROTO_TCP,
                                Socket::AI_PASSIVE)
 
-     expected = [["AF_INET6", 80, "::", "::", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]]
-     res.should == expected
+     expected = [
+       ["AF_INET6", 80, "::", "::", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP],
+       ["AF_INET6", 80, "0:0:0:0:0:0:0:0", "0:0:0:0:0:0:0:0", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]
+     ]
+     res.each { |a| expected.should include (a) }
    end
 
    it "accepts empty addresses for IPv6 non-passive sockets" do
@@ -101,8 +104,11 @@ describe "Socket#getaddrinfo" do
                                Socket::IPPROTO_TCP,
                                0)
 
-     expected = [["AF_INET6", 80, "::1", "::1", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]]
-     res.should == expected
+     expected = [
+       ["AF_INET6", 80, "::1", "::1", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP],
+       ["AF_INET6", 80, "0:0:0:0:0:0:0:1", "0:0:0:0:0:0:0:1", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]
+     ]
+     res.each { |a| expected.should include (a) }
    end
 end
 
