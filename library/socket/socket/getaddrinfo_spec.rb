@@ -4,6 +4,10 @@ require File.expand_path('../../fixtures/classes', __FILE__)
 require 'socket'
 
 describe "Socket#getaddrinfo" do
+  before :all do
+    @do_not_reverse_lookup = BasicSocket.do_not_reverse_lookup
+  end
+    
   before :each do
     BasicSocket.do_not_reverse_lookup = false
   end
@@ -12,6 +16,10 @@ describe "Socket#getaddrinfo" do
     BasicSocket.do_not_reverse_lookup = false
   end
 
+  after :all do
+    BasicSocket.do_not_reverse_lookup = @do_not_reverse_lookup
+  end
+    
   it "gets the address information" do
     BasicSocket.do_not_reverse_lookup = true
     expected = []
