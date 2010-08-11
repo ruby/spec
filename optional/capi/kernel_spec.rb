@@ -88,11 +88,9 @@ describe "C-API Kernel function" do
 
   describe "rb_sys_fail" do
     it "raises an exception from the value of errno" do
-      # If errno = 1 is no EPERM on a platform, we can change the
-      # expected exception class to be more generic
       lambda do
         @s.rb_sys_fail("additional info")
-      end.should raise_error(Errno::EPERM, /additional info/)
+      end.should raise_error(SystemCallError, /additional info/)
     end
   end
 
