@@ -7,6 +7,14 @@ describe "C-API Regex functions" do
     @o = CApiRegexpSpecs.new
   end
 
+  it "rb_reg_new should return a new valid Regexp" do
+    my_re = @p.a_re
+    my_re.kind_of?(Regexp).should == true
+    ('1a' =~ my_re).should == 1
+    ('1b' =~ my_re).should == nil
+    my_re.source.should == 'a'
+  end
+
   describe "rb_reg_options" do
     it "returns the options used to create the regexp" do
       @o.rb_reg_options(/42/im).should == //im.options
