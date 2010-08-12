@@ -15,6 +15,13 @@ describe "C-API Regex functions" do
     my_re.source.should == 'a'
   end
 
+  it "rb_reg_nth_match should return a the appropriate match data entry" do
+    @p.a_re_1st_match(/([ab])/.match("a")).should == 'a'
+    @p.a_re_1st_match(/([ab])/.match("b")).should == 'b'
+    @p.a_re_1st_match(/[ab]/.match("a")).should == nil
+    @p.a_re_1st_match(/[ab]/.match("c")).should == nil
+  end
+
   describe "rb_reg_options" do
     it "returns the options used to create the regexp" do
       @o.rb_reg_options(/42/im).should == //im.options
