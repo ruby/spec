@@ -147,6 +147,17 @@ static VALUE array_spec_rb_ary_new(VALUE self) {
 static VALUE array_spec_rb_ary_new2(VALUE self, VALUE length) {
   return rb_ary_new2(NUM2LONG(length));
 }
+
+#ifdef HAVE_RARRAY
+static VALUE array_spec_rb_ary_new2_assign(VALUE self, VALUE ary, VALUE content, VALUE length) {
+  int i;
+  for (i = 0; i < NUM2INT(length); i++) {
+    RARRAY(ary)->ptr[i] = content;
+  }
+  RARRAY(ary)->len = i;
+  return ary;
+}
+#endif
 #endif
 
 #ifdef HAVE_RB_ARY_NEW3
@@ -279,6 +290,9 @@ void Init_array_spec() {
 
 #ifdef HAVE_RB_ARY_NEW2
   rb_define_method(cls, "rb_ary_new2", array_spec_rb_ary_new2, 1);
+#ifdef HAVE_RARRAY
+  rb_define_method(cls, "rb_ary_new2_assign", array_spec_rb_ary_new2_assign, 3);
+#endif
 #endif
 
 #ifdef HAVE_RB_ARY_NEW3
