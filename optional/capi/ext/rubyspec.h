@@ -292,6 +292,16 @@
 #include "mri.h"
 #endif
 
+#ifndef RARRAY_PTR
+#define RARRAY_PTR(s) (*(VALUE *const *)&RARRAY(s)->ptr)
+#endif
+#ifndef RARRAY_LEN
+#define RARRAY_LEN(s) (*(const long *)&RARRAY(s)->len)
+#endif
+#ifndef RFLOAT_VALUE
+#define RFLOAT_VALUE(v) (RFLOAT(v)->value)
+#endif
+
 #if RUBY_VERSION_MAJOR > 1 || RUBY_VERSION_MINOR > 8
 #undef HAVE_RB_CVAR_SET
 #undef HAVE_RB_SET_KCODE

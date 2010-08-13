@@ -11,7 +11,7 @@ extern "C" {
 static VALUE array_spec_RARRAY_ptr_assign_call(VALUE self, VALUE array) {
   VALUE* ptr;
 
-  ptr = RARRAY(array)->ptr;
+  ptr = RARRAY_PTR(array);
   ptr[1] = INT2FIX(5);
   ptr[2] = INT2FIX(7);
   rb_ary_push(array, INT2FIX(9));
@@ -22,7 +22,7 @@ static VALUE array_spec_RARRAY_ptr_assign_call(VALUE self, VALUE array) {
 static VALUE array_spec_RARRAY_ptr_assign_funcall(VALUE self, VALUE array) {
   VALUE* ptr;
 
-  ptr = RARRAY(array)->ptr;
+  ptr = RARRAY_PTR(array);
   ptr[1] = INT2FIX(1);
   ptr[2] = INT2FIX(2);
   rb_funcall(array, rb_intern("<<"), 1, INT2FIX(3));
@@ -31,14 +31,14 @@ static VALUE array_spec_RARRAY_ptr_assign_funcall(VALUE self, VALUE array) {
 }
 
 static VALUE array_spec_RARRAY_len(VALUE self, VALUE array) {
-  return INT2FIX(RARRAY(array)->len);
+  return INT2FIX(RARRAY_LEN(array));
 }
 
 static VALUE array_spec_RARRAY_ptr_iterate(VALUE self, VALUE array) {
   int i;
   VALUE* ptr;
 
-  ptr = RARRAY(array)->ptr;
+  ptr = RARRAY_PTR(array);
   for(i = 0; i < RARRAY_LEN(array); i++) {
     rb_yield(ptr[i]);
   }
@@ -49,7 +49,7 @@ static VALUE array_spec_RARRAY_ptr_assign(VALUE self, VALUE array, VALUE value) 
   int i;
   VALUE* ptr;
 
-  ptr = RARRAY(array)->ptr;
+  ptr = RARRAY_PTR(array);
   for(i = 0; i < RARRAY_LEN(array); i++) {
     ptr[i] = value;
   }

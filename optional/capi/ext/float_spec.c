@@ -19,7 +19,7 @@ static VALUE float_spec_new_point_five(VALUE self) {
 }
 
 static VALUE float_spec_RFLOAT_value(VALUE self, VALUE float_h) {
-  return rb_float_new(RFLOAT(float_h)->value);
+  return rb_float_new(RFLOAT_VALUE(float_h));
 }
 #endif
 
@@ -31,7 +31,7 @@ static VALUE float_spec_rb_Float(VALUE self, VALUE float_str) {
 
 #ifdef HAVE_RFLOAT
 static VALUE float_spec_RFLOAT_value_set(VALUE self, VALUE float_h, VALUE new_value) {
-  RFLOAT(float_h)->value = (double)NUM2INT(new_value);
+  RFLOAT_VALUE(float_h) = (double)NUM2INT(new_value);
   return Qnil;
 }
 #endif
