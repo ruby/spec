@@ -19,8 +19,8 @@ static VALUE do_unlocked(void* data) {
   return (VALUE)0;
 }
 
-// There is really no way to know we're unlocked. So just make sure the arguments
-// go through fine.
+/* There is really no way to know we're unlocked. So just make sure the arguments */
+/* go through fine. */
 static VALUE thread_spec_rb_thread_blocking_region() {
   VALUE ret = rb_thread_blocking_region(do_unlocked, (void*)1, 0, 0);
   if(ret == (VALUE)1) return Qtrue;
