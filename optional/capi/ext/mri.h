@@ -12,6 +12,10 @@
 
 #undef HAVE_THREAD_BLOCKING_REGION
 
+#ifdef RUBY_VERSION_IS_LT_1_8_7
+#undef HAVE_RB_STR_SET_LEN
+#endif
+
 #ifdef RUBY_VERSION_IS_1_9
 #undef HAVE_RARRAY
 #undef HAVE_RFLOAT
