@@ -11,7 +11,7 @@ extern "C" {
 VALUE concat_func(VALUE args) {
   int i;
   char buffer[500] = {0};
-  if (TYPE(val) != T_ARRAY) return Qnil;
+  if (TYPE(args) != T_ARRAY) return Qnil;
   for(i = 0; i < RARRAY_LEN(args); ++i) {
     VALUE v = RARRAY_PTR(args)[i];
     strcat(buffer, StringValuePtr(v));
