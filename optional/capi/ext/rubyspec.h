@@ -292,4 +292,9 @@
 #include "mri.h"
 #endif
 
+#if RUBY_VERSION_MAJOR > 1 || RUBY_VERSION_MINOR > 8
+#undef HAVE_RB_CVAR_SET
+#undef HAVE_RB_SET_KCODE
+#endif
+
 #endif
