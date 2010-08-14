@@ -12,4 +12,22 @@
 
 #undef HAVE_THREAD_BLOCKING_REGION
 
+#ifdef RUBY_VERSION_IS_1_9
+#undef HAVE_RB_CVAR_SET
+#undef HAVE_RB_SET_KCODE
+#endif
+
+/* Macros that may not be defined in old versions */
+#ifndef RARRAY_PTR
+#define RARRAY_PTR(s) (*(VALUE *const *)&RARRAY(s)->ptr)
+#endif
+
+#ifndef RARRAY_LEN
+#define RARRAY_LEN(s) (*(const long *)&RARRAY(s)->len)
+#endif
+
+#ifndef RFLOAT_VALUE
+#define RFLOAT_VALUE(v) (RFLOAT(v)->value)
+#endif
+
 #endif
