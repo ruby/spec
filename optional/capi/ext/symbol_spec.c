@@ -7,19 +7,19 @@ extern "C" {
 
 #ifdef HAVE_RB_IS_CLASS_ID
 VALUE symbol_spec_rb_is_class_id(VALUE self, VALUE sym) {
-  return rb_is_class_id(SYM2ID(sym));
+  return rb_is_class_id(SYM2ID(sym)) ? Qtrue : Qfalse;
 }
 #endif
 
 #ifdef HAVE_RB_IS_CONST_ID
 VALUE symbol_spec_rb_is_const_id(VALUE self, VALUE sym) {
-  return rb_is_const_id(SYM2ID(sym));
+  return rb_is_const_id(SYM2ID(sym)) ? Qtrue : Qfalse;
 }
 #endif
 
 #ifdef HAVE_RB_IS_INSTANCE_ID
 VALUE symbol_spec_rb_is_instance_id(VALUE self, VALUE sym) {
-  return rb_is_instance_id(SYM2ID(sym));
+  return rb_is_instance_id(SYM2ID(sym)) ? Qtrue : Qfalse;
 }
 #endif
 
