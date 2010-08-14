@@ -190,7 +190,7 @@ static VALUE array_spec_rb_assoc_new(VALUE self, VALUE first, VALUE second) {
 
 #if defined(HAVE_RB_ITERATE) && defined(HAVE_RB_EACH)
 static VALUE copy_ary(VALUE el, VALUE new_ary) {
-  rb_ary_push(new_ary, el);
+  return rb_ary_push(new_ary, el);
 }
 
 static VALUE array_spec_rb_iterate(VALUE self, VALUE ary) {
