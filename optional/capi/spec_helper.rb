@@ -10,12 +10,10 @@ def compile_extension(path, name)
   signature = "#{ext}.sig"
 
   # TODO use rakelib/ext_helper.rb?
-  rch_hdrdir = nil
   if RUBY_NAME == 'rbx'
     hdrdir = Rubinius::HDR_PATH
   elsif RUBY_NAME =~ /^ruby/
-    hdrdir = Config::CONFIG["rubyhdrdir"]
-    arch_hdrdir = "#{hdrdir}/#{Config::CONFIG["arch"]}"
+    hdrdir = Config::CONFIG["archdir"]
   else
     raise "Don't know how to build C extensions with #{RUBY_NAME}"
   end
@@ -34,7 +32,6 @@ def compile_extension(path, name)
   cflags    = (ENV["CFLAGS"] || Config::CONFIG["CFLAGS"]).dup
   cflags   += " -fPIC" unless cflags.include?("-fPIC")
   incflags  = "-I#{path} -I#{hdrdir}"
-  incflags << " -I#{arch_hdrdir}" if arch_hdrdir
 
   `#{cc} #{incflags} #{cflags} -c #{source} -o #{obj}`
 
