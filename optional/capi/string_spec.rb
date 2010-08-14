@@ -35,8 +35,10 @@ describe "C-API String function" do
       @s.rb_str_new2.should == "hello"
     end
 
-    it "rb_str_new2 should raise ArgumentError if passed NULL" do
-      lambda { @s.rb_str_new2_with_null }.should raise_error(ArgumentError)
+    ruby_version_is ""..."1.9" do
+      it "rb_str_new2 should raise ArgumentError if passed NULL" do
+        lambda { @s.rb_str_new2_with_null }.should raise_error(ArgumentError)
+      end
     end
   end
 
@@ -150,36 +152,38 @@ describe "C-API String function" do
     end
   end
 
-  describe "RSTRING" do
-    it "returns struct with a pointer to the string's contents" do
-      str = "xyz"
-      chars = []
-      @s.RSTRING_ptr_iterate(str) do |c|
-        chars << c
+  ruby_version_is ""..."1.9" do
+    describe "RSTRING" do
+      it "returns struct with a pointer to the string's contents" do
+        str = "xyz"
+        chars = []
+        @s.RSTRING_ptr_iterate(str) do |c|
+          chars << c
+        end
+        chars.should == [120, 121, 122]
       end
-      chars.should == [120, 121, 122]
-    end
 
-    it "allows changing the characters in the string" do
-      str = "abc"
-      @s.RSTRING_ptr_assign(str, 70)
-      str.should == "FFF"
-    end
+      it "allows changing the characters in the string" do
+        str = "abc"
+        @s.RSTRING_ptr_assign(str, 70)
+        str.should == "FFF"
+      end
 
-    it "allows changing the string and calling a rb_str_xxx function" do
-      str = "abc"
-      @s.RSTRING_ptr_assign_call(str)
-      str.should == "axcd"
-    end
+      it "allows changing the string and calling a rb_str_xxx function" do
+        str = "abc"
+        @s.RSTRING_ptr_assign_call(str)
+        str.should == "axcd"
+      end
 
-    it "allows changing the string and calling a method via rb_funcall" do
-      str = "abc"
-      @s.RSTRING_ptr_assign_funcall(str)
-      str.should == "axce"
-    end
+      it "allows changing the string and calling a method via rb_funcall" do
+        str = "abc"
+        @s.RSTRING_ptr_assign_funcall(str)
+        str.should == "axce"
+      end
 
-    it "returns a struct with the string's length" do
-      @s.RSTRING_len("dewdrops").should == 8
+      it "returns a struct with the string's length" do
+        @s.RSTRING_len("dewdrops").should == 8
+      end
     end
   end
 
@@ -277,71 +281,73 @@ describe "C-API String function" do
     end
   end
 
-  describe "rb_str2cstr" do
-    before :each do
-      @verbose = $VERBOSE
-      @stderr, $stderr = $stderr, IOStub.new
+  ruby_version_is ""..."1.9" do
+    describe "rb_str2cstr" do
+      before :each do
+        @verbose = $VERBOSE
+        @stderr, $stderr = $stderr, IOStub.new
+      end
+
+      after :each do
+        $stderr = @stderr
+        $VERBOSE = @verbose
+      end
+
+      it "returns a pointer to the string's content and its length" do
+        str, len = @s.rb_str2cstr('any str', true)
+        str.should == 'any str'
+        len.should == 7
+      end
+
+      it "allows changing the characters in the string" do
+        str = 'any str'
+        # Hardcoded to set "foo\0"
+        @s.rb_str2cstr_replace(str)
+        str.should == "foo\0str"
+      end
+
+      it "issues a warning iff passed string contains a NULL character, $VERBOSE = true and len parameter is NULL" do
+        $VERBOSE = false
+        @s.rb_str2cstr('any str', true)
+        $stderr.should == ''
+
+        @s.rb_str2cstr('any str', false)
+        $stderr.should == ''
+
+        $VERBOSE = true
+        @s.rb_str2cstr('any str', true)
+        $stderr.should == ''
+
+        @s.rb_str2cstr('any str', false)
+        $stderr.should == ''
+
+        $VERBOSE = false
+        @s.rb_str2cstr("any\0str", true)
+        $stderr.should == ''
+
+        @s.rb_str2cstr("any\0str", false)
+        $stderr.should == ''
+
+        $VERBOSE = true
+        @s.rb_str2cstr("any\0str", true)
+        $stderr.should == ''
+
+        @s.rb_str2cstr("any\0str", false)
+        $stderr.should =~ /string contains \\0 character/
+      end
     end
 
-    after :each do
-      $stderr = @stderr
-      $VERBOSE = @verbose
-    end
+    describe "STR2CSTR" do
+      it "returns a pointer to the string's content" do
+        @s.STR2CSTR('any str').should == 'any str'
+      end
 
-    it "returns a pointer to the string's content and its length" do
-      str, len = @s.rb_str2cstr('any str', true)
-      str.should == 'any str'
-      len.should == 7
-    end
-
-    it "allows changing the characters in the string" do
-      str = 'any str'
-      # Hardcoded to set "foo\0"
-      @s.rb_str2cstr_replace(str)
-      str.should == "foo\0str"
-    end
-
-    it "issues a warning iff passed string contains a NULL character, $VERBOSE = true and len parameter is NULL" do
-      $VERBOSE = false
-      @s.rb_str2cstr('any str', true)
-      $stderr.should == ''
-
-      @s.rb_str2cstr('any str', false)
-      $stderr.should == ''
-
-      $VERBOSE = true
-      @s.rb_str2cstr('any str', true)
-      $stderr.should == ''
-
-      @s.rb_str2cstr('any str', false)
-      $stderr.should == ''
-
-      $VERBOSE = false
-      @s.rb_str2cstr("any\0str", true)
-      $stderr.should == ''
-
-      @s.rb_str2cstr("any\0str", false)
-      $stderr.should == ''
-
-      $VERBOSE = true
-      @s.rb_str2cstr("any\0str", true)
-      $stderr.should == ''
-
-      @s.rb_str2cstr("any\0str", false)
-      $stderr.should =~ /string contains \\0 character/
-    end
-  end
-
-  describe "STR2CSTR" do
-    it "returns a pointer to the string's content" do
-      @s.STR2CSTR('any str').should == 'any str'
-    end
-
-    it "allows changing the characters in the string" do
-      str = 'any str'
-      # Hardcoded to set "foo\0"
-      @s.STR2CSTR_replace(str)
-      str.should == "foo\0str"
+      it "allows changing the characters in the string" do
+        str = 'any str'
+        # Hardcoded to set "foo\0"
+        @s.STR2CSTR_replace(str)
+        str.should == "foo\0str"
+      end
     end
   end
 

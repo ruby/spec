@@ -280,6 +280,8 @@
  * with version incompatibilities.
  */
 
+#include "rubyspec_version.h"
+
 #if RUBY_VERSION_MAJOR == 1 && RUBY_VERSION_MINOR == 8
 #define RUBY_VERSION_IS_1_8
 #endif
@@ -291,7 +293,6 @@
 #if RUBY_VERSION_MAJOR == 1 && RUBY_VERSION_MINOR == 9
 #define RUBY_VERSION_IS_1_9
 #endif
-
 
 /* Now, create the differential set. The format of the preprocessor directives
  * is significant. The alternative implementations should define RUBY because

@@ -265,7 +265,7 @@ describe "CApiObject" do
     end
   end
 
-  describe "rb_obj_taint" do 
+  describe "rb_obj_taint" do
     it "marks the object passed as tainted" do
       obj = ""
       obj.tainted?.should == false
@@ -273,28 +273,40 @@ describe "CApiObject" do
       obj.tainted?.should == true
     end
 
-    it "raises an error if the object passed is frozen" do
-      obj = ""
-      obj.freeze
-      lambda { @o.rb_obj_taint(obj) }.should raise_error(TypeError)
+    ruby_version_is ""..."1.9" do
+      it "raises a TypeError if the object passed is frozen" do
+        lambda { @o.rb_obj_taint("".freeze) }.should raise_error(TypeError)
+      end
+    end
+
+    ruby_version_is "1.9" do
+      it "raises a RuntimeError if the object passed is frozen" do
+        lambda { @o.rb_obj_taint("".freeze) }.should raise_error(RuntimeError)
+      end
     end
   end
 
-  describe "rb_check_frozen" do 
-    it "raises an error if the obj is frozen" do 
-      obj = ""
-      obj.freeze
-      lambda { @o.rb_check_frozen(obj) }.should raise_error(TypeError)
+  describe "rb_check_frozen" do
+    ruby_version_is ""..."1.9" do
+      it "raises a TypeError if the obj is frozen" do
+        lambda { @o.rb_check_frozen("".freeze) }.should raise_error(TypeError)
+      end
     end
 
-    it "does nothing when object isn't frozen" do 
+    ruby_version_is "1.9" do
+      it "raises a RuntimeError if the obj is frozen" do
+        lambda { @o.rb_check_frozen("".freeze) }.should raise_error(RuntimeError)
+      end
+    end
+
+    it "does nothing when object isn't frozen" do
       obj = ""
       lambda { @o.rb_check_frozen(obj) }.should_not raise_error(TypeError)
     end
   end
 
   describe "rb_any_to_s" do
-    it "converts obj to string" do 
+    it "converts obj to string" do
       obj = 1
       i = @o.rb_any_to_s(obj)
       i.should be_kind_of(String)

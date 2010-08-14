@@ -129,36 +129,38 @@ describe "C-API Array function" do
     end
   end
 
-  describe "RARRAY" do
-    it "returns a struct with a pointer to a C array of the array's elements" do
-      a = [1, 2, 3]
-      b = []
-      @s.RARRAY_ptr_iterate(a) do |e|
-        b << e
+  ruby_version_is ""..."1.9" do
+    describe "RARRAY" do
+      it "returns a struct with a pointer to a C array of the array's elements" do
+        a = [1, 2, 3]
+        b = []
+        @s.RARRAY_ptr_iterate(a) do |e|
+          b << e
+        end
+        a.should == b
       end
-      a.should == b
-    end
 
-    it "allows assigning to the elements of the C array" do
-      a = [1, 2, 3]
-      @s.RARRAY_ptr_assign(a, :nasty)
-      a.should == [:nasty, :nasty, :nasty]
-    end
+      it "allows assigning to the elements of the C array" do
+        a = [1, 2, 3]
+        @s.RARRAY_ptr_assign(a, :nasty)
+        a.should == [:nasty, :nasty, :nasty]
+      end
 
-    it "allows changing the array and calling an rb_ary_xxx function" do
-      a = [1, 2, 3]
-      @s.RARRAY_ptr_assign_call(a)
-      a.should == [1, 5, 7, 9]
-    end
+      it "allows changing the array and calling an rb_ary_xxx function" do
+        a = [1, 2, 3]
+        @s.RARRAY_ptr_assign_call(a)
+        a.should == [1, 5, 7, 9]
+      end
 
-    it "allows changing the array and calling a method via rb_funcall" do
-      a = [1, 2, 3]
-      @s.RARRAY_ptr_assign_funcall(a)
-      a.should == [1, 1, 2, 3]
-    end
+      it "allows changing the array and calling a method via rb_funcall" do
+        a = [1, 2, 3]
+        @s.RARRAY_ptr_assign_funcall(a)
+        a.should == [1, 1, 2, 3]
+      end
 
-    it "returns a struct with the length of the array" do
-      @s.RARRAY_len([1, 2, 3]).should == 3
+      it "returns a struct with the length of the array" do
+        @s.RARRAY_len([1, 2, 3]).should == 3
+      end
     end
   end
 

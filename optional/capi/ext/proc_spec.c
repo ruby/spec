@@ -12,10 +12,12 @@ VALUE concat_func(VALUE args) {
   int i;
   char buffer[500] = {0};
 
-  for(i = 0; i < RARRAY_LEN(args); ++i) {
-    VALUE v = RARRAY_PTR(args)[i];
-   strcat(buffer, StringValuePtr(v));
-    strcat(buffer, "_");
+  if(TYPE(args) == T_ARRAY) {
+    for(i = 0; i < RARRAY_LEN(args); ++i) {
+      VALUE v = RARRAY_PTR(args)[i];
+      strcat(buffer, StringValuePtr(v));
+      strcat(buffer, "_");
+    }
   }
 
   buffer[strlen(buffer) - 1] = 0;
