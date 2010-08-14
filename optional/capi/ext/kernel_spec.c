@@ -28,11 +28,13 @@ VALUE kernel_spec_rb_block_proc(VALUE self) {
 #ifdef HAVE_RB_ENSURE
 VALUE kernel_spec_rb_ensure(VALUE self, VALUE main_proc, VALUE arg,
                             VALUE ensure_proc, VALUE arg2) {
-  VALUE main_array = rb_ary_new();
+  VALUE main_array, ensure_array;
+
+  main_array = rb_ary_new();
   rb_ary_push(main_array, main_proc);
   rb_ary_push(main_array, arg);
 
-  VALUE ensure_array = rb_ary_new();
+  ensure_array = rb_ary_new();
   rb_ary_push(ensure_array, ensure_proc);
   rb_ary_push(ensure_array, arg2);
 
@@ -66,11 +68,13 @@ VALUE kernel_spec_rb_throw(VALUE self, VALUE result) {
 #ifdef HAVE_RB_RESCUE
 VALUE kernel_spec_rb_rescue(VALUE self, VALUE main_proc, VALUE arg,
                             VALUE raise_proc, VALUE arg2) {
-  VALUE main_array = rb_ary_new();
+  VALUE main_array, raise_array;
+
+  main_array = rb_ary_new();
   rb_ary_push(main_array, main_proc);
   rb_ary_push(main_array, arg);
 
-  VALUE raise_array = rb_ary_new();
+  raise_array = rb_ary_new();
   rb_ary_push(raise_array, raise_proc);
   rb_ary_push(raise_array, arg2);
 
@@ -81,11 +85,13 @@ VALUE kernel_spec_rb_rescue(VALUE self, VALUE main_proc, VALUE arg,
 
 #ifdef HAVE_RB_RESCUE2
 VALUE kernel_spec_rb_rescue2(int argc, VALUE *args, VALUE self) {
-  VALUE main_array = rb_ary_new();
+  VALUE main_array, raise_array;
+
+  main_array = rb_ary_new();
   rb_ary_push(main_array, args[0]);
   rb_ary_push(main_array, args[1]);
 
-  VALUE raise_array = rb_ary_new();
+  raise_array = rb_ary_new();
   rb_ary_push(raise_array, args[2]);
   rb_ary_push(raise_array, args[3]);
 
