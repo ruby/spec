@@ -2,22 +2,24 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 require 'rbconfig'
 
+# Generate a version.h file for specs to use
+File.open File.expand_path("../ext/rubyspec_version.h", __FILE__), "w" do |f|
+  # Yes, I know CONFIG variables exist for these, but
+  # who knows when those could be removed without warning.
+  major, minor, teeny = RUBY_VERSION.split(".")
+  f.puts "#define RUBY_VERSION_MAJOR  #{major}"
+  f.puts "#define RUBY_VERSION_MINOR  #{minor}"
+  f.puts "#define RUBY_VERSION_TEENY  #{teeny}"
+end
+
+CAPI_RUBY_SIGNATURE = "#{RUBY_NAME}-#{RUBY_VERSION}"
+
 def compile_extension(path, name)
   ext       = File.join(path, "#{name}_spec")
   source    = "#{ext}.c"
   obj       = "#{ext}.o"
   lib       = "#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   signature = "#{ext}.sig"
-
-  # Generate a version.h file for specs to use
-  File.open File.expand_path("../ext/rubyspec_version.h", __FILE__), "w" do |f|
-    # Yes, I know CONFIG variables exist for these, but
-    # who knows when those could be removed without warning.
-    major, minor, teeny = RUBY_VERSION.split(".")
-    f.puts "#define RUBY_VERSION_MAJOR  #{major}"
-    f.puts "#define RUBY_VERSION_MINOR  #{minor}"
-    f.puts "#define RUBY_VERSION_TEENY  #{teeny}"
-  end
 
   # TODO use rakelib/ext_helper.rb?
   arch_hdrdir = nil
@@ -38,12 +40,14 @@ def compile_extension(path, name)
 
   ruby_header     = File.join(hdrdir, "ruby.h")
   rubyspec_header = File.join(path, "rubyspec.h")
+  mri_header      = File.join(path, "mri.h")
 
   return lib if File.exists?(signature) and
-                IO.read(signature).chomp == RUBY_NAME and
+                IO.read(signature).chomp == CAPI_RUBY_SIGNATURE and
                 File.exists?(lib) and File.mtime(lib) > File.mtime(source) and
                 File.mtime(lib) > File.mtime(ruby_header) and
-                File.mtime(lib) > File.mtime(rubyspec_header)
+                File.mtime(lib) > File.mtime(rubyspec_header) and
+                File.mtime(lib) > File.mtime(mri_header)
 
   # avoid problems where compilation failed but previous shlib exists
   File.delete lib if File.exists? lib
@@ -67,7 +71,7 @@ def compile_extension(path, name)
   # we don't need to leave the object file around
   File.delete obj if File.exists? obj
 
-  File.open(signature, "w") { |f| f.puts RUBY_NAME }
+  File.open(signature, "w") { |f| f.puts CAPI_RUBY_SIGNATURE }
 
   lib
 end
