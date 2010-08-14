@@ -3,42 +3,64 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require 'rbconfig'
 
 def compile_extension(path, name)
-  ext       = "#{path}#{name}_spec"
+  ext       = File.join(path, "#{name}_spec")
   source    = "#{ext}.c"
   obj       = "#{ext}.o"
-  lib       = "#{ext}.#{Config::CONFIG['DLEXT']}"
+  lib       = "#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   signature = "#{ext}.sig"
 
+  # Generate a version.h file for specs to use
+  File.open File.expand_path("../ext/rubyspec_version.h", __FILE__), "w" do |f|
+    # Yes, I know CONFIG variables exist for these, but
+    # who knows when those could be removed without warning.
+    major, minor, teeny = RUBY_VERSION.split(".")
+    f.puts "#define RUBY_VERSION_MAJOR  #{major}"
+    f.puts "#define RUBY_VERSION_MINOR  #{minor}"
+    f.puts "#define RUBY_VERSION_TEENY  #{teeny}"
+  end
+
   # TODO use rakelib/ext_helper.rb?
+  arch_hdrdir = nil
+  ruby_hdrdir = nil
+
   if RUBY_NAME == 'rbx'
     hdrdir = Rubinius::HDR_PATH
   elsif RUBY_NAME =~ /^ruby/
-    hdrdir = Config::CONFIG["archdir"]
+    if hdrdir = RbConfig::CONFIG["rubyhdrdir"]
+      arch_hdrdir = File.join hdrdir, RbConfig::CONFIG["arch"]
+      ruby_hdrdir = File.join hdrdir, "ruby"
+    else
+      hdrdir = RbConfig::CONFIG["archdir"]
+    end
   else
     raise "Don't know how to build C extensions with #{RUBY_NAME}"
   end
 
-  header = hdrdir + "/ruby.h"
+  ruby_header     = File.join(hdrdir, "ruby.h")
+  rubyspec_header = File.join(path, "rubyspec.h")
 
   return lib if File.exists?(signature) and
                 IO.read(signature).chomp == RUBY_NAME and
                 File.exists?(lib) and File.mtime(lib) > File.mtime(source) and
-                File.mtime(lib) > File.mtime(header)
+                File.mtime(lib) > File.mtime(ruby_header) and
+                File.mtime(lib) > File.mtime(rubyspec_header)
 
   # avoid problems where compilation failed but previous shlib exists
   File.delete lib if File.exists? lib
 
-  cc        = Config::CONFIG["CC"]
-  cflags    = (ENV["CFLAGS"] || Config::CONFIG["CFLAGS"]).dup
+  cc        = RbConfig::CONFIG["CC"]
+  cflags    = (ENV["CFLAGS"] || RbConfig::CONFIG["CFLAGS"]).dup
   cflags   += " -fPIC" unless cflags.include?("-fPIC")
   incflags  = "-I#{path} -I#{hdrdir}"
+  incflags << " -I#{arch_hdrdir}" if arch_hdrdir
+  incflags << " -I#{ruby_hdrdir}" if ruby_hdrdir
 
   `#{cc} #{incflags} #{cflags} -c #{source} -o #{obj}`
 
-  ldshared  = Config::CONFIG["LDSHARED"]
+  ldshared  = RbConfig::CONFIG["LDSHARED"]
   libpath   = "-L#{path}"
-  libs      = Config::CONFIG["LIBS"]
-  dldflags  = Config::CONFIG["DLDFLAGS"]
+  libs      = RbConfig::CONFIG["LIBS"]
+  dldflags  = RbConfig::CONFIG["DLDFLAGS"]
 
   `#{ldshared} #{obj} #{libpath} #{dldflags} #{libs} -o #{lib}`
 
@@ -51,7 +73,7 @@ def compile_extension(path, name)
 end
 
 def load_extension(name)
-  path = File.dirname(__FILE__) + '/ext/'
+  path = File.join(File.dirname(__FILE__), 'ext')
 
   ext = compile_extension path, name
   require ext
