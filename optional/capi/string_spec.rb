@@ -272,12 +272,24 @@ describe "C-API String function" do
       @s.rb_str_intern("symbol").should == :symbol
     end
 
-    it "raises an ArgumentError if passed an empty string" do
-      lambda { @s.rb_str_intern("") }.should raise_error(ArgumentError)
+    ruby_version_is ""..."1.9" do
+      it "raises an ArgumentError if passed an empty string" do
+        lambda { @s.rb_str_intern("") }.should raise_error(ArgumentError)
+      end
+
+      it "raises an ArgumentError if the passed string contains NULL characters" do
+        lambda { @s.rb_str_intern("no\0no") }.should raise_error(ArgumentError)
+      end
     end
 
-    it "raises an ArgumentError if the passed string contains NULL characters" do
-      lambda { @s.rb_str_intern("no\0no") }.should raise_error(ArgumentError)
+    ruby_version_is "1.9" do
+      it "returns a symbol even if passed an empty string" do
+        @s.rb_str_intern("").should == "".to_sym
+      end
+
+      it "returns a symbol even if the passed string contains NULL characters" do
+        @s.rb_str_intern("no\0no").should == "no\0no".to_sym
+      end
     end
   end
 
