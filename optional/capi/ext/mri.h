@@ -18,7 +18,6 @@
 #undef HAVE_RSTRING
 #undef HAVE_STR2CSTR
 #undef HAVE_RB_STR2CSTR
-#undef HAVE_RB_CVAR_SET
 #undef HAVE_RB_SET_KCODE
 #endif
 
