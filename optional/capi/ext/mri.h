@@ -22,6 +22,17 @@
 #undef HAVE_RB_SET_KCODE
 #endif
 
+/* RubySpec assumes following are public API */
+#ifndef rb_proc_new
+VALUE rb_proc_new _((VALUE (*)(ANYARGS/* VALUE yieldarg[, VALUE procarg] */), VALUE));
+#endif
+#ifndef rb_str_len
+int rb_str_len(VALUE);
+#endif
+#ifndef rb_set_errinfo
+void rb_set_errinfo(VALUE);
+#endif
+
 /* Macros that may not be defined in old versions */
 #ifndef RARRAY_PTR
 #define RARRAY_PTR(s) (*(VALUE *const *)&RARRAY(s)->ptr)
