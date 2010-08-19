@@ -8,19 +8,28 @@ extern "C" {
 #endif
 
 #ifdef HAVE_RB_PROC_NEW
-#ifdef RUBY_VERSION_IS_1_8
-VALUE concat_func(VALUE args) {
-  int i;
-  char buffer[500] = {0};
+VALUE concat_func0(int argc, VALUE *argv) {
+#define BUFLEN 500
+  int i, len = 0;
+  char buffer[BUFLEN] = {0};
 
-  for (i = 0; i < RARRAY_LEN(args); ++i) {
-    VALUE v = RARRAY_PTR(args)[i];
+  for (i = 0; i < argc; ++i) {
+    VALUE v = argv[i];
+    len += RSTRING_LEN(v) + 1;
+    if (len > BUFLEN - 1) return Qnil;
     strcat(buffer, StringValuePtr(v));
     strcat(buffer, "_");
   }
 
-  buffer[strlen(buffer) - 1] = 0;
+  buffer[len - 1] = 0;
   return rb_str_new2(buffer);
+}
+#endif
+
+#ifdef HAVE_RB_PROC_NEW
+#ifdef RUBY_VERSION_IS_1_8
+VALUE concat_func(VALUE args) {
+  return concat_func0(RARRAY_LEN(args), RARRAY_PTR(args));
 }
 #endif
 #endif
@@ -28,19 +37,7 @@ VALUE concat_func(VALUE args) {
 #ifdef HAVE_RB_PROC_NEW
 #ifdef RUBY_VERSION_IS_1_9
 VALUE concat_func(VALUE arg1, VALUE val, int argc, VALUE *argv, VALUE passed_proc) {
-  int i;
-  char buffer[500] = {0};
-
-  argv = RARRAY_PTR(arg1);
-  argc = RARRAY_LEN(arg1);
-  for (i = 0; i < argc; ++i) {
-    VALUE v = argv[i];
-    strcat(buffer, StringValuePtr(v));
-    strcat(buffer, "_");
-  }
-
-  buffer[strlen(buffer) - 1] = 0;
-  return rb_str_new2(buffer);
+  return concat_func0(argc, argv);
 }
 #endif
 #endif
