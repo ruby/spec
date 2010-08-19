@@ -8,23 +8,44 @@ extern "C" {
 #endif
 
 #ifdef HAVE_RB_PROC_NEW
+#ifdef RUBY_VERSION_IS_1_8
 VALUE concat_func(VALUE args) {
   int i;
   char buffer[500] = {0};
 
-  if(TYPE(args) == T_ARRAY) {
-    for(i = 0; i < RARRAY_LEN(args); ++i) {
-      VALUE v = RARRAY_PTR(args)[i];
-      strcat(buffer, StringValuePtr(v));
-      strcat(buffer, "_");
-    }
+  for (i = 0; i < RARRAY_LEN(args); ++i) {
+    VALUE v = RARRAY_PTR(args)[i];
+    strcat(buffer, StringValuePtr(v));
+    strcat(buffer, "_");
   }
 
   buffer[strlen(buffer) - 1] = 0;
   return rb_str_new2(buffer);
-
 }
+#endif
+#endif
 
+#ifdef HAVE_RB_PROC_NEW
+#ifdef RUBY_VERSION_IS_1_9
+VALUE concat_func(VALUE arg1, VALUE val, int argc, VALUE *argv, VALUE passed_proc) {
+  int i;
+  char buffer[500] = {0};
+
+  argv = RARRAY_PTR(arg1);
+  argc = RARRAY_LEN(arg1);
+  for (i = 0; i < argc; ++i) {
+    VALUE v = argv[i];
+    strcat(buffer, StringValuePtr(v));
+    strcat(buffer, "_");
+  }
+
+  buffer[strlen(buffer) - 1] = 0;
+  return rb_str_new2(buffer);
+}
+#endif
+#endif
+
+#ifdef HAVE_RB_PROC_NEW
 VALUE sp_underline_concat_proc(VALUE self) {
   return rb_proc_new(concat_func, Qnil);
 }
