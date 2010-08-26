@@ -38,7 +38,7 @@ def compile_extension(path, name)
   ext       = File.join(path, "#{name}_spec")
   source    = "#{ext}.c"
   obj       = "#{ext}.o"
-  lib       = "#{ext}.#{Config::CONFIG['DLEXT']}"
+  lib       = "#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   signature = "#{ext}.sig"
 
   ruby_header     = File.join(hdrdir, "ruby.h")
