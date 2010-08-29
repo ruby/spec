@@ -341,8 +341,6 @@
  * will be included.
  */
 
-#include "version.h"
-
 #if defined(RUBINIUS)
 #include "rubinius.h"
 #elif defined(JRUBY)
