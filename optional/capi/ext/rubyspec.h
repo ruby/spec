@@ -206,6 +206,7 @@
 #define HAVE_RB_NUM2DBL                    1
 #define HAVE_RB_NUM2LONG                   1
 #define HAVE_RB_NUM2ULONG                  1
+#define HAVE_RB_NUM_ZERODIV                1
 
 /* Object */
 #define HAVE_OBJ_TAINT                     1
@@ -315,6 +316,8 @@
 
 /* Util */
 #define HAVE_RB_SCAN_ARGS                  1
+#define HAVE_RUBY_SETENV                   1
+#define HAVE_RUBY_STRDUP                   1
 
 /* Define convenience macros similar to the RubySpec guards to assist
  * with version incompatibilities.
