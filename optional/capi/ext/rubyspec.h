@@ -251,6 +251,8 @@
 #define HAVE_RB_RANGE_NEW                  1
 
 /* Regexp */
+#define HAVE_RB_BACKREF_GET                1
+#define HAVE_RB_REG_MATCH                  1
 #define HAVE_RB_REG_NEW                    1
 #define HAVE_RB_REG_NTH_MATCH              1
 #define HAVE_RB_REG_OPTIONS                1
