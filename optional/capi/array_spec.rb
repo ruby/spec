@@ -18,10 +18,12 @@ describe "C-API Array function" do
       @s.rb_ary_new2(5).should == []
     end
 
-    it "returns an array which can be assigned to from C" do
-      ary = @s.rb_ary_new2(5)
-      @s.rb_ary_new2_assign(ary, :set, 5)
-      ary.should == [:set] * 5
+    ruby_version_is ""..."1.9" do
+      it "returns an array which can be assigned to from C" do
+        ary = @s.rb_ary_new2(5)
+        @s.rb_ary_new2_assign(ary, :set, 5)
+        ary.should == [:set] * 5
+      end
     end
   end
 
