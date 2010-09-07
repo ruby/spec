@@ -26,7 +26,7 @@ describe "C-API Array function" do
   end
 
   describe "rb_ary_new3" do
-    it "returns an an array with the passed cardinality and varargs" do
+    it "returns an array with the passed cardinality and varargs" do
       @s.rb_ary_new3(1,2,3).should == [1,2,3]
     end
   end
