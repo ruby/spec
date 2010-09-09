@@ -321,6 +321,12 @@ describe "C-API Array function" do
     end
   end
 
+  describe "rb_mem_clear" do
+    it "sets elements of a C array to nil" do
+      @s.rb_mem_clear(1).should == nil
+    end
+  end
+
   describe "rb_ary_delete_at" do
     it "removes an element from an array at the specified index" do
       ary = [1, 2, 3, 4]
