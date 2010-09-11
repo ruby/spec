@@ -14,6 +14,12 @@ describe "C-API Symbol function" do
     end
   end
 
+  describe "rb_id2name" do
+    it "converts a symbol to a C char array" do
+      @s.rb_id2name(:test_symbol).should === "test_symbol"
+    end
+  end
+
   describe "rb_is_const_id" do
     it "returns true given a const-like symbol" do
       @s.rb_is_const_id(:Foo).should == true
