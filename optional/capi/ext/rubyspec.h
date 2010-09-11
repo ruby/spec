@@ -269,6 +269,7 @@
 #define HAVE_RB_STRUCT_DEFINE              1
 
 /* Symbol */
+#define HAVE_RB_INTERN                     1
 #define HAVE_RB_IS_CLASS_ID                1
 #define HAVE_RB_IS_CONST_ID                1
 #define HAVE_RB_IS_INSTANCE_ID             1
