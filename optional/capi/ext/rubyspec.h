@@ -183,6 +183,7 @@
 #define HAVE_RB_DEFINE_PROTECTED_METHOD    1
 #define HAVE_RB_DEFINE_SINGLETON_METHOD    1
 #define HAVE_RB_UNDEF_METHOD               1
+#define HAVE_RB_UNDEF                      1
 
 /* Numeric */
 #define HAVE_NUM2CHR                       1
