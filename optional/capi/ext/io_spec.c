@@ -37,6 +37,10 @@ static int io_spec_get_fd(VALUE io) {
   return fileno(fp->f);
 #endif
 }
+
+VALUE io_spec_GetOpenFile_fd(VALUE self, VALUE io) {
+  return INT2NUM(io_spec_get_fd(io));
+}
 #endif
 
 #ifdef HAVE_RB_IO_WRITE
@@ -95,6 +99,10 @@ VALUE io_spec_rb_io_wait_writable(VALUE self, VALUE io) {
 
 void Init_io_spec() {
   VALUE cls = rb_define_class("CApiIOSpecs", rb_cObject);
+
+#ifdef HAVE_GET_OPEN_FILE
+  rb_define_method(cls, "GetOpenFile_fd", io_spec_GetOpenFile_fd, 1);
+#endif
 
 #ifdef HAVE_RB_IO_WRITE
   rb_define_method(cls, "rb_io_write", io_spec_rb_io_write, 2);

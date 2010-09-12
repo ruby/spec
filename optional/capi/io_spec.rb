@@ -67,4 +67,13 @@ describe "C-API IO function" do
       lambda { @o.rb_io_wait_readable(@read_end) }.should raise_error(IOError)
     end
   end
+
+  describe "GetOpenFile" do
+    it "allows access to the system fileno" do
+      @o.GetOpenFile_fd($stdin).should == 0
+      @o.GetOpenFile_fd($stdout).should == 1
+      @o.GetOpenFile_fd($stderr).should == 2
+      @o.GetOpenFile_fd(@read_end).should == @read_end.fileno
+    end
+  end
 end
