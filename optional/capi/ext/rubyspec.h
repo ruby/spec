@@ -242,6 +242,10 @@
 /* Range */
 #define HAVE_RB_RANGE_NEW                  1
 
+/* Regexp */
+#define HAVE_RB_REG_OPTIONS                1
+#define HAVE_RB_REG_REGCOMP                1
+
 /* Safe */
 #define HAVE_RB_SAFE_LEVEL                 1
 #define HAVE_RB_SECURE                     1
