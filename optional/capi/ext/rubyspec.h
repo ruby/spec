@@ -298,6 +298,9 @@
 /* Time */
 #define HAVE_RB_TIME_NEW                   1
 
+/* Util */
+#define HAVE_RB_SCAN_ARGS                  1
+
 /* Define convenience macros similar to the RubySpec guards to assist
  * with version incompatibilities.
  */
