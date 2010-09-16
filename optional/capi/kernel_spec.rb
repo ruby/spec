@@ -101,6 +101,11 @@ describe "C-API Kernel function" do
       lambda do
         @s.rb_sys_fail("additional info")
       end.should raise_error(SystemCallError, /additional info/)
+
+    it "can take a NULL message" do
+      lambda do
+        @s.rb_sys_fail(nil)
+      end.should raise_error(Errno::EPERM)
     end
   end
 
