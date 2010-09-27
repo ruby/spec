@@ -16,6 +16,17 @@ describe "C-API IO function" do
     end
   end
 
+  describe "rb_io_close" do
+    it "closes an IO object" do
+      io = File.open(__FILE__, "r")
+      io.closed?.should be_false
+
+      @o.rb_io_close(io)
+
+      io.closed?.should be_true
+    end
+  end
+
   describe "rb_io_check_readable" do
     it "raises an IOError if the io isn't opened for reading" do
       lambda { @o.rb_io_check_readable(@write_end) }.should raise_error(IOError)

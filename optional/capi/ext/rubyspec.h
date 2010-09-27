@@ -149,12 +149,13 @@
 
 /* IO */
 #define HAVE_GET_OPEN_FILE                 1
-#define HAVE_RB_IO_WRITE                   1
+#define HAVE_RB_IO_CHECK_CLOSED            1
 #define HAVE_RB_IO_CHECK_READABLE          1
 #define HAVE_RB_IO_CHECK_WRITABLE          1
-#define HAVE_RB_IO_CHECK_CLOSED            1
+#define HAVE_RB_IO_CLOSE                   1
 #define HAVE_RB_IO_WAIT_READABLE           1
 #define HAVE_RB_IO_WAIT_WRITABLE           1
+#define HAVE_RB_IO_WRITE                   1
 
 /* Kernel */
 #define HAVE_RB_BLOCK_GIVEN_P              1
