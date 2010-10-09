@@ -1,8 +1,4 @@
 describe :module_class_exec, :shared => true do
-  # TODO: This should probably be replaced with a "should behave like" that uses
-  # the many scoping/binding specs from kernel/eval_spec, since most of those
-  # behaviors are the same for instance_eval. See also module_eval/class_exec.
-
   it "does not add defined methods to other classes" do
     FalseClass.class_exec do
       def foo
