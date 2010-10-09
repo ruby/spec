@@ -199,8 +199,8 @@ ruby_version_is "1.9" do
     end
 
     it "considers Integers as Floats if one end point is a float" do
-      Random.new(42).rand(0.0..1).should == 0.3745401144950984
-      Random.new(42).rand(0..1.0).should == 0.3745401144950984
+      Random.new(42).rand(0.0..1).should be_kind_of(Float)
+      Random.new(42).rand(0..1.0).should be_kind_of(Float)
     end
 
     it "raises an ArgumentError when the startpoint lacks #+ and #- methods" do
