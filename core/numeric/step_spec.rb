@@ -150,8 +150,8 @@ describe "Numeric#step with [stop, step] when self, stop or step is a Float" do
   end
 end
 
-ruby_bug "1.8.7", "redmine:781" do
-  describe "Numeric#step with [stop, +infinity]" do
+describe "Numeric#step with [stop, +infinity]" do
+  ruby_bug "#781", "1.8.7" do
     it "yields once if self < stop" do
       result = []
       42.step(100, 1.0/0.0)              { |x| result << x }
@@ -165,7 +165,9 @@ ruby_bug "1.8.7", "redmine:781" do
       (1.0/0.0).step(1.0/0.0, 1.0/0.0)   { |x| result << x }
       result.should == [42, 1.0/0.0]
     end
+  end
 
+  ruby_bug "#3945", "1.9.2" do
     it "does not yield when self > stop" do
       result = []
       100.step(42, 1.0/0.0)              { |x| result << x }
@@ -195,8 +197,8 @@ describe "Numeric#step with [stop, +step] when self, stop or step is a Float" do
   end
 end
 
-ruby_bug "1.8.7", "redmine:781" do
-  describe "Numeric#step with [stop, -infinity]" do
+describe "Numeric#step with [stop, -infinity]" do
+  ruby_bug "#3945", "1.9.2" do
     it "yields once if self > stop" do
       result = []
       42.step(6, -1.0/0.0)               { |x| result << x }
@@ -210,7 +212,9 @@ ruby_bug "1.8.7", "redmine:781" do
       (1.0/0.0).step(1.0/0.0, -1.0/0.0)  { |x| result << x }
       result.should == [42, 1.0/0.0]
     end
+  end
 
+  ruby_bug "#781", "1.8.7" do
     it "does not yield when self > stop" do
       result = []
       42.step(100, -1.0/0.0)             { |x| result << x }
