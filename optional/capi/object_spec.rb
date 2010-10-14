@@ -375,6 +375,23 @@ describe "CApiObject" do
     end
   end
 
+  describe "rb_equal" do
+    it "returns true if the arguments are the same exact object" do
+      s = "hello"
+      @o.rb_equal(s, s).should be_true
+    end
+
+    it "calls == to check equality and coerces to true/false" do
+      m = mock("string")
+      m.should_receive(:==).and_return(8)
+      @o.rb_equal(m, "hello").should be_true
+
+      m2 = mock("string")
+      m2.should_receive(:==).and_return(nil)
+      @o.rb_equal(m2, "hello").should be_false
+    end
+  end
+
   describe "instance variable access" do
     before do
       @test = ObjectTest.new
