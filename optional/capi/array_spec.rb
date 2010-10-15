@@ -334,6 +334,12 @@ describe "C-API Array function" do
     end
   end
 
+  describe "rb_protect_inspect" do
+    it "tracks an object recursively" do
+      @s.rb_protect_inspect("blah").should be_true
+    end
+  end
+
   describe "rb_ary_delete_at" do
     it "removes an element from an array at the specified index" do
       ary = [1, 2, 3, 4]
