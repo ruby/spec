@@ -28,6 +28,7 @@
 #define HAVE_RB_ASSOC_NEW                  1
 #define HAVE_RB_PROTECT_INSPECT            1
 #define HAVE_RB_INSPECTING_P               1
+#define HAVE_RB_ARY_FREEZE                 1
 
 #define HAVE_RB_EACH                       1
 #define HAVE_RB_ITERATE                    1
@@ -311,6 +312,7 @@
 #define HAVE_RB_STRUCT_AREF                1
 #define HAVE_RB_STRUCT_ASET                1
 #define HAVE_RB_STRUCT_DEFINE              1
+#define HAVE_RB_STRUCT_NEW                 1
 
 /* Symbol */
 #define HAVE_RB_INTERN                     1
