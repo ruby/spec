@@ -328,6 +328,7 @@
 #define HAVE_RB_THREAD_LOCAL_AREF          1
 #define HAVE_RB_THREAD_LOCAL_ASET          1
 #define HAVE_RB_THREAD_SELECT              1
+#define HAVE_RB_THREAD_WAIT_FOR            1
 
 /* Time */
 #define HAVE_RB_TIME_NEW                   1
