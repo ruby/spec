@@ -168,6 +168,7 @@
 #define HAVE_RB_ENSURE                     1
 #define HAVE_RB_EVAL_STRING                1
 #define HAVE_RB_EXEC_RECURSIVE             1
+#define HAVE_RB_SET_END_PROC               1
 #define HAVE_RB_RAISE                      1
 #define HAVE_RB_THROW                      1
 #define HAVE_RB_RESCUE                     1
