@@ -28,6 +28,10 @@ ruby_version_is "1.9" do
       lambda { ArraySpecs.frozen_array.sort_by! {}}.should raise_error(RuntimeError)
     end
 
+    it "raises a RuntimeError on an empty frozen array" do
+      lambda { ArraySpecs.empty_frozen_array.sort_by! {}}.should raise_error(RuntimeError)
+    end
+
     it "returns the specified value when it would break in the given block" do
       [1, 2, 3].sort_by!{ break :a }.should == :a
     end
