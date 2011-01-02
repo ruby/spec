@@ -2,6 +2,10 @@ module ProcSpecs
   def self.new_proc_in_method
     Proc.new
   end
+
+  def self.new_proc_subclass_in_method
+    Class.new(Proc).new
+  end
   class SourceLocation
     def self.my_proc
       proc { true }

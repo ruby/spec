@@ -124,3 +124,17 @@ describe "Proc.new without a block" do
   end
 
 end
+
+describe "Subclass of Proc.new without a block" do
+
+  it "raises an ArgumentError if invoked from within a method with no block" do
+    lambda {
+      ProcSpecs.new_proc_subclass_in_method
+    }.should raise_error(ArgumentError)
+  end
+
+  it "returns a new Proc instance from the block passed to the containing method" do
+    ProcSpecs.new_proc_subclass_in_method { "hello" }.call.should == "hello"
+  end
+
+end
