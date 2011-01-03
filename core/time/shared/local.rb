@@ -1,5 +1,19 @@
 describe :time_local, :shared => true do
 
+  it "sets the time zone correctly for a short time zone identifier" do
+    tz = "PDT"
+    # Pacific Standard Time
+    with_timezone(tz) do
+      time = Time.send(@method, 2011, 1,1)
+      time.zone.should == "PST"
+    end
+    # Pacific Daylight Saving Time
+    with_timezone(tz) do
+      time = Time.send(@method, 2011, 8,1)
+      time.zone.should == tz
+    end
+  end
+
   ruby_version_is ""..."1.9" do
     it "creates a time based on given values, interpreted in the local time zone" do
       with_timezone("PST", -8) do
