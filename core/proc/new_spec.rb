@@ -46,6 +46,24 @@ describe "Proc.new with an associated block" do
       end
     end
   end
+  
+  # JRUBY-5261; Proc sets up the block during .new, not in #initialize
+  describe "called on a subclass of Proc that does not 'super' in 'initialize'" do
+    before :each do
+      @subclass = Class.new(Proc) do
+        attr_reader :ok
+        def initialize
+          @ok = true
+        end
+      end
+    end
+    
+    it "still constructs a functional proc" do
+      proc = @subclass.new {'ok'}
+      proc.call.should == 'ok'
+      proc.ok.should == true
+    end
+  end
 
   # This raises a ThreadError on 1.8 HEAD. Reported as bug #1707
   it "raises a LocalJumpError when context of the block no longer exists" do
