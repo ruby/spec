@@ -1,8 +1,8 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-load_extension('regexp')
+load_extension("regexp")
 
-describe "C-API Regexp functions" do
+describe "C-API Regexp function" do
   before :each do
     @p = CApiRegexpSpecs.new
   end
