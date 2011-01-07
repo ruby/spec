@@ -5,7 +5,7 @@ describe "Kernel#sprintf" do
   it "is a private method" do
     Kernel.should have_private_instance_method(:sprintf)
   end
-  
+
   it "treats nil arguments as zero-width strings in %s slots" do
     sprintf("%s%d%s%s", nil, 4, 'a', 'b').should == '4ab'
   end
@@ -70,54 +70,50 @@ describe "Kernel#sprintf" do
     describe "with negative values" do
       describe "with format %x" do
         it "precedes the number with '..'" do
-          sprintf("%0x", -123).should == "..f85"
-          sprintf("%#0x", -123).should == "0x..f85"
-          sprintf("%08x", -123).should == "..ffff85"
-          sprintf("%#08x", -123).should == "0x..ff85"
-          sprintf("%8.10x", -123).should == "..ffffff85"
-          sprintf("%08.10x", -123).should == "..ffffff85"
-          sprintf("%10.8x", -123).should == "  ..ffff85"
-          sprintf("%010.8x", -123).should == "  ..ffff85"
+          [ ["%0x",     "..f85"],
+            ["%#0x",    "0x..f85"],
+            ["%08x",    "..ffff85"],
+            ["%#08x",   "0x..ff85"],
+            ["%8.10x",  "..ffffff85"],
+            ["%08.10x", "..ffffff85"],
+            ["%10.8x",  "  ..ffff85"],
+            ["%010.8x", "  ..ffff85"],
+          ].should be_computed_by_function(:sprintf, -123)
         end
       end
 
       describe "with format %u" do
         it "precedes the number with '-'" do
-          sprintf("%u", -123).should == "-123"
-          sprintf("%0u", -123).should == "-123"
-          sprintf("%#u", -123).should == "-123"
-          sprintf("%#0u", -123).should == "-123"
-          sprintf("%8u", -123).should == "    -123"
-          sprintf("%08u", -123).should == "-0000123"
-          sprintf("%#8u", -123).should == "    -123"
-          sprintf("%#08u", -123).should == "-0000123"
-
-          sprintf("%30u", -123).should == "                          -123"
-          sprintf("%030u", -123).should == "-00000000000000000000000000123"
-
-          sprintf("%#30u", -123).should == "                          -123"
-          sprintf("%#030u", -123).should == "-00000000000000000000000000123"
-
-          sprintf("%24.30u", -123).should == "-000000000000000000000000000123"
-          sprintf("%024.30u", -123).should == "-000000000000000000000000000123"
-
-          sprintf("%#24.30u", -123).should == "-000000000000000000000000000123"
-          sprintf("%#024.30u", -123).should == "-000000000000000000000000000123"
-
-
-          sprintf("%30.24u", -123).should == "     -000000000000000000000123"
-          sprintf("%030.24u", -123).should == "     -000000000000000000000123"
-
-          sprintf("%#30.24u", -123).should == "     -000000000000000000000123"
-          sprintf("%#030.24u", -123).should == "     -000000000000000000000123"
+          [ ["%u",        "-123"],
+            ["%0u",       "-123"],
+            ["%#u",       "-123"],
+            ["%#0u",      "-123"],
+            ["%8u",       "    -123"],
+            ["%08u",      "-0000123"],
+            ["%#8u",      "    -123"],
+            ["%#08u",     "-0000123"],
+            ["%30u",      "                          -123"],
+            ["%030u",     "-00000000000000000000000000123"],
+            ["%#30u",     "                          -123"],
+            ["%#030u",    "-00000000000000000000000000123"],
+            ["%24.30u",   "-000000000000000000000000000123"],
+            ["%024.30u",  "-000000000000000000000000000123"],
+            ["%#24.30u",  "-000000000000000000000000000123"],
+            ["%#024.30u", "-000000000000000000000000000123"],
+            ["%30.24u",   "     -000000000000000000000123"],
+            ["%030.24u",  "     -000000000000000000000123"],
+            ["%#30.24u",  "     -000000000000000000000123"],
+            ["%#030.24u", "     -000000000000000000000123"],
+          ].should be_computed_by_function(:sprintf, -123)
         end
       end
 
       describe "with format %b or %B" do
         it "precedes the number with '..'" do
-          sprintf("%.7b", -5).should == "..11011"
-          sprintf("%.7B", -5).should == "..11011"
-          sprintf("%0b", -5).should == "..1011"
+          [ ["%.7b", "..11011"],
+            ["%.7B", "..11011"],
+            ["%0b",  "..1011"],
+          ].should be_computed_by_function(:sprintf, -5)
         end
       end
     end
