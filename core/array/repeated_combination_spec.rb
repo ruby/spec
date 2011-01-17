@@ -46,5 +46,14 @@ ruby_version_is "1.9" do
          [10, 12, 12, 12], [11, 11, 11, 11], [11, 11, 11, 12],
          [11, 11, 12, 12], [11, 12, 12, 12], [12, 12, 12, 12]]
     end
+    
+    it "generates from a defensive copy, ignoring mutations" do
+      accum = []
+      @array.repeated_combination(2) do |x|
+        accum << x
+        @array[0] = 1
+      end
+      accum.should == [[10, 10], [10, 11], [10, 12], [11, 11], [11, 12], [12, 12]]
+    end
   end
 end
