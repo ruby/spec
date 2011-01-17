@@ -54,5 +54,19 @@ ruby_version_is "1.9" do
          [1, 2, 2], [2, 1, 1], [2, 1, 2],
          [2, 2, 1], [2, 2, 2]]
     end
+    
+    it "generates from a defensive copy, ignoring mutations" do
+      accum = []
+      ary = [1,2]
+      ary.repeated_permutation(3) do |x|
+        accum << x
+        ary[0] = 5
+      end
+      
+      accum.should ==
+        [[1, 1, 1], [1, 1, 2], [1, 2, 1],
+         [1, 2, 2], [2, 1, 1], [2, 1, 2],
+         [2, 2, 1], [2, 2, 2]]
+    end
   end
 end
