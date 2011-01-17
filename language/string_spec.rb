@@ -174,6 +174,16 @@ HERE
     "#{obj}".should be_an_instance_of(String)
   end
 
+  it "allow a dynamic string to parse a nested do...end block as an argument to a call, interpolated" do
+    lambda {
+      s = eval <<-HERE
+        def foo(arg); arg; end
+        foo "#{proc do; 'a'; end.call}"
+      HERE
+      s.should == 'a'
+    }.should_not raise_error(SyntaxError)
+  end
+
   ruby_version_is '1.9' do
     it "are produced from character shortcuts" do
       ?z.should == 'z'
