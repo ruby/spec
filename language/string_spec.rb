@@ -175,7 +175,7 @@ HERE
   end
 
   it "allow a dynamic string to parse a nested do...end block as an argument to a call without parens, interpolated" do
-    s = eval "#{proc do; 1; end.call}"
+    s = eval 'eval "#{proc do; 1; end.call}"'
     s.should == 1
   end
 
