@@ -174,12 +174,9 @@ HERE
     "#{obj}".should be_an_instance_of(String)
   end
 
-  it "allow a dynamic string to parse a nested do...end block as an argument to a call, interpolated" do
-    s = eval <<-HERE
-      def foo(arg); arg; end
-      foo "#{proc do; 'a'; end.call}"
-    HERE
-    s.should == 'a'
+  it "allow a dynamic string to parse a nested do...end block as an argument to a call without parens, interpolated" do
+    s = eval "#{proc do; 1; end.call}"
+    s.should == 1
   end
 
   ruby_version_is '1.9' do
