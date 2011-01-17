@@ -47,5 +47,12 @@ ruby_version_is "1.9" do
       @numbers.unshift 10
       enum.to_a.sort.should == @permutations
     end
+    
+    it "allows permutations larger than the number of elements" do
+      [1,2].repeated_permutation(3).sort.should ==
+        [[1, 1, 1], [1, 1, 2], [1, 2, 1],
+         [1, 2, 2], [2, 1, 1], [2, 1, 2],
+         [2, 2, 1], [2, 2, 2]]
+    end
   end
 end
