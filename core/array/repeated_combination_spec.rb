@@ -37,5 +37,14 @@ ruby_version_is "1.9" do
     it "yields a partition consisting of only singletons" do
       @array.repeated_combination(1).sort.to_a.should == [[10],[11],[12]]
     end
+    
+    it "accepts sizes larger than the original array" do
+      @array.repeated_combination(4).to_a.sort.should ==
+        [[10, 10, 10, 10], [10, 10, 10, 11], [10, 10, 10, 12],
+         [10, 10, 11, 11], [10, 10, 11, 12], [10, 10, 12, 12],
+         [10, 11, 11, 11], [10, 11, 11, 12], [10, 11, 12, 12],
+         [10, 12, 12, 12], [11, 11, 11, 11], [11, 11, 11, 12],
+         [11, 11, 12, 12], [11, 12, 12, 12], [12, 12, 12, 12]]
+    end
   end
 end
