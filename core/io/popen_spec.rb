@@ -99,8 +99,6 @@ describe "IO.popen" do
     io.close
   end
 
-  #~/projects/jruby ➔ ruby1.9 -e 'IO.popen([{"foo" => "bar"}, "echo", "\$blah", :err => [:child, :out]]) do |io|; puts io.read(50); end'
-
   ruby_version_is "1.9.2" do
     platform_is_not :windows do # not sure what commands to use on Windows
       describe "with a leading Array parameter" do
