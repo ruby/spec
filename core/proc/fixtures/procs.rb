@@ -3,9 +3,13 @@ module ProcSpecs
     Proc.new
   end
 
-  def self.new_proc_subclass_in_method
-    Class.new(Proc).new
+  class ProcSubclass < Proc
   end
+
+  def self.new_proc_subclass_in_method
+    ProcSubclass.new
+  end
+
   class SourceLocation
     def self.my_proc
       proc { true }
