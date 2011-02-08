@@ -116,7 +116,7 @@ describe "IO.popen" do
         
         it "uses a trailing Hash in the Array for spawn-like settings" do
           io = IO.popen(['sh', '-c', 'does_not_exist', {:err => [:child, :out]}]) do |i|
-            i.read.should =~ /command not found/
+            i.read.should =~ /not found/
           end
         end
       end
