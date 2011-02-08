@@ -161,7 +161,7 @@ describe "Kernel#sprintf" do
     sprintf("% 010.8x", -123).should == " -0000007b"
   end
 
-  it "passes some tests for negative %u" do
+  it "passes some tests for negative % u" do
     sprintf("% u", -123).should == "-123"
     sprintf("%+u", -123).should == "-123"
     sprintf("%+0u", -123).should == "-123"
@@ -185,39 +185,74 @@ describe "Kernel#sprintf" do
     sprintf("%#+08u", -123).should == "-0000123"
     sprintf("%#+ 8u", -123).should == "    -123"
     sprintf("%# 08u", -123).should == "-0000123"
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "passes some tests for negative %u" do
+      platform_is :wordsize => 32 do
+      end
+
+      platform_is :wordsize => 64 do
+        sprintf("%u", -123).should == "..18446744073709551493"
+        sprintf("%0u", -123).should == "18446744073709551493"
+        sprintf("%#u", -123).should == "..18446744073709551493"
+        sprintf("%#0u", -123).should == "18446744073709551493"
+        sprintf("%8u", -123).should == "..18446744073709551493"
+        sprintf("%08u", -123).should == "18446744073709551493"
+        sprintf("%#8u", -123).should == "..18446744073709551493"
+        sprintf("%#08u", -123).should == "18446744073709551493"
+
+        sprintf("%30u", -123).should == "        ..18446744073709551493"
+        sprintf("%030u", -123).should == "..........18446744073709551493"
+
+        sprintf("%#30u", -123).should == "        ..18446744073709551493"
+        sprintf("%#030u", -123).should == "..........18446744073709551493"
+
+        sprintf("%24.30u", -123).should == "..........18446744073709551493"
+        sprintf("%024.30u", -123).should == "..........18446744073709551493"
+
+        sprintf("%#24.30u", -123).should == "..........18446744073709551493"
+        sprintf("%#024.30u", -123).should == "..........18446744073709551493"
 
 
-    platform_is :wordsize => 32 do
+        sprintf("%30.24u", -123).should == "      ....18446744073709551493"
+        sprintf("%030.24u", -123).should == "      ....18446744073709551493"
+
+        sprintf("%#30.24u", -123).should == "      ....18446744073709551493"
+        sprintf("%#030.24u", -123).should == "      ....18446744073709551493"
+      end
     end
+  end
 
-    platform_is :wordsize => 64 do
-      sprintf("%u", -123).should == "..18446744073709551493"
-      sprintf("%0u", -123).should == "18446744073709551493"
-      sprintf("%#u", -123).should == "..18446744073709551493"
-      sprintf("%#0u", -123).should == "18446744073709551493"
-      sprintf("%8u", -123).should == "..18446744073709551493"
-      sprintf("%08u", -123).should == "18446744073709551493"
-      sprintf("%#8u", -123).should == "..18446744073709551493"
-      sprintf("%#08u", -123).should == "18446744073709551493"
+  ruby_version_is "1.9" do
+    it "passes some tests for negative %u" do
+      sprintf("%u", -123).should == "-123"
+      sprintf("%0u", -123).should == "-123"
+      sprintf("%#u", -123).should == "-123"
+      sprintf("%#0u", -123).should == "-123"
+      sprintf("%8u", -123).should == "    -123"
+      sprintf("%08u", -123).should == "-0000123"
+      sprintf("%#8u", -123).should == "    -123"
+      sprintf("%#08u", -123).should == "-0000123"
 
-      sprintf("%30u", -123).should == "        ..18446744073709551493"
-      sprintf("%030u", -123).should == "..........18446744073709551493"
+      sprintf("%30u", -123).should == "                          -123"
+      sprintf("%030u", -123).should == "-00000000000000000000000000123"
 
-      sprintf("%#30u", -123).should == "        ..18446744073709551493"
-      sprintf("%#030u", -123).should == "..........18446744073709551493"
+      sprintf("%#30u", -123).should == "                          -123"
+      sprintf("%#030u", -123).should == "-00000000000000000000000000123"
 
-      sprintf("%24.30u", -123).should == "..........18446744073709551493"
-      sprintf("%024.30u", -123).should == "..........18446744073709551493"
+      sprintf("%24.30u", -123).should == "-000000000000000000000000000123"
+      sprintf("%024.30u", -123).should == "-000000000000000000000000000123"
 
-      sprintf("%#24.30u", -123).should == "..........18446744073709551493"
-      sprintf("%#024.30u", -123).should == "..........18446744073709551493"
+      sprintf("%#24.30u", -123).should == "-000000000000000000000000000123"
+      sprintf("%#024.30u", -123).should == "-000000000000000000000000000123"
 
 
-      sprintf("%30.24u", -123).should == "      ....18446744073709551493"
-      sprintf("%030.24u", -123).should == "      ....18446744073709551493"
+      sprintf("%30.24u", -123).should == "     -000000000000000000000123"
+      sprintf("%030.24u", -123).should == "     -000000000000000000000123"
 
-      sprintf("%#30.24u", -123).should == "      ....18446744073709551493"
-      sprintf("%#030.24u", -123).should == "      ....18446744073709551493"
+      sprintf("%#30.24u", -123).should == "     -000000000000000000000123"
+      sprintf("%#030.24u", -123).should == "     -000000000000000000000123"
     end
   end
 
