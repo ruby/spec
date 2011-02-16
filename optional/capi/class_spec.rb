@@ -243,7 +243,7 @@ describe "C-API Class function" do
     end
 
     it "raises a TypeError if passed a singleton class as the superclass" do
-      metaclass = Object.new.metaclass
+      metaclass = Object.new.singleton_class
       lambda { @s.rb_class_new(metaclass) }.should raise_error(TypeError)
     end
   end
