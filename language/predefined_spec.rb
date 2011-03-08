@@ -633,13 +633,8 @@ describe "Processing RUBYOPT" do
 
   ruby_version_is "1.9" do
     it "prints the version number for '-v'" do
-      rubyflags, ENV["RUBY_FLAGS"] = ENV["RUBY_FLAGS"], nil
-      begin
-        ENV["RUBYOPT"] = '-v'
-        ruby_exe(nil).chomp.should == RUBY_DESCRIPTION
-      ensure
-        ENV["RUBY_FLAGS"] = rubyflags
-      end
+      ENV["RUBYOPT"] = '-v'
+      ruby_exe("").chomp.should == RUBY_DESCRIPTION
     end
   end
 
