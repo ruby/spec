@@ -161,7 +161,7 @@ describe "Kernel#sprintf" do
     sprintf("% 010.8x", -123).should == " -0000007b"
   end
 
-  it "passes some tests for negative % u" do
+  it "passes some tests for negative %u" do
     sprintf("% u", -123).should == "-123"
     sprintf("%+u", -123).should == "-123"
     sprintf("%+0u", -123).should == "-123"
@@ -188,11 +188,34 @@ describe "Kernel#sprintf" do
   end
 
   ruby_version_is ""..."1.9" do
-    it "passes some tests for negative %u" do
-      platform_is :wordsize => 32 do
+    platform_is :wordsize => 32 do
+      it "passes some tests for negative %u" do
+          [ ["%u",       "..4294967173"],
+            ["%0u",      "4294967173"],
+            ["%#u",      "..4294967173"],
+            ["%#0u",     "4294967173"],
+            ["%8u",      "..4294967173"],
+            ["%08u",     "4294967173"],
+            ["%#8u",     "..4294967173"],
+            ["%#08u",    "4294967173"],
+            ["%30u",     "                  ..4294967173"],
+            ["%030u",    "....................4294967173"],
+            ["%#30u",    "                  ..4294967173"],
+            ["%#030u",   "....................4294967173"],
+            ["%24.30u",  "....................4294967173"],
+            ["%024.30u", "....................4294967173"],
+            ["%#24.30u", "....................4294967173"],
+            ["%#024.30u", "....................4294967173"],
+            ["%30.24u",   "      ..............4294967173"],
+            ["%030.24u",  "      ..............4294967173"],
+            ["%#30.24u",  "      ..............4294967173"],
+            ["%#030.24u", "      ..............4294967173"]
+          ].should be_computed_by_function(:sprintf, -123)
       end
+    end
 
-      platform_is :wordsize => 64 do
+    platform_is :wordsize => 64 do
+      it "passes some tests for negative %u" do
         sprintf("%u", -123).should == "..18446744073709551493"
         sprintf("%0u", -123).should == "18446744073709551493"
         sprintf("%#u", -123).should == "..18446744073709551493"
