@@ -45,5 +45,16 @@ describe "Kernel.binding" do
     it "uses the caller's self for 'self' in the binding" do
       eval('self', Kernel.binding).should == self
     end
+    
+    it "uses the class or module as 'self' in a binding call from Class/Module.new block form" do
+      cls_self = nil
+      cls = Class.new {cls_self = eval 'self', Kernel.binding}
+      cls_self.should == cls
+      
+      cls_self = nil
+      cls = Class.new {cls_self = eval 'self', binding}
+
+      cls_self.should == cls
+    end
   end
 end
