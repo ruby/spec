@@ -52,5 +52,11 @@ ruby_version_is "1.9" do
       proc{}.curry.lambda?.should be_false
       Proc.new{}.curry.lambda?.should be_false
     end
+
+    it "is preserved when a curried Proc is called without enough arguments" do
+      lambda{|x,y|}.curry.call(42).lambda?.should be_true
+      proc{|x,y|}.curry.call(42).lambda?.should be_false
+      Proc.new{|x,y|}.curry.call(42).lambda?.should be_false
+    end
   end
 end
