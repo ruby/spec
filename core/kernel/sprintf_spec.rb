@@ -66,6 +66,33 @@ describe "Kernel#sprintf" do
     sprintf("% 010.8x", 123).should == "  0000007b"
   end
 
+  ruby_version_is ""..."1.9" do
+    describe "with negative values" do
+      describe "with format %x" do
+        it "doesn't precede the number with '..'" do
+          [ ["%0x",     "f85"],
+            ["%#0x",    "0xf85"],
+            ["%08x",    "ffffff85"],
+            ["%#08x",   "0xffff85"],
+            ["%8.10x",  "ffffffff85"],
+            ["%08.10x", "ffffffff85"],
+            ["%10.8x",  "  ffffff85"],
+            ["%010.8x", "  ffffff85"],
+          ].should be_computed_by_function(:sprintf, -123)
+        end
+      end
+
+      describe "with format %b or %B" do
+        it "doesn't precede the number with '..'" do
+          [ ["%.7b", "1111011"],
+            ["%.7B", "1111011"],
+            ["%0b",  "1011"],
+          ].should be_computed_by_function(:sprintf, -5)
+        end
+      end
+    end
+  end
+
   ruby_version_is "1.9" do
     describe "with negative values" do
       describe "with format %x" do
