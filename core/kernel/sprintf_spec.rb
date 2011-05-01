@@ -66,7 +66,7 @@ describe "Kernel#sprintf" do
     sprintf("% 010.8x", 123).should == "  0000007b"
   end
 
-  ruby_bug "svn r29502", "1.9.2.135" do
+  ruby_version_is "1.9" do
     describe "with negative values" do
       describe "with format %x" do
         it "precedes the number with '..'" do
