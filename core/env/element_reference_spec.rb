@@ -9,26 +9,29 @@ describe "ENV.[]" do
   end
 
   it "returns the specified environment variable" do
-    skip "ENV[#{@variable_name}] is masked" unless ENV[@variable_name]
-    ENV[@variable_name].should == username
+    if ENV[@variable_name]
+      # username may masked by chroot or sudo
+      ENV[@variable_name].should == username
+    end
   end
 
   it "returns nil if the variable isn't found" do
-    skip "ENV[#{@variable_name}] is masked" unless ENV[@variable_name]
     ENV["this_var_is_never_set"].should == nil
   end
 
   it "returns only frozen values" do
-    skip "ENV[#{@variable_name}] is masked" unless ENV[@variable_name]
-    ENV[@variable_name].frozen?.should == true
+    if ENV[@variable_name]
+      ENV[@variable_name].frozen?.should == true
+    end
     ENV["returns_only_frozen_values"] = "a non-frozen string"
     ENV["returns_only_frozen_values"].frozen?.should == true
   end
 
   ruby_version_is "1.9" do
     it "uses the locale encoding" do
-      skip "ENV[#{@variable_name}] is masked" unless ENV[@variable_name]
-      ENV[@variable_name].encoding.should == Encoding.find('locale')
+      if ENV[@variable_name]
+        ENV[@variable_name].encoding.should == Encoding.find('locale')
+      end
       ENV["uses_the_locale_encoding"] = "a binary string".force_encoding('binary')
       ENV["uses_the_locale_encoding"].encoding.should == Encoding.find('locale')
     end
