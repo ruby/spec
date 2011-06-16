@@ -9,9 +9,11 @@ describe "ENV.[]" do
   end
 
   it "returns the specified environment variable" do
+    # username may masked by chroot or sudo
     if ENV[@variable_name]
-      # username may masked by chroot or sudo
       ENV[@variable_name].should == username
+    else
+      ENV[@variable_name].should be_nil
     end
   end
 
