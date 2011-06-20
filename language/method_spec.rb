@@ -191,13 +191,13 @@ describe "Calling a method" do
     res.first.should == 2501
     res.last.should equal(obj)
   end
-  
+
   it "allows []= form with *args in the [] expanded to individual arguments" do
     obj = Class.new do
       attr_reader :result
       def []=(a, b, c, d); @result = [a,b,c,d]; end
     end.new
-    
+
     ary = [2,3]
     (obj[1, *ary] = 4).should == 4
     obj.result.should == [1,2,3,4]
