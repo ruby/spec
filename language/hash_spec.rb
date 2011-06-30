@@ -53,3 +53,4 @@ describe "Hash literal" do
 end
 
 language_version __FILE__, "hash"
+

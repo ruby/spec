@@ -16,3 +16,4 @@ describe "Hash literal" do
     end
   end
 end
+
