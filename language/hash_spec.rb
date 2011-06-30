@@ -51,3 +51,5 @@ describe "Hash literal" do
     h.should == {:a => 1, :b => 2}
   end
 end
+
+language_version __FILE__, "hash"
