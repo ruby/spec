@@ -44,4 +44,10 @@ describe "Hash literal" do
     h.keys.size.should == 1
     h.should == {:foo => :foo}
   end
+
+  it "accepts a hanging comma" do
+    h = {:a => 1, :b => 2,}
+    h.size.should == 2
+    h.should == {:a => 1, :b => 2}
+  end
 end
