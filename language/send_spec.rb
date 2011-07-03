@@ -215,3 +215,4 @@ describe "Invoking a private getter method" do
 end
 
 language_version __FILE__, "send"
+
