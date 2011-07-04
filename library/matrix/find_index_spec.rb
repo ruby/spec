@@ -62,16 +62,14 @@ ruby_version_is "1.9.3" do
         end
       end
 
-      conflicts_with :CMath do # CMath implies mathn
-        it "returns the first index for which the block returns true" do
-          @tests.each do |matrix, h|
-            h.each do |selector, result|
-              cnt = result.size / 2
-              which = result[cnt]
-              idx = matrix.find_index(selector){|x| cnt -= 1; x == which}
-              matrix[*idx].should == which
-              cnt.should == -1
-            end
+      it "returns the first index for which the block returns true" do
+        @tests.each do |matrix, h|
+          h.each do |selector, result|
+            cnt = result.size.div 2
+            which = result[cnt]
+            idx = matrix.find_index(selector){|x| cnt -= 1; x == which}
+            matrix[*idx].should == which
+            cnt.should == -1
           end
         end
       end
