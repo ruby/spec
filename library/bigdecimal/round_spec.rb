@@ -116,7 +116,7 @@ describe "BigDecimal#round" do
     end
   end
 
-  ruby_bug "redmine:3803", "1.9.2" do
+  ruby_bug "redmine:3803/4567", "1.9.2" do
     describe "BigDecimal::ROUND_HALF_DOWN" do
       it "rounds values > 5 up, otherwise down" do
         @p1_50.round(0, BigDecimal::ROUND_HALF_DOWN).should == @one
@@ -172,7 +172,7 @@ describe "BigDecimal#round" do
     end
   end
 
-  ruby_bug "redmine:3803", "1.9.2" do
+  ruby_bug "redmine:3803/4567", "1.9.2" do
     describe "BigDecimal::ROUND_HALF_EVEN" do
       it "rounds values > 5 up, < 5 down and == 5 towards even neighbor" do
         @p1_50.round(0, BigDecimal::ROUND_HALF_EVEN).should == @two
