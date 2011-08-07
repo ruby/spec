@@ -25,6 +25,14 @@ ruby_version_is "1.9" do
     it "reads the contents of a file from an offset of a specific size when specified" do
       IO.binread(@fname, 5, 3).should == @contents.slice(3, 5)
     end
+   
+    it "raises an ArgumentError when not passed a valid length" do
+      lambda { IO.binread @fname, -1 }.should raise_error(ArgumentError)
+    end
+
+    it "raises an Errno::EINVAL when not passed a valid offset" do
+      lambda { IO.binread @fname, 0, -1  }.should raise_error(Errno::EINVAL)
+    end
 
     it "needs to be reviewed for spec completeness"
   end
