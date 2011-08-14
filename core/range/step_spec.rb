@@ -57,17 +57,11 @@ describe "Range#step" do
     end
   end
 
-  ruby_bug "redmine #4576", "1.9.3" do
-    describe "given Float values and step" do
-      it "returns float values of the form step * n + begin and never the end value if the range is exclusive" do
-        (1.0...6.4).step(1.8).to_a.should eql [1.0, 2.8, 4.6]
-        (1.0..6.4).step(1.8).to_a.should eql [1.0, 2.8, 4.6, 6.4]
-        (1.0...55.6).step(18.2).to_a.should eql [1.0, 19.2, 37.4]
-      end
-
-      it "returns float values of the form step * n + begin and never bigger than the end value if the range is inclusive" do
-        (1.0..12.7).step(1.3).to_a.should eql [1.0, 2.3, 3.6, 4.9, 6.2, 7.5, 8.8, 10.1, 11.4, 12.7]
-      end
+  ruby_version_is "1.8.7".."" do
+    it "passes each nth element to the block with Float argument" do
+      a = []
+      (1..2).step(0.4) { |x| a << x }
+      a.should == [1.0, 1.4, 1.8]
     end
   end
 end
