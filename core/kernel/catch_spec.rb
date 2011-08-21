@@ -32,6 +32,22 @@ describe "Kernel.catch" do
     x.should == :fin
   end
 
+  it "passes the given symbol to its block" do
+    result = nil
+    catch :blah do |tag|
+      result = tag
+    end
+    result.should == :blah
+  end
+
+  it "passes a symbol converted from the given string to its block" do
+    result = nil
+    catch :blah do |tag|
+      result = tag
+    end
+    result.should == :blah
+  end
+
   ruby_version_is "" ... "1.9" do
     it "matches strings as symbols" do
       lambda { catch("exit") { throw :exit } }.should_not raise_error
@@ -51,6 +67,23 @@ describe "Kernel.catch" do
     it "catches objects that are exactly the same" do
       lambda { catch(:exit) { throw :exit } }.should_not raise_error
       lambda { exit = "exit"; catch(exit) { throw exit } }.should_not raise_error
+    end
+
+    it "passes the given object to its block" do
+      result = nil
+      object = Object.new
+      catch object do |tag|
+        result = tag
+      end
+      result.should equal(object)
+    end
+
+    it "passes an object to its block if no tag is given" do
+      result = catch do |tag|
+        throw tag, tag
+        nil
+      end
+      result.should be_an_instance_of(Object)
     end
   end
 
