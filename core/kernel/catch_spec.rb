@@ -154,10 +154,11 @@ describe "Kernel.catch" do
 
     it "passes the given string as is to its block" do
       result = nil
-      catch "blah" do |tag|
+      string = "blah"
+      catch string do |tag|
         result = tag
       end
-      result.should == "blah"
+      result.should equal(string)
     end
 
     it "yields a new, unique object when called without arguments" do
