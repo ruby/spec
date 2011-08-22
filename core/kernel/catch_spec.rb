@@ -60,23 +60,6 @@ describe "Kernel.catch" do
       lambda { catch(:exit) { throw :exit } }.should_not raise_error
       lambda { exit = "exit"; catch(exit) { throw exit } }.should_not raise_error
     end
-
-    it "passes the given object to its block" do
-      result = nil
-      object = Object.new
-      catch object do |tag|
-        result = tag
-      end
-      result.should equal(object)
-    end
-
-    it "passes an object to its block if no tag is given" do
-      result = catch do |tag|
-        throw tag, tag
-        nil
-      end
-      result.should be_an_instance_of(Object)
-    end
   end
 
   it "requires a block" do
@@ -158,6 +141,15 @@ describe "Kernel.catch" do
       lambda {
         catch Object.new do end
       }.should_not raise_error
+    end
+
+    it "passes the given object to its block" do
+      result = nil
+      object = Object.new
+      catch object do |tag|
+        result = tag
+      end
+      result.should equal(object)
     end
 
     it "passes the given string as is to its block" do
