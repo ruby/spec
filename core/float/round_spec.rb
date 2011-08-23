@@ -12,10 +12,17 @@ describe "Float#round" do
   ruby_version_is "1.9" do
     it "rounds self to an optionally given precision" do
       5.5.round(0).should == 6
-      1.2345678.round(2).should be_close(1.23, TOLERANCE)
+      1.2345678.round(2).should == 1.23
       123456.78.round(-2).should == 123500 # rounded up
-      12.345678.round(2.9999999999999999999).should be_close(12.346, TOLERANCE)
+      -123456.78.round(-2).should == -123500
+      12.345678.round(3.999).should == 12.346
       0.8346268.round(-2.0**30).should == 0
+      0.42.round(2.0**30).should == 0.42
+    end
+
+    it "raises a TypeError when its argument can not be converted to an Integer" do
+      lambda { 1.0.round("4") }.should raise_error(TypeError)
+      lambda { 1.0.round(nil) }.should raise_error(TypeError)
     end
   end
 
