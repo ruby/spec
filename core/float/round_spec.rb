@@ -24,6 +24,13 @@ describe "Float#round" do
       lambda { 1.0.round("4") }.should raise_error(TypeError)
       lambda { 1.0.round(nil) }.should raise_error(TypeError)
     end
+
+    ruby_bug "redmine:5227",  "1.9.2" do
+      it "works for corner cases" do
+        42.0.round(308).should == 42.0
+        1.0e307.round(2).should == 1.0e307
+      end
+    end
   end
 
 end
