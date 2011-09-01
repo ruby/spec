@@ -25,23 +25,46 @@ describe "Fixnum#&" do
     end
   end
 
-  it "tries to convert it's int like argument to an Integer using to_int" do
-    (obj = mock('2')).should_receive(:to_int).and_return(2)
-    (3 & obj).should == 2
+  ruby_version_is ""..."1.9" do
+    it "tries to convert it's int like argument to an Integer using to_int" do
+      (obj = mock('2')).should_receive(:to_int).and_return(2)
+      (3 & obj).should == 2
+    end
   end
 
-  it "raises a TypeError when the given argument can't be converted to Integer" do
-    obj = mock('asdf')
-    lambda { 3 & obj }.should raise_error(TypeError)
-
-    obj.should_receive(:to_int).and_return("asdf")
-    lambda { 3 & obj }.should raise_error(TypeError)
+  ruby_version_is "1.9" do
+    it "raises a TypeError when passed a non-integral object which doesn't receive to_int" do
+      (obj = mock('2')).should_not_receive(:to_int).and_return(2)
+      lambda { 3 & obj }.should raise_error(TypeError) 
+    end
   end
 
-  ruby_bug "#", "1.8.6" do # Fixed at MRI 1.8.7
-    it "coerces arguments correctly even if it is a Bignum" do
-      (obj = mock('large value')).should_receive(:to_int).and_return(8000_0000_0000_0000_0000)
-      (3 & obj).should == 0
+  ruby_version_is ""..."1.9" do
+    it "raises a TypeError when the given argument can't be converted to Integer" do
+      obj = mock('asdf')
+      lambda { 3 & obj }.should raise_error(TypeError)
+
+      obj.should_receive(:to_int).and_return("asdf")
+      lambda { 3 & obj }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises a TypeError when the given argument can't be converted to Integer" do
+      obj = mock('asdf')
+      lambda { 3 & obj }.should raise_error(TypeError)
+
+      obj.should_not_receive(:to_int).and_return("asdf")
+      lambda { 3 & obj }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is ""..."1.9" do
+    ruby_bug "#", "1.8.6" do # Fixed at MRI 1.8.7
+      it "coerces arguments correctly even if it is a Bignum" do
+        (obj = mock('large value')).should_receive(:to_int).and_return(8000_0000_0000_0000_0000)
+        (3 & obj).should == 0
+      end
     end
   end
 end

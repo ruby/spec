@@ -39,16 +39,37 @@ describe "Bignum#|" do
     end
   end
 
-  it "tries to convert the given argument to an Integer using to_int" do
-    (obj = mock('2')).should_receive(:to_int).and_return(2)
-    (@bignum | obj).should == 9223372036854775819
+  ruby_version_is ""..."1.9" do
+    it "tries to convert the given argument to an Integer using to_int" do
+      (obj = mock('2')).should_receive(:to_int).and_return(2)
+      (@bignum | obj).should == 9223372036854775819
+    end
   end
 
-  it "raises a TypeError when the given argument can't be converted to Integer" do
-    obj = mock('asdf')
-    lambda { @bignum | obj }.should raise_error(TypeError)
+  ruby_version_is "1.9" do
+    it "raises a TypeError when passed a non-integral Object which doesn't receive to_int" do
+      (obj = mock('2')).should_not_receive(:to_int)
+      lambda { @bignum | obj }.should raise_error(TypeError)
+    end
+  end
 
-    obj.should_receive(:to_int).and_return("asdf")
-    lambda { @bignum | obj }.should raise_error(TypeError)
+  ruby_version_is ""..."1.9" do
+    it "raises a TypeError when the given argument can't be converted to Integer" do
+      obj = mock('asdf')
+      lambda { @bignum | obj }.should raise_error(TypeError)
+
+      obj.should_receive(:to_int).and_return("asdf")
+      lambda { @bignum | obj }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises a TypeError when the given argument can't be converted to Integer" do
+      obj = mock('asdf')
+      lambda { @bignum | obj }.should raise_error(TypeError)
+
+      obj.should_not_receive(:to_int).and_return("asdf")
+      lambda { @bignum | obj }.should raise_error(TypeError)
+    end
   end
 end
