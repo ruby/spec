@@ -9,19 +9,6 @@ describe "Float#round" do
     0.49999999999999994.round.should eql(0) # see http://jira.codehaus.org/browse/JRUBY-5048
   end
 
-  ruby_bug "redmine #5272", "1.9.2" do
-    it "returns rounded values for big values" do
-      +2.5e20.round(-20).should   eql( +3 * 10 ** 20  )
-      +2.4e20.round(-20).should   eql( +2 * 10 ** 20  )
-      -2.5e20.round(-20).should   eql( -3 * 10 ** 20  )
-      -2.4e20.round(-20).should   eql( -2 * 10 ** 20  )
-      +2.5e200.round(-200).should eql( +3 * 10 ** 200 )
-      +2.4e200.round(-200).should eql( +2 * 10 ** 200 )
-      -2.5e200.round(-200).should eql( -3 * 10 ** 200 )
-      -2.4e200.round(-200).should eql( -2 * 10 ** 200 )
-    end
-  end
-
   it "raises FloatDomainError for exceptional values" do
     lambda { (+1.0/0).round }.should raise_error(FloatDomainError)
     lambda { (-1.0/0).round }.should raise_error(FloatDomainError)
@@ -63,6 +50,19 @@ describe "Float#round" do
       it "works for corner cases" do
         42.0.round(308).should eql(42.0)
         1.0e307.round(2).should eql(1.0e307)
+      end
+    end
+
+    ruby_bug "redmine #5272", "1.9.2" do
+      it "returns rounded values for big values" do
+        +2.5e20.round(-20).should   eql( +3 * 10 ** 20  )
+        +2.4e20.round(-20).should   eql( +2 * 10 ** 20  )
+        -2.5e20.round(-20).should   eql( -3 * 10 ** 20  )
+        -2.4e20.round(-20).should   eql( -2 * 10 ** 20  )
+        +2.5e200.round(-200).should eql( +3 * 10 ** 200 )
+        +2.4e200.round(-200).should eql( +2 * 10 ** 200 )
+        -2.5e200.round(-200).should eql( -3 * 10 ** 200 )
+        -2.4e200.round(-200).should eql( -2 * 10 ** 200 )
       end
     end
   end
