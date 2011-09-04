@@ -9,6 +9,19 @@ describe "Float#round" do
     0.49999999999999994.round.should eql(0) # see http://jira.codehaus.org/browse/JRUBY-5048
   end
 
+  ruby_bug "redmine #5272", "1.9.2" do
+    it "returns rounded values for big values" do
+      +2.5e20.round(-20).should   eql( +3 * 10 ** 20  )
+      +2.4e20.round(-20).should   eql( +2 * 10 ** 20  )
+      -2.5e20.round(-20).should   eql( -3 * 10 ** 20  )
+      -2.4e20.round(-20).should   eql( -2 * 10 ** 20  )
+      +2.5e200.round(-200).should eql( +3 * 10 ** 200 )
+      +2.4e200.round(-200).should eql( +2 * 10 ** 200 )
+      -2.5e200.round(-200).should eql( -3 * 10 ** 200 )
+      -2.4e200.round(-200).should eql( -2 * 10 ** 200 )
+    end
+  end
+
   it "raises FloatDomainError for exceptional values" do
     lambda { (+1.0/0).round }.should raise_error(FloatDomainError)
     lambda { (-1.0/0).round }.should raise_error(FloatDomainError)
