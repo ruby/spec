@@ -30,6 +30,17 @@ describe "Integer#round" do
       end
     end
 
+    ruby_bug "redmine #5271", "1.9.2" do
+      it "returns 0 if passed a big negative value" do
+        42.round(-2**30).should eql(0)
+      end
+    end
+
+    it "raises a RangeError when its argument can not be converted to a Fixnum" do
+      lambda { 42.round(Float::INFINITY) }.should raise_error(RangeError)
+      lambda { 42.round(-2**100) }.should raise_error(RangeError)
+    end
+
     it "raises a TypeError when its argument can not be converted to an Integer" do
       lambda { 42.round("4") }.should raise_error(TypeError)
       lambda { 42.round(nil) }.should raise_error(TypeError)
