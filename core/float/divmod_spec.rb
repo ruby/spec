@@ -44,4 +44,10 @@ describe "Float#divmod" do
       lambda { 1.0.divmod(0.0) }.should raise_error(ZeroDivisionError)
     end
   end
+
+  ruby_bug "redmine #5276", "1.9.2" do
+    it "returns the correct [quotient, modulus] even for large quotient" do
+      0.59.divmod(7.761021455128987e-11).first.should eql(7602092113)
+    end
+  end
 end
