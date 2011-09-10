@@ -69,8 +69,8 @@ describe "Float#round" do
     ruby_bug "redmine #5273", "1.9.2" do
       it "returns the expected float for precisions over the whole range of Floats" do
         1.upto(307) do |exp|
-          Float("2.5e-#{exp}").round(+exp).should eql(Float("3.0e-#{exp}"))
-          Float("2.5e+#{exp}").round(-exp).should eql(3 * 10 ** exp)
+          Float("3.3e-#{exp}").round(+exp).should eql(Float("3.0e-#{exp}"))
+          Float("3.3e+#{exp}").round(-exp).should eql(3 * 10 ** exp)
         end
       end
     end
