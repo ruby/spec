@@ -32,6 +32,14 @@ describe "Kernel.catch" do
     x.should == :fin
   end
 
+  it "passes the given symbol to its block" do
+    result = nil
+    catch :blah do |tag|
+      result = tag
+    end
+    result.should == :blah
+  end
+
   ruby_version_is "" ... "1.9" do
     it "matches strings as symbols" do
       lambda { catch("exit") { throw :exit } }.should_not raise_error
@@ -118,6 +126,14 @@ describe "Kernel.catch" do
     it "raises ArgumentError if called without argument" do
       lambda { catch {} }.should raise_error(ArgumentError)
     end
+
+    it "passes a symbol converted from the given string to its block" do
+      result = nil
+      catch "blah" do |tag|
+        result = tag
+      end
+      result.should == :blah
+    end
   end
 
   ruby_version_is "1.9" do
@@ -125,6 +141,24 @@ describe "Kernel.catch" do
       lambda {
         catch Object.new do end
       }.should_not raise_error
+    end
+
+    it "passes the given object to its block" do
+      result = nil
+      object = Object.new
+      catch object do |tag|
+        result = tag
+      end
+      result.should equal(object)
+    end
+
+    it "passes the given string as is to its block" do
+      result = nil
+      string = "blah"
+      catch string do |tag|
+        result = tag
+      end
+      result.should equal(string)
     end
 
     it "yields a new, unique object when called without arguments" do
