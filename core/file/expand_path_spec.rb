@@ -24,7 +24,7 @@ describe "File.expand_path" do
 
   not_compliant_on :ironruby do
     it "converts a pathname to an absolute pathname, Ruby-Talk:18512 " do
-      # Because of Ruby-Talk:18512
+      # See Ruby-Talk:18512
       File.expand_path('.a').should == File.join(@base, '.a')
       File.expand_path('..a').should == File.join(@base, '..a')
       File.expand_path('a../b').should == File.join(@base, 'a../b')
@@ -32,7 +32,8 @@ describe "File.expand_path" do
   end
 
   platform_is_not :windows do
-    it "keeps trailing dots on absolute pathname, Ruby-Talk:18512" do
+    it "keeps trailing dots on absolute pathname" do
+      # See Ruby-Talk:18512
       File.expand_path('a.').should == File.join(@base, 'a.')
       File.expand_path('a..').should == File.join(@base, 'a..')
     end
