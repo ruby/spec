@@ -96,20 +96,23 @@ describe "IO.select" do
   it "does not accept negative timeouts" do
     lambda { IO.select(nil, nil, nil, -5)}.should raise_error(ArgumentError)
   end
-  
-  it "sleeps forever for nil timeout" do
-    started = false
-    finished = false
+end
+
+describe "IO.select" do
+  before :each do
+    ScratchPad.clear
+  end
+
+  it "sleeps forever when passed nil for timeout" do
     t = Thread.new do
-      started = true
+      ScratchPad.record :thread_started
       IO.select(nil, nil, nil, nil)
-      finished = false
+      ScratchPad.record :select_returned
     end
-    
-    Thread.pass until t.status == "sleep"
-    started.should == true
+
+    Thread.pass until ScratchPad.recorded == :thread_started
     t.kill
     t.join
-    finished.should == false
+    ScratchPad.recorded.should == :thread_started
   end
 end
