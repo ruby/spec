@@ -77,7 +77,7 @@ describe "IO.select" do
     lambda { IO.select(nil, [obj]) }.should raise_error(TypeError)
   end
 
-  it "raises TypeError if the specified timeout value is not Numeric" do
+  it "raises a TypeError if the specified timeout value is not Numeric" do
     lambda { IO.select([@rd], nil, nil, Object.new) }.should raise_error(TypeError)
   end
 
@@ -93,7 +93,7 @@ describe "IO.select" do
     (Time.now - start).should >= 0.1
   end
 
-  it "does not accept negative timeouts" do
+  it "raises an ArgumentError when passed a negative timeout" do
     lambda { IO.select(nil, nil, nil, -5)}.should raise_error(ArgumentError)
   end
 end
