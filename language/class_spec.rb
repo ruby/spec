@@ -213,6 +213,12 @@ describe "An anonymous class" do
     
     ClassSpecs::AnonymousClasses::C3 = c3
     c3::C4.inspect.should == "ClassSpecs::AnonymousClasses::C3::C4"
+
+    c5 = Class.new
+    c5.const_set :C6, Class.new
+
+    ClassSpecs::AnonymousClasses.const_set :C5, c5
+    c5::C6.inspect.should == "ClassSpecs::AnonymousClasses::C5::C6"
   end
   
   it "never recalculates full name once no longer anonymous" do
