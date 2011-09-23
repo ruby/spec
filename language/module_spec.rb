@@ -83,39 +83,39 @@ describe "An anonymous module" do
   end
 
   it "takes on the name of the first constant it is assigned to" do
-    c1 = Module.new
-    c1.inspect.should =~ /#<Module/
-    LangModuleSpec::AnonymousModules::C1 = c1
-    c1.inspect.should == "LangModuleSpec::AnonymousModules::C1"
+    m1 = Module.new
+    m1.inspect.should =~ /#<Module/
+    LangModuleSpec::AnonymousModules::M1 = m1
+    m1.inspect.should == "LangModuleSpec::AnonymousModules::M1"
 
-    c2 = Module.new
-    LangModuleSpec::AnonymousModules.const_set :C2, c2
-    c2.inspect.should == "LangModuleSpec::AnonymousModules::C2"
+    m2 = Module.new
+    LangModuleSpec::AnonymousModules.const_set :M2, m2
+    m2.inspect.should == "LangModuleSpec::AnonymousModules::M2"
   end
 
   it "forces named nested modules to be anonymous" do
-    c3 = Module.new
-    c3.const_set :C4, Module.new
+    m3 = Module.new
+    m3.const_set :M4, Module.new
 
-    c3::C4.inspect.should =~ /#<Module/
+    m3::M4.inspect.should =~ /#<Module/
 
-    LangModuleSpec::AnonymousModules::C3 = c3
-    c3::C4.inspect.should == "LangModuleSpec::AnonymousModules::C3::C4"
+    LangModuleSpec::AnonymousModules::M3 = m3
+    m3::M4.inspect.should == "LangModuleSpec::AnonymousModules::M3::M4"
 
-    c5 = Module.new
-    c5.const_set :C6, Module.new
+    m5 = Module.new
+    m5.const_set :M6, Module.new
 
-    LangModuleSpec::AnonymousModules.const_set :C5, c5
-    c5::C6.inspect.should == "LangModuleSpec::AnonymousModules::C5::C6"
+    LangModuleSpec::AnonymousModules.const_set :M5, m5
+    m5::M6.inspect.should == "LangModuleSpec::AnonymousModules::M5::M6"
   end
 
   it "never recalculates full name once no longer anonymous" do
-    c6 = Module.new
-    c6.const_set :C7, Module.new
-    LangModuleSpec::AnonymousModules::C6 = c6
-    c6::C7.inspect.should == "LangModuleSpec::AnonymousModules::C6::C7"
+    m6 = Module.new
+    m6.const_set :M7, Module.new
+    LangModuleSpec::AnonymousModules::M6 = m6
+    m6::M7.inspect.should == "LangModuleSpec::AnonymousModules::M6::M7"
 
-    LangModuleSpec::AnonymousModules::C8 = c6::C7
-    LangModuleSpec::AnonymousModules::C8.inspect.should == "LangModuleSpec::AnonymousModules::C6::C7"
+    LangModuleSpec::AnonymousModules::M8 = m6::M7
+    LangModuleSpec::AnonymousModules::M8.inspect.should == "LangModuleSpec::AnonymousModules::M6::M7"
   end
 end
