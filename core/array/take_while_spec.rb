@@ -1,7 +1,13 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
-ruby_version_is "1.9" do
+ruby_version_is "1.8.7" do
   describe "Array#take_while" do
-    it "needs to be reviewed for spec completeness"
+    it "returns all elements until block returns false" do
+      [1, 2, 3].take_while{ |element| element < 3 }.should == [1, 2]
+    end
+    
+    it "returns all elements until block returns nil" do
+      [1, 2, nil].take_while{ |element| element }.should == [1, 2]
+    end
   end
 end
