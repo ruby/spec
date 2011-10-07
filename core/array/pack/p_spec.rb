@@ -9,3 +9,11 @@ describe "Array#pack with format 'P'" do
     [nil].pack("P").size.should == 1.size
   end
 end
+
+describe "Array#pack with format 'p'" do
+  it_behaves_like :array_pack_basic_non_float, 'p'
+
+  it "returns a String whose size is the number of bytes in a mochine word" do
+    [nil].pack("p").size.should == 1.size
+  end
+end
