@@ -82,32 +82,6 @@ describe "Kernel#sprintf" do
         end
       end
 
-      describe "with format %u" do
-        it "precedes the number with '-'" do
-          [ ["%u",        "-123"],
-            ["%0u",       "-123"],
-            ["%#u",       "-123"],
-            ["%#0u",      "-123"],
-            ["%8u",       "    -123"],
-            ["%08u",      "-0000123"],
-            ["%#8u",      "    -123"],
-            ["%#08u",     "-0000123"],
-            ["%30u",      "                          -123"],
-            ["%030u",     "-00000000000000000000000000123"],
-            ["%#30u",     "                          -123"],
-            ["%#030u",    "-00000000000000000000000000123"],
-            ["%24.30u",   "-000000000000000000000000000123"],
-            ["%024.30u",  "-000000000000000000000000000123"],
-            ["%#24.30u",  "-000000000000000000000000000123"],
-            ["%#024.30u", "-000000000000000000000000000123"],
-            ["%30.24u",   "     -000000000000000000000123"],
-            ["%030.24u",  "     -000000000000000000000123"],
-            ["%#30.24u",  "     -000000000000000000000123"],
-            ["%#030.24u", "     -000000000000000000000123"],
-          ].should be_computed_by_function(:sprintf, -123)
-        end
-      end
-
       describe "with format %b or %B" do
         it "precedes the number with '..'" do
           [ ["%.7b", "..11011"],
@@ -159,32 +133,6 @@ describe "Kernel#sprintf" do
     sprintf("%+010.8x", -123).should == " -0000007b"
     sprintf("%+ 10.8x", -123).should == " -0000007b"
     sprintf("% 010.8x", -123).should == " -0000007b"
-  end
-
-  it "passes some tests for negative %u" do
-    sprintf("% u", -123).should == "-123"
-    sprintf("%+u", -123).should == "-123"
-    sprintf("%+0u", -123).should == "-123"
-    sprintf("%+ u", -123).should == "-123"
-    sprintf("% 0u", -123).should == "-123"
-
-    sprintf("%# u", -123).should == "-123"
-    sprintf("%#+u", -123).should == "-123"
-    sprintf("%#+0u", -123).should == "-123"
-    sprintf("%#+ u", -123).should == "-123"
-    sprintf("%# 0u", -123).should == "-123"
-
-    sprintf("% 8u", -123).should == "    -123"
-    sprintf("%+8u", -123).should == "    -123"
-    sprintf("%+08u", -123).should == "-0000123"
-    sprintf("%+ 8u", -123).should == "    -123"
-    sprintf("% 08u", -123).should == "-0000123"
-
-    sprintf("%# 8u", -123).should == "    -123"
-    sprintf("%#+8u", -123).should == "    -123"
-    sprintf("%#+08u", -123).should == "-0000123"
-    sprintf("%#+ 8u", -123).should == "    -123"
-    sprintf("%# 08u", -123).should == "-0000123"
   end
 
   ruby_version_is ""..."1.9" do
