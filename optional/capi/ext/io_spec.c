@@ -6,6 +6,7 @@
 #include "ruby/io.h"
 #endif
 #include <fcntl.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,7 +32,7 @@ static int set_non_blocking(int fd) {
 static int io_spec_get_fd(VALUE io) {
   rb_io_t* fp;
   GetOpenFile(io, fp);
-#ifdef RUBY_VERSION_IS_1_9
+#ifdef RUBY_VERSION_IS_GTE_1_9
   return fp->fd;
 #else
   return fileno(fp->f);
@@ -76,7 +77,7 @@ VALUE io_spec_rb_io_check_closed(VALUE self, VALUE io) {
 }
 #endif
 
-#ifdef RUBY_VERSION_IS_1_9
+#ifdef RUBY_VERSION_IS_GTE_1_9
 typedef int wait_bool;
 #define wait_bool_to_ruby_bool(x) (x ? Qtrue : Qfalse)
 #else
@@ -89,9 +90,9 @@ typedef VALUE wait_bool;
 
 VALUE io_spec_rb_io_wait_readable(VALUE self, VALUE io, VALUE read_p) {
   int fd = io_spec_get_fd(io);
-  set_non_blocking(fd);
   char buf[RB_IO_WAIT_READABLE_BUF];
   wait_bool ret;
+  set_non_blocking(fd);
 
   if(RTEST(read_p)) {
     rb_ivar_set(self, rb_intern("@write_data"), Qtrue);

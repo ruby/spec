@@ -12,7 +12,7 @@ static VALUE time_spec_rb_time_new(VALUE self, VALUE sec, VALUE usec) {
 }
 # endif
 
-# ifdef RUBY_VERSION_IS_1_9
+# ifdef RUBY_VERSION_IS_GTE_1_9
 static VALUE time_spec_rb_time_new(VALUE self, VALUE sec, VALUE usec) {
   return rb_time_new(NUM2TIMET(sec), NUM2LONG(usec));
 }
