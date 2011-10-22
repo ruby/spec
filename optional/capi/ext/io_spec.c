@@ -6,6 +6,7 @@
 #include "ruby/io.h"
 #endif
 #include <fcntl.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {
