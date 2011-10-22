@@ -1,6 +1,6 @@
 #include "ruby.h"
 #include "rubyspec.h"
-#ifdef RUBY_VERSION_IS_1_8
+#ifdef RUBY_VERSION_IS_1_8_EX_1_9
 #include "rubyio.h"
 #else
 #include "ruby/io.h"
@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#ifdef RUBY_VERSION_IS_LT_1_8_7
+#ifdef RUBY_VERSION_IS_1_8_EX_1_8_7
 #define rb_io_t OpenFile
 #endif
 
