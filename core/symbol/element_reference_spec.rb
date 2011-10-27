@@ -81,9 +81,15 @@ ruby_version_is "1.9" do
       end
 
       describe "and a length that cannot be converted into an Integer" do
-        it "raises a TypeError" do
-          lambda { :symbol[1,{}] }.should raise_error(TypeError)
-          lambda { :symbol[1,[]] }.should raise_error(TypeError)
+        it "raises a TypeError when given an Array" do
+          lambda { :symbol[1,Array.new] }.should raise_error(TypeError)
+        end
+
+        it "raises a TypeError when given an Hash" do
+          lambda { :symbol[1,Hash.new] }.should raise_error(TypeError)
+        end
+
+        it "raises a TypeError when given an Object" do
           lambda { :symbol[1,Object.new] }.should raise_error(TypeError)
         end
       end
@@ -102,9 +108,15 @@ ruby_version_is "1.9" do
     end
 
     describe "with an index that cannot be converted into an Integer" do
-      it "raises a TypeError" do
-        lambda { :symbol[{}] }.should raise_error(TypeError)
-        lambda { :symbol[[]] }.should raise_error(TypeError)
+      it "raises a TypeError when given an Array" do
+        lambda { :symbol[Array.new] }.should raise_error(TypeError)
+      end
+
+      it "raises a TypeError when given an Hash" do
+        lambda { :symbol[Hash.new] }.should raise_error(TypeError)
+      end
+
+      it "raises a TypeError when given an Object" do
         lambda { :symbol[Object.new] }.should raise_error(TypeError)
       end
     end
@@ -201,9 +213,16 @@ ruby_version_is "1.9" do
           :symbol[/(sy)(mb)(ol)/, 1.5].should == "sy"
         end
 
-        it "raises a TypeError if the index cannot be converted to n Integer" do
-          lambda { :symbol[/(sy)(mb)(ol)/, {}] }.should raise_error(TypeError)
-          lambda { :symbol[/(sy)(mb)(ol)/, []] }.should raise_error(TypeError)
+        describe "and an index that cannot be converted to an Integer"
+        it "raises a TypeError when given an Hash" do
+          lambda { :symbol[/(sy)(mb)(ol)/, Hash.new] }.should raise_error(TypeError)
+        end
+
+        it "raises a TypeError when given an Array" do
+          lambda { :symbol[/(sy)(mb)(ol)/, Array.new] }.should raise_error(TypeError)
+        end
+
+        it "raises a TypeError when given an Object" do
           lambda { :symbol[/(sy)(mb)(ol)/, Object.new] }.should raise_error(TypeError)
         end
 
