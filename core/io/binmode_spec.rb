@@ -24,6 +24,12 @@ describe "IO#binmode" do
     it "raises an IOError on closed stream" do
       lambda { IOSpecs.closed_io.binmode }.should raise_error(IOError)
     end
+  
+    it "propagates to dup'ed IO objects" do
+      @file.binmode
+      duped = @file.dup
+      duped.binmode?.should == @file.binmode?
+    end
   end
 
   # Even if it does nothing in Unix it should not raise any errors.
@@ -35,5 +41,10 @@ end
 ruby_version_is "1.9" do
   describe "IO#binmode?" do
     it "needs to be reviewed for spec completeness"
+    # Notes:
+    # * binmode may only have observable behavior on Windows
+    # * On JRuby, binmode flag appeared to propagate, but did not.
+    #   since this only affects Windows, a Windows spec should test
+    #   that binmode is *actually* honored after a dup. JRUBY-6198
   end
 end
