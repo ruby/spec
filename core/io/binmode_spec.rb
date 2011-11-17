@@ -33,6 +33,29 @@ describe "IO#binmode" do
       @duped.binmode?.should == @file.binmode?
     end
   end
+  
+  it "propagates to dup'ed IO objects on read" do
+    @file.binmode
+    @file.write("PNG\r\n\032\n")
+    @file.close
+    
+    @file = File.open(@filename, "r")
+    @file.binmode
+    @duped = @file.dup
+    @duped.read.should == "PNG\r\n\032\n"
+  end
+  
+  it "propagates to dup'ed IO objects when writing" do
+    @file.binmode
+    duped = @file.dup
+    duped.write("PNG\r\n\032\n")
+    duped.close
+    @file.close
+    
+    @file = File.open(@filename, "r")
+    @file.binmode
+    @file.read.should == "PNG\r\n\032\n"
+  end
 
   # Even if it does nothing in Unix it should not raise any errors.
   it "puts a stream in binary mode" do
