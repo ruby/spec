@@ -5,9 +5,11 @@ describe "IO#binmode" do
   before :each do
     @filename = tmp("IO_binmode_file")
     @file = File.open(@filename, "w")
+    @duped = nil
   end
 
   after :each do
+    @duped.close if @duped
     @file.close
     File.unlink @filename
   end
@@ -27,8 +29,8 @@ describe "IO#binmode" do
   
     it "propagates to dup'ed IO objects" do
       @file.binmode
-      duped = @file.dup
-      duped.binmode?.should == @file.binmode?
+      @duped = @file.dup
+      @duped.binmode?.should == @file.binmode?
     end
   end
 
