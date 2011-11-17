@@ -28,15 +28,41 @@ describe "IO#binmode" do
     end
   end
   
-  it "propagates to dup'ed IO objects on read" do
-    @file.binmode
-    @file.write("PNG\r\n\032\n")
-    @file.close
+  describe "read" do
+    before :each do
+      @file.binmode
+      @file.write("PNG\r\n\032\n")
+      @file.close
+      @file = File.open(@filename, "r")
+    end
     
-    @file = File.open(@filename, "r")
-    @file.binmode
-    @duped = @file.dup
-    @duped.read.should == "PNG\r\n\032\n"
+    platform_is :windows do
+      it "modifies the line endings without binmode" do
+        @file.read.should == "PNG\n\032\n"
+      end
+    end
+
+    it 'doesn\'t modify \r\n in binmode' do
+      @file.binmode
+      @file.read.should == "PNG\r\n\032\n"
+    end
+    
+    it "has binmode propagated from IO object dup'ed" do
+      @file.binmode
+      @duped = @file.dup
+      @duped.read.should == "PNG\r\n\032\n"
+    end
+  end
+
+  platform_is :windows do
+    it "modifies line endings when writing without binmode" do
+      @file.write("PNG\n\032\n")
+      @file.close
+      
+      @file = File.open(@filename, "r")
+      @file.binmode
+      @file.read.should == "PNG\r\n\032\r\n"
+    end
   end
   
   it "propagates to dup'ed IO objects when writing" do
