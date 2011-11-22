@@ -11,10 +11,21 @@ describe "Bignum#div" do
       bignum_value(88).div(bignum_value(88).to_f).should eql(1)
       bignum_value(88).div(-bignum_value(88).to_f).should eql(-1)
     end
+  end
 
-    it "raises FloatDomainError if the argument is a float zero" do
-      lambda { bignum_value(88).div(0.0) }.should raise_error(FloatDomainError)
-      lambda { bignum_value(88).div(-0.0) }.should raise_error(FloatDomainError)
+  ruby_bug "#", "1.8.6" do
+    ruby_version_is "1.8.6"..."2.0" do
+      it "raises FloatDomainError if the argument is a float zero" do
+        lambda { bignum_value(88).div(0.0) }.should raise_error(FloatDomainError)
+        lambda { bignum_value(88).div(-0.0) }.should raise_error(FloatDomainError)
+      end
+    end
+
+    ruby_version_is "2.0" do
+      it "raises FloatDomainError if the argument is a float zero" do
+        lambda { bignum_value(88).div(0.0) }.should raise_error(ZeroDivisionError)
+        lambda { bignum_value(88).div(-0.0) }.should raise_error(ZeroDivisionError)
+      end
     end
   end
 end
