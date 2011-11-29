@@ -35,13 +35,13 @@ describe :dir_delete, :shared => true do
     end.should raise_error(Errno::ENOTEMPTY)
   end
 
-  it "raises a ENOENT when trying to remove a non-existing directory" do
+  it "raises a Errno::ENOENT when trying to remove a non-existing directory" do
     lambda do
       Dir.send @method, DirSpecs.nonexistent
     end.should raise_error(Errno::ENOENT)
   end
 
-  it "raises a ENOTDIR when trying to remove a non-directory" do
+  it "raises a Errno::ENOTDIR when trying to remove a non-directory" do
     lambda do
       Dir.send @method, __FILE__
     end.should raise_error(Errno::ENOTDIR)
@@ -49,7 +49,7 @@ describe :dir_delete, :shared => true do
 
   # this won't work on Windows, since chmod(0000) does not remove all permissions
   platform_is_not :windows do
-    it "raises a EACCES if lacking adequate permissions to remove the directory" do
+    it "raises a Errno::EACCES if lacking adequate permissions to remove the directory" do
       parent = DirSpecs.mock_rmdir("noperm")
       child = DirSpecs.mock_rmdir("noperm", "child")
       File.chmod(0000, parent)
