@@ -87,12 +87,12 @@ describe "Dir.chdir" do
     Dir.pwd.should == @original
   end
 
-  it "raises a Errno::ENOENT if the directory does not exist" do
+  it "raises an Errno::ENOENT if the directory does not exist" do
     lambda { Dir.chdir DirSpecs.nonexistent }.should raise_error(Errno::ENOENT)
     lambda { Dir.chdir(DirSpecs.nonexistent) { } }.should raise_error(Errno::ENOENT)
   end
 
-  it "raises a Errno::ENOENT if the original directory no longer exists" do
+  it "raises an Errno::ENOENT if the original directory no longer exists" do
     dir1 = tmp('/testdir1')
     dir2 = tmp('/testdir2')
     File.exist?(dir1).should == false
