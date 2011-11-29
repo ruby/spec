@@ -52,15 +52,7 @@ describe "Float#round" do
       end
     end
 
-    platform_is :wordsize => 32 do
-      ruby_bug "redmine:5271",  "1.9.3.3" do
-        it "returns rounded values for big argument" do
-          0.42.round(2.0**30).should == 0.42
-        end
-      end
-    end
-
-    platform_is :wordsize => 64 do
+    ruby_bug "redmine:5271",  "1.9.3.3" do
       it "returns rounded values for big argument" do
         0.42.round(2.0**30).should == 0.42
       end
