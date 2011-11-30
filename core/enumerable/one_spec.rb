@@ -2,27 +2,31 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Enumerable#one?" do
   ruby_version_is '1.8.7' do
-    describe "when block is given" do
+    describe "when passed a block" do
       it "returns true if block returns true once" do
-        ["ant", "bear", "cat"].one?{ |word| word.length == 4 }.should be_true
+        [:a, :b, :c].one? { |s| s == :a }.should be_true
       end
-      
-      it "returns false if block evaluation are true more than once" do
-        ["ant", "bear"].one? { |word| word.length > 4 }.should be_false
+
+      it "returns false if the block returns true more than once" do
+        [:a, :b, :c].one? { |s| s == :a || s == :b }.should be_false
+      end
+
+      it "returns false if the block only returns false" do
+        [:a, :b, :c].one? { |s| s == :d }.should be_false
       end
     end
-    
-    describe "when block isn't given" do
-      it "returns true if only one element is true" do
+
+    describe "when not passed a block" do
+      it "returns true if only one element evaluates to true" do
         [false, nil, true].one?.should be_true
       end
-      
-      it "returns false if two elements are true" do
-        [false, true, nil, true].one?.should be_false
+
+      it "returns false if two elements evaluate to true" do
+        [false, :value, nil, true].one?.should be_false
       end
-      
-      it "returns false if two elements aren't false or nil" do
-        [false, true, nil, 99].one?.should be_false
+
+      it "returns false if all elements evaluate to false" do
+        [false, nil, false].one?.should be_false
       end
     end
   end
