@@ -9,5 +9,9 @@ ruby_version_is "1.8.7" do
     it "returns all elements until the block returns nil" do
       [1, 2, nil, 4].take_while{ |element| element }.should == [1, 2]
     end
+
+    it "returns all elements until the block returns false" do
+      [1, 2, false, 4].take_while{ |element| element }.should == [1, 2]
+    end
   end
 end
