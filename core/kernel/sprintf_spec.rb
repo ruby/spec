@@ -162,32 +162,6 @@ describe "Kernel#sprintf" do
     sprintf("% 010.8x", -123).should == " -0000007b"
   end
 
-  it "passes some tests for negative %u" do
-    sprintf("% u", -123).should == "-123"
-    sprintf("%+u", -123).should == "-123"
-    sprintf("%+0u", -123).should == "-123"
-    sprintf("%+ u", -123).should == "-123"
-    sprintf("% 0u", -123).should == "-123"
-
-    sprintf("%# u", -123).should == "-123"
-    sprintf("%#+u", -123).should == "-123"
-    sprintf("%#+0u", -123).should == "-123"
-    sprintf("%#+ u", -123).should == "-123"
-    sprintf("%# 0u", -123).should == "-123"
-
-    sprintf("% 8u", -123).should == "    -123"
-    sprintf("%+8u", -123).should == "    -123"
-    sprintf("%+08u", -123).should == "-0000123"
-    sprintf("%+ 8u", -123).should == "    -123"
-    sprintf("% 08u", -123).should == "-0000123"
-
-    sprintf("%# 8u", -123).should == "    -123"
-    sprintf("%#+8u", -123).should == "    -123"
-    sprintf("%#+08u", -123).should == "-0000123"
-    sprintf("%#+ 8u", -123).should == "    -123"
-    sprintf("%# 08u", -123).should == "-0000123"
-  end
-
   ruby_version_is ""..."1.9" do
     platform_is :wordsize => 32 do
       it "passes some tests for negative %u" do
