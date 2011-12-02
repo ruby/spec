@@ -8,18 +8,17 @@ describe "Delegator#methods" do
       def singleton_method
       end
     end
-    
+
     @delegate = DelegateSpecs::Delegator.new(@simple)
     @methods = @delegate.methods
-    @singleton_methods = @delegate.methods(false)
   end
 
   ruby_version_is ""..."1.9" do
-    it "have one method in the singleton version return of methods" do
-      @singleton_methods.length.should equal 1
-      @singleton_methods.should include "singleton_method"
+    # See ruby_bug guarded spec below
+    it "returns singleton methods when passed false" do
+      @delegate.methods(false).should include("singleton_method")
     end
-    
+
     it "includes all public methods of the delegate object" do
       @methods.should include "pub"
     end
@@ -40,6 +39,12 @@ describe "Delegator#methods" do
   end
 
   ruby_version_is "1.9" do
+    ruby_bug "4882", "1.9.3" do
+      it "returns singleton methods when passed false" do
+        @delegate.methods(false).should include("singleton_method")
+      end
+    end
+
     it "includes all public methods of the delegate object" do
       @methods.should include :pub
     end
