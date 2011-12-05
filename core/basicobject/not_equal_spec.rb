@@ -22,5 +22,13 @@ ruby_version_is "1.9" do
       a = BasicObject.new
       (a != a).should be_false
     end
+
+    it "dispatches to #==" do
+      a = mock("not_equal")
+      b = BasicObject.new
+      a.should_receive(:==).and_return(true)
+
+      (a != b).should be_false
+    end
   end
 end
