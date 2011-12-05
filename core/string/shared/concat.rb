@@ -78,6 +78,12 @@ describe :string_concat_fixnum, :shared => true do
     end
   end
 
+  ruby_version_is "1.9" do
+    it "raises a RangeError when the given Fixnum is negative" do
+      lambda { "".send(@method, -200)           }.should raise_error(RangeError)
+    end
+  end
+
   it "doesn't call to_int on its argument" do
     x = mock('x')
     x.should_not_receive(:to_int)
