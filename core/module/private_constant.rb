@@ -1,0 +1,92 @@
+require File.expand_path('../../../spec_helper', __FILE__)
+
+ruby_version_is "1.9.3" do
+  require File.expand_path('../fixtures/classes19', __FILE__)
+  
+  describe "Module#private_constant marked constants" do
+  
+    describe "in a module" do
+      it "cannot be accessed from outside the module" do
+        lambda do
+          ModuleSpecs::PrivConstModule::PRIVATE_CONSTANT_MODULE
+        end.should raise_error(NameError)
+      end
+      
+      it "is not defined? with A::B form" do
+        defined?(ModuleSpecs::PrivConstModule::PRIVATE_CONSTANT_MODULE).should == nil
+      end
+      
+      it "can be accessed from the module itself" do
+        ModuleSpecs::PrivConstModule.private_constant_from_self.should be_true
+      end
+      
+      it "is defined? from the module itself" do
+        ModuleSpecs::PrivConstModule.defined_from_self.should == "constant"
+      end
+      
+      it "can be accessed from lexical scope" do
+        ModuleSpecs::PrivConstModule::Nested.private_constant_from_scope.should be_true
+      end
+      
+      it "is defined? from lexical scope" do
+        ModuleSpecs::PrivConstModule::Nested.defined_from_scope.should == "constant"
+      end
+      
+      it "can be accessed from classes that include the module" do
+        ModuleSpecs::PrivConstModuleChild.new.private_constant_from_include.should be_true
+      end
+      
+      it "is defined? from classes that include the module" do
+        ModuleSpecs::PrivConstModuleChild.new.defined_from_include.should == "constant"
+      end
+    end
+    
+    describe "A private constant in a class" do
+      it "cannot be accessed from outside the class" do
+        lambda do
+          ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS
+        end.should raise_error(NameError)
+      end
+      
+      it "is not defined? with A::B form" do
+        defined?(ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS).should == nil
+      end
+      
+      it "can be accessed from the class itself" do
+        ModuleSpecs::PrivConstClass.private_constant_from_self.should be_true
+      end
+      
+      it "is defined? from the class itself" do
+        ModuleSpecs::PrivConstClass.defined_from_self.should == "constant"
+      end
+      
+      it "can be accessed from lexical scope" do
+        ModuleSpecs::PrivConstClass::Nested.private_constant_from_scope.should be_true
+      end
+      
+      it "is defined? from lexical scope" do
+        ModuleSpecs::PrivConstClass::Nested.defined_from_scope.should == "constant"
+      end
+      
+      it "can be accessed from subclasses" do
+        ModuleSpecs::PrivConstClassChild.new.private_constant_from_subclass.should be_true
+      end
+      
+      it "is defined? from subclasses" do
+        ModuleSpecs::PrivConstClassChild.new.defined_from_subclass.should == "constant"
+      end
+    end
+    
+    describe "A private constant in Object" do
+      it "cannot be accessed using ::Const form" do
+        lambda do
+          ::PRIVATE_CONSTANT_IN_OBJECT
+        end.should raise_error(NameError)
+      end
+      
+      it "can be accessed through the normal search" do
+        PRIVATE_CONSTANT_IN_OBJECT.should be_true
+      end
+    end
+  end
+end
