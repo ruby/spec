@@ -84,8 +84,16 @@ ruby_version_is "1.9.3" do
         end.should raise_error(NameError)
       end
       
+      it "is not defined? using ::Const form" do
+        defined?(::PRIVATE_CONSTANT_IN_OBJECT).should == nil
+      end
+      
       it "can be accessed through the normal search" do
         PRIVATE_CONSTANT_IN_OBJECT.should be_true
+      end
+      
+      it "is defined? through the normal search" do
+        defined?(PRIVATE_CONSTANT_IN_OBJECT).should == "constant"
       end
     end
   end
