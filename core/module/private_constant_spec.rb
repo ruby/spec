@@ -27,6 +27,15 @@ ruby_version_is "1.9.3" do
   end
   
   describe "Module#private_constant marked constants" do
+    
+    it "remain private even when updated" do
+      mod = Module.new
+      mod.const_set :Foo, true
+      mod.send :private_constant, :Foo
+      mod.const_set :Foo, false
+      
+      lambda {mod::Foo}.should raise_error(NameError)
+    end
   
     describe "in a module" do
       it "cannot be accessed from outside the module" do
