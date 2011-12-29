@@ -66,6 +66,10 @@ module ModuleSpecs
       defined? PRIVATE_CONSTANT_CLASS
     end
   end
+  
+  def self.reset_private_constants
+    Object.send :private_constant, :PRIVATE_CONSTANT_IN_OBJECT
+  end
 end
 
 class Object
