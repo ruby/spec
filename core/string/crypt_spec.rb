@@ -43,7 +43,7 @@ describe "String#crypt" do
         "hello".crypt("\x00a").should == ""
       end
 
-      it "returns the same character prepended to the string for the salt if the second character of the salt is a NULL byte"
+      it "returns the same character prepended to the string for the salt if the second character of the salt is a NULL byte" do
         "hello".crypt("a\x00").should == "aaGJVggM8eWwo"
         "hello".crypt("b\x00").should == "bb.LIhrI2NKCo"
       end
