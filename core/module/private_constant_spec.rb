@@ -14,15 +14,30 @@ ruby_version_is "1.9.3" do
       end.should raise_error(NameError)
     end
     
-    it "accepts multiple names but ignores names past the first" do
-      mod = Module.new
-      mod.const_set :Foo, true
-      mod.const_set :Bar, true
-      
-      mod.send :private_constant, :Foo, :Bar
-      
-      lambda {mod::Foo}.should raise_error(NameError)
-      mod::Bar.should == true
+    not_compliant_on :jruby do
+      it "accepts multiple names but ignores names past the first" do
+        mod = Module.new
+        mod.const_set :Foo, true
+        mod.const_set :Bar, true
+        
+        mod.send :private_constant, :Foo, :Bar
+        
+        lambda {mod::Foo}.should raise_error(NameError)
+        mod::Bar.should == true
+      end
+    end
+    
+    deviates_on :jruby do
+      it "accepts multiple names" do
+        mod = Module.new
+        mod.const_set :Foo, true
+        mod.const_set :Bar, true
+        
+        mod.send :private_constant, :Foo, :Bar
+        
+        lambda {mod::Foo}.should raise_error(NameError)
+        lambda {mod::Bar}.should raise_error(NameError)
+      end
     end
   end
   
@@ -85,7 +100,7 @@ ruby_version_is "1.9.3" do
       end
     end
     
-    describe "A private constant in a class" do
+    describe "in a class" do
       it "cannot be accessed from outside the class" do
         lambda do
           ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS
@@ -134,7 +149,7 @@ ruby_version_is "1.9.3" do
       end
     end
     
-    describe "A private constant in Object" do
+    describe "in Object" do
       it "cannot be accessed using ::Const form" do
         lambda do
           ::PRIVATE_CONSTANT_IN_OBJECT
@@ -146,7 +161,7 @@ ruby_version_is "1.9.3" do
       end
       
       it "can be accessed through the normal search" do
-        PRIVATE_CONSTANT_IN_OBJECT.should be_true
+        PRIVATE_CONSTANT_IN_OBJECT.should == true
       end
       
       it "is defined? through the normal search" do
