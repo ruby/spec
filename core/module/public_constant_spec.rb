@@ -14,23 +14,7 @@ ruby_version_is "1.9.3" do
       end.should raise_error(NameError)
     end
     
-    not_compliant_on :jruby do
-      it "accepts multiple names but ignores names past the first" do
-        mod = Module.new
-        mod.const_set :Foo, true
-        mod.const_set :Bar, true
-        
-        mod.send :private_constant, :Foo
-        mod.send :private_constant, :Bar
-        
-        mod.send :public_constant, :Foo, :Bar
-        
-        mod::Foo.should == true
-        lambda {mod::Bar}.should raise_error(NameError)
-      end
-    end
-    
-    deviates_on :jruby do
+    ruby_bug "[ruby-list:48558]", "1.9.3" do
       it "accepts multiple names" do
         mod = Module.new
         mod.const_set :Foo, true
