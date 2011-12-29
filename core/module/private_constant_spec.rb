@@ -44,6 +44,18 @@ ruby_version_is "1.9.3" do
         end.should raise_error(NameError)
       end
       
+      it "cannot be reopened as a module" do
+        lambda do
+          module ModuleSpecs::PrivConstModule::PRIVATE_CONSTANT_MODULE; end
+        end.should raise_error(NameError)
+      end
+
+      it "cannot be reopened as a class" do
+        lambda do
+          class ModuleSpecs::PrivConstModule::PRIVATE_CONSTANT_MODULE; end
+        end.should raise_error(NameError)
+      end
+      
       it "is not defined? with A::B form" do
         defined?(ModuleSpecs::PrivConstModule::PRIVATE_CONSTANT_MODULE).should == nil
       end
@@ -79,6 +91,19 @@ ruby_version_is "1.9.3" do
           ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS
         end.should raise_error(NameError)
       end
+      
+      it "cannot be reopened as a module" do
+        lambda do
+          module ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS; end
+        end.should raise_error(NameError)
+      end
+
+      it "cannot be reopened as a class" do
+        lambda do
+          class ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS; end
+        end.should raise_error(NameError)
+      end
+
       
       it "is not defined? with A::B form" do
         defined?(ModuleSpecs::PrivConstClass::PRIVATE_CONSTANT_CLASS).should == nil
