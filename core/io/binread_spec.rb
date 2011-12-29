@@ -5,7 +5,7 @@ require File.expand_path('../fixtures/classes', __FILE__)
 ruby_version_is "1.9" do
   describe "IO.binread" do
     before :each do
-      @fname = tmp('IO_binread.txt')
+      @fname = tmp('io_read.txt')
       @contents = "1234567890"
       touch(@fname) { |f| f.write @contents }
     end
@@ -33,8 +33,6 @@ ruby_version_is "1.9" do
     it "raises an Errno::EINVAL when not passed a valid offset" do
       lambda { IO.binread @fname, 0, -1  }.should raise_error(Errno::EINVAL)
     end
-    
-    it "reads file contents unencoded" do
 
     it "needs to be reviewed for spec completeness"
   end
