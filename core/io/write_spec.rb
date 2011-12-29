@@ -1,6 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 require File.expand_path('../shared/write', __FILE__)
+require File.expand_path('../shared/binwrite', __FILE__)
 
 describe "IO#write on a file" do
   before :each do
@@ -39,6 +40,27 @@ describe "IO#write on a file" do
 
   it "returns a length of 0 when writing a blank string" do
     @file.write('').should == 0
+  end
+end
+
+ruby_version_is "1.9.3" do
+  describe "IO.write" do
+    before :each do
+      @filename = tmp("IO_write") + $$.to_s
+    end
+    
+    after :each do
+      rm_r @filename
+    end
+    
+    it_behaves_like :io_binwrite, :write
+    
+    it "uses encoding from given options, if provided" do
+      IO.write(@filename, 'hello', :encoding => 'UTF-16')
+      IO.binread(@filename).should == "\xFE\xFF\x00h\x00e\x00l\x00l\x00o"
+    end
+    
+    it "needs to be reviewed for spec completeness"
   end
 end
 
