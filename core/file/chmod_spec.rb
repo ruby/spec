@@ -27,8 +27,7 @@ describe "File#chmod" do
 
   # -256, -2 and -1 raise Errno::E079 on FreeBSD
   # -256, -2 and -1 raise Errno::EFTYPE on NetBSD
-  # -256, -2 and -1 raise Errno::EINVAL on OpenBSD
-  platform_is :freebsd, :netbsd, :openbsd do
+  platform_is :freebsd, :netbsd do
     it "always succeeds with any numeric values" do
       vals = [-2**30, -2**16, #-2**8, -2, -1,
         -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
@@ -38,6 +37,16 @@ describe "File#chmod" do
     end
   end
 
+  # -256, -2 and -1 raise Errno::EINVAL on OpenBSD
+  platform_is :openbsd do
+    it "always succeeds with any numeric values" do
+      vals = [#-2**30, -2**16, -2**8, -2, -1,
+        -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8]#, 2**16, 2**30
+      vals.each { |v|
+        lambda { @file.chmod(v) }.should_not raise_error
+      }
+    end
+  end
   it "invokes to_int on non-integer argument" do
     mode = File.stat(@filename).mode
     (obj = mock('mode')).should_receive(:to_int).and_return(mode)
@@ -124,13 +133,28 @@ describe "File.chmod" do
 
   # -256, -2 and -1 raise Errno::E079 on FreeBSD
   # -256, -2 and -1 raise Errno::EFTYPE on NetBSD
-  # -256, -2 and -1 raise Errno::EINVAL on OpenBSD
-  platform_is :freebsd, :netbsd, :openbsd do
+  platform_is :freebsd, :netbsd do
     it "always succeeds with any numeric values" do
       vals = [-2**30, -2**16, #-2**8, -2, -1,
         -0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8, 2**16, 2**30]
       vals.each { |v|
         lambda { File.chmod(v, @file) }.should_not raise_error
+      }
+    end
+  end
+
+  platform_is :openbsd do
+    it "succeeds with valid values" do
+      vals = [-0.5, 0, 1, 2, 5.555575, 16, 32, 64, 2**8]
+      vals.each { |v|
+        lambda { File.chmod(v, @file) }.should_not raise_error
+      }
+    end
+
+    it "fails with invalid values" do
+      vals = [-2**30, -2**16, -2**8, -2, -1, 2**16, 2**30]
+      vals.each { |v|
+        lambda { File.chmod(v, @file) }.should raise_error(Errno::EINVAL)
       }
     end
   end
