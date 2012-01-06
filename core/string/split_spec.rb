@@ -351,7 +351,6 @@ describe "String#split with Regexp" do
     broken_str.force_encoding('binary')
     broken_str.chop!
     broken_str.force_encoding('utf-8')
-    lambda{ broken_str.split(/\r\n/) }.should raise_error(ArgumentError)
-  end  
-
+    lambda{ broken_str.split(/\r\n|\r|\n/) }.should raise_error(ArgumentError)
+  end
 end
