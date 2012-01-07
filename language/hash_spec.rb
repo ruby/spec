@@ -50,6 +50,13 @@ describe "Hash literal" do
     h.size.should == 2
     h.should == {:a => 1, :b => 2}
   end
+  
+  it "recognizes {:a==>1} as a valid expression" do
+    lambda {
+      h = {:a==>1}
+      h[:a=].should == 1
+    }.should_not raise_error
+  end
 end
 
 language_version __FILE__, "hash"
