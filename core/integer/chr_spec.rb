@@ -84,11 +84,11 @@ ruby_version_is "1.9" do
     end
 
     it "accepts an Encoding object as an argument" do
-      lambda { 568.chr(Encoding::SHIFT_JIS) }.should_not raise_error
+      lambda { 0x82A0.chr(Encoding::SHIFT_JIS) }.should_not raise_error
     end
 
     it "accepts a String as an argument" do
-      lambda { 56.chr('euc-jp') }.should_not raise_error
+      lambda { 0xA4A2.chr('euc-jp') }.should_not raise_error
     end
 
     it "converts a String to an Encoding as Encoding.find does" do
