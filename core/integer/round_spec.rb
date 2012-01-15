@@ -40,8 +40,8 @@ describe "Integer#round" do
       lambda { 42.round(Float::INFINITY) }.should raise_error(RangeError)
     end
 
-    it "raises a RangeError when passed a Bignum" do
-      lambda { 42.round(fixnum_max + 1) }.should raise_error(RangeError)
+    it "raises a RangeError when passed a beyond signed int" do
+      lambda { 42.round(1<<31) }.should raise_error(RangeError)
     end
 
     it "raises a TypeError when passed a String" do
