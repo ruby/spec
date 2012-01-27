@@ -145,11 +145,20 @@ describe "File.expand_path" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9"..."2.0" do
     it "produces a String in the default external encoding" do
       old_external = Encoding.default_external
       Encoding.default_external = Encoding::SHIFT_JIS
       File.expand_path("./a").encoding.should == Encoding::SHIFT_JIS
+      Encoding.default_external = old_external
+    end
+  end
+
+  ruby_version_is "2.0" do
+    it "produces a String in the default external encoding" do
+      old_external = Encoding.default_external
+      Encoding.default_external = Encoding::SHIFT_JIS
+      File.expand_path("./a").encoding.should == Encoding::US_ASCII
       Encoding.default_external = old_external
     end
   end
