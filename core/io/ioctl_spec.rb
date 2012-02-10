@@ -1,5 +1,6 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
+require 'socket'
 
 describe "IO#ioctl" do
   it "raises IOError on closed stream" do
