@@ -42,7 +42,7 @@ describe :kernel_String, :shared => true do
     end
   end
 
-  ruby_bug "#5158", "1.9.3-p116" do
+  ruby_bug "#5158", "1.9.3.116" do
     it "raises a TypeError if respond_to? returns false for #to_s" do
       obj = mock("to_s")
       obj.does_not_respond_to(:to_s)
