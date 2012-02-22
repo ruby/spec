@@ -25,6 +25,16 @@ describe :float_modulo, :shared => true do
     4.2.send(@method, (0/0.0)).should be_nan
   end
 
+  it "returns -0.0 when called on -0.0 with a non zero modulus" do
+    r = (-0.0).send(@method, 42)
+    r.should == 0
+    (1/r).should < 0
+
+    r = (-0.0).send(@method, (1/0.0))
+    r.should == 0
+    (1/r).should < 0
+  end
+
   ruby_version_is ""..."1.9" do
     it "does NOT raise ZeroDivisionError if other is zero" do
       1.0.send(@method, 0).should be_nan
