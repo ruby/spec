@@ -44,38 +44,33 @@ ruby_version_is "1.9" do
   describe "Array#rotate!" do
     it "moves the first n elements to the last and returns self" do
       a = [1, 2, 3, 4, 5]
-      a.rotate!.should == [2, 3, 4, 5, 1]
+      a.rotate!.should equal(a)
       a.should == [2, 3, 4, 5, 1]
       a = [1, 2, 3, 4, 5]
-      a.rotate!(2).should == [3, 4, 5, 1, 2]
+      a.rotate!(2).should equal(a)
       a.should == [3, 4, 5, 1, 2]
       a = [1, 2, 3, 4, 5]
-      a.rotate!(-1).should == [5, 1, 2, 3, 4]
+      a.rotate!(-1).should equal(a)
       a.should == [5, 1, 2, 3, 4]
       a = [1, 2, 3, 4, 5]
-      a.rotate!(13).should == [4, 5, 1, 2, 3]
+      a.rotate!(13).should equal(a)
       a.should == [4, 5, 1, 2, 3]
     end
 
     it "does nothing and returns self when the length is zero or one" do
       a = [1]
-      a.rotate! == [1]
+      a.rotate!.should equal(a)
       a.should == [1]
       a = [1]
-      a.rotate!(2).should == [1]
+      a.rotate!(2).should equal(a)
       a.should == [1]
 
       a = []
-      a.rotate!.should == []
+      a.rotate!.should equal(a)
       a.should == []
       a = []
-      a.rotate!(2).should == []
+      a.rotate!(2).should equal(a)
       a.should == []
-    end
-
-    it "returns self" do
-      a = [1, 2, 3]
-      a.rotate!.object_id.should == a.object_id
     end
 
     it "raises a RuntimeError on a frozen array" do
