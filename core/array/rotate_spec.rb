@@ -3,29 +3,62 @@ require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is "1.9" do
   describe "Array#rotate" do
-    it "returns a copy of the array whose first n elements is moved to the last" do
-      a = [1, 2, 3, 4, 5].freeze
-      a.rotate.should == [2, 3, 4, 5, 1]
-      a.rotate(2).should == [3, 4, 5, 1, 2]
-      a.rotate(-1).should == [5, 1, 2, 3, 4]
-      a.rotate(13).should == [4, 5, 1, 2, 3]
+    describe "when passed no argument" do
+      it "returns a copy of the array with the first element moved at the end" do
+        [1, 2, 3, 4, 5].rotate.should == [2, 3, 4, 5, 1]
+      end
     end
 
-    it "returns a copy of the array when the length is one" do
-      a = [1].freeze
-      a.rotate.should == [1]
-      a.rotate(2).should == [1]
+    describe "with an argument n" do
+      it "returns a copy of the array with the first (n % size) elements moved at the end" do
+        a = [1, 2, 3, 4, 5]
+        a.rotate(  2).should == [3, 4, 5, 1, 2]
+        a.rotate( -1).should == [5, 1, 2, 3, 4]
+        a.rotate(-21).should == [5, 1, 2, 3, 4]
+        a.rotate( 13).should == [4, 5, 1, 2, 3]
+        a.rotate(  0).should == a
+      end
+
+      it "coerces the argument using to_int" do
+        [1, 2, 3].rotate(2.6).should == [3, 1, 2]
+
+        obj = mock('integer_like')
+        obj.should_receive(:to_int).and_return(2)
+        [1, 2, 3].rotate(obj).should == [3, 1, 2]
+      end
+
+      it "raises a TypeError if not passed an integer-like argument" do
+        lambda {
+          [1, 2].rotate(nil)
+        }.should raise_error(TypeError)
+        lambda {
+          [1, 2].rotate("4")
+        }.should raise_error(TypeError)
+      end
     end
 
-    it "returns an empty array when self is empty" do
-      a = [].freeze
-      a.rotate.should == []
-      a.rotate(2).should == []
+    it "returns a copy of the array when its length is one or zero" do
+      [1].rotate.should == [1]
+      [1].rotate(2).should == [1]
+      [1].rotate(-42).should == [1]
+      [ ].rotate.should == []
+      [ ].rotate(2).should == []
+      [ ].rotate(-42).should == []
+    end
+
+    it "does not mutate the receiver" do
+      lambda {
+        [].freeze.rotate
+        [2].freeze.rotate(2)
+        [1,2,3].freeze.rotate(-3)
+      }.should_not raise_error
     end
 
     it "does not return self" do
       a = [1, 2, 3]
       a.rotate.should_not equal(a)
+      a = []
+      a.rotate(0).should_not equal(a)
     end
 
     ruby_version_is "" ... "1.9.3" do
