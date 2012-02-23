@@ -75,39 +75,65 @@ ruby_version_is "1.9" do
   end
 
   describe "Array#rotate!" do
-    it "moves the first n elements to the last and returns self" do
-      a = [1, 2, 3, 4, 5]
-      a.rotate!.should equal(a)
-      a.should == [2, 3, 4, 5, 1]
-      a = [1, 2, 3, 4, 5]
-      a.rotate!(2).should equal(a)
-      a.should == [3, 4, 5, 1, 2]
-      a = [1, 2, 3, 4, 5]
-      a.rotate!(-1).should equal(a)
-      a.should == [5, 1, 2, 3, 4]
-      a = [1, 2, 3, 4, 5]
-      a.rotate!(13).should equal(a)
-      a.should == [4, 5, 1, 2, 3]
+    describe "when passed no argument" do
+      it "moves the first element to the end and returns self" do
+        a = [1, 2, 3, 4, 5]
+        a.rotate!.should equal(a)
+        a.should == [2, 3, 4, 5, 1]
+      end
+    end
+
+    describe "with an argument n" do
+      it "moves the first (n % size) elements at the end and returns self" do
+        a = [1, 2, 3, 4, 5]
+        a.rotate!(2).should equal(a)
+        a.should == [3, 4, 5, 1, 2]
+        a.rotate!(-12).should equal(a)
+        a.should == [1, 2, 3, 4, 5]
+        a.rotate!(13).should equal(a)
+        a.should == [4, 5, 1, 2, 3]
+      end
+
+      it "coerces the argument using to_int" do
+        [1, 2, 3].rotate!(2.6).should == [3, 1, 2]
+
+        obj = mock('integer_like')
+        obj.should_receive(:to_int).and_return(2)
+        [1, 2, 3].rotate!(obj).should == [3, 1, 2]
+      end
+
+      it "raises a TypeError if not passed an integer-like argument" do
+        lambda {
+          [1, 2].rotate!(nil)
+        }.should raise_error(TypeError)
+        lambda {
+          [1, 2].rotate!("4")
+        }.should raise_error(TypeError)
+      end
     end
 
     it "does nothing and returns self when the length is zero or one" do
       a = [1]
       a.rotate!.should equal(a)
       a.should == [1]
-      a = [1]
       a.rotate!(2).should equal(a)
+      a.should == [1]
+      a.rotate!(-21).should equal(a)
       a.should == [1]
 
       a = []
       a.rotate!.should equal(a)
       a.should == []
-      a = []
       a.rotate!(2).should equal(a)
+      a.should == []
+      a.rotate!(-21).should equal(a)
       a.should == []
     end
 
     it "raises a RuntimeError on a frozen array" do
-      lambda { ArraySpecs.frozen_array.rotate! }.should raise_error(RuntimeError)
+      lambda { [1, 2, 3].freeze.rotate!(0) }.should raise_error(RuntimeError)
+      lambda { [1].freeze.rotate!(42) }.should raise_error(RuntimeError)
+      lambda { [].freeze.rotate! }.should raise_error(RuntimeError)
     end
   end
 end
