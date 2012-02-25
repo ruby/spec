@@ -69,7 +69,7 @@ ruby_version_is "1.9" do
 
     ruby_version_is "1.9.3" do
       it "does not return subclass instance for Array subclasses" do
-        ArraySpecs::MyArray[1, 2, 3].rotate.should be_kind_of(Array)
+        ArraySpecs::MyArray[1, 2, 3].rotate.should be_an_instance_of(Array)
       end
     end
   end
