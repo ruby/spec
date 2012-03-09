@@ -10,6 +10,10 @@ describe "Kernel#exec" do
     lambda { exec "" }.should raise_error(SystemCallError)
   end
 
+  it "raises a SystemCallError if cmd cannot execute and contains '-'" do
+    lambda { exec 'cmd-plugin' }.should raise_error(SystemCallError)
+  end
+
   it "raises Errno::ENOENT if the script does not exist" do
     lambda { exec "bogus-noent-script.sh" }.should raise_error(Errno::ENOENT)
   end
