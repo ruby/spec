@@ -67,14 +67,14 @@ describe "The unpacking splat operator (*)" do
   end
 
   ruby_version_is ""..."2.0" do
-    it "when applied to a value with no other items in the containing array, coerces the passed value to an array and returns it unchanged" do
+    it "returns the array when applied to an array inside an empty array" do
       splatted_array = [3, 4, 5]
       [*splatted_array].should equal(splatted_array)
     end
   end
 
   ruby_version_is "2.0" do
-    it "when applied to a value with no other items in the containing array, coerces the passed value to an array and returns it unchanged but another object" do
+    it "returns a new array containing the same values when applied to an array inside an empty array" do
       splatted_array = [3, 4, 5]
       [*splatted_array].should == splatted_array
       [*splatted_array].should_not equal(splatted_array)
