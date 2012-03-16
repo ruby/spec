@@ -74,7 +74,7 @@ ruby_version_is "1.9" do
     end
 
     ruby_version_is "2.0" do
-      it "isn't called when obj responds to the given protected method, include_private = false" do
+      it "is called when obj responds to the given protected method, include_private = false" do
         @a.should_receive(:respond_to_missing?)
         @a.respond_to?(:protected_method, false).should be_false
       end
