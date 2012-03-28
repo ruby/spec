@@ -32,7 +32,7 @@ module ProcessSpecs
 
       return unless File.exists? @data
 
-      File.open(@data, "rb") { |f| return f.gets.chomp }
+      File.open(@data, "rb") { |f| return f.gets.tap{|x|x&&x.chomp!} }
     end
   end
 end
