@@ -59,4 +59,9 @@ describe "IO.sysopen" do
     @fd = IO.sysopen(@filename, "w", 777)
     @fd.should_not equal(0)
   end
+
+  it "accepts mode & permission that are nil" do
+    @fd = IO.sysopen(@filename, nil, nil)
+    @fd.should_not equal(0)
+  end
 end
