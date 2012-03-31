@@ -252,7 +252,13 @@ describe "The super keyword" do
     Super::RestArgsWithSuper::B.new.a("bar").should == ["bar", "foo"]
   end
 
-  ruby_bug "#6239", "1.8.7.358" do
+  ruby_version_is ""..."1.9" do
+    it "passes empty args instead of modified rest args when they were originally empty" do
+      Super::RestArgsWithSuper::B.new.a.should == []
+    end
+  end
+
+  ruby_version_is "1.9" do
     it "passes along modified rest args when they were originally empty" do
       Super::RestArgsWithSuper::B.new.a.should == ["foo"]
     end
