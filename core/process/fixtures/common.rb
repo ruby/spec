@@ -18,13 +18,11 @@ module ProcessSpecs
     end
 
     def invoke(behavior, arguments=[])
-      case arguments.size
-      when 0, 1
-        args = arguments.inspect
-      when 2
-        args = "[#{arguments.first.inspect},#{arguments.last.inspect}]"
-      end
-      args << " #{@input} #{@data} #{@signal} #{behavior}"
+      args = Marshal.dump(arguments).unpack("H*")
+      args << @input
+      args << @data
+      args << @signal
+      args << behavior
 
       ruby_exe @script, :args => args
 
