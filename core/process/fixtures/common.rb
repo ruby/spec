@@ -28,6 +28,14 @@ module ProcessSpecs
 
       wait_for_daemon
 
+      if 'daemon_at_exit' == behavior || /keep_stdio_open_true_stdout/ =~ behavior
+        # prevent false negative because of filesystem cache or something
+        10.times do
+          break if File.exist?(@data) && File.size?(@data)
+          sleep 0.1
+        end
+      end
+
       return unless File.exists? @data
 
       File.open(@data, "rb") { |f| return f.gets.tap{|x|x&&x.chomp!} }
