@@ -38,8 +38,22 @@ describe "Hash#default_proc=" do
     end
 
     it "raises an error if passed stuff not convertible to procs" do
-      lambda{new_hash.default_proc = nil}.should raise_error(TypeError)
       lambda{new_hash.default_proc = 42}.should raise_error(TypeError)
+    end
+
+    ruby_version_is "1.9"..."2.0" do
+      it "raises an error if passed nil" do
+        lambda{new_hash.default_proc = nil}.should raise_error(TypeError)
+      end
+    end
+
+    ruby_version_is "2.0" do
+      it "clears the default proc if passed nil" do
+        h = new_hash { |i| 'Paris' }
+        h.default_proc = nil
+        h.default_proc.should == nil
+        h[:city].should == nil
+      end
     end
 
     it "accepts a lambda with an arity of 2" do
