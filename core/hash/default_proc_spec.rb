@@ -14,7 +14,7 @@ describe "Hash#default_proc" do
 end
 
 describe "Hash#default_proc=" do
-  ruby_version_is "1.8.8" do
+  ruby_version_is "1.9" do
     it "replaces the block passed to Hash.new" do
       h = new_hash { |i| 'Paris' }
       h.default_proc = Proc.new { 'Montreal' }
@@ -49,17 +49,14 @@ describe "Hash#default_proc=" do
       end.should_not raise_error(TypeError)
     end
 
-    ruby_version_is "1.9" do
-      it "raises a TypeError if passed a lambda with an arity other than 2" do
-        h = new_hash
-        lambda do
-          h.default_proc = lambda {|a| }
-        end.should raise_error(TypeError)
-        lambda do
-          h.default_proc = lambda {|a,b,c| }
-        end.should raise_error(TypeError)
-      end
+    it "raises a TypeError if passed a lambda with an arity other than 2" do
+      h = new_hash
+      lambda do
+        h.default_proc = lambda {|a| }
+      end.should raise_error(TypeError)
+      lambda do
+        h.default_proc = lambda {|a,b,c| }
+      end.should raise_error(TypeError)
     end
-
   end
 end
