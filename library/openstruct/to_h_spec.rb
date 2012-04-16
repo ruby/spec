@@ -25,7 +25,7 @@ ruby_version_is "2.0" do
 
     it "returns a Hash that is independent from the struct" do
       @to_h[:age] = 71
-      @h.age.should = 70
+      @os.age.should == 70
     end
   end
 end
