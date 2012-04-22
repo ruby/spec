@@ -8,10 +8,12 @@ describe "Socket#connect_nonblock" do
     @hostname = "127.0.0.1"
     @addr = Socket.sockaddr_in(SocketSpecs.port, @hostname)
     @socket = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
+    @thread = nil
   end
 
   after :each do
     @socket.close
+    @thread.join if @thread
   end
 
   platform_is_not :freebsd do
@@ -41,7 +43,7 @@ describe "Socket#connect_nonblock" do
 
   it "connects the socket to the remote side" do
     ready = false
-    thread = Thread.new do
+    @thread = Thread.new do
       server = TCPServer.new(@hostname, SocketSpecs.port)
       ready = true
       conn = server.accept
@@ -50,7 +52,7 @@ describe "Socket#connect_nonblock" do
       server.close
     end
 
-    Thread.pass while (thread.status and thread.status != 'sleep') or !ready
+    Thread.pass while (@thread.status and @thread.status != 'sleep') or !ready
 
     begin
       @socket.connect_nonblock(@addr)
