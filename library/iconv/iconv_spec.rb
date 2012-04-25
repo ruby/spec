@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../shared/initialize_exceptions', __FILE__)
-require 'iconv'
+require File.expand_path('../fixtures/classes.rb', __FILE__)
 
 # These specs assume the Iconv implementation supports at least
 # the following encodings:
