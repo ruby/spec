@@ -34,4 +34,9 @@ describe "Tempfile#initialize" do
       File.stat(@tempfile.path).mode.should == 0100600
     end
   end
+
+  it "accepts encoding options" do
+    @tempfile.send(:initialize, ['shiftjis', 'yml'], :encoding => 'SHIFT_JIS')
+    @tempfile.external_encoding.should == Encoding::Shift_JIS
+  end
 end
