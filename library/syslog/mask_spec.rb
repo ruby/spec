@@ -44,11 +44,11 @@ describe "Syslog.mask" do
         Syslog.mask = 64
 
         Syslog.reopen("rubyspec") do
-          Syslog.mask.should == 64
+          Syslog.mask.should == 255
         end
 
         Syslog.open do
-          Syslog.mask.should == 64
+          Syslog.mask.should == 255
         end
       end
     end
