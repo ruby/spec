@@ -16,29 +16,20 @@ describe "Socket#connect_nonblock" do
     @thread.join if @thread
   end
 
-  platform_is_not :freebsd do
-    it "takes an encoded socket address and starts the connection to it" do
-      lambda {
+  it "takes an encoded socket address and starts the connection to it" do
+    lambda {
+      begin
         @socket.connect_nonblock(@addr)
-      }.should raise_error(Errno::EINPROGRESS)
-    end
-  end
-
-  platform_is :freebsd do
-    it "takes an encoded socket address and starts the connection to it" do
-      lambda {
-        begin
-          @socket.connect_nonblock(@addr)
-        rescue Errno::EINPROGRESS
-          r = @socket.getsockopt(Socket::SOL_SOCKET, Socket::SO_ERROR)
-          if r.unpack('i').first == Errno::ECONNREFUSED::Errno
-            raise Errno::ECONNREFUSED.new
-          else
-            raise r.inspect
-          end
+      rescue Errno::EINPROGRESS
+        IO.select(nil, [@socket])
+        r = @socket.getsockopt(Socket::SOL_SOCKET, Socket::SO_ERROR)
+        if r.unpack('i').first == Errno::ECONNREFUSED::Errno
+          raise Errno::ECONNREFUSED.new
+        else
+          raise r.inspect
         end
-      }.should raise_error(Errno::ECONNREFUSED)
-    end
+      end
+    }.should raise_error(Errno::ECONNREFUSED)
   end
 
   it "connects the socket to the remote side" do
