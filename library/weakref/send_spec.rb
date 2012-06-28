@@ -27,9 +27,18 @@ describe "WeakRef#__send__" do
     wr.delegated_method.should == :result
   end
 
-  it "delegates to protected methods of the weakly-referenced object" do
-    wr = WeakRef.new(WeakRefSpecs)
-    wr.protected_method.should == :result
+  ruby_version_is ""..."2.0" do
+    it "delegates to protected methods of the weakly-referenced object" do
+      wr = WeakRef.new(WeakRefSpecs)
+      wr.protected_method.should == :result
+    end
+  end
+
+  ruby_version_is "2.0" do
+    it "delegates to protected methods of the weakly-referenced object" do
+      wr = WeakRef.new(WeakRefSpecs)
+      lambda { wr.protected_method }.should raise_error(NameError)
+    end
   end
 
   it "does not delegate to private methods of the weakly-referenced object" do
