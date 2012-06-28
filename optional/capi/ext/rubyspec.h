@@ -223,7 +223,9 @@
 #endif
 
 /* Enumerable */
+#ifdef RUBY_VERSION_IS_1_8_7
 #define HAVE_RB_ENUMERATORIZE              1
+#endif
 
 /* Exception */
 #define HAVE_RB_EXC_NEW                    1
