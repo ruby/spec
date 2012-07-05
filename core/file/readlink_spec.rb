@@ -40,7 +40,9 @@ describe "File.readlink" do
     describe "File.readlink when changing the working directory" do
       before :each do
         @cwd = Dir.pwd
-        Dir.chdir tmp("")
+        @tmpdir = tmp("/readlink")
+        Dir.mkdir @tmpdir
+        Dir.chdir @tmpdir
 
         @link = 'readlink_link'
         @file = 'readlink_file'
@@ -53,6 +55,7 @@ describe "File.readlink" do
         # rm_r would not work since File.exist?(@link) might be false but yet exist
         File.unlink @link
         Dir.chdir @cwd
+        Dir.rmdir @tmpdir
       end
 
       it "returns the name of the file referenced by the given link" do
