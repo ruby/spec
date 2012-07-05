@@ -31,7 +31,7 @@ describe "File.readlink" do
         lambda { File.readlink("/this/surely/doesnt/exist") }.should raise_error(Errno::ENOENT)
       end
 
-      it "raises an Errno::EINVAL if called with an invalid argument" do
+      it "raises an Errno::EINVAL if called with a normal file" do
         touch @file
         lambda { File.readlink(@file) }.should raise_error(Errno::EINVAL)
       end
