@@ -22,6 +22,7 @@ describe "Fixnum#**" do
     (2 ** 62).should eql 4611686018427387904
     (2 ** 63).should eql 9223372036854775808
     (2 ** 64).should eql 18446744073709551616
+    (8 ** 23).should eql 590295810358705651712
   end
 
   it "raises negative numbers to the given power" do
