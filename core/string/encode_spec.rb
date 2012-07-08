@@ -39,6 +39,12 @@ with_feature :encoding do
   describe "String#encode" do
     it_behaves_like :encode_string, :encode
 
+    it "an ascii substring of a binary string should be encoded UTF-8 without raising an exception" do
+      str = "\x82foo".force_encoding("ascii-8bit")[1..-1].encode("utf-8")
+      str.should == encode("foo", "utf-8")
+      str.encoding.name.should == "UTF-8"
+    end
+
     it "returns a copy of self when called with only a target encoding" do
       str = "strung".force_encoding(Encoding::UTF_8)
       copy = str.encode('ascii')
