@@ -16,15 +16,27 @@ describe "Hash.[]" do
   end
 
   ruby_version_is '1.8.7' do
-    # Not officially documented yet, see http://redmine.ruby-lang.org/issues/show/1385
-    ruby_bug "[ruby-core:21249]", "1.8.7.167" do
+    ruby_bug "#1000 #1385", "1.8.7.167" do
       it "creates a Hash; values can be provided as a list of value-pairs in an array" do
         hash_class[[[:a, 1], [:b, 2]]].should == new_hash(:a => 1, :b => 2)
-        hash_class[[[:a, 1], [:b], 42, [:d, 2], [:e, 2, 3], []]].should == new_hash(:a => 1, :b => nil, :d => 2)
         obj = mock('x')
         def obj.to_ary() [:b, 2] end
         hash_class[[[:a, 1], obj]].should == new_hash(:a => 1, :b => 2)
       end
+    end
+  end
+
+  ruby_version_is '1.8.7'...'2.0' do
+    ruby_bug "#1000 #1385", "1.8.7.167" do
+      it "creates a Hash; values can be provided as a list of value-invalid-pairs in an array" do
+        hash_class[[[:a, 1], [:b], 42, [:d, 2], [:e, 2, 3], []]].should == new_hash(:a => 1, :b => nil, :d => 2)
+      end
+    end
+  end
+
+  ruby_version_is '2.0' do
+    it "raises an ArgumentError when passed a list of value-invalid-pairs in an array" do
+      lambda {hash_class[[[:a, 1], [:b], 42, [:d, 2], [:e, 2, 3], []]] }.should raise_error(ArgumentError)
     end
   end
 
@@ -41,7 +53,7 @@ describe "Hash.[]" do
     end
 
     it "returns an instance of a subclass when passed an Array" do
-      HashSpecs::MyHash[[1,2,3,4]].should be_kind_of(HashSpecs::MyHash)
+      HashSpecs::MyHash[1,2,3,4].should be_kind_of(HashSpecs::MyHash)
     end
   end
 
