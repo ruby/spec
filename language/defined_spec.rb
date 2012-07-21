@@ -1132,6 +1132,10 @@ describe "The defined? keyword for a module method call scoped constant" do
 end
 
 describe "The defined? keyword for a variable scoped constant" do
+  after :all do
+    Object.remove_class_variable :@@defined_specs_obj
+  end
+
   it "returns nil if the scoped constant is not defined" do
     @defined_specs_obj = DefinedSpecs::Basic
     defined?(@defined_specs_obj::Undefined).should be_nil
