@@ -14,8 +14,8 @@ describe "CGI.escapeHTML" do
   end
 
   ruby_version_is "2.0" do
-    it "escapes special HTML characters (&\"<>) in the passed argument" do
-      CGI.escapeHTML(%[& < > " ']).should == '&amp; &lt; &gt; &quot; &apos;'
+    it "escapes special HTML characters (&\"<>') in the passed argument" do
+      CGI.escapeHTML(%[& < > " ']).should == '&amp; &lt; &gt; &quot; &#39;'
     end
 
     it "does not escape any other characters" do
