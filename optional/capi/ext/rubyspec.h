@@ -225,6 +225,8 @@
 #define HAVE_RB_LONG2INT                   1
 #endif
 
+#define HAVE_RB_ITER_BREAK                 1
+
 /* Enumerable */
 #ifdef RUBY_VERSION_IS_1_8_7
 #define HAVE_RB_ENUMERATORIZE              1
