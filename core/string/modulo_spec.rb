@@ -651,7 +651,12 @@ describe "String#%" do
   it "taints result for %s when argument is tainted" do
     ("%s" % "x".taint).tainted?.should == true
     ("%s" % mock('x').taint).tainted?.should == true
-    ("%s" % -0.0.taint).tainted?.should == true # -0.0 is not flonum
+  end
+
+  ruby_version_is ""..."2.0" do
+    it "taints result for %s when argument is tainted float" do
+      ("%s" % 0.0.taint).tainted?.should == true # float is frozen on 2.0
+    end
   end
 
   # MRI crashes on this one.
