@@ -1,13 +1,9 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 ruby_version_is "2.0.0" do
-  describe "Kernel#using" do
-    before :each do
-      @string_mod = Module.new do
-        refine(String) {def foo; 'foo'; end}
-      end
-    end
+  require File.expand_path('../fixtures/string_refinement', __FILE__)
 
+  describe "Kernel#using" do
     it "requires one or more Module arguments" do
       lambda do
         Module.new do
@@ -23,10 +19,8 @@ ruby_version_is "2.0.0" do
     end
 
     it "uses refinements from the given module for method calls in the target module" do
-      string_mod = @string_mod
-
       mod = Module.new do
-        using string_mod
+        using StringRefinement
         def self.go(str)
           str.foo
         end
@@ -36,10 +30,8 @@ ruby_version_is "2.0.0" do
     end
 
     it "uses refinements from the given module for method calls in subclasses" do
-      string_mod = @string_mod
-
       cls = Class.new do
-        using string_mod
+        using StringRefinement
       end
       cls2 = Class.new(cls) do
         def self.go(str)
@@ -126,6 +118,33 @@ ruby_version_is "2.0.0" do
       end
 
       mod2.call_bar(cls2.new).should == 'bar'
+    end
+
+    it "applies used refinements to module/class_eval blocks" do
+      mod = Module.new do
+        using StringRefinement
+      end
+
+      mod.module_eval {'hello'.foo}.should == 'foo'
+      mod.class_eval {'hello'.foo}.should == 'foo'
+    end
+
+    it "applies used refinements to lambda blocks" do
+      lambda do
+        using StringRefinement
+        'hello'.foo
+      end.call.should == 'foo'
+    end
+
+    ruby_bug "in a_matsuda's slides but does not appear to work", "2.0.1" do
+      it "applies used refinements to nested closures inside module/class_eval" do
+	mod = Module.new do
+	  using StringRefinement
+	end
+
+	mod.module_eval { lambda { 'hello'.say } }.call.should == 'foo'
+	mod.class_eval { lambda { 'hello'.say } }.call.should == 'foo'
+      end
     end
   end
 end
