@@ -1,11 +1,25 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 ruby_version_is "2.0.0" do
-  describe "Module#using" do
+  describe "Kernel#using" do
     before :each do
       @string_mod = Module.new do
         refine(String) {def foo; 'foo'; end}
       end
+    end
+
+    it "requires one or more Module arguments" do
+      lambda do
+        Module.new do
+          using
+        end
+      end.should raise_error(ArgumentError)
+
+      lambda do
+        Module.new do
+          using 'foo'
+        end
+      end.should raise_error(TypeError)
     end
 
     it "uses refinements from the given module for method calls in the target module" do
