@@ -24,17 +24,22 @@ describe "Array#sample" do
         lambda { [1, 2].sample(-1) }.should raise_error(ArgumentError)
       end
 
-      it "returns different random values from the array" do
-        a = [1, 2, 3, 4]
-        sum = []
-        42.times {
-          pair = a.sample(2)
-          sum.concat(pair)
-          (pair - a).should == []
-          pair[0].should_not == pair[1]
+      it "selects values from the array" do
+        source = [1,2,3,4]
+        source.should include(*source.sample(2))
+      end
+
+      it "does not return the same value if the array is unique" do
+        source = [1, 2, 3, 4]
+        1000.times {
+          pair = source.sample(2)
+          pair[0].should_not eql(pair[1])
         }
-        a.should == [1, 2, 3, 4]
-        (a - sum).should == []  # Might fail once every 2^40 times ...
+      end
+
+      it "may return the same value if the array is not unique" do
+        source = [4, 4]
+        source.sample(2).should eql([4,4])
       end
 
       it "returns a distribution of results" do
