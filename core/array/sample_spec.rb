@@ -38,7 +38,7 @@ describe "Array#sample" do
         a.sample(obj).size.should == 2
       end
 
-      it "returns all values with n big enough" do
+      it "returns all values when n >= array size" do
         a = [1, 2, 3, 4]
         a.sample(4).sort.should == a
         a.sample(5).sort.should == a
