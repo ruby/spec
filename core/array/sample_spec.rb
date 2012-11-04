@@ -7,6 +7,14 @@ describe "Array#sample" do
       [4].sample.should eql(4)
     end
 
+    it "returns a distribution of results" do
+      source = [0,1,2,3,4]
+      samples = (0..1000).collect { |el|
+        source.sample
+      }.uniq.sort
+      samples.should eql(source)
+    end
+
     it "returns nil for empty arrays" do
       [].sample.should be_nil
     end
@@ -27,6 +35,14 @@ describe "Array#sample" do
         }
         a.should == [1, 2, 3, 4]
         (a - sum).should == []  # Might fail once every 2^40 times ...
+      end
+
+      it "returns a distribution of results" do
+        source = [0,1,2,3,4]
+        samples = (0..1000).collect { |el| 
+          source.sample(3) 
+        }.flatten.uniq.sort
+        samples.should eql(source)
       end
 
       it "tries to convert n to an Integer using #to_int" do

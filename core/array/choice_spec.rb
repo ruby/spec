@@ -7,6 +7,14 @@ describe "Array#choice" do
       [4].choice.should eql(4)
     end
 
+    it "returns a distribution of results" do
+      source = [0,1,2,3,4]
+      choices = (0..1000).collect { |el|
+        source.choice
+      }.uniq.sort
+      choices.should == source
+    end
+
     it "returns nil for empty arrays" do
       [].choice.should be_nil
     end
