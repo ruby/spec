@@ -9,10 +9,8 @@ describe "Array#choice" do
 
     it "returns a distribution of results" do
       source = [0,1,2,3,4]
-      choices = (0..1000).collect { |el|
-        source.choice
-      }.uniq.sort
-      choices.should == source
+      choices = ArraySpecs::SampleRange.collect { |el| source.choice }
+      choices.uniq.sort.should == source
     end
 
     it "returns nil for empty arrays" do

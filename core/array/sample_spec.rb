@@ -9,10 +9,8 @@ describe "Array#sample" do
 
     it "returns a distribution of results" do
       source = [0,1,2,3,4]
-      samples = (0..1000).collect { |el|
-        source.sample
-      }.uniq.sort
-      samples.should eql(source)
+      samples = ArraySpecs::SampleRange.collect { |el| source.sample }
+      samples.uniq.sort.should eql(source)
     end
 
     it "returns nil for empty arrays" do
@@ -31,10 +29,10 @@ describe "Array#sample" do
 
       it "does not return the same value if the array is unique" do
         source = [1, 2, 3, 4]
-        1000.times {
+        ArraySpecs::SampleCount.times do
           pair = source.sample(2)
           pair[0].should_not eql(pair[1])
-        }
+        end
       end
 
       it "may return the same value if the array is not unique" do
@@ -44,10 +42,8 @@ describe "Array#sample" do
 
       it "returns a distribution of results" do
         source = [0,1,2,3,4]
-        samples = (0..1000).collect { |el| 
-          source.sample(3) 
-        }.flatten.uniq.sort
-        samples.should eql(source)
+        samples = ArraySpecs::SampleRange.collect { |el| source.sample(3) }
+        samples.flatten.uniq.sort.should eql(source)
       end
 
       it "tries to convert n to an Integer using #to_int" do
