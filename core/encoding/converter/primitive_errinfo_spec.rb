@@ -1,4 +1,4 @@
-# -*- coding: US-ASCII -*-
+# -*- encoding: US-ASCII -*-
 require File.expand_path('../../../../spec_helper', __FILE__)
 
 with_feature :encoding do

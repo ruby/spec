@@ -1,4 +1,4 @@
-# -*- coding: US-ASCII -*-
+# -*- encoding: US-ASCII -*-
 require 'digest/sha2'
 
 module SHA512Constants
