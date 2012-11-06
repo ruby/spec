@@ -1,3 +1,4 @@
+# -*- coding: US-ASCII -*-
 require 'digest/md5'
 
 module MD5Constants
