@@ -9,6 +9,7 @@ describe "Socket#accept_nonblock" do
     @addr = Socket.sockaddr_in(SocketSpecs.port, @hostname)
     @socket = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
 
+    # TODO: This is a hack. Fix the race condition.
     count = 0
     begin
       @socket.bind(@addr)
