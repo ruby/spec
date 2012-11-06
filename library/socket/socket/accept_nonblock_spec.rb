@@ -8,7 +8,16 @@ describe "Socket#accept_nonblock" do
     @hostname = "127.0.0.1"
     @addr = Socket.sockaddr_in(SocketSpecs.port, @hostname)
     @socket = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
-    @socket.bind(@addr)
+
+    count = 0
+    begin
+      @socket.bind(@addr)
+    rescue Errno::EADDRINUSE
+      count += 1
+      sleep 1
+      retry if count < 3
+    end
+
     @socket.listen(1)
   end
 
