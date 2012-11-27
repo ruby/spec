@@ -14,7 +14,7 @@ describe "Array#delete" do
     a.should == [1, 2, 4, 5]
   end
 
-  ruby_version_is '1.8.7' ... '2.0' do
+  ruby_version_is '1.9' ... '2.0' do
     it "returns the last element in the array for which object is equal under #==" do
       x = mock('delete')
       y = mock('delete_more')
@@ -24,7 +24,7 @@ describe "Array#delete" do
       a = [1, 2, 3, y, 4, 3, 5, x]
 
       ret = a.delete 3
-      ret.should == x
+      ret.should equal(x)
     end
   end
 
