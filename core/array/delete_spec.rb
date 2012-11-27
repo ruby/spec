@@ -14,6 +14,20 @@ describe "Array#delete" do
     a.should == [1, 2, 4, 5]
   end
 
+  ruby_version_is '1.8.7' do
+    it "returns the argument" do
+      x = mock('delete')
+      y = mock('delete_more')
+      def x.==(other) 3 == other end
+      def y.==(other) 3 == other end
+
+      a = [1, 2, 3, 4, 3, 5, x]
+
+      ret = a.delete y
+      ret.should equal(y)
+    end
+  end
+
   ruby_version_is '1.9' ... '2.0' do
     it "returns the last element in the array for which object is equal under #==" do
       x = mock('delete')
