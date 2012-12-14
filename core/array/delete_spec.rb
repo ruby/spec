@@ -14,7 +14,7 @@ describe "Array#delete" do
     a.should == [1, 2, 4, 5]
   end
 
-  ruby_version_is '1.8.7' do
+  ruby_version_is '1.8.7' ... '1.9' do
     it "returns the argument" do
       x = mock('delete')
       y = mock('delete_more')
