@@ -6,6 +6,7 @@ ruby_version_is '1.8.7' do
   describe "String#end_with?" do
     it "returns true only if ends match" do
       s = "hello"
+      s.end_with?('').should be_true
       s.end_with?('o').should be_true
       s.end_with?('llo').should be_true
       s.end_with?('ll').should be_false
