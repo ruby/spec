@@ -8,6 +8,9 @@ ruby_version_is '1.8.7' do
       s = "hello"
       s.end_with?('o').should be_true
       s.end_with?('llo').should be_true
+    end
+
+    it 'returns false if the end does not match' do
       s.end_with?('ll').should be_false
     end
 
