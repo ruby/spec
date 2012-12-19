@@ -67,6 +67,7 @@ describe "Dir.glob" do
       deeply/nested/directory/structure/
       dir/
       special/
+      special/test{1}/
       subdir_one/
       subdir_two/
     ]
@@ -87,6 +88,7 @@ describe "Dir.glob" do
       ./deeply/nested/directory/structure/
       ./dir/
       ./special/
+      ./special/test{1}/
       ./subdir_one/
       ./subdir_two/
     ]
