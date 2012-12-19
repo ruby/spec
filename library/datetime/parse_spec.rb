@@ -48,7 +48,7 @@ describe "DateTime.parse" do
     d.should == DateTime.civil(2012, 11, 8)
   end
 
-  context "YYYY-MM-DDTHH:MM:SS format" do
+  describe "YYYY-MM-DDTHH:MM:SS format" do
     it "can handle valid values" do
       d = DateTime.parse("2012-11-08T15:43:59")
       d.should == DateTime.civil(2012, 11, 8, 15, 43, 59)
