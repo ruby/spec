@@ -11,6 +11,7 @@ ruby_version_is '1.8.7' do
     end
 
     it 'returns false if the end does not match' do
+      s = 'hello'
       s.end_with?('ll').should be_false
     end
 
