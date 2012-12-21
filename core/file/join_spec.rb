@@ -49,9 +49,10 @@ describe "File.join" do
     File.join.should == ""
   end
 
-  it "when given a single argument returns an equal string" do
-    File.join("").should == ""
-    File.join("usr").should == "usr"
+  it "returns a duplicate string when given a single argument" do
+    str = "usr"
+    File.join(str).should == str
+    File.join(str).should_not equal(str)
   end
 
   it "supports any number of arguments" do
