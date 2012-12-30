@@ -36,7 +36,7 @@ describe "Thread#abort_on_exception=" do
     ruby_version_is ""..."1.9.2" do
       it "causes the main thread to raise a SystemExit" do
 	go = false
-	t = Thread.new { 1 until go; raise }
+	t = Thread.new { Thread.pass until go; raise }
 	lambda {t.abort_on_exception = true; go = true; t.join}.should raise_error(SystemExit)
       end
     end
@@ -81,7 +81,7 @@ describe "Thread.abort_on_exception=" do
     ruby_version_is ""..."1.9.2" do
       it "causes the main thread to raise a SystemExit" do
 	go = false
-	t = Thread.new { 1 until go; raise }
+	t = Thread.new { Thread.pass until go; raise }
 	lambda { go = true; t.join }.should raise_error(SystemExit)
       end
     end
