@@ -72,14 +72,25 @@ ruby_version_is "2.0.0" do
       end.should raise_error(ArgumentError)
     end
 
-    it "applies refinements to calls in the the containing module's body" do
+    it "applies refinements to calls in the refine block" do
       result = nil
       Module.new do
-        refine(String) {def foo; 'foo'; end}
-        result = 'hello'.foo
+        refine(String) do
+          def foo; 'foo'; end
+          result = 'hello'.foo
+        end
       end
-
       result.should == 'foo'
+    end
+
+    it "doesn't apply refinements outside the refine block" do
+      Module.new do
+        refine(String) {def foo; 'foo'; end}
+        lambda do
+          'hello'.foo
+        end
+        should raise_error(NoMethodError)
+      end
     end
 
     it "does not apply refinements to external scopes not using the module" do
