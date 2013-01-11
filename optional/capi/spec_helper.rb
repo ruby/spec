@@ -55,7 +55,7 @@ def compile_extension(name)
                 File.mtime(lib) > File.mtime(mri_header)
 
   # avoid problems where compilation failed but previous shlib exists
-  File.delete lib if File.exists? lib
+  rm_r lib
 
   cc        = RbConfig::CONFIG["CC"]
   cflags    = (ENV["CFLAGS"] || RbConfig::CONFIG["CFLAGS"]).dup
