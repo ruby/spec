@@ -69,12 +69,20 @@ describe "DateTime.parse" do
       lambda{DateTime.parse("2012-12-31T25:43:59")}.should raise_error(ArgumentError)
     end
 
-    #this seems like unexpected behaviour why not raise an ArgumentError?
-    #also according to ISO8601 seconds can be 60 to allow for a leap second
-    it "truncates seconds down to 59" do
-      d = DateTime.parse("2012-11-08T15:43:61")
+    ruby_version_is ""..."2.0" do
+      #this seems like unexpected behaviour why not raise an ArgumentError?
+      #also according to ISO8601 seconds can be 60 to allow for a leap second
+      it "truncates seconds down to 59" do
+        d = DateTime.parse("2012-11-08T15:43:61")
 
-      d.should == DateTime.civil(2012, 11, 8, 15, 43, 59)
+        d.should == DateTime.civil(2012, 11, 8, 15, 43, 59)
+      end
+    end
+
+    ruby_version_is "2.0" do
+      it "throws an argument error for invalid second values" do
+        lambda{DateTime.parse("2012-11-08T15:43:61")}.should raise_error(ArgumentError)
+      end
     end
 
   end
