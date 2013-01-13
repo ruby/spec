@@ -15,7 +15,7 @@ describe "IO.sysopen" do
   end
 
   after :all do
-    File.unlink @filename
+    rm_r @filename
   end
 
   it "returns the file descriptor for a given path" do
@@ -33,11 +33,19 @@ describe "IO.sysopen" do
     end
   end
 
+  ruby_version_is ""..."1.9" do
+    it "calls #to_str to convert an object to a String" do
+      path = mock('sysopen to_str')
+      path.should_receive(:to_str).and_return(@filename)
+      @fd = IO.sysopen(path, 'w')
+    end
+  end
+
   ruby_version_is "1.9" do
-    it "calls #to_path on first argument" do
-      p = mock('path')
-      p.should_receive(:to_path).and_return(@filename)
-      @fd = IO.sysopen(p, 'w')
+    it "calls #to_path to convert an object to a path" do
+      path = mock('sysopen to_path')
+      path.should_receive(:to_path).and_return(@filename)
+      @fd = IO.sysopen(path, 'w')
     end
   end
 
@@ -49,6 +57,11 @@ describe "IO.sysopen" do
 
   it "accepts permissions as third argument" do
     @fd = IO.sysopen(@filename, "w", 777)
+    @fd.should_not equal(0)
+  end
+
+  it "accepts mode & permission that are nil" do
+    @fd = IO.sysopen(@filename, nil, nil)
     @fd.should_not equal(0)
   end
 end

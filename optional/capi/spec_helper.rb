@@ -14,13 +14,15 @@ end
 
 CAPI_RUBY_SIGNATURE = "#{RUBY_NAME}-#{RUBY_VERSION}"
 
-def compile_extension(path, name)
+def compile_extension(name)
+  path = extension_path
+
   # TODO use rakelib/ext_helper.rb?
   arch_hdrdir = nil
   ruby_hdrdir = nil
 
   if RUBY_NAME == 'rbx'
-    hdrdir = Rubinius::HDR_PATH
+    hdrdir = RbConfig::CONFIG["rubyhdrdir"]
   elsif RUBY_NAME =~ /^ruby/
     if hdrdir = RbConfig::CONFIG["rubyhdrdir"]
       arch_hdrdir = File.join hdrdir, RbConfig::CONFIG["arch"]
@@ -53,7 +55,7 @@ def compile_extension(path, name)
                 File.mtime(lib) > File.mtime(mri_header)
 
   # avoid problems where compilation failed but previous shlib exists
-  File.delete lib if File.exists? lib
+  rm_r lib
 
   cc        = RbConfig::CONFIG["CC"]
   cflags    = (ENV["CFLAGS"] || RbConfig::CONFIG["CFLAGS"]).dup
@@ -72,7 +74,8 @@ def compile_extension(path, name)
   ldshared  = RbConfig::CONFIG["LDSHARED"]
   libpath   = "-L#{path}"
   libs      = RbConfig::CONFIG["LIBS"]
-  dldflags  = RbConfig::CONFIG["DLDFLAGS"]
+  dldflags  = "#{RbConfig::CONFIG["LDFLAGS"]} #{RbConfig::CONFIG["DLDFLAGS"]}"
+  dldflags.sub!(/-Wl,-soname,\S+/, '')
 
   output = `#{ldshared} #{obj} #{libpath} #{dldflags} #{libs} -o #{lib}`
 
@@ -86,11 +89,12 @@ def compile_extension(path, name)
   lib
 end
 
-def load_extension(name)
-  path = File.join(File.dirname(__FILE__), 'ext')
+def extension_path
+  File.expand_path("../ext", __FILE__)
+end
 
-  ext = compile_extension path, name
-  require ext
+def load_extension(name)
+  require compile_extension(name)
 end
 
 # Constants

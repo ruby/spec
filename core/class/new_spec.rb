@@ -1,4 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "Class.new with a block given" do
   it "uses the given block as the class' body" do
@@ -38,6 +39,33 @@ describe "Class.new with a block given" do
     klass.new.message.should == "text"
     klass.new.message2.should == "hello"
   end
+
+  ruby_version_is ""..."1.9" do
+
+    it "runs the inherited hook before yielding the block" do
+      ScratchPad.record []
+      klass = Class.new(CoreClassSpecs::Inherited::D) do
+        ScratchPad << self
+      end
+
+      ScratchPad.recorded.should == [klass, CoreClassSpecs::Inherited::D]
+    end
+
+  end
+
+  ruby_version_is "1.9" do
+
+    it "runs the inherited hook after yielding the block" do
+      ScratchPad.record []
+      klass = Class.new(CoreClassSpecs::Inherited::D) do
+        ScratchPad << self
+      end
+
+      ScratchPad.recorded.should == [CoreClassSpecs::Inherited::D, klass]
+    end
+
+  end
+
 end
 
 describe "Class.new" do
@@ -95,5 +123,38 @@ describe "Class.new" do
 end
 
 describe "Class#new" do
-  it "needs to be reviewed for spec completeness"
+  it "returns a new instance of self" do
+    klass = Class.new
+    klass.new.is_a?(klass).should == true
+  end
+
+  it "invokes #initialize on the new instance with the given args" do
+    klass = Class.new do
+      def initialize(*args)
+        @initialized = true
+        @args = args
+      end
+
+      def args
+        @args
+      end
+
+      def initialized?
+        @initialized || false
+      end
+    end
+
+    klass.new.initialized?.should == true
+    klass.new(1, 2, 3).args.should == [1, 2, 3]
+  end
+
+  it "passes the block to #initialize" do
+    klass = Class.new do
+      def initialize
+        yield
+      end
+    end
+
+    klass.new { break 42 }.should == 42
+  end
 end

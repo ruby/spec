@@ -1,23 +1,49 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require 'timeout'
 
 describe "Process.detach" do
   platform_is_not :windows do
     it "returns a thread" do
-      p1 = Process.fork { Process.exit! }
-      Process.detach(p1).should be_kind_of(Thread)
+      pid = Process.fork { Process.exit! }
+      thr = Process.detach(pid)
+      thr.should be_kind_of(Thread)
+      timeout(3) { thr.join }
+    end
+
+    it "produces the exit Process::Status as the thread value" do
+      pid = Process.fork { Process.exit! }
+      thr  = Process.detach(pid)
+      timeout(3) { thr.join }
+
+      status = thr.value
+      status.should be_kind_of(Process::Status)
+      status.pid.should == pid
     end
 
     platform_is_not :openbsd do
       it "reaps the child process's status automatically" do
-        p1 = Process.fork { Process.exit! }
-        Process.detach(p1)
+        pid = Process.fork { Process.exit! }
+        thr = Process.detach(pid)
+        timeout(3) { thr.join }
+        lambda { Process.waitpid(pid) }.should raise_error(Errno::ECHILD)
+      end
+    end
 
-        t = Time.now
-        while true
-          alive = Process.kill(0, p1) rescue nil
-          break unless alive && (Time.now - t < 5) # fail safe
-        end
-        lambda { Process.waitpid(p1) }.should raise_error(Errno::ECHILD)
+    ruby_version_is "1.9" do
+      it "sets the :pid thread-local to the PID" do
+        pid = Process.fork { Process.exit! }
+        thr = Process.detach(pid)
+        timeout(3) { thr.join }
+
+        thr[:pid].should == pid
+      end
+
+      it "provides a #pid method on the returned thread which returns the PID" do
+        pid = Process.fork { Process.exit! }
+        thr = Process.detach(pid)
+        timeout(3) { thr.join }
+
+        thr.pid.should == pid
       end
     end
   end

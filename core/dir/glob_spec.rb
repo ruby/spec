@@ -67,6 +67,7 @@ describe "Dir.glob" do
       deeply/nested/directory/structure/
       dir/
       special/
+      special/test{1}/
       subdir_one/
       subdir_two/
     ]
@@ -87,6 +88,7 @@ describe "Dir.glob" do
       ./deeply/nested/directory/structure/
       ./dir/
       ./special/
+      ./special/test{1}/
       ./subdir_one/
       ./subdir_two/
     ]
@@ -99,6 +101,11 @@ describe "Dir.glob" do
     ret = Dir.glob(["file_o*", "file_t*"]) { |t| ary << t }
     ret.should be_nil
     ary.should == %w!file_one.ext file_two.ext!
+  end
+
+  it "ignores non-dirs when traversing recursively" do
+    touch "spec"
+    Dir.glob("spec/**/*.rb").should == []
   end
 
   platform_is_not(:windows) do

@@ -12,7 +12,7 @@ with_feature :encoding do
       ec.replacement.encoding.should == Encoding::US_ASCII
     end
 
-    it "returns \u{fffd} when the destination encoding is UTF-8" do
+    it "returns \\uFFFD when the destination encoding is UTF-8" do
       ec = Encoding::Converter.new("us-ascii", "utf-8")
       ec.replacement.should == "\u{fffd}".force_encoding('utf-8')
       ec.replacement.encoding.should == Encoding::UTF_8
@@ -22,12 +22,13 @@ with_feature :encoding do
   describe "Encoding::Converter#replacement=" do
     it "accepts a String argument" do
       ec = Encoding::Converter.new("utf-8", "us-ascii")
-      lambda { ec.replacement = "!" }.should_not raise_error(ArgumentError)
+      ec.replacement = "!"
+      ec.replacement.should == "!"
     end
 
     it "accepts a String argument of arbitrary length" do
       ec = Encoding::Converter.new("utf-8", "us-ascii")
-      lambda { ec.replacement = "?!?" * 9999 }.should_not raise_error(ArgumentError)
+      ec.replacement = "?!?" * 9999
       ec.replacement.should == "?!?" * 9999
     end
 

@@ -64,13 +64,6 @@ describe "Time#strftime" do
     now.strftime('%T').should == hhmmss
   end
 
-  it "supports timezone formatting with %z" do
-    with_timezone("UTC", 0) do
-      time = Time.utc(2005, 2, 21, 17, 44, 30)
-      time.strftime("%z").should == "+0000"
-    end
-  end
-
   it "supports 12-hr formatting with %l" do
     time = Time.local(2004, 8, 26, 22, 38, 3)
     time.strftime('%l').should == '10'
@@ -125,6 +118,14 @@ describe "Time#strftime" do
     time.strftime('%j').should == '261'
   end
 
+  ruby_version_is "1.9" do
+    describe "with %L" do
+      it "formats the milliseconds of of the second" do
+        Time.local(2009, 1, 1, 0, 0, Rational(999, 1000)).strftime("%L").should == "999"
+      end
+    end
+  end
+
   it "returns the month with %m" do
     time = Time.local(2009, 9, 18, 12, 0, 0)
     time.strftime('%m').should == '09'
@@ -133,6 +134,30 @@ describe "Time#strftime" do
   it "returns the minute with %M" do
     time = Time.local(2009, 9, 18, 12, 6, 0)
     time.strftime('%M').should == '06'
+  end
+
+  ruby_version_is "1.9" do
+    describe "with %N" do
+      it "formats the nanoseconds of of the second with %N" do
+        Time.local(2009, 1, 1, 0, 0, Rational(999999999, 1000000000)).strftime("%N").should == "999999999"
+      end
+
+      it "formats the milliseconds of of the second with %3N" do
+        Time.local(2009, 1, 1, 0, 0, Rational(999, 1000)).strftime("%3N").should == "999"
+      end
+
+      it "formats the microseconds of of the second with %6N" do
+        Time.local(2009, 1, 1, 0, 0, Rational(999999, 1000000)).strftime("%6N").should == "999999"
+      end
+
+      it "formats the nanoseconds of of the second with %9N" do
+        Time.local(2009, 1, 1, 0, 0, Rational(999999999, 1000000000)).strftime("%9N").should == "999999999"
+      end
+
+      it "formats the picoseconds of of the second with %12N" do
+        Time.local(2009, 1, 1, 0, 0, Rational(999999999999, 1000000000000)).strftime("%12N").should == "999999999999"
+      end
+    end
   end
 
   it "returns the second with %S" do
@@ -165,6 +190,48 @@ describe "Time#strftime" do
     time.strftime('%Y').should == '2009'
   end
 
+  describe "with %z" do
+    ruby_version_is "1.9" do
+      it "formats a UTC time offset as '+0000'" do
+        Time.utc(2005).strftime("%z").should == "+0000"
+      end
+    end
+
+    it "formats a local time with positive UTC offset as '+HHMM'" do
+      with_timezone("CET", 1) do
+        Time.local(2005).strftime("%z").should == "+0100"
+      end
+    end
+
+    it "formats a local time with negative UTC offset as '-HHMM'" do
+      with_timezone("PST", -8) do
+        Time.local(2005).strftime("%z").should == "-0800"
+      end
+    end
+
+    ruby_version_is "1.9" do
+      it "formats a time with fixed positive offset as '+HHMM'" do
+        Time.new(2012, 1, 1, 0, 0, 0, 3660).strftime("%z").should == "+0101"
+      end
+
+      it "formats a time with fixed negative offset as '-HHMM'" do
+        Time.new(2012, 1, 1, 0, 0, 0, -3660).strftime("%z").should == "-0101"
+      end
+
+      it "formats a time with fixed offset as '+/-HH:MM' with ':' specifier" do
+        Time.new(2012, 1, 1, 0, 0, 0, 3660).strftime("%:z").should == "+01:01"
+      end
+
+      it "formats a time with fixed offset as '+/-HH:MM:SS' with '::' specifier" do
+        Time.new(2012, 1, 1, 0, 0, 0, 3665).strftime("%::z").should == "+01:01:05"
+      end
+
+      it "rounds fixed offset to the nearest second" do
+        Time.new(2012, 1, 1, 0, 0, 0, Rational(36645, 10)).strftime("%::z").should == "+01:01:05"
+      end
+    end
+  end
+
   it "returns the timezone with %Z" do
     time = Time.local(2009, 9, 18, 12, 0, 0)
     zone = time.zone
@@ -177,6 +244,13 @@ describe "Time#strftime" do
       time.strftime('%P').should == 'pm'
       time = Time.local(2004, 8, 26, 11, 38, 3)
       time.strftime('%P').should == 'am'
+    end
+  end
+  
+  ruby_version_is '1.9' do
+    it "returns the fractional seconds digits, default is 9 digits (nanosecond) with %N" do
+      time = Time.local(2009, 9, 18, 12, 0, 6, 123456)
+      time.strftime('%N').should == '123456000'
     end
   end
 
@@ -205,6 +279,21 @@ describe "Time#strftime" do
       ["%10h","%^10h","%_10h","%_010h","%0_10h","%0_-10h","%0-_10h"].each do |format|
         time.strftime(format).should == expected[format]
       end
+    end
+
+    it "supports the '-' modifier to drop leading zeros" do
+      time = Time.local(2001,1,1,14,01,42)
+      time.strftime("%-m/%-d/%-y %-I:%-M %p").should == "1/1/1 2:1 PM"
+
+      time = Time.local(2010,10,10,12,10,42)
+      time.strftime("%-m/%-d/%-y %-I:%-M %p").should == "10/10/10 12:10 PM"
+    end
+
+    it "supports the '-' modifier for padded format directives" do
+      time = Time.local(2010, 8, 8, 8, 10, 42)
+      time.strftime("%-e").should == "8"
+      time.strftime("%-k%p").should == "8AM"
+      time.strftime("%-l%p").should == "8AM"
     end
   end
 end

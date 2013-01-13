@@ -25,7 +25,7 @@ describe "Hash#[]" do
   end
 
   it "calls subclass implementations of default" do
-    h = DefaultHash.new
+    h = HashSpecs::DefaultHash.new
     h[:nothing].should == 100
   end
 
@@ -104,8 +104,12 @@ describe "Hash#[]" do
 
     new_hash(y => 1)[x].should == 1
   end
-end
 
-describe "Hash.[]" do
-  it "needs to be reviewed for spec completeness"
+  it "finds a value via an identical key even when its #eql? isn't reflexive" do
+    x = mock('x')
+    x.should_receive(:hash).any_number_of_times.and_return(42)
+    x.stub!(:eql?).and_return(false) # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
+
+    new_hash(x => :x)[x].should == :x
+  end
 end

@@ -25,12 +25,12 @@ describe "Module#attr_writer" do
   end
 
   it "allows for adding an attr_writer to an immediate" do
-    class Integer
+    class TrueClass
       attr_writer :spec_attr_writer
     end
 
-    1.spec_attr_writer = "a"
-    1.instance_variable_get("@spec_attr_writer").should == "a"
+    true.spec_attr_writer = "a"
+    true.instance_variable_get("@spec_attr_writer").should == "a"
   end
 
   ruby_version_is ""..."1.9" do
@@ -74,5 +74,9 @@ describe "Module#attr_writer" do
     end
 
     lambda { c.new.foo=1 }.should raise_error(NoMethodError)
+  end
+
+  it "is a private method" do
+    lambda { Class.new.attr_writer(:foo) }.should raise_error(NoMethodError)
   end
 end

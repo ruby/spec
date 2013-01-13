@@ -48,15 +48,15 @@ describe "File.truncate" do
 
   it "raises an Errno::ENOENT if the file does not exist" do
     # TODO: missing_file
-    not_existing_file = "file-does-not-exist-for-sure.txt"
+    not_existing_file = tmp("file-does-not-exist-for-sure.txt")
 
     # make sure it doesn't exist for real
-    File.delete(not_existing_file) if File.exist?(not_existing_file)
+    rm_r not_existing_file
 
     begin
       lambda { File.truncate(not_existing_file, 5) }.should raise_error(Errno::ENOENT)
     ensure
-      File.delete(not_existing_file) if File.exist?(not_existing_file)
+      rm_r not_existing_file
     end
   end
 
@@ -65,7 +65,7 @@ describe "File.truncate" do
     lambda { File.truncate(@name) }.should raise_error(ArgumentError)
   end
 
-  platform_is_not :openbsd do
+  platform_is_not :netbsd, :openbsd do
     it "raises an Errno::EINVAL if the length argument is not valid" do
       lambda { File.truncate(@name, -1)  }.should raise_error(Errno::EINVAL) # May fail
     end
@@ -155,8 +155,10 @@ describe "File#truncate" do
     lambda { @file.truncate(1) }.should_not raise_error(ArgumentError)
   end
 
-  it "raises an Errno::EINVAL if the length argument is not valid" do
-    lambda { @file.truncate(-1)  }.should raise_error(Errno::EINVAL) # May fail
+  platform_is_not :netbsd do
+    it "raises an Errno::EINVAL if the length argument is not valid" do
+      lambda { @file.truncate(-1)  }.should raise_error(Errno::EINVAL) # May fail
+    end
   end
 
   it "raises an IOError if file is closed" do

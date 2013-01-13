@@ -1,8 +1,13 @@
+# -*- encoding: US-ASCII -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/common', __FILE__)
 
 describe "File.expand_path" do
   before :each do
+    ruby_version_is "1.9" do
+      @extenc = Encoding.default_external
+    end
+
     platform_is :windows do
       @base = `cd`.chomp.tr '\\', '/'
       @tmpdir = "c:/tmp"
@@ -16,6 +21,12 @@ describe "File.expand_path" do
     end
   end
 
+  after :each do
+    ruby_version_is "1.9" do
+      Encoding.default_external = @extenc if Encoding.default_external != @extenc
+    end
+  end
+
   it "converts a pathname to an absolute pathname" do
     File.expand_path('').should == @base
     File.expand_path('a').should == File.join(@base, 'a')
@@ -24,12 +35,18 @@ describe "File.expand_path" do
 
   not_compliant_on :ironruby do
     it "converts a pathname to an absolute pathname, Ruby-Talk:18512 " do
-      # Because of Ruby-Talk:18512
-      File.expand_path('a.').should == File.join(@base, 'a.')
+      # See Ruby-Talk:18512
       File.expand_path('.a').should == File.join(@base, '.a')
-      File.expand_path('a..').should == File.join(@base, 'a..')
       File.expand_path('..a').should == File.join(@base, '..a')
       File.expand_path('a../b').should == File.join(@base, 'a../b')
+    end
+  end
+
+  platform_is_not :windows do
+    it "keeps trailing dots on absolute pathname" do
+      # See Ruby-Talk:18512
+      File.expand_path('a.').should == File.join(@base, 'a.')
+      File.expand_path('a..').should == File.join(@base, 'a..')
     end
   end
 
@@ -139,12 +156,17 @@ describe "File.expand_path" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9"..."2.0" do
     it "produces a String in the default external encoding" do
-      old_external = Encoding.default_external
       Encoding.default_external = Encoding::SHIFT_JIS
       File.expand_path("./a").encoding.should == Encoding::SHIFT_JIS
-      Encoding.default_external = old_external
+    end
+  end
+
+  ruby_version_is "2.0" do
+    it "produces a String in the default external encoding" do
+      Encoding.default_external = Encoding::SHIFT_JIS
+      File.expand_path("./a").encoding.should == Encoding::US_ASCII
     end
   end
 
@@ -181,6 +203,11 @@ platform_is_not :windows do
     it "raises an ArgumentError when passed '~' if HOME is nil" do
       ENV.delete "HOME"
       lambda { File.expand_path("~") }.should raise_error(ArgumentError)
+    end
+
+    it "raises an ArgumentError when passed '~/' if HOME is nil" do
+      ENV.delete "HOME"
+      lambda { File.expand_path("~/") }.should raise_error(ArgumentError)
     end
 
     ruby_version_is ""..."1.8.7" do

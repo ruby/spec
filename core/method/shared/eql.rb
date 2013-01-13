@@ -57,32 +57,41 @@ describe :method_equal, :shared => true do
       @m_foo.send(@method, m2).should be_true
     end
 
-    it "returns true for methods defined using the same block/proc" do
-      class MethodSpecs::Methods
-        p = Proc.new { :cool }
-        define_method :proc1, p
-        define_method :proc2, p
+    ruby_version_is ""..."2.0" do
+      it "returns true for methods defined using the same block/proc" do
+        class MethodSpecs::Methods
+          p = Proc.new { :cool }
+          define_method :proc1, p
+          define_method :proc2, p
 
-        define_method :block1, &p
-        define_method :block2, &p
+          define_method :block1, &p
+          define_method :block2, &p
+        end
+        proc1 = @m.method :proc1
+        proc2 = @m.method :proc2
+        block1 = @m.method :proc1
+        block2 = @m.method :proc2
+
+        proc1.send(@method, proc2).should be_true
+        block1.send(@method, block2).should be_true
+        proc1.send(@method, block1).should be_true
       end
-      proc1 = @m.method :proc1
-      proc2 = @m.method :proc2
-      block1 = @m.method :proc1
-      block2 = @m.method :proc2
-
-      proc1.send(@method, proc2).should be_true
-      block1.send(@method, block2).should be_true
-      proc1.send(@method, block1).should be_true
     end
 
-    it "returns true for the same method missing" do
-      miss1 = @m.method(:handled_via_method_missing)
-      miss1bis = @m.method(:handled_via_method_missing)
-      miss2 = @m.method(:also_handled)
+    describe 'missing methods' do
+      it "returns true for the same method missing" do
+        miss1 = @m.method(:handled_via_method_missing)
+        miss1bis = @m.method(:handled_via_method_missing)
+        miss2 = @m.method(:also_handled)
 
-      miss1.send(@method, miss1bis).should be_true
-      miss1.send(@method, miss2).should be_false
+        miss1.send(@method, miss1bis).should be_true
+        miss1.send(@method, miss2).should be_false
+      end
+
+      it 'calls respond_to_missing? with true to include private methods' do
+        @m.should_receive(:respond_to_missing?).with(:some_missing_method, true).and_return(true)
+        @m.method(:some_missing_method)
+      end
     end
   end
 

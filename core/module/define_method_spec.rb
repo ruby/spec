@@ -1,6 +1,8 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
+language_version __FILE__, "define_method"
+
 class DefineMethodSpecClass
 end
 
@@ -92,6 +94,22 @@ describe "Module#define_method" do
     lambda {
       Class.new { define_method(:test) }
     }.should raise_error(ArgumentError)
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "raises a TypeError if frozen" do
+      lambda {
+        Class.new { freeze; define_method(:foo) {} }
+      }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises a RuntimeError if frozen" do
+      lambda {
+        Class.new { freeze; define_method(:foo) {} }
+      }.should raise_error(RuntimeError)
+    end
   end
 
   it "accepts a Method (still bound)" do
@@ -277,10 +295,14 @@ describe "Module#define_method" do
     end
 
     it "returns the value computed by the block when passed one argument" do
-      @klass.new.m(1, 2).should == [1, [2]]
+      @klass.new.m(1).should == [1, []]
     end
 
     it "returns the value computed by the block when passed two arguments" do
+      @klass.new.m(1, 2).should == [1, [2]]
+    end
+
+    it "returns the value computed by the block when passed three arguments" do
       @klass.new.m(1, 2, 3).should == [1, [2, 3]]
     end
   end

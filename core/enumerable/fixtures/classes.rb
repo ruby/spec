@@ -133,6 +133,10 @@ module EnumerableSpecs
       self.sym = sym
       @delegate.to_enum(sym)
     end
+
+    def respond_to_missing?(*args)
+      @delegate.respond_to?(*args)
+    end
   end
 
   class Equals
@@ -150,6 +154,24 @@ module EnumerableSpecs
       yield 1,2
       yield 3,4,5
       yield 6,7,8,9
+    end
+  end
+
+  class YieldsMultiWithFalse
+    include Enumerable
+    def each
+      yield false,2
+      yield false,4,5
+      yield false,7,8,9
+    end
+  end
+
+  class YieldsMultiWithSingleTrue
+    include Enumerable
+    def each
+      yield false,2
+      yield true,4,5
+      yield false,7,8,9
     end
   end
 

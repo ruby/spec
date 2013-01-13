@@ -155,6 +155,12 @@ static VALUE constants_spec_rb_cMethod(VALUE self) {
 }
 #endif
 
+#ifdef HAVE_RB_CENUMERATOR
+static VALUE constants_spec_rb_cEnumerator(VALUE self) {
+  return rb_cEnumerator;
+}
+#endif
+
 #ifdef HAVE_RB_MCOMPARABLE
 static VALUE constants_spec_rb_mComparable(VALUE self) {
   return rb_mComparable;
@@ -341,6 +347,30 @@ static VALUE constants_spec_rb_eZeroDivError(VALUE self) {
 }
 #endif
 
+#ifdef HAVE_RB_EMATHDOMAINERROR
+static VALUE constants_spec_rb_eMathDomainError(VALUE self) {
+  return rb_eMathDomainError;
+}
+#endif
+
+#ifdef HAVE_RB_EENCCOMPATERROR
+static VALUE constants_spec_rb_eEncCompatError(VALUE self) {
+  return rb_eEncCompatError;
+}
+#endif
+
+#ifdef HAVE_RB_MWAITREADABLE
+static VALUE constants_spec_rb_mWaitReadable(VALUE self) {
+  return rb_mWaitReadable;
+}
+#endif
+
+#ifdef HAVE_RB_MWAITWRITABLE
+static VALUE constants_spec_rb_mWaitWritable(VALUE self) {
+  return rb_mWaitWritable;
+}
+#endif
+
 void Init_constants_spec() {
   VALUE cls;
   cls = rb_define_class("CApiConstantsSpecs", rb_cObject);
@@ -445,6 +475,10 @@ void Init_constants_spec() {
   rb_define_method(cls, "rb_cMethod", constants_spec_rb_cMethod, 0);
 #endif
 
+#ifdef HAVE_RB_CENUMERATOR
+  rb_define_method(cls, "rb_cEnumerator", constants_spec_rb_cEnumerator, 0);
+#endif
+
 #ifdef HAVE_RB_MCOMPARABLE
   rb_define_method(cls, "rb_mComparable", constants_spec_rb_mComparable, 0);
 #endif
@@ -456,7 +490,6 @@ void Init_constants_spec() {
 #ifdef HAVE_RB_MKERNEL
   rb_define_method(cls, "rb_mKernel", constants_spec_rb_mKernel, 0);
 #endif
-
 
 #ifdef HAVE_RB_EARGERROR
   rb_define_method(cls, "rb_eArgError", constants_spec_rb_eArgError, 0);
@@ -569,6 +602,23 @@ void Init_constants_spec() {
 #ifdef HAVE_RB_EZERODIVERROR
   rb_define_method(cls, "rb_eZeroDivError", constants_spec_rb_eZeroDivError, 0);
 #endif
+
+#ifdef HAVE_RB_EMATHDOMAINERROR
+  rb_define_method(cls, "rb_eMathDomainError", constants_spec_rb_eMathDomainError, 0);
+#endif
+
+#ifdef HAVE_RB_EENCCOMPATERROR
+  rb_define_method(cls, "rb_eEncCompatError", constants_spec_rb_eEncCompatError, 0);
+#endif
+
+#ifdef HAVE_RB_MWAITREADABLE
+  rb_define_method(cls, "rb_mWaitReadable", constants_spec_rb_mWaitReadable, 0);
+#endif
+
+#ifdef HAVE_RB_MWAITWRITABLE
+  rb_define_method(cls, "rb_mWaitWritable", constants_spec_rb_mWaitWritable, 0);
+#endif
+
 }
 
 #ifdef __cplusplus

@@ -85,6 +85,11 @@ describe "File.open" do
     File.exist?(@file).should == true
   end
 
+  it "opens a file with mode and permission as nil" do
+    @fh = File.open(@file, nil, nil)
+    @fh.should be_kind_of(File)
+  end
+
   # For this test we delete the file first to reset the perms
   it "opens the file when passed mode, num and permissions" do
     rm_r @file
@@ -519,6 +524,45 @@ describe "File.open" do
       File.open(@file, 'wb+') {|f| f.external_encoding.should == Encoding::ASCII_8BIT}
     end
   end
+
+  ruby_version_is "1.9" do
+    it "needs to be completed for hash argument"
+  end
+
+  platform_is_not :windows do
+    if `which mkfifo`.chomp != ""
+      describe "on a FIFO" do
+        before :each do
+          @fifo = tmp("File_open_fifo")
+          system "mkfifo #{@fifo}"
+        end
+
+        after :each do
+          rm_r @fifo
+        end
+
+        it "opens it as a normal file" do
+          file_w, file_r, read_bytes, written_length = nil
+          
+          # open in threads, due to blocking open and writes
+          Thread.new do
+            file_w = File.open(@fifo, 'w')
+            written_length = file_w.syswrite('hello')
+          end
+          Thread.new do
+            file_r = File.open(@fifo, 'r')
+            read_bytes = file_r.sysread(5)
+          end
+          
+          Thread.pass until read_bytes && written_length
+
+          written_length.should == 5
+          read_bytes.should == 'hello'
+        end
+      end
+    end
+  end
+    
 end
 
 describe "File.open" do

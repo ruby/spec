@@ -37,11 +37,31 @@ describe "String#crypt" do
   end
 
   platform_is_not :java do
-    platform_is :darwin, :netbsd, :openbsd do
+    platform_is :openbsd do
+      it "returns empty string if the first byte of the salt" do
+        "hello".crypt("\x00\x00").should == ""
+        "hello".crypt("\x00a").should == ""
+      end
+
+      it "returns the same character prepended to the string for the salt if the second character of the salt is a NULL byte" do
+        "hello".crypt("a\x00").should == "aaGJVggM8eWwo"
+        "hello".crypt("b\x00").should == "bb.LIhrI2NKCo"
+      end
+    end
+
+    platform_is :darwin, /netbsd[a-z]*[1-5]\./ do
       it "returns '.' prepended to the string for each NULL byte the salt contains" do
         "hello".crypt("\x00\x00").should == "..dR0/E99ehpU"
         "hello".crypt("\x00a").should == ".aeipc4xPxhGY"
         "hello".crypt("a\x00").should == "a.GJVggM8eWwo"
+      end
+    end
+
+    platform_is /netbsd[a-z]*(?![1-5]\.)/ do
+      it "returns '*0' when the salt contains NULL bytes" do
+        "hello".crypt("\x00\x00").should == "*0"
+        "hello".crypt("\x00a").should == "*0"
+        "hello".crypt("a\x00").should == "*0"
       end
     end
 

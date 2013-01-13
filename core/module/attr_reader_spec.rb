@@ -25,12 +25,12 @@ describe "Module#attr_reader" do
   end
 
   it "allows for adding an attr_reader to an immediate" do
-    class Integer
+    class TrueClass
       attr_reader :spec_attr_reader
     end
 
-    1.instance_variable_set("@spec_attr_reader", "a")
-    1.spec_attr_reader.should == "a"
+    true.instance_variable_set("@spec_attr_reader", "a")
+    true.spec_attr_reader.should == "a"
   end
 
   it "converts non string/symbol/fixnum names to strings using to_str" do
@@ -57,5 +57,9 @@ describe "Module#attr_reader" do
     end
 
     lambda { c.new.foo }.should raise_error(NoMethodError)
+  end
+
+  it "is a private method" do
+    lambda { Class.new.attr_reader(:foo) }.should raise_error(NoMethodError)
   end
 end

@@ -24,14 +24,42 @@ describe "Kernel#respond_to?" do
     @a.respond_to?("pub_method").should == true
   end
 
+  ruby_version_is ""..."2.0" do
+    it "returns true if obj responds to the given protected method" do
+      @a.respond_to?(:protected_method).should == true
+      @a.respond_to?("protected_method").should == true
+    end
+  end
+
+  ruby_version_is "2.0" do
+    it "returns true if obj responds to the given protected method" do
+      @a.respond_to?(:protected_method).should == false
+      @a.respond_to?("protected_method").should == false
+    end
+  end
+
+  it "returns false if obj responds to the given private method" do
+    @a.respond_to?(:private_method).should == false
+    @a.respond_to?("private_method").should == false
+  end
+
   it "returns true if obj responds to the given protected method (include_private = true)" do
     @a.respond_to?(:protected_method, true).should == true
     @a.respond_to?("protected_method", true).should == true
   end
 
-  it "returns true if obj responds to the given protected method (include_private = false)" do
-    @a.respond_to?(:protected_method, false).should == true
-    @a.respond_to?("protected_method", false).should == true
+  ruby_version_is ""..."2.0" do
+    it "returns true if obj responds to the given protected method (include_private = false)" do
+      @a.respond_to?(:protected_method, false).should == true
+      @a.respond_to?("protected_method", false).should == true
+    end
+  end
+
+  ruby_version_is "2.0" do
+    it "returns true if obj responds to the given protected method (include_private = false)" do
+      @a.respond_to?(:protected_method, false).should == false
+      @a.respond_to?("protected_method", false).should == false
+    end
   end
 
   it "returns false even if obj responds to the given private method (include_private = false)" do
@@ -50,21 +78,4 @@ describe "Kernel#respond_to?" do
     KernelSpecs::Foo.new.respond_to?(:invalid_and_silly_method_name).should == false
   end
 
-  ruby_version_is "1.9" do
-    platform_is :os => :windows do
-      it "returns false for a method which exists but is unimplemented" do
-        Process.methods.include?(:fork).should be_true
-        Process.respond_to?(:fork).should be_false
-        lambda { Process.fork }.should raise_error(NotImplementedError)
-      end
-    end
-
-    platform_is :os => [:linux, :openbsd] do
-      it "returns false for a method which exists but is unimplemented" do
-        File.methods.include?(:lchmod).should be_true
-        File.respond_to?(:lchmod).should be_false
-        lambda { File.lchmod }.should raise_error(NotImplementedError)
-      end
-    end
-  end
 end

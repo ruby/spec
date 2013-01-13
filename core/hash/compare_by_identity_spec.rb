@@ -23,9 +23,9 @@ ruby_version_is "1.9" do
     end
 
     it "uses the semantics of BasicObject#equal? to determine key identity" do
-      1.1.should_not equal(1.1)
-      @idh[1.1] = :a
-      @idh[1.1] = :b
+      -0.0.should_not equal(-0.0) # -0.0 is not flonum
+      @idh[-0.0] = :a
+      @idh[-0.0] = :b
       [1].should_not equal([1])
       @idh[[1]] = :c
       @idh[[1]] = :d
@@ -38,12 +38,12 @@ ruby_version_is "1.9" do
       @idh.values.should == [:a, :b, :c, :d, :f, :g, :h]
     end
 
-    it "doesn't call #equal? on keys to determine their identity" do
+    it "uses #equal? semantics, but doesn't actually call #equal? to determine identity" do
       obj = mock('equal')
       obj.should_not_receive(:equal?)
       @idh[:foo] = :glark
       @idh[obj] = :a
-      @idh[obj.dup].should == nil
+      @idh[obj].should == :a
     end
 
     it "regards #dup'd objects as having different identities" do

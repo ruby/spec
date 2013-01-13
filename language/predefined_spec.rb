@@ -88,6 +88,38 @@ describe "Predefined global $~" do
     lambda { $~ = Object.new }.should raise_error(TypeError)
     lambda { $~ = 1 }.should raise_error(TypeError)
   end
+
+  it "changes the value of derived capture globals when assigned" do
+    "foo" =~ /(f)oo/
+    foo_match = $~
+    "bar" =~ /(b)ar/
+    $~ = foo_match
+    $1.should == "f"
+  end
+
+  it "changes the value of the derived preceding match global" do
+    "foo hello" =~ /hello/
+    foo_match = $~
+    "bar" =~ /(bar)/
+    $~ = foo_match
+    $`.should == "foo "
+  end
+
+  it "changes the value of the derived following match global" do
+    "foo hello" =~ /foo/
+    foo_match = $~
+    "bar" =~ /(bar)/
+    $~ = foo_match
+    $'.should == " hello"
+  end
+
+  it "changes the value of the derived full match global" do
+    "foo hello" =~ /foo/
+    foo_match = $~
+    "bar" =~ /(bar)/
+    $~ = foo_match
+    $&.should == "foo"
+  end
 end
 
 describe "Predefined global $&" do
@@ -240,6 +272,15 @@ $stdout          IO              The current standard output. Assignment to $std
                                  $stdout.reopen instead.
 =end
 
+describe "Predefined global $," do
+  it "defaults to nil" do
+    $,.should be_nil
+  end
+
+  it "raises TypeError if assigned a non-String" do
+    lambda { $, = Object.new }.should raise_error(TypeError)
+  end
+end
 
 describe "Predefined global $_" do
   it "is set to the last line read by e.g. StringIO#gets" do
@@ -280,6 +321,21 @@ describe "Predefined global $_" do
 
     match.should == "qux\n"
     $_.should == match
+  end
+
+  it "is Thread-local" do
+    $_ = nil
+    running = false
+
+    thr = Thread.new do
+      $_ = "last line"
+      running = true
+    end
+
+    Thread.pass until running
+    $_.should be_nil
+
+    thr.join
   end
 
   it "can be assigned any value" do
@@ -331,7 +387,7 @@ $LOAD_PATH       Array           A synonym for $:. [r/o]
 $-p              Object          Set to true if the -p option (which puts an implicit while gets . . . end
                                  loop around your program) is present on the command line. [r/o]
 $SAFE            Fixnum          The current safe level. This variable’s value may never be
-                                 reduced by assignment. [thread]
+                                 reduced by assignment. [thread] (Not implemented in Rubinius)
 $VERBOSE         Object          Set to true if the -v, --version, -W, or -w option is specified on the com-
                                  mand line. Set to false if no option, or -W1 is given. Set to nil if -W0
                                  was specified. Setting this option to true causes the interpreter and some
@@ -358,12 +414,14 @@ describe "Execution variable $:" do
     end
   end
 
-  it "does not include '.' when the taint check level > 1" do
-    begin
-      orig_opts, ENV['RUBYOPT'] = ENV['RUBYOPT'], '-T'
-      `#{RUBY_EXE} -e 'p $:.include?(".")'`.should == "false\n"
-    ensure
-      ENV['RUBYOPT'] = orig_opts
+  not_compliant_on :rubinius do
+    it "does not include '.' when the taint check level > 1" do
+      begin
+        orig_opts, ENV['RUBYOPT'] = ENV['RUBYOPT'], '-T'
+        `#{RUBY_EXE} -e 'p $:.include?(".")'`.should == "false\n"
+      ensure
+        ENV['RUBYOPT'] = orig_opts
+      end
     end
   end
 
@@ -430,6 +488,21 @@ describe "Global variable $?" do
       $? = nil
     }.should raise_error(NameError)
   end
+
+  ruby_version_is ""..."1.9" do
+    it "is shared across threads" do
+      system("true")
+      pid = $?.pid
+      Thread.new { $?.pid.should == pid }.join
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "is thread-local" do
+      system("true")
+      Thread.new { $?.should be_nil }.join
+    end
+  end
 end
 
 describe "Global variable $-a" do
@@ -447,6 +520,71 @@ end
 describe "Global variable $-p" do
   it "is read-only" do
     lambda { $-p = true }.should raise_error(NameError)
+  end
+end
+
+describe "Global variable $-d" do
+  before :each do
+    @debug = $DEBUG
+  end
+
+  after :each do
+    $DEBUG = @debug
+  end
+
+  it "is an alias of $DEBUG" do
+    $DEBUG = true
+    $-d.should be_true
+    $-d = false
+    $DEBUG.should be_false
+  end
+end
+
+describe :verbose_global_alias, :shared => true do
+  before :each do
+    @verbose = $VERBOSE
+  end
+
+  after :each do
+    $VERBOSE = @verbose
+  end
+
+  it "is an alias of $VERBOSE" do
+    $VERBOSE = true
+    eval(@method).should be_true
+    eval("#{@method} = false")
+    $VERBOSE.should be_false
+  end
+end
+
+describe "Global variable $-v" do
+  it_behaves_like :verbose_global_alias, '$-v'
+end
+
+describe "Global variable $-w" do
+  it_behaves_like :verbose_global_alias, '$-w'
+end
+
+describe "Global variable $0" do
+  before :each do
+    @orig_program_name = $0
+  end
+
+  after :each do
+    $0 = @orig_program_name
+  end
+
+  it "returns the program name" do
+    $0 = "rbx"
+    $0.should == "rbx"
+  end
+
+  it "returns the given value when set" do
+    ($0 = "rbx").should == "rbx"
+  end
+
+  it "raises a TypeError when not given an object that can be coerced to a String" do
+    lambda { $0 = nil }.should raise_error(TypeError)
   end
 end
 
@@ -622,11 +760,14 @@ describe "Processing RUBYOPT" do
 
   it "sets $DEBUG to true for '-d'" do
     ENV["RUBYOPT"] = '-d'
-    ruby_exe("puts $DEBUG", :escape => true).chomp.should == "true"
+    command = %[puts "value of $DEBUG is \#{$DEBUG}"]
+    result = ruby_exe(command, :escape => true, :args => "2>&1")
+    result.should =~ /value of \$DEBUG is true/
   end
 
   ruby_version_is "1.9" do
     it "prints the version number for '-v'" do
+      ENV["RBXOPT"] = '-X19'
       ENV["RUBYOPT"] = '-v'
       ruby_exe("").chomp.should == RUBY_DESCRIPTION
     end

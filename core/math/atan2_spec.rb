@@ -38,6 +38,47 @@ describe "Math.atan2" do
   it "accepts any argument that can be coerced with Float()" do
     Math.atan2(MathSpecs::Float.new, MathSpecs::Float.new).should be_close(0.785398163397448, TOLERANCE)
   end
+
+  it "returns positive zero when passed 0.0, 0.0" do
+    Math.atan2(0.0, 0.0).should be_positive_zero
+  end
+
+  platform_is_not :solaris do
+    it "returns negative zero when passed -0.0, 0.0" do
+      Math.atan2(-0.0, 0.0).should be_negative_zero
+    end
+  end
+
+  platform_is :solaris do
+    it "returns positive zero when passed -0.0, 0.0" do
+      Math.atan2(-0.0, 0.0).should be_positive_zero
+    end
+  end
+
+  platform_is_not :solaris do
+    it "returns Pi when passed 0.0, -0.0" do
+      Math.atan2(0.0, -0.0).should == Math::PI
+    end
+  end
+
+  platform_is :solaris do
+    it "returns positive zero when passed 0.0, -0.0" do
+      Math.atan2(0.0, -0.0).should be_positive_zero
+    end
+  end
+
+  platform_is_not :solaris do
+    it "returns -Pi when passed -0.0, -0.0" do
+      Math.atan2(-0.0, -0.0).should == -Math::PI
+    end
+  end
+
+  platform_is :solaris do
+    it "returns positive zero when passed -0.0, -0.0" do
+      Math.atan2(-0.0, -0.0).should be_positive_zero
+    end
+  end
+
 end
 
 describe "Math#atan2" do

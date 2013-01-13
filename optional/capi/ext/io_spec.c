@@ -1,17 +1,18 @@
 #include "ruby.h"
 #include "rubyspec.h"
-#ifdef RUBY_VERSION_IS_1_8
+#ifdef RUBY_VERSION_IS_1_8_EX_1_9
 #include "rubyio.h"
 #else
 #include "ruby/io.h"
 #endif
 #include <fcntl.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef RUBY_VERSION_IS_LT_1_8_7
+#ifdef RUBY_VERSION_IS_1_8_EX_1_8_7
 #define rb_io_t OpenFile
 #endif
 
@@ -43,11 +44,60 @@ VALUE io_spec_GetOpenFile_fd(VALUE self, VALUE io) {
 }
 #endif
 
+#ifdef HAVE_RB_IO_ADDSTR
+VALUE io_spec_rb_io_addstr(VALUE self, VALUE io, VALUE str) {
+  return rb_io_addstr(io, str);
+}
+#endif
+
+#ifdef HAVE_RB_IO_PRINTF
+VALUE io_spec_rb_io_printf(VALUE self, VALUE io, VALUE ary) {
+  long argc = RARRAY_LEN(ary);
+  VALUE *argv = alloca(sizeof(VALUE) * argc);
+  int i;
+
+  for (i = 0; i < argc; i++) {
+    argv[i] = rb_ary_entry(ary, i);
+  }
+
+  return rb_io_printf((int)argc, argv, io);
+}
+#endif
+
+#ifdef HAVE_RB_IO_PRINT
+VALUE io_spec_rb_io_print(VALUE self, VALUE io, VALUE ary) {
+  long argc = RARRAY_LEN(ary);
+  VALUE *argv = alloca(sizeof(VALUE) * argc);
+  int i;
+
+  for (i = 0; i < argc; i++) {
+    argv[i] = rb_ary_entry(ary, i);
+  }
+
+  return rb_io_print((int)argc, argv, io);
+}
+#endif
+
+#ifdef HAVE_RB_IO_PUTS
+VALUE io_spec_rb_io_puts(VALUE self, VALUE io, VALUE ary) {
+  long argc = RARRAY_LEN(ary);
+  VALUE *argv = alloca(sizeof(VALUE) * argc);
+  int i;
+
+  for (i = 0; i < argc; i++) {
+    argv[i] = rb_ary_entry(ary, i);
+  }
+
+  return rb_io_puts((int)argc, argv, io);
+}
+#endif
+
 #ifdef HAVE_RB_IO_WRITE
 VALUE io_spec_rb_io_write(VALUE self, VALUE io, VALUE str) {
   return rb_io_write(io, str);
 }
 #endif
+
 
 #ifdef HAVE_RB_IO_CHECK_READABLE
 VALUE io_spec_rb_io_check_readable(VALUE self, VALUE io) {
@@ -89,9 +139,10 @@ typedef VALUE wait_bool;
 
 VALUE io_spec_rb_io_wait_readable(VALUE self, VALUE io, VALUE read_p) {
   int fd = io_spec_get_fd(io);
-  set_non_blocking(fd);
   char buf[RB_IO_WAIT_READABLE_BUF];
   wait_bool ret;
+
+  set_non_blocking(fd);
 
   if(RTEST(read_p)) {
     rb_ivar_set(self, rb_intern("@write_data"), Qtrue);
@@ -122,6 +173,20 @@ VALUE io_spec_rb_io_wait_writable(VALUE self, VALUE io) {
 }
 #endif
 
+#ifdef HAVE_RB_THREAD_WAIT_FD
+VALUE io_spec_rb_thread_wait_fd(VALUE self, VALUE io) {
+  rb_thread_wait_fd(io_spec_get_fd(io));
+  return Qnil;
+}
+#endif
+
+#ifdef HAVE_RB_THREAD_FD_WRITABLE
+VALUE io_spec_rb_thread_fd_writable(VALUE self, VALUE io) {
+  rb_thread_fd_writable(io_spec_get_fd(io));
+  return Qnil;
+}
+#endif
+
 #ifdef HAVE_RB_IO_CLOSE
 VALUE io_spec_rb_io_close(VALUE self, VALUE io) {
   return rb_io_close(io);
@@ -133,6 +198,22 @@ void Init_io_spec() {
 
 #ifdef HAVE_GET_OPEN_FILE
   rb_define_method(cls, "GetOpenFile_fd", io_spec_GetOpenFile_fd, 1);
+#endif
+
+#ifdef HAVE_RB_IO_ADDSTR
+  rb_define_method(cls, "rb_io_addstr", io_spec_rb_io_addstr, 2);
+#endif
+
+#ifdef HAVE_RB_IO_PRINTF
+  rb_define_method(cls, "rb_io_printf", io_spec_rb_io_printf, 2);
+#endif
+
+#ifdef HAVE_RB_IO_PRINT
+  rb_define_method(cls, "rb_io_print", io_spec_rb_io_print, 2);
+#endif
+
+#ifdef HAVE_RB_IO_PUTS
+  rb_define_method(cls, "rb_io_puts", io_spec_rb_io_puts, 2);
 #endif
 
 #ifdef HAVE_RB_IO_WRITE
@@ -161,6 +242,14 @@ void Init_io_spec() {
 
 #ifdef HAVE_RB_IO_WAIT_WRITABLE
   rb_define_method(cls, "rb_io_wait_writable", io_spec_rb_io_wait_writable, 1);
+#endif
+
+#ifdef HAVE_RB_THREAD_WAIT_FD
+  rb_define_method(cls, "rb_thread_wait_fd", io_spec_rb_thread_wait_fd, 1);
+#endif
+
+#ifdef HAVE_RB_THREAD_FD_WRITABLE
+  rb_define_method(cls, "rb_thread_fd_writable", io_spec_rb_thread_fd_writable, 1);
 #endif
 
 }

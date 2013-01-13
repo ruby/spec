@@ -119,6 +119,10 @@ describe "An instance method with a default argument" do
 end
 
 describe "A singleton method definition" do
+  after :all do
+    Object.remove_class_variable :@@a rescue nil
+  end
+
   it "can be declared for a local variable" do
     a = "hi"
     def a.foo
@@ -168,6 +172,22 @@ describe "A singleton method definition" do
       2
     end
     (obj==2).should == 2
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "raises TypeError if frozen" do
+      obj = Object.new
+      obj.freeze
+      lambda { def obj.foo; end }.should raise_error(TypeError)
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises RuntimeError if frozen" do
+      obj = Object.new
+      obj.freeze
+      lambda { def obj.foo; end }.should raise_error(RuntimeError)
+    end
   end
 end
 
@@ -305,6 +325,28 @@ describe "A method definition inside a metaclass scope" do
 
     obj.a_singleton_method.should == obj
     lambda { Object.new.a_singleton_method }.should raise_error(NoMethodError)
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "raises TypeError if frozen" do
+      obj = Object.new
+      obj.freeze
+
+      class << obj
+        lambda { def foo; end }.should raise_error(TypeError)
+      end
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "raises RuntimeError if frozen" do
+      obj = Object.new
+      obj.freeze
+
+      class << obj
+        lambda { def foo; end }.should raise_error(RuntimeError)
+      end
+    end
   end
 end
 

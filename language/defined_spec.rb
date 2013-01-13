@@ -32,6 +32,16 @@ describe "The defined? keyword when called with a method name" do
     it "returns nil if the method is not defined" do
       defined?(defined_specs_undefined_method).should be_nil
     end
+
+    it "returns 'method' if the method is defined and private" do
+      obj = DefinedSpecs::Basic.new
+      obj.private_method_defined.should == "method"
+    end
+
+    it "returns 'method' if the predicate method is defined and private" do
+      obj = DefinedSpecs::Basic.new
+      obj.private_predicate_defined.should == "method"
+    end
   end
 
   describe "having a module as receiver" do
@@ -1122,6 +1132,10 @@ describe "The defined? keyword for a module method call scoped constant" do
 end
 
 describe "The defined? keyword for a variable scoped constant" do
+  after :all do
+    Object.remove_class_variable :@@defined_specs_obj rescue nil
+  end
+
   it "returns nil if the scoped constant is not defined" do
     @defined_specs_obj = DefinedSpecs::Basic
     defined?(@defined_specs_obj::Undefined).should be_nil
@@ -1217,16 +1231,20 @@ describe "The defined? keyword for super" do
       DefinedSpecs::Super.new.method_no_args.should == "super"
     end
 
-    it "returns 'super' from a block when a superclass method exists" do
-      DefinedSpecs::Super.new.method_block_no_args.should == "super"
+    ruby_bug '#6644', '1.9.3' do
+      it "returns 'super' from a block when a superclass method exists" do
+        DefinedSpecs::Super.new.method_block_no_args.should == nil
+      end
     end
 
     it "returns 'super' from a #define_method when a superclass method exists" do
       DefinedSpecs::Super.new.define_method_no_args.should == "super"
     end
 
-    it "returns 'super' from a block in a #define_method when a superclass method exists" do
-      DefinedSpecs::Super.new.define_method_block_no_args.should == "super"
+    ruby_bug '#6644', '1.9.3' do
+      it "returns 'super' from a block in a #define_method when a superclass method exists" do
+        DefinedSpecs::Super.new.define_method_block_no_args.should == nil
+      end
     end
 
     it "returns 'super' when the method exists in a supermodule" do
@@ -1255,16 +1273,20 @@ describe "The defined? keyword for super" do
       DefinedSpecs::Super.new.method_args.should == "super"
     end
 
-    it "returns 'super' from a block when a superclass method exists" do
-      DefinedSpecs::Super.new.method_block_args.should == "super"
+    ruby_bug '#6644', '1.9.3' do
+      it "returns 'super' from a block when a superclass method exists" do
+        DefinedSpecs::Super.new.method_block_args.should == nil
+      end
     end
 
     it "returns 'super' from a #define_method when a superclass method exists" do
       DefinedSpecs::Super.new.define_method_args.should == "super"
     end
 
-    it "returns 'super' from a block in a #define_method when a superclass method exists" do
-      DefinedSpecs::Super.new.define_method_block_args.should == "super"
+    ruby_bug '#6644', '1.9.3' do
+      it "returns 'super' from a block in a #define_method when a superclass method exists" do
+        DefinedSpecs::Super.new.define_method_block_args.should == nil
+      end
     end
   end
 

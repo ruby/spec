@@ -1,3 +1,4 @@
+# -*- encoding: US-ASCII -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes.rb', __FILE__)
 
@@ -73,7 +74,7 @@ describe "String#count" do
   end
 
   ruby_version_is ""..."1.9" do
-    it "regards invaid sequences as empty" do
+    it "regards invalid sequences as empty" do
       s = "hel-[()]-lo012^"
 
       # empty sequences (end before start)
@@ -83,7 +84,7 @@ describe "String#count" do
   end
 
   ruby_version_is "1.9" do
-    it "raises if the given sequences are invaid" do
+    it "raises if the given sequences are invalid" do
       s = "hel-[()]-lo012^"
 
       lambda { s.count("h-e") }.should raise_error(ArgumentError)

@@ -87,7 +87,7 @@ static VALUE array_spec_RARRAY_LEN(VALUE self, VALUE array) {
 static VALUE array_spec_rb_ary_aref(int argc, VALUE *argv, VALUE self) {
   VALUE ary, args;
   rb_scan_args(argc, argv, "1*", &ary, &args);
-  return rb_ary_aref(RARRAY_LEN(args), RARRAY_PTR(args), ary);
+  return rb_ary_aref((int)RARRAY_LEN(args), RARRAY_PTR(args), ary);
 }
 #endif
 
@@ -161,7 +161,10 @@ static VALUE array_spec_rb_ary_new3(VALUE self, VALUE first, VALUE second, VALUE
 
 #ifdef HAVE_RB_ARY_NEW4
 static VALUE array_spec_rb_ary_new4(VALUE self, VALUE first, VALUE second, VALUE third) {
-  VALUE values[3] = {first, second, third};
+  VALUE values[3];
+  values[0] = first;
+  values[1] = second;
+  values[2] = third;
   return rb_ary_new4(3, values);
 }
 #endif
@@ -238,6 +241,16 @@ static VALUE array_spec_rb_iterate_each_pair(VALUE self, VALUE obj) {
   rb_iterate(each_pair, obj, sub_pair, new_ary);
 
   return new_ary;
+}
+
+static VALUE iter_yield(VALUE el, VALUE ary) {
+  rb_yield(el);
+  return Qnil;
+}
+
+static VALUE array_spec_rb_iterate_then_yield(VALUE self, VALUE obj) {
+  rb_iterate(rb_each, obj, iter_yield, obj);
+  return Qnil;
 }
 #endif
 
@@ -379,6 +392,7 @@ void Init_array_spec() {
 #if defined(HAVE_RB_ITERATE) && defined(HAVE_RB_EACH)
   rb_define_method(cls, "rb_iterate", array_spec_rb_iterate, 1);
   rb_define_method(cls, "rb_iterate_each_pair", array_spec_rb_iterate_each_pair, 1);
+  rb_define_method(cls, "rb_iterate_then_yield", array_spec_rb_iterate_then_yield, 1);
 #endif
 
 #if defined(HAVE_RB_MEM_CLEAR)

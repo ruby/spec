@@ -236,6 +236,10 @@ describe "String#split with Regexp" do
     "hello".split(//, 2).should == ["h", "ello"]
 
     "hi mom".split(/\s*/).should == ["h", "i", "m", "o", "m"]
+
+    "AABCCBAA".split(/(?=B)/).should == ["AA", "BCC", "BAA"]
+    "AABCCBAA".split(/(?=B)/, -1).should == ["AA", "BCC", "BAA"]
+    "AABCCBAA".split(/(?=B)/, 2).should == ["AA", "BCCBAA"]
   end
 
   it "respects $KCODE when splitting between characters" do
@@ -343,6 +347,16 @@ describe "String#split with Regexp" do
           end
         end
       end
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "returns an ArgumentError if an invalid UTF-8 string is supplied" do
+      broken_str = 'проверка' # in russian, means "test"
+      broken_str.force_encoding('binary')
+      broken_str.chop!
+      broken_str.force_encoding('utf-8')
+      lambda{ broken_str.split(/\r\n|\r|\n/) }.should raise_error(ArgumentError)
     end
   end
 end

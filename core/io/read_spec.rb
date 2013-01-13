@@ -23,6 +23,34 @@ describe "IO.read" do
       p.should_receive(:to_path).and_return(@fname)
       IO.read(p)
     end
+
+    it "accepts an empty options Hash" do
+      IO.read(@fname, {}).should == @contents
+    end
+
+    it "accepts a length, offset, and empty options Hash" do
+      IO.read(@fname, 3, 0, {}).should == @contents[0, 3]
+    end
+
+    it "raises an IOError if the options Hash specifies write mode" do
+      lambda { IO.read(@fname, 3, 0, {:mode => "w"}) }.should raise_error(IOError)
+    end
+
+    it "raises an IOError if the options Hash specifies append only mode" do
+      lambda { IO.read(@fname, {:mode => "a"}) }.should raise_error(IOError)
+    end
+
+    it "reads the file if the options Hash includes read mode" do
+      IO.read(@fname, {:mode => "r"}).should == @contents
+    end
+
+    it "reads the file if the options Hash includes read/write mode" do
+      IO.read(@fname, {:mode => "r+"}).should == @contents
+    end
+
+    it "reads the file if the options Hash includes read/write append mode" do
+      IO.read(@fname, {:mode => "a+"}).should == @contents
+    end
   end
 
   it "treats second nil argument as no length limit" do
@@ -239,6 +267,30 @@ describe "IO#read" do
 
   it "raises IOError on closed stream" do
     lambda { IOSpecs.closed_io.read }.should raise_error(IOError)
+  end
+end
+
+platform_is :windows do
+  describe "IO#read on Windows" do
+    before :each do
+      @fname = tmp("io_read.txt")
+      touch(@fname, "wb") { |f| f.write "a\r\nb\r\nc" }
+    end
+
+    after :each do
+      rm_r @fname
+      @io.close if @io and !@io.closed?
+    end
+
+    it "normalizes line endings in text mode" do
+      @io = new_io(@fname, "r")
+      @io.read.should == "a\nb\nc"
+    end
+
+    it "does not normalize line endings in binary mode" do
+      @io = new_io(@fname, "rb")
+      @io.read.should == "a\r\nb\r\nc"
+    end
   end
 end
 

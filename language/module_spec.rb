@@ -1,80 +1,56 @@
 require File.expand_path('../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/module', __FILE__)
 
-module LangModuleSpec
-  module Sub1; end
-end
-
-module LangModuleSpecInObject
-  module LangModuleTop
-  end
-end
-
-# Must be here, we have to include it into Object because thats
-# the case.
-include LangModuleSpecInObject
-
-module LangModuleSpec::Sub2; end
-
-describe "module" do
-  it "has the right name" do
-    LangModuleSpec::Sub1.name.should == "LangModuleSpec::Sub1"
-    LangModuleSpec::Sub2.name.should == "LangModuleSpec::Sub2"
+describe "The module keyword" do
+  it "creates a new module with a non-qualified constant name" do
+    module ModuleSpecsToplevel; end
+    ModuleSpecsToplevel.should be_an_instance_of(Module)
   end
 
-  it "gets a name when assigned to a constant" do
-    LangModuleSpec::Anon = Module.new
-    LangModuleSpec::Anon.name.should == "LangModuleSpec::Anon"
+  it "creates a new module with a qualified constant name" do
+    module ModuleSpecs::Nested; end
+    ModuleSpecs::Nested.should be_an_instance_of(Module)
   end
 
-  it "raises a TypeError if the constant is a class" do
-    class LangModuleSpec::C1; end
-
-    lambda {
-      module LangModuleSpec::C1; end
-    }.should raise_error(TypeError)
+  it "creates a new module with a variable qualified constant name" do
+    m = Module.new
+    module m::N; end
+    m::N.should be_an_instance_of(Module)
   end
 
-  it "raises a TypeError if the constant is not a module" do
-    module LangModuleSpec
-      C2 = 2
-    end
-
-    lambda {
-      module LangModuleSpec::C2; end
-    }.should raise_error(TypeError)
+  it "reopens an existing module" do
+    module ModuleSpecs; Reopened = true; end
+    ModuleSpecs::Reopened.should be_true
   end
 
-  it "allows for reopening a module subclass" do
-    class ModuleSubClass < Module; end
-    LangModuleSpec::C3 = ModuleSubClass.new
-
-    module LangModuleSpec::C3
-      C4 = 4
-    end
-
-    LangModuleSpec::C3::C4.should == 4
+  it "reopens a module included in Object" do
+    module IncludedModuleSpecs; Reopened = true; end
+    ModuleSpecs::IncludedInObject::IncludedModuleSpecs::Reopened.should be_true
   end
 
-  it "reopens a module included into Object" do
-    module LangModuleTop
-    end
-
-    LangModuleTop.should == LangModuleSpecInObject::LangModuleTop
-  end
-end
-
-describe "An anonymous module" do
-  ruby_version_is "" ... "1.9" do
-    it "returns an empty string for its name" do
-      m = Module.new
-      m.name.should == ""
-    end
+  it "raises a TypeError if the constant is a Class" do
+    lambda do
+      module ModuleSpecs::Modules::Klass; end
+    end.should raise_error(TypeError)
   end
 
-  ruby_version_is "1.9" do
-    it "returns nil for its name" do
-      m = Module.new
-      m.name.should == nil
-    end
+  it "raises a TypeError if the constant is a String" do
+    lambda { module ModuleSpecs::Modules::A; end }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError if the constant is a Fixnum" do
+    lambda { module ModuleSpecs::Modules::B; end }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError if the constant is nil" do
+    lambda { module ModuleSpecs::Modules::C; end }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError if the constant is true" do
+    lambda { module ModuleSpecs::Modules::D; end }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError if the constant is false" do
+    lambda { module ModuleSpecs::Modules::D; end }.should raise_error(TypeError)
   end
 end

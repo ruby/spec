@@ -84,6 +84,14 @@ describe "The super keyword" do
     Super::S7.new.here.should == :good
   end
 
+  it "can call through a define_method multiple times (caching check)" do
+    obj = Super::S7.new
+
+    2.times do
+      obj.here.should == :good
+    end
+  end
+
   it "supers up appropriate name even if used for multiple method names" do
     sup = Class.new do
       def a; "a"; end
@@ -104,7 +112,7 @@ describe "The super keyword" do
   end
 
   ruby_version_is ""..."1.9" do
-    it "can be used with implicit arguments from a method defined with define_method" do
+    it "can be used with zero implicit arguments from a method defined with define_method" do
       sup = Class.new do
         def a; "a"; end
       end
@@ -117,14 +125,115 @@ describe "The super keyword" do
 
       sub.new.a.should == "a"
     end
+
+    it "can be used with non-zero implicit arguments from a method defined with define_method" do
+      sup = Class.new do
+        def a(n1, n2); n1 + n2; end
+      end
+
+      sub = Class.new(sup) do
+        define_method :a do |*args|
+          super
+        end
+      end
+
+      sub.new.a(30,12).should == 42
+    end
+
+    it "passes along optional args in all cases" do
+      sup = Class.new do
+        def a(n1, n2); n1 + n2; end
+      end
+
+      sub = Class.new(sup) do
+        def a(n1, n2=2)
+          super
+        end
+      end
+
+      sub.new.a(39, 3).should == 42
+      sub.new.a(40).should == 42
+    end
+
+    describe "passes along unnamed rest args" do
+      before(:each) do
+        @sup = Class.new do
+          def a(n1, *n2); return n1 + n2[0]; end
+        end
+      end
+
+      it "" do
+        sub = Class.new(@sup) do
+          def a(n, *)
+            super
+          end
+        end
+
+        sub.new.a(30, 12).should == 42
+      end
+
+      it "even when nested within a block" do
+        sub = Class.new(@sup) do
+          def yieldit; yield; end
+
+          def a(n, *)
+            yieldit { super }
+          end
+        end
+
+        sub.new.a(30, 12).should == 42
+      end
+    end
+
+    describe "passes along the incoming block to the super method" do
+      before(:each) do
+        @sup = Class.new do
+          def a(*n); yield n; end
+        end
+      end
+
+      it "" do
+        sub = Class.new(@sup) do
+          def a(*n); super; end
+        end
+
+        sub.new.a { 42 }.should == 42
+      end
+
+      it "even when the method has args" do
+        sub = Class.new(@sup) do
+          def a(*n); super; end
+        end
+
+        sub.new.a(42) {|i| i}.should == [42]
+      end
+
+      it "even when incoming args are explicitly passed in" do
+        sub = Class.new(@sup) do
+          def a(*n); super(*n); end
+        end
+
+        sub.new.a(42) {|i| i}.should == [42]
+      end
+    end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9"..."2.0" do
     it "can't be used with implicit arguments from a method defined with define_method" do
       Class.new do
         define_method :a do
           super
         end.should raise_error(RuntimeError)
+      end
+    end
+  end
+
+  ruby_bug "#6907", "2.0" do
+    it "can be used with implicit arguments from a method defined with define_method" do
+      Class.new do
+        define_method :a do
+          super
+        end
       end
     end
   end
@@ -147,5 +256,21 @@ describe "The super keyword" do
     lambda {
       Super::AliasWithSuper::Trigger.foo.should == [:b, :a]
     }.should_not raise_error(NoMethodError)
+  end
+
+  it "passes along modified rest args when they weren't originally empty" do
+    Super::RestArgsWithSuper::B.new.a("bar").should == ["bar", "foo"]
+  end
+
+  ruby_version_is ""..."1.9" do
+    it "passes empty args instead of modified rest args when they were originally empty" do
+      Super::RestArgsWithSuper::B.new.a.should == []
+    end
+  end
+
+  ruby_version_is "1.9" do
+    it "passes along modified rest args when they were originally empty" do
+      Super::RestArgsWithSuper::B.new.a.should == ["foo"]
+    end
   end
 end
