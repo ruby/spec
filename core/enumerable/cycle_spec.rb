@@ -3,29 +3,31 @@ require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is "1.8.7" do
   describe "Enumerable#cycle" do
-    it "loops indefinitely if no argument or nil argument" do
-      [[],[nil]].each do |args|
-        bomb = 10
-        EnumerableSpecs::Numerous.new.cycle(*args) do
-          bomb -= 1
-          break 42 if bomb <= 0
-        end.should == 42
-        bomb.should == 0
+    describe "passed no argument or nil" do
+      it "loops indefinitely" do
+        [[],[nil]].each do |args|
+          bomb = 10
+          EnumerableSpecs::Numerous.new.cycle(*args) do
+            bomb -= 1
+            break 42 if bomb <= 0
+          end.should == 42
+          bomb.should == 0
+        end
       end
-    end
 
-    it "returns if there are no elements" do
-      out = EnumerableSpecs::Empty.new.cycle { break :nope }
-      out.should be_nil
-    end
-
-    it "yields successive elements of the array repeatedly" do
-      b = []
-      EnumerableSpecs::Numerous.new(1,2,3).cycle do |elem|
-        b << elem
-        break if b.size == 7
+      it "returns if there are no elements" do
+        out = EnumerableSpecs::Empty.new.cycle { break :nope }
+        out.should be_nil
       end
-      b.should == [1,2,3,1,2,3,1]
+
+      it "yields successive elements of the array repeatedly" do
+        b = []
+        EnumerableSpecs::Numerous.new(1,2,3).cycle do |elem|
+          b << elem
+          break if b.size == 7
+        end
+        b.should == [1,2,3,1,2,3,1]
+      end
     end
 
     describe "passed a number n as an argument" do
