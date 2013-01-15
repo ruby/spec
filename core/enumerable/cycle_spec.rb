@@ -28,6 +28,18 @@ ruby_version_is "1.8.7" do
         end
         b.should == [1,2,3,1,2,3,1]
       end
+
+      it "calls each at most once" do
+        enum = EnumerableSpecs::EachCounter.new(1, 2)
+        enum.cycle.first(6).should == [1,2,1,2,1,2]
+        enum.times_called.should == 1
+      end
+
+      it "yields only when necessary" do
+        enum = EnumerableSpecs::EachCounter.new(10, 20, 30)
+        enum.cycle { |x| break if x == 20}
+        enum.times_yielded.should == 2
+      end
     end
 
     describe "passed a number n as an argument" do
