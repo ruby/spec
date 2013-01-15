@@ -33,6 +33,22 @@ describe "File#flock" do
     end
   end
 
+  it "blocks if trying to lock an exclusively locked file" do
+    @file.flock File::LOCK_EX
+
+    blocking = true
+    t = Thread.new do
+      File.open(@name, "w") do |f2|
+        f2.flock(File::LOCK_EX)
+      end
+      blocking = false
+    end
+    sleep 1
+    t.kill
+    t.join
+    blocking.should == true
+  end
+
   it "returns 0 if trying to lock a non-exclusively locked file" do
     @file.flock File::LOCK_SH
 
