@@ -156,6 +156,17 @@ describe "IO.readlines" do
     @name = fixture __FILE__, "lines.txt"
   end
 
+  ruby_version_is "1.9" do
+    before :each do
+      @orig_exteenc = Encoding.default_external
+      Encoding.default_external = Encoding::UTF_8
+    end
+
+    after :each do
+      Encoding.default_external = @orig_exteenc
+    end
+  end
+
   describe "when not passed a separator" do
     before :each do
       @sep, $/ = $/, " "
