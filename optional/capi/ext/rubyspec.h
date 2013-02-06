@@ -234,6 +234,7 @@
 #define HAVE_RB_ITER_BREAK                 1
 #define HAVE_RB_SOURCEFILE                 1
 #define HAVE_RB_SOURCELINE                 1
+#define HAVE_RB_METHOD_BOUNDP              1
 
 /* Enumerable */
 #ifdef RUBY_VERSION_IS_1_8_7
