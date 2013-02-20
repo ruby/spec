@@ -1,0 +1,52 @@
+language: ruby
+script:
+  - bundle exec mspec .
+rvm:
+  - 1.8.7
+  - 1.9.3
+  - ruby-head
+  - jruby-18mode
+  - jruby-19mode
+  - jruby-head
+  - rbx-18mode
+  - rbx-19mode
+  - rbx-head
+  - ree
+jdk:
+  - openjdk6
+  - openjdk7
+  - oraclejdk7
+allow_failures:
+ - rvm: ruby-head
+ - rvm: jruby-head
+ - rvm: rbx-head
+matrix:
+  exclude:
+    - rvm: 1.9.3
+      jdk: openjdk7
+    - rvm: 1.9.3
+      jdk: openjdk6
+    - rvm: 1.8.7
+      jdk: openjdk7
+    - rvm: 1.8.7
+      jdk: openjdk6
+    - rvm: ruby-head
+      jdk: openjdk7
+    - rvm: ruby-head
+      jdk: openjdk6
+    - rvm: ree
+      jdk: openjdk7
+    - rvm: ree
+      jdk: openjdk6
+    - rvm: rbx-18mode
+      jdk: openjdk7
+    - rvm: rbx-18mode
+      jdk: openjdk6
+    - rvm: rbx-19mode
+      jdk: openjdk7
+    - rvm: rbx-19mode
+      jdk: openjdk6
+    - rvm: rbx-head
+      jdk: openjdk7
+    - rvm: rbx-head
+      jdk: openjdk6

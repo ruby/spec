@@ -1,0 +1,22 @@
+GIT
+  remote: git://github.com/ffi/ffi.git
+  revision: 24cf4c983b1e31f279a96855897cdd47cb3909df
+  specs:
+    ffi (1.4.0)
+
+GIT
+  remote: git://github.com/rubyspec/mspec.git
+  revision: b602701683fab545306ec8466fccf3005a31f2d8
+  specs:
+    mspec (1.5.18)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ffi!
+  mspec!
