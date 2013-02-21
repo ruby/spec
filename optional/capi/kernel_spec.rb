@@ -170,7 +170,7 @@ describe "C-API Kernel function" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9.3" do
     describe "rb_syserr_fail" do
       it "raises an exception from the given error" do
         lambda do
@@ -423,7 +423,7 @@ describe "C-API Kernel function" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9.3" do
     describe "rb_make_backtrace" do
       it "returns a caller backtrace" do
         backtrace = @s.rb_make_backtrace
