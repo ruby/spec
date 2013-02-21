@@ -3,7 +3,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 ruby_version_is "2.0.0" do
   require File.expand_path('../fixtures/string_refinement', __FILE__)
 
-  describe "main.using" do
+  describe "Kernel#using" do
     it "requires one or more Module arguments" do
       lambda do
         Module.new do
@@ -127,6 +127,13 @@ ruby_version_is "2.0.0" do
 
       mod.module_eval {'hello'.foo}.should == 'foo'
       mod.class_eval {'hello'.foo}.should == 'foo'
+    end
+
+    it "applies used refinements to lambda blocks" do
+      lambda do
+        using StringRefinement
+        'hello'.foo
+      end.call.should == 'foo'
     end
 
     ruby_bug "in a_matsuda's slides but does not appear to work", "2.0.1" do
