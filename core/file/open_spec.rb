@@ -542,7 +542,7 @@ describe "File.open" do
   end
 
   platform_is_not :windows do
-    ruby_version_is "1.9" do
+    ruby_bug '#7908', '1.8.7' do
       if `which mkfifo`.chomp != ""
         describe "on a FIFO" do
           before :each do
