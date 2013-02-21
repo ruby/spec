@@ -88,7 +88,9 @@ describe "C-API Util function" do
         @o.rb_scan_args([1, 2, 3, 4], "01*1", 3, @acc).should == 4
         ScratchPad.recorded.should == [1, [2, 3], 4]
       end
+    end
 
+    ruby_version_is "1.9.3" do
       it "assigns required, optional, splat, post-splat and block arguments" do
         @o.rb_scan_args([1, 2, 3, 4, 5], "11*1&", 5, @acc, &@prc).should == 5
         ScratchPad.recorded.should == [1, 2, [3, 4], 5, @prc]
