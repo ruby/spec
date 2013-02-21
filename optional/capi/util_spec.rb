@@ -127,34 +127,66 @@ describe "C-API Util function" do
     end
   end
 
-  describe "rb_iter_break" do
+  ruby_version_is ""..."1.9" do
+    describe "rb_iter_break" do
 
-    before :each do
-      ScratchPad.record []
-    end
-
-    it "breaks a loop" do
-      3.times do |i|
-        if i == 2
-          @o.rb_iter_break
-        end
-        ScratchPad << i
+      before :each do
+        ScratchPad.record []
       end
-      ScratchPad.recorded.should == [0, 1]
-    end
 
-    it "breaks the inner loop" do
-      3.times do |i|
-        3.times do |j|
-          if i == 1
+      it "breaks a loop" do
+        3.times do |i|
+          if i == 2
             @o.rb_iter_break
           end
-          ScratchPad << [i, j]
+          ScratchPad << i
         end
+        ScratchPad.recorded.should == [0, 1]
       end
-      ScratchPad.recorded.should == [[0, 0], [0, 1], [0, 2], [2, 0], [2, 1], [2, 2]]
-    end
 
+      it "breaks the inner loop" do
+        3.times do |i|
+          3.times do |j|
+            if i == 1
+              @o.rb_iter_break
+            end
+            ScratchPad << [i, j]
+          end
+        end
+        ScratchPad.recorded.should == [[0, 0], [0, 1], [0, 2], [2, 0], [2, 1], [2, 2]]
+      end
+    end
+  end
+
+  ruby_bug "#7896", "2.0" do
+    describe "rb_iter_break" do
+
+      before :each do
+        ScratchPad.record []
+      end
+
+      it "breaks a loop" do
+        3.times do |i|
+          if i == 2
+            @o.rb_iter_break
+          end
+          ScratchPad << i
+        end
+        ScratchPad.recorded.should == [0, 1]
+      end
+
+      it "breaks the inner loop" do
+        3.times do |i|
+          3.times do |j|
+            if i == 1
+              @o.rb_iter_break
+            end
+            ScratchPad << [i, j]
+          end
+        end
+        ScratchPad.recorded.should == [[0, 0], [0, 1], [0, 2], [2, 0], [2, 1], [2, 2]]
+      end
+    end
   end
 
   describe "rb_sourcefile" do
