@@ -13,9 +13,7 @@ rvm:
   - rbx-head
   - ree
 jdk:
-  - openjdk6
   - openjdk7
-  - oraclejdk7
 allow_failures:
  - rvm: ruby-head
  - rvm: jruby-head
@@ -50,3 +48,6 @@ matrix:
       jdk: openjdk7
     - rvm: rbx-head
       jdk: openjdk6
+notifications:
+  recipients:
+    - brixen@gmail.com
