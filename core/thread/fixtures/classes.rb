@@ -60,7 +60,7 @@ module ThreadSpecs
     Thread.new do
       begin
         ThreadSpecs.state = :running
-        loop { Thread.pass }
+        loop { }
         ScratchPad.record :woken
       rescue Object => e
         ScratchPad.record e

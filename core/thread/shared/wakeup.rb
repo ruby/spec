@@ -7,7 +7,6 @@ describe :thread_wakeup, :shared => true do
     t = Thread.new do
       while true
         break if exit_loop == true
-        Thread.pass
       end
 
       sleep
