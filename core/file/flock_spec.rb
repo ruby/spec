@@ -2,6 +2,8 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "File#flock" do
   before :each do
+    ScratchPad.record []
+
     @name = tmp("flock_test")
     touch(@name)
 
@@ -36,17 +38,25 @@ describe "File#flock" do
   it "blocks if trying to lock an exclusively locked file" do
     @file.flock File::LOCK_EX
 
-    blocking = true
+    running = false
     t = Thread.new do
+      ScratchPad << :before
+
+      running = true
       File.open(@name, "w") do |f2|
         f2.flock(File::LOCK_EX)
       end
-      blocking = false
+
+      ScratchPad << :after
     end
-    sleep 1
+
+    Thread.pass until running
+    sleep 0.5
+
     t.kill
     t.join
-    blocking.should == true
+
+    ScratchPad.recorded.should == [:before]
   end
 
   it "returns 0 if trying to lock a non-exclusively locked file" do
