@@ -71,15 +71,13 @@ ruby_version_is "1.9" do
     end
 
     it "is equivalent to keep_if if changes are made" do
-      new_hash(:a => 2).select! { |k,v| v <= 1 }.should ==
-        new_hash(:a => 2).keep_if { |k, v| v <= 1 }
+      h = new_hash(:a => 2)
+      h.select! { |k,v| v <= 1 }.should equal h
 
       h = new_hash(1 => 2, 3 => 4)
       all_args_select = []
-      all_args_keep_if = []
       h.dup.select! { |*args| all_args_select << args }
-      h.dup.keep_if { |*args| all_args_keep_if << args }
-      all_args_select.should == all_args_keep_if
+      all_args_select.should == [[1, 2], [3, 4]]
     end
 
     it "returns nil if no changes were made" do
