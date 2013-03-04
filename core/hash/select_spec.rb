@@ -84,7 +84,7 @@ ruby_version_is "1.9" do
       new_hash(:a => 1).select! { |k,v| v <= 1 }.should == nil
     end
 
-    it "raises a RuntimeError if called on a frozen instance that is modified" do
+    it "raises a RuntimeError if called on an empty frozen instance" do
       lambda { HashSpecs.empty_frozen_hash.select! { false } }.should raise_error(RuntimeError)
     end
 
