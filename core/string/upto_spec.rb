@@ -100,6 +100,12 @@ describe "String#upto" do
       a = []
       "9".upto("A"){ |s| a << s}
       a.should == ["9", ":", ";", "<", "=", ">", "?", "@", "A"]
+      a = []
+      "Z".upto("a"){ |s| a << s }
+      a.should == ["Z", "[", "\\", "]", "^", "_", "`", "a"]
+      a = []
+      "z".upto("~"){ |s| a << s }
+      a.should == ["z", "{", "|", "}", "~"]
     end
   end
 
