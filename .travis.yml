@@ -1,6 +1,11 @@
 language: ruby
 script:
   - bundle exec mspec .
+branches:
+  only:
+    - ruby
+notifications:
+  email: false
 rvm:
   - 1.8.7
   - 1.9.3
@@ -15,8 +20,6 @@ rvm:
   - ree
 jdk:
   - oraclejdk7
-notifications:
-  email: false
 allow_failures:
  - rvm: jruby-18mode
  - rvm: jruby-19mode
