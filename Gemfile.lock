@@ -5,8 +5,9 @@ GIT
     ffi (1.4.0)
 
 GIT
-  remote: git://github.com/rubyspec/mspec.git
-  revision: b602701683fab545306ec8466fccf3005a31f2d8
+  remote: git://github.com/nurse/mspec.git
+  revision: 252dea85943ca86d6c93b9dd4cb65c9c85b3c024
+  branch: ruby
   specs:
     mspec (1.5.18)
 
