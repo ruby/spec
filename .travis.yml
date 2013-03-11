@@ -4,6 +4,7 @@ script:
 rvm:
   - 1.8.7
   - 1.9.3
+  - 2.0.0
   - ruby-head
   - jruby-18mode
   - jruby-19mode
@@ -13,40 +14,14 @@ rvm:
   - rbx-head
   - ree
 jdk:
-  - openjdk6
-  - openjdk7
   - oraclejdk7
+notifications:
+  email: false
 allow_failures:
- - rvm: ruby-head
+ - rvm: jruby-18mode
+ - rvm: jruby-19mode
  - rvm: jruby-head
+ - rvm: rbx-18mode
+ - rvm: rbx-19mode
  - rvm: rbx-head
-matrix:
-  exclude:
-    - rvm: 1.9.3
-      jdk: openjdk7
-    - rvm: 1.9.3
-      jdk: openjdk6
-    - rvm: 1.8.7
-      jdk: openjdk7
-    - rvm: 1.8.7
-      jdk: openjdk6
-    - rvm: ruby-head
-      jdk: openjdk7
-    - rvm: ruby-head
-      jdk: openjdk6
-    - rvm: ree
-      jdk: openjdk7
-    - rvm: ree
-      jdk: openjdk6
-    - rvm: rbx-18mode
-      jdk: openjdk7
-    - rvm: rbx-18mode
-      jdk: openjdk6
-    - rvm: rbx-19mode
-      jdk: openjdk7
-    - rvm: rbx-19mode
-      jdk: openjdk6
-    - rvm: rbx-head
-      jdk: openjdk7
-    - rvm: rbx-head
-      jdk: openjdk6
+ - rvm: ree
