@@ -228,12 +228,12 @@ describe "The super keyword" do
     end
   end
 
-  ruby_bug "#6907", "2.0" do
+  ruby_version_is "2.0" do
     it "can be used with implicit arguments from a method defined with define_method" do
       Class.new do
         define_method :a do
           super
-        end
+        end.should_not raise_error(RuntimeError)
       end
     end
   end
