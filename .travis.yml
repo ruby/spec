@@ -1,14 +1,14 @@
 language: ruby
 script:
-  - bundle exec mspec .
+  - bundle exec mspec -t ruby .
 branches:
   only:
     - ruby
 notifications:
   email: false
 rvm:
-#  - 1.8.7
-#  - 1.9.3
+  - 1.8.7
+  - 1.9.3
   - 2.0.0
   - ruby-head
 #  - jruby-18mode
