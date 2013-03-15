@@ -1,3 +1,4 @@
+# coding: US-ASCII
 require File.expand_path('../spec_helper', __FILE__)
 
 load_extension('string')
@@ -426,7 +427,7 @@ describe "C-API String function" do
 
     it "increases the size of the string" do
       str = @s.rb_str_resize("test", 12)
-      str.size.should == 12
+      str.size.should == 12 # this should be bytesize
       @s.RSTRING_LEN(str).should == 12
       str[0, 4].should == "test"
     end
