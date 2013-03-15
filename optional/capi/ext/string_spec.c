@@ -150,29 +150,27 @@ VALUE string_spec_rb_str_new(VALUE self, VALUE str, VALUE len) {
 #endif
 
 #ifdef HAVE_RB_STR_NEW2
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnonnull"
 VALUE string_spec_rb_str_new2(VALUE self, VALUE str) {
   if(NIL_P(str)) {
-    return rb_str_new2(NULL);
+    SUPPRESS_DIAGNOSTIC("-Wnonnull",
+      return rb_str_new2(NULL);
+    )
   } else {
     return rb_str_new2(RSTRING_PTR(str));
   }
 }
-#pragma GCC diagnostic pop
 #endif
 
 #ifdef HAVE_RB_STR_NEW_CSTR
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnonnull"
 VALUE string_spec_rb_str_new_cstr(VALUE self, VALUE str) {
   if(NIL_P(str)) {
-    return rb_str_new_cstr(NULL);
+    SUPPRESS_DIAGNOSTIC("-Wnonnull",
+      return rb_str_new_cstr(NULL);
+    )
   } else {
     return rb_str_new_cstr(RSTRING_PTR(str));
   }
 }
-#pragma GCC diagnostic pop
 #endif
 
 #ifdef HAVE_RB_EXTERNAL_STR_NEW
