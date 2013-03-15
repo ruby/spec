@@ -503,4 +503,26 @@
 #include "mri.h"
 #endif
 
+#define GCC_VERSION_IS(x,y,z) (defined(__GNUC__) && \
+	(__GNUC__ > (x) || (__GNUC__ == (x) && \
+		(__GNUC_MINOR__ > (y) || __GNUC_MINOR__ == (y) && \
+			__GNUC_PATCHLEVEL__ >= (z)))))
+
+#ifndef STRINGIZE
+# define STRINGIZE(expr) STRINGIZE0(expr)
+# ifndef STRINGIZE0
+#  define STRINGIZE0(expr) #expr
+# endif
+#endif
+
+#if GCC_VERSION_IS(4,6,0) || defined(__clang__)
+# define SUPPRESS_DIAGNOSTIC(arg,rest) \
+	_Pragma("GCC diagnostic push") \
+	_Pragma(STRINGIZE(GCC diagnostic ignored arg)) \
+	rest \
+	_Pragma("GCC diagnostic pop")
+#else
+# define SUPPRESS_DIAGNOSTIC(arg,rest) rest
+#endif
+
 #endif
