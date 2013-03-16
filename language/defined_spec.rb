@@ -1296,3 +1296,16 @@ describe "The defined? keyword for super" do
     end
   end
 end
+
+
+describe "The defined? keyword for instance variables" do
+  it "returns 'instace-variable' if assigned" do
+    @assigned_ivar = "some value"
+    defined?(@assigned_ivar).should == "instance-variable"
+  end
+
+  it "returns 'instace-variable' if not assigned" do
+    defined?(@unassigned_ivar).should == "nil"
+  end
+end
+
