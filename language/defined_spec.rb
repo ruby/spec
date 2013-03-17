@@ -1299,7 +1299,7 @@ end
 
 
 describe "The defined? keyword for instance variables" do
-  it "returns 'instace-variable' if assigned" do
+  it "returns 'instance-variable' if assigned" do
     @assigned_ivar = "some value"
     defined?(@assigned_ivar).should == "instance-variable"
   end
