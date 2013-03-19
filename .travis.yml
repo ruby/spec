@@ -21,8 +21,9 @@ rvm:
 jdk:
   - oraclejdk7
 allow_failures:
- - rvm: 1.9.3 # too old (2013-03-19)
- - rvm: ruby-head # it is bit old (2013-03-19)
+ - rvm: 1.9.3
+ - rvm: 1.9.3
+ - rvm: ruby-head
  - rvm: jruby-18mode
  - rvm: jruby-19mode
  - rvm: jruby-head
