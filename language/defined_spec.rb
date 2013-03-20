@@ -1305,7 +1305,7 @@ describe "The defined? keyword for instance variables" do
   end
 
   it "returns 'nil' if not assigned" do
-    defined?(@unassigned_ivar).should == "nil"
+    defined?(@unassigned_ivar).should == nil
   end
 end
 
