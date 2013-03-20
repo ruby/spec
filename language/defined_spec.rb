@@ -1304,8 +1304,8 @@ describe "The defined? keyword for instance variables" do
     defined?(@assigned_ivar).should == "instance-variable"
   end
 
-  it "returns 'nil' if not assigned" do
-    defined?(@unassigned_ivar).should == nil
+  it "returns nil if not assigned" do
+    defined?(@unassigned_ivar).should be_nil
   end
 end
 
