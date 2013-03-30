@@ -20,13 +20,14 @@ rvm:
 #  - ree
 #jdk:
 #  - oraclejdk7
-allow_failures:
- - rvm: 1.9.3
- - rvm: ruby-head
- - rvm: jruby-18mode
- - rvm: jruby-19mode
- - rvm: jruby-head
- - rvm: rbx-18mode
- - rvm: rbx-19mode
- - rvm: rbx-head
- - rvm: ree
+matrix:
+ allow_failures:
+  - rvm: 1.9.3
+  - rvm: ruby-head
+  - rvm: jruby-18mode
+  - rvm: jruby-19mode
+  - rvm: jruby-head
+  - rvm: rbx-18mode
+  - rvm: rbx-19mode
+  - rvm: rbx-head
+  - rvm: ree
