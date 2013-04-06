@@ -131,8 +131,12 @@ describe "Array#flatten!" do
     a.flatten!.should == nil
     a = [1, [2, 3]]
     a.flatten!.should_not == nil
+  end
+
+  it "should not check modification by size" do
     a = [1, 2, [3]]
     a.flatten!.should_not == nil
+    a.should == [1, 2, 3]
   end
 
   ruby_version_is "1.8.7" do
