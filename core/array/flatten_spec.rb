@@ -131,6 +131,8 @@ describe "Array#flatten!" do
     a.flatten!.should == nil
     a = [1, [2, 3]]
     a.flatten!.should_not == nil
+    a = [1, 2, [3]]
+    a.flatten!.should_not == nil
   end
 
   ruby_version_is "1.8.7" do
