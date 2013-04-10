@@ -6,8 +6,11 @@ describe :enum_with_object, :shared => true do
   end
 
   it "returns the given object when given a block" do
-    object = [].to_enum.send(@method, 'wadus') {|i, o| o = o + o}
-    object.should == 'wadus'
+    object = ''
+    ret = [].to_enum.send(@method, object) do |elm, obj|
+      # nothing
+    end
+    ret.should equal(object)
   end
 
   it "iterates over the array adding the given object" do
