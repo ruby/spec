@@ -14,9 +14,9 @@ describe :enum_with_object, :shared => true do
   end
 
   it "iterates over the array adding the given object" do
-    expected = ''
-    %w|wadus wadus|.to_enum.send(@method, ' ') {|e, o| expected += e + o}
-
-    expected.should == 'wadus wadus '
+    object = ''
+    addings = [nil, nil].to_enum.send(@method, object).map{|elm, obj|obj}
+    addings[0].should equal(object)
+    addings[1].should equal(object)
   end
 end
