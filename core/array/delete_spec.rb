@@ -69,7 +69,7 @@ describe "Array#delete" do
       lambda { [1, 2, 3].freeze.delete(1) }.should raise_error(TypeError)
     end
 
-    it "returns false on a frozen array if a modification does not take place" do
+    it "returns nil on a frozen array if a modification does not take place" do
       [1, 2, 3].freeze.delete(0).should == nil
     end
   end
