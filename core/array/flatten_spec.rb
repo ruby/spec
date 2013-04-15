@@ -81,10 +81,10 @@ describe "Array#flatten" do
   end
 
   it "returns subclass instance for Array subclasses" do
-    ArraySpecs::MyArray[].flatten.should be_kind_of(ArraySpecs::MyArray)
-    ArraySpecs::MyArray[1, 2, 3].flatten.should be_kind_of(ArraySpecs::MyArray)
-    ArraySpecs::MyArray[1, [2], 3].flatten.should be_kind_of(ArraySpecs::MyArray)
-    [ArraySpecs::MyArray[1, 2, 3]].flatten.should be_kind_of(Array)
+    ArraySpecs::MyArray[].flatten.should be_an_instance_of(ArraySpecs::MyArray)
+    ArraySpecs::MyArray[1, 2, 3].flatten.should be_an_instance_of(ArraySpecs::MyArray)
+    ArraySpecs::MyArray[1, [2], 3].flatten.should be_an_instance_of(ArraySpecs::MyArray)
+    [ArraySpecs::MyArray[1, 2, 3]].flatten.should be_an_instance_of(Array)
   end
 
   it "is not destructive" do
