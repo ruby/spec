@@ -206,7 +206,7 @@ describe "Array#flatten!" do
 
     ary = [ArraySpecs::MyArray[1, 2, 3]]
     ary.flatten!
-    ary.should be_kind_of(Array)
+    ary.should be_an_instance_of(Array)
     ary.should == [1, 2, 3]
   end
 
