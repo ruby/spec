@@ -73,15 +73,12 @@ describe "Comparable#==" do
       # TypeError < StandardError
       def a.<=>(b) raise TypeError, "test"; end
       (a == b).should == nil
-
-      def a.<=>(b) raise Exception, "test"; end
-      lambda { (a == b).should == nil }.should raise_error(Exception)
     end
   end
 
   ruby_version_is "1.9" do
     # Behaviour confirmed by MRI test suite
-    it "returns false if calling #<=> on self raises an Exception" do
+    it "returns false if calling #<=> on self raises a StandardError" do
       a = ComparableSpecs::Weird.new(0)
       b = ComparableSpecs::Weird.new(10)
 
@@ -90,9 +87,19 @@ describe "Comparable#==" do
 
       def a.<=>(b) raise TypeError, "test"; end
       (a == b).should be_false
-
-      def a.<=>(b) raise Exception, "test"; end
-      lambda { (a == b).should be_false }.should raise_error(Exception)
     end
+  end
+
+  it "raises the error if calling #<=> on self raises an Exception excluding StandardError" do
+    a = ComparableSpecs::Weird.new(0)
+    b = ComparableSpecs::Weird.new(10)
+    specific_error = Class.new Exception
+
+    (class << a; self; end).class_eval do
+      define_method :'<=>' do |other|
+       raise specific_error, "test"
+      end
+    end
+    lambda { a == b }.should raise_error(specific_error)
   end
 end
