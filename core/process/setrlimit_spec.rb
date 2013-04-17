@@ -2,12 +2,24 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Process.setrlimit and Process.getrlimit" do
   platform_is_not :windows do
-    it "coerces arguments to Integers" do
-      lim, max = Process.getrlimit(Process::RLIMIT_CORE)
-      max.should <= 2**63
-      Process.setrlimit(mock_int(Process::RLIMIT_CORE),
-                        mock_int(lim),
-                        mock_int(max)).should be_nil
+    ruby_version_is ""..."1.9" do
+      it "coerces arguments to Integers (1.8's max vaue is LONG_MAX)" do
+        lim, max = Process.getrlimit(Process::RLIMIT_CORE)
+        longmax = "\xff\xff\xff\xff\xff\xff\xff\xff".unpack("L!")[0]/2
+        max = long_max if max > long_max
+        Process.setrlimit(mock_int(Process::RLIMIT_CORE),
+                          mock_int(lim),
+                          mock_int(max)).should be_nil
+      end
+    end
+
+    ruby_version_is "1.9" do
+      it "coerces arguments to Integers" do
+        lim, max = Process.getrlimit(Process::RLIMIT_CORE)
+        Process.setrlimit(mock_int(Process::RLIMIT_CORE),
+                          mock_int(lim),
+                          mock_int(max)).should be_nil
+      end
     end
 
     it "limit and get core size (bytes)" do
