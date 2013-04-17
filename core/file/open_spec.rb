@@ -141,23 +141,22 @@ describe "File.open" do
   end
 
   it "opens the file when call with fd" do
-    begin
-      fh_orig = File.open(@file)
-      @fh = File.open(fh_orig.fileno)
-      @fh.should be_kind_of(File)
-      File.exist?(@file).should == true
-    ensure
-      # fdopen causes an IO object which wrongly has closed fd.
-      # so close them here with ignoring exception
-      fh_orig.close rescue nil
-      @fh.close rescue nil # this always raise exception
-    end
+    fh_orig = File.open(@file)
+    @fh = File.open(fh_orig.fileno)
+    (@fh.autoclose = false) rescue nil
+    @fh.should be_kind_of(File)
+    File.exist?(@file).should == true
+    # don't close fh_orig here to adjust closing cycle between fh_orig and @fh
+    # see also c02c78b3899fcf769084a88777c63de0fcebb48d
   end
 
   it "opens a file with a file descriptor d and a block" do
     @fh = File.open(@file)
     @fh.should be_kind_of(File)
-    File.open(@fh.fileno) { |fh| @fd = fh.fileno; @fh.close }
+    File.open(@fh.fileno) do |fh|
+      @fd = fh.fileno
+      @fh.close
+    end
     lambda { File.open(@fd) }.should raise_error(SystemCallError)
     File.exist?(@file).should == true
   end

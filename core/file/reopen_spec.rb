@@ -12,25 +12,19 @@ ruby_version_is "1.9" do
     end
 
     it "resets the stream to a new file path" do
-      begin
-        fh = File.new(@file)
-        text = fh.read
-        fh2 = fh.reopen(@file, "r")
-        fh.read.should == text
-      ensure
-        fh.close rescue nil
-        fh2.close rescue nil
-      end
+      fh = File.new(@file)
+      text = fh.read
+      fh2 = fh.reopen(@file, "r")
+      fh2.autoclose = false
+      fh.read.should == text
+      fh.close
     end
 
     it "accepts an object that has a #to_path method" do
-      begin
-        fh = File.new(@file)
-        fh2 = fh.reopen(mock_to_path(@file), "r")
-      ensure
-        fh.close rescue nil
-        fh2.close rescue nil
-      end
+      fh = File.new(@file)
+      fh2 = fh.reopen(mock_to_path(@file), "r")
+      fh2.autoclose = false
+      fh.close
     end
   end
 end
