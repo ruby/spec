@@ -5,7 +5,7 @@ describe "Process.setrlimit and Process.getrlimit" do
     ruby_version_is ""..."1.9" do
       it "coerces arguments to Integers (1.8's max vaue is LONG_MAX)" do
         lim, max = Process.getrlimit(Process::RLIMIT_CORE)
-        longmax = "\xff\xff\xff\xff\xff\xff\xff\xff".unpack("L!")[0]/2
+        long_max = "\xff\xff\xff\xff\xff\xff\xff\xff".unpack("L!")[0]/2
         max = long_max if max > long_max
         Process.setrlimit(mock_int(Process::RLIMIT_CORE),
                           mock_int(lim),
