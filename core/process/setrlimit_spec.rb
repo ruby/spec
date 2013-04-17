@@ -4,6 +4,7 @@ describe "Process.setrlimit and Process.getrlimit" do
   platform_is_not :windows do
     it "coerces arguments to Integers" do
       lim, max = Process.getrlimit(Process::RLIMIT_CORE)
+      max.should <= 2**63
       Process.setrlimit(mock_int(Process::RLIMIT_CORE),
                         mock_int(lim),
                         mock_int(max)).should be_nil
