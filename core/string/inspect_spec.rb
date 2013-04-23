@@ -607,7 +607,7 @@ describe "String#inspect" do
         end
       end
 
-      ruby_version_is "2.1"... do
+      ruby_version_is "2.1"..."" do
         it "returns a string with a NUL character replaced by \\000" do
           0.chr('utf-8').inspect.should == '"\\000"'
         end
