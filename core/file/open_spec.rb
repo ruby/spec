@@ -4,7 +4,7 @@ require File.expand_path('../shared/open', __FILE__)
 
 describe "File.open" do
   before :all do
-    @file = tmp("core-file-open.txt")
+    @file = tmp("test.txt")
     @nonexistent = tmp("fake.txt")
     rm_r @file, @nonexistent
   end
@@ -141,17 +141,11 @@ describe "File.open" do
   end
 
   it "opens the file when call with fd" do
-    begin
-      fh_orig = File.open(@file)
-      @fh = File.open(fh_orig.fileno)
-      @fh.should be_kind_of(File)
-      File.exist?(@file).should == true
-    ensure
-      # fdopen causes an IO object which wrongly has closed fd.
-      # so close them here with ignoring exception
-      fh_orig.close rescue nil
-      @fh.close rescue nil # this always raise exception
-    end
+    # store in an ivar so it doesn't GC before we go to close it in 'after'
+    @fh_orig = File.open(@file)
+    @fh = File.open(@fh_orig.fileno)
+    @fh.should be_kind_of(File)
+    File.exist?(@file).should == true
   end
 
   it "opens a file with a file descriptor d and a block" do
