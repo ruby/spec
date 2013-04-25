@@ -1,4 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is "1.9" do
   describe "Math.cbrt" do
@@ -15,6 +16,14 @@ ruby_version_is "1.9" do
 
     it "raises a TypeError if the argument cannot be coerced with Float()" do
       lambda { Math.cbrt("foobar") }.should raise_error(TypeError)
+    end
+
+    it "raises a TypeError if the argument is nil" do
+      lambda { Math.cbrt(nil) }.should raise_error(TypeError)
+    end
+
+    it "accepts any argument that can be coerced with Float()" do
+      Math.cbrt(MathSpecs::Float.new).should be_close(1.0, TOLERANCE)
     end
   end
 end
