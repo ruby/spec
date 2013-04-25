@@ -12,6 +12,13 @@ ruby_version_is "1.8.7" do
       EnumerableSpecs::Empty.new.group_by { |x| x}.should == {}
     end
 
+    it "returns hash without default_proc" do
+      h = EnumerableSpecs::Numerous.new(*%w(foo bar baz)).group_by{ |word| word[0..0].to_sym }
+      h[:some].should == nil
+      h.default_proc.should == nil
+      h.default.should == nil
+    end
+
     it "returns an Enumerator if called without a block" do
       EnumerableSpecs::Numerous.new.group_by.should be_an_instance_of(enumerator_class)
     end
