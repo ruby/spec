@@ -86,7 +86,7 @@ describe "Kernel#instance_variable_set" do
     end
 
     ruby_version_is ""..."1.9" do
-      it "raises a TypeError when passed replacement is idencial with stored object" do
+      it "raises a TypeError when passed replacement is identical to the stored object" do
         lambda { @frozen.instance_variable_set(:@ivar, :origin) }.should raise_error(TypeError)
       end
 
@@ -96,7 +96,7 @@ describe "Kernel#instance_variable_set" do
     end
 
     ruby_version_is "1.9" do
-      it "raises a RuntimeError when passed replacement is idencial with stored object" do
+      it "raises a RuntimeError when passed replacement is identical to stored object" do
         lambda { @frozen.instance_variable_set(:@ivar, :origin) }.should raise_error(RuntimeError)
       end
 
