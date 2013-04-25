@@ -4,7 +4,7 @@ require File.expand_path('../fixtures/classes', __FILE__)
 ruby_version_is "1.9" do
   describe "Math.cbrt" do
     it "returns a float" do
-      Math.cbrt(1).should be_kind_of(Float)
+      Math.cbrt(1).should be_an_instance_of(Float)
     end
 
     it "returns the cubic root of the argument" do
