@@ -73,15 +73,9 @@ describe "A Symbol literal" do
     end
   end
 
-  ruby_version_is "1.9"..."2.0" do
+  ruby_version_is "1.9".."2.0" do
     it "can contain null in the string" do
       eval(':"\0" ').inspect.should == ':"\\x00"'
-    end
-  end
-
-  ruby_version_is "2.0" do
-    it "can contain null in the string" do
-      eval(':"\0" ').inspect.should == ':"\\0"'
     end
   end
 
