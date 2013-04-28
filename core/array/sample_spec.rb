@@ -77,6 +77,12 @@ describe "Array#sample" do
 
       [1, 2].sample(:random => obj).should be_an_instance_of(Fixnum)
     end
+
+    it "ignores an Object passed for the RNG if it does not define #rand" do
+      obj = mock("array_sample_random")
+
+      [1, 2].sample(:random => obj).should be_an_instance_of(Fixnum)
+    end
   end
 
   ruby_version_is "1.9.3"..."2.0" do
