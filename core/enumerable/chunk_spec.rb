@@ -51,5 +51,11 @@ ruby_version_is "1.9" do
       same = en.chunk {|e| e > 1 ? e > 3 : :_separator}.to_a
       same.should == ret
     end
+
+    it "treats every :_alone returned by the block as singleton chunk" do
+      ret = EnumerableSpecs::Numerous.new(1,2,-1,0,0,5,8,0,0,-6).chunk {|e| e == 0 ? :_alone : e > 0}.to_a
+      ret.should == [[true, [1, 2]], [false, [-1]], [:_alone, [0]], [:_alone, [0]],
+                     [true, [5, 8]], [:_alone, [0]], [:_alone, [0]], [false, [-6]]]
+    end
   end
 end
