@@ -57,5 +57,11 @@ ruby_version_is "1.9" do
       ret.should == [[true, [1, 2]], [false, [-1]], [:_alone, [0]], [:_alone, [0]],
                      [true, [5, 8]], [:_alone, [0]], [:_alone, [0]], [false, [-6]]]
     end
+
+    it "treats any other symbol beginning with an underscore as reserved" do
+      lambda do
+        EnumerableSpecs::Numerous.new(0).chunk {|e| :_foo}.to_a
+      end.should raise_error(RuntimeError)
+    end
   end
 end
