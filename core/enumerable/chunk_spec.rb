@@ -63,5 +63,19 @@ ruby_version_is "1.9" do
         EnumerableSpecs::Numerous.new(0).chunk {|e| :_foo}.to_a
       end.should raise_error(RuntimeError)
     end
+
+    it "has an optional argument which will be passed to the block as a state" do
+      en = EnumerableSpecs::Numerous.new(1,6,4,11,15,13,4,3,12,14,13)
+      ret = en.chunk([]) do |e, already_seen|
+        if not already_seen.include?(e)
+          already_seen << e
+          e > 10
+        end
+      end.to_a
+      ret[0].last.should == [1, 6, 4]
+      ret[1].last.should == [11, 15, 13]
+      ret[2].last.should == [3]
+      ret[3].last.should == [12, 14]
+    end
   end
 end
