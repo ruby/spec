@@ -64,7 +64,7 @@ ruby_version_is "1.9" do
       end.should raise_error(RuntimeError)
     end
 
-    it "has an optional argument which will be passed to the block as a state" do
+    it "can also yield a state to the block. In this case chunk's first argument should be the initial state" do
       en = EnumerableSpecs::Numerous.new(1,6,4,11,15,13,4,3,12,14,13)
       ret = en.chunk([]) do |e, already_seen|
         if not already_seen.include?(e)
