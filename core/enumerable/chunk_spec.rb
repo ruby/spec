@@ -41,15 +41,22 @@ ruby_version_is "1.9" do
       ret[4].last.should == [9]
     end
 
-    it "drops every nil and every :_separator returned by the block" do
+    it "drops every nil returned by the block" do
       en = EnumerableSpecs::Numerous.new(1,2,3,4,5,4,3,2,1)
       en.chunk {|e| nil}.to_a.should == []
       ret = en.chunk {|e| e > 3 if e > 1}.to_a
       ret[0].last.should == [2, 3]
       ret[1].last.should == [4, 5, 4]
       ret[2].last.should == [3, 2]
-      same = en.chunk {|e| e > 1 ? e > 3 : :_separator}.to_a
-      same.should == ret
+    end
+
+    it "drops every :_separator returned by the block" do
+      en = EnumerableSpecs::Numerous.new(1,5,0,8,10,0,4,12,0,3,13)
+      ret = en.chunk {|e| e != 0 ? e % 2 : :_separator}.to_a
+      ret[0].last.should == [1, 5]
+      ret[1].last.should == [8, 10]
+      ret[2].last.should == [4, 12]
+      ret[3].last.should == [3, 13]
     end
 
     it "treats every :_alone returned by the block as singleton chunk" do
