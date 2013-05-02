@@ -43,7 +43,6 @@ ruby_version_is "1.9" do
 
     it "drops every nil returned by the block" do
       en = EnumerableSpecs::Numerous.new(1,2,3,4,5,4,3,2,1)
-      en.chunk {|e| nil}.to_a.should == []
       ret = en.chunk {|e| e > 3 if e > 1}.to_a
       ret[0].last.should == [2, 3]
       ret[1].last.should == [4, 5, 4]
