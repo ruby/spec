@@ -64,7 +64,7 @@ ruby_version_is "1.9" do
                      [true, [5, 8]], [:_alone, [0]], [:_alone, [0]], [false, [-6]]]
     end
 
-    it "treats any other symbol beginning with an underscore as reserved" do
+    it "raises a RuntimeError if passed a symbol beginning with an underscore other than :_alone and :_separator" do
       lambda do
         EnumerableSpecs::Numerous.new(0).chunk {|e| :_foo}.to_a
       end.should raise_error(RuntimeError)
