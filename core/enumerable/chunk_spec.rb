@@ -33,7 +33,8 @@ ruby_version_is "1.9" do
     end
 
     it "sets the last element of each sub-Array to the consecutive values for which the block returned the first element" do
-      ret = EnumerableSpecs::Numerous.new(5,5,2,3,4,5,7,1,9).chunk {|e| e >= 5 }.to_a
+      en = EnumerableSpecs::Numerous.new(5,5,2,3,4,5,7,1,9)
+      ret = en.chunk {|e| e >= 5}.to_a
       ret[0].last.should == [5, 5]
       ret[1].last.should == [2, 3, 4]
       ret[2].last.should == [5, 7]
@@ -50,18 +51,20 @@ ruby_version_is "1.9" do
     end
 
     it "drops every :_separator returned by the block" do
-      en = EnumerableSpecs::Numerous.new(1,5,0,8,10,0,4,12,0,3,13)
+      en = EnumerableSpecs::Numerous.new(1,5,0,3)
       ret = en.chunk {|e| e != 0 ? e % 2 : :_separator}.to_a
       ret[0].last.should == [1, 5]
-      ret[1].last.should == [8, 10]
-      ret[2].last.should == [4, 12]
-      ret[3].last.should == [3, 13]
+      ret[1].last.should == [3]
     end
 
     it "treats every :_alone returned by the block as singleton chunk" do
-      ret = EnumerableSpecs::Numerous.new(1,2,-1,0,0,5,8,0,0,-6).chunk {|e| e == 0 ? :_alone : e > 0}.to_a
-      ret.should == [[true, [1, 2]], [false, [-1]], [:_alone, [0]], [:_alone, [0]],
-                     [true, [5, 8]], [:_alone, [0]], [:_alone, [0]], [false, [-6]]]
+      en = EnumerableSpecs::Numerous.new(1,0,2,3,0,4,5,6)
+      ret = en.chunk {|e| e == 0 ? :_alone : false}.to_a
+      ret[0].should == [false, [1]]
+      ret[1].should == [:_alone, [0]]
+      ret[2].should == [false, [2, 3]]
+      ret[3].should == [:_alone, [0]]
+      ret[4].should == [false, [4, 5, 6]]
     end
 
     it "raises a RuntimeError if passed a symbol beginning with an underscore other than :_alone and :_separator" do
