@@ -16,25 +16,25 @@ describe "Exception#set_backtrace" do
     err.backtrace.should == bt
   end
 
-  it "allows the user to set the backtrace to string" do
+  it "accepts a String" do
     err = RuntimeError.new
     err.set_backtrace "unhappy"
     err.backtrace.should == ["unhappy"]
   end
 
-  it "allows the user to set the backtrace to nil" do
+  it "accepts nil" do
     err = RuntimeError.new
     err.set_backtrace nil
     err.backtrace.should be_nil
   end
 
-  it "raises TypeError when argument is not array" do
+  it "raises a TypeError when when passed a Symbol" do
     err = RuntimeError.new
-    lambda { err.set_backtrace 1 }.should raise_error(TypeError)
+    lambda { err.set_backtrace :unhappy }.should raise_error(TypeError)
   end
 
-  it "raises TypeError when argument contains non String element" do
+  it "raises a TypeError when the Array contains a Symbol" do
     err = RuntimeError.new
-    lambda { err.set_backtrace ["String", 1] }.should raise_error(TypeError)
+    lambda { err.set_backtrace ["String", :unhappy] }.should raise_error(TypeError)
   end
 end
