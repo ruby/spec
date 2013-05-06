@@ -73,10 +73,16 @@ ruby_version_is "1.9" do
       end.should raise_error(RuntimeError)
     end
 
-    it "yields an element and the object passed to chunk to a block" do
+    it "yields an element and an object == to the object passed to chunk to a block" do
       e = EnumerableSpecs::Numerous.new(1)
       ret = e.chunk("yield this") { |*x| x }
       ret.first.first.should == [1, "yield this"]
+    end
+
+    it "doesn't yield an object equal to the one passed to chunk to a block" do
+      e = EnumerableSpecs::Numerous.new(1)
+      ret = e.chunk("copy this") { |*x| x }
+      ret.first.first.last.should_not equal("copy this")
     end
 
     it "yields only the elements to the block if no argument is passed to #chunk" do
