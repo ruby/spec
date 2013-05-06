@@ -16,6 +16,12 @@ describe "Exception#set_backtrace" do
     err.backtrace.should == bt
   end
 
+  it "accepts an empty Array" do
+    err = RuntimeError.new
+    err.set_backtrace []
+    err.backtrace.should == []
+  end
+
   it "accepts a String" do
     err = RuntimeError.new
     err.set_backtrace "unhappy"
