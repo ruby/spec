@@ -48,11 +48,6 @@ ruby_version_is "1.9.3" do
   describe "IO.write" do
     it_behaves_like :io_binwrite, :write
 
-    it "uses encoding from given options, if provided" do
-      IO.write(@filename, 'hello', :encoding => 'UTF-16').should == 12
-      IO.binread(@filename).should == "\xFE\xFF\x00h\x00e\x00l\x00l\x00o"
-    end
-
     it "uses an :open_args option" do
       IO.write(@filename, 'hi', :open_args => ["w", nil, {:encoding => Encoding::UTF_32LE}]).should == 8
     end
