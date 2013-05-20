@@ -33,7 +33,8 @@ ruby_version_is "1.9" do
     end
 
     it "sets the last element of each sub-Array to the consecutive values for which the block returned the first element" do
-      ret = EnumerableSpecs::Numerous.new(5,5,2,3,4,5,7,1,9).chunk {|e| e >= 5 }.to_a
+      en = EnumerableSpecs::Numerous.new(5,5,2,3,4,5,7,1,9)
+      ret = en.chunk {|e| e >= 5}.to_a
       ret[0].last.should == [5, 5]
       ret[1].last.should == [2, 3, 4]
       ret[2].last.should == [5, 7]
@@ -75,6 +76,61 @@ ruby_version_is "1.9" do
       lambda {
         EnumerableSpecs::Numerous.new(5,5,2,3,4,5,7,1,9).chunk {|e| e <= 3 && :_singleton }.to_a
       }.should raise_error(RuntimeError)
+    end
+
+    it "drops every nil returned by the block" do
+      en = EnumerableSpecs::Numerous.new(1,2,3,4,5,4,3,2,1)
+      ret = en.chunk {|e| e > 3 if e > 1}.to_a
+      ret[0].last.should == [2, 3]
+      ret[1].last.should == [4, 5, 4]
+      ret[2].last.should == [3, 2]
+    end
+
+    it "drops every :_separator returned by the block" do
+      en = EnumerableSpecs::Numerous.new(1,5,0,3)
+      ret = en.chunk {|e| e != 0 ? e % 2 : :_separator}.to_a
+      ret[0].last.should == [1, 5]
+      ret[1].last.should == [3]
+    end
+
+    it "treats every :_alone returned by the block as singleton chunk" do
+      en = EnumerableSpecs::Numerous.new(1,0,2,3,0,4,5,6)
+      ret = en.chunk {|e| e == 0 ? :_alone : false}.to_a
+      ret[0].should == [false, [1]]
+      ret[1].should == [:_alone, [0]]
+      ret[2].should == [false, [2, 3]]
+      ret[3].should == [:_alone, [0]]
+      ret[4].should == [false, [4, 5, 6]]
+    end
+
+    it "raises a RuntimeError if passed a symbol beginning with an underscore other than :_alone and :_separator" do
+      lambda do
+        EnumerableSpecs::Numerous.new(0).chunk {|e| :_foo}.to_a
+      end.should raise_error(RuntimeError)
+    end
+
+    it "yields an element and an object == to the object passed to chunk to a block" do
+      e = EnumerableSpecs::Numerous.new(1)
+      ret = e.chunk("yield this") { |*x| x }
+      ret.first.first.should == [1, "yield this"]
+    end
+
+    it "doesn't yield an object equal to the one passed to chunk to a block" do
+      e = EnumerableSpecs::Numerous.new(1)
+      ret = e.chunk("copy this") { |*x| x }
+      ret.first.first.last.should_not equal("copy this")
+    end
+
+    it "yields only the elements to the block if no argument is passed to #chunk" do
+      e = EnumerableSpecs::Numerous.new(1)
+      ret = e.chunk { |*x| x }
+      ret.first.first.should == [1]
+    end
+
+    it "does not yield the object passed to #chunk if it is nil" do
+      e = EnumerableSpecs::Numerous.new(1)
+      ret = e.chunk(nil) { |*x| x }
+      ret.first.first.should == [1]
     end
   end
 end
