@@ -22,3 +22,10 @@ allow_failures:
 notifications:
   recipients:
     - brixen@gmail.com
+  irc:
+    channels:
+      - "chat.freenode.net#rubyspec"
+    on_success: change
+    on_failure: change
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
