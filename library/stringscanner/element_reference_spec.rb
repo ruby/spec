@@ -37,13 +37,10 @@ describe "StringScanner#[]" do
     lambda { @s[nil]}.should raise_error(TypeError)
   end
 
-  it "raises a TypeError when a String is as argument" do
-    @s.scan(/(\w+) (\w+) (\d+) /)
-    lambda { @s["Fri"]}.should raise_error(TypeError)
-  end
-
   it "raises a TypeError when a Range is as argument" do
     @s.scan(/(\w+) (\w+) (\d+) /)
     lambda { @s[0..2]}.should raise_error(TypeError)
   end
 end
+
+language_version __FILE__, "element_reference"
