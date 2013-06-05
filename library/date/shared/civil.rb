@@ -66,4 +66,14 @@ describe :date_civil, :shared => true do
       lambda { Date.send(@method, 2000, 2, 2, r.jd) }.should raise_error(ArgumentError)
     end
   end
+
+  ruby_bug "#8485" # passes for MRI prior to "1.9.3"
+    it "creates equivalent dates per julian day" do
+      Date.send(@method, -4712, 2, 8, Date::JULIAN).should ==
+        Date.send(@method, -4712, 1, 1, Date::GREGORIAN)
+      Date.send(@method, -4712, 1, 1, Date::JULIAN).should ==
+        Date.send(@method, -4713, 11, 24, Date::GREGORIAN)
+    end
+  end
+
 end
