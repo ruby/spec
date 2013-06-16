@@ -22,20 +22,30 @@ ruby_version_is "1.9" do
     end
   end
 
-  not_compliant_on :rubinius do
+  ruby_version_is ""..."2.1.0" do
+    not_compliant_on :rubinius do
+      describe "Delegator#trust" do
+        before :each do
+          @delegate = lambda { $SAFE=4; DelegateSpecs::Delegator.new([]) }.call
+        end
+
+        it "raises a SecurityError when modifying a trusted delegator" do
+          @delegate.trust
+          lambda { $SAFE=4; @delegate.data = :foo }.should raise_error(SecurityError)
+        end
+
+        it "raises a SecurityError when modifying a trusted delegate" do
+          @delegate.trust
+          lambda { $SAFE=4; @delegate << 42 }.should raise_error(SecurityError)
+        end
+      end
+    end
+  end
+
+  ruby_version_is "2.1.0" do
     describe "Delegator#trust" do
-      before :each do
-        @delegate = lambda { $SAFE=4; DelegateSpecs::Delegator.new([]) }.call
-      end
-
-      it "raises a SecurityError when modifying a trusted delegator" do
-        @delegate.trust
-        lambda { $SAFE=4; @delegate.data = :foo }.should raise_error(SecurityError)
-      end
-
-      it "raises a SecurityError when modifying a trusted delegate" do
-        @delegate.trust
-        lambda { $SAFE=4; @delegate << 42 }.should raise_error(SecurityError)
+      it "raises an ArgumentError for obsolete $SAFE=4" do
+        lambda { $SAFE=4 }.should raise_error(ArgumentError)
       end
     end
   end
