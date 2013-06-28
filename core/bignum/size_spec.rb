@@ -7,7 +7,7 @@ describe "Bignum#size" do
 
   ruby_version_is ""..."2.1" do
     compliant_on :ironruby do
-      it "returns the number of bytes in the machine representation in multiples of four" do
+      it "returns the number of bytes in the machine representation in multiples of sizeof(BDIGIT) which is 4 where long long is 64 bit" do
         (256**7).size.should == 8
         (256**8).size.should == 12
         (256**9).size.should == 12
