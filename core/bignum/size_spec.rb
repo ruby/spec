@@ -2,7 +2,17 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Bignum#size" do
   ruby_version_is "2.1" do
-    # to be determined at https://bugs.ruby-lang.org/issues/8553
+    it "returns the number of bytes whose number of bytes is larger than the size of allocated binum data" do
+      (256**7).size.should >= 8
+      (256**8).size.should >= 9
+      (256**9).size.should >= 10
+      (256**10).size.should >= 10
+      (256**10-1).size.should >= 9
+      (256**11).size.should >= 12
+      (256**12).size.should >= 13
+      (256**20-1).size.should >= 20
+      (256**40-1).size.should >= 40
+    end
   end
 
   ruby_version_is ""..."2.1" do
