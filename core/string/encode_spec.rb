@@ -28,6 +28,12 @@ with_feature :encoding do
         str = "abc"
         str.encode.should_not equal(str)
       end
+
+      it "an ascii substring of a binary string should be encoded UTF-8 without raising an exception" do
+        str = "\x82foo".force_encoding("ascii-8bit")[1..-1].encode("utf-8")
+        str.should == encode("foo", "utf-8")
+        str.encoding.name.should == "UTF-8"
+      end
     end
 
     describe "when passed to encoding" do
