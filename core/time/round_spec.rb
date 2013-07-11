@@ -1,4 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/methods', __FILE__)
 
 ruby_version_is "1.9" do
   describe "Time#round" do
@@ -20,7 +21,16 @@ ruby_version_is "1.9" do
     end
 
     it "returns an instance of Time, even if #round is called on a subclass" do
-      @subclass.round.should be_an_instance_of Time
+      @subclass.round.should be_an_instance_of(Time)
+    end
+
+    it "copies own timezone to the returning value" do
+      @time.zone.should == @time.round.zone
+
+      with_timezone "JST" do
+        time = Time.at 0, 1
+        time.zone.should == time.round.zone
+      end
     end
   end
 end
