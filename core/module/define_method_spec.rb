@@ -44,6 +44,30 @@ describe "Module#define_method when given an UnboundMethod" do
   end
 end
 
+describe "Module#define_method when name is :initialize" do
+  ruby_version_is "1.9" do
+    describe "passed a block" do
+      it "sets visibility to private when method name is :initialize" do
+        klass = Class.new do
+          define_method(:initialize) { }
+        end
+        klass.private_instance_methods.should include(:initialize)
+      end
+    end
+
+    describe "given an UnboundMethod" do
+      it "sets the visibility to private when method is named :initialize" do
+        klass = Class.new do
+          def test_method
+          end
+          define_method(:initialize, instance_method(:test_method))
+        end
+        klass.private_instance_methods.should include(:initialize)
+      end
+    end
+  end
+end
+
 describe "Module#define_method" do
   it "defines the given method as an instance method with the given name in self" do
     class DefineMethodSpecClass
