@@ -20,7 +20,7 @@ ruby_version_is "1.9" do
     end
 
     it "returns an instance of Time, even if #round is called on a subclass" do
-      @subclass.round.should be_kind_of Time
+      @subclass.round.should be_an_instance_of Time
     end
   end
 end
