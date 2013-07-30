@@ -51,7 +51,7 @@ describe "Module#define_method when name is :initialize" do
         klass = Class.new do
           define_method(:initialize) { }
         end
-        klass.private_instance_methods.should include(:initialize)
+        klass.should have_private_instance_method(:initialize)
       end
     end
 
@@ -62,7 +62,7 @@ describe "Module#define_method when name is :initialize" do
           end
           define_method(:initialize, instance_method(:test_method))
         end
-        klass.private_instance_methods.should include(:initialize)
+        klass.should have_private_instance_method(:initialize)
       end
     end
   end
