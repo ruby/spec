@@ -233,7 +233,7 @@ describe "Module#module_function as a toggle (no arguments) in a Module body" do
         def test1() end
       }
 
-      m.respond_to?(:test1).should == true
+      m.respond_to?(:test1).should == false
     end
   end
 
