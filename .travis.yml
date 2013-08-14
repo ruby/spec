@@ -10,7 +10,7 @@ rvm:
   - 1.8.7
   - 1.9.3
   - 2.0.0
-#  - ruby-head
+  - ruby-head
 #  - jruby-18mode
 #  - jruby-19mode
 #  - jruby-head
@@ -22,7 +22,6 @@ rvm:
 #  - oraclejdk7
 matrix:
  allow_failures:
-  - rvm: 1.9.3
   - rvm: ruby-head
   - rvm: jruby-18mode
   - rvm: jruby-19mode
