@@ -79,7 +79,7 @@ describe :io_binwrite, :shared => true do
   with_feature :encoding do
     it "uses encoding from given options, if provided" do
       IO.send(@method, @filename, 'hello', :encoding => 'UTF-16').should == 12
-      IO.binread(@filename).should == "\xFE\xFF\x00h\x00e\x00l\x00l\x00o"
+      IO.binread(@filename).should == "\xFE\xFF\x00h\x00e\x00l\x00l\x00o".force_encoding(Encoding::ASCII_8BIT)
     end
   end
 
