@@ -137,9 +137,9 @@ describe :string_slice_index_length, :shared => true do
 
   it "returns subclass instances" do
     s = StringSpecs::MyString.new("hello")
-    s.send(@method, 0,0).should be_kind_of(StringSpecs::MyString)
-    s.send(@method, 0,4).should be_kind_of(StringSpecs::MyString)
-    s.send(@method, 1,4).should be_kind_of(StringSpecs::MyString)
+    s.send(@method, 0,0).should be_an_instance_of(StringSpecs::MyString)
+    s.send(@method, 0,4).should be_an_instance_of(StringSpecs::MyString)
+    s.send(@method, 1,4).should be_an_instance_of(StringSpecs::MyString)
   end
 
   it "handles repeated application" do
@@ -224,9 +224,9 @@ describe :string_slice_range, :shared => true do
 
   it "returns subclass instances" do
     s = StringSpecs::MyString.new("hello")
-    s.send(@method, 0...0).should be_kind_of(StringSpecs::MyString)
-    s.send(@method, 0..4).should be_kind_of(StringSpecs::MyString)
-    s.send(@method, 1..4).should be_kind_of(StringSpecs::MyString)
+    s.send(@method, 0...0).should be_an_instance_of(StringSpecs::MyString)
+    s.send(@method, 0..4).should be_an_instance_of(StringSpecs::MyString)
+    s.send(@method, 1..4).should be_an_instance_of(StringSpecs::MyString)
   end
 
   it "calls to_int on range arguments" do
@@ -300,8 +300,8 @@ describe :string_slice_regexp, :shared => true do
 
   it "returns subclass instances" do
     s = StringSpecs::MyString.new("hello")
-    s.send(@method, //).should be_kind_of(StringSpecs::MyString)
-    s.send(@method, /../).should be_kind_of(StringSpecs::MyString)
+    s.send(@method, //).should be_an_instance_of(StringSpecs::MyString)
+    s.send(@method, /../).should be_an_instance_of(StringSpecs::MyString)
   end
 
   it "sets $~ to MatchData when there is a match and nil when there's none" do
@@ -386,8 +386,8 @@ describe :string_slice_regexp_index, :shared => true do
 
   it "returns subclass instances" do
     s = StringSpecs::MyString.new("hello")
-    s.send(@method, /(.)(.)/, 0).should be_kind_of(StringSpecs::MyString)
-    s.send(@method, /(.)(.)/, 1).should be_kind_of(StringSpecs::MyString)
+    s.send(@method, /(.)(.)/, 0).should be_an_instance_of(StringSpecs::MyString)
+    s.send(@method, /(.)(.)/, 1).should be_an_instance_of(StringSpecs::MyString)
   end
 
   it "sets $~ to MatchData when there is a match and nil when there's none" do
@@ -443,7 +443,7 @@ describe :string_slice_string, :shared => true do
     s = StringSpecs::MyString.new("el")
     r = "hello".send(@method, s)
     r.should == "el"
-    r.should be_kind_of(StringSpecs::MyString)
+    r.should be_an_instance_of(StringSpecs::MyString)
   end
 end
 
