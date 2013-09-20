@@ -56,6 +56,10 @@ describe "->(){}" do
     lambda { ->() {} }.should_not raise_error(SyntaxError)
   end
 
+  it "does not allow a space between the -> and ()" do
+    lambda { eval "-> () {}" }.should raise_error(SyntaxError)
+  end
+
   it "allows the parenthesis to be omitted entirely" do
     lambda { -> {} }.should_not raise_error(SyntaxError)
     lambda { ->{} }.should_not raise_error(SyntaxError)
