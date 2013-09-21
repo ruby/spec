@@ -221,8 +221,16 @@ ruby_version_is "1.9" do
         @s.rb_enc_copy(/regexp/, @obj).encoding.should == Encoding::US_ASCII
       end
 
-      it "sets the encoding of a Symbol to that of the second argument" do
-        @s.rb_enc_copy(:symbol, @obj).encoding.should == Encoding::US_ASCII
+      ruby_version_is ""..."2.1" do
+        it "sets the encoding of a Symbol to that of the second argument" do
+          @s.rb_enc_copy(:symbol, @obj).encoding.should == Encoding::US_ASCII
+        end
+      end
+
+      ruby_version_is "2.1" do
+        it "raises a RuntimeError if the second argument is a Symbol" do
+          lambda { @s.rb_enc_copy(:symbol, @obj) }.should raise_error(RuntimeError)
+        end
       end
     end
 
@@ -272,8 +280,16 @@ ruby_version_is "1.9" do
         @s.rb_enc_associate(/regexp/, "ASCII-8BIT").encoding.should == Encoding::ASCII_8BIT
       end
 
-      it "sets the encoding of a Symbol to the encoding" do
-        @s.rb_enc_associate(:symbol, "US-ASCII").encoding.should == Encoding::US_ASCII
+      ruby_version_is ""..."2.1" do
+        it "sets the encoding of a Symbol to the encoding" do
+          @s.rb_enc_associate(:symbol, "US-ASCII").encoding.should == Encoding::US_ASCII
+        end
+      end
+
+      ruby_version_is "2.1" do
+        it "raises a RuntimeError if the argument is Symbol" do
+          lambda { @s.rb_enc_associate(:symbol, "US-ASCII") }.should raise_error(RuntimeError)
+        end
       end
     end
 
@@ -288,9 +304,17 @@ ruby_version_is "1.9" do
         enc.should == Encoding::ASCII_8BIT
       end
 
-      it "sets the encoding of a Symbol to the encoding" do
-        enc = @s.rb_enc_associate(:symbol, "US-ASCII").encoding
-        enc.should == Encoding::US_ASCII
+      ruby_version_is ""..."2.1" do
+        it "sets the encoding of a Symbol to the encoding" do
+          enc = @s.rb_enc_associate_index(:symbol, "US-ASCII").encoding
+          enc.should == Encoding::US_ASCII
+        end
+      end
+
+      ruby_version_is "2.1" do
+        it "sets the encoding of a Symbol to the encoding" do
+          lambda { @s.rb_enc_associate_index(:symbol, "US-ASCII") }.should raise_error(RuntimeError)
+        end
       end
     end
 

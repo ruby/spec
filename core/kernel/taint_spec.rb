@@ -33,9 +33,24 @@ describe "Kernel#taint" do
   end
 
   it "has no effect on immediate values" do
-    [nil, true, false, :sym].each do |v|
+    [nil, true, false].each do |v|
       v.taint
       v.tainted?.should == false
+    end
+  end
+
+  ruby_version_is ""..."2.1" do
+    it "has no effect on symbols" do
+      v = :sym
+      v.taint
+      v.tainted?.should == false
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "raises a RuntimeError on symbols" do
+      v = :sym
+      lambda { v.taint }.should raise_error(RuntimeError)
     end
   end
 
