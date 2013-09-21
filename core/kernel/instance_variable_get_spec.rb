@@ -39,10 +39,20 @@ describe "Kernel#instance_variable_get" do
     lambda { @obj.instance_variable_get(obj) }.should raise_error(NameError)
   end
 
-  it "returns nil when passed just '@'" do
-    obj = mock("to_str")
-    obj.stub!(:to_str).and_return('@')
-    @obj.instance_variable_get(obj).should be_nil
+  ruby_version_is ""..."2.1" do
+    it "returns nil when passed just '@'" do
+      obj = mock("to_str")
+      obj.stub!(:to_str).and_return('@')
+      @obj.instance_variable_get(obj).should be_nil
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "raises a NameError when passed just '@'" do
+      obj = mock("to_str")
+      obj.stub!(:to_str).and_return('@')
+      lambda { @obj.instance_variable_get(obj) }.should raise_error(NameError)
+    end
   end
 end
 
@@ -60,8 +70,16 @@ describe "Kernel#instance_variable_get when passed Symbol" do
     lambda { @obj.instance_variable_get(:test) }.should raise_error(NameError)
   end
 
-  it "returns nil when passed just '@'" do
-    @obj.instance_variable_get(:"@").should be_nil
+  ruby_version_is ""..."2.1" do
+    it "returns nil when passed just '@'" do
+      @obj.instance_variable_get(:"@").should be_nil
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "raises a NameError when passed just '@'" do
+      lambda { @obj.instance_variable_get(:"@") }.should raise_error(NameError)
+    end
   end
 end
 
@@ -79,8 +97,16 @@ describe "Kernel#instance_variable_get when passed String" do
     lambda { @obj.instance_variable_get("test") }.should raise_error(NameError)
   end
 
-  it "returns nil when passed just '@'" do
-    @obj.instance_variable_get("@").should be_nil
+  ruby_version_is ""..."2.1" do
+    it "returns nil when passed just '@'" do
+      @obj.instance_variable_get("@").should be_nil
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "raises a NameError when passed just '@'" do
+      lambda { @obj.instance_variable_get("@") }.should raise_error(NameError)
+    end
   end
 end
 
