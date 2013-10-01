@@ -549,3 +549,7 @@ describe "The def keyword" do
 end
 
 language_version __FILE__, "def"
+
+ruby_version_is "2.0" do
+  require File.expand_path('../versions/def_2.0.rb', __FILE__)
+end
