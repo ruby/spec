@@ -1,6 +1,6 @@
 language: ruby
 script:
-  - bundle exec mspec -V -fs -t ruby
+  - bundle exec mspec -V -fs -t ruby .
 branches:
   only:
     - ruby
@@ -22,7 +22,6 @@ rvm:
 #  - oraclejdk7
 matrix:
  allow_failures:
-  - rvm: ruby-head
   - rvm: jruby-18mode
   - rvm: jruby-19mode
   - rvm: jruby-head
