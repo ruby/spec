@@ -1,6 +1,6 @@
 language: ruby
 script:
-  - bundle exec mspec -V -fs -t ruby .
+  - bundle exec mspec -V -fs -t ruby
 branches:
   only:
     - ruby
