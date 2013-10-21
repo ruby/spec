@@ -5,6 +5,10 @@ describe "->(){}" do
     lambda { ->(){} }.should_not raise_error
   end
 
+  it "allows a space between the -> and ()" do
+    lambda { -> () {} }.should_not raise_error
+  end
+
   it "returns a Proc object" do
     ->(){}.should be_an_instance_of(Proc)
   end
