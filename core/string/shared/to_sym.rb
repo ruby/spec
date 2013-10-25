@@ -7,9 +7,11 @@ describe :string_to_sym, :shared => true do
     "abc=".send(@method).should == :abc=
   end
 
-  it "special cases +(binary) and -(binary)" do
-    "+(binary)".to_sym.should == :+
-    "-(binary)".to_sym.should == :-
+  ruby_version_is ""..."1.9" do
+    it "special cases +(binary) and -(binary)" do
+      "+(binary)".to_sym.should == :+
+        "-(binary)".to_sym.should == :-
+    end
   end
 
   ruby_version_is ""..."1.9" do
