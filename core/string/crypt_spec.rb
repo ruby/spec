@@ -76,16 +76,21 @@ describe "String#crypt" do
       end
     end
 
-    platform_is :linux do
-      it "returns an empty string when the salt starts with NULL bytes" do
-        "hello".crypt("\x00\x00").should == ""
-        "hello".crypt("\x00a").should == ""
-      end
 
-      it "ignores trailing NULL bytes in the salt but counts them for the 2 character minimum" do
-        "hello".crypt("a\x00").should == "aa1dYAU.hgL3A"
-      end
-    end
+# previous glibc behaves as following, but from glibc 2.17 it return NULL with EINVAL
+# and Fedora 18 backports it to glibc/f18
+# * http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=4ba74a357376c8f8bf49487f96ae71cf2460c3f3
+# * http://pkgs.fedoraproject.org/cgit/glibc.git/commit/?h=f18&id=9d9d94d2662c805fec1b41472648df38f7481cc7
+#   platform_is :linux do
+#     it "returns an empty string when the salt starts with NULL bytes" do
+#       "hello".crypt("\x00\x00").should == ""
+#       "hello".crypt("\x00a").should == ""
+#     end
+#
+#     it "ignores trailing NULL bytes in the salt but counts them for the 2 character minimum" do
+#       "hello".crypt("a\x00").should == "aa1dYAU.hgL3A"
+#     end
+#   end
   end
 
   it "raises an ArgumentError when the salt is shorter than two characters" do
