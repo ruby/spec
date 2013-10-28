@@ -56,8 +56,16 @@ describe :array_pack_float_le, :shared => true do
     [-infinity_value].pack(pack_format).should == "\x00\x00\x80\xff"
   end
 
-  it "encodes NaN" do
-    [nan_value].pack(pack_format).should == "\x00\x00\xc0\xff"
+  platform_is "86" do # x86 / x86_64
+    it "encodes NaN" do
+      [nan_value].pack(pack_format).should == "\x00\x00\xc0\xff"
+    end
+  end
+
+  platform_is "powerpc64" do
+    it "encodes NaN" do
+      [nan_value].pack(pack_format).should == "\x00\x00\xc0\x7f"
+    end
   end
 
   it "encodes a positive Float outside the range of a single precision float" do
@@ -202,8 +210,16 @@ describe :array_pack_double_le, :shared => true do
     [-infinity_value].pack(pack_format).should == "\x00\x00\x00\x00\x00\x00\xf0\xff"
   end
 
-  it "encodes NaN" do
-    [nan_value].pack(pack_format).should == "\x00\x00\x00\x00\x00\x00\xf8\xff"
+  platform_is "86" do # x86 / x86_64
+    it "encodes NaN" do
+      [nan_value].pack(pack_format).should == "\x00\x00\x00\x00\x00\x00\xf8\xff"
+    end
+  end
+
+  platform_is "powerpc64" do
+    it "encodes NaN" do
+      [nan_value].pack(pack_format).should == "\x00\x00\x00\x00\x00\x00\xf8\x7f"
+    end
   end
 
   it "encodes a positive Float outside the range of a single precision float" do
