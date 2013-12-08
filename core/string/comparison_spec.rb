@@ -121,5 +121,13 @@ describe "String#<=>" do
 
       ("abc" <=> obj).should == 1
     end
+
+    it "does not overflow the stack when compared with an object that does a reverse comparison" do
+      obj = mock('x')
+      def obj.<=>(other); other <=> self; end
+      obj.should_receive(:<=>).once
+
+      lambda { ("abc" <=> obj).should be_nil }.should_not raise_error
+    end
   end
 end

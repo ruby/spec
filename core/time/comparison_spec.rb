@@ -76,6 +76,15 @@ describe "Time#<=>" do
         obj.should_receive(:<=>).with(t).and_return(r)
         (t <=> obj).should == 0
       end
+
+      it "does not overflow the stack when compared with an object that does a reverse comparison" do
+        t = Time.now
+        r = mock('r')
+        def r.<=>(other); other <=> self; end
+        r.should_receive(:<=>).once
+
+        lambda { (t <=> r).should be_nil }.should_not raise_error
+      end
     end
   end
 end
