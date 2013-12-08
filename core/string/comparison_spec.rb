@@ -127,7 +127,7 @@ describe "String#<=>" do
       def obj.<=>(other); other <=> self; end
       obj.should_receive(:<=>).once
 
-      lambda { ("abc" <=> obj).should be_nil }.should_not raise_error
+      ("abc" <=> obj).should be_nil
     end
   end
 end

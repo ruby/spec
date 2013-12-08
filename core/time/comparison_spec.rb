@@ -83,7 +83,7 @@ describe "Time#<=>" do
         def r.<=>(other); other <=> self; end
         r.should_receive(:<=>).once
 
-        lambda { (t <=> r).should be_nil }.should_not raise_error
+        (t <=> r).should be_nil
       end
     end
   end
