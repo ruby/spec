@@ -77,7 +77,7 @@ describe "Time#<=>" do
         (t <=> obj).should == 0
       end
 
-      it "does not overflow the stack when compared with an object that does a reverse comparison" do
+      it "returns nil if argument also uses an inverse comparison for <=>" do
         t = Time.now
         r = mock('r')
         def r.<=>(other); other <=> self; end
