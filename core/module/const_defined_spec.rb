@@ -86,7 +86,23 @@ describe "Module#const_defined?" do
     lambda { ConstantSpecs.const_defined? "__CONSTX__" }.should raise_error(NameError)
     lambda { ConstantSpecs.const_defined? "@Name" }.should raise_error(NameError)
     lambda { ConstantSpecs.const_defined? "!Name" }.should raise_error(NameError)
-    lambda { ConstantSpecs.const_defined? "::Name" }.should raise_error(NameError)
+  end
+
+  ruby_version_is ""..."2.1" do
+    it "raises a NameError for the nested name" do
+      lambda { ConstantSpecs.const_defined? "::Name" }.should raise_error(NameError)
+      lambda { ConstantSpecs.const_defined? "A::Name" }.should raise_error(NameError)
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "returns true or false for the nested name" do
+      ConstantSpecs.const_defined?("A::Name").should == false
+      ConstantSpecs.const_defined?("::Name").should == false
+      ConstantSpecs.const_defined?("::Object").should == true
+      ConstantSpecs.const_defined?("ClassA::CS_CONST10").should == true
+      ConstantSpecs.const_defined?("ClassA::CS_CONST10_").should == false
+    end
   end
 
   it "raises a NameError if the name contains non-alphabetic characters except '_'" do
