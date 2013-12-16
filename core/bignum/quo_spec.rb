@@ -17,20 +17,20 @@ ruby_version_is ""..."1.9" do
         @bignum.quo(0).to_s.should == "Infinity"
         (-@bignum).quo(0).to_s.should == "-Infinity"
       end
-    end
 
-    it "does not raise a FloatDomainError when the given argument is 0 and a Float" do
-      @bignum.quo(0.0).to_s.should == "Infinity"
-      (-@bignum).quo(0.0).to_s.should == "-Infinity"
-    end
+      it "does not raise a FloatDomainError when the given argument is 0 and a Float" do
+        @bignum.quo(0.0).to_s.should == "Infinity"
+        (-@bignum).quo(0.0).to_s.should == "-Infinity"
+      end
 
-    it "raises a TypeError when given a non-Integer" do
-      lambda {
-        (obj = mock('to_int')).should_not_receive(:to_int)
-        @bignum.quo(obj)
-      }.should raise_error(TypeError)
-      lambda { @bignum.quo("10") }.should raise_error(TypeError)
-      lambda { @bignum.quo(:symbol) }.should raise_error(TypeError)
+      it "raises a TypeError when given a non-Integer" do
+        lambda {
+          (obj = mock('to_int')).should_not_receive(:to_int)
+          @bignum.quo(obj)
+        }.should raise_error(TypeError)
+        lambda { @bignum.quo("10") }.should raise_error(TypeError)
+        lambda { @bignum.quo(:symbol) }.should raise_error(TypeError)
+      end
     end
   end
 end
