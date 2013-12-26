@@ -26,7 +26,7 @@ describe "File::Stat#ftype" do
     end
   end
 
-  platform_is_not :freebsda do  # FreeBSD does not have block devices
+  platform_is_not :freebsd do  # FreeBSD does not have block devices
     # travis-ci also doesn't have block devices
     break unless FileSpecs.block_device{|block|block}
 
