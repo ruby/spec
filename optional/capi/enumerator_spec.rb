@@ -25,15 +25,6 @@ describe "C-API Enumerator function" do
           enumerator = @s.rb_enumeratorize(@enumerable, :each, :arg1, :arg2)
           enumerator.class.should == Enumerator
         end
-        
-        it 'raises an exception when the enumerator position is already at the end' do
-          e = 2.times
-          e.peek.should == 0
-          e.next
-          e.peek.should == 1
-          e.next
-          lambda { e.peek }.should raise_error(StopIteration)
-        end
       end
 
       it "enumerates the given object" do
