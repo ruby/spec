@@ -48,7 +48,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9"..."2.1" do
     it "returns false if calling #<=> on self returns nil or a non-Integer" do
       a = ComparableSpecs::Weird.new(0)
       b = ComparableSpecs::Weird.new(10)
@@ -59,6 +59,20 @@ describe "Comparable#==" do
       a = ComparableSpecs::Weird.new(0)
       a.should_receive(:<=>).any_number_of_times.and_return("abc")
       (a == b).should be_false
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "returns false if calling #<=> on self returns nil or a non-Integer" do
+      a = ComparableSpecs::Weird.new(0)
+      b = ComparableSpecs::Weird.new(10)
+
+      a.should_receive(:<=>).any_number_of_times.and_return(nil)
+      (a == b).should be_false
+
+      a = ComparableSpecs::Weird.new(0)
+      a.should_receive(:<=>).any_number_of_times.and_return("abc")
+      lambda { a == b }.should raise_error(ArgumentError)
     end
   end
 
@@ -79,7 +93,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9"..."2.1" do
     # Behaviour confirmed by MRI test suite
     it "returns false if calling #<=> on self raises an Exception" do
       a = ComparableSpecs::Weird.new(0)
@@ -90,6 +104,23 @@ describe "Comparable#==" do
 
       def a.<=>(b) raise TypeError, "test"; end
       (a == b).should be_false
+
+      def a.<=>(b) raise Exception, "test"; end
+      lambda { (a == b).should be_false }.should raise_error(Exception)
+    end
+  end
+
+  ruby_version_is "2.1" do
+    # Behaviour confirmed by MRI test suite
+    it "returns false if calling #<=> on self raises an Exception" do
+      a = ComparableSpecs::Weird.new(0)
+      b = ComparableSpecs::Weird.new(10)
+
+      def a.<=>(b) raise StandardError, "test"; end
+      lambda { (a == b).should be_false }.should raise_error(StandardError)
+
+      def a.<=>(b) raise TypeError, "test"; end
+      lambda { (a == b).should be_false }.should raise_error(TypeError)
 
       def a.<=>(b) raise Exception, "test"; end
       lambda { (a == b).should be_false }.should raise_error(Exception)
