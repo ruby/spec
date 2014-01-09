@@ -48,7 +48,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "1.9"..."2.1" do
+  ruby_version_is "1.9"..."2.2" do
     it "returns false if calling #<=> on self returns nil or a non-Integer" do
       a = ComparableSpecs::Weird.new(0)
       b = ComparableSpecs::Weird.new(10)
@@ -62,7 +62,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "2.1" do
+  ruby_version_is "2.2" do
     it "returns false if calling #<=> on self returns nil or a non-Integer" do
       a = ComparableSpecs::Weird.new(0)
       b = ComparableSpecs::Weird.new(10)
@@ -93,7 +93,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "1.9"..."2.1" do
+  ruby_version_is "1.9"..."2.2" do
     # Behaviour confirmed by MRI test suite
     it "returns false if calling #<=> on self raises an Exception" do
       a = ComparableSpecs::Weird.new(0)
@@ -110,7 +110,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "2.1" do
+  ruby_version_is "2.2" do
     # Behaviour confirmed by MRI test suite
     it "returns false if calling #<=> on self raises an Exception" do
       a = ComparableSpecs::Weird.new(0)
