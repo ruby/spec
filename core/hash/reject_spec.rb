@@ -54,7 +54,7 @@ end
 describe "Hash#reject!" do
   before(:each) do
     @hsh = new_hash
-    (1 .. 10).each { |k| @hsh[k] = k.even? }
+    (1 .. 10).each { |k| @hsh[k] = (k % 2 == 0) }
     @empty = new_hash
   end
 
