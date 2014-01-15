@@ -15,6 +15,8 @@ static VALUE thread_spec_rb_thread_alone() {
 }
 #endif
 
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+
 #ifdef HAVE_RB_THREAD_BLOCKING_REGION
 /* This is unblocked by unblock_func(). */
 static VALUE blocking_func(void* data) {
