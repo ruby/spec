@@ -46,9 +46,18 @@ describe "Hash.[]" do
     end
   end
 
-  it "ignores elements that are not arrays" do
-    hash_class[[:a]].should == new_hash
-    hash_class[[:nil]].should == new_hash
+  ruby_version_is '1.8.6'...'1.8.7' do
+    it "raises error when elements are not arrays" do
+      lambda { hash_class[[:a]] }.should raise_error(ArgumentError)
+      lambda { hash_class[[:nil]] }.should raise_error(ArgumentError)
+    end
+  end
+
+  ruby_version_is '1.8.7' do
+    it "ignores elements that are not arrays" do
+      hash_class[[:a]].should == new_hash
+      hash_class[[:nil]].should == new_hash
+    end
   end
 
   ruby_version_is '1.8.7'...'2.0' do
