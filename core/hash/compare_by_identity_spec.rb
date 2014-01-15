@@ -5,11 +5,55 @@ ruby_version_is "1.9" do
       @idh = new_hash.compare_by_identity
     end
 
-    it "causes future comparisons on the receiver to be made by identity" do
-      @h["a"] = :a
-      @h["a"].should == :a
-      @h.compare_by_identity
-      @h["a"].should be_nil
+    ruby_version_is ''...'2.2' do
+      it "causes future comparisons on the receiver to be made by identity" do
+        @h["a"] = :a
+        @h["a"].should == :a
+        @h.compare_by_identity
+        @h["a"].should be_nil
+      end
+
+      it "uses the semantics of BasicObject#equal? to determine key identity" do
+        -0.0.should_not equal(-0.0) # -0.0 is not flonum
+        @idh[-0.0] = :a
+        @idh[-0.0] = :b
+        [1].should_not equal([1])
+        @idh[[1]] = :c
+        @idh[[1]] = :d
+        :bar.should equal(:bar)
+        @idh[:bar] = :e
+        @idh[:bar] = :f
+        "bar".should_not equal('bar')
+        @idh["bar"] = :g
+        @idh["bar"] = :h
+        @idh.values.should == [:a, :b, :c, :d, :f, :g, :h]
+      end
+    end
+
+    ruby_version_is '2.2' do
+      it "causes future comparisons on the receiver to be made by identity" do
+        @h["a"] = :a
+        @h["a"].should == :a
+        @h.compare_by_identity
+        @h["a"].should == :a
+      end
+
+      it "uses the semantics of BasicObject#equal? to determine key identity" do
+        -0.0.should_not equal(-0.0) # -0.0 is not flonum
+        @idh[-0.0] = :a
+        @idh[-0.0] = :b
+        [1].should_not equal([1])
+        @idh[[1]] = :c
+        @idh[[1]] = :d
+        :bar.should equal(:bar)
+        @idh[:bar] = :e
+        @idh[:bar] = :f
+        # CRuby r44551 [ruby-core:59640] [Bug #9382]
+        "bar".should_not equal('bar')
+        @idh["bar"] = :g
+        @idh["bar"] = :h
+        @idh.values.should == [:a, :b, :c, :d, :f, :h]
+      end
     end
 
     it "causes #compare_by_identity? to return true" do
@@ -20,22 +64,6 @@ ruby_version_is "1.9" do
       h = new_hash
       h[:foo] = :bar
       h.compare_by_identity.should == h
-    end
-
-    it "uses the semantics of BasicObject#equal? to determine key identity" do
-      -0.0.should_not equal(-0.0) # -0.0 is not flonum
-      @idh[-0.0] = :a
-      @idh[-0.0] = :b
-      [1].should_not equal([1])
-      @idh[[1]] = :c
-      @idh[[1]] = :d
-      :bar.should equal(:bar)
-      @idh[:bar] = :e
-      @idh[:bar] = :f
-      "bar".should_not equal('bar')
-      @idh["bar"] = :g
-      @idh["bar"] = :h
-      @idh.values.should == [:a, :b, :c, :d, :f, :g, :h]
     end
 
     it "uses #equal? semantics, but doesn't actually call #equal? to determine identity" do
