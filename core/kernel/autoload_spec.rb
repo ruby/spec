@@ -100,12 +100,6 @@ describe "Kernel.autoload" do
   end
 
   ruby_version_is "1.9" do
-    it "sets the autoload constant in Object's metaclass's constant table" do
-      class << Object
-        should have_constant(:KSAutoloadBB)
-      end
-    end
-
     it "calls #to_path on non-String filenames" do
       p = mock('path')
       p.should_receive(:to_path).and_return @non_existent
