@@ -386,7 +386,10 @@ describe "Marshal.dump" do
   end
 
   describe "with a Time" do
-    before do
+    before :each do
+      @internal = Encoding.default_internal
+      Encoding.default_internal = Encoding::UTF_8
+
       @utc = Time.utc(2012, 1, 1)
       @utc_dump = @utc.send(:_dump)
 
@@ -396,6 +399,10 @@ describe "Marshal.dump" do
         @t_dump = @t.send(:_dump)
         @fract_dump = @fract.send(:_dump)
       end
+    end
+
+    after :each do
+      Encoding.default_internal = @internal
     end
 
     it "dumps the zone and the offset" do
