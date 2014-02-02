@@ -60,6 +60,11 @@ describe "IO.foreach" do
     $_.should be_nil
   end
 
+  it "returns an Enumerator when called without a block" do
+    IO.foreach(@name).should be_an_instance_of(enumerator_class)
+    IO.foreach(@name).to_a.should == IOSpecs.lines
+  end
+
   it_behaves_like :io_readlines, :foreach, IOSpecs.collector
   it_behaves_like :io_readlines_options_19, :foreach, IOSpecs.collector
 end
