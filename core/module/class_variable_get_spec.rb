@@ -13,7 +13,7 @@ describe "Module#class_variable_get" do
     c.send(:class_variable_get, "@@mvar").should == :mvar
   end
 
-  ruby_version_is ''...'2.1' do
+  ruby_version_is ''...'2.0' do
     it "allows '@@' to be a valid class variable name" do
       c = Class.new { class_variable_set '@@', :foo }
       c.send(:class_variable_get, "@@").should == :foo
@@ -21,7 +21,7 @@ describe "Module#class_variable_get" do
     end
   end
 
-  ruby_version_is '2.1' do
+  ruby_version_is '2.0'..'2.1' do
     it "raises a NameError for a class variable named '@@'" do
       c = Class.new
       lambda { c.send(:class_variable_get, "@@") }.should raise_error(NameError)
