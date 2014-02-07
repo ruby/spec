@@ -28,7 +28,7 @@ describe "Kernel#instance_variable_set" do
     end
   end
 
-  ruby_version_is "2.0".."2.1" do
+  ruby_version_is "2.0" do
     it "raises a NameError if argument is '@'" do
       class DogAt; end
       lambda { DogAt.new.instance_variable_set(:'@', "cat") }.should raise_error(NameError)

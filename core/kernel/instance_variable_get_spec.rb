@@ -47,7 +47,7 @@ describe "Kernel#instance_variable_get" do
     end
   end
 
-  ruby_version_is "2.0".."2.1" do
+  ruby_version_is "2.0" do
     it "raises a NameError when passed just '@'" do
       obj = mock("to_str")
       obj.stub!(:to_str).and_return('@')
@@ -76,7 +76,7 @@ describe "Kernel#instance_variable_get when passed Symbol" do
     end
   end
 
-  ruby_version_is "2.0".."2.1" do
+  ruby_version_is "2.0" do
     it "raises a NameError when passed just '@'" do
       lambda { @obj.instance_variable_get(:"@") }.should raise_error(NameError)
     end
@@ -103,7 +103,7 @@ describe "Kernel#instance_variable_get when passed String" do
     end
   end
 
-  ruby_version_is "2.0".."2.1" do
+  ruby_version_is "2.0" do
     it "raises a NameError when passed just '@'" do
       lambda { @obj.instance_variable_get("@") }.should raise_error(NameError)
     end

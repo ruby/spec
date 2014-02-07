@@ -21,7 +21,7 @@ describe "Module#class_variable_get" do
     end
   end
 
-  ruby_version_is '2.0'..'2.1' do
+  ruby_version_is '2.0' do
     it "raises a NameError for a class variable named '@@'" do
       c = Class.new
       lambda { c.send(:class_variable_get, "@@") }.should raise_error(NameError)
