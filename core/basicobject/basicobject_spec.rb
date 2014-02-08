@@ -78,4 +78,10 @@ describe "BasicObject subclass" do
 
     obj.send(:hash).should be_an_instance_of(Fixnum)
   end
+
+  describe "BasicObject references" do
+    it "BasicObject can refer to BasicObject from within itself" do
+      lambda { BasicObject::BasicObject }.should_not raise_error
+    end
+  end
 end
