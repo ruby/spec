@@ -7,6 +7,11 @@
 
 #include "rubyspec_version.h"
 
+#define RUBY_VERSION_BEFORE(major,minor,teeny) \
+  ((RUBY_VERSION_MAJOR < (major)) || \
+   (RUBY_VERSION_MAJOR == (major) && RUBY_VERSION_MINOR < (minor)) || \
+   (RUBY_VERSION_MAJOR == (major) && RUBY_VERSION_MINOR == (minor) && RUBY_VERSION_TEENY < (teeny)))
+
 #if RUBY_VERSION_MAJOR >= 2
 #define RUBY_VERSION_IS_2_0
 #endif
@@ -76,9 +81,11 @@
 #define HAVE_RB_MEM_CLEAR                  1
 
 /* Bignum */
+#if RUBY_VERSION_BEFORE(2,2,0)
 #define HAVE_RBIGNUM_NEGATIVE_P            1
 #define HAVE_RBIGNUM_POSITIVE_P            1
 #define HAVE_RBIGNUM_SIGN                  1
+#endif
 #define HAVE_RB_BIG2DBL                    1
 #define HAVE_RB_BIG2LL                     1
 #define HAVE_RB_BIG2LONG                   1
@@ -471,11 +478,15 @@
 
 /* Thread */
 #define HAVE_RB_THREAD_ALONE               1
+#if RUBY_VERSION_BEFORE(2,2,0)
 #define HAVE_RB_THREAD_BLOCKING_REGION     1
+#endif
 #define HAVE_RB_THREAD_CURRENT             1
 #define HAVE_RB_THREAD_LOCAL_AREF          1
 #define HAVE_RB_THREAD_LOCAL_ASET          1
+#if RUBY_VERSION_BEFORE(2,2,0)
 #define HAVE_RB_THREAD_SELECT              1
+#endif
 #define HAVE_RB_THREAD_WAIT_FOR            1
 #define HAVE_RB_THREAD_WAKEUP              1
 
