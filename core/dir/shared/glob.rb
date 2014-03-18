@@ -16,11 +16,13 @@ describe :dir_glob, :shared => true do
     end
   end
 
-  it "calls #to_path to convert patterns" do
-    obj = mock('file_one.ext')
-    obj.should_receive(:to_path).and_return('file_one.ext')
+  ruby_version_is "1.9" do
+    it "calls #to_path to convert a pattern" do
+      obj = mock('file_one.ext')
+      obj.should_receive(:to_path).and_return('file_one.ext')
 
-    Dir.send(@method, obj).should == %w[file_one.ext]
+      Dir.send(@method, obj).should == %w[file_one.ext]
+    end
   end
 
   it "splits the string on \\0 if there is only one string given" do
