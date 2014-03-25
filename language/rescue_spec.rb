@@ -3,9 +3,11 @@ class SpecificExampleException < StandardError
 end
 class OtherCustomException < StandardError
 end
+class ArbitraryException < StandardError
+end
 
 def exception_list
-  [SpecificExampleException, ZeroDivisionError]
+  [SpecificExampleException, ArbitraryException]
 end
 describe "The rescue keyword" do
   before :each do
@@ -31,10 +33,10 @@ describe "The rescue keyword" do
 
   it "can rescue multiple raised exceptions with a single rescue block" do
     lambda do
-      [lambda{1/0}, lambda{raise SpecificExampleException}].each do |block|
+      [lambda{raise ArbitraryException}, lambda{raise SpecificExampleException}].each do |block|
         begin
           block.call
-        rescue SpecificExampleException, ZeroDivisionError
+        rescue SpecificExampleException, ArbitraryException
         end
       end
     end.should_not raise_error
@@ -50,7 +52,7 @@ describe "The rescue keyword" do
     caught_it.should be_true
     caught = []
     lambda do
-      [lambda{1/0}, lambda{raise SpecificExampleException}].each do |block|
+      [lambda{raise ArbitraryException}, lambda{raise SpecificExampleException}].each do |block|
         begin
           block.call
         rescue *exception_list
