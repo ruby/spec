@@ -175,31 +175,19 @@ describe "Break inside a while loop" do
       a = while true; break *[1,2]; end;    a.should == [1,2]
     end
 
-    ruby_version_is "" ... "1.9" do
-      it "unwraps the value if there is only one value" do
-        a = while true; break *1; end;      a.should == 1
-      end
-
-      it "makes the value nil if the splat is empty" do
-        a = while true; break *[]; end;     a.should == nil
-      end
+    it "treats nil as an empty array" do
+      a = while true; break *nil; end;      a.should == []
     end
 
-    ruby_version_is "1.9" do
-      it "treats nil as an empty array" do
-        a = while true; break *nil; end;      a.should == []
-      end
+    it "preserves an array as is" do
+      a = while true; break *[]; end;       a.should == []
+      a = while true; break *[1,2]; end;    a.should == [1,2]
+      a = while true; break *[nil]; end;    a.should == [nil]
+      a = while true; break *[[]]; end;     a.should == [[]]
+    end
 
-      it "preserves an array as is" do
-        a = while true; break *[]; end;       a.should == []
-        a = while true; break *[1,2]; end;    a.should == [1,2]
-        a = while true; break *[nil]; end;    a.should == [nil]
-        a = while true; break *[[]]; end;     a.should == [[]]
-      end
-
-      it "wraps a non-Array in an Array" do
-        a = while true; break *1; end;        a.should == [1]
-      end
+    it "wraps a non-Array in an Array" do
+      a = while true; break *1; end;        a.should == [1]
     end
   end
 
@@ -332,8 +320,4 @@ describe "Executing break from within a block" do
     bt2.three
     ScratchPad.recorded.should == [:two_ensure, :three_post, :three_ensure]
   end
-end
-
-ruby_version_is "1.8"..."1.9" do
-  require File.expand_path("../versions/break_1.8", __FILE__)
 end
