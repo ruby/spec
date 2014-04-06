@@ -68,7 +68,7 @@ describe "A Symbol literal" do
   end
 
   it "can contain null in the string" do
-    eval(':"\0" ').inspect.should == ':"\\000"'
+    eval(':"\0" ').inspect.should == ':"\\x00"'
   end
 
   it "can be an empty string" do

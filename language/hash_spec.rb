@@ -76,4 +76,3 @@ describe "Hash literal" do
     {'rbx' => :cool, specs: 'fail_sometimes'}.should == {'rbx' => :cool, :specs => 'fail_sometimes'}
   end
 end
-end

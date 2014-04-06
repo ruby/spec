@@ -121,10 +121,10 @@ describe "The super keyword" do
     klass = Class.new super_class do
       define_method :a do |arg|
         super
-      end.should_not raise_error(RuntimeError)
+      end
     end
 
-    klass.new.a(:a_called).should == :a_called
+    lambda { klass.new.a(:a_called) }.should raise_error(RuntimeError)
   end
 
   # Rubinius ticket github#157

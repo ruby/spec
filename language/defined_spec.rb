@@ -1110,6 +1110,6 @@ end
 
 describe "The defined? keyword for exception expressions" do
   it "returns 'expression'" do
-    defined?(begin end).should == "expression"
+    defined?(begin 1 end).should == "expression"
   end
 end
