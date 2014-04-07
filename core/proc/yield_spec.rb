@@ -1,6 +1,6 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../shared/call', __FILE__)
-require File.expand_path('../../shared/call_arguments', __FILE__)
+require File.expand_path('../shared/call_arguments', __FILE__)
 
 describe "Proc#yield" do
   it_behaves_like :proc_call, :yield

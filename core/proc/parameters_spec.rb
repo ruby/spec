@@ -1,4 +1,4 @@
-require File.expand_path('../../../../spec_helper', __FILE__)
+require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Proc#parameters" do
   it "returns an empty Array for a proc expecting no parameters" do
