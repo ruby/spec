@@ -49,7 +49,7 @@ describe "Proc#source_location" do
 
     line = @method.source_location.last
     line.should be_an_instance_of(Fixnum)
-    line.should == 16
+    line.should == 15
   end
 
   it "works even if the proc was created on the same line" do
