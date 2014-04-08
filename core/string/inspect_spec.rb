@@ -314,7 +314,7 @@ describe "String#inspect" do
   end
 
   it "returns a string with a NUL character replaced by \\000" do
-    0.chr.inspect.should == '"\\000"'
+    0.chr.inspect.should == '"\\x00"'
   end
 
   describe "when default external is UTF-8" do
@@ -386,7 +386,7 @@ describe "String#inspect" do
     end
 
     it "returns a string with a NUL character replaced by \\000" do
-      0.chr('utf-8').inspect.should == '"\\000"'
+      0.chr('utf-8').inspect.should == '"\\u0000"'
     end
 
     it "returns a string with extended characters for Unicode strings" do

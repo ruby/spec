@@ -29,13 +29,13 @@ describe "String#scrub with a custom replacement" do
   end
 
   it "raises ArgumentError for replacements with an invalid encoding" do
-    block = lambda { "foo".scrub("\xE4") }
+    block = lambda { "foo\x81".scrub("\xE4") }
 
     block.should raise_error(ArgumentError)
   end
 
   it "raises TypeError when a non String replacement is given" do
-    block = lambda { "foo".scrub(1) }
+    block = lambda { "foo\x81".scrub(1) }
 
     block.should raise_error(TypeError)
   end

@@ -54,4 +54,3 @@ describe "String#end_with?" do
   end
 
 end
-end
