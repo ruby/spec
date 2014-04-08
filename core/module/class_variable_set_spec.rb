@@ -25,15 +25,6 @@ describe "Module#class_variable_set" do
     c.send(:class_variable_get, "@@mvar").should == :new_mvar
   end
 
-  it "raises a TypeError when self is frozen" do
-    lambda {
-      Class.new.freeze.send(:class_variable_set, :@@test, "test")
-    }.should raise_error(TypeError)
-    lambda {
-      Module.new.freeze.send(:class_variable_set, :@@test, "test")
-    }.should raise_error(TypeError)
-  end
-
   it "raises a RuntimeError when self is frozen" do
     lambda {
       Class.new.freeze.send(:class_variable_set, :@@test, "test")
