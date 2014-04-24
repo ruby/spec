@@ -18,17 +18,6 @@ describe "IO#ioctl" do
       end
     end
 
-    platform_is "powerpc64" do
-      it "resizes an empty String to match the output size" do
-        File.open(__FILE__, 'r') do |f|
-          buffer = ''
-          # FIONREAD in /usr/include/asm-generic/ioctls.h
-          f.ioctl 0x8004667f, buffer
-          buffer.unpack('I').first.should be_kind_of(Integer)
-        end
-      end
-    end
-
     it "raises an Errno error when ioctl fails" do
       File.open(__FILE__, 'r') do |f|
         lambda {
