@@ -16,7 +16,7 @@ describe "Socket::BasicSocket#ioctl" do
       # Interface name should remain unchanged.
       buffer[0, 16].should == if_name
       # lo should have an IPv4 address of 127.0.0.1
-      buffer[16, 1].unpack('C').first.should == Socket::AF_INET
+      buffer[16, 2].unpack('S!').first.should == Socket::AF_INET
       buffer[20, 4].should == "\x7f\0\0\x01"
     end
   end
