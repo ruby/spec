@@ -38,6 +38,18 @@ describe :process_fork, :shared => true do
         result.exitstatus.should == 0
       end
 
+      it "returns status non-zero" do
+        pid = Process.fork { exit! 42 }
+        _, result = Process.wait2(pid)
+        result.exitstatus.should == 42
+      end
+
+      it "returns status non-zero" do
+        pid = Process.fork { exit 42 }
+        _, result = Process.wait2(pid)
+        result.exitstatus.should == 42
+      end
+
       it "returns nil for the child process" do
         child_id = @object.fork
         if child_id == nil
