@@ -22,19 +22,19 @@ describe :process_fork, :shared => true do
 
       it "returns status zero" do
         pid = Process.fork { exit! 0 }
-        _, result = Process.wait2
+        _, result = Process.wait2(pid)
         result.exitstatus.should == 0
       end
 
       it "returns status zero" do
         pid = Process.fork { exit 0 }
-        _, result = Process.wait2
+        _, result = Process.wait2(pid)
         result.exitstatus.should == 0
       end
 
       it "returns status zero" do
         pid = Process.fork {}
-        _, result = Process.wait2
+        _, result = Process.wait2(pid)
         result.exitstatus.should == 0
       end
 
