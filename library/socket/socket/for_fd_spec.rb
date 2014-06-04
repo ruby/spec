@@ -18,7 +18,7 @@ describe "Socket.for_fd" do
 
   it "creates a new Socket that aliases the existing Socket's file descriptor" do
     @socket = Socket.for_fd(@client.fileno)
-    @socket.autoclose = false
+    @socket.autoclose = false rescue nil # for 1.8.7
     @socket.fileno.should == @client.fileno
 
     @socket.send("foo", 0)
