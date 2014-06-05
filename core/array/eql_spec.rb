@@ -12,4 +12,16 @@ describe "Array#eql?" do
     [1, 2, 3, 4].send(@method, [1, 2, 3, 4.0]).should be_false
   end
 
+it "returns false if other is not an Array or subclass" do
+    class NotAnArray
+      def to_ary
+        [1,2,3]
+      end
+      def ==(other)
+	true
+      end
+    end
+
+    [1,2,3].eql?(NotAnArray.new).should be_false
+  end
 end
