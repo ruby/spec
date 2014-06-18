@@ -82,11 +82,12 @@ ruby_version_is ''...'2.0' do
       end
     end
 
-    platform_is :linux, :darwin, :freebsd do
+    platform_is :linux, :darwin do
       # glibc iconv and GNU libiconv wrongly raises EILSEQ.
-      # Linux, Darwin, and FreeBSD usually use them.
+      # Linux, and Darwin usually use them.
       # NetBSD's libc iconv, Citrus iconv, correctly behaves as POSIX,
       # but on NetBSD users may install GNU libiconv and use it.
+      # FreeBSD 9+ uses Citrus iconv.
       it "raises Iconv::IllegalSequence when a character cannot be represented on the target encoding" do
         Iconv.open "us-ascii", "utf-8" do |conv|
           lambda { conv.iconv("euro \xe2\x82\xac") }.should raise_error(Iconv::IllegalSequence)
@@ -136,7 +137,7 @@ ruby_version_is ''...'2.0' do
 
     it_behaves_like :iconv_initialize_exceptions, :iconv, "test"
 
-    platform_is :linux, :darwin, :freebsd do
+    platform_is :linux, :darwin do
       # //ignore is glibc iconv and GNU libiconv specific behavior, not POSIX
       describe "using the ignore option" do
         # This spec exists because some implementions of libiconv return
@@ -193,9 +194,11 @@ ruby_version_is ''...'2.0' do
       Iconv.iconv("utf-16be", "utf-8", "ab").should == [encode("\0a\0b", "utf-16be")]
     end
 
-    it "treats possible byte-order marks as regular characters" do
-      Iconv.iconv("utf-8", "utf-16be", "\xfe\xff\0a").should == ["\xef\xbb\xbfa"]
-      Iconv.iconv("utf-8", "utf-16be", "\xff\xfe\0a").should == ["\xef\xbf\xbea"]
+    platform_is :linux, :darwin do
+      it "treats possible byte-order marks as regular characters" do
+        Iconv.iconv("utf-8", "utf-16be", "\xfe\xff\0a").should == ["\xef\xbb\xbfa"]
+        Iconv.iconv("utf-8", "utf-16be", "\xff\xfe\0a").should == ["\xef\xbf\xbea"]
+      end
     end
   end
 
@@ -204,9 +207,11 @@ ruby_version_is ''...'2.0' do
       Iconv.iconv("utf-16le", "utf-8", "ab").should == [encode("a\0b\0", "utf-16le")]
     end
 
-    it "treats possible byte-order marks as regular characters" do
-      Iconv.iconv("utf-8", "utf-16le", "\xfe\xff\0a").should == ["\xef\xbf\xbe\xe6\x84\x80"]
-      Iconv.iconv("utf-8", "utf-16le", "\xff\xfe\0a").should == ["\xef\xbb\xbf\xe6\x84\x80"]
+    platform_is :linux, :darwin do
+      it "treats possible byte-order marks as regular characters" do
+        Iconv.iconv("utf-8", "utf-16le", "\xfe\xff\0a").should == ["\xef\xbf\xbe\xe6\x84\x80"]
+        Iconv.iconv("utf-8", "utf-16le", "\xff\xfe\0a").should == ["\xef\xbb\xbf\xe6\x84\x80"]
+      end
     end
   end
 end
