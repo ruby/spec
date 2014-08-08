@@ -105,7 +105,7 @@ describe "Net::HTTP::Options" do
   end
 
   it "has no Respone Body" do
-    Net::HTTP::Options::RESPONSE_HAS_BODY.should be_false
+    Net::HTTP::Options::RESPONSE_HAS_BODY.should be_true
   end
 end
 

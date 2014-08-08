@@ -21,8 +21,7 @@ describe "Net::HTTP#options" do
 
   it "sends an options request to the passed path and returns the response" do
     response = @http.options("/request")
-    # OPTIONS responses have no bodies
-    response.body.should be_nil
+    response.body.should == "Request type: OPTIONS"
   end
 
   it "returns a Net::HTTPResponse" do
