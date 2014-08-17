@@ -246,7 +246,7 @@ describe "Time#strftime" do
       time.strftime('%P').should == 'am'
     end
   end
-  
+
   ruby_version_is '1.9' do
     it "returns the fractional seconds digits, default is 9 digits (nanosecond) with %N" do
       time = Time.local(2009, 9, 18, 12, 0, 6, 123456)

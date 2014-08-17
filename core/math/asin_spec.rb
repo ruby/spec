@@ -30,7 +30,7 @@ describe "Math.asin" do
     it "raises an ArgumentError if the argument cannot be coerced with Float()" do
       lambda { Math.asin("test") }.should raise_error(ArgumentError)
     end
-    
+
     it "raises an Errno::EDOM given NaN" do
       lambda { Math.asin(nan_value) }.should raise_error( Errno::EDOM)
     end

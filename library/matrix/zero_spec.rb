@@ -44,7 +44,7 @@ ruby_version_is "1.9.3" do
       Matrix.empty(3,0).zero?.should == true
       Matrix.empty(0,3).zero?.should == true
     end
-  
+
     it "returns true for matrices with zero entries" do
       Matrix.zero(2,3).zero?.should == true
     end

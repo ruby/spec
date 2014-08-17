@@ -7,7 +7,7 @@ ruby_version_is "1.9.3" do
       Matrix[[0, 1], [1, 2]].orthogonal?.should == false
       Matrix[[1, 1, 0], [0, 1, 1], [1, 0, 1]].orthogonal?.should == false
     end
-  
+
     it "returns true for orthogonal matrices" do
       Matrix[[0, 1], [1, 0]].orthogonal?.should == true
     end

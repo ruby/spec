@@ -67,7 +67,7 @@ describe "Marshal.dump" do
   it "dumps an extended_object" do
     Marshal.dump(Object.new.extend(Meths)).should == "\x04\be:\nMethso:\vObject\x00"
   end
-  
+
   it "dumps an object that has had an ivar added and removed as though the ivar never was set" do
     obj = Object.new
     initial = Marshal.dump(obj)

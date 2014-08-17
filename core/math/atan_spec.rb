@@ -27,7 +27,7 @@ describe "Math.atan" do
       lambda { Math.atan("test") }.should raise_error(TypeError)
     end
   end
-    
+
   it "returns NaN given NaN" do
     Math.atan(nan_value).nan?.should be_true
   end

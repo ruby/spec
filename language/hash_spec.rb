@@ -50,13 +50,13 @@ describe "Hash literal" do
     h.size.should == 2
     h.should == {:a => 1, :b => 2}
   end
-  
+
   it "recognizes '=' at the end of the key" do
     eval("{:a==>1}").should   == {:"a=" => 1}
     eval("{:a= =>1}").should  == {:"a=" => 1}
     eval("{:a= => 1}").should == {:"a=" => 1}
   end
-  
+
   it "with '==>' in the middle raises SyntaxError" do
     lambda {eval("{:a ==> 1}")}.should raise_error(SyntaxError)
   end

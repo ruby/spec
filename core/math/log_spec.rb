@@ -30,7 +30,7 @@ describe "Math.log" do
       Math.log("10").should be_close( 2.30258509299405, TOLERANCE)
       Math.log("10e15").should be_close(36.8413614879047, TOLERANCE)
     end
-    
+
     it "raises Errno::EDOM given NaN" do
       lambda { Math.log(nan_value) }.should raise_error(Errno::EDOM)
     end

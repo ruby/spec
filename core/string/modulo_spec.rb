@@ -943,32 +943,32 @@ describe "String#%" do
       (format % "5".taint).tainted?.should == false
     end
   end
-  
+
   ruby_version_is "1.9.2" do
     describe "when format string contains %{} sections" do
-    
+
       it "replaces %{} sections with values from passed-in hash" do
         ("%{foo}bar" % {:foo => 'oof'}).should == "oofbar"
       end
-      
+
       it "raises KeyError if key is missing from passed-in hash" do
         lambda {"%{foo}" % {}}.should raise_error(KeyError)
       end
-      
+
       it "should raise ArgumentError if no hash given" do
         lambda {"%{foo}" % []}.should raise_error(ArgumentError)
       end
     end
-    
+
     describe "when format string contains %<> formats" do
       it "uses the named argument for the format's value" do
         ("%<foo>d" % {:foo => 1}).should == "1"
       end
-      
+
       it "raises KeyError if key is missing from passed-in hash" do
         lambda {"%<foo>d" % {}}.should raise_error(KeyError)
       end
-      
+
       it "should raise ArgumentError if no hash given" do
         lambda {"%<foo>" % []}.should raise_error(ArgumentError)
       end

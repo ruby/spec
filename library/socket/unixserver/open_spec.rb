@@ -21,6 +21,6 @@ describe "UNIXServer.open" do
 	unix.path.should == @path
 	unix.addr.should == ["AF_UNIX", @path]
       end
-    end 
+    end
   end
 end

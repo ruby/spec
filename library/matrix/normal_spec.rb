@@ -6,7 +6,7 @@ ruby_version_is "1.9.3" do
     # it "returns false for non normal matrices" do
     #   Matrix[[0, 1], [1, 2]].normal?.should == false
     # end
-  
+
     it "returns true for normal matrices" do
       Matrix[[1, 1, 0], [0, 1, 1], [1, 0, 1]].normal?.should == true
       Matrix[[0, Complex(0, 2)], [Complex(0, -2), 0]].normal?.should == true

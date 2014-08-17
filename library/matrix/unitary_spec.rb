@@ -9,7 +9,7 @@ ruby_version_is "1.9.3" do
       Matrix[[0, Complex(0, 1)], [Complex(0, -1), 0]].unitary?.should == false
       Matrix[[1, 1, 0], [0, 1, 1], [1, 0, 1]].unitary?.should == false
     end
-  
+
     it "returns true for unitary matrices" do
       Matrix[[0, Complex(0, 1)], [Complex(0, 1), 0]].unitary?.should == true
     end

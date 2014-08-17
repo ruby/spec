@@ -29,7 +29,7 @@ describe "Math.ldexp" do
   it "returns NaN given NaN" do
     Math.ldexp(nan_value, 0).nan?.should be_true
   end
-  
+
   it "raises RangeError if NaN is given as the second arg" do
     lambda { Math.ldexp(0, nan_value) }.should raise_error(RangeError)
   end

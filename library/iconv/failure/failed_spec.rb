@@ -1,7 +1,7 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
 require File.expand_path('../../fixtures/classes.rb', __FILE__)
 
-ruby_version_is ''...'2.0' do 
+ruby_version_is ''...'2.0' do
   describe "Iconv::Failure#failed" do
     it "returns a substring of the original string passed to Iconv that starts at the character which caused the exception" do
       lambda {

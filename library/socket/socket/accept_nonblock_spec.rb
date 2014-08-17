@@ -15,7 +15,7 @@ describe "Socket#accept_nonblock" do
   after :each do
     @socket.close
   end
-  
+
   it "raises Errno::EAGAIN if the connection is not accepted yet" do
     lambda { @socket.accept_nonblock }.should raise_error(Errno::EAGAIN)
   end

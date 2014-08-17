@@ -1,7 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes.rb', __FILE__)
 
-ruby_version_is ''...'2.0' do 
+ruby_version_is ''...'2.0' do
   describe "Iconv::Failure" do
     it "is a module" do
       Iconv::Failure.should be_kind_of(Module)

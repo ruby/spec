@@ -7,7 +7,7 @@ require File.expand_path('../fixtures/classes.rb', __FILE__)
 # the following encodings:
 #   us-ascii, utf-8, utf-16, utf-16be, utf-16le, iso-8859-1
 
-ruby_version_is ''...'2.0' do 
+ruby_version_is ''...'2.0' do
   describe "Iconv#iconv" do
     it "raises an ArgumentError when called on a closed converter" do
       conv = Iconv.new("us-ascii", "us-ascii")

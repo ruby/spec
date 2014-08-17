@@ -14,7 +14,7 @@ describe :datetime_sec, :shared => true do
   it "adds 60 to negative values" do
     new_datetime(:second => -20).send(@method).should == 40
   end
-  
+
   it "returns the absolute value of a Rational" do
     new_datetime(:second => 5 + Rational(1,2)).send(@method).should == 5
   end

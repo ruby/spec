@@ -44,7 +44,7 @@ ruby_version_is "1.8.7" do
       s = "hola"
       (s == s.instance_exec { self }).should == true
     end
-    
+
     it "binds the block's binding self to the receiver" do
       s = "hola"
       (s == s.instance_exec { eval "self", binding }).should == true

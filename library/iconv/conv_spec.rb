@@ -2,7 +2,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../shared/initialize_exceptions', __FILE__)
 require File.expand_path('../fixtures/classes.rb', __FILE__)
 
-ruby_version_is ''...'2.0' do 
+ruby_version_is ''...'2.0' do
   describe "Iconv.conv" do
     it_behaves_like :iconv_initialize_exceptions, :conv, "test"
 

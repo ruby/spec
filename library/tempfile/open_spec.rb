@@ -67,7 +67,7 @@ describe "Tempfile.open when passed a block" do
 
     ScratchPad.recorded.should == :yielded
   end
-  
+
   ruby_version_is ""..."1.9" do
     it "returns nil" do
       value = Tempfile.open("specs") do |tempfile|
@@ -85,7 +85,7 @@ describe "Tempfile.open when passed a block" do
       value.should == "return"
     end
   end
-  
+
   it "closes the yielded Tempfile after the block" do
     Tempfile.open("specs") { |tempfile| @tempfile = tempfile }
     @tempfile.closed?.should be_true

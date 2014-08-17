@@ -1,7 +1,7 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
 require File.expand_path('../../fixtures/classes.rb', __FILE__)
 
-ruby_version_is ''...'2.0' do 
+ruby_version_is ''...'2.0' do
   describe "Iconv::Failure#success" do
     it "for Iconv#iconv and Iconv.conv returns the substring of the original string passed which was translated successfully until the exception ocurred" do
       lambda {

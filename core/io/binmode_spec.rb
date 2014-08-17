@@ -50,13 +50,13 @@ ruby_version_is "1.9" do
       @file.close
       rm_r @filename
     end
-    
+
     it "is true after a call to IO#binmode" do
       @file.binmode?.should be_false
       @file.binmode
       @file.binmode?.should be_true
     end
-    
+
     it "propagates to dup'ed IO objects" do
       @file.binmode
       @duped = @file.dup
