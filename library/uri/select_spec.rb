@@ -15,7 +15,7 @@ describe "URI#select" do
   end
 
   it "raises an ArgumentError if a component is requested that isn't valid under the given scheme" do
-    bad_selects = [
+    [
       lambda {URI("mailto:spam@mailinator.com").select(:path)},
       lambda {URI("http://blog.blag.web").select(:typecode)},
     ].each do |select_lambda|
