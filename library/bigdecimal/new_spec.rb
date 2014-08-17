@@ -40,7 +40,6 @@ describe "BigDecimal.new" do
   end
 
   it "Number of significant digits >= given precision" do
-    pi_string = "3.1415923"
     BigDecimal.new("3.1415923", 10).precs[1].should >= 10
   end
 

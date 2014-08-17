@@ -37,10 +37,7 @@ describe "BigDecimal#mod_part_of_divmod" do
 
   ruby_version_is "" ... "1.9" do
     it "does NOT raise ZeroDivisionError if other is zero" do
-      bd6543 = BigDecimal.new("6543.21")
       bd5667 = BigDecimal.new("5667.19")
-      a = BigDecimal("1.0000000000000000000000000000000000000000005")
-      b = BigDecimal("1.00000000000000000000000000000000000000000005")
 
       bd5667.send(@method, 0).nan?.should == true
       bd5667.send(@method, BigDecimal("0")).nan?.should == true
@@ -50,10 +47,7 @@ describe "BigDecimal#mod_part_of_divmod" do
 
   ruby_version_is "1.9" do
     it "raises ZeroDivisionError if other is zero" do
-      bd6543 = BigDecimal.new("6543.21")
       bd5667 = BigDecimal.new("5667.19")
-      a = BigDecimal("1.0000000000000000000000000000000000000000005")
-      b = BigDecimal("1.00000000000000000000000000000000000000000005")
 
       lambda { bd5667.send(@method, 0) }.should raise_error(ZeroDivisionError)
       lambda { bd5667.send(@method, BigDecimal("0")) }.should raise_error(ZeroDivisionError)
