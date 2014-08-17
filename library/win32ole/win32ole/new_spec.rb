@@ -5,7 +5,6 @@ platform_is :windows do
     it "creates a WIN32OLE object from OLE server name" do
       shell = WIN32OLE.new 'Shell.Application'
       shell.should be_kind_of WIN32OLE
-      shell = nil
     end
 
     it "creates a WIN32OLE object from valid CLSID" do
