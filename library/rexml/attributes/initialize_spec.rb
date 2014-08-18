@@ -12,7 +12,6 @@ describe "REXML::Attributes#initialize" do
 
   it "receives a parent node" do
     e = REXML::Element.new "root"
-    a = REXML::Attributes.new(e)
     e.attributes << REXML::Attribute.new("name", "Vic")
     e.attributes["name"].should == "Vic"
   end

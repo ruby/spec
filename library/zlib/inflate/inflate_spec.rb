@@ -29,7 +29,7 @@ describe "Zlib::Inflate#inflate" do
   it "works in pass-through mode, once finished" do
     data = "x\234c`\200\001\000\000\n\000\001"
 
-    unzipped = @inflator.inflate data
+    @inflator.inflate data
     @inflator.finish  # this is a precondition
 
     out = @inflator.inflate('uncompressed_data')

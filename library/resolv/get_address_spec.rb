@@ -10,14 +10,14 @@ describe "Resolv#getaddress" do
     res = Resolv.new([Resolv::Hosts.new])
 
     lambda {
-      address = res.getaddress("localhost")
+      res.getaddress("localhost")
     }.should_not raise_error(Resolv::ResolvError)
   end
 
   it "raises ResolvError if the name can not be looked up" do
     res = Resolv.new([])
     lambda {
-      address = res.getaddress("should.raise.error.")
+      res.getaddress("should.raise.error.")
     }.should raise_error(Resolv::ResolvError)
   end
 

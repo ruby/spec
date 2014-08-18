@@ -39,7 +39,6 @@ describe "Logger#datetime_format=" do
   end
 
   it "sets the date format for the logs" do
-    format = "%Y"
     @logger.datetime_format = "%Y"
     @logger.datetime_format.should == "%Y"
     @logger.add(Logger::WARN, "Test message")

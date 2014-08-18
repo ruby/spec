@@ -14,12 +14,11 @@ describe "StringScanner#unscan" do
   end
 
   it "remember only one previous position" do
-    pos1 = @s.pos
     @s.scan(/This/)
-    pos2 = @s.pos
+    pos = @s.pos
     @s.scan(/ is/)
     @s.unscan
-    @s.pos.should == pos2
+    @s.pos.should == pos
   end
 
   it "raises a ScanError when the previous match had failed" do

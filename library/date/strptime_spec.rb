@@ -99,7 +99,6 @@ describe "Date#strptime" do
   end
 
   it "parses a week day" do
-    d = Date.today
     Date.strptime("2007 4", "%Y %w").should == Date.civil(2007, 1, 4)
   end
 

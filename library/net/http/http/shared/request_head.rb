@@ -34,11 +34,9 @@ describe :net_ftp_request_head, :shared => true do
     end
 
     it "yields the response to the passed block" do
-      yielded = false
       @http.send(@method, "/request") do |response|
         response.body.should be_nil
       end
-      yielded = true
     end
 
     it "returns a Net::HTTPResponse object" do

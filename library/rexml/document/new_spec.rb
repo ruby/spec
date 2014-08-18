@@ -28,7 +28,7 @@ describe "REXML::Document#new" do
 
   ruby_bug "#", "1.8.6.111" do
     it "raises an error if source is not a Document, String or IO" do
-      lambda {s = REXML::Document.new(3)}.should raise_error(RuntimeError)
+      lambda {REXML::Document.new(3)}.should raise_error(RuntimeError)
     end
   end
 

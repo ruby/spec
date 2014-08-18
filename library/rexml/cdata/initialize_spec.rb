@@ -4,7 +4,6 @@ require 'rexml/document'
 describe "REXML::CData#initialize" do
   it "creates a new CData object" do
     c = REXML::CData.new("some    text")
-    c = REXML::CData.new("some    text")
     c.should be_kind_of(REXML::CData)
     c.should be_kind_of(REXML::Text)
   end
@@ -19,7 +18,7 @@ describe "REXML::CData#initialize" do
 
   it "receives parent as third argument" do
     e = REXML::Element.new("root")
-    c = REXML::CData.new("test", true, e)
+    REXML::CData.new("test", true, e)
     e.to_s.should == "<root><![CDATA[test]]></root>"
   end
 end

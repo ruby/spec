@@ -33,7 +33,7 @@ describe "GzipReader#eof?" do
 
   it "returns false when at EOF when there's data left in the buffer to read" do
     gz = Zlib::GzipReader.new @io
-    data = gz.read(9)
+    gz.read(9)
     gz.eof?.should be_false
     gz.read
     gz.eof?.should be_true

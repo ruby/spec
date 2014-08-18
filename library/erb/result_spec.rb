@@ -80,7 +80,7 @@ END
     MyERB2.new.main1().should == expected
 
     lambda {
-      actual = MyERB2.new.main2()
+      MyERB2.new.main2()
     }.should raise_error(NameError)
   end
 

@@ -31,6 +31,6 @@ describe "Logger#unknown" do
   it "receives empty messages" do
     lambda { @logger.unknown("") }.should_not raise_error
     @log_file.rewind
-    message = LoggerSpecs::strip_date(@log_file.readlines.first).should ==  "ANY -- : \n"
+    LoggerSpecs::strip_date(@log_file.readlines.first).should ==  "ANY -- : \n"
   end
 end

@@ -15,7 +15,6 @@ describe "REXML::Element#comments" do
   end
 
   it "returns a frozen object" do
-    comment = REXML::Comment.new "The insertion should fail"
     @e.comments.frozen?.should == true
   end
 end

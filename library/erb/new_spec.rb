@@ -107,7 +107,6 @@ END
 %%%
 END
 
-    trim_mode = '%-'
     ERB.new(input, nil, '%-').result.should == expected
   end
 

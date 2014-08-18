@@ -157,9 +157,9 @@ describe "StringIO.open when passed [Object, mode]" do
 
   it "raises an Errno::EACCES error when passed a frozen string with a write-mode" do
     (str = "example").freeze
-    lambda { io = StringIO.open(str, "r+") }.should raise_error(Errno::EACCES)
-    lambda { io = StringIO.open(str, "w") }.should raise_error(Errno::EACCES)
-    lambda { io = StringIO.open(str, "a") }.should raise_error(Errno::EACCES)
+    lambda { StringIO.open(str, "r+") }.should raise_error(Errno::EACCES)
+    lambda { StringIO.open(str, "w") }.should raise_error(Errno::EACCES)
+    lambda { StringIO.open(str, "a") }.should raise_error(Errno::EACCES)
   end
 end
 
