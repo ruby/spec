@@ -25,22 +25,22 @@ describe "Net::FTP#login" do
 
     ruby_version_is "" ... "1.9" do
       it "sends the current username + hostname as a password when required" do
-	passhost = Socket.gethostname
-	if not passhost.index(".")
-	  passhost = Socket.gethostbyname(passhost)[0]
-	end
-	pass = ENV["USER"] + "@" + passhost
-	@server.should_receive(:user).and_respond("331 User name okay, need password.")
-	@ftp.login
-	@server.login_pass.should == pass
+        passhost = Socket.gethostname
+        if not passhost.index(".")
+          passhost = Socket.gethostbyname(passhost)[0]
+        end
+        pass = ENV["USER"] + "@" + passhost
+        @server.should_receive(:user).and_respond("331 User name okay, need password.")
+        @ftp.login
+        @server.login_pass.should == pass
       end
     end
 
     ruby_version_is "1.9" do
       it "sends 'anonymous@' as a password when required" do
-	@server.should_receive(:user).and_respond("331 User name okay, need password.")
-	@ftp.login
-	@server.login_pass.should == "anonymous@"
+        @server.should_receive(:user).and_respond("331 User name okay, need password.")
+        @ftp.login
+        @server.login_pass.should == "anonymous@"
       end
     end
 
