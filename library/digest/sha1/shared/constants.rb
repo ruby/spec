@@ -1,4 +1,4 @@
-# -*- encoding: US-ASCII -*-
+# -*- encoding: us-ascii -*-
 require 'digest/sha1'
 
 module SHA1Constants

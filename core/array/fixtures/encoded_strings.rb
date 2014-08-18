@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# encoding: utf-8
 module ArraySpecs
   def self.array_with_usascii_and_7bit_utf8_strings
     [

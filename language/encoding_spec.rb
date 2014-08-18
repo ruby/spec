@@ -1,4 +1,4 @@
-# -*- encoding: US-ASCII -*-
+# -*- encoding: us-ascii -*-
 require File.expand_path('../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/coding_us_ascii', __FILE__)
 require File.expand_path('../fixtures/coding_utf_8', __FILE__)
@@ -22,7 +22,7 @@ ruby_version_is "1.9" do
       code = "# encoding: ASCII-8BIT\n__ENCODING__".force_encoding("US-ASCII")
       eval(code).should == Encoding::ASCII_8BIT
 
-      code = "# encoding: US-ASCII\n__ENCODING__".force_encoding("ASCII-8BIT")
+      code = "# encoding: us-ascii\n__ENCODING__".force_encoding("ASCII-8BIT")
       eval(code).should == Encoding::US_ASCII
     end
 

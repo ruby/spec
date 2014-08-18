@@ -1,4 +1,4 @@
-# -*- encoding: US-ASCII -*-
+# -*- encoding: us-ascii -*-
 require 'digest/sha2'
 
 module SHA384Constants

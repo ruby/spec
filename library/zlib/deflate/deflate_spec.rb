@@ -1,4 +1,4 @@
-# -*- encoding: US-ASCII -*-
+# -*- encoding: us-ascii -*-
 require 'zlib'
 require File.expand_path('../../../../spec_helper', __FILE__)
 
