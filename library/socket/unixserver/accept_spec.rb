@@ -22,6 +22,7 @@ platform_is_not :windows do
       data, info = sock.recvfrom(5)
 
       data.should == 'hello'
+      info.should_not be_empty
 
       server.close
       client.close
