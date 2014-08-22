@@ -3,6 +3,8 @@ require File.expand_path('../../../shared/complex/image', __FILE__)
 
 require 'complex'
 
-describe "Complex#image" do
-  it_behaves_like(:complex_image, :image)
+ruby_version_is ""..."2.2" do
+  describe "Complex#image" do
+    it_behaves_like(:complex_image, :image)
+  end
 end
