@@ -1,3 +1,4 @@
+require 'cmath'
 class IncludesMath
-  include Math
+  include CMath
 end

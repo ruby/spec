@@ -11,7 +11,7 @@ describe :complex_math_tanh, :shared => true do
   end
 
   it "returns the hyperbolic tangent for Complex numbers" do
-    @object.send(:tanh, Complex(0, Math::PI)).should be_close(Complex(0.0, -1.22464679914735e-16), TOLERANCE)
+    @object.send(:tanh, Complex(0, CMath::PI)).should be_close(Complex(0.0, -1.22464679914735e-16), TOLERANCE)
     @object.send(:tanh, Complex(3, 4)).should be_close(Complex(1.00070953606723, 0.00490825806749599), TOLERANCE)
   end
 end

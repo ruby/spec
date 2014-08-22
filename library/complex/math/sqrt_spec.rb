@@ -21,11 +21,11 @@ ruby_version_is ""..."1.9" do
 end
 
 describe "Math.sqrt" do
-  it_behaves_like :complex_math_sqrt, :_, Math
+  it_behaves_like :complex_math_sqrt, :_, CMath
 end
 
 ruby_version_is ""..."1.9" do
   describe "Math.sqrt!" do
-    it_behaves_like :complex_math_sqrt_bang, :_, Math
+    it_behaves_like :complex_math_sqrt_bang, :_, CMath
   end
 end

@@ -21,11 +21,11 @@ ruby_version_is ""..."1.9" do
 end
 
 describe "Math.sin" do
-  it_behaves_like :complex_math_sin, :_, Math
+  it_behaves_like :complex_math_sin, :_, CMath
 end
 
 ruby_version_is ""..."1.9" do
   describe "Math.sin!" do
-    it_behaves_like :complex_math_sin_bang, :_, Math
+    it_behaves_like :complex_math_sin_bang, :_, CMath
   end
 end

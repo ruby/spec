@@ -9,12 +9,12 @@ describe :complex_math_atan2, :shared => true do
   end
 
   it "returns the arc tangent for two Complex numbers" do
-    Math.atan2(Complex(3, 4), Complex(3.5, -4)).should be_close(Complex(-0.641757436698881, 1.10829873031207), TOLERANCE)
+    CMath.atan2(Complex(3, 4), Complex(3.5, -4)).should be_close(Complex(-0.641757436698881, 1.10829873031207), TOLERANCE)
   end
 
   it "returns the arc tangent for Complex and real numbers" do
-    Math.atan2(Complex(3, 4), -7).should be_close(Complex(2.61576754731561, -0.494290673139855), TOLERANCE)
-    Math.atan2(5, Complex(3.5, -4)).should be_close(Complex(0.739102348493673, 0.487821626522923), TOLERANCE)
+    CMath.atan2(Complex(3, 4), -7).should be_close(Complex(2.61576754731561, -0.494290673139855), TOLERANCE)
+    CMath.atan2(5, Complex(3.5, -4)).should be_close(Complex(0.739102348493673, 0.487821626522923), TOLERANCE)
   end
 end
 

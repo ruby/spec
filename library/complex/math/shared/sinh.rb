@@ -9,7 +9,7 @@ describe :complex_math_sinh, :shared => true do
   end
 
   it "returns the hyperbolic sin for Complex numbers" do
-    @object.send(:sinh, Complex(0, Math::PI)).should be_close(Complex(-0.0, 1.22464679914735e-16), TOLERANCE)
+    @object.send(:sinh, Complex(0, CMath::PI)).should be_close(Complex(-0.0, 1.22464679914735e-16), TOLERANCE)
     @object.send(:sinh, Complex(3, 4)).should be_close(Complex(-6.548120040911, -7.61923172032141), TOLERANCE)
   end
 end

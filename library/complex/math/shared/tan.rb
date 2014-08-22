@@ -9,7 +9,7 @@ describe :complex_math_tan, :shared => true do
   end
 
   it "returns the tangent for Complex numbers" do
-    @object.send(:tan, Complex(0, Math::PI)).should be_close(Complex(0.0, 0.99627207622075), TOLERANCE)
+    @object.send(:tan, Complex(0, CMath::PI)).should be_close(Complex(0.0, 0.99627207622075), TOLERANCE)
     @object.send(:tan, Complex(3, 4)).should be_close(Complex(-0.000187346204629452, 0.999355987381473), TOLERANCE)
   end
 end

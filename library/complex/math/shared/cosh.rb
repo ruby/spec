@@ -9,7 +9,7 @@ describe :complex_math_cosh, :shared => true do
   end
 
   it "returns the hyperbolic cosine for Complex numbers" do
-    @object.send(:cosh, Complex(0, Math::PI)).should be_close(Complex(-1.0, 0.0), TOLERANCE)
+    @object.send(:cosh, Complex(0, CMath::PI)).should be_close(Complex(-1.0, 0.0), TOLERANCE)
     @object.send(:cosh, Complex(3, 4)).should be_close(Complex(-6.58066304055116, -7.58155274274654), TOLERANCE)
   end
 end

@@ -21,11 +21,11 @@ ruby_version_is ""..."1.9" do
 end
 
 describe "Math.cos" do
-  it_behaves_like :complex_math_cos, :_, Math
+  it_behaves_like :complex_math_cos, :_, CMath
 end
 
 ruby_version_is ""..."1.9" do
   describe "Math.cos!" do
-    it_behaves_like :complex_math_cos_bang, :_, Math
+    it_behaves_like :complex_math_cos_bang, :_, CMath
   end
 end
