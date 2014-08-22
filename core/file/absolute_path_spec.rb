@@ -10,12 +10,6 @@ ruby_version_is "1.9" do
       File.absolute_path(@abs).should == @abs
     end
 
-    it "resolves paths relative to the current working directory" do
-      Dir.chdir(File.dirname(@abs)) do |dir|
-        File.absolute_path(File.expand_path('./' + File.basename(__FILE__))).should == @abs
-      end
-    end
-
     it "doesn't expand '~'" do
       File.absolute_path('~').should_not == File.expand_path('~')
     end
