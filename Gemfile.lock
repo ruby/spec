@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/ffi/ffi.git
-  revision: 24cf4c983b1e31f279a96855897cdd47cb3909df
+  revision: 53fedc22339d1447b4690c352acce0d3010bfe21
   specs:
-    ffi (1.4.0)
+    ffi (1.9.3)
 
 GIT
   remote: git://github.com/nurse/mspec.git
