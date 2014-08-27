@@ -42,8 +42,8 @@ describe "File.open" do
       ScratchPad.recorded.should == [:file_opened, :file_closed]
     end
 
-    it "does not propagate StandardErrors produced by close" do
-      File.open(@file, 'r') { |f| FileSpecs.make_closer f, IOError }
+    it "does not propagate IOError with 'closed stream' message produced by close" do
+      File.open(@file, 'r') { |f| FileSpecs.make_closer f, IOError.new('closed stream') }
 
       ScratchPad.recorded.should == [:file_opened, :file_closed]
     end
