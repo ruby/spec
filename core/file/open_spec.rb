@@ -153,10 +153,12 @@ describe "File.open" do
   it "opens a file with a file descriptor d and a block" do
     @fh = File.open(@file)
     @fh.should be_kind_of(File)
-    File.open(@fh.fileno) do |fh|
-      @fd = fh.fileno
-      @fh.close
-    end
+    lambda {
+      File.open(@fh.fileno) do |fh|
+        @fd = fh.fileno
+        @fh.close
+      end
+    }.should raise_error(Errno::EBADF)
     lambda { File.open(@fd) }.should raise_error(SystemCallError)
     File.exist?(@file).should == true
   end
