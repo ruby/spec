@@ -153,13 +153,25 @@ describe "File.open" do
   it "opens a file with a file descriptor d and a block" do
     @fh = File.open(@file)
     @fh.should be_kind_of(File)
-    lambda {
+
+    ruby_version_is ''...'2.1' do
       File.open(@fh.fileno) do |fh|
         @fd = fh.fileno
         @fh.close
       end
-    }.should raise_error(Errno::EBADF)
-    lambda { File.open(@fd) }.should raise_error(SystemCallError)
+      lambda { File.open(@fd) }.should raise_error(SystemCallError)
+    end
+
+    ruby_version_is '2.2' do
+      lambda {
+        File.open(@fh.fileno) do |fh|
+          @fd = fh.fileno
+          @fh.close
+        end
+      }.should raise_error(Errno::EBADF)
+      lambda { File.open(@fd) }.should raise_error(SystemCallError)
+    end
+
     File.exist?(@file).should == true
   end
 
