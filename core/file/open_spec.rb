@@ -154,7 +154,7 @@ describe "File.open" do
     @fh = File.open(@file)
     @fh.should be_kind_of(File)
 
-    ruby_version_is ''...'2.1' do
+    ruby_version_is ''...'2.2' do
       File.open(@fh.fileno) do |fh|
         @fd = fh.fileno
         @fh.close
