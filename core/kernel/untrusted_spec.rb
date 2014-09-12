@@ -31,10 +31,17 @@ describe "Kernel#untrusted?" do
     end
   end
 
-  ruby_version_is "2.0" do
+  ruby_version_is "2.0"..."2.2" do
     it "has no effect on immediate values" do
       d = 1
       lambda { d.untrust }.should raise_error(RuntimeError)
+    end
+  end
+
+  ruby_version_is "2.2" do
+    it "has effect on immediate values" do
+      d = 1
+      lambda { d.untrust }.should_not raise_error(RuntimeError)
     end
   end
 end
