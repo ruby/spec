@@ -64,10 +64,10 @@ describe "Kernel#taint" do
   end
 
   ruby_version_is "2.0" do
-  it "raises error on fixnum values" do
-    [1].each do |v|
-      lambda { v.taint }.should raise_error(RuntimeError)
+    it "raises error on fixnum values" do
+      [1].each do |v|
+        lambda { v.taint }.should raise_error(RuntimeError)
+      end
     end
-  end
   end
 end
