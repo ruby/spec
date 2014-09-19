@@ -31,5 +31,9 @@ describe "Float" do
       num = rand
       num.next_float.prev_float.should == num
     end
+
+    it "returns NAN if NAN was the receiver" do
+      Float::NAN.prev_float.nan?.should == true
+    end
   end
 end
