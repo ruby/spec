@@ -27,9 +27,16 @@ describe "Float" do
     end
 
     it "reverses the effect of next_float" do
-      0.0.next_float.prev_float.should eql 0.0
       num = rand
       num.next_float.prev_float.should eql num
+    end
+
+    it "returns positive zero when stepping downward from just above zero" do
+      x = 0.0.next_float.prev_float
+      (1/x).should eql Float::INFINITY
+      x = (-0.0).next_float.prev_float
+      (1/x).should eql Float::INFINITY
+      x.prev_float.should < 0
     end
 
     it "returns NAN if NAN was the receiver" do
