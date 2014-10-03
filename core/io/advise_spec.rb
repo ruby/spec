@@ -71,7 +71,15 @@ ruby_version_is '1.9.3' do
     end
 
     it "supports the willneed advice type" do
-      @io.advise(:willneed).should be_nil
+      begin
+        @io.advise(:willneed).should be_nil
+      rescue Errno::EINVAL
+        if /linux/ =~ RUBY_PLATFORM && (Etc.uname[:release].split('.').map(&:to_i) <=> [3,6]) < 0
+          skip "[ruby-core:65355] tmpfs is not supported"
+        else
+          retry
+        end
+      end
     end
 
     it "raises an IOError if the stream is closed" do
