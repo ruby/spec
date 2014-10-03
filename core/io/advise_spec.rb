@@ -70,11 +70,10 @@ ruby_version_is '1.9.3' do
       @io.advise(:noreuse).should be_nil
     end
 
-    it "supports the willneed advice type" do
-      if /linux/ =~ RUBY_PLATFORM && (Etc.uname[:release].split('.').map(&:to_i) <=> [3,6]) < 0
-        # [ruby-core:65355] tmpfs is not supported
-        lambda { @io.advise(:willneed) }.should raise_error(Errno::EINVAL)
-      else
+    if /linux/ =~ RUBY_PLATFORM && (Etc.uname[:release].split('.').map(&:to_i) <=> [3,6]) >= 0
+      # [ruby-core:65355] tmpfs is not supported
+    else
+      it "supports the willneed advice type" do
         @io.advise(:willneed).should be_nil
       end
     end
