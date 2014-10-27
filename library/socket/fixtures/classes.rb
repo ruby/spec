@@ -24,11 +24,18 @@ module SocketSpecs
   end
 
   def self.port
-    43191
+    @@_port ||= begin
+                  s = TCPServer.open(0)
+                  port = s.addr[1]
+                  s.close
+                  port
+                rescue
+                  43191
+                end
   end
 
   def self.str_port
-    "43191"
+    port.to_s
   end
 
   def self.local_port
