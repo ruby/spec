@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/ffi/ffi.git
-  revision: 53fedc22339d1447b4690c352acce0d3010bfe21
-  specs:
-    ffi (1.9.3)
-
-GIT
   remote: git://github.com/nurse/mspec.git
   revision: 88ffc944daaa9f1894521f8abaddc88d9a087342
   branch: ruby
@@ -14,10 +8,11 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    ffi (1.9.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  ffi!
+  ffi
   mspec!
