@@ -47,6 +47,7 @@
 /* Define all function flags */
 
 /* Array */
+#define HAVE_RB_ARRAY                      1
 #define HAVE_RARRAY                        1
 #define HAVE_RARRAY_LEN                    1
 #define HAVE_RARRAY_PTR                    1
@@ -89,10 +90,13 @@
 #define HAVE_RBIGNUM_SIGN                  1
 #define HAVE_RBIGNUM_LEN                   1
 #define HAVE_RB_BIG2DBL                    1
+#define HAVE_RB_DBL2BIG                    1
 #define HAVE_RB_BIG2LL                     1
 #define HAVE_RB_BIG2LONG                   1
 #define HAVE_RB_BIG2STR                    1
 #define HAVE_RB_BIG2ULONG                  1
+#define HAVE_RB_BIG_CMP                    1
+#define HAVE_RB_BIG_PACK                   1
 
 /* Class */
 #define HAVE_RB_CALL_SUPER                 1
@@ -101,6 +105,8 @@
 #define HAVE_RB_CLASS_NAME                 1
 #define HAVE_RB_CLASS_NEW                  1
 #define HAVE_RB_CLASS_NEW_INSTANCE         1
+#define HAVE_RB_CLASS_PATH                 1
+#define HAVE_RB_CLASS_REAL                 1
 #define HAVE_RB_CVAR_DEFINED               1
 #define HAVE_RB_CVAR_GET                   1
 #define HAVE_RB_CVAR_SET                   1
@@ -111,6 +117,10 @@
 #define HAVE_RB_INCLUDE_MODULE             1
 #define HAVE_RB_PATH2CLASS                 1
 #define HAVE_RB_PATH_TO_CLASS              1
+
+#ifdef RUBY_VERSION_IS_1_9_3
+#define HAVE_RB_CLASS_SUPERCLASS           1
+#endif
 
 /* Complex */
 #define HAVE_RB_COMPLEX                    1
@@ -248,10 +258,6 @@
 #define HAVE_RSTRING_LENINT                1
 #define HAVE_TIMET2NUM                     1
 
-#ifdef RUBY_VERSION_IS_1_9_3
-#define HAVE_RB_CLASS_SUPERCLASS           1
-#endif
-
 #define HAVE_RB_LONG2INT                   1
 #define HAVE_RB_INTERN3                    1
 #endif
@@ -300,6 +306,10 @@
 #ifdef RUBY_VERSION_IS_1_8_EX_1_9
 #define HAVE_RB_SET_KCODE                  1
 #endif
+#define HAVE_RB_STDERR                     1
+#define HAVE_RB_STDIN                      1
+#define HAVE_RB_STDOUT                     1
+#define HAVE_RB_DEFOUT                     1
 
 #define HAVE_RB_LASTLINE_SET               1
 #define HAVE_RB_LASTLINE_GET               1
@@ -325,6 +335,7 @@
 #define HAVE_RB_IO_ADDSTR                  1
 #define HAVE_RB_IO_CHECK_IO                1
 #define HAVE_RB_IO_CHECK_CLOSED            1
+#define HAVE_RB_IO_TAINT_CHECK             1
 #define HAVE_RB_IO_CHECK_READABLE          1
 #define HAVE_RB_IO_CHECK_WRITABLE          1
 #define HAVE_RB_IO_CLOSE                   1
@@ -381,6 +392,8 @@
 #define HAVE_RB_YIELD                      1
 #define HAVE_RB_YIELD_SPLAT                1
 #define HAVE_RB_YIELD_VALUES               1
+#define HAVE_RB_FUNCALL3                   1
+#define HAVE_RB_FUNCALL_WITH_BLOCK         1
 
 /* GC */
 #define HAVE_RB_GC_REGISTER_ADDRESS        1
@@ -425,6 +438,7 @@
 #define HAVE_RB_NUM2UINT                   1
 #endif
 #define HAVE_RB_NUM2LONG                   1
+#define HAVE_RB_INT2NUM                    1
 #define HAVE_RB_NUM2ULONG                  1
 #define HAVE_RB_NUM_COERCE_BIN             1
 #define HAVE_RB_NUM_COERCE_CMP             1
@@ -503,6 +517,8 @@
 #define HAVE_RB_RATIONAL_NEW               1
 #define HAVE_RB_RATIONAL_NEW1              1
 #define HAVE_RB_RATIONAL_NEW2              1
+#define HAVE_RB_RATIONAL_NUM               1
+#define HAVE_RB_RATIONAL_DEN               1
 
 /* Regexp */
 #define HAVE_RB_BACKREF_GET                1

@@ -107,6 +107,16 @@ describe "C-API Class function" do
     end
   end
 
+  describe "rb_class_path" do
+    it "returns a String of a class path with no scope modifiers" do
+      @s.rb_class_path(Array).should == "Array"
+    end
+
+    it "returns a String of a class path with scope modifiers" do
+      @s.rb_class_path(File::Stat).should == "File::Stat"
+    end
+  end
+
   describe "rb_class_name" do
     it "returns the class name" do
       @s.rb_class_name(CApiClassSpecs).should == "CApiClassSpecs"
@@ -264,6 +274,24 @@ describe "C-API Class function" do
 
     it "returns nil if the class has no superclass" do
       @s.rb_class_superclass(BasicObject).should be_nil
+    end
+  end
+
+  describe "rb_class_real" do
+    it "returns the class of an object ignoring the singleton class" do
+      obj = CApiClassSpecs::Sub.new
+      def obj.some_method() end
+
+      @s.rb_class_real(obj).should == CApiClassSpecs::Sub
+    end
+
+    it "returns the class of an object ignoring included modules" do
+      obj = CApiClassSpecs::SubM.new
+      @s.rb_class_real(obj).should == CApiClassSpecs::SubM
+    end
+
+    it "returns 0 if passed 0" do
+      @s.rb_class_real(0).should == 0
     end
   end
 end
