@@ -116,6 +116,10 @@ describe "Kernel.rand" do
       end
     end
   end
+
+  it 'returns nil when range is nonexistent' do
+    rand(1..0).should be_nil
+  end
 end
 
 describe "Kernel#rand" do
