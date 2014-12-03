@@ -15,7 +15,7 @@ describe "Exception#message" do
     exc.message.should == "this is from #to_s"
   end
 
-  context "when #bactrace is redefined" do
+  context "when #backtrace is redefined" do
     it "returns the Exception message" do
       e = Exception.new
       e.message.should == 'Exception'
