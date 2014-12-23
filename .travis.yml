@@ -1,17 +1,17 @@
 language: ruby
-script:
-  - bundle exec mspec .
+script: bundle exec mspec .
 rvm:
-  - 2.1.2
+  - 2.1
   - ruby-head
   - rbx-2
-  - jruby-1.7.12
+  - jruby
   - jruby-head
-allow_failures:
- - rvm: ruby-head
- - rvm: rbx-2
- - rvm: jruby-1.7.12
- - rvm: jruby-head
+matrix:
+  allow_failures:
+   - rvm: ruby-head
+   - rvm: rbx-2
+   - rvm: jruby
+   - rvm: jruby-head
 notifications:
   recipients:
     - brixen@gmail.com
