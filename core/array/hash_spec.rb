@@ -14,10 +14,10 @@ describe "Array#hash" do
   ruby_bug "#", "1.8.6.277" do
     it "properly handles recursive arrays" do
       empty = ArraySpecs.empty_recursive_array
-      empty.hash.should be_kind_of(Integer)
+      empty.hash.should be_kind_of(Fixnum)
 
       array = ArraySpecs.recursive_array
-      array.hash.should be_kind_of(Integer)
+      array.hash.should be_kind_of(Fixnum)
     end
   end
 
