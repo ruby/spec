@@ -1,4 +1,5 @@
 require File.expand_path('../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/def', __FILE__)
 
 # Language-level method behaviour
 describe "Redefining a method" do
@@ -8,6 +9,16 @@ describe "Redefining a method" do
 
     def barfoo; 200; end
     barfoo.should == 200
+  end
+end
+
+describe "Defining a method at the top-level" do
+  it "defines it on Object with private visibility by default" do
+    Object.should have_private_instance_method(:some_toplevel_method, false)
+  end
+
+  it "defines it on Object with public visibility after calling public" do
+    Object.should have_public_instance_method(:public_toplevel_method, false)
   end
 end
 
