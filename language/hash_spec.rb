@@ -89,11 +89,23 @@ describe "Hash literal" do
     {a: 1, **h, c: 4}.should == {a: 1, b: 2, c: 4}
   end
 
-  it "calls #to_hash to convert an '**obj' element" do
-    obj = mock("hash splat")
-    obj.should_receive(:to_hash).and_return({a: 2, b: 3})
+  ruby_version_is "2.0".."2.1" do
+    it "expands an '**{}' element with containing Hash literal keys taking precedence" do
+      {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 1, b: 3, c: 3}
+    end
+  end
 
-    {a: 1, **obj, c: 3}.should == {a:1, b: 3, c: 3}
+  ruby_version_is "2.2".."2.3" do
+    it "expands an '**{}' element with the last key/value pair taking precedence" do
+      {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 2, b: 3, c: 3}
+    end
+  end
+
+  it "calls #to_hash to expand an '**obj' element" do
+    obj = mock("hash splat")
+    obj.should_receive(:to_hash).and_return({b: 2, d: 4})
+
+    {a: 1, **obj, c: 3}.should == {a:1, b: 2, c: 3, d: 4}
   end
 
   it "raises a TypeError if #to_hash does not return a Hash" do
