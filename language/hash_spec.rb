@@ -95,7 +95,7 @@ describe "Hash literal" do
     end
   end
 
-  ruby_version_is "2.2".."2.3" do
+  ruby_version_is "2.2" do
     it "expands an '**{}' element with the last key/value pair taking precedence" do
       {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 2, b: 3, c: 3}
     end
