@@ -115,10 +115,6 @@ describe "Hash literal" do
     lambda { {**obj} }.should raise_error(TypeError)
   end
 
-  it "merges the containing Hash into the **obj before importing obj's items" do
-    {a: 1, **{a: 2, b: 3, c: 4}, c: 3}.should == {a: 1, b: 3, c: 3}
-  end
-
   it "merges multiple nested '**obj' in Hash literals" do
     h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
     h.should == {a: 1, b: 3, c: 4, d: 5}
