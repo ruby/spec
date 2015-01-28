@@ -89,15 +89,25 @@ describe "Hash literal" do
     {a: 1, **h, c: 4}.should == {a: 1, b: 2, c: 4}
   end
 
-  ruby_version_is "2.0".."2.1" do
+  ruby_version_is "2.0"..."2.2" do
     it "expands an '**{}' element with containing Hash literal keys taking precedence" do
       {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 1, b: 3, c: 3}
+    end
+
+    it "merges multiple nested '**obj' in Hash literals" do
+      h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
+      h.should == {a: 1, b: 3, c: 4, d: 5}
     end
   end
 
   ruby_version_is "2.2" do
     it "expands an '**{}' element with the last key/value pair taking precedence" do
       {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 2, b: 3, c: 3}
+    end
+
+    it "merges multiple nested '**obj' in Hash literals" do
+      h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
+      h.should == {a: 2, b: 3, c: 4, d: 6}
     end
   end
 
@@ -115,8 +125,4 @@ describe "Hash literal" do
     lambda { {**obj} }.should raise_error(TypeError)
   end
 
-  it "merges multiple nested '**obj' in Hash literals" do
-    h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
-    h.should == {a: 1, b: 3, c: 4, d: 5}
-  end
 end
