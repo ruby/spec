@@ -73,9 +73,18 @@ describe "Defining a 'respond_to_missing?' method" do
 end
 
 describe "Defining a method" do
-  it "returns a symbol of the method name" do
-    method_name = def some_method; end
-    method_name.should == :some_method
+  ruby_version_is ""..."2.1" do
+    it "returns a symbol of the method name" do
+      method_name = def some_method; end
+      method_name.should == nil
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "returns a symbol of the method name" do
+      method_name = def some_method; end
+      method_name.should == :some_method
+    end
   end
 end
 
