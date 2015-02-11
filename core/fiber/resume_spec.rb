@@ -14,25 +14,24 @@ with_feature :fiber do
     end
 
     with_feature :fork do
-      ruby_bug "redmine #595", "2.1.0" do
-        it "executes the ensure clause" do
-          rd, wr = IO.pipe
-          if Kernel::fork then
-            wr.close
-            rd.read.should == "executed"
-            rd.close
-          else
-            rd.close
-            Fiber.new {
-              begin
-                Fiber.yield
-              ensure
-                wr.write "executed"
-              end
-            }.resume
-            exit 0
-          end
+      it "does not execute the ensure clause" do
+        rd, wr = IO.pipe
+
+        Kernel::fork do
+          rd.close
+          Fiber.new {
+            begin
+              Fiber.yield
+            ensure
+              wr.write "executed"
+            end
+          }.resume
+          exit 0
         end
+
+        wr.close
+        rd.read.should == ""
+        rd.close
       end
     end
   end
