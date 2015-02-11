@@ -1,6 +1,8 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
+no_silent_rescue = "2.3"
+
 describe "Comparable#==" do
   a = b = nil
   before :each do
@@ -50,10 +52,19 @@ describe "Comparable#==" do
       a.should_receive(:<=>).any_number_of_times.and_return(nil)
       (a == b).should be_false
     end
+  end
 
+  ruby_version_is "1.9"...no_silent_rescue do
     it "returns false if calling #<=> on self returns a non-Integer" do
       a.should_receive(:<=>).any_number_of_times.and_return("abc")
       (a == b).should be_false
+    end
+  end
+
+  ruby_version_is no_silent_rescue do
+    it "raise an ArgumentError if calling #<=> on self returns a non-Integer" do
+      a.should_receive(:<=>).any_number_of_times.and_return("abc")
+      lambda { (a == b) }.should raise_error(ArgumentError)
     end
   end
 
@@ -70,7 +81,7 @@ describe "Comparable#==" do
     end
   end
 
-  ruby_version_is "1.9" do
+  ruby_version_is "1.9"...no_silent_rescue do
     # Behaviour confirmed by MRI test suite
     it "returns false if calling #<=> on self raises a StandardError" do
       def a.<=>(b) raise StandardError, "test"; end
@@ -80,6 +91,18 @@ describe "Comparable#==" do
     it "returns false if calling #<=> on self raises a subclass of StandardError" do
       def a.<=>(b) raise TypeError, "test"; end
       (a == b).should be_false
+    end
+  end
+
+  ruby_version_is no_silent_rescue do
+    it "raises the exception if calling #<=> on self raises a StandardError" do
+      def a.<=>(b) raise StandardError, "test"; end
+      lambda { (a == b) }.should raise_error(StandardError)
+    end
+
+    it "raises the exception if calling #<=> on self raises a subclass of StandardError" do
+      def a.<=>(b) raise TypeError, "test"; end
+      lambda { (a == b) }.should raise_error(TypeError)
     end
   end
 
