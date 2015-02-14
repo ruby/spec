@@ -24,7 +24,7 @@ describe "Hash#assoc" do
   it "only returns the first matching key-value pair for identity hashes" do
     @h.compare_by_identity
     @h['pear'] = :red
-    @h['pear'] = :green
+    @h['pear'.dup] = :green
     @h.keys.grep(/pear/).size.should == 2
     @h.assoc('pear').should == ['pear', :red]
   end
