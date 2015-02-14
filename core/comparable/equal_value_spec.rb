@@ -16,98 +16,121 @@ describe "Comparable#==" do
   end
 
   it "calls #<=> on self with other and returns true if #<=> returns 0" do
-    a.should_receive(:<=>).any_number_of_times.and_return(0)
+    a.should_receive(:<=>).once.and_return(0)
     (a == b).should == true
   end
 
   it "calls #<=> on self with other and returns true if #<=> returns 0.0" do
-    a.should_receive(:<=>).any_number_of_times.and_return(0.0)
+    a.should_receive(:<=>).once.and_return(0.0)
     (a == b).should == true
   end
 
   it "returns false if calling #<=> on self returns a positive Integer" do
-    a.should_receive(:<=>).any_number_of_times.and_return(1)
+    a.should_receive(:<=>).once.and_return(1)
     (a == b).should == false
   end
 
   it "returns false if calling #<=> on self returns a negative Integer" do
-    a.should_receive(:<=>).any_number_of_times.and_return(-1)
+    a.should_receive(:<=>).once.and_return(-1)
     (a == b).should == false
   end
 
-  ruby_version_is ""..."1.9" do
-    it "returns nil if calling #<=> on self returns nil" do
-      a.should_receive(:<=>).any_number_of_times.and_return(nil)
-      (a == b).should == nil
+  context "when #<=> returns nil" do
+    before :each do
+      a.should_receive(:<=>).once.and_return(nil)
     end
 
-    it "returns nil if calling #<=> on self returns a non-Integer" do
-      a.should_receive(:<=>).any_number_of_times.and_return("abc")
-      (a == b).should == nil
+    ruby_version_is ""..."1.9" do
+      it "returns nil" do
+        (a == b).should == nil
+      end
     end
-  end
 
-  ruby_version_is "1.9" do
-    it "returns false if calling #<=> on self returns nil" do
-      a.should_receive(:<=>).any_number_of_times.and_return(nil)
-      (a == b).should be_false
-    end
-  end
-
-  ruby_version_is "1.9"...no_silent_rescue do
-    it "returns false if calling #<=> on self returns a non-Integer" do
-      a.should_receive(:<=>).any_number_of_times.and_return("abc")
-      (a == b).should be_false
+    ruby_version_is "1.9" do
+      it "returns false" do
+        (a == b).should be_false
+      end
     end
   end
 
-  ruby_version_is no_silent_rescue do
-    it "raise an ArgumentError if calling #<=> on self returns a non-Integer" do
-      a.should_receive(:<=>).any_number_of_times.and_return("abc")
-      lambda { (a == b) }.should raise_error(ArgumentError)
+  context "when #<=> returns nor nil neither an Integer" do
+    before :each do
+      a.should_receive(:<=>).once.and_return("abc")
+    end
+
+    ruby_version_is ""..."1.9" do
+      it "returns nil" do
+        (a == b).should == nil
+      end
+    end
+
+    ruby_version_is "1.9"...no_silent_rescue do
+      it "returns false" do
+        (a == b).should be_false
+      end
+    end
+
+    ruby_version_is no_silent_rescue do
+      it "raises an ArgumentError" do
+        lambda { (a == b) }.should raise_error(ArgumentError)
+      end
     end
   end
 
-  ruby_version_is ""..."1.9" do
-    it "returns nil if calling #<=> on self raises a StandardError" do
-      def a.<=>(b) raise StandardError, "test"; end
-      (a == b).should == nil
+  context "when #<=> raises an exception" do
+    context "if it is a StandardError" do
+      before :each do
+        a.should_receive(:<=>).once.and_raise(StandardError)
+      end
+
+      ruby_version_is ""..."1.9" do
+        it "returns nil" do
+          (a == b).should == nil
+        end
+      end
+
+      ruby_version_is "1.9"...no_silent_rescue do
+        # Behaviour confirmed by MRI test suite
+        it "returns false" do
+          (a == b).should be_false
+        end
+      end
+
+      ruby_version_is no_silent_rescue do
+        it "lets it go through" do
+          lambda { (a == b) }.should raise_error(StandardError)
+        end
+      end
     end
 
-    it "returns nil if calling #<=> on self raises a subclass of StandardError" do
+    context "if it is a subclass of StandardError" do
       # TypeError < StandardError
-      def a.<=>(b) raise TypeError, "test"; end
-      (a == b).should == nil
-    end
-  end
+      before :each do
+        a.should_receive(:<=>).once.and_raise(TypeError)
+      end
 
-  ruby_version_is "1.9"...no_silent_rescue do
-    # Behaviour confirmed by MRI test suite
-    it "returns false if calling #<=> on self raises a StandardError" do
-      def a.<=>(b) raise StandardError, "test"; end
-      (a == b).should be_false
+      ruby_version_is ""..."1.9" do
+        it "returns nil" do
+          (a == b).should == nil
+        end
+      end
+
+      ruby_version_is "1.9"...no_silent_rescue do
+        it "returns false" do
+          (a == b).should be_false
+        end
+      end
+
+      ruby_version_is no_silent_rescue do
+        it "lets it go through" do
+          lambda { (a == b) }.should raise_error(TypeError)
+        end
+      end
     end
 
-    it "returns false if calling #<=> on self raises a subclass of StandardError" do
-      def a.<=>(b) raise TypeError, "test"; end
-      (a == b).should be_false
+    it "lets it go through if it is not a StandardError" do
+      a.should_receive(:<=>).once.and_raise(Exception)
+      lambda { (a == b) }.should raise_error(Exception)
     end
-  end
-
-  ruby_version_is no_silent_rescue do
-    it "raises the exception if calling #<=> on self raises a StandardError" do
-      def a.<=>(b) raise StandardError, "test"; end
-      lambda { (a == b) }.should raise_error(StandardError)
-    end
-
-    it "raises the exception if calling #<=> on self raises a subclass of StandardError" do
-      def a.<=>(b) raise TypeError, "test"; end
-      lambda { (a == b) }.should raise_error(TypeError)
-    end
-  end
-
-  it "raises the exception if calling #<=> on self raises an unrescued exception" do
-    def a.<=>(b) raise Exception, "test"; end
-    lambda { (a == b) }.should raise_error(Exception)
   end
 end
