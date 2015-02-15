@@ -117,4 +117,24 @@ describe "Hash#[]" do
     key = HashSpecs::KeyWithPrivateHash.new
     new_hash(key => 42)[key].should == 42
   end
+
+  describe "when compare_by_identity? is true" do
+    before(:each) do
+      @identity_hash = {}.compare_by_identity
+    end
+
+    ruby_version_is ""..."2.2" do
+      it "does not match literal string keys" do
+        @identity_hash["a"] = 1
+        @identity_hash["a"].should == nil
+      end
+    end
+
+    ruby_version_is "2.2" do
+      it "matches literal string keys" do
+        @identity_hash["a"] = 1
+        @identity_hash["a"].should == 1
+      end
+    end
+  end
 end
