@@ -50,6 +50,19 @@ describe "IO.open" do
     ScratchPad.recorded.should == :called
   end
 
+  it "propagates an exception raised by #close that is a StandardError" do
+    lambda do
+      IO.open(@fd, "w") do |io|
+        IOSpecs.io_mock(io, :close) do
+          super()
+          ScratchPad.record :called
+          raise StandardError
+        end
+      end
+    end.should raise_error(StandardError)
+    ScratchPad.recorded.should == :called
+  end
+
   it "does not propagate a IOError with 'closed stream' message raised by #close" do
     IO.open(@fd, "w") do |io|
       IOSpecs.io_mock(io, :close) do
