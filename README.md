@@ -1,6 +1,6 @@
 # A RubySpec fork for CRuby
 
-[![Build Status](https://travis-ci.org/nurse/rubyspec.png)](https://travis-ci.org/nurse/rubyspec)
+[![Build Status](https://travis-ci.org/ruby/rubyspec.png)](https://travis-ci.org/ruby/rubyspec)
 
 ## FAQ
 
