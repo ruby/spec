@@ -1,7 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/caller', __FILE__)
 
-describe 'Kernel#caller_locations' do
+describe 'Kernel#caller' do
   it 'is a private method' do
     Kernel.should have_private_instance_method(:caller)
   end
