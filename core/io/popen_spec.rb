@@ -50,7 +50,7 @@ describe "IO.popen" do
     end
 
     it "waits for the child to finish" do
-      @io = IO.popen("cat > #{@fname} && sleep 1", "w")
+      @io = IO.popen("cat > #{@fname}", "w")
       @io.write("bar")
       @io.close
 
