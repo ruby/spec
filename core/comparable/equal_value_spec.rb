@@ -37,9 +37,20 @@ describe "Comparable#==" do
     (@a == @b).should be_false
   end
 
-  it "returns false if calling #<=> on self returns a non-Integer" do
-    @a.should_receive(:<=>).any_number_of_times.and_return("abc")
-    (@a == @b).should be_false
+  ruby_version_is ""..."2.3" do
+    it "returns false if calling #<=> on self returns a non-Integer" do
+      @a.should_receive(:<=>).any_number_of_times.and_return("abc")
+      (@a == @b).should be_false
+    end
+  end
+
+  ruby_version_is "2.3" do
+    it "raises ArgumentError if calling #<=> on self returns a non-Integer" do
+      @a.should_receive(:<=>).any_number_of_times.and_return("abc")
+      lambda {
+        @a == @b
+      }.should raise_error(ArgumentError)
+    end
   end
 
   describe "when calling #<=> on self raises an Exception" do
@@ -59,10 +70,23 @@ describe "Comparable#==" do
       lambda { @raise_not_standard_error == @b }.should raise_error(@not_standard_error)
     end
 
-    # Behaviour confirmed by MRI test suite
-    it "returns false if #<=> raises a StandardError" do
-      (@raise_standard_error == @b).should be_false
-      (@raise_sub_standard_error == @b).should be_false
+    ruby_version_is ""..."2.3" do
+      it "returns false if #<=> raises a StandardError" do
+        (@raise_standard_error == @b).should be_false
+        (@raise_sub_standard_error == @b).should be_false
+      end
+    end
+
+    ruby_version_is "2.3" do
+      it "raises the error if #<=> raises a StandardError" do
+        lambda {
+          @raise_standard_error == @b
+        }.should raise_error(StandardError)
+
+        lambda {
+          @raise_sub_standard_error == @b
+        }.should raise_error(TypeError)
+      end
     end
   end
 end

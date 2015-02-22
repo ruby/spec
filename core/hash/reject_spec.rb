@@ -25,14 +25,28 @@ describe "Hash#reject" do
     h.reject { false }.to_a.should == [[1, 2]]
   end
 
-  it "returns subclass instance for subclasses" do
-    HashSpecs::MyHash[1 => 2, 3 => 4].reject { false }.should be_an_instance_of(HashSpecs::MyHash)
-    HashSpecs::MyHash[1 => 2, 3 => 4].reject { true }.should be_an_instance_of(HashSpecs::MyHash)
+  ruby_version_is ""..."2.2" do
+    it "returns subclass instance for subclasses" do
+      HashSpecs::MyHash[1 => 2, 3 => 4].reject { false }.should be_an_instance_of(HashSpecs::MyHash)
+      HashSpecs::MyHash[1 => 2, 3 => 4].reject { true }.should be_an_instance_of(HashSpecs::MyHash)
+    end
+
+    it "taints the resulting hash" do
+      h = new_hash(:a => 1).taint
+      h.reject {false}.tainted?.should == true
+    end
   end
 
-  it "taints the resulting hash" do
-    h = new_hash(:a => 1).taint
-    h.reject {false}.tainted?.should == true
+  ruby_version_is "2.2" do
+    it "returns Hash instance for subclasses" do
+      HashSpecs::MyHash[1 => 2, 3 => 4].reject { false }.should be_an_instance_of(Hash)
+      HashSpecs::MyHash[1 => 2, 3 => 4].reject { true }.should be_an_instance_of(Hash)
+    end
+
+    it "does not taint the resulting hash" do
+      h = new_hash(:a => 1).taint
+      h.reject {false}.tainted?.should == false
+    end
   end
 
   it "processes entries with the same order as reject!" do

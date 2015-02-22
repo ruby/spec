@@ -62,7 +62,6 @@ describe "IO.popen" do
     it "does not throw an exception if child exited and has been waited for" do
       @io = IO.popen("sleep 1000")
       Process.kill "KILL", @io.pid
-      Process.wait @io.pid
       @io.close
       $?.exitstatus.should be_nil
     end

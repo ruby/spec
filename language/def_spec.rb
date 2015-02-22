@@ -73,9 +73,18 @@ describe "Defining a 'respond_to_missing?' method" do
 end
 
 describe "Defining a method" do
-  it "returns a symbol of the method name" do
-    method_name = def some_method; end
-    method_name.should == :some_method
+  ruby_version_is ""..."2.1" do
+    it "returns a symbol of the method name" do
+      method_name = def some_method; end
+      method_name.should == nil
+    end
+  end
+
+  ruby_version_is "2.1" do
+    it "returns a symbol of the method name" do
+      method_name = def some_method; end
+      method_name.should == :some_method
+    end
   end
 end
 
@@ -165,15 +174,30 @@ describe "An instance method with a default argument" do
     foo(2,3,3).should == [2,3,[3]]
   end
 
-  it "calls a method with the same name as the local" do
-    def bar
-      1
+  ruby_version_is "2.0"..."2.2" do
+    it "calls a method with the same name as the local" do
+      def bar
+        1
+      end
+      def foo(bar = bar)
+        bar
+      end
+      foo.should == 1
+      foo(2).should == 2
     end
-    def foo(bar = bar)
-      bar
+  end
+
+  ruby_version_is "2.2" do
+    it "does not call a method with the same name as the local" do
+      def bar
+        1
+      end
+      def foo(bar = bar)
+        bar
+      end
+      foo.should == nil
+      foo(2).should == 2
     end
-    foo.should == 1
-    foo(2).should == 2
   end
 end
 

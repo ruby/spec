@@ -8,7 +8,7 @@ describe "Hash#compare_by_identity" do
     @h["a"] = :a
     @h["a"].should == :a
     @h.compare_by_identity
-    @h["a"].should be_nil
+    @h["a".dup].should be_nil
   end
 
   it "causes #compare_by_identity? to return true" do
@@ -30,7 +30,7 @@ describe "Hash#compare_by_identity" do
     @idh[:bar] = :f
     "bar".should_not equal('bar')
     @idh["bar"] = :g
-    @idh["bar"] = :h
+    @idh["bar".dup] = :h
     @idh.values.should == [:c, :d, :f, :g, :h]
   end
 
