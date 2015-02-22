@@ -26,6 +26,6 @@ describe 'Kernel#caller_locations' do
     locations = KernelSpecs::CallerTest.locations
     line      = __LINE__ - 1
 
-    locations[0].should == "#{__FILE__}:#{line}:in `__script__'"
+    locations[0].should include("#{__FILE__}:#{line}:in")
   end
 end
