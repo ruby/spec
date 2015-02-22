@@ -120,6 +120,63 @@ describe "Proc.new with an associated block" do
   end
 end
 
+describe "Proc.new with a block argument" do
+  it "returns the passed proc created from a block" do
+    passed_prc = Proc.new { "hello".size }
+    prc = Proc.new(&passed_prc)
+
+    prc.should equal(passed_prc)
+    prc.call.should == 5
+  end
+
+  it "returns the passed proc created from a method" do
+    method = "hello".method(:size)
+    passed_prc = Proc.new(&method)
+    prc = Proc.new(&passed_prc)
+
+    prc.should equal(passed_prc)
+    prc.call.should == 5
+  end
+
+  it "returns the passed proc created from a symbol" do
+    passed_prc = Proc.new(&:size)
+    prc = Proc.new(&passed_prc)
+
+    prc.should equal(passed_prc)
+    prc.call("hello").should == 5
+  end
+end
+
+describe "Proc.new with a block argument called indirectly from a subclass" do
+  it "returns the passed proc created from a block" do
+    passed_prc = ProcSpecs::MyProc.new { "hello".size }
+    passed_prc.class.should == ProcSpecs::MyProc
+    prc = ProcSpecs::MyProc.new(&passed_prc)
+
+    prc.should equal(passed_prc)
+    prc.call.should == 5
+  end
+
+  it "returns the passed proc created from a method" do
+    method = "hello".method(:size)
+    passed_prc = ProcSpecs::MyProc.new(&method)
+    passed_prc.class.should == ProcSpecs::MyProc
+    prc = ProcSpecs::MyProc.new(&passed_prc)
+
+    prc.should equal(passed_prc)
+    prc.call.should == 5
+  end
+
+  it "returns the passed proc created from a symbol" do
+    passed_prc = ProcSpecs::MyProc.new(&:size)
+    passed_prc.class.should == ProcSpecs::MyProc
+    prc = ProcSpecs::MyProc.new(&passed_prc)
+
+    prc.should equal(passed_prc)
+    prc.call("hello").should == 5
+  end
+end
+
 describe "Proc.new without a block" do
   it "raises an ArgumentError" do
     lambda { Proc.new }.should raise_error(ArgumentError)
@@ -131,5 +188,15 @@ describe "Proc.new without a block" do
 
   it "raises an ArgumentError if invoked on a subclass from within a method with no block" do
     lambda { ProcSpecs.new_proc_subclass_in_method }.should raise_error(ArgumentError)
+  end
+
+  it "uses the implicit block from an enclosing method" do
+    def some_method
+      Proc.new
+    end
+
+    prc = some_method { "hello" }
+
+    prc.call.should == "hello"
   end
 end

@@ -6,34 +6,43 @@ describe "Kernel#sleep" do
     Kernel.should have_private_instance_method(:sleep)
   end
 
-  it "pauses execution for approximately the duration requested" do
-    duration = 0.1
-    start = Time.now
-    sleep duration
-    (Time.now - start).should be_close(duration, 0.1)
+  it "accepts a Float" do
+    sleep(0.1).should be_close(0, 2)
   end
 
-  it "returns the rounded number of seconds asleep" do
-    sleep(0.01).should be_kind_of(Integer)
+  it "accepts a Fixnum" do
+    sleep(0).should be_close(0, 2)
   end
 
-  it "raises a TypeError when passed a non-numeric duration" do
+  it "accepts a Rational" do
+    sleep(Rational(1, 9)).should be_close(0, 2)
+  end
+
+  it "raises an ArgumentError when passed a negative duration" do
+    lambda { sleep(-0.1) }.should raise_error(ArgumentError)
+    lambda { sleep(-1) }.should raise_error(ArgumentError)
+  end
+
+  it "raises a TypeError when passed nil" do
     lambda { sleep(nil)   }.should raise_error(TypeError)
-    lambda { sleep('now') }.should raise_error(TypeError)
+  end
+
+  it "raises a TypeError when passed a String" do
     lambda { sleep('2')   }.should raise_error(TypeError)
   end
 
   it "pauses execution indefinitely if not given a duration" do
-    lock = Channel.new
+    running = false
     t = Thread.new do
-      lock << :ready
+      running = true
       sleep
       5
     end
-    lock.receive.should == :ready
-    # wait until the thread has gone to sleep
+
+    Thread.pass until running
     Thread.pass while t.status and t.status != "sleep"
-    t.run
+
+    t.wakeup
     t.value.should == 5
   end
 end

@@ -52,26 +52,16 @@ describe "Hash#reject" do
 end
 
 describe "Hash#reject!" do
-  before(:each) do
-    @hsh = new_hash
-    (1 .. 10).each { |k| @hsh[k] = (k % 2 == 0) }
-    @empty = new_hash
-  end
-
   it "removes keys from self for which the block yields true" do
-    @hsh.reject! { |k,v| v }
-    @hsh.keys.sort.should == [1,3,5,7,9]
+    hsh = new_hash
+    (1 .. 10).each { |k| hsh[k] = (k % 2 == 0) }
+    hsh.reject! { |k,v| v }
+    hsh.keys.sort.should == [1,3,5,7,9]
   end
 
   it "is equivalent to delete_if if changes are made" do
-    @hsh.reject! { |k,v| v }.should == @hsh.delete_if { |k, v| v }
-
-    h = new_hash(1 => 2, 3 => 4)
-    all_args_reject = []
-    all_args_delete_if = []
-    h.dup.reject! { |*args| all_args_reject << args }
-    h.dup.delete_if { |*args| all_args_delete_if << args }
-    all_args_reject.should == all_args_delete_if
+    hsh = new_hash(:a => 1)
+    hsh.reject! { |k,v| v < 2 }.should == hsh.dup.delete_if { |k, v| v < 2 }
   end
 
   it "returns nil if no changes were made" do
@@ -89,41 +79,13 @@ describe "Hash#reject!" do
     reject_bang_pairs.should == delete_if_pairs
   end
 
-  ruby_version_is ""..."1.9" do
-    it "raises a TypeError if called on a frozen instance" do
-      lambda { HashSpecs.frozen_hash.reject! { false } }.should raise_error(TypeError)
-      lambda { HashSpecs.empty_frozen_hash.reject! { true } }.should raise_error(TypeError)
-    end
+  it "raises a RuntimeError if called on a frozen instance that is modified" do
+    lambda { HashSpecs.empty_frozen_hash.reject! { true } }.should raise_error(RuntimeError)
   end
 
-  ruby_version_is "1.9" do
-    it "raises a RuntimeError if called on a frozen instance that is modified" do
-      lambda { HashSpecs.empty_frozen_hash.reject! { true } }.should raise_error(RuntimeError)
-    end
-
-    it "raises a RuntimeError if called on a frozen instance that would not be modified" do
-      lambda { HashSpecs.frozen_hash.reject! { false } }.should raise_error(RuntimeError)
-    end
+  it "raises a RuntimeError if called on a frozen instance that would not be modified" do
+    lambda { HashSpecs.frozen_hash.reject! { false } }.should raise_error(RuntimeError)
   end
 
-  ruby_version_is "" ... "1.8.7" do
-    it "raises a LocalJumpError when called on a non-empty hash without a block" do
-      lambda { @hsh.reject! }.should raise_error(LocalJumpError)
-    end
-
-    it "does not raise a LocalJumpError when called on an empty hash without a block" do
-      @empty.reject!.should == nil
-    end
-  end
-
-  ruby_version_is "1.8.7" do
-    it "returns an Enumerator when called on a non-empty hash without a block" do
-      @hsh.reject!.should be_an_instance_of(enumerator_class)
-    end
-
-    it "returns an Enumerator when called on an empty hash without a block" do
-      @empty.reject!.should be_an_instance_of(enumerator_class)
-    end
-  end
-
+  it_behaves_like(:hash_iteration_no_block, :reject!)
 end

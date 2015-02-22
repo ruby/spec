@@ -119,9 +119,7 @@ describe "The break statement in a lambda" do
         it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
           @program.break_in_nested_scope_yield
           expected = [:a, :d, :aaa, :b, :bbb]
-          expected.push expected
-          expected.push :e
-          ScratchPad.recorded.should == expected
+          ScratchPad.recorded.should == [:a, :d, :aaa, :b, :bbb, :e]
         end
       end
     end
@@ -184,6 +182,11 @@ describe "Break inside a while loop" do
       a = while true; break []; end;       a.should == []
       a = while true; break [1]; end;      a.should == [1]
     end
+
+    it "passes the value returned by a method with omitted parenthesis and passed block" do
+      obj = BreakSpecs::Block.new
+      lambda { break obj.method :value do |x| x end }.call.should == :value
+    end
   end
 
   describe "with a splat" do
@@ -191,31 +194,19 @@ describe "Break inside a while loop" do
       a = while true; break *[1,2]; end;    a.should == [1,2]
     end
 
-    ruby_version_is "" ... "1.9" do
-      it "unwraps the value if there is only one value" do
-        a = while true; break *1; end;      a.should == 1
-      end
-
-      it "makes the value nil if the splat is empty" do
-        a = while true; break *[]; end;     a.should == nil
-      end
+    it "treats nil as an empty array" do
+      a = while true; break *nil; end;      a.should == []
     end
 
-    ruby_version_is "1.9" do
-      it "treats nil as an empty array" do
-        a = while true; break *nil; end;      a.should == []
-      end
+    it "preserves an array as is" do
+      a = while true; break *[]; end;       a.should == []
+      a = while true; break *[1,2]; end;    a.should == [1,2]
+      a = while true; break *[nil]; end;    a.should == [nil]
+      a = while true; break *[[]]; end;     a.should == [[]]
+    end
 
-      it "preserves an array as is" do
-        a = while true; break *[]; end;       a.should == []
-        a = while true; break *[1,2]; end;    a.should == [1,2]
-        a = while true; break *[nil]; end;    a.should == [nil]
-        a = while true; break *[[]]; end;     a.should == [[]]
-      end
-
-      it "wraps a non-Array in an Array" do
-        a = while true; break *1; end;        a.should == [1]
-      end
+    it "wraps a non-Array in an Array" do
+      a = while true; break *1; end;        a.should == [1]
     end
   end
 
@@ -349,5 +340,3 @@ describe "Executing break from within a block" do
     ScratchPad.recorded.should == [:two_ensure, :three_post, :three_ensure]
   end
 end
-
-language_version __FILE__, "break"

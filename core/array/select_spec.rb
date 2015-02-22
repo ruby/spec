@@ -11,7 +11,7 @@ describe "Array#select" do
   end
 
   it "does not return subclass instance on Array subclasses" do
-    ArraySpecs::MyArray[1, 2, 3].select { true }.should be_kind_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].select { true }.should be_an_instance_of(Array)
   end
 
   it "properly handles recursive arrays" do
@@ -25,12 +25,10 @@ describe "Array#select" do
   end
 end
 
-ruby_version_is "1.9" do
-  describe "Array#select!" do
-    it "returns nil if no changes were made in the array" do
-      [1, 2, 3].select! { true }.should be_nil
-    end
-
-    it_behaves_like :keep_if, :select!
+describe "Array#select!" do
+  it "returns nil if no changes were made in the array" do
+    [1, 2, 3].select! { true }.should be_nil
   end
+
+  it_behaves_like :keep_if, :select!
 end

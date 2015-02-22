@@ -12,7 +12,7 @@ describe "String#lstrip" do
 
   # spec/core/string/lstrip_spec.rb
   not_compliant_on :rubinius do
-    it "does not strip leading \0" do
+    it "does not strip leading \\0" do
      "\x00hello".lstrip.should == "\x00hello"
     end
   end
@@ -41,26 +41,13 @@ describe "String#lstrip!" do
     a.should == "hello"
   end
 
-  ruby_version_is ""..."1.9" do
-    it "raises a TypeError on a frozen instance that is modified" do
-      lambda { "  hello  ".freeze.lstrip! }.should raise_error(TypeError)
-    end
-
-    it "does not raise an exception on a frozen instance that would not be modified" do
-      "hello".freeze.lstrip!.should be_nil
-      "".freeze.lstrip!.should be_nil
-    end
+  it "raises a RuntimeError on a frozen instance that is modified" do
+    lambda { "  hello  ".freeze.lstrip! }.should raise_error(RuntimeError)
   end
 
-  ruby_version_is "1.9" do
-    it "raises a RuntimeError on a frozen instance that is modified" do
-      lambda { "  hello  ".freeze.lstrip! }.should raise_error(RuntimeError)
-    end
-
-    # see [ruby-core:23657]
-    it "raises a RuntimeError on a frozen instance that would not be modified" do
-      lambda { "hello".freeze.lstrip! }.should raise_error(RuntimeError)
-      lambda { "".freeze.lstrip!      }.should raise_error(RuntimeError)
-    end
+  # see [ruby-core:23657]
+  it "raises a RuntimeError on a frozen instance that would not be modified" do
+    lambda { "hello".freeze.lstrip! }.should raise_error(RuntimeError)
+    lambda { "".freeze.lstrip!      }.should raise_error(RuntimeError)
   end
 end

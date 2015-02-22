@@ -1,6 +1,159 @@
 require File.expand_path('../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/block', __FILE__)
 
+describe "A block yielded a single" do
+  before :all do
+    def m(a) yield a end
+  end
+
+  context "Array" do
+    it "assigns the Array to a single argument" do
+      m([1, 2]) { |a| a }.should == [1, 2]
+    end
+
+    it "receives the identical Array object" do
+      ary = [1, 2]
+      m(ary) { |a| a }.should equal(ary)
+    end
+
+    it "assigns the Array to a single rest argument" do
+      m([1, 2, 3]) { |*a| a }.should == [[1, 2, 3]]
+    end
+
+    it "assigns the first element to a single argument with trailing comma" do
+      m([1, 2]) { |a, | a }.should == 1
+    end
+
+    it "assigns elements to required arguments" do
+      m([1, 2, 3]) { |a, b| [a, b] }.should == [1, 2]
+    end
+
+    it "assigns nil to unassigned required arguments" do
+      m([1, 2]) { |a, *b, c, d| [a, b, c, d] }.should == [1, [], 2, nil]
+    end
+
+    it "assigns elements to optional arguments" do
+      m([1, 2]) { |a=5, b=4, c=3| [a, b, c] }.should == [1, 2, 3]
+    end
+
+    it "assgins elements to post arguments" do
+      m([1, 2]) { |a=5, b, c, d| [a, b, c, d] }.should == [5, 1, 2, nil]
+    end
+
+    it "assigns elements to required arguments when a keyword rest argument is present" do
+      m([1, 2]) { |a, **k| [a, k] }.should == [1, {}]
+    end
+
+    it "assigns elements to mixed argument types" do
+      result = m([1, 2, 3, {x: 9}]) { |a, b=5, *c, d, e: 2, **k| [a, b, c, d, e, k] }
+      result.should == [1, 2, [], 3, 2, {x: 9}]
+    end
+
+    it "treats hashes with symbol keys as keyword arguments" do
+      result = m([a: 10]) { |a = nil, **b| [a, b] }
+      result.should == [nil, a: 10]
+    end
+
+    it "does not treat hashes with string keys as keyword arguments" do
+      result = m(["a" => 10]) { |a = nil, **b| [a, b] }
+      result.should == [{"a" => 10}, {}]
+    end
+
+    it "calls #to_hash on the last element if keyword arguments are present" do
+      obj = mock("destructure block keyword arguments")
+      obj.should_receive(:to_hash).and_return({x: 9})
+
+      result = m([1, 2, 3, obj]) { |a, *b, c, **k| [a, b, c, k] }
+      result.should == [1, [2], 3, {x: 9}]
+    end
+
+    it "assigns the last element to a non-keyword argument if #to_hash returns nil" do
+      obj = mock("destructure block keyword arguments")
+      obj.should_receive(:to_hash).and_return(nil)
+
+      result = m([1, 2, 3, obj]) { |a, *b, c, **k| [a, b, c, k] }
+      result.should == [1, [2, 3], obj, {}]
+    end
+
+    it "calls #to_hash on the element that maps to the keyword arguments" do
+      x = mock("destructure matching block keyword argument")
+      x.should_receive(:to_hash).and_return({x: 9})
+      y = mock("destructure non-matching block keyword argument")
+      y.should_not_receive(:to_hash)
+
+      result = m([1, 2, 3, x, 4, 5, y]) { |a, b=5, c, **k| [a, b, c, k] }
+      result.should == [1, 2, 3, {x: 9}]
+    end
+
+    it "raises a TypeError if #to_hash does not return a Hash" do
+      obj = mock("destructure block keyword arguments")
+      obj.should_receive(:to_hash).and_return(1)
+
+      lambda { m([1, 2, 3, obj]) { |a, *b, c, **k| } }.should raise_error(TypeError)
+    end
+
+    it "raises the error raised inside #to_hash" do
+      obj = mock("destructure block keyword arguments")
+      error = RuntimeError.new("error while converting to a hash")
+      obj.should_receive(:to_hash).and_raise(error)
+
+      lambda { m([1, 2, 3, obj]) { |a, *b, c, **k| } }.should raise_error(error)
+    end
+
+    it "does not call #to_ary on the Array" do
+      ary = [1, 2]
+      ary.should_not_receive(:to_ary)
+
+      m(ary) { |a, b, c| [a, b, c] }.should == [1, 2, nil]
+    end
+  end
+
+  context "Object" do
+    it "calls #to_ary on the object when taking multiple arguments" do
+      obj = mock("destructure block arguments")
+      obj.should_receive(:to_ary).and_return([1, 2])
+
+      m(obj) { |a, b, c| [a, b, c] }.should == [1, 2, nil]
+    end
+
+    it "does not call #to_ary when not taking any arguments" do
+      obj = mock("destructure block arguments")
+      obj.should_not_receive(:to_ary)
+
+      m(obj) { 1 }.should == 1
+    end
+
+    it "does not call #to_ary on the object when taking a single argument" do
+      obj = mock("destructure block arguments")
+      obj.should_not_receive(:to_ary)
+
+      m(obj) { |a| a }.should == obj
+    end
+
+    it "does not call #to_ary on the object when taking a single rest argument" do
+      obj = mock("destructure block arguments")
+      obj.should_not_receive(:to_ary)
+
+      m(obj) { |*a| a }.should == [obj]
+    end
+
+    it "receives the object if #to_ary returns nil" do
+      obj = mock("destructure block arguments")
+      obj.should_receive(:to_ary).and_return(nil)
+
+      m(obj) { |a, b, c| [a, b, c] }.should == [obj, nil, nil]
+    end
+
+    it "raises a TypeError if #to_ary does not return an Array" do
+      obj = mock("destructure block arguments")
+      obj.should_receive(:to_ary).and_return(1)
+
+      lambda { m(obj) { |a, b| } }.should raise_error(TypeError)
+    end
+  end
+end
+
+# TODO: rewrite
 describe "A block" do
   before :each do
     @y = BlockSpecs::Yielder.new
@@ -16,20 +169,15 @@ describe "A block" do
     res.should == 1
   end
 
-  ruby_version_is ""..."1.9" do
-    it "overwrites a captured local when used as an argument" do
-      var = 1
-      @y.s(2) { |var| var }.should == 2
-      var.should == 2
-    end
+  it "allows to define a block variable with the same name as the enclosing block" do
+    o = BlockSpecs::OverwriteBlockVariable.new
+    o.z { 1 }.should == 1
   end
 
-  ruby_version_is "1.9" do
-    it "does not capture a local when an argument has the same name" do
-      var = 1
-      @y.s(2) { |var| var }.should == 2
-      var.should == 1
-    end
+  it "does not capture a local when an argument has the same name" do
+    var = 1
+    @y.s(2) { |var| var }.should == 2
+    var.should == 1
   end
 
   describe "taking zero arguments" do
@@ -68,16 +216,8 @@ describe "A block" do
       @y.s(obj) { |a| a }.should equal(obj)
     end
 
-    ruby_version_is ""..."1.9" do
-      it "assigns all the values yielded to the argument as an Array" do
-        @y.m(1, 2) { |a| a }.should == [1, 2]
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "assigns the first value yielded to the argument" do
-        @y.m(1, 2) { |a| a }.should == 1
-      end
+    it "assigns the first value yielded to the argument" do
+      @y.m(1, 2) { |a| a }.should == 1
     end
 
     it "does not destructure a single Array value" do
@@ -116,18 +256,9 @@ describe "A block" do
       @y.s([1, 2, 3]) { |a, b| [a, b] }.should == [1, 2]
     end
 
-    ruby_version_is ""..."1.9" do
-      it "does not destructure a splatted Array" do
-        @y.r([[]]) { |a, b| [a, b] }.should == [[], nil]
-        @y.r([[1]]) { |a, b| [a, b] }.should == [[1], nil]
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "destructures a splatted Array" do
-        @y.r([[]]) { |a, b| [a, b] }.should == [nil, nil]
-        @y.r([[1]]) { |a, b| [a, b] }.should == [1, nil]
-      end
+    it "destructures a splatted Array" do
+      @y.r([[]]) { |a, b| [a, b] }.should == [nil, nil]
+      @y.r([[1]]) { |a, b| [a, b] }.should == [1, nil]
     end
 
     it "calls #to_ary to convert a single yielded object to an Array" do
@@ -150,12 +281,20 @@ describe "A block" do
       @y.s(obj) { |a, b| [a, b] }.should == [obj, nil]
     end
 
-    it "raises an TypeError if #to_ary does not return an Array" do
+    it "raises a TypeError if #to_ary does not return an Array" do
       obj = mock("block yield to_ary invalid")
       obj.should_receive(:to_ary).and_return(1)
 
       lambda { @y.s(obj) { |a, b| } }.should raise_error(TypeError)
     end
+
+    it "raises the original exception if #to_ary raises an exception" do
+      obj = mock("block yield to_ary raising an exception")
+      obj.should_receive(:to_ary).and_raise(ZeroDivisionError)
+
+      lambda { @y.s(obj) { |a, b| } }.should raise_error(ZeroDivisionError)
+    end
+
   end
 
   describe "taking |a, *b| arguments" do
@@ -177,18 +316,9 @@ describe "A block" do
       @y.s([[]]) { |a, *b| [a, b] }.should == [[], []]
     end
 
-    ruby_version_is ""..."1.9" do
-      it "does not destructure a splatted Array" do
-        @y.r([[]]) { |a, *b| [a, b] }.should == [[], []]
-        @y.r([[1]]) { |a, *b| [a, b] }.should == [[1], []]
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "destructures a splatted Array" do
-        @y.r([[]]) { |a, *b| [a, b] }.should == [nil, []]
-        @y.r([[1]]) { |a, *b| [a, b] }.should == [1, []]
-      end
+    it "destructures a splatted Array" do
+      @y.r([[]]) { |a, *b| [a, b] }.should == [nil, []]
+      @y.r([[1]]) { |a, *b| [a, b] }.should == [1, []]
     end
 
     it "destructures a single Array value assigning the remaining values to the rest argument" do
@@ -215,7 +345,7 @@ describe "A block" do
       @y.s(obj) { |a, *b| [a, b] }.should == [obj, []]
     end
 
-    it "raises an TypeError if #to_ary does not return an Array" do
+    it "raises a TypeError if #to_ary does not return an Array" do
       obj = mock("block yield to_ary invalid")
       obj.should_receive(:to_ary).and_return(1)
 
@@ -245,36 +375,11 @@ describe "A block" do
       @y.s(obj) { |*| 1 }.should == 1
     end
 
-    ruby_version_is ""..."1.9" do
-      it "calls #to_ary to convert a single yielded object to an Array" do
-        obj = mock("block yield to_ary")
-        obj.should_receive(:to_ary).and_return([1, 2])
+    it "does not call #to_ary to convert a single yielded object to an Array" do
+      obj = mock("block yield to_ary")
+      obj.should_not_receive(:to_ary)
 
-        @y.s(obj) { |*| 1 }.should == 1
-      end
-
-      it "does not raise a TypeError if #to_ary returns nil" do
-        obj = mock("block yield to_ary nil")
-        obj.should_receive(:to_ary).and_return(nil)
-
-        @y.s(obj) { |*o| o }.should == [obj]
-      end
-
-      it "raises an TypeError if #to_ary does not return an Array" do
-        obj = mock("block yield to_ary invalid")
-        obj.should_receive(:to_ary).and_return(1)
-
-        lambda { @y.s(obj) { |*| } }.should raise_error(TypeError)
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "does not call #to_ary to convert a single yielded object to an Array" do
-        obj = mock("block yield to_ary")
-        obj.should_not_receive(:to_ary)
-
-        @y.s(obj) { |*| 1 }.should == 1
-      end
+      @y.s(obj) { |*| 1 }.should == 1
     end
   end
 
@@ -312,29 +417,11 @@ describe "A block" do
       @y.s(obj) { |*a| a }.should == [obj]
     end
 
-    ruby_version_is ""..."1.9" do
-      it "calls #to_ary to convert a single yielded object to an Array" do
-        obj = mock("block yield to_ary")
-        obj.should_receive(:to_ary).and_return([1, 2])
+    it "does not call #to_ary to convert a single yielded object to an Array" do
+      obj = mock("block yield to_ary")
+      obj.should_not_receive(:to_ary)
 
-        @y.s(obj) { |*a| a }.should == [obj]
-      end
-
-      it "raises an TypeError if #to_ary does not return an Array" do
-        obj = mock("block yield to_ary invalid")
-        obj.should_receive(:to_ary).and_return(1)
-
-        lambda { @y.s(obj) { |*a| } }.should raise_error(TypeError)
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "does not call #to_ary to convert a single yielded object to an Array" do
-        obj = mock("block yield to_ary")
-        obj.should_not_receive(:to_ary)
-
-        @y.s(obj) { |*a| a }.should == [obj]
-      end
+      @y.s(obj) { |*a| a }.should == [obj]
     end
   end
 
@@ -383,7 +470,7 @@ describe "A block" do
       @y.s(obj) { |a, | a }.should == obj
     end
 
-    it "raises an TypeError if #to_ary does not return an Array" do
+    it "raises a TypeError if #to_ary does not return an Array" do
       obj = mock("block yield to_ary invalid")
       obj.should_receive(:to_ary).and_return(1)
 
@@ -397,6 +484,11 @@ describe "A block" do
     end
 
     it "destructures a single Array value yielded" do
+      @y.s([1, 2]) { |(a, b)| [a, b] }.should == [1, 2]
+    end
+
+    it "destructures a single Array value yielded when shadowing an outer variable" do
+      a = 9
       @y.s([1, 2]) { |(a, b)| [a, b] }.should == [1, 2]
     end
 
@@ -420,7 +512,7 @@ describe "A block" do
       @y.s(obj) { |(a, b)| [a, b] }.should == [obj, nil]
     end
 
-    it "raises an TypeError if #to_ary does not return an Array" do
+    it "raises a TypeError if #to_ary does not return an Array" do
       obj = mock("block yield to_ary invalid")
       obj.should_receive(:to_ary).and_return(1)
 
@@ -461,7 +553,7 @@ describe "A block" do
       @y.s(obj) { |(a, b), c| [a, b, c] }.should == [obj, nil, nil]
     end
 
-    it "raises an TypeError if #to_ary does not return an Array" do
+    it "raises a TypeError if #to_ary does not return an Array" do
       obj = mock("block yield to_ary invalid")
       obj.should_receive(:to_ary).and_return(1)
 
@@ -506,29 +598,194 @@ describe "A block" do
   end
 
   describe "arguments with _" do
-
-    ruby_version_is ""..."1.9" do
-      it "extracts arguments with _" do
-        @y.m([[1, 2, 3], 4]) { |(_, a, _), _| a }.should == 4
-      end
-
-      it "assigns the last variable named" do
-        @y.m(1, 2) { |_, _| _ }.should == 2
-      end
+    it "extracts arguments with _" do
+      @y.m([[1, 2, 3], 4]) { |(_, a, _), _| a }.should == 2
+      @y.m([1, [2, 3, 4]]) { |_, (_, a, _)| a }.should == 3
     end
 
-    ruby_version_is "1.9" do
-      it "extracts arguments with _" do
-        @y.m([[1, 2, 3], 4]) { |(_, a, _), _| a }.should == 2
-      end
-
-      it "assigns the first variable named" do
-        @y.m(1, 2) { |_, _| _ }.should == 1
-      end
+    it "assigns the first variable named" do
+      @y.m(1, 2) { |_, _| _ }.should == 1
     end
-
   end
-
 end
 
-language_version __FILE__, "block"
+describe "Block-local variables" do
+  # Examples phrased so the concatenation of the describe and it blocks make
+  # grammatical sense.
+  it "are introduced with a semi-colon in the parameter list" do
+    lambda { [1].each {|one; bl| } }.should_not raise_error(SyntaxError)
+  end
+
+  it "can be specified in a comma-separated list after the semi-colon" do
+    lambda { [1].each {|one; bl, bl2| } }.should_not raise_error(SyntaxError)
+  end
+
+  it "can not have the same name as one of the standard parameters" do
+    lambda { eval "[1].each {|foo; foo| }" }.should raise_error(SyntaxError)
+    lambda { eval "[1].each {|foo, bar; glark, bar| }" }.should raise_error(SyntaxError)
+  end
+
+  it "can not be prefixed with an asterisk" do
+    lambda { eval "[1].each {|foo; *bar| }" }.should raise_error(SyntaxError)
+    lambda do
+      eval "[1].each {|foo, bar; glark, *fnord| }"
+    end.should raise_error(SyntaxError)
+  end
+
+  it "can not be prefixed with an ampersand" do
+    lambda { eval "[1].each {|foo; &bar| }" }.should raise_error(SyntaxError)
+    lambda do
+      eval "[1].each {|foo, bar; glark, &fnord| }"
+    end.should raise_error(SyntaxError)
+  end
+
+  it "can not be assigned default values" do
+    lambda { eval "[1].each {|foo; bar=1| }" }.should raise_error(SyntaxError)
+    lambda do
+      eval "[1].each {|foo, bar; glark, fnord=:fnord| }"
+    end.should raise_error(SyntaxError)
+  end
+
+  it "need not be preceeded by standard parameters" do
+    lambda { [1].each {|; foo| } }.should_not raise_error(SyntaxError)
+    lambda { [1].each {|; glark, bar| } }.should_not raise_error(SyntaxError)
+  end
+
+  it "only allow a single semi-colon in the parameter list" do
+    lambda { eval "[1].each {|foo; bar; glark| }" }.should raise_error(SyntaxError)
+    lambda { eval "[1].each {|; bar; glark| }" }.should raise_error(SyntaxError)
+  end
+
+  it "override shadowed variables from the outer scope" do
+    out = :out
+    [1].each {|; out| out = :in }
+    out.should == :out
+
+    a = :a
+    b = :b
+    c = :c
+    d = :d
+    {:ant => :bee}.each_pair do |a, b; c, d|
+      a = :A
+      b = :B
+      c = :C
+      d = :D
+    end
+    a.should == :a
+    b.should == :b
+    c.should == :c
+    d.should == :d
+  end
+
+  it "are not automatically instantiated in the outer scope" do
+    defined?(glark).should be_nil
+    [1].each {|;glark| 1}
+    defined?(glark).should be_nil
+  end
+
+  it "are automatically instantiated in the block" do
+    [1].each do |;glark|
+      glark.should be_nil
+    end
+  end
+end
+
+describe "Post-args" do
+  it "appear after a splat" do
+    proc do |*a, b|
+      [a, b]
+    end.call(1, 2, 3).should == [[1, 2], 3]
+
+    proc do |*a, b, c|
+      [a, b, c]
+    end.call(1, 2, 3).should == [[1], 2, 3]
+
+    proc do |*a, b, c, d|
+      [a, b, c, d]
+    end.call(1, 2, 3).should == [[], 1, 2, 3]
+  end
+
+  it "are required" do
+    lambda {
+      lambda do |*a, b|
+        [a, b]
+      end.call
+    }.should raise_error(ArgumentError)
+  end
+
+  describe "with required args" do
+
+    it "gathers remaining args in the splat" do
+      proc do |a, *b, c|
+        [a, b, c]
+      end.call(1, 2, 3).should == [1, [2], 3]
+    end
+
+    it "has an empty splat when there are no remaining args" do
+      proc do |a, b, *c, d|
+        [a, b, c, d]
+      end.call(1, 2, 3).should == [1, 2, [], 3]
+
+      proc do |a, *b, c, d|
+        [a, b, c, d]
+      end.call(1, 2, 3).should == [1, [], 2, 3]
+    end
+  end
+
+  describe "with optional args" do
+
+    it "gathers remaining args in the splat" do
+      proc do |a=5, *b, c|
+        [a, b, c]
+      end.call(1, 2, 3).should == [1, [2], 3]
+    end
+
+    it "overrides the optional arg before gathering in the splat" do
+      proc do |a=5, *b, c|
+        [a, b, c]
+      end.call(2, 3).should == [2, [], 3]
+
+      proc do |a=5, b=6, *c, d|
+        [a, b, c, d]
+      end.call(1, 2, 3).should == [1, 2, [], 3]
+
+      proc do |a=5, *b, c, d|
+        [a, b, c, d]
+      end.call(1, 2, 3).should == [1, [], 2, 3]
+    end
+
+    it "uses the required arg before the optional and the splat" do
+      proc do |a=5, *b, c|
+        [a, b, c]
+      end.call(3).should == [5, [], 3]
+
+      proc do |a=5, b=6, *c, d|
+        [a, b, c, d]
+      end.call(3).should == [5, 6, [], 3]
+
+      proc do |a=5, *b, c, d|
+        [a, b, c, d]
+      end.call(2, 3).should == [5, [], 2, 3]
+    end
+
+    it "overrides the optional args from left to right before gathering the splat" do
+      proc do |a=5, b=6, *c, d|
+        [a, b, c, d]
+      end.call(2, 3).should == [2, 6, [], 3]
+    end
+  end
+
+  describe "with pattern matching" do
+    it "extracts matched blocks with post arguments" do
+      proc do |(a, *b, c), d, e|
+        [a, b, c, d, e]
+      end.call([1, 2, 3, 4], 5, 6).should == [1, [2, 3], 4, 5, 6]
+    end
+
+    it "allows empty splats" do
+      proc do |a, (*), b|
+        [a, b]
+      end.call([1, 2, 3]).should == [1, 3]
+    end
+  end
+end

@@ -1,5 +1,13 @@
+class Object
+  autoload :CApiModuleSpecsAutoload, File.expand_path('../const_get_object.rb', __FILE__)
+end
+
 class CApiModuleSpecs
   class A
+    autoload :B, File.expand_path('../const_get_at.rb', __FILE__)
+    autoload :C, File.expand_path('../const_get_from.rb', __FILE__)
+    autoload :D, File.expand_path('../const_get.rb', __FILE__)
+
     X = 1
   end
 
@@ -16,4 +24,8 @@ class CApiModuleSpecs
 
   class Super
   end
+
+  autoload :ModuleUnderAutoload, "#{extension_path}/module_under_autoload_spec"
+  autoload :RubyUnderAutoload, File.expand_path('../module_autoload', __FILE__)
+
 end

@@ -21,15 +21,19 @@ describe "C-API IO function" do
   describe "rb_io_addstr" do
     it "calls #to_s to convert the object to a String" do
       obj = mock("rb_io_addstr string")
-      obj.should_receive(:to_s).and_return("rb_io_addstr")
+      obj.should_receive(:to_s).and_return("rb_io_addstr data")
 
       @o.rb_io_addstr(@io, obj)
-      @name.should have_data("rb_io_addstr")
+      @name.should have_data("rb_io_addstr data")
     end
 
     it "writes the String to the IO" do
-      @o.rb_io_addstr(@io, "rb_io_addstr")
-      @name.should have_data("rb_io_addstr")
+      @o.rb_io_addstr(@io, "rb_io_addstr data")
+      @name.should have_data("rb_io_addstr data")
+    end
+
+    it "returns the io" do
+      @o.rb_io_addstr(@io, "rb_io_addstr data").should eql(@io)
     end
   end
 
@@ -125,6 +129,16 @@ describe "C-API IO function" do
     end
   end
 
+  describe "rb_io_check_io" do
+    it "returns the IO object if it is valid" do
+      @o.rb_io_check_io(@io).should == @io
+    end
+
+    it "returns nil for non IO objects" do
+      @o.rb_io_check_io(new_hash).should be_nil
+    end
+  end
+
   describe "rb_io_check_closed" do
     it "does not raise an exception if the IO is not closed" do
       # The MRI function is void, so we use should_not raise_error
@@ -137,12 +151,37 @@ describe "C-API IO function" do
     end
   end
 
+  # NOTE: unlike the name might suggest in MRI this function checks if an
+  # object is frozen, *not* if it's tainted.
+  describe "rb_io_taint_check" do
+    it "does not raise an exception if the IO is not frozen" do
+      lambda { @o.rb_io_taint_check(@io) }.should_not raise_error
+    end
+
+    it "raises an exception if the IO is frozen" do
+      @io.freeze
+
+      lambda { @o.rb_io_taint_check(@io) }.should raise_error(RuntimeError)
+    end
+  end
+
   describe "GetOpenFile" do
     it "allows access to the system fileno" do
       @o.GetOpenFile_fd($stdin).should == 0
       @o.GetOpenFile_fd($stdout).should == 1
       @o.GetOpenFile_fd($stderr).should == 2
       @o.GetOpenFile_fd(@io).should == @io.fileno
+    end
+  end
+
+  describe "rb_io_binmode" do
+    it "returns self" do
+      @o.rb_io_binmode(@io).should == @io
+    end
+
+    it "sets binmode" do
+      @o.rb_io_binmode(@io)
+      @io.binmode?.should be_true
     end
   end
 end
@@ -255,4 +294,49 @@ describe "C-API IO function" do
     end
   end
 
+end
+
+describe "rb_fd_fix_cloexec" do
+
+  before :each do
+    @o = CApiIOSpecs.new
+
+    @name = tmp("c_api_rb_io_specs")
+    touch @name
+
+    @io = new_io @name, fmode("w:utf-8")
+    @io.close_on_exec = false
+    @io.sync = true
+  end
+
+  after :each do
+    @io.close unless @io.closed?
+    rm_r @name
+  end
+
+  it "sets close_on_exec on the IO" do
+    @o.rb_fd_fix_cloexec(@io)
+    @io.close_on_exec?.should be_true
+  end
+
+end
+
+describe "rb_cloexec_open" do
+  before :each do
+    @o = CApiIOSpecs.new
+    @name = tmp("c_api_rb_io_specs")
+    touch @name
+
+    @io = nil
+  end
+
+  after :each do
+    @io.close unless @io.nil? || @io.closed?
+    rm_r @name
+  end
+
+  it "sets close_on_exec on the newly-opened IO" do
+    @io = @o.rb_cloexec_open(@name, 0, 0)
+    @io.close_on_exec?.should be_true
+  end
 end

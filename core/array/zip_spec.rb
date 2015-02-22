@@ -28,16 +28,14 @@ describe "Array#zip" do
     [1, 2].zip(obj).should == [[1, 3], [2, 4]]
   end
 
-  ruby_version_is "1.9.2" do
-    it "uses #each to extract arguments' elements when #to_ary fails" do
-      obj = Class.new do
-        def each(&b)
-          [3,4].each(&b)
-        end
-      end.new
+  it "uses #each to extract arguments' elements when #to_ary fails" do
+    obj = Class.new do
+      def each(&b)
+        [3,4].each(&b)
+      end
+    end.new
 
-      [1, 2].zip(obj).should == [[1, 3], [2, 4]]
-    end
+    [1, 2].zip(obj).should == [[1, 3], [2, 4]]
   end
 
   it "calls block if supplied" do
@@ -50,6 +48,6 @@ describe "Array#zip" do
   end
 
   it "does not return subclass instance on Array subclasses" do
-    ArraySpecs::MyArray[1, 2, 3].zip(["a", "b"]).should be_kind_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].zip(["a", "b"]).should be_an_instance_of(Array)
   end
 end

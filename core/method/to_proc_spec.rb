@@ -50,31 +50,35 @@ describe "Method#to_proc" do
     x.baz(1,2,3,&m).should == [1,2,3]
   end
 
-  ruby_bug "#5926", "1.9.2" do
-    it "returns a proc that can receive a block" do
-      x = Object.new
-      def x.foo; yield 'bar'; end
+  # #5926
+  it "returns a proc that can receive a block" do
+    x = Object.new
+    def x.foo; yield 'bar'; end
 
-      m = x.method :foo
-      result = nil
-      m.to_proc.call {|val| result = val}
-      result.should == 'bar'
-    end
-  end
-
-  ruby_version_is ""..."1.9" do
-    it "returns a proc that accepts passed arguments like a block would" do
-      obj = MethodSpecs::ToProc.new
-
-      array = [["text", :comment], ["space", :chunk]]
-      array.each(&obj)
-
-      ScratchPad.recorded.should == array = [["text", :comment], ["space", :chunk]]
-    end
+    m = x.method :foo
+    result = nil
+    m.to_proc.call {|val| result = val}
+    result.should == 'bar'
   end
 
   it "can be called directly and not unwrap arguments like a block" do
     obj = MethodSpecs::ToProcBeta.new
     obj.to_proc.call([1]).should == [1]
+  end
+
+  it "should correct handle arguments (unwrap)" do
+    obj = MethodSpecs::ToProcBeta.new
+
+    array = [[1]]
+    array.each(&obj)
+    ScratchPad.recorded.should == [[1]]
+  end
+
+  it "executes method with whole array (one argument)" do
+    obj = MethodSpecs::ToProcBeta.new
+
+    array = [[1, 2]]
+    array.each(&obj)
+    ScratchPad.recorded.should == [[1, 2]]
   end
 end

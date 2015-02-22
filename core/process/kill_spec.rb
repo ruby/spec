@@ -56,30 +56,9 @@ describe "Process.kill" do
     @sp.result.should == "signaled"
   end
 
-  ruby_version_is "1.9" do
-    it "calls #to_int to coerce the pid to an Integer" do
-      Process.kill("SIGTERM", mock_int(@sp.pid))
-      @sp.result.should == "signaled"
-    end
-  end
-end
-
-describe "Process.kill" do
-  ruby_version_is ""..."1.9" do
-    it "raises a TypeError if the PID is not a Fixnum" do
-      pid = mock("process kill pid")
-      pid.should_not_receive(:to_int)
-
-      lambda { Process.kill("SIGTERM", pid) }.should raise_error(TypeError)
-    end
-  end
-end
-
-as_user do
-  describe "Process.kill" do
-    it "raises an Errno::EPERM if permission is denied" do
-      lambda { Process.kill("SIGKILL", 1) }.should raise_error(Errno::EPERM)
-    end
+  it "calls #to_int to coerce the pid to an Integer" do
+    Process.kill("SIGTERM", mock_int(@sp.pid))
+    @sp.result.should == "signaled"
   end
 end
 

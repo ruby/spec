@@ -1,30 +1,32 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
-ruby_version_is "1.9" do
-  describe "File#reopen" do
-    before :each do
-      @file = tmp('core-file-reopen.txt')
-      touch(@file) { |f| f << "1234567890" }
-    end
+describe "File#reopen" do
+  before :each do
+    @name_a = tmp("file_reopen_a.txt")
+    @name_b = tmp("file_reopen_b.txt")
+    @content_a = "File#reopen a"
+    @content_b = "File#reopen b"
 
-    after :each do
-      rm_r @file
-    end
+    touch(@name_a) { |f| f.write @content_a }
+    touch(@name_b) { |f| f.write @content_b }
 
-    it "resets the stream to a new file path" do
-      fh = File.new(@file)
-      text = fh.read
-      fh2 = fh.reopen(@file, "r")
-      fh2.autoclose = false
-      fh.read.should == text
-      fh.close
-    end
+    @file = nil
+  end
 
-    it "accepts an object that has a #to_path method" do
-      fh = File.new(@file)
-      fh2 = fh.reopen(mock_to_path(@file), "r")
-      fh2.autoclose = false
-      fh.close
-    end
+  after :each do
+    @file.close if @file and not @file.closed?
+    rm_r @name_a, @name_b
+  end
+
+  it "resets the stream to a new file path" do
+    file = File.new @name_a, "r"
+    file.read.should == @content_a
+    @file = file.reopen(@name_b, "r")
+    @file.read.should == @content_b
+  end
+
+  it "calls #to_path to convern an Object" do
+    @file = File.new(@name_a).reopen(mock_to_path(@name_b), "r")
+    @file.read.should == @content_b
   end
 end

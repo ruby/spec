@@ -36,7 +36,7 @@ describe "IO#reopen" do
     lambda { @io.reopen obj }.should raise_error(IOError)
   end
 
-  it "raises an TypeError if #to_io does not return an IO instance" do
+  it "raises a TypeError if #to_io does not return an IO instance" do
     obj = mock("io")
     obj.should_receive(:to_io).and_return("something else")
     lambda { @io.reopen obj }.should raise_error(TypeError)
@@ -108,12 +108,10 @@ describe "IO#reopen with a String" do
     @tmp_file.should have_data("from system\nfrom exec", "r")
   end
 
-  ruby_version_is "1.9" do
-    it "calls #to_path on non-String arguments" do
-      obj = mock('path')
-      obj.should_receive(:to_path).and_return(@other_name)
-      @io.reopen(obj)
-    end
+  it "calls #to_path on non-String arguments" do
+    obj = mock('path')
+    obj.should_receive(:to_path).and_return(@other_name)
+    @io.reopen(obj)
   end
 end
 
@@ -121,12 +119,14 @@ describe "IO#reopen with a String" do
   before :each do
     @name = tmp("io_reopen.txt")
     @other_name = tmp("io_reopen_other.txt")
+    @other_io = nil
 
     rm_r @other_name
   end
 
   after :each do
     @io.close unless @io.closed?
+    @other_io.close if @other_io and not @other_io.closed?
     rm_r @name, @other_name
   end
 
@@ -140,6 +140,19 @@ describe "IO#reopen with a String" do
 
     @name.should have_data("original data")
     @other_name.should have_data("new data")
+  end
+
+  it "closes the file descriptor obtained by opening the new file" do
+    @io = new_io @name, "w"
+
+    @other_io = File.open @other_name, "w"
+    max = @other_io.fileno
+    @other_io.close
+
+    @io.reopen @other_name
+
+    @other_io = File.open @other_name, "w"
+    @other_io.fileno.should == max
   end
 
   it "creates the file if it doesn't exist if the IO is opened in write mode" do

@@ -1,5 +1,3 @@
-require File.expand_path('../caller_fixture1', __FILE__)
-
 module KernelSpecs
   def self.Array_function(arg)
     Array(arg)
@@ -9,12 +7,56 @@ module KernelSpecs
     Kernel.Array(arg)
   end
 
+  def self.Hash_function(arg)
+    Hash(arg)
+  end
+
+  def self.Hash_method(arg)
+    Kernel.Hash(arg)
+  end
+
+  def self.Integer_function(arg)
+    Integer(arg)
+  end
+
+  def self.Integer_method(arg)
+    Kernel.Integer(arg)
+  end
+
   def self.putc_function(arg)
     putc arg
   end
 
   def self.putc_method(arg)
     Kernel.putc arg
+  end
+
+  def self.has_private_method(name)
+    cmd = <<-EOC
+| #{RUBY_EXE} -n -e '
+m = Kernel.private_instance_methods(false).grep(/^#{name}$/)
+print m.map { |x| x.to_s }.join("")
+'
+    EOC
+    ruby_exe("puts", :args => cmd) == name.to_s
+  end
+
+  def self.chop(str, method)
+    cmd = "| #{RUBY_EXE} -n -e '$_ = #{str.inspect}; #{method}; print $_'"
+    ruby_exe "puts", :args => cmd
+  end
+
+  def self.encoded_chop(file)
+    ruby_exe "puts", :args => "| #{RUBY_EXE} -n #{file}"
+  end
+
+  def self.chomp(str, method, sep="\n")
+    cmd = "| #{RUBY_EXE} -n -e '$_ = #{str.inspect}; $/ = #{sep.inspect}; #{method}; print $_'"
+    ruby_exe "puts", :args => cmd
+  end
+
+  def self.encoded_chomp(file)
+    ruby_exe "puts", :args => "| #{RUBY_EXE} -n #{file}"
   end
 
   class Method
@@ -108,6 +150,12 @@ module KernelSpecs
 
   class B < A
     alias aliased_pub_method pub_method
+  end
+
+  class VisibilityChange
+    class << self
+      private :new
+    end
   end
 
   class Binding
@@ -258,6 +306,18 @@ module KernelSpecs
     end
   end
 
+  class Clone
+    def initialize_clone(other)
+      ScratchPad.record other.object_id
+    end
+  end
+
+  class Dup
+    def initialize_dup(other)
+      ScratchPad.record other.object_id
+    end
+  end
+
   module ParentMixin
     def parent_mixin_method; end
   end
@@ -321,9 +381,29 @@ module KernelSpecs
     end
   end
 
-  class Ivar
+  class InstanceVariable
     def initialize
       @greeting = "hello"
+    end
+  end
+
+  class PrivateToAry
+    private
+
+    def to_ary
+      [1, 2]
+    end
+
+    def to_a
+      [3, 4]
+    end
+  end
+
+  class PrivateToA
+    private
+
+    def to_a
+      [3, 4]
     end
   end
 end
@@ -336,6 +416,16 @@ class EvalSpecs
     end
   end
 
+  class CoercedObject
+    def to_str
+      '2 + 3'
+    end
+
+    def hash
+      nil
+    end
+  end
+
   def f
     yield
   end
@@ -344,13 +434,6 @@ class EvalSpecs
     f = __FILE__
     eval "true", binding, "(eval)", 1
     return f
-  end
-end
-
-module CallerSpecs
-  def self.recurse(n)
-    return caller if n <= 0
-    recurse(n-1)
   end
 end
 

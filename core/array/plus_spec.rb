@@ -32,9 +32,9 @@ describe "Array#+" do
   end
 
   it "does return subclass instances with Array subclasses" do
-    (ArraySpecs::MyArray[1, 2, 3] + []).should be_kind_of(Array)
-    (ArraySpecs::MyArray[1, 2, 3] + ArraySpecs::MyArray[]).should be_kind_of(Array)
-    ([1, 2, 3] + ArraySpecs::MyArray[]).should be_kind_of(Array)
+    (ArraySpecs::MyArray[1, 2, 3] + []).should be_an_instance_of(Array)
+    (ArraySpecs::MyArray[1, 2, 3] + ArraySpecs::MyArray[]).should be_an_instance_of(Array)
+    ([1, 2, 3] + ArraySpecs::MyArray[]).should be_an_instance_of(Array)
   end
 
   it "does not call to_ary on array subclasses" do
@@ -48,12 +48,10 @@ describe "Array#+" do
     ([1, 2].taint + [3, 4].taint).tainted?.should be_false
   end
 
-  ruby_version_is '1.9' do
-    it "does not infected even if an original array is untrusted" do
-      ([1, 2] + [3, 4]).untrusted?.should be_false
-      ([1, 2].untrust + [3, 4]).untrusted?.should be_false
-      ([1, 2] + [3, 4].untrust).untrusted?.should be_false
-      ([1, 2].untrust + [3, 4].untrust).untrusted?.should be_false
-    end
+  it "does not infected even if an original array is untrusted" do
+    ([1, 2] + [3, 4]).untrusted?.should be_false
+    ([1, 2].untrust + [3, 4]).untrusted?.should be_false
+    ([1, 2] + [3, 4].untrust).untrusted?.should be_false
+    ([1, 2].untrust + [3, 4].untrust).untrusted?.should be_false
   end
 end

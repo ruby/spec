@@ -79,21 +79,21 @@ describe "Array#sort" do
     a = Array.new(25)
     (0...25).each {|i| a[i] = ArraySpecs::UFOSceptic.new }
 
-    a.sort { -1 }.should be_kind_of(Array)
+    a.sort { -1 }.should be_an_instance_of(Array)
   end
 
   it "does not call #<=> on elements when invoked with a block even if Array is large (Rubinius #412)" do
     a = Array.new(1500)
     (0...1500).each {|i| a[i] = ArraySpecs::UFOSceptic.new }
 
-    a.sort { -1 }.should be_kind_of(Array)
+    a.sort { -1 }.should be_an_instance_of(Array)
   end
 
   it "completes when supplied a block that always returns the same result" do
     a = [2, 3, 5, 1, 4]
-    a.sort {  1 }.should be_kind_of(Array)
-    a.sort {  0 }.should be_kind_of(Array)
-    a.sort { -1 }.should be_kind_of(Array)
+    a.sort {  1 }.should be_an_instance_of(Array)
+    a.sort {  0 }.should be_an_instance_of(Array)
+    a.sort { -1 }.should be_an_instance_of(Array)
   end
 
   it "does not freezes self during being sorted" do
@@ -133,6 +133,20 @@ describe "Array#sort" do
     }.should raise_error(ArgumentError)
   end
 
+  it "sorts an array that has a value shifted off without a block" do
+    a = Array.new(20, 1)
+    a.shift
+    a[0] = 2
+    a.sort.last.should == 2
+  end
+
+  it "sorts an array that has a value shifted off with a block" do
+    a = Array.new(20, 1)
+    a.shift
+    a[0] = 2
+    a.sort {|a, b| a <=> b }.last.should == 2
+  end
+
   it "raises an error if objects can't be compared" do
     a=[ArraySpecs::Uncomparable.new, ArraySpecs::Uncomparable.new]
     lambda {a.sort}.should raise_error(ArgumentError)
@@ -144,18 +158,9 @@ describe "Array#sort" do
     pruned.sort.should == ArraySpecs::LargeTestArraySorted
   end
 
-  ruby_version_is "" ... "1.9.3" do
-    it "returns subclass instance on Array subclasses" do
-      ary = ArraySpecs::MyArray[1, 2, 3]
-      ary.sort.should be_kind_of(ArraySpecs::MyArray)
-    end
-  end
-
-  ruby_version_is "1.9.3" do
-    it "does not return subclass instance on Array subclasses" do
-      ary = ArraySpecs::MyArray[1, 2, 3]
-      ary.sort.should be_kind_of(Array)
-    end
+  it "does not return subclass instance on Array subclasses" do
+    ary = ArraySpecs::MyArray[1, 2, 3]
+    ary.sort.should be_an_instance_of(Array)
   end
 end
 
@@ -205,41 +210,25 @@ describe "Array#sort!" do
     a = Array.new(25)
     (0...25).each {|i| a[i] = ArraySpecs::UFOSceptic.new }
 
-    a.sort! { -1 }.should be_kind_of(Array)
+    a.sort! { -1 }.should be_an_instance_of(Array)
   end
 
   it "does not call #<=> on elements when invoked with a block even if Array is large (Rubinius #412)" do
     a = Array.new(1500)
     (0...1500).each {|i| a[i] = ArraySpecs::UFOSceptic.new }
 
-    a.sort! { -1 }.should be_kind_of(Array)
+    a.sort! { -1 }.should be_an_instance_of(Array)
   end
 
   it "completes when supplied a block that always returns the same result" do
     a = [2, 3, 5, 1, 4]
-    a.sort!{  1 }.should be_kind_of(Array)
-    a.sort!{  0 }.should be_kind_of(Array)
-    a.sort!{ -1 }.should be_kind_of(Array)
+    a.sort!{  1 }.should be_an_instance_of(Array)
+    a.sort!{  0 }.should be_an_instance_of(Array)
+    a.sort!{ -1 }.should be_an_instance_of(Array)
   end
 
-  ruby_version_is '' ... '1.9' do
-    it "raises a TypeError on a frozen array" do
-      lambda { ArraySpecs.frozen_array.sort! }.should raise_error(TypeError)
-    end
-
-    not_compliant_on :rubinius do
-      it "temporarily freezes self and recovers after sorted" do
-        a = [1, 2, 3]
-        a.sort! { |x,y| a.frozen?.should == true; x <=> y }
-        a.frozen?.should == false
-      end
-    end
-  end
-
-  ruby_version_is '1.9' do
-    it "raises a RuntimeError on a frozen array" do
-      lambda { ArraySpecs.frozen_array.sort! }.should raise_error(RuntimeError)
-    end
+  it "raises a RuntimeError on a frozen array" do
+    lambda { ArraySpecs.frozen_array.sort! }.should raise_error(RuntimeError)
   end
 
   it "returns the specified value when it would break in the given block" do

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes.rb', __FILE__)
 
@@ -72,17 +73,44 @@ describe "String#rjust with length, padding" do
   end
 
   it "returns subclass instances when called on subclasses" do
-    StringSpecs::MyString.new("").rjust(10).should be_kind_of(StringSpecs::MyString)
-    StringSpecs::MyString.new("foo").rjust(10).should be_kind_of(StringSpecs::MyString)
-    StringSpecs::MyString.new("foo").rjust(10, StringSpecs::MyString.new("x")).should be_kind_of(StringSpecs::MyString)
+    StringSpecs::MyString.new("").rjust(10).should be_an_instance_of(StringSpecs::MyString)
+    StringSpecs::MyString.new("foo").rjust(10).should be_an_instance_of(StringSpecs::MyString)
+    StringSpecs::MyString.new("foo").rjust(10, StringSpecs::MyString.new("x")).should be_an_instance_of(StringSpecs::MyString)
 
-    "".rjust(10, StringSpecs::MyString.new("x")).should be_kind_of(String)
-    "foo".rjust(10, StringSpecs::MyString.new("x")).should be_kind_of(String)
+    "".rjust(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
+    "foo".rjust(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
   end
 
   it "when padding is tainted and self is untainted returns a tainted string if and only if length is longer than self" do
     "hello".rjust(4, 'X'.taint).tainted?.should be_false
     "hello".rjust(5, 'X'.taint).tainted?.should be_false
     "hello".rjust(6, 'X'.taint).tainted?.should be_true
+  end
+
+  with_feature :encoding do
+    describe "with width" do
+      it "returns a String in the same encoding as the original" do
+        str = "abc".force_encoding Encoding::IBM437
+        result = str.rjust 5
+        result.should == "  abc"
+        result.encoding.should equal(Encoding::IBM437)
+      end
+    end
+
+    describe "with width, pattern" do
+      it "returns a String in the compatible encoding" do
+        str = "abc".force_encoding Encoding::IBM437
+        result = str.rjust 5, "あ"
+        result.should == "ああabc"
+        result.encoding.should equal(Encoding::UTF_8)
+      end
+
+      it "raises an Encoding::CompatibilityError if the encodings are incompatible" do
+        pat = "ア".encode Encoding::EUC_JP
+        lambda do
+          "あれ".rjust 5, pat
+        end.should raise_error(Encoding::CompatibilityError)
+      end
+    end
   end
 end

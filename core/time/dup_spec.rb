@@ -1,5 +1,4 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/methods', __FILE__)
 
 describe "Time#dup" do
   it "returns a Time object that represents the same time" do
@@ -23,7 +22,7 @@ describe "Time#dup" do
     c = Class.new(Time)
     t = c.now
 
-    t.should be_kind_of(c)
-    t.dup.should be_kind_of(c)
+    t.should be_an_instance_of(c)
+    t.dup.should be_an_instance_of(c)
   end
 end

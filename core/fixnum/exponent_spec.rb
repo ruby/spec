@@ -22,6 +22,7 @@ describe "Fixnum#**" do
     (2 ** 62).should eql 4611686018427387904
     (2 ** 63).should eql 9223372036854775808
     (2 ** 64).should eql 18446744073709551616
+    (8 ** 23).should eql 590295810358705651712
   end
 
   it "raises negative numbers to the given power" do
@@ -54,19 +55,8 @@ describe "Fixnum#**" do
   end
 
   conflicts_with :Rational do
-    ruby_version_is ""..."1.9" do
-      ruby_bug "ruby-dev:32084", "1.8.6.138" do
-        it "returns Infinity for 0**-1" do
-          (0**-1).should be_kind_of(Float)
-          (0**-1).infinite?.should == 1
-        end
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "raises a ZeroDivisionError for 0**-1" do
-        lambda { (0**-1) }.should raise_error(ZeroDivisionError)
-      end
+    it "raises a ZeroDivisionError for 0**-1" do
+      lambda { (0**-1) }.should raise_error(ZeroDivisionError)
     end
 
     it "raises a TypeError when given a non-Integer" do
@@ -79,11 +69,8 @@ describe "Fixnum#**" do
     end
   end
 
-  ruby_version_is '1.9' do
-    it "returns a complex number when negative and raised to a fractional power" do
-      ((-8) ** (1.0/3))      .should be_close(Complex(1, 1.73205), TOLERANCE)
-      ((-8) ** Rational(1,3)).should be_close(Complex(1, 1.73205), TOLERANCE)
-    end
+  it "returns a complex number when negative and raised to a fractional power" do
+    ((-8) ** (1.0/3))      .should be_close(Complex(1, 1.73205), TOLERANCE)
+    ((-8) ** Rational(1,3)).should be_close(Complex(1, 1.73205), TOLERANCE)
   end
-
 end

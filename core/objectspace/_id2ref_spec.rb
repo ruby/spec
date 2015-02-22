@@ -6,4 +6,16 @@ describe "ObjectSpace._id2ref" do
     r = ObjectSpace._id2ref(s.object_id)
     r.should == s
   end
+
+  it "retrieves a Fixnum by object_id" do
+    f = 1
+    r = ObjectSpace._id2ref(f.object_id)
+    r.should == f
+  end
+
+  it "retrieves a Symbol by object_id" do
+    s = :sym
+    r = ObjectSpace._id2ref(s.object_id)
+    r.should == s
+  end
 end

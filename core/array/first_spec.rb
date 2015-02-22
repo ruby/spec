@@ -33,6 +33,10 @@ describe "Array#first" do
     lambda { [1, 2].first(-1) }.should raise_error(ArgumentError)
   end
 
+  it "raises a RangeError when count is a Bignum" do
+    lambda { [].first(bignum_value) }.should raise_error(RangeError)
+  end
+
   it "returns the entire array when count > length" do
     [1, 2, 3, 4, 5, 9].first(10).should == [1, 2, 3, 4, 5, 9]
   end
@@ -70,11 +74,11 @@ describe "Array#first" do
   end
 
   it "does not return subclass instance when passed count on Array subclasses" do
-    ArraySpecs::MyArray[].first(0).should be_kind_of(Array)
-    ArraySpecs::MyArray[].first(2).should be_kind_of(Array)
-    ArraySpecs::MyArray[1, 2, 3].first(0).should be_kind_of(Array)
-    ArraySpecs::MyArray[1, 2, 3].first(1).should be_kind_of(Array)
-    ArraySpecs::MyArray[1, 2, 3].first(2).should be_kind_of(Array)
+    ArraySpecs::MyArray[].first(0).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[].first(2).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].first(0).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].first(1).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].first(2).should be_an_instance_of(Array)
   end
 
   it "is not destructive" do

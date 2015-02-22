@@ -1,8 +1,9 @@
+# -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 
 # TODO: Fix these
 describe "File.basename" do
-  it "return the basename of a path (basic cases)" do
+  it "returns the basename of a path (basic cases)" do
     File.basename("/Some/path/to/test.txt").should == "test.txt"
     File.basename(File.join("/tmp")).should == "tmp"
     File.basename(File.join(*%w( g f d s a b))).should == "b"
@@ -29,7 +30,7 @@ describe "File.basename" do
     File.basename("dir//base.c/", ".*").should == "base"
   end
 
-  it "return the last component of the filename" do
+  it "returns the last component of the filename" do
     File.basename('a').should == 'a'
     File.basename('/a').should == 'a'
     File.basename('/a/b').should == 'b'
@@ -40,11 +41,11 @@ describe "File.basename" do
     File.basename('baz.rb', 'z.rb').should == 'ba'
   end
 
-  it "return an string" do
+  it "returns an string" do
     File.basename("foo").should be_kind_of(String)
   end
 
-  it "return the basename for unix format" do
+  it "returns the basename for unix format" do
     File.basename("/foo/bar").should == "bar"
     File.basename("/foo/bar.txt").should == "bar.txt"
     File.basename("bar.c").should == "bar.c"
@@ -58,7 +59,7 @@ describe "File.basename" do
     end
   end
 
-  it "return the basename for edge cases" do
+  it "returns the basename for edge cases" do
     File.basename("").should == ""
     File.basename(".").should == "."
     File.basename("..").should == ".."
@@ -74,7 +75,7 @@ describe "File.basename" do
     File.basename("bar.rb///", '.*').should == "bar"
   end
 
-  it "return the basename for unix suffix" do
+  it "returns the basename for unix suffix" do
     File.basename("bar.c", ".c").should == "bar"
     File.basename("bar.txt", ".txt").should == "bar"
     File.basename("/bar.txt", ".txt").should == "bar"
@@ -97,10 +98,8 @@ describe "File.basename" do
     lambda { File.basename(true)         }.should raise_error(TypeError)
   end
 
-  ruby_version_is "1.9" do
-    it "accepts an object that has a #to_path method" do
-      File.basename(mock_to_path("foo.txt"))
-    end
+  it "accepts an object that has a #to_path method" do
+    File.basename(mock_to_path("foo.txt"))
   end
 
   it "raises an ArgumentError if passed more than two arguments" do
@@ -109,7 +108,7 @@ describe "File.basename" do
 
   # specific to MS Windows
   platform_is :windows do
-    it "return the basename for windows" do
+    it "returns the basename for windows" do
       File.basename("C:\\foo\\bar\\baz.txt").should == "baz.txt"
       File.basename("C:\\foo\\bar").should == "bar"
       File.basename("C:\\foo\\bar\\").should == "bar"
@@ -117,12 +116,12 @@ describe "File.basename" do
       File.basename("C:\\").should == "\\"
     end
 
-    it "return basename windows unc" do
+    it "returns basename windows unc" do
       File.basename("\\\\foo\\bar\\baz.txt").should == "baz.txt"
       File.basename("\\\\foo\\bar\\baz").should =="baz"
     end
 
-    it "return basename windows forward slash" do
+    it "returns basename windows forward slash" do
       File.basename("C:/").should == "/"
       File.basename("C:/foo").should == "foo"
       File.basename("C:/foo/bar").should == "bar"
@@ -130,7 +129,7 @@ describe "File.basename" do
       File.basename("C:/foo/bar//").should == "bar"
     end
 
-    it "return basename with windows suffix" do
+    it "returns basename with windows suffix" do
       File.basename("c:\\bar.txt", ".txt").should == "bar"
       File.basename("c:\\foo\\bar.txt", ".txt").should == "bar"
       File.basename("c:\\bar.txt", ".exe").should == "bar.txt"
@@ -140,4 +139,13 @@ describe "File.basename" do
       File.basename("c:\\bar.txt.exe", ".*").should == "bar.txt"
     end
   end
+
+  with_feature :encoding do
+
+    it "returns the extension for a multibyte filename" do
+      File.basename('/path/Офис.m4a').should == "Офис.m4a"
+    end
+
+  end
+
 end

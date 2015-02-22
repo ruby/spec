@@ -1,5 +1,4 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/methods', __FILE__)
 
 describe "Time#hour" do
   it "returns the hour of the day (0..23) for a local Time" do
@@ -12,9 +11,7 @@ describe "Time#hour" do
     Time.utc(1970, 1, 1, 0).hour.should == 0
   end
 
-  ruby_version_is "1.9" do
-    it "returns the hour of the day for a Time with a fixed offset" do
-      Time.new(2012, 1, 1, 0, 0, 0, -3600).hour.should == 0
-    end
+  it "returns the hour of the day for a Time with a fixed offset" do
+    Time.new(2012, 1, 1, 0, 0, 0, -3600).hour.should == 0
   end
 end

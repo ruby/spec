@@ -28,9 +28,9 @@ describe "String#*" do
   end
 
   it "returns subclass instances" do
-    (StringSpecs::MyString.new("cool") * 0).should be_kind_of(StringSpecs::MyString)
-    (StringSpecs::MyString.new("cool") * 1).should be_kind_of(StringSpecs::MyString)
-    (StringSpecs::MyString.new("cool") * 2).should be_kind_of(StringSpecs::MyString)
+    (StringSpecs::MyString.new("cool") * 0).should be_an_instance_of(StringSpecs::MyString)
+    (StringSpecs::MyString.new("cool") * 1).should be_an_instance_of(StringSpecs::MyString)
+    (StringSpecs::MyString.new("cool") * 2).should be_an_instance_of(StringSpecs::MyString)
   end
 
   it "always taints the result when self is tainted" do
@@ -40,6 +40,14 @@ describe "String#*" do
       [0, 1, 2].each do |arg|
         (str * arg).tainted?.should == true
       end
+    end
+  end
+
+  with_feature :encoding do
+    it "returns a String in the same encoding as self" do
+      str = "\xE3\x81\x82".force_encoding Encoding::UTF_8
+      result = str * 2
+      result.encoding.should equal(Encoding::UTF_8)
     end
   end
 end

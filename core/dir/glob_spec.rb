@@ -40,9 +40,31 @@ describe "Dir.glob" do
     DirSpecs.delete_mock_dirs
   end
 
+  with_feature :encoding do
+    describe "with encoding" do
+      it "returns Strings in the encoding of the pattern" do
+        a = "file_one*".force_encoding Encoding::IBM437
+        b = "file_two*".force_encoding Encoding::EUC_JP
+        files = Dir.glob([a, b])
+
+        files.first.encoding.should equal(Encoding::IBM437)
+        files.last.encoding.should equal(Encoding::EUC_JP)
+      end
+    end
+  end
+
   it "can take an array of patterns" do
     Dir.glob(["file_o*", "file_t*"]).should ==
                %w!file_one.ext file_two.ext!
+  end
+
+  it "calls #to_path to convert multiple patterns" do
+    pat1 = mock('file_one.ext')
+    pat1.should_receive(:to_path).and_return('file_one.ext')
+    pat2 = mock('file_two.ext')
+    pat2.should_receive(:to_path).and_return('file_two.ext')
+
+    Dir.glob([pat1, pat2]).should == %w[file_one.ext file_two.ext]
   end
 
   it "matches both dot and non-dotfiles with '*' and option File::FNM_DOTMATCH" do
@@ -96,6 +118,19 @@ describe "Dir.glob" do
     Dir.glob('./**/', File::FNM_DOTMATCH).sort.should == expected
   end
 
+  it "matches a list of paths by concatenating their individual results" do
+    expected = %w[
+      deeply/
+      deeply/nested/
+      deeply/nested/directory/
+      deeply/nested/directory/structure/
+      subdir_two/nondotfile
+      subdir_two/nondotfile.ext
+    ]
+
+    Dir.glob('{deeply/**/,subdir_two/*}').sort.should == expected
+  end
+
   it "accepts a block and yields it with each elements" do
     ary = []
     ret = Dir.glob(["file_o*", "file_t*"]) { |t| ary << t }
@@ -106,6 +141,14 @@ describe "Dir.glob" do
   it "ignores non-dirs when traversing recursively" do
     touch "spec"
     Dir.glob("spec/**/*.rb").should == []
+  end
+
+  it "matches nothing when given an empty list of paths" do
+    Dir.glob('{}').should == []
+  end
+
+  it "handles infinite directory wildcards" do
+    Dir.glob('**/**/**').empty?.should == false
   end
 
   platform_is_not(:windows) do

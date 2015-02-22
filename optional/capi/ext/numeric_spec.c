@@ -36,8 +36,26 @@ static VALUE numeric_spec_rb_num2dbl(VALUE self, VALUE num) {
 #endif
 
 #ifdef HAVE_RB_NUM2LONG
+static VALUE numeric_spec_rb_num2int(VALUE self, VALUE num) {
+  return LONG2NUM(rb_num2int(num));
+}
+#endif
+
+#ifdef HAVE_RB_INT2NUM
+static VALUE numeric_spec_rb_int2num(VALUE self, VALUE num) {
+  return INT2NUM(rb_num2long(num));
+}
+#endif
+
+#ifdef HAVE_RB_NUM2LONG
 static VALUE numeric_spec_rb_num2long(VALUE self, VALUE num) {
   return LONG2NUM(rb_num2long(num));
+}
+#endif
+
+#ifdef HAVE_RB_NUM2UINT
+static VALUE numeric_spec_rb_num2uint(VALUE self, VALUE num) {
+  return ULONG2NUM(rb_num2uint(num));
 }
 #endif
 
@@ -102,8 +120,20 @@ void Init_numeric_spec() {
   rb_define_method(cls, "rb_num2dbl", numeric_spec_rb_num2dbl, 1);
 #endif
 
+#ifdef HAVE_RB_NUM2INT
+  rb_define_method(cls, "rb_num2int", numeric_spec_rb_num2int, 1);
+#endif
+
 #ifdef HAVE_RB_NUM2LONG
   rb_define_method(cls, "rb_num2long", numeric_spec_rb_num2long, 1);
+#endif
+
+#ifdef HAVE_RB_INT2NUM
+  rb_define_method(cls, "rb_int2num", numeric_spec_rb_int2num, 1);
+#endif
+
+#ifdef HAVE_RB_NUM2UINT
+  rb_define_method(cls, "rb_num2uint", numeric_spec_rb_num2uint, 1);
 #endif
 
 #ifdef HAVE_RB_NUM2ULONG

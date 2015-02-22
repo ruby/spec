@@ -98,6 +98,11 @@ VALUE io_spec_rb_io_write(VALUE self, VALUE io, VALUE str) {
 }
 #endif
 
+#ifdef HAVE_RB_IO_CHECK_IO
+VALUE io_spec_rb_io_check_io(VALUE self, VALUE io) {
+  return rb_io_check_io(io);
+}
+#endif
 
 #ifdef HAVE_RB_IO_CHECK_READABLE
 VALUE io_spec_rb_io_check_readable(VALUE self, VALUE io) {
@@ -123,6 +128,15 @@ VALUE io_spec_rb_io_check_closed(VALUE self, VALUE io) {
   GetOpenFile(io, fp);
   rb_io_check_closed(fp);
   return Qnil;
+}
+#endif
+
+#ifdef HAVE_RB_IO_TAINT_CHECK
+VALUE io_spec_rb_io_taint_check(VALUE self, VALUE io) {
+  /*rb_io_t* fp;
+  GetOpenFile(io, fp);*/
+  rb_io_taint_check(io);
+  return io;
 }
 #endif
 
@@ -187,6 +201,27 @@ VALUE io_spec_rb_thread_fd_writable(VALUE self, VALUE io) {
 }
 #endif
 
+#ifdef HAVE_RB_IO_BINMODE
+VALUE io_spec_rb_io_binmode(VALUE self, VALUE io) {
+  return rb_io_binmode(io);
+}
+#endif
+
+#ifdef HAVE_RB_FD_FIX_CLOEXEC
+VALUE io_spec_rb_fd_fix_cloexec(VALUE self, VALUE io) {
+  rb_fd_fix_cloexec(io_spec_get_fd(io));
+  return Qnil;
+}
+#endif
+
+#ifdef HAVE_RB_CLOEXEC_OPEN
+VALUE io_spec_rb_cloexec_open(VALUE self, VALUE path, VALUE flags, VALUE mode) {
+  const char *pathname = StringValuePtr(path);
+  int fd = rb_cloexec_open(pathname, FIX2INT(flags), FIX2INT(mode));
+  return rb_funcall(rb_cIO, rb_intern("for_fd"), 1, INT2FIX(fd));
+}
+#endif
+
 #ifdef HAVE_RB_IO_CLOSE
 VALUE io_spec_rb_io_close(VALUE self, VALUE io) {
   return rb_io_close(io);
@@ -224,6 +259,10 @@ void Init_io_spec() {
   rb_define_method(cls, "rb_io_close", io_spec_rb_io_close, 1);
 #endif
 
+#ifdef HAVE_RB_IO_CHECK_IO
+  rb_define_method(cls, "rb_io_check_io", io_spec_rb_io_check_io, 1);
+#endif
+
 #ifdef HAVE_RB_IO_CHECK_READABLE
   rb_define_method(cls, "rb_io_check_readable", io_spec_rb_io_check_readable, 1);
 #endif
@@ -234,6 +273,10 @@ void Init_io_spec() {
 
 #ifdef HAVE_RB_IO_CHECK_CLOSED
   rb_define_method(cls, "rb_io_check_closed", io_spec_rb_io_check_closed, 1);
+#endif
+
+#ifdef HAVE_RB_IO_TAINT_CHECK
+  rb_define_method(cls, "rb_io_taint_check", io_spec_rb_io_taint_check, 1);
 #endif
 
 #ifdef HAVE_RB_IO_WAIT_READABLE
@@ -252,6 +295,17 @@ void Init_io_spec() {
   rb_define_method(cls, "rb_thread_fd_writable", io_spec_rb_thread_fd_writable, 1);
 #endif
 
+#ifdef HAVE_RB_IO_BINMODE
+  rb_define_method(cls, "rb_io_binmode", io_spec_rb_io_binmode, 1);
+#endif
+
+#ifdef HAVE_RB_FD_FIX_CLOEXEC
+  rb_define_method(cls, "rb_fd_fix_cloexec", io_spec_rb_fd_fix_cloexec, 1);
+#endif
+
+#ifdef HAVE_RB_CLOEXEC_OPEN
+  rb_define_method(cls, "rb_cloexec_open", io_spec_rb_cloexec_open, 3);
+#endif
 }
 
 #ifdef __cplusplus

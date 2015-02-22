@@ -1,5 +1,6 @@
 require File.expand_path('../../spec_helper', __FILE__)
 require File.expand_path('../../fixtures/class', __FILE__)
+require File.expand_path('../fixtures/metaclass', __FILE__)
 
 describe "self in a metaclass body (class << obj)" do
   it "is TrueClass for true" do
@@ -83,26 +84,13 @@ describe "A constant on a metaclass" do
     end.should raise_error(NameError)
   end
 
-  ruby_version_is ""..."1.9" do
-    it "appears in the metaclass constant list" do
-      constants = class << @object; constants; end
-      constants.should include("CONST")
-    end
-
-    it "does not appear in the object's class constant list" do
-      @object.class.constants.should_not include("CONST")
-    end
+  it "appears in the metaclass constant list" do
+    constants = class << @object; constants; end
+    constants.should include(:CONST)
   end
 
-  ruby_version_is "1.9" do
-    it "appears in the metaclass constant list" do
-      constants = class << @object; constants; end
-      constants.should include(:CONST)
-    end
-
-    it "does not appear in the object's class constant list" do
-      @object.class.constants.should_not include(:CONST)
-    end
+  it "does not appear in the object's class constant list" do
+    @object.class.constants.should_not include(:CONST)
   end
 
   it "is not preserved when the object is duped" do
@@ -119,5 +107,37 @@ describe "A constant on a metaclass" do
     class << @object
       CONST.should_not be_nil
     end
+  end
+end
+
+describe "calling methods on the metaclass" do
+
+  it "calls a method on the metaclass" do
+    MetaClassSpecs::A.cheese.should == 'edam'
+    MetaClassSpecs::B.cheese.should == 'stilton'
+  end
+
+  it "calls a method on the instance's metaclass" do
+    b = MetaClassSpecs::B.new
+    b_meta = MetaClassSpecs.metaclass_of b
+    b_meta.send(:define_method, :cheese) {'cheshire'}
+    b.cheese.should == 'cheshire'
+  end
+
+  it "calls a method in deeper chains of metaclasses" do
+    b = MetaClassSpecs::B.new
+    b_meta = MetaClassSpecs.metaclass_of b
+    b_meta_meta = MetaClassSpecs.metaclass_of b_meta
+    b_meta_meta.send(:define_method, :cheese) {'gouda'}
+    b_meta.cheese.should == 'gouda'
+
+    b_meta_meta_meta = MetaClassSpecs.metaclass_of b_meta_meta
+    b_meta_meta_meta.send(:define_method, :cheese) {'wensleydale'}
+    b_meta_meta.cheese.should == 'wensleydale'
+  end
+
+  it "calls a method defined on the metaclass of the metaclass" do
+    d_meta = MetaClassSpecs::D.singleton_class
+    d_meta.ham.should == 'iberico'
   end
 end

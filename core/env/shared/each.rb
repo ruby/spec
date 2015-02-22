@@ -14,23 +14,44 @@ describe :env_each, :shared => true do
     end
   end
 
-  ruby_version_is "" ... "1.8.7" do
-    it "raises LocalJumpError if no block given" do
-      lambda { ENV.send(@method) }.should raise_error(LocalJumpError)
-    end
+  it "returns an Enumerator if called without a block" do
+    ENV.send(@method).should be_an_instance_of(enumerator_class)
   end
 
-  ruby_version_is "1.8.7" do
-    it "returns an Enumerator if called without a block" do
-      ENV.send(@method).should be_an_instance_of(enumerator_class)
-    end
-  end
+  with_feature :encoding do
+    describe "with encoding" do
+      before :each do
+        @external = Encoding.default_external
+        @internal = Encoding.default_internal
 
-  ruby_version_is "1.9" do
-    it "uses the locale encoding" do
-      ENV.send(@method) do |key, value|
-        key.encoding.should == Encoding.find('locale')
-        value.encoding.should == Encoding.find('locale')
+        Encoding.default_external = Encoding::ASCII_8BIT
+
+        @locale_encoding = Encoding.find "locale"
+      end
+
+      after :each do
+        Encoding.default_external = @external
+        Encoding.default_internal = @internal
+      end
+
+      it "uses the locale encoding when Encoding.default_internal is nil" do
+        Encoding.default_internal = nil
+
+        ENV.send(@method) do |key, value|
+          key.encoding.should equal(@locale_encoding)
+          value.encoding.should equal(@locale_encoding)
+        end
+      end
+
+      it "transcodes from the locale encoding to Encoding.default_internal if set" do
+        Encoding.default_internal = internal = Encoding::IBM437
+
+        ENV.send(@method) do |key, value|
+          key.encoding.should equal(internal)
+          if value.ascii_only?
+            value.encoding.should equal(internal)
+          end
+        end
       end
     end
   end

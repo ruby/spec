@@ -13,6 +13,16 @@ describe "Thread#join" do
     t.join(0).should equal(t)
   end
 
+  it "coerces timeout to a Float if it is not nil" do
+    t = Thread.new {}
+    t.join
+    t.join(0).should equal(t)
+    t.join(0.0).should equal(t)
+    t.join(nil).should equal(t)
+    lambda { t.join(:foo) }.should raise_error TypeError
+    lambda { t.join("bar") }.should raise_error TypeError
+  end
+
   it "returns nil if it is not finished when given a timeout" do
     c = Channel.new
     t = Thread.new { c.receive }
@@ -45,19 +55,8 @@ describe "Thread#join" do
     t.join.should equal(t)
   end
 
-  ruby_version_is "" ... "1.9" do
-    not_compliant_on :rubinius do
-      it "returns the dead thread even if an uncaught exception is thrown from ensure block" do
-        t = ThreadSpecs.dying_thread_ensures { raise "In dying thread" }
-        t.join.should equal(t)
-      end
-    end
-  end
-
-  ruby_version_is "1.9" do
-    it "raises any uncaught exception encountered in ensure block" do
-      t = ThreadSpecs.dying_thread_ensures { raise NotImplementedError.new("Just kidding") }
-      lambda { t.join }.should raise_error(NotImplementedError)
-    end
+  it "raises any uncaught exception encountered in ensure block" do
+    t = ThreadSpecs.dying_thread_ensures { raise NotImplementedError.new("Just kidding") }
+    lambda { t.join }.should raise_error(NotImplementedError)
   end
 end

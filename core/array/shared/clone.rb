@@ -1,7 +1,7 @@
 describe :array_clone, :shared => true do
   it "returns an Array or a subclass instance" do
-    [].send(@method).should be_kind_of(Array)
-    ArraySpecs::MyArray[1, 2].send(@method).should be_kind_of(ArraySpecs::MyArray)
+    [].send(@method).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2].send(@method).should be_an_instance_of(ArraySpecs::MyArray)
   end
 
   it "produces a shallow copy where the references are directly copied" do
@@ -29,16 +29,14 @@ describe :array_clone, :shared => true do
     bb.tainted?.should == false
   end
 
-  ruby_version_is '1.9' do
-    it "copies untrusted status from the original" do
-      a = [1, 2, 3, 4]
-      b = [1, 2, 3, 4]
-      a.untrust
-      aa = a.send @method
-      bb = b.send @method
+  it "copies untrusted status from the original" do
+    a = [1, 2, 3, 4]
+    b = [1, 2, 3, 4]
+    a.untrust
+    aa = a.send @method
+    bb = b.send @method
 
-      aa.untrusted?.should == true
-      bb.untrusted?.should == false
-    end
+    aa.untrusted?.should == true
+    bb.untrusted?.should == false
   end
 end

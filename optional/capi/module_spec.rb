@@ -3,8 +3,6 @@ require File.expand_path('../fixtures/module', __FILE__)
 
 load_extension('module')
 
-autoload :ModuleUnderAutoload, "#{extension_path}/module_under_autoload_spec"
-
 describe "CApiModule" do
 
   before :each do
@@ -42,10 +40,16 @@ describe "CApiModule" do
       mod.name.should == "CApiModuleSpecs::ModuleSpecsModuleUnder2"
     end
 
-    it "defines a module for an existing Autoload" do
+    it "defines a module for an existing Autoload with an extension" do
       compile_extension("module_under_autoload")
 
-      ModuleUnderAutoload.name.should == "ModuleUnderAutoload"
+      CApiModuleSpecs::ModuleUnderAutoload.name.should == "CApiModuleSpecs::ModuleUnderAutoload"
+    end
+
+    it "defines a module for an existing Autoload with a ruby object" do
+      compile_extension("module_under_autoload")
+
+      CApiModuleSpecs::RubyUnderAutoload.name.should == "CApiModuleSpecs::RubyUnderAutoload"
     end
   end
 
@@ -97,12 +101,20 @@ describe "CApiModule" do
     end
 
     it "returns a constant defined in a superclass" do
-      @m.rb_const_get_from(CApiModuleSpecs::B, :X).should == 1
+      @m.rb_const_get(CApiModuleSpecs::B, :X).should == 1
     end
 
     it "calls #const_missing if the constant is not defined in the class or ancestors" do
       CApiModuleSpecs::A.should_receive(:const_missing).with(:CApiModuleSpecsUndefined)
-      @m.rb_const_get_from(CApiModuleSpecs::A, :CApiModuleSpecsUndefined)
+      @m.rb_const_get(CApiModuleSpecs::A, :CApiModuleSpecsUndefined)
+    end
+
+    it "resolves autoload constants in classes" do
+      @m.rb_const_get(CApiModuleSpecs::A, :D).should == 123
+    end
+
+    it "resolves autoload constants in Object" do
+      @m.rb_const_get(Object, :CApiModuleSpecsAutoload).should == 123
     end
   end
 
@@ -119,11 +131,19 @@ describe "CApiModule" do
       CApiModuleSpecs::M.should_receive(:const_missing).with(:Fixnum)
       @m.rb_const_get_from(CApiModuleSpecs::M, :Fixnum)
     end
+
+    it "resolves autoload constants" do
+      @m.rb_const_get_from(CApiModuleSpecs::A, :C).should == 123
+    end
   end
 
   describe "rb_const_get_at" do
     it "returns a constant defined in the module" do
       @m.rb_const_get_at(CApiModuleSpecs::B, :Y).should == 2
+    end
+
+    it "resolves autoload constants" do
+      @m.rb_const_get_at(CApiModuleSpecs::A, :B).should == 123
     end
 
     it "calls #const_missing if the constant is not defined in the module" do
@@ -240,16 +260,36 @@ describe "CApiModule" do
   end
 
   describe "rb_undef_method" do
-    it "undef'ines a method on a class" do
-      cls = Class.new do
+    before(:each) do
+      @class = Class.new do
         def ruby_test_method
           :ruby_test_method
         end
       end
+    end
 
-      cls.new.ruby_test_method.should == :ruby_test_method
-      @m.rb_undef_method cls, "ruby_test_method"
-      cls.should_not have_instance_method(:ruby_test_method)
+    it "undef'ines a method on a class" do
+      @class.new.ruby_test_method.should == :ruby_test_method
+      @m.rb_undef_method @class, "ruby_test_method"
+      @class.should_not have_instance_method(:ruby_test_method)
+    end
+
+    it "does not raise exceptions when passed a missing name" do
+      lambda { @m.rb_undef_method @class, "not_exist" }.should_not raise_error
+    end
+
+    describe "when given a frozen Class" do
+      before(:each) do
+        @frozen = @class.dup.freeze
+      end
+
+      it "raises a RuntimeError when passed a name" do
+        lambda { @m.rb_undef_method @frozen, "ruby_test_method" }.should raise_error(RuntimeError)
+      end
+
+      it "raises a RuntimeError when passed a missing name" do
+        lambda { @m.rb_undef_method @frozen, "not_exist" }.should raise_error(RuntimeError)
+      end
     end
   end
 

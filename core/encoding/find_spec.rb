@@ -18,10 +18,12 @@ with_feature :encoding do
       end
     end
 
-    it "does NOT accept encoding names as Symbols" do
-      @encodings.each do |enc|
-        lambda { Encoding.find(enc.to_sym) }.should raise_error(TypeError)
-      end
+    it "raises a TypeError if passed a Symbol" do
+      lambda { Encoding.find(:"utf-8") }.should raise_error(TypeError)
+    end
+
+    it "returns the passed Encoding object" do
+      Encoding.find(Encoding::UTF_8).should == Encoding::UTF_8
     end
 
     it "accepts encoding names as Strings" do

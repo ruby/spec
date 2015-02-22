@@ -1,25 +1,18 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
+require File.expand_path('../shared/readlines', __FILE__)
 
 describe "IO#readlines" do
   before :each do
     @io = IOSpecs.io_fixture "lines.txt"
+    @orig_exteenc = Encoding.default_external
+    Encoding.default_external = Encoding::UTF_8
   end
 
   after :each do
     @io.close unless @io.closed?
-  end
-
-  ruby_version_is "1.9" do
-    before :each do
-      @orig_exteenc = Encoding.default_external
-      Encoding.default_external = Encoding::UTF_8
-    end
-
-    after :each do
-      Encoding.default_external = @orig_exteenc
-    end
+    Encoding.default_external = @orig_exteenc
   end
 
   it "raises an IOError if the stream is closed" do
@@ -152,82 +145,60 @@ describe "IO#readlines" do
 end
 
 describe "IO.readlines" do
-  before(:each) do
+  before :each do
+    @external = Encoding.default_external
+    Encoding.default_external = Encoding::UTF_8
+
     @name = fixture __FILE__, "lines.txt"
+    ScratchPad.record []
   end
 
-  ruby_version_is "1.9" do
-    before :each do
-      @orig_exteenc = Encoding.default_external
-      Encoding.default_external = Encoding::UTF_8
-    end
-
-    after :each do
-      Encoding.default_external = @orig_exteenc
-    end
+  after :each do
+    Encoding.default_external = @external
   end
 
-  describe "when not passed a separator" do
-    before :each do
-      @sep, $/ = $/, " "
-    end
-
-    after :each do
-      $/ = @sep
-    end
-
-    it "returns an Array containing lines of file_name based on $/" do
-      IO.readlines(@name).should == IOSpecs.lines_space_separator
-    end
+  it "does not change $_" do
+    $_ = "test"
+    IO.readlines(@name)
+    $_.should == "test"
   end
 
-  describe "when not passed a separator" do
-    it "raises an Errno::ENOENT error when the passed file_name does not exist" do
-      lambda { IO.readlines(tmp("nonexistent.txt")) }.should raise_error(Errno::ENOENT)
-    end
+  it_behaves_like :io_readlines, :readlines
+  it_behaves_like :io_readlines_options_19, :readlines
+end
 
-    it "does not change $_" do
-      $_ = "test"
-      IO.readlines(@name)
-      $_.should == "test"
-    end
-
-    it "tries to convert the passed file_name to a String using #to_str" do
-      obj = mock('IO.readlines filename')
-      obj.stub!(:to_str).and_return(@name)
-      IO.readlines(obj).should == IOSpecs.lines
-    end
+describe "IO.readlines" do
+  before :each do
+    @external = Encoding.default_external
+    @internal = Encoding.default_internal
+    @name = fixture __FILE__, "lines.txt"
+    @dollar_slash = $/
   end
 
-  describe "when passed nil as a separator" do
-    it "returns the contents as a single String" do
-      IO.readlines(@name, nil).should == [IOSpecs.lines.join]
-    end
+  after :each do
+    Encoding.default_external = @external
+    Encoding.default_internal = @internal
+    $/ = @dollar_slash
   end
 
-  describe "when passed an empty String as a separator" do
-    it "returns an Array containing all paragraphs" do
-      IO.readlines(@name, "").should == IOSpecs.paragraphs
-    end
+  it "encodes lines using the default external encoding" do
+    Encoding.default_external = Encoding::UTF_8
+    lines = IO.readlines(@name)
+    lines.all? { |s| s.encoding == Encoding::UTF_8 }.should be_true
   end
 
-  describe "when passed an arbitrary string separator" do
-    it "returns an Array containing lines of file_name based on the passed separator" do
-      IO.readlines(@name, "r").should == IOSpecs.lines_r_separator
-    end
-
-    it "does not change $_" do
-      $_ = "test"
-      IO.readlines(@name, "r")
-      $_.should == "test"
-    end
+  it "encodes lines using the default internal encoding, when set" do
+    Encoding.default_external = Encoding::UTF_8
+    Encoding.default_internal = Encoding::UTF_16
+    $/ = $/.encode Encoding::UTF_16
+    lines = IO.readlines(@name)
+    lines.all? { |s| s.encoding == Encoding::UTF_16 }.should be_true
   end
 
-  describe "when passed an object as separator" do
-    it "tries to convert the passed separator to a String using #to_str" do
-      obj = mock('IO.readlines filename')
-      obj.stub!(:to_str).and_return("r")
-      IO.readlines(@name, obj).should == IOSpecs.lines_r_separator
-    end
+  it "ignores the default internal encoding if the external encoding is ASCII-8BIT" do
+    Encoding.default_external = Encoding::ASCII_8BIT
+    Encoding.default_internal = Encoding::UTF_8
+    lines = IO.readlines(@name)
+    lines.all? { |s| s.encoding == Encoding::ASCII_8BIT }.should be_true
   end
 end

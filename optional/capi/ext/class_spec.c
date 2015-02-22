@@ -19,14 +19,20 @@ static VALUE class_spec_define_call_super_method(VALUE self, VALUE obj, VALUE st
 }
 #endif
 
+#ifdef HAVE_RB_CLASS_PATH
+static VALUE class_spec_rb_class_path(VALUE self, VALUE klass) {
+  return rb_class_path(klass);
+}
+#endif
+
 #ifdef HAVE_RB_CLASS_NAME
-static VALUE class_spec_rbclass_name(VALUE self, VALUE klass) {
+static VALUE class_spec_rb_class_name(VALUE self, VALUE klass) {
   return rb_class_name(klass);
 }
 #endif
 
 #ifdef HAVE_RB_CLASS2NAME
-static VALUE class_spec_rbclass2name(VALUE self, VALUE klass) {
+static VALUE class_spec_rb_class2name(VALUE self, VALUE klass) {
   return rb_str_new2( rb_class2name(klass) );
 }
 #endif
@@ -71,6 +77,16 @@ static VALUE class_spec_rb_class_new_instance(VALUE self,
     c_args[i] = rb_ary_entry(args, i);
 
   return rb_class_new_instance(c_nargs, c_args, klass);
+}
+#endif
+
+#ifdef HAVE_RB_CLASS_REAL
+static VALUE class_spec_rb_class_real(VALUE self, VALUE object) {
+  if(rb_type_p(object, T_FIXNUM)) {
+    return INT2FIX(rb_class_real(FIX2INT(object)));
+  } else {
+    return rb_class_real(CLASS_OF(object));
+  }
 }
 #endif
 
@@ -166,12 +182,16 @@ void Init_class_spec() {
   rb_define_method(cls, "define_call_super_method", class_spec_define_call_super_method, 2);
 #endif
 
+#ifdef HAVE_RB_CLASS_PATH
+  rb_define_method(cls, "rb_class_path", class_spec_rb_class_path, 1);
+#endif
+
 #ifdef HAVE_RB_CLASS_NAME
-  rb_define_method(cls, "rb_class_name", class_spec_rbclass_name, 1);
+  rb_define_method(cls, "rb_class_name", class_spec_rb_class_name, 1);
 #endif
 
 #ifdef HAVE_RB_CLASS2NAME
-  rb_define_method(cls, "rb_class2name", class_spec_rbclass2name, 1);
+  rb_define_method(cls, "rb_class2name", class_spec_rb_class2name, 1);
 #endif
 
 #ifdef HAVE_RB_PATH2CLASS
@@ -192,6 +212,10 @@ void Init_class_spec() {
 
 #ifdef HAVE_RB_CLASS_NEW_INSTANCE
   rb_define_method(cls, "rb_class_new_instance", class_spec_rb_class_new_instance, 3);
+#endif
+
+#ifdef HAVE_RB_CLASS_REAL
+  rb_define_method(cls, "rb_class_real", class_spec_rb_class_real, 1);
 #endif
 
 #ifdef HAVE_RB_CLASS_SUPERCLASS

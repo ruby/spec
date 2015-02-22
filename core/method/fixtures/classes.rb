@@ -157,11 +157,28 @@ module MethodSpecs
 
   class ToProcBeta
     def method_called(a)
+      ScratchPad << a
       a
     end
 
     def to_proc
       method(:method_called).to_proc
     end
+  end
+
+  class Methods
+    def one_splat_one_req(*a,b); end
+    def one_splat_two_req(*a,b,c); end
+    def one_splat_one_req_with_block(*a,b,&blk); end
+
+    def one_opt_with_stabby(a=->(b){true}); end
+
+    def one_unnamed_splat(*); end
+
+    def one_splat_one_block(*args, &block)
+      options = {}
+    end
+
+    define_method(:one_optional_defined_method) {|x = 1|}
   end
 end

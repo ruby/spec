@@ -12,7 +12,7 @@ describe "File.ftype" do
     l.should raise_error(Errno::ENOENT)
   end
 
-  it "returns a String " do
+  it "returns a String" do
     FileSpecs.normal_file do |file|
       File.ftype(file).should be_kind_of(String)
     end
@@ -32,12 +32,11 @@ describe "File.ftype" do
 
   # Both FreeBSD and Windows does not have block devices
   platform_is_not :freebsd, :windows do
-    # travis-ci also doesn't have block devices
-    break unless FileSpecs.block_device{|block|block}
-
-    it "returns 'blockSpecial' when the file is a block" do
-      FileSpecs.block_device do |block|
-        File.ftype(block).should == 'blockSpecial'
+    with_block_device do
+      it "returns 'blockSpecial' when the file is a block" do
+        FileSpecs.block_device do |block|
+          File.ftype(block).should == 'blockSpecial'
+        end
       end
     end
   end

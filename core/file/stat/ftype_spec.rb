@@ -2,7 +2,7 @@ require "#{File.dirname(__FILE__)}/../../../spec_helper"
 require "#{File.dirname(__FILE__)}/../fixtures/file_types.rb"
 
 describe "File::Stat#ftype" do
-  it "returns a String " do
+  it "returns a String" do
     FileSpecs.normal_file do |file|
       File.lstat(file).ftype.should be_kind_of(String)
     end
@@ -27,12 +27,11 @@ describe "File::Stat#ftype" do
   end
 
   platform_is_not :freebsd do  # FreeBSD does not have block devices
-    # travis-ci also doesn't have block devices
-    break unless FileSpecs.block_device{|block|block}
-
-    it "returns 'blockSpecial' when the file is a block" do
-      FileSpecs.block_device do |block|
-        File.lstat(block).ftype.should == 'blockSpecial'
+    with_block_device do
+      it "returns 'blockSpecial' when the file is a block" do
+        FileSpecs.block_device do |block|
+          File.lstat(block).ftype.should == 'blockSpecial'
+        end
       end
     end
   end

@@ -9,7 +9,7 @@ describe :module_class_eval, :shared => true do
   end
 
   it "does not add defined methods to other classes" do
-    FalseClass.class_eval do
+    FalseClass.send(@method) do
       def foo
         'foo'
       end
@@ -73,7 +73,7 @@ describe :module_class_eval, :shared => true do
   # This case was found because Rubinius was caching the compiled
   # version of the string and not duping the methods within the
   # eval, causing the method addition to change the static scope
-  # of the shared CompiledMethod.
+  # of the shared CompiledCode.
   it "adds methods respecting the lexical constant scope" do
     code = "def self.attribute; C; end"
 
@@ -85,8 +85,8 @@ describe :module_class_eval, :shared => true do
       self::C = "B"
     end
 
-    a.class_eval code
-    b.class_eval code
+    a.send @method, code
+    b.send @method, code
 
     a.attribute.should == "A"
     b.attribute.should == "B"

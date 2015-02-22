@@ -79,4 +79,25 @@ describe "Module#attr_accessor" do
   it "is a private method" do
     lambda { Class.new.attr_accessor(:foo) }.should raise_error(NoMethodError)
   end
+
+  describe "on immediates" do
+    before :each do
+      class Fixnum
+        attr_accessor :foobar
+      end
+    end
+
+    after :each do
+      if Fixnum.method_defined?(:foobar)
+        Fixnum.send(:remove_method, :foobar)
+      end
+      if Fixnum.method_defined?(:foobar=)
+        Fixnum.send(:remove_method, :foobar=)
+      end
+    end
+
+    it "can read through the accessor" do
+      1.foobar.should be_nil
+    end
+  end
 end
