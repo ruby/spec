@@ -5,6 +5,6 @@ describe :thread_backtrace_location_to_string, :shared => true do
   end
 
   it 'converts the call frame to a String' do
-    @frame.send(@method).should == "#{__FILE__}:#{@line}:in `__script__'"
+    @frame.send(@method).should include("#{__FILE__}:#{@line}:in ")
   end
 end

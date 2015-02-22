@@ -7,6 +7,6 @@ describe 'Thread::Backtrace::Location#label' do
   end
 
   it 'returns the base label of the call frame' do
-    @frame.label.should == '__script__'
+    @frame.label.should include('<top (required)>')
   end
 end
