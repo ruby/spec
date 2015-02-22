@@ -54,9 +54,11 @@ describe "A block yielded a single" do
       result.should == [nil, a: 10]
     end
 
-    it "does not treat hashes with string keys as keyword arguments" do
-      result = m(["a" => 10]) { |a = nil, **b| [a, b] }
-      result.should == [{"a" => 10}, {}]
+    ruby_bug "#10685", "2.2.0.0" do
+      it "does not treat hashes with string keys as keyword arguments" do
+        result = m(["a" => 10]) { |a = nil, **b| [a, b] }
+        result.should == [{"a" => 10}, {}]
+      end
     end
 
     it "calls #to_hash on the last element if keyword arguments are present" do
