@@ -560,35 +560,33 @@ describe "File.open" do
 
   platform_is_not :windows do
     ruby_bug '#7908', '1.8.7' do
-      if `which mkfifo`.chomp != ""
-        describe "on a FIFO" do
-          before :each do
-            @fifo = tmp("File_open_fifo")
-            system "mkfifo #{@fifo}"
+      describe "on a FIFO" do
+        before :each do
+          @fifo = tmp("File_open_fifo")
+          system "mkfifo #{@fifo}"
+        end
+
+        after :each do
+          rm_r @fifo
+        end
+
+        it "opens it as a normal file" do
+          file_w, file_r, read_bytes, written_length = nil
+
+          # open in threads, due to blocking open and writes
+          Thread.new do
+            file_w = File.open(@fifo, 'w')
+            written_length = file_w.syswrite('hello')
+          end
+          Thread.new do
+            file_r = File.open(@fifo, 'r')
+            read_bytes = file_r.sysread(5)
           end
 
-          after :each do
-            rm_r @fifo
-          end
+          Thread.pass until read_bytes && written_length
 
-          it "opens it as a normal file" do
-            file_w, file_r, read_bytes, written_length = nil
-
-            # open in threads, due to blocking open and writes
-            Thread.new do
-              file_w = File.open(@fifo, 'w')
-              written_length = file_w.syswrite('hello')
-            end
-            Thread.new do
-              file_r = File.open(@fifo, 'r')
-              read_bytes = file_r.sysread(5)
-            end
-
-            Thread.pass until read_bytes && written_length
-
-            written_length.should == 5
-            read_bytes.should == 'hello'
-          end
+          written_length.should == 5
+          read_bytes.should == 'hello'
         end
       end
     end
