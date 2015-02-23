@@ -44,11 +44,13 @@ describe "SystemCallError.new" do
     exc.message.should == "Invalid argument - custom message"
   end
 
-  it "accepts an optional third argument specifying the location" do
-    exc = SystemCallError.new("custom message", 22, "location")
-    exc.should be_an_instance_of(Errno::EINVAL)
-    exc.errno.should == 22
-    exc.message.should == "Invalid argument @ location - custom message"
+  ruby_version_is "2.1" do
+    it "accepts an optional third argument specifying the location" do
+      exc = SystemCallError.new("custom message", 22, "location")
+      exc.should be_an_instance_of(Errno::EINVAL)
+      exc.errno.should == 22
+      exc.message.should == "Invalid argument @ location - custom message"
+    end
   end
 
   it "returns an arity of -1 for the initialize method" do
