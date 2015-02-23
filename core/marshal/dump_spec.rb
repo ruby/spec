@@ -431,17 +431,34 @@ describe "Marshal.dump" do
       Encoding.default_internal = @internal
     end
 
-    it "dumps the zone and the offset" do
-      with_timezone 'AST', 3 do
-        dump = Marshal.dump(@t)
-        dump.should == "\x04\bIu:\tTime\r#{@t_dump}\a:\voffseti\x020*:\tzoneI\"\bAST\x06:\x06ET"
+    ruby_version_is ""..."2.2" do
+      it "dumps the zone and the offset" do
+        with_timezone 'AST', 3 do
+          dump = Marshal.dump(@t)
+          dump.should == "\x04\bIu:\tTime\r#{@t_dump}\a:\voffseti\x020*:\tzoneI\"\bAST\x06:\x06ET"
+        end
+      end
+
+      it "dumps the zone, but not the offset if zone is UTC" do
+        dump = Marshal.dump(@utc)
+        dump.should == "\x04\bIu:\tTime\r#{@utc_dump}\x06:\tzoneI\"\bUTC\x06:\x06ET"
       end
     end
 
-    it "dumps the zone, but not the offset if zone is UTC" do
-      dump = Marshal.dump(@utc)
-      dump.should == "\x04\bIu:\tTime\r#{@utc_dump}\x06:\tzoneI\"\bUTC\x06:\x06ET"
+    ruby_version_is "2.2" do
+      it "dumps the zone and the offset" do
+        with_timezone 'AST', 3 do
+          dump = Marshal.dump(@t)
+          dump.should == "\x04\bIu:\tTime\r#{@t_dump}\a:\voffseti\x020*:\tzone\"\bAST"
+        end
+
+        it "dumps the zone, but not the offset if zone is UTC" do
+          dump = Marshal.dump(@utc)
+          dump.should == "\x04\bIu:\tTime\r#{@utc_dump}\x06:\tzone\"\bUTC"
+        end
+      end
     end
+
   end
 
   describe "with an Exception" do
