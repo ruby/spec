@@ -67,11 +67,24 @@ describe "Marshal.dump" do
         [Marshal, s.encode("euc-jp").to_sym,
             "\x04\bI:\a\xA2\xAA\x06:\rencoding\"\vEUC-JP"],
         [Marshal, s.encode("sjis").to_sym,
-            "\x04\bI:\a\x81\xA8\x06:\rencoding\"\x10Windows-31J"],
-        [Marshal, s.force_encoding("binary").to_sym,
-            "\x04\bI:\b\xE2\x86\x92\x00"]
+            "\x04\bI:\a\x81\xA8\x06:\rencoding\"\x10Windows-31J"]
       ].should be_computed_by(:dump)
     end
+
+    ruby_version_is ""..."2.2" do
+      it "dumps a binary encoded Symbol" do
+        s = "\u2192".force_encoding("binary").to_sym
+        Marshal.dump(s).should == "\x04\bI:\b\xE2\x86\x92\x00"
+      end
+    end
+
+    ruby_version_is "2.2" do
+      it "dumps a binary encoded Symbol" do
+        s = "\u2192".force_encoding("binary").to_sym
+        Marshal.dump(s).should == "\x04\b:\b\xE2\x86\x92"
+      end
+    end
+
   end
 
   it "dumps an extended_object" do
