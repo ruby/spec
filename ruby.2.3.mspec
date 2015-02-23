@@ -11,6 +11,7 @@ class MSpecScript
   # Core library specs
   set :core, [
     'core',
+    '^core/marshal',
   ]
 
   # Standard library specs
