@@ -89,11 +89,15 @@ describe "IO#puts" do
   end
 
   it "ignores the $/ separator global" do
-    $/ = ":"
-    @io.should_receive(:write).with("5")
-    @io.should_receive(:write).with("\n")
-    @io.puts(5).should == nil
-    $/ = "\n"
+    old_rs = $/
+    begin
+      $/ = ":"
+      @io.should_receive(:write).with("5")
+      @io.should_receive(:write).with("\n")
+      @io.puts(5).should == nil
+    ensure
+      $/ = old_rs
+    end
   end
 
   it "raises IOError on closed stream" do
