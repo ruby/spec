@@ -340,6 +340,17 @@ with_feature :encoding do
       str = "abc\r\n".encode "utf-32be"
       str.chomp.should == "abc".encode("utf-32be")
     end
+
+    it "removes the final carriage return, newline from a non-ASCII String when the record separator is changed" do
+      old_rs = $/
+      begin
+        $/ = "\n".encode("utf-8")
+        str = "abc\r\n".encode "utf-32be"
+        str.chomp.should == "abc".encode("utf-32be")
+      ensure
+        $/ = old_rs
+      end
+    end
   end
 
   describe "String#chomp!" do
@@ -354,6 +365,17 @@ with_feature :encoding do
     it "removes the final carriage return, newline from a non-ASCII String" do
       str = "abc\r\n".encode "utf-32be"
       str.chomp!.should == "abc".encode("utf-32be")
+    end
+
+    it "removes the final carriage return, newline from a non-ASCII String when the record separator is changed" do
+      old_rs = $/
+      begin
+        $/ = "\n".encode("utf-8")
+        str = "abc\r\n".encode "utf-32be"
+        str.chomp!.should == "abc".encode("utf-32be")
+      ensure
+        $/ = old_rs
+      end
     end
   end
 end
