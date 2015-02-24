@@ -710,12 +710,8 @@ describe :marshal_load, :shared => true do
     end
 
     it "raises a NameError" do
-      lambda { Marshal.send(@method, @data) }.should raise_error(NameError)
-    end
-
-    it "invokes Module#const_missing" do
-      NamespaceTest.should_receive(:const_missing).with(:SameName).and_raise(NameError)
-      lambda { Marshal.send(@method, @data) }.should raise_error(NameError)
+      message = "undefined class/module NamespaceTest::SameName"
+      lambda { Marshal.send(@method, @data) }.should raise_error(ArgumentError, message)
     end
   end
 
