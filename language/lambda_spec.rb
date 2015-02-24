@@ -22,31 +22,6 @@ describe "A lambda literal -> () { }" do
     -> () { }.lambda?.should be_true
   end
 
-  it "searches lexical scope for constants" do
-    klass = Class.new do
-      X = 1
-      def m
-        -> { X }
-      end
-    end
-
-    klass.new.m.().should == 1
-  end
-
-  it "searches inheritance hierarchy for constants" do
-    parent = Class.new do
-      X = 1
-    end
-
-    klass = Class.new(parent) do
-      def m
-        -> { X }
-      end
-    end
-
-    klass.new.m.().should == 1
-  end
-
   context "assigns no local variables" do
     evaluate <<-ruby do
         @a = -> { }
@@ -297,31 +272,6 @@ describe "A lambda expression 'lambda { ... }'" do
 
   it "returns a lambda" do
     lambda { }.lambda?.should be_true
-  end
-
-  it "searches lexical scope for constants" do
-    klass = Class.new do
-      X = 1
-      def m
-        -> { X }
-      end
-    end
-
-    klass.new.m.().should == 1
-  end
-
-  it "searches inheritance hierarchy for constants" do
-    parent = Class.new do
-      X = 1
-    end
-
-    klass = Class.new(parent) do
-      def m
-        -> { X }
-      end
-    end
-
-    klass.new.m.().should == 1
   end
 
   context "assigns no local variables" do
