@@ -173,11 +173,13 @@ describe :marshal_load, :shared => true do
       y.first.tainted?.should be_false
     end
 
-    it "does not taint Bignums" do
-      x = [bignum_value]
-      y = Marshal.send(@method, Marshal.dump(x).taint)
-      y.tainted?.should be_true
-      y.first.tainted?.should be_false
+    ruby_bug "#8945", "2.1" do
+      it "does not taint Bignums" do
+        x = [bignum_value]
+        y = Marshal.send(@method, Marshal.dump(x).taint)
+        y.tainted?.should be_true
+        y.first.tainted?.should be_false
+      end
     end
 
     it "does not taint Floats" do
