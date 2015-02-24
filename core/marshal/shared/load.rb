@@ -702,14 +702,14 @@ describe :marshal_load, :shared => true do
     end
   end
 
-  describe "when a class with the same name as the dumped one exists outside the namespace" do
+  describe "when a class does not exist in the namespace" do
     before(:each) do
       NamespaceTest.send(:const_set, :SameName, Class.new)
       @data = Marshal.dump(NamespaceTest::SameName.new)
       NamespaceTest.send(:remove_const, :SameName)
     end
 
-    it "raises a NameError" do
+    it "raises an ArgumentError" do
       message = "undefined class/module NamespaceTest::SameName"
       lambda { Marshal.send(@method, @data) }.should raise_error(ArgumentError, message)
     end
