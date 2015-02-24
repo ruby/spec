@@ -12,7 +12,11 @@
    (RUBY_VERSION_MAJOR == (major) && RUBY_VERSION_MINOR < (minor)) || \
    (RUBY_VERSION_MAJOR == (major) && RUBY_VERSION_MINOR == (minor) && RUBY_VERSION_TEENY < (teeny)))
 
-#if RUBY_VERSION_MAJOR >=2 && RUBY_VERSION_MINOR >= 1
+#if RUBY_VERSION_MAJOR >= 2 && RUBY_VERSION_MINOR >= 2
+#define RUBY_VERSION_IS_2_2
+#endif
+
+#if RUBY_VERSION_MAJOR >= 2 && RUBY_VERSION_MINOR >= 1
 #define RUBY_VERSION_IS_2_1
 #endif
 
@@ -527,8 +531,10 @@
 #define HAVE_RB_RATIONAL_NEW               1
 #define HAVE_RB_RATIONAL_NEW1              1
 #define HAVE_RB_RATIONAL_NEW2              1
+#ifdef RUBY_VERSION_IS_2_2
 #define HAVE_RB_RATIONAL_NUM               1
 #define HAVE_RB_RATIONAL_DEN               1
+#endif
 
 /* Regexp */
 #define HAVE_RB_BACKREF_GET                1
