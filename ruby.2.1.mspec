@@ -54,8 +54,6 @@ class MSpecScript
   set :ci_files, get(:files)
 
   # Optional library specs
-  set :ffi, 'optional/ffi'
-
   set :capi, 'optional/capi'
 
   # A list of _all_ optional library specs
