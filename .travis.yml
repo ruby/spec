@@ -1,9 +1,6 @@
 language: ruby
 script:
   - bundle exec mspec -t ruby
-branches:
-  only:
-    - ruby
 notifications:
   email: false
 rvm:
