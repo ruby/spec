@@ -401,17 +401,8 @@ describe "C-API Encoding function" do
       enc.should == Encoding::UTF_8
     end
 
-    ruby_version_is ""..."2.1" do
-      it "sets the encoding of a Symbol to the encoding" do
-        enc = @s.rb_enc_associate_index(:symbol, "US-ASCII").encoding
-        enc.should == Encoding::US_ASCII
-      end
-    end
-
-    ruby_version_is "2.1" do
-      it "sets the encoding of a Symbol to the encoding" do
-        lambda { @s.rb_enc_associate_index(:symbol, "US-ASCII") }.should raise_error(RuntimeError)
-      end
+    it "sets the encoding of a Symbol to the encoding" do
+      lambda { @s.rb_enc_associate_index(:symbol, "US-ASCII") }.should raise_error(TypeError)
     end
   end
 
