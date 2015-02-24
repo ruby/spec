@@ -49,7 +49,7 @@ describe "Time#zone" do
     end
 
     ruby_version_is ""..."2.3" do
-      ruby_bug "#10887", "2.2.0.0" do
+      ruby_bug "#10887", "2.2.0.81" do
         it "returns the string with the default internal encoding" do
           t = Time.new(2005, 2, 27, 22, 50, 0, -3600)
 

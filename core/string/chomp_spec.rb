@@ -349,7 +349,7 @@ with_feature :encoding do
       str.chomp.should == "abc".encode("utf-32be")
     end
 
-    ruby_bug "#10893", "2.3" do
+    ruby_bug "#10893", "2.2.0.80" do
       it "removes the final carriage return, newline from a non-ASCII String when the record separator is changed" do
         $/ = "\n".encode("utf-8")
         str = "abc\r\n".encode "utf-32be"
@@ -380,7 +380,7 @@ with_feature :encoding do
       str.chomp!.should == "abc".encode("utf-32be")
     end
 
-    ruby_bug "#10893", "2.3" do
+    ruby_bug "#10893", "2.2.0.80" do
       it "removes the final carriage return, newline from a non-ASCII String when the record separator is changed" do
         $/ = "\n".encode("utf-8")
         str = "abc\r\n".encode "utf-32be"

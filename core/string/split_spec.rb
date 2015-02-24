@@ -13,7 +13,7 @@ describe "String#split with String" do
   end
 
   with_feature :encoding do
-    ruby_bug "#10886", "2.3" do
+    ruby_bug "#10886", "2.2.0.79" do
       it "throws an ArgumentError if the pattern is not a valid string" do
         str = 'проверка'
         broken_str = 'проверка'
