@@ -2,8 +2,16 @@ require File.expand_path('../../fixtures/marshal_data', __FILE__)
 require 'stringio'
 
 describe :marshal_load, :shared => true do
-  before :all do
-    @num_self_class = 1
+  ruby_version_is ""..."2.1" do
+    before :all do
+      @num_self_class = 0
+    end
+  end
+
+  ruby_version_is "2.1" do
+    before :all do
+      @num_self_class = 1
+    end
   end
 
   it "raises an ArgumentError when the dumped data is truncated" do
