@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "ruby.h"
+#include "ruby/thread.h"
 #include "rubyspec.h"
 
 #ifdef __cplusplus
