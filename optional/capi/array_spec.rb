@@ -42,9 +42,11 @@ describe "C-API Array function" do
     end
   end
 
-  describe "rb_ary_new_from_args" do
-    it "returns an array with the passed cardinality and varargs" do
-      @s.rb_ary_new_from_args(1,2,3).should == [1,2,3]
+  ruby_version_is "2.1" do
+    describe "rb_ary_new_from_args" do
+      it "returns an array with the passed cardinality and varargs" do
+        @s.rb_ary_new_from_args(1,2,3).should == [1,2,3]
+      end
     end
   end
 
