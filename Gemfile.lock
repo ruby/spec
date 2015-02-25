@@ -1,7 +1,6 @@
 GIT
-  remote: git://github.com/nurse/mspec.git
-  revision: de8a47dac4362fa25c22b2a48eaab244635faa7b
-  branch: master
+  remote: git://github.com/ruby/mspec.git
+  revision: 312d99ce934a8e776280e5bd40dbeb8040ced18f
   specs:
     mspec (1.7.0)
 
