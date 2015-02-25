@@ -46,8 +46,8 @@ describe "Logger#new" do
     l.add Logger::WARN, "foo"
     l.add Logger::WARN, "bar"
 
-    File.exists?(path).should be_true
-    File.exists?(path + ".0").should be_true
+    File.exist?(path).should be_true
+    File.exist?(path + ".0").should be_true
 
     # first line will be a comment so we'll have to skip it.
     f = File.open(path)

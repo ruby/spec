@@ -39,12 +39,12 @@ describe :dir_exists, :shared => true do
   end
 
   it "returns false if the argument exists but is a file" do
-    File.exists?(__FILE__).should be_true
+    File.exist?(__FILE__).should be_true
     Dir.send(@method, __FILE__).should be_false
   end
 
   it "doesn't set $! when file doesn't exist" do
-    Dir.exists?("/path/to/non/existent/dir")
+    Dir.exist?("/path/to/non/existent/dir")
     $!.should be_nil
   end
 

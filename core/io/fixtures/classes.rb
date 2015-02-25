@@ -109,7 +109,7 @@ module IOSpecs
   # file should obviously not be deleted.
   def self.io_fixture(name, options_or_mode="r:utf-8")
     path = fixture __FILE__, name
-    name = path if File.exists? path
+    name = path if File.exist? path
     new_io name, options_or_mode
   end
 

@@ -21,7 +21,7 @@ describe :kernel_require_basic, :shared => true do
 
     it "raises a LoadError if the file does not exist" do
       path = File.expand_path "nonexistent.rb", CODE_LOADING_DIR
-      File.exists?(path).should be_false
+      File.exist?(path).should be_false
       lambda { @object.send(@method, path) }.should raise_error(LoadError)
       ScratchPad.recorded.should == []
     end
@@ -41,7 +41,7 @@ describe :kernel_require_basic, :shared => true do
         end
 
         it "raises a LoadError" do
-          File.exists?(@path).should be_true
+          File.exist?(@path).should be_true
           lambda { @object.send(@method, @path) }.should raise_error(LoadError)
         end
       end
@@ -244,7 +244,7 @@ describe :kernel_require, :shared => true do
   describe "(file extensions)" do
     it "loads a .rb extensioned file when passed a non-extensioned path" do
       path = File.expand_path "load_fixture", CODE_LOADING_DIR
-      File.exists?(path).should be_true
+      File.exist?(path).should be_true
       @object.require(path).should be_true
       ScratchPad.recorded.should == [:loaded]
     end
@@ -268,7 +268,7 @@ describe :kernel_require, :shared => true do
 
     it "loads a .rb extensioned file when passed a non-.rb extensioned path" do
       path = File.expand_path "load_fixture.ext", CODE_LOADING_DIR
-      File.exists?(path).should be_true
+      File.exist?(path).should be_true
       @object.require(path).should be_true
       ScratchPad.recorded.should == [:loaded]
     end
