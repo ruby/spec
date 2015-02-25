@@ -25,7 +25,8 @@ def compile_extension(name)
     hdrdir = RbConfig::CONFIG["rubyhdrdir"]
   elsif RUBY_NAME =~ /^ruby/
     if hdrdir = RbConfig::CONFIG["rubyhdrdir"]
-      arch_hdrdir = File.join hdrdir, RbConfig::CONFIG["arch"]
+      arch_hdrdir = RbConfig::CONFIG["rubyarchhdrdir"] ||
+                    File.join(hdrdir, RbConfig::CONFIG["arch"])
       ruby_hdrdir = File.join hdrdir, "ruby"
     else
       hdrdir = RbConfig::CONFIG["archdir"]
