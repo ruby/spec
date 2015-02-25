@@ -50,15 +50,15 @@ def compile_extension(name)
   rubyspec_header = File.join(path, "rubyspec.h")
   mri_header      = File.join(path, "mri.h")
 
-  return lib if File.exists?(signature) and
+  return lib if File.exist?(signature) and
                 IO.read(signature).chomp == CAPI_RUBY_SIGNATURE and
-                File.exists?(lib) and File.mtime(lib) > File.mtime(source) and
+                File.exist?(lib) and File.mtime(lib) > File.mtime(source) and
                 File.mtime(lib) > File.mtime(ruby_header) and
                 File.mtime(lib) > File.mtime(rubyspec_header) and
                 File.mtime(lib) > File.mtime(mri_header)
 
   # avoid problems where compilation failed but previous shlib exists
-  File.delete lib if File.exists? lib
+  File.delete lib if File.exist? lib
 
   cc        = RbConfig::CONFIG["CC"]
   cflags    = (ENV["CFLAGS"] || RbConfig::CONFIG["CFLAGS"]).dup
@@ -70,7 +70,7 @@ def compile_extension(name)
 
   output = `#{cc} #{incflags} #{cflags} -c #{source} -o #{obj}`
 
-  if $?.exitstatus != 0 or !File.exists?(obj)
+  if $?.exitstatus != 0 or !File.exist?(obj)
     puts "ERROR:\n#{output}"
     raise "Unable to compile \"#{source}\""
   end
