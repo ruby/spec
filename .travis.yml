@@ -1,6 +1,6 @@
 language: ruby
 script:
-  - bundle exec mspec -t ruby
+  - bundle exec mspec --config ruby.mspec -t ruby
 notifications:
   email: false
 rvm:
