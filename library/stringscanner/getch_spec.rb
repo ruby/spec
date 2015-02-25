@@ -22,7 +22,7 @@ describe "StringScanner#getch" do
     $KCODE = 'EUC'
 
     # Japanese hiragana "A" in EUC-JP
-    src = encode("\244\242", "euc-jp")
+    src = "\244\242".force_encoding("euc-jp")
 
     s = StringScanner.new(src)
     s.getch.should == src

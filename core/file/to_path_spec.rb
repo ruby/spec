@@ -41,7 +41,7 @@ describe "File#to_path" do
 
   with_feature :encoding do
     it "preserves the encoding of the path" do
-      path = encode @path, "euc-jp"
+      path = @path.force_encoding("euc-jp")
       @file = File.new path
       @file.to_path.encoding.should == Encoding.find("euc-jp")
     end

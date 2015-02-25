@@ -228,13 +228,13 @@ describe "C-API Encoding function" do
 
   describe "ENC_CODERANGE_ASCIIONLY" do
     it "returns true if the object encoding is only ASCII" do
-      str = encode("abc", "us-ascii")
+      str = "abc".force_encoding("us-ascii")
       str.valid_encoding? # make sure to set the coderange
       @s.ENC_CODERANGE_ASCIIONLY(str).should be_true
     end
 
     it "returns false if the object encoding is not ASCII only" do
-      str = encode("ありがとう", "utf-8")
+      str = "ありがとう".force_encoding("utf-8")
       @s.ENC_CODERANGE_ASCIIONLY(str).should be_false
     end
   end

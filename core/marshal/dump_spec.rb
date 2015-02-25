@@ -195,33 +195,33 @@ describe "Marshal.dump" do
 
   describe "with a String" do
     it "dumps a blank String" do
-      Marshal.dump(encode("", "binary")).should == "\004\b\"\000"
+      Marshal.dump("".force_encoding("binary")).should == "\004\b\"\000"
     end
 
     it "dumps a short String" do
-      Marshal.dump(encode("short", "binary")).should == "\004\b\"\012short"
+      Marshal.dump("short".force_encoding("binary")).should == "\004\b\"\012short"
     end
 
     it "dumps a long String" do
-      Marshal.dump(encode("big" * 100, "binary")).should == "\004\b\"\002,\001#{"big" * 100}"
+      Marshal.dump(("big" * 100).force_encoding("binary")).should == "\004\b\"\002,\001#{"big" * 100}"
     end
 
     it "dumps a String extended with a Module" do
-      Marshal.dump(encode("".extend(Meths), "binary")).should == "\004\be:\nMeths\"\000"
+      Marshal.dump("".extend(Meths).force_encoding("binary")).should == "\004\be:\nMeths\"\000"
     end
 
     it "dumps a String subclass" do
-      Marshal.dump(encode(UserString.new, "binary")).should == "\004\bC:\017UserString\"\000"
+      Marshal.dump(UserString.new.force_encoding("binary")).should == "\004\bC:\017UserString\"\000"
     end
 
     it "dumps a String subclass extended with a Module" do
-      Marshal.dump(encode(UserString.new.extend(Meths), "binary")).should == "\004\be:\nMethsC:\017UserString\"\000"
+      Marshal.dump(UserString.new.extend(Meths).force_encoding("binary")).should == "\004\be:\nMethsC:\017UserString\"\000"
     end
 
     it "dumps a String with instance variables" do
       str = ""
       str.instance_variable_set("@foo", "bar")
-      Marshal.dump(encode(str, "binary")).should == "\x04\bI\"\x00\x06:\t@fooI\"\bbar\x06:\x06EF"
+      Marshal.dump(str.force_encoding("binary")).should == "\x04\bI\"\x00\x06:\t@fooI\"\bbar\x06:\x06EF"
     end
 
     with_feature :encoding do
@@ -271,17 +271,17 @@ describe "Marshal.dump" do
     end
 
     it "dumps a binary Regexp" do
-      o = Regexp.new(encode("", "binary"), Regexp::FIXEDENCODING)
+      o = Regexp.new("".force_encoding("binary"), Regexp::FIXEDENCODING)
       Marshal.dump(o).should == "\x04\b/\x00\x10"
     end
 
     it "dumps a UTF-8 Regexp" do
-      o = Regexp.new(encode("", "utf-8"), Regexp::FIXEDENCODING)
+      o = Regexp.new("".force_encoding("utf-8"), Regexp::FIXEDENCODING)
       Marshal.dump(o).should == "\x04\bI/\x00\x10\x06:\x06ET"
     end
 
     it "dumps a Regexp in another encoding" do
-      o = Regexp.new(encode("", "utf-16le"), Regexp::FIXEDENCODING)
+      o = Regexp.new("".force_encoding("utf-16le"), Regexp::FIXEDENCODING)
       Marshal.dump(o).should == "\x04\bI/\x00\x10\x06:\rencoding\"\rUTF-16LE"
     end
   end
