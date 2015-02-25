@@ -7,11 +7,9 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.9.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  ffi
   mspec!
