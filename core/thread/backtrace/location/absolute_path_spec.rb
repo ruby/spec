@@ -7,6 +7,6 @@ describe 'Thread::Backtrace::Location#absolute_path' do
   end
 
   it 'returns the absolute path of the call frame' do
-    @frame.absolute_path.should == __FILE__
+    @frame.absolute_path.should == File.realpath(__FILE__)
   end
 end
