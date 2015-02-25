@@ -70,7 +70,7 @@ def compile_extension(name)
 
   output = `#{cc} #{incflags} #{cflags} -c #{source} -o #{obj}`
 
-  if $?.exitstatus != 0 or !File.exist?(obj)
+  if $?.success? or !File.exist?(obj)
     puts "ERROR:\n#{output}"
     raise "Unable to compile \"#{source}\""
   end
@@ -84,7 +84,7 @@ def compile_extension(name)
 
   output = `#{ldshared} #{obj} #{libpath} #{dldflags} #{libs} -o #{lib}`
 
-  if $?.exitstatus != 0
+  if $?.success?
     puts "ERROR:\n#{output}"
     raise "Unable to link \"#{source}\""
   end
