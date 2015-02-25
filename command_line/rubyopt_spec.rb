@@ -3,12 +3,10 @@ require File.expand_path('../../spec_helper', __FILE__)
 describe "Processing RUBYOPT" do
   before (:each) do
     @rubyopt, ENV["RUBYOPT"] = ENV["RUBYOPT"], nil
-    @ruby_flags, ENV["RUBY_FLAGS"] = ENV["RUBY_FLAGS"], nil
   end
 
   after (:each) do
     ENV["RUBYOPT"] = @rubyopt
-    ENV["RUBY_FLAGS"] = @ruby_flags
   end
 
   it "adds the -I path to $LOAD_PATH" do
