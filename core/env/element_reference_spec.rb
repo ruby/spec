@@ -33,8 +33,10 @@ with_feature :encoding do
     it "uses the locale encoding if Encoding.default_internal is nil" do
       Encoding.default_internal = nil
 
+      locale = Encoding.find('locale')
+      locale = Encoding::ASCII_8BIT if locale == Encoding::US_ASCII
       ENV[@variable] = "\xC3\xB8"
-      ENV[@variable].encoding.should == Encoding.find('locale')
+      ENV[@variable].encoding.should == locale
     end
 
     it "transcodes from the locale encoding to Encoding.default_internal if set" do
