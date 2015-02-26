@@ -46,7 +46,7 @@ describe "CApiRationalSpecs" do
   ruby_version_is "2.2" do
     describe "rb_rational_num" do
       it "returns the numerator of a Rational" do
-        @r.rb_rational_num(Rational(7)).should == 7
+        @r.rb_rational_num(Rational(7, 2)).should == 7
       end
     end
 
