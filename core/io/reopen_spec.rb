@@ -98,7 +98,7 @@ describe "IO#reopen with a String" do
 
   platform_is_not :windows do
     it "passes all mode flags through" do
-      @io.reopen(@name, "ab")
+      @io.reopen(@tmp_file, "ab")
       (@io.fcntl(Fcntl::F_GETFL) & File::APPEND).should == File::APPEND
     end
   end
