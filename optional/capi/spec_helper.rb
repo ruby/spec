@@ -11,6 +11,9 @@ FileUtils.makedirs(objdir)
 CAPI_RUBY_SIGNATURE = "#{RUBY_NAME}-#{RUBY_VERSION}"
 
 def compile_extension(name)
+  preloadenv = RbConfig::CONFIG["PRELOADENV"] || "LD_PRELOAD"
+  preload, ENV[preloadenv] = ENV[preloadenv], nil if preloadenv
+
   path = extension_path
   objdir = object_path
 
@@ -92,6 +95,8 @@ def compile_extension(name)
   File.open(signature, "w") { |f| f.puts CAPI_RUBY_SIGNATURE }
 
   lib
+ensure
+  ENV[preloadenv] = preload if preloadenv
 end
 
 def extension_path
