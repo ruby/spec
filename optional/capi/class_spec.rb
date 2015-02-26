@@ -3,7 +3,7 @@ require File.expand_path('../fixtures/class', __FILE__)
 
 load_extension("class")
 
-autoload :ClassUnderAutoload, "#{extension_path}/class_under_autoload_spec"
+autoload :ClassUnderAutoload, "#{object_path}/class_under_autoload_spec"
 
 describe :rb_path_to_class, :shared => true do
   it "returns a class or module from a scoped String" do

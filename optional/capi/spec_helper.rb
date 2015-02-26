@@ -3,20 +3,16 @@ $extmk = false
 
 require 'rbconfig'
 
-# Generate a version.h file for specs to use
-File.open File.expand_path("../ext/rubyspec_version.h", __FILE__), "w" do |f|
-  # Yes, I know CONFIG variables exist for these, but
-  # who knows when those could be removed without warning.
-  major, minor, teeny = RUBY_VERSION.split(".")
-  f.puts "#define RUBY_VERSION_MAJOR  #{major}"
-  f.puts "#define RUBY_VERSION_MINOR  #{minor}"
-  f.puts "#define RUBY_VERSION_TEENY  #{teeny}"
-end
+objdir = File.expand_path("spec/rubyspec/optional/capi/ext")
+
+define_method(:object_path) {objdir}
+FileUtils.makedirs(objdir)
 
 CAPI_RUBY_SIGNATURE = "#{RUBY_NAME}-#{RUBY_VERSION}"
 
 def compile_extension(name)
   path = extension_path
+  objdir = object_path
 
   # TODO use rakelib/ext_helper.rb?
   arch_hdrdir = nil
@@ -42,11 +38,11 @@ def compile_extension(name)
     raise "Don't know how to build C extensions with #{RUBY_NAME}"
   end
 
-  ext       = File.join(path, "#{name}_spec")
-  source    = "#{ext}.c"
-  obj       = "#{ext}.o"
-  lib       = "#{ext}.#{RbConfig::CONFIG['DLEXT']}"
-  signature = "#{ext}.sig"
+  ext       = "#{name}_spec"
+  source    = File.join(path, "#{ext}.c")
+  obj       = File.join(objdir, "#{ext}.#{RbConfig::CONFIG['OBJEXT']}")
+  lib       = File.join(objdir, "#{ext}.#{RbConfig::CONFIG['DLEXT']}")
+  signature = File.join(objdir, "#{ext}.sig")
 
   ruby_header     = File.join(hdrdir, "ruby.h")
   rubyspec_header = File.join(path, "rubyspec.h")
@@ -74,6 +70,8 @@ def compile_extension(name)
 
   unless $?.success? and File.exist?(obj)
     puts "ERROR:\n#{output}"
+    puts "incflags=#{incflags}"
+    puts "cflags=#{cflags}"
     raise "Unable to compile \"#{source}\""
   end
 

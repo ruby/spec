@@ -25,7 +25,7 @@ class CApiModuleSpecs
   class Super
   end
 
-  autoload :ModuleUnderAutoload, "#{extension_path}/module_under_autoload_spec"
+  autoload :ModuleUnderAutoload, "#{object_path}/module_under_autoload_spec"
   autoload :RubyUnderAutoload, File.expand_path('../module_autoload', __FILE__)
 
 end
