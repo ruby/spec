@@ -24,7 +24,7 @@ describe :set_visibility, :shared => true do
       new_visibility = nil
       mod = Module.new {
             send visibility
-            new_visibility = [:protected, :private].find {|vis| vis != visibility } 
+            new_visibility = [:protected, :private].find {|vis| vis != visibility }
             send new_visibility
             def test1() end
           }
