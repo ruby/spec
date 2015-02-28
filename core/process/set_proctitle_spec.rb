@@ -15,10 +15,10 @@ ruby_version_is "2.1" do
       end
 
       it 'should set the process title' do
-        title = 'rubinius-proctitle-test'
+        title = 'rubyspec-proctitle-test'
 
         Process.setproctitle(title).should == title
-        `ps -f`.include?(title).should     == true
+        `ps -f`.should include(title)
       end
     end
   end
