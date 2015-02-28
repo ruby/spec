@@ -27,8 +27,7 @@ describe :rational_exponent, :shared => true do
       end
 
       it "returns a complex number when self is negative and the passed argument is not 0" do
-        (Rational(-3, 4) ** Rational(-4, 3)).should == Complex(
-          -0.7337616108654732, 1.2709123906625817)
+        (Rational(-3, 4) ** Rational(-4, 3)).should be_close(Complex(-0.7337616108654732, 1.2709123906625817), TOLERANCE)
       end
     end
   end
