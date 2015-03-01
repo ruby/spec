@@ -691,7 +691,7 @@ describe "Global variable $0" do
     it "actually sets the program name" do
       title = "rubyspec-dollar0-test"
       $0 = title
-      `ps -f`.should include(title)
+      `ps -ocommand= -p#{$$}`.should include(title)
     end
   end
 

@@ -18,7 +18,7 @@ ruby_version_is "2.1" do
         title = 'rubyspec-proctitle-test'
 
         Process.setproctitle(title).should == title
-        `ps -f`.should include(title)
+        `ps -ocommand= -p#{$$}`.should include(title)
       end
     end
   end
