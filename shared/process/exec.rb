@@ -11,9 +11,11 @@ describe :process_exec, :shared => true do
     lambda { @object.exec "\000" }.should raise_error(ArgumentError)
   end
 
-  it "raises Errno::EACCES when the file does not have execute permissions" do
-    lambda { @object.exec __FILE__ }.should raise_error(Errno::EACCES)
-  end unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
+  unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
+    it "raises Errno::EACCES when the file does not have execute permissions" do
+      lambda { @object.exec __FILE__ }.should raise_error(Errno::EACCES)
+    end
+  end
 
   platform_is_not :openbsd do
     it "raises Errno::EACCES when passed a directory" do
