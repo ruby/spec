@@ -151,13 +151,13 @@ describe "IO.popen" do
       end
 
       it "accepts a single String command with a trailing Hash of Process.exec options" do
-        IO.popen({"FOO" => "nonexistent"}, "ls $FOO", :err => [:child, :out]) do |io|
+        IO.popen({"LANG" => "C", "FOO" => "nonexistent"}, "ls $FOO", :err => [:child, :out]) do |io|
           io.read.should =~ /No such file or directory/
         end
       end
 
       it "accepts a single String command with a trailing Hash of Process.exec options, and an IO mode" do
-        IO.popen({"FOO" => "nonexistent"}, "ls $FOO", "r", :err => [:child, :out]) do |io|
+        IO.popen({"LANG" => "C", "FOO" => "nonexistent"}, "ls $FOO", "r", :err => [:child, :out]) do |io|
           io.read.should =~ /No such file or directory/
         end
       end
