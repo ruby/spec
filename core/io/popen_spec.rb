@@ -9,17 +9,17 @@ describe "IO.popen" do
   end
 
   it "returns an open IO" do
-    @io = IO.popen("yes", "r")
+    @io = IO.popen("#{RUBY_EXE} -e exit", "r")
     @io.closed?.should be_false
   end
 
   it "reads a read-only pipe" do
-    @io = IO.popen("echo foo", "r")
+    @io = IO.popen("#{RUBY_EXE} -e 'puts \"foo\"'", "r")
     @io.read.should == "foo\n"
   end
 
   it "raises IOError when writing a read-only pipe" do
-    @io = IO.popen("echo foo", "r")
+    @io = IO.popen("#{RUBY_EXE} -e 'puts \"foo\"'", "r")
     lambda { @io.write('foo') }.should raise_error(IOError)
   end
 
@@ -33,7 +33,7 @@ describe "IO.popen" do
     end
 
     it "writes to a write-only pipe" do
-      @io = IO.popen("cat > #{@fname}", "w")
+      @io = IO.popen("#{RUBY_EXE} -e 'IO.copy_stream(STDIN,STDOUT)' > #{@fname}", "w")
       @io.write("bar")
       @io.close
 
@@ -41,18 +41,18 @@ describe "IO.popen" do
     end
 
     it "raises IOError when reading a write-only pipe" do
-      @io = IO.popen("cat", "w")
+      @io = IO.popen("#{RUBY_EXE} -e 'IO.copy_stream(STDIN,STDOUT)'", "w")
       lambda { @io.read }.should raise_error(IOError)
     end
 
     it "reads and writes a read/write pipe" do
-      @io = IO.popen("cat", "r+")
+      @io = IO.popen("#{RUBY_EXE} -e 'IO.copy_stream(STDIN,STDOUT)'", "r+")
       @io.write("bar")
       @io.read(3).should == "bar"
     end
 
     it "waits for the child to finish" do
-      @io = IO.popen("cat > #{@fname}", "w")
+      @io = IO.popen("#{RUBY_EXE} -e 'IO.copy_stream(STDIN,STDOUT)' > #{@fname}", "w")
       @io.write("bar")
       @io.close
 
@@ -62,7 +62,7 @@ describe "IO.popen" do
     end
 
     it "does not throw an exception if child exited and has been waited for" do
-      @io = IO.popen("sleep 1000")
+      @io = IO.popen("#{RUBY_EXE} -e sleep")
       Process.kill "KILL", @io.pid
       @io.close
       $?.exitstatus.should be_nil
@@ -70,7 +70,7 @@ describe "IO.popen" do
   end
 
   it "returns an instance of a subclass when called on a subclass" do
-    @io = IOSpecs::SubIO.popen("true", "r")
+    @io = IOSpecs::SubIO.popen("#{RUBY_EXE} -e exit", "r")
     @io.should be_an_instance_of(IOSpecs::SubIO)
   end
 
@@ -82,29 +82,29 @@ describe "IO.popen" do
 
   describe "with a block" do
     it "yields an open IO to the block" do
-      @io = IO.popen("yes", "r") do |io|
+      @io = IO.popen("#{RUBY_EXE} -e exit", "r") do |io|
         io.closed?.should be_false
       end
     end
 
     it "yields an instance of a subclass when called on a subclass" do
-      IOSpecs::SubIO.popen("true", "r") do |io|
+      IOSpecs::SubIO.popen("#{RUBY_EXE} -e exit", "r") do |io|
         io.should be_an_instance_of(IOSpecs::SubIO)
       end
     end
 
     it "closes the IO after yielding" do
-      @io = IO.popen("yes", "r") { |io| io }
+      @io = IO.popen("#{RUBY_EXE} -e exit", "r") { |io| io }
       @io.closed?.should be_true
     end
 
     it "allows the IO to be closed inside the block" do
-      @io = IO.popen('yes', 'r') { |io| io.close; io }
+      @io = IO.popen("#{RUBY_EXE} -e exit", 'r') { |io| io.close; io }
       @io.closed?.should be_true
     end
 
     it "returns the value of the block" do
-      IO.popen("yes", "r") { :hello }.should == :hello
+      IO.popen("#{RUBY_EXE} -e exit", "r") { :hello }.should == :hello
     end
   end
 
@@ -122,17 +122,17 @@ describe "IO.popen" do
 
   with_feature :encoding do
     it "has the given external encoding" do
-      io = IO.popen("true", :external_encoding => Encoding::EUC_JP)
+      io = IO.popen("#{RUBY_EXE} -e exit", :external_encoding => Encoding::EUC_JP)
       io.external_encoding.should == Encoding::EUC_JP
     end
 
     it "has the given internal encoding" do
-      io = IO.popen("true", :internal_encoding => Encoding::EUC_JP)
+      io = IO.popen("#{RUBY_EXE} -e exit", :internal_encoding => Encoding::EUC_JP)
       io.internal_encoding.should == Encoding::EUC_JP
     end
 
     it "sets the internal encoding to nil if it's the same as the external encoding" do
-      io = IO.popen("true", :external_encoding => Encoding::EUC_JP,
+      io = IO.popen("#{RUBY_EXE} -e exit", :external_encoding => Encoding::EUC_JP,
                             :internal_encoding => Encoding::EUC_JP)
       io.internal_encoding.should be_nil
     end
@@ -141,13 +141,13 @@ describe "IO.popen" do
   platform_is_not :windows do # not sure what commands to use on Windows
     context "with a leading ENV Hash" do
       it "accepts a single String command" do
-        IO.popen({"FOO" => "bar"}, "echo $FOO") do |io|
+        IO.popen({"FOO" => "bar"}, "#{RUBY_EXE} -e 'puts ENV[\"FOO\"]'") do |io|
           io.read.should == "bar\n"
         end
       end
 
       it "accepts a single String command, and an IO mode" do
-        IO.popen({"FOO" => "bar"}, "echo $FOO", "r") do |io|
+        IO.popen({"FOO" => "bar"}, "#{RUBY_EXE} -e 'puts ENV[\"FOO\"]'", "r") do |io|
           io.read.should == "bar\n"
         end
       end
@@ -167,13 +167,15 @@ describe "IO.popen" do
       end
 
       it "accepts an Array of command and arguments" do
-        IO.popen({"FOO" => "bar"}, [["sh", "specfu"], "-c", "echo $FOO"]) do |io|
+        exe, *args = *ruby_exe
+        IO.popen({"FOO" => "bar"}, [[exe, "specfu"], *args, "-e", "puts ENV['FOO']"]) do |io|
           io.read.should == "bar\n"
         end
       end
 
       it "accepts an Array of command and arguments, and an IO mode" do
-        IO.popen({"FOO" => "bar"}, [["sh", "specfu"], "-c", "echo $FOO"], "r") do |io|
+        exe, *args = *ruby_exe
+        IO.popen({"FOO" => "bar"}, [[exe, "specfu"], *args, "-e", "puts ENV['FOO']"], "r") do |io|
           io.read.should == "bar\n"
         end
       end
@@ -197,26 +199,26 @@ describe "IO.popen" do
       ruby_exe = RUBY_EXE.split
 
       it "uses the Array as command plus args for the child process" do
-        IO.popen(["echo", "hello"]) do |io|
+        IO.popen([*ruby_exe, "-e", "puts 'hello'"]) do |io|
           io.read.should == "hello\n"
         end
       end
 
       it "accepts a leading ENV Hash" do
-        IO.popen([{"FOO" => "bar"}, "sh", "-c", "echo $FOO"]) do |io|
+        IO.popen([{"FOO" => "bar"}, *ruby_exe, "-e", "puts ENV['FOO']"]) do |io|
           io.read.should == "bar\n"
         end
       end
 
       it "accepts a trailing Hash of Process.exec options" do
-        IO.popen(["sh", "-c", "does_not_exist", {:err => [:child, :out]}]) do |io|
-          io.read.should =~ /not found/
+        IO.popen([*ruby_exe, "does_not_exist", {:err => [:child, :out]}]) do |io|
+          io.read.should =~ /LoadError/
         end
       end
 
       it "accepts an IO mode argument following the Array" do
-        IO.popen(["sh", "-c", "does_not_exist", {:err => [:child, :out]}], "r") do |io|
-          io.read.should =~ /not found/
+        IO.popen([*ruby_exe, "does_not_exist", {:err => [:child, :out]}], "r") do |io|
+          io.read.should =~ /LoadError/
         end
       end
 
