@@ -100,7 +100,7 @@ platform_is_not :windows do
 
         it "coerces :RTTIME into RLIMIT_RTTIME" do
           Process.setrlimit(:RTTIME, *Process.getrlimit(Process::RLIMIT_RTTIME)).should be_nil
-        end
+        end if defined?(Process::RLIMIT_RTTIME)
 
         it "coerces :SIGPENDING into RLIMIT_SIGPENDING" do
           Process.setrlimit(:SIGPENDING, *Process.getrlimit(Process::RLIMIT_SIGPENDING)).should be_nil
@@ -178,7 +178,7 @@ platform_is_not :windows do
 
         it "coerces 'RTTIME' into RLIMIT_RTTIME" do
           Process.setrlimit("RTTIME", *Process.getrlimit(Process::RLIMIT_RTTIME)).should be_nil
-        end
+        end if defined?(Process::RLIMIT_RTTIME)
 
         it "coerces 'SIGPENDING' into RLIMIT_SIGPENDING" do
           Process.setrlimit("SIGPENDING", *Process.getrlimit(Process::RLIMIT_SIGPENDING)).should be_nil
