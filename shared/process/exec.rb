@@ -12,9 +12,8 @@ describe :process_exec, :shared => true do
   end
 
   it "raises Errno::EACCES when the file does not have execute permissions" do
-    File.executable?(__FILE__).should == false
     lambda { @object.exec __FILE__ }.should raise_error(Errno::EACCES)
-  end
+  end unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
 
   platform_is_not :openbsd do
     it "raises Errno::EACCES when passed a directory" do
