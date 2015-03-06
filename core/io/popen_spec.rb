@@ -151,14 +151,16 @@ describe "IO.popen" do
       end
 
       it "accepts a single String command with a trailing Hash of Process.exec options" do
-        IO.popen({"LANG" => "C", "FOO" => "nonexistent"}, "ls $FOO", :err => [:child, :out]) do |io|
-          io.read.should =~ /No such file or directory/
+        IO.popen({"FOO" => "bar"}, "#{RUBY_EXE} -e 'STDERR.puts ENV[\"FOO\"]'",
+                 :err => [:child, :out]) do |io|
+          io.read.should == "bar\n"
         end
       end
 
       it "accepts a single String command with a trailing Hash of Process.exec options, and an IO mode" do
-        IO.popen({"LANG" => "C", "FOO" => "nonexistent"}, "ls $FOO", "r", :err => [:child, :out]) do |io|
-          io.read.should =~ /No such file or directory/
+        IO.popen({"FOO" => "bar"}, "#{RUBY_EXE} -e 'STDERR.puts ENV[\"FOO\"]'", "r",
+                 :err => [:child, :out]) do |io|
+          io.read.should == "bar\n"
         end
       end
 
