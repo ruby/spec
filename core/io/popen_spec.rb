@@ -108,15 +108,17 @@ describe "IO.popen" do
     end
   end
 
-  it "starts returns a forked process if the command is -" do
-    io = IO.popen("-")
+  with_feature :fork do
+    it "starts returns a forked process if the command is -" do
+      io = IO.popen("-")
 
-    if io # parent
-      io.gets.should == "hello from child\n"
-      io.close
-    else # child
-      puts "hello from child"
-      exit!
+      if io # parent
+        io.gets.should == "hello from child\n"
+        io.close
+      else # child
+        puts "hello from child"
+        exit!
+      end
     end
   end
 
