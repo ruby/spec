@@ -467,9 +467,11 @@ describe :process_spawn, :shared => true do
     lambda { @object.spawn "nonesuch" }.should raise_error(Errno::ENOENT)
   end
 
-  it "raises an Errno::EACCES when the file does not have execute permissions" do
-    lambda { @object.spawn __FILE__ }.should raise_error(Errno::EACCES)
-  end unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
+  unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
+    it "raises an Errno::EACCES when the file does not have execute permissions" do
+      lambda { @object.spawn __FILE__ }.should raise_error(Errno::EACCES)
+    end
+  end
 
   it "raises an Errno::EACCES when passed a directory" do
     lambda { @object.spawn File.dirname(__FILE__) }.should raise_error(Errno::EACCES)
