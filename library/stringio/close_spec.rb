@@ -16,8 +16,10 @@ describe "StringIO#close" do
     lambda { @io.write('x') }.should raise_error(IOError)
   end
 
-  it "raises an IOError when self was already closed" do
-    @io.close
-    lambda { @io.close }.should raise_error(IOError)
+  ruby_version_is ''...'2.3' do
+    it "raises an IOError when self was already closed" do
+      @io.close
+      lambda { @io.close }.should raise_error(IOError)
+    end
   end
 end
