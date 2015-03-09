@@ -37,6 +37,13 @@ describe "IO#close" do
       lambda { @io.close }.should raise_error(IOError)
     end
   end
+
+  ruby_version_is "2.3" do
+    it "does not raise anything when self was already closed" do
+      @io.close
+      lambda { @io.close }.should_not raise_error
+    end
+  end
 end
 
 describe "IO#close on an IO.popen stream" do
