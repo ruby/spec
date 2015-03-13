@@ -67,7 +67,7 @@ describe :process_exec, :shared => true do
     end
 
     it "creates an argument array with shell parsing semantics for whitespace" do
-      ruby_exe('exec "echo a b  c 	d"', :escape => true).should == "a b c d\n"
+      ruby_exe('exec "echo a b  c   d"', :escape => true).should == "a b c d\n"
     end
   end
 

@@ -54,8 +54,7 @@ describe "URI::Mailto.build" do
     ok << ["mailto:?to=joe@example.com&cc=bob@example.com&body=hello"]
     ok[-1] << [nil,
       ["to=joe@example.com", "cc=bob@example.com", "body=hello"]]
-    ok[-1] << {:headers => ["to=joe@example.com",
-	"cc=bob@example.com", "body=hello"]}
+    ok[-1] << {:headers => ["to=joe@example.com", "cc=bob@example.com", "body=hello"]}
 
     # mailto:gorby%25kremvax@example.com
     ok << ["mailto:gorby%25kremvax@example.com"]

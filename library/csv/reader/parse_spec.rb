@@ -8,7 +8,7 @@ ruby_version_is "" ... "1.9" do
       empty_input = mock('empty file')
       empty_input.should_receive(:read).once.and_return(nil)
       CSV::Reader.parse(empty_input) do |row|
-	Expectation.fail_with('block should not be executed', 'but executed')
+        Expectation.fail_with('block should not be executed', 'but executed')
       end
     end
 
@@ -16,7 +16,7 @@ ruby_version_is "" ... "1.9" do
       input_stream = File.open(File.dirname(__FILE__) + '/../fixtures/one_line.csv', 'rb')
       count = 0
       CSV::Reader.parse(input_stream) do |row|
-	count += 1
+        count += 1
       end
       count.should == 1
     end
