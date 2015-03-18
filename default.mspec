@@ -12,9 +12,6 @@ class MSpecScript
   # Standard library specs
   set :library, [
     'library',
-
-    # obsolete libraries
-    '^library/ping',
   ]
 
   # An ordered list of the directories containing specs to run
