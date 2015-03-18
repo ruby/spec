@@ -14,7 +14,6 @@ class MSpecScript
     'library',
 
     # obsolete libraries
-    '^library/enumerator',
     '^library/ftools',
     '^library/generator',
     '^library/parsedate',
