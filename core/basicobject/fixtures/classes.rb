@@ -14,4 +14,20 @@ module BasicObjectSpecs
   module InstExecIncluded
     include InstExec
   end
+
+  module InstEvalCVar
+    instance_eval { @@count = 2 }
+  end
+
+  class InstEvalConst
+    INST_EVAL_CONST_X = 2
+  end
+
+  module InstEvalOuter
+    module Inner
+      obj = InstEvalConst.new
+      X_BY_STR = obj.instance_eval("INST_EVAL_CONST_X") rescue nil
+      X_BY_BLOCK = obj.instance_eval { INST_EVAL_CONST_X } rescue nil
+    end
+  end
 end
