@@ -16,10 +16,10 @@ class MSpecScript
   # This set of files is run by mspec ci
   set :ci_files, get(:files)
 
-  # Optional library specs
+  # Optional specs
   set :capi, 'optional/capi'
 
-  # A list of _all_ optional library specs
+  # A list of _all_ optional specs
   set :optional, [get(:capi)]
 
   # The default implementation to run the specs.
