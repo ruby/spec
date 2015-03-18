@@ -1,18 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-
-module KernelSpecs
-  module SomeOtherModule; end
-  module AncestorModule; end
-  module MyModule; end
-
-  class AncestorClass < String
-    include AncestorModule
-  end
-
-  class InstanceClass < AncestorClass
-    include MyModule
-  end
-end
+require File.expand_path('../fixtures/classes', __FILE__)
 
 describe Kernel, "#instance_of?" do
   before(:each) do

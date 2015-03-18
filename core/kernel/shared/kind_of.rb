@@ -1,20 +1,4 @@
-module KernelSpecs
-  module SomeOtherModule; end
-  module AncestorModule; end
-  module MyModule; end
-  module MyExtensionModule; end
-
-  class AncestorClass < String
-    include AncestorModule
-  end
-
-  class KindaClass < AncestorClass
-    include MyModule
-    def initialize
-      self.extend MyExtensionModule
-    end
-  end
-end
+require File.expand_path('../../fixtures/classes', __FILE__)
 
 describe :kernel_kind_of, :shared => true do
   before(:each) do
