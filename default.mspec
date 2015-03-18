@@ -14,7 +14,6 @@ class MSpecScript
     'library',
 
     # obsolete libraries
-    '^library/parsedate',
     '^library/ping',
   ]
 
