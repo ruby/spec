@@ -5,14 +5,10 @@ class MSpecScript
   set :language, [ 'language' ]
 
   # Core library specs
-  set :core, [
-    'core',
-  ]
+  set :core, [ 'core' ]
 
   # Standard library specs
-  set :library, [
-    'library',
-  ]
+  set :library, [ 'library' ]
 
   # An ordered list of the directories containing specs to run
   set :files, get(:language) + get(:core) + get(:library)
