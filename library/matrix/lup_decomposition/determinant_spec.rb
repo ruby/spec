@@ -8,17 +8,15 @@ ruby_version_is "1.9.3" do
       a.lup.determinant.should == 15120 # == a.determinant
     end
 
-    ruby_bug "#7620", "1.9.3" do
-      it "raises an error for rectangular matrices" do
-        [
-          Matrix[[7, 8, 9], [14, 46, 51]],
-          Matrix[[7, 8], [14, 46], [28, 82]],
-        ].each do |m|
-          lup = m.lup
-          lambda {
-            lup.determinant
-          }.should raise_error(Matrix::ErrDimensionMismatch)
-        end
+    it "raises an error for rectangular matrices" do
+      [
+        Matrix[[7, 8, 9], [14, 46, 51]],
+        Matrix[[7, 8], [14, 46], [28, 82]],
+      ].each do |m|
+        lup = m.lup
+        lambda {
+          lup.determinant
+        }.should raise_error(Matrix::ErrDimensionMismatch)
       end
     end
   end

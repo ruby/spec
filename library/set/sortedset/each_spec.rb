@@ -12,10 +12,8 @@ describe "SortedSet#each" do
     ret.should == ["one", "two", "three"].sort
   end
 
-  ruby_bug "http://redmine.ruby-lang.org/issues/show/116", "1.8.7.7" do
-    it "returns self" do
-      @set.each { |x| x }.should equal(@set)
-    end
+  it "returns self" do
+    @set.each { |x| x }.should equal(@set)
   end
 
   ruby_version_is "1.8.7" do

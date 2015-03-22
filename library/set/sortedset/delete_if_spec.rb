@@ -6,12 +6,10 @@ describe "SortedSet#delete_if" do
     @set = SortedSet["one", "two", "three"]
   end
 
-  ruby_bug "http://redmine.ruby-lang.org/projects/ruby-18/issues/show?id=115", "1.8.7.7" do
-    it "yields each Object in self in sorted order" do
-      ret = []
-      @set.delete_if { |x| ret << x }
-      ret.should == ["one", "two", "three"].sort
-    end
+  it "yields each Object in self in sorted order" do
+    ret = []
+    @set.delete_if { |x| ret << x }
+    ret.should == ["one", "two", "three"].sort
   end
 
   it "deletes every element from self for which the passed block returns true" do

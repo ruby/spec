@@ -28,11 +28,9 @@ ruby_version_is "1.9.3" do
       end
     end
 
-    ruby_bug "redmine:6290", "1.9.3" do
-      it "returns false for a matrix with complex values on the diagonal" do
-        Matrix[[Complex(1,1)]].hermitian?.should be_false
-        Matrix[[Complex(1,0)]].hermitian?.should be_true
-      end
+    it "returns false for a matrix with complex values on the diagonal" do
+      Matrix[[Complex(1,1)]].hermitian?.should be_false
+      Matrix[[Complex(1,0)]].hermitian?.should be_true
     end
   end
 end

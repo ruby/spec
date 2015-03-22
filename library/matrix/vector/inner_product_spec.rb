@@ -17,10 +17,8 @@ ruby_version_is "1.9.3" do
       }.should raise_error(Vector::ErrDimensionMismatch)
     end
 
-    ruby_bug "Bug #6967", "1.9.3" do
-      it "uses the conjugate of its argument" do
-        Vector[Complex(1,2)].inner_product(Vector[Complex(3,4)]).should == Complex(11, 2)
-      end
+    it "uses the conjugate of its argument" do
+      Vector[Complex(1,2)].inner_product(Vector[Complex(3,4)]).should == Complex(11, 2)
     end
   end
 end

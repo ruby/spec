@@ -17,14 +17,12 @@ describe "Delegator when frozen" do
     @delegate.frozen?.should be_true
   end
 
-  ruby_bug "redmine:2221", "1.8.7" do
-    it "is not writeable" do
-      lambda{ @delegate[0] += 2 }.should raise_error( RuntimeError )
-    end
+  it "is not writeable" do
+    lambda{ @delegate[0] += 2 }.should raise_error( RuntimeError )
+  end
 
-    it "creates a frozen clone" do
-      @delegate.clone.frozen?.should be_true
-    end
+  it "creates a frozen clone" do
+    @delegate.clone.frozen?.should be_true
   end
 
   it "creates an unfrozen dup" do

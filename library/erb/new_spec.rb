@@ -77,11 +77,9 @@ END
     lambda { ERB.new(input, nil, '-').result }.should raise_error
   end
 
-  ruby_bug "#213", "1.8.7" do
-    it "regards lines starting with '%' as '<% ... %>' when trim_mode is '%'" do
-      expected = "<ul>\n  <li>1\n  \n  <li>2\n  \n  <li>3\n  \n\n</ul>\n%%\n"
-      ERB.new(@eruby_str2, nil, "%").result.should == expected
-    end
+  it "regards lines starting with '%' as '<% ... %>' when trim_mode is '%'" do
+    expected = "<ul>\n  <li>1\n  \n  <li>2\n  \n  <li>3\n  \n\n</ul>\n%%\n"
+    ERB.new(@eruby_str2, nil, "%").result.should == expected
   end
   it "regards lines starting with '%' as '<% ... %>' and remove \"\\n\" when trim_mode is '%>'" do
     expected = "<ul>\n  <li>1    <li>2    <li>3  </ul>\n%%\n"

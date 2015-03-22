@@ -28,17 +28,15 @@ describe "Net::HTTPHeader#each_capitalized_name" do
     end
 
     ruby_version_is "1.8.7" do
-      ruby_bug "http://redmine.ruby-lang.org/issues/show/447", "1.8.7" do
-        it "returns an Enumerator" do
-          enumerator = @headers.each_capitalized_name
-          enumerator.should be_an_instance_of(enumerator_class)
+      it "returns an Enumerator" do
+        enumerator = @headers.each_capitalized_name
+        enumerator.should be_an_instance_of(enumerator_class)
 
-          res = []
-          enumerator.each do |key|
-            res << key
-          end
-          res.sort.should == ["My-Header", "My-Other-Header"]
+        res = []
+        enumerator.each do |key|
+          res << key
         end
+        res.sort.should == ["My-Header", "My-Other-Header"]
       end
     end
   end

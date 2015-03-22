@@ -123,23 +123,21 @@ describe "BigDecimal#divmod" do
     # TODO: file MRI bug:
     # BigDecimal('1').divmod(BigDecimal('3E-9'))[0] #=> 0.3E9,
     # but really should be 0.333333333E9
-    ruby_bug "#206", "1.8" do #MRI's precision is very low in some cases
-      values << BigDecimal('1E-10')
-      values << BigDecimal('-1E-10')
-      values << BigDecimal('2E55')
-      values << BigDecimal('-2E55')
-      values << BigDecimal('2E-5555')
-      values << BigDecimal('-2E-5555')
+    values << BigDecimal('1E-10')
+    values << BigDecimal('-1E-10')
+    values << BigDecimal('2E55')
+    values << BigDecimal('-2E55')
+    values << BigDecimal('2E-5555')
+    values << BigDecimal('-2E-5555')
 
 
-      values_and_zeroes = values + @zeroes
-      values_and_zeroes.each do |val1|
-        values.each do |val2|
-          res = val1.divmod(val2)
-          DivmodSpecs::check_both_bigdecimal(res)
-          res[0].should == ((val1/val2).floor)
-          res[1].should == (val1 - res[0] * val2)
-        end
+    values_and_zeroes = values + @zeroes
+    values_and_zeroes.each do |val1|
+      values.each do |val2|
+        res = val1.divmod(val2)
+        DivmodSpecs::check_both_bigdecimal(res)
+        res[0].should == ((val1/val2).floor)
+        res[1].should == (val1 - res[0] * val2)
       end
     end
   end

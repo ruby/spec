@@ -4,17 +4,13 @@ require File.expand_path('../../../spec_helper', __FILE__)
 describe "Date constants" do
 
   # Fixes in 1.8.7
-  ruby_bug "#", "1.8.6" do
-    it "defines JULIAN" do
-      (Date::JULIAN <=> Date::Infinity.new).should == 0
-    end
+  it "defines JULIAN" do
+    (Date::JULIAN <=> Date::Infinity.new).should == 0
   end
 
   # Fixed in 1.8.7
-  ruby_bug "#", "1.8.6" do
-    it "defines GREGORIAN" do
-      (Date::GREGORIAN <=> -Date::Infinity.new).should == 0
-    end
+  it "defines GREGORIAN" do
+    (Date::GREGORIAN <=> -Date::Infinity.new).should == 0
   end
 
   it "defines ITALY" do
