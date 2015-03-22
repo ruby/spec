@@ -29,16 +29,8 @@ describe "Delegator when frozen" do
     @delegate.dup.frozen?.should be_false
   end
 
-  ruby_version_is "" ... "1.9" do
-    it "causes mutative calls to raise TypeError" do
-      lambda{ @delegate.__setobj__("hola!") }.should raise_error( TypeError )
-    end
-  end
-
-  ruby_version_is "1.9" do
-    it "causes mutative calls to raise RuntimeError" do
-      lambda{ @delegate.__setobj__("hola!") }.should raise_error( RuntimeError )
-    end
+  it "causes mutative calls to raise RuntimeError" do
+    lambda{ @delegate.__setobj__("hola!") }.should raise_error( RuntimeError )
   end
 
   it "returns false if only the delegated object is frozen" do

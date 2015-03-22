@@ -1,18 +1,9 @@
 require 'bigdecimal'
 
 describe :bigdecimal_to_int , :shared => true do
-  ruby_version_is "" ... "1.9" do
-    it "returns nil if BigDecimal is infinity or NaN" do
-      BigDecimal("Infinity").send(@method).should == nil
-      BigDecimal("NaN").send(@method).should == nil
-    end
-  end
-
-  ruby_version_is "1.9" do
-    it "raises FloatDomainError if BigDecimal is infinity or NaN" do
-      lambda { BigDecimal("Infinity").send(@method) }.should raise_error(FloatDomainError)
-      lambda { BigDecimal("NaN").send(@method) }.should raise_error(FloatDomainError)
-    end
+  it "raises FloatDomainError if BigDecimal is infinity or NaN" do
+    lambda { BigDecimal("Infinity").send(@method) }.should raise_error(FloatDomainError)
+    lambda { BigDecimal("NaN").send(@method) }.should raise_error(FloatDomainError)
   end
 
   it "returns Integer or Bignum otherwise" do

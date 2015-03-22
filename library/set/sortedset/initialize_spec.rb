@@ -21,10 +21,4 @@ describe "SortedSet#initialize" do
     s.should include(4)
     s.should include(9)
   end
-
-  ruby_version_is ""..."1.9" do
-    it "takes only values which respond to <=>" do
-      lambda { SortedSet[3, 4, SortedSet[5, 6]] }.should raise_error(ArgumentError)
-    end
-  end
 end

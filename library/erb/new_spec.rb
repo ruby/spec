@@ -134,17 +134,8 @@ END
     ERB.new(input, nil, '<>').result.should == "<b></b>\n"
   end
 
-  ruby_version_is ""..."2.0" do
-    it "remember local variables defined previous one" do
-      ERB.new(@eruby_str).result
-      ERB.new("<%= list.inspect %>").result.should == "[1, 2, 3]"
-    end
-  end
-
-  ruby_version_is "2.0" do
-    it "forget local variables defined previous one" do
-      ERB.new(@eruby_str).result
-      lambda{ ERB.new("<%= list %>").result }.should raise_error(NameError)
-    end
+  it "forget local variables defined previous one" do
+    ERB.new(@eruby_str).result
+    lambda{ ERB.new("<%= list %>").result }.should raise_error(NameError)
   end
 end

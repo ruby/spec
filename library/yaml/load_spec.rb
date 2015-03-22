@@ -65,15 +65,6 @@ describe "YAML.load" do
     YAML.load("--- abc").should == "abc"
   end
 
-  ruby_version_is "" ... "2.0" do
-    it "does not escape symbols" do
-      YAML.load("foobar: >= 123").should == { "foobar" => ">= 123"}
-      YAML.load("foobar: |= 567").should == { "foobar" => "|= 567"}
-      YAML.load("--- \n*.rb").should == "*.rb"
-      YAML.load("--- \n&.rb").should == "&.rb"
-    end
-  end
-
   it "works with block sequence shortcuts" do
     block_seq = "- - - one\n    - two\n    - three"
     YAML.load(block_seq).should == [[["one", "two", "three"]]]
