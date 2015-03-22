@@ -339,10 +339,12 @@ describe "IO#read in binary mode" do
     result.should == "abc\xE2def".force_encoding(Encoding::ASCII_8BIT)
   end
 
-  it "does not transcode file contents when an internal encoding is specified" do
-    result = File.open(@name, "r:binary:utf-8") { |f| f.read }.chomp
-    result.encoding.should == Encoding::ASCII_8BIT
-    result.should == "abc\xE2def".force_encoding(Encoding::ASCII_8BIT)
+  ruby_bug "#8342", "2.0" do
+    it "does not transcode file contents when an internal encoding is specified" do
+      result = File.open(@name, "r:binary:utf-8") { |f| f.read }.chomp
+      result.encoding.should == Encoding::ASCII_8BIT
+      result.should == "abc\xE2def".force_encoding(Encoding::ASCII_8BIT)
+    end
   end
 end
 
