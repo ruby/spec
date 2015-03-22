@@ -1075,14 +1075,12 @@ describe "A method" do
       m(b: 3, a: 4).should == [4, 3]
     end
 
-    ruby_bug "#10894", "2.0" do
-      evaluate <<-ruby do
-          def m(a: 1, **) a end
-        ruby
+    evaluate <<-ruby do
+        def m(a: 1, **) a end
+      ruby
 
-        m().should == 1
-        m(a: 2, b: 1).should == 2
-      end
+      m().should == 1
+      m(a: 2, b: 1).should == 2
     end
 
     evaluate <<-ruby do
