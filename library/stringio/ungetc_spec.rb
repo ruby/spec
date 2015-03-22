@@ -84,16 +84,14 @@ end
 # Note: This is incorrect.
 #
 # describe "StringIO#ungetc when self is not writable" do
-#   ruby_bug "#", "1.8.7.17" do
-#     it "raises an IOError" do
-#       io = StringIO.new("test", "r")
-#       io.pos = 1
-#       lambda { io.ungetc(?A) }.should raise_error(IOError)
+#   it "raises an IOError" do
+#     io = StringIO.new("test", "r")
+#     io.pos = 1
+#     lambda { io.ungetc(?A) }.should raise_error(IOError)
 #
-#       io = StringIO.new("test")
-#       io.pos = 1
-#       io.close_write
-#       lambda { io.ungetc(?A) }.should raise_error(IOError)
-#     end
+#     io = StringIO.new("test")
+#     io.pos = 1
+#     io.close_write
+#     lambda { io.ungetc(?A) }.should raise_error(IOError)
 #   end
 # end
