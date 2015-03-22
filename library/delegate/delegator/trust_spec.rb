@@ -21,7 +21,7 @@ describe "Delegator#trust" do
   end
 end
 
-ruby_version_is ""..."2.1.0" do
+ruby_version_is ""..."2.1" do
   not_compliant_on :rubinius do
     describe "Delegator#trust" do
       before :each do
@@ -41,7 +41,7 @@ ruby_version_is ""..."2.1.0" do
   end
 end
 
-ruby_version_is "2.1.0" do
+ruby_version_is "2.1" do
   describe "Delegator#trust" do
     it "raises an ArgumentError for obsolete $SAFE=4" do
       lambda { $SAFE=4 }.should raise_error(ArgumentError)

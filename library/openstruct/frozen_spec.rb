@@ -14,7 +14,7 @@ describe "OpenStruct.new when frozen" do
     @os.name.should == "John Smith"
   end
 
-  ruby_version_is ""..."2.1.0" do
+  ruby_version_is ""..."2.1" do
     it "is not writeable" do
       lambda{ @os.age = 42 }.should raise_error( TypeError )
     end
@@ -31,7 +31,7 @@ describe "OpenStruct.new when frozen" do
     end
   end
 
-  ruby_version_is "2.1.0" do
+  ruby_version_is "2.1" do
     it "is not writeable" do
       lambda{ @os.age = 42 }.should raise_error( RuntimeError )
     end
