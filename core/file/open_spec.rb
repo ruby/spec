@@ -158,23 +158,13 @@ describe "File.open" do
     @fh = File.open(@file)
     @fh.should be_kind_of(File)
 
-    ruby_version_is ''...'2.0' do
+    lambda {
       File.open(@fh.fileno) do |fh|
         @fd = fh.fileno
         @fh.close
       end
-      lambda { File.open(@fd) }.should raise_error(SystemCallError)
-    end
-
-    ruby_version_is '2.0' do
-      lambda {
-        File.open(@fh.fileno) do |fh|
-          @fd = fh.fileno
-          @fh.close
-        end
-      }.should raise_error(Errno::EBADF)
-      lambda { File.open(@fd) }.should raise_error(SystemCallError)
-    end
+    }.should raise_error(Errno::EBADF)
+    lambda { File.open(@fd) }.should raise_error(SystemCallError)
 
     File.exist?(@file).should == true
   end
