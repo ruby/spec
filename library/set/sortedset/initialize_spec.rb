@@ -23,10 +23,8 @@ describe "SortedSet#initialize" do
   end
 
   ruby_version_is ""..."1.9" do
-    ruby_bug "redmine #118", "1.8.7" do
-      it "takes only values which respond to <=>" do
-        lambda { SortedSet[3, 4, SortedSet[5, 6]] }.should raise_error(ArgumentError)
-      end
+    it "takes only values which respond to <=>" do
+      lambda { SortedSet[3, 4, SortedSet[5, 6]] }.should raise_error(ArgumentError)
     end
   end
 end

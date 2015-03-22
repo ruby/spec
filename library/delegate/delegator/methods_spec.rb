@@ -39,10 +39,8 @@ describe "Delegator#methods" do
   end
 
   ruby_version_is "1.9" do
-    ruby_bug "4882", "1.9.3" do
-      it "returns singleton methods when passed false" do
-        @delegate.methods(false).should include(:singleton_method)
-      end
+    it "returns singleton methods when passed false" do
+      @delegate.methods(false).should include(:singleton_method)
     end
 
     it "includes all public methods of the delegate object" do

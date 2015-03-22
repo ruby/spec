@@ -11,10 +11,8 @@ describe "DelegateClass.instance_methods" do
       @methods.should include "pub"
     end
 
-    ruby_bug "#2496", "1.8" do
-      it "includes all protected methods of the delegated class" do
-        @methods.should include "prot"
-      end
+    it "includes all protected methods of the delegated class" do
+      @methods.should include "prot"
     end
 
     it "includes instance methods of the DelegateClass class" do

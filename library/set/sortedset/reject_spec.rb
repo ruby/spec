@@ -6,12 +6,10 @@ describe "SortedSet#reject!" do
     @set = SortedSet["one", "two", "three"]
   end
 
-  ruby_bug "http://redmine.ruby-lang.org/issues/show/115", "1.8.7.7" do
-    it "yields each Object in self in sorted order" do
-      res = []
-      @set.reject! { |x| res << x }
-      res.should == ["one", "two", "three"].sort
-    end
+  it "yields each Object in self in sorted order" do
+    res = []
+    @set.reject! { |x| res << x }
+    res.should == ["one", "two", "three"].sort
   end
 
   it "deletes every element from self for which the passed block returns true" do
