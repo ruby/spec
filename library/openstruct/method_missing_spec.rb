@@ -22,7 +22,7 @@ describe "OpenStruct#method_missing when called with a method name ending in '='
       @os.freeze
       lambda { @os.method_missing(:test=, "test") }.should raise_error(RuntimeError)
     end
-end
+  end
 
   it "creates accessor methods" do
     @os.method_missing(:test=, "test")
