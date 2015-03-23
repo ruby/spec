@@ -41,16 +41,14 @@ describe "Dir.glob" do
   end
 
   with_feature :encoding do
-    platform_is_not :windows, :darwin do
-      describe "with encoding" do
-        it "returns Strings in the encoding of the pattern" do
-          a = "file_one*".force_encoding Encoding::IBM437
-          b = "file_two*".force_encoding Encoding::EUC_JP
-          files = Dir.glob([a, b])
+    describe "with encoding" do
+      it "returns Strings in the encoding of the pattern" do
+        a = "file_one*".force_encoding Encoding::IBM437
+        b = "file_two*".force_encoding Encoding::EUC_JP
+        files = Dir.glob([a, b])
 
-          files.first.encoding.should equal(Encoding::IBM437)
-          files.last.encoding.should equal(Encoding::EUC_JP)
-        end
+        files.first.encoding.should equal(Encoding::IBM437)
+        files.last.encoding.should equal(Encoding::EUC_JP)
       end
     end
   end
