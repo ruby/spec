@@ -114,7 +114,9 @@ describe "String#match" do
 
   it "raises a TypeError if pattern is not a regexp or a string" do
     lambda { 'hello'.match(10)   }.should raise_error(TypeError)
-    lambda { 'hello'.match(:ell) }.should raise_error(TypeError)
+    not_supported_on :opal do
+      lambda { 'hello'.match(:ell) }.should raise_error(TypeError)
+    end
   end
 
   it "converts string patterns to regexps without escaping" do
