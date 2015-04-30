@@ -50,6 +50,12 @@ describe "Module#const_defined?" do
     ConstantSpecs.const_defined?("CS_CONSTλ").should be_true
   end
 
+  it "returns true when passed a constant name with EUC-JP characters" do
+    str = "CS_CONSTλ".encode("euc-jp")
+    ConstantSpecs.const_set str, 1
+    ConstantSpecs.const_defined?(str).should be_true
+  end
+
   it "returns false if the constant is not defined in the receiver, its superclass, or any included modules" do
     # The following constant isn't defined at all.
     ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4726).should be_false
