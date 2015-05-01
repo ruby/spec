@@ -9,10 +9,12 @@ describe "Integer#even?" do
     1.even?.should be_false
     2.even?.should be_true
 
-    bignum_value(0).even?.should be_true
-    bignum_value(1).even?.should be_false
+    not_supported_on :opal do
+      bignum_value(0).even?.should be_true
+      bignum_value(1).even?.should be_false
 
-    (-bignum_value(0)).even?.should be_true
-    (-bignum_value(1)).even?.should be_false
+      (-bignum_value(0)).even?.should be_true
+      (-bignum_value(1)).even?.should be_false
+    end
   end
 end
