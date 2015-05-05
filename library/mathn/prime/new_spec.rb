@@ -8,9 +8,5 @@ describe "Prime::instance" do
   
   it "raises a TypeError when is called with some arguments" do
     lambda { Prime.instance(1) }.should raise_error(ArgumentError)
-  end
-  
-  it "raises a NoMethodError when Prime::new is called" do 
-    lambda { Prime.new }.should raise_error(NoMethodError)
   end  
 end

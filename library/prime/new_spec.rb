@@ -10,10 +10,6 @@ describe "Prime.instance" do
     Prime.instance.should_not respond_to(:succ)
     Prime.instance.should_not respond_to(:next)
   end
-
-  it "raises a NoMethodError when new is called" do
-    lambda { Prime.new }.should raise_error(NoMethodError)
-  end 
   
   it "raises a ArgumentError when is called with some arguments" do
     lambda { Prime.instance(1) }.should raise_error(ArgumentError)
