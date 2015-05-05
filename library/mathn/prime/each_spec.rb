@@ -1,9 +1,9 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
-require'mathn'
+require 'mathn'
 
-describe "Prime#each" do
+describe "Prime#each with Prime.instance.each" do
   it "enumerates the elements" do
-    primes = Prime.new
+    primes = Prime.instance
     result = []
 
     primes.each { |p|
@@ -15,7 +15,7 @@ describe "Prime#each" do
   end
 
   it "don't rewind the generator, each loop start at the current value" do
-    primes = Prime.new
+    primes = Prime.each
     primes.next
     result = []
 
