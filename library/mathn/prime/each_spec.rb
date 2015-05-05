@@ -15,7 +15,7 @@ describe "Prime#each with Prime.instance" do
   end
 
   it "don't rewind the generator, each loop start at the current value" do
-    primes = Prime.each
+    primes = Prime.instance.each
     primes.next
     result = []
 
