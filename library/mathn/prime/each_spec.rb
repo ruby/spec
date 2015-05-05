@@ -1,7 +1,7 @@
 require File.expand_path('../../../../spec_helper', __FILE__)
 require 'mathn'
 
-describe "Prime#each with Prime.instance.each" do
+describe "Prime#each with Prime.instance" do
   it "enumerates the elements" do
     primes = Prime.instance
     result = []
