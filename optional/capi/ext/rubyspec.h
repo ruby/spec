@@ -299,6 +299,9 @@
 #define HAVE_RB_HASH_LOOKUP                1
 #define HAVE_RB_HASH_LOOKUP2               1
 #define HAVE_RB_HASH_NEW                   1
+#ifdef RUBY_VERSION_IS_2_1
+#define HAVE_RB_HASH_SET_IFNONE            1
+#endif
 #ifdef RUBY_VERSION_IS_2_2
 #define HAVE_RB_HASH_SIZE                  1
 #endif
