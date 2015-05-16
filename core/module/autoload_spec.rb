@@ -441,10 +441,3 @@ describe "Module#autoload" do
     end
   end
 end
-
-describe "Module#autoload" do
-  it "does not call Kernel#require or Kernel#load dynamically" do
-    ModuleSpecs::Autoload.autoload :N, fixture(__FILE__, "autoload_n.rb")
-    ModuleSpecs::Autoload::N.should == :autoload_n
-  end
-end
