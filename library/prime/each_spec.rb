@@ -144,15 +144,15 @@ describe "Prime#each with Prime.instance" do
   it_behaves_like :prime_each_with_arguments, :each, Prime.instance
 end
 
-describe "Prime#each with Prime.new" do
+describe "Prime#each with Prime.instance" do
   before :each do
-    @object = Prime.new
+    @object = Prime.instance
   end
 
   it_behaves_like :prime_each, :each
 
-  it "does not rewind the enumerator with each call" do
+  it "resets the enumerator with each call" do
     @object.each { |prime| break if prime > 10 }
-    @object.each { |prime| break prime }.should == 13
+    @object.each { |prime| break prime }.should_not == 13
   end
 end
