@@ -1,8 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-
-# force reload for Prime::method_added and Prime::instance
-Object.send(:remove_const, :Prime) if defined?(Prime)
-load 'prime.rb'
+require 'prime'
 
 describe :prime_each, :shared => true do
   before :each do
