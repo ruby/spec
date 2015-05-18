@@ -9,6 +9,18 @@ describe :prime_each, :shared => true do
     ScratchPad.record []
   end
 
+  it "enumerates primes" do
+    primes = Prime.instance
+    result = []
+
+    primes.each { |p|
+      result << p
+      break if p > 10
+    }
+
+    result.should == [2, 3, 5, 7, 11]
+  end
+
   it "yields ascending primes to the block" do
     previous = 1
     @object.each do |prime|
