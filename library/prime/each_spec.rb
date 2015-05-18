@@ -165,6 +165,6 @@ describe "Prime#each with Prime.instance" do
 
   it "resets the enumerator with each call" do
     @object.each { |prime| break if prime > 10 }
-    @object.each { |prime| break prime }.should_not == 13
+    @object.each { |prime| break prime }.should == 2
   end
 end
