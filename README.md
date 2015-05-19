@@ -18,7 +18,7 @@ The RubySpec files are written using RSpec-compatible syntax. MSpec is a
 purpose-built framework for running RubySpec. For more information, see the
 http://github.com/rubyspec/mspec project.
 
-[![Build Status](https://travis-ci.org/rubyspec/rubyspec.png)](https://travis-ci.org/rubyspec/rubyspec)
+[![Build Status](https://travis-ci.org/ruby/rubyspec.png)](https://travis-ci.org/ruby/rubyspec)
 
 1. Installing MSpec
 
@@ -33,7 +33,7 @@ However, RubySpec often utilizes the latest MSpec features, so you may want to
 use MSpec directly from the Git repository.
 
     $ cd /somewhere
-    $ git clone git://github.com/rubyspec/mspec.git
+    $ git clone git://github.com/ruby/mspec.git
 
 MSpec is now available in '/somewhere/mspec'.
 
@@ -46,7 +46,7 @@ Once you have MSpec installed, clone the RubySpec Git repository to run the
 specs.
 
     $ cd /somewhere
-    $ git clone git://github.com/rubyspec/rubyspec.git
+    $ git clone git://github.com/ruby/rubyspec.git
 
 To run the RubySpec suite:
 
