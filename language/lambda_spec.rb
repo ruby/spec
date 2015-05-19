@@ -274,6 +274,20 @@ describe "A lambda expression 'lambda { ... }'" do
     lambda { }.lambda?.should be_true
   end
 
+  it "requires a block" do
+    lambda { lambda }.should raise_error(ArgumentError)
+  end
+
+  context "with an implicit block" do
+    before do
+      def meth; lambda; end
+    end
+
+    it "can be created" do
+      meth { 1 }.().should == 1
+    end
+  end
+
   context "assigns no local variables" do
     evaluate <<-ruby do
         @a = lambda { }
