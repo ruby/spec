@@ -1,4 +1,4 @@
-# A RubySpec fork used by MRI and JRuby
+# RubySpec
 
 [![Build Status](https://travis-ci.org/ruby/rubyspec.png)](https://travis-ci.org/ruby/rubyspec)
 
