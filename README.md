@@ -16,29 +16,31 @@ If you do not have bundler yet, you can install it with:
 
     $ gem install bundler
 
-Then, to install the MSpec dependency, just do
+Then, to install the MSpec dependency, just do:
 
+    $ cd path/to/rubyspec
     $ bundle install
 
 To run the RubySpec suite:
 
-    $ cd /somewhere/rubyspec
     $ bundle exec mspec
 
 Alternatively, you can clone [MSpec](http://github.com/ruby/mspec) and run the specs with:
 
-    $ cd /somewhere/rubyspec
-    $ ../path/to/mspec/bin/mspec
+    $ cd path/to/rubyspec
+    $ cd ..
+    $ git clone https://github.com/ruby/mspec.git
+    $ cd rubyspec
+    $ ../mspec/bin/mspec
 
-This will execute all the RubySpec specs using the executable named 'ruby' on your current PATH.
+This will execute all the RubySpec specs using the executable named `ruby` on your current PATH.
 
 ### Running Specs with a Specific Ruby Interpreter
 
-Use the '-t' option to specify the Ruby implementation with which to run the
-specs. The argument may be a full path to the Ruby binary. For example, to run
-RubySpec against '/opt/ruby-enterprise/bin/ruby':
+Use the `-t` option to specify the Ruby implementation with which to run the
+specs. The argument may be a full path to the Ruby binary.
 
-    $ mspec -t /opt/ruby-enterprise/bin/ruby
+    $ mspec -t /path/to/some/bin/ruby
 
 ### Running Selected Specs
 
@@ -50,7 +52,7 @@ You can also pass a directory, in which case all specs in that directories will 
 
     $ mspec core/kernel
 
-Finally, you can also run them per group as defined in `default.mspec`.
+Finally, you can also run them per group as defined in `default.mspec`.  
 The following command will run all language specs:
 
     $ mspec :language
