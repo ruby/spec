@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ruby/rubyspec.png)](https://travis-ci.org/ruby/rubyspec)
 
-RubySpec is an executable specification for the Ruby programming language.
-The specs describe Ruby language syntax as well as the core and standard library classes.
+RubySpec is an executable specification for the Ruby programming language.  
+The specs describe the Ruby language syntax as well as the core and standard library classes.
 
 The RubySpec files are written using a RSpec-like syntax.
 MSpec is the purpose-built framework for running RubySpec.
@@ -11,8 +11,8 @@ For more information, see the [MSpec](http://github.com/ruby/mspec) project.
 
 ### Running the specs
 
-The easiest way to run the RubySpec suite is to use Bundler.
-If you do not have bundler yet, you can install it with:
+The easiest way to run the RubySpec suite is to use Bundler.  
+If you do not have Bundler yet, you can install it with:
 
     $ gem install bundler
 
@@ -35,10 +35,10 @@ Alternatively, you can clone [MSpec](http://github.com/ruby/mspec) and run the s
 
 This will execute all the RubySpec specs using the executable named `ruby` on your current PATH.
 
-### Running Specs with a Specific Ruby Interpreter
+### Running Specs with a Specific Ruby Implementation
 
-Use the `-t` option to specify the Ruby implementation with which to run the
-specs. The argument may be a full path to the Ruby binary.
+Use the `-t` option to specify the Ruby implementation with which to run the specs.  
+The argument may be a full path to the Ruby binary.
 
     $ mspec -t /path/to/some/bin/ruby
 
