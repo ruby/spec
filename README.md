@@ -65,6 +65,4 @@ In similar fashion, the following commands run the respective specs:
 
 ### Contributing
 
-Contribution are much appreciated.  
-Please open a pull request or add an issue to discuss what you intend to work on.  
-If the pull requests passes the CI and conforms to the existing style of specs, it will be merged.
+See [CONTRIBUTING.md](https://github.com/ruby/rubyspec/blob/master/CONTRIBUTING.md).
