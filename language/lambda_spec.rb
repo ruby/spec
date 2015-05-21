@@ -284,7 +284,10 @@ describe "A lambda expression 'lambda { ... }'" do
     end
 
     it "can be created" do
-      meth { 1 }.().should == 1
+      implicit_lambda = meth { 1 }
+
+      implicit_lambda.lambda?.should be_true
+      implicit_lambda.call.should == 1
     end
   end
 
