@@ -7,6 +7,23 @@ describe "C-API Array function" do
     @s = CApiArraySpecs.new
   end
 
+  describe "rb_Array" do
+    it "returns obj if it is an array" do
+      arr = @s.rb_Array([1,2])
+      arr.should == [1, 2]
+    end
+
+    it "tries to convert obj to an array" do
+      arr = @s.rb_Array({"bar" => "foo"})
+      arr.should == [["bar", "foo"]]
+    end
+
+    it "returns obj wrapped in an array if it cannot be converted to an array" do
+      arr = @s.rb_Array("a")
+      arr.should == ["a"]
+    end
+  end
+
   describe "rb_ary_new" do
     it "returns an empty array" do
       @s.rb_ary_new.should == []
@@ -22,6 +39,14 @@ describe "C-API Array function" do
   describe "rb_ary_new3" do
     it "returns an array with the passed cardinality and varargs" do
       @s.rb_ary_new3(1,2,3).should == [1,2,3]
+    end
+  end
+
+  ruby_version_is "2.1" do
+    describe "rb_ary_new_from_args" do
+      it "returns an array with the passed cardinality and varargs" do
+        @s.rb_ary_new_from_args(1,2,3).should == [1,2,3]
+      end
     end
   end
 
@@ -162,6 +187,12 @@ describe "C-API Array function" do
     end
   end
 
+  describe "rb_ary_plus" do
+    it "adds two arrays together" do
+      @s.rb_ary_plus([10], [20]).should == [10, 20]
+    end
+  end
+
   describe "RARRAY_PTR" do
     it "returns a pointer to a C array of the array's elements" do
       a = [1, 2, 3]
@@ -285,7 +316,7 @@ describe "C-API Array function" do
   end
 
   describe "rb_ary_freeze" do
-    it "freezes the object exactly like Object#freeze" do
+    it "freezes the object exactly like Kernel#freeze" do
       ary = [1,2]
       @s.rb_ary_freeze(ary)
       ary.frozen?.should be_true

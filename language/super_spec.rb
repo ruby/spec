@@ -18,11 +18,11 @@ describe "The super keyword" do
 
   it "searches class methods" do
     Super::S3::A.new.foo([]).should == ["A#foo"]
-    Super::S3::A.foo([]).should == ["A::foo"]
-    Super::S3::A.bar([]).should == ["A::bar","A::foo"]
+    Super::S3::A.foo([]).should == ["A.foo"]
+    Super::S3::A.bar([]).should == ["A.bar","A.foo"]
     Super::S3::B.new.foo([]).should == ["A#foo"]
-    Super::S3::B.foo([]).should == ["B::foo","A::foo"]
-    Super::S3::B.bar([]).should == ["B::bar","A::bar","B::foo","A::foo"]
+    Super::S3::B.foo([]).should == ["B.foo","A.foo"]
+    Super::S3::B.bar([]).should == ["B.bar","A.bar","B.foo","A.foo"]
   end
 
   it "calls the method on the calling class including modules" do
@@ -39,13 +39,18 @@ describe "The super keyword" do
     Super::MS2::C.new.foo([]).should == ["ModB#foo","C#baz","A#baz"]
   end
 
+  it "can resolve to different methods in an included module method" do
+    Super::MultiSuperTargets::A.new.foo.should == :BaseA
+    Super::MultiSuperTargets::B.new.foo.should == :BaseB
+  end
+
   it "searches class methods including modules" do
     Super::MS3::A.new.foo([]).should == ["A#foo"]
     Super::MS3::A.foo([]).should == ["ModA#foo"]
     Super::MS3::A.bar([]).should == ["ModA#bar","ModA#foo"]
     Super::MS3::B.new.foo([]).should == ["A#foo"]
-    Super::MS3::B.foo([]).should == ["B::foo","ModA#foo"]
-    Super::MS3::B.bar([]).should == ["B::bar","ModA#bar","B::foo","ModA#foo"]
+    Super::MS3::B.foo([]).should == ["B.foo","ModA#foo"]
+    Super::MS3::B.bar([]).should == ["B.bar","ModA#bar","B.foo","ModA#foo"]
   end
 
   it "calls the correct method when the method visibility is modified" do
@@ -57,23 +62,21 @@ describe "The super keyword" do
     Super::S4::B.new.foo([],"test").should == ["B#foo(a,test)", "A#foo"]
   end
 
-  ruby_bug "#1151 [ruby-core:22040]", "1.8.7.174" do
-    it "raises an error error when super method does not exist" do
-      sup = Class.new
-      sub_normal = Class.new(sup) do
-        def foo
-          super()
-        end
+  it "raises an error error when super method does not exist" do
+    sup = Class.new
+    sub_normal = Class.new(sup) do
+      def foo
+        super()
       end
-      sub_zsuper = Class.new(sup) do
-        def foo
-          super
-        end
-      end
-
-      lambda {sub_normal.new.foo}.should raise_error(NoMethodError, /super/)
-      lambda {sub_zsuper.new.foo}.should raise_error(NoMethodError, /super/)
     end
+    sub_zsuper = Class.new(sup) do
+      def foo
+        super
+      end
+    end
+
+    lambda {sub_normal.new.foo}.should raise_error(NoMethodError, /super/)
+    lambda {sub_zsuper.new.foo}.should raise_error(NoMethodError, /super/)
   end
 
   it "calls the superclass method when in a block" do
@@ -154,4 +157,13 @@ describe "The super keyword" do
   it "passes along modified rest args when they were originally empty" do
     Super::RestArgsWithSuper::B.new.a.should == ["foo"]
   end
+
+  it "invokes methods from a chain of anonymous modules" do
+    Super::AnonymousModuleIncludedTwice.new.a([]).should == ["anon", "anon", "non-anon"]
+  end
+
+  it "can accept a block but still pass the original arguments" do
+    Super::ZSuperWithBlock::B.new.a.should == 14
+  end
+
 end

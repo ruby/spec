@@ -33,7 +33,7 @@ describe :process_spawn, :shared => true do
     end
 
     it "creates an argument array with shell parsing semantics for whitespace" do
-      lambda { Process.wait @object.spawn("echo a b  c 	d") }.should output_to_fd("a b c d\n")
+      lambda { Process.wait @object.spawn("echo a b  c   d") }.should output_to_fd("a b c d\n")
     end
 
     it "calls #to_str to convert the argument to a String" do
@@ -57,7 +57,7 @@ describe :process_spawn, :shared => true do
     end
 
     it "preserves whitespace in passed arguments" do
-      lambda { Process.wait @object.spawn("echo", "a b  c 	d") }.should output_to_fd("a b  c 	d\n")
+      lambda { Process.wait @object.spawn("echo", "a b  c   d") }.should output_to_fd("a b  c   d\n")
     end
 
     it "calls #to_str to convert the arguments to Strings" do
@@ -85,7 +85,7 @@ describe :process_spawn, :shared => true do
     end
 
     it "preserves whitespace in passed arguments" do
-      lambda { Process.wait @object.spawn(["echo", "echo"], "a b  c 	d") }.should output_to_fd("a b  c 	d\n")
+      lambda { Process.wait @object.spawn(["echo", "echo"], "a b  c   d") }.should output_to_fd("a b  c   d\n")
     end
 
     it "calls #to_ary to convert the argument to an Array" do
@@ -467,8 +467,10 @@ describe :process_spawn, :shared => true do
     lambda { @object.spawn "nonesuch" }.should raise_error(Errno::ENOENT)
   end
 
-  it "raises an Errno::EACCES when the file does not have execute permissions" do
-    lambda { @object.spawn __FILE__ }.should raise_error(Errno::EACCES)
+  unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
+    it "raises an Errno::EACCES when the file does not have execute permissions" do
+      lambda { @object.spawn __FILE__ }.should raise_error(Errno::EACCES)
+    end
   end
 
   it "raises an Errno::EACCES when passed a directory" do
@@ -481,5 +483,28 @@ describe :process_spawn, :shared => true do
 
   it "raises an ArgumentError when passed an unknown option key" do
     lambda { @object.spawn("echo", :nonesuch => :foo) }.should raise_error(ArgumentError)
+  end
+
+  describe "with Integer option keys" do
+    before :each do
+      @name = tmp("spawn_fd_map.txt")
+      @io = new_io @name, "w+"
+      @io.sync = true
+    end
+
+    after :each do
+      @io.close unless @io.closed?
+      rm_r @name
+    end
+
+    it "maps the key to a file descriptor in the child that inherits the file descriptor from the parent specified by the value" do
+      child_fd = @io.fileno + 1
+      args = [RUBY_EXE, fixture(__FILE__, "map_fd.rb"), child_fd.to_s]
+      pid = @object.spawn *args, { child_fd => @io }
+      Process.waitpid pid
+      @io.rewind
+
+      @io.read.should == "writing to fd: #{child_fd}"
+    end
   end
 end

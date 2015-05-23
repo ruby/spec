@@ -23,14 +23,10 @@ with_feature :encoding do
       before :each do
         @lc_all = ENV["LC_ALL"]
         ENV["LC_ALL"] = "C"
-
-        @rbxopt = ENV["RBXOPT"]
-        ENV["RBXOPT"] = (@rbxopt || "") + " -X19"
       end
 
       after :each do
         ENV["LC_ALL"] = @lc_all
-        ENV["RBXOPT"] = @rbxopt
       end
 
       it "is not changed by the -U option" do
@@ -71,7 +67,7 @@ with_feature :encoding do
 
     it "calls #to_s on arguments that are neither Strings nor Encodings" do
       string = mock('string')
-      string.should_receive(:to_str).twice.and_return('US-ASCII')
+      string.should_receive(:to_str).at_least(1).and_return('US-ASCII')
       Encoding.default_external = string
       Encoding.default_external.should == Encoding::ASCII
     end

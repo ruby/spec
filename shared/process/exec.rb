@@ -11,9 +11,10 @@ describe :process_exec, :shared => true do
     lambda { @object.exec "\000" }.should raise_error(ArgumentError)
   end
 
-  it "raises Errno::EACCES when the file does not have execute permissions" do
-    File.executable?(__FILE__).should == false
-    lambda { @object.exec __FILE__ }.should raise_error(Errno::EACCES)
+  unless File.executable?(__FILE__) # Some FS (e.g. vboxfs) locate all files executable
+    it "raises Errno::EACCES when the file does not have execute permissions" do
+      lambda { @object.exec __FILE__ }.should raise_error(Errno::EACCES)
+    end
   end
 
   platform_is_not :openbsd do
@@ -37,6 +38,14 @@ describe :process_exec, :shared => true do
     ruby_exe("exec(\"pwd\", :chdir => #{tmpdir.inspect})", :escape => true).should == "#{tmpdir}\n"
   end
 
+  it "flushes STDOUT upon exit when it's not set to sync" do
+    ruby_exe("STDOUT.sync = false; STDOUT.write 'hello'").should == "hello"
+  end
+
+  it "flushes STDERR upon exit when it's not set to sync" do
+    ruby_exe("STDERR.sync = false; STDERR.write 'hello'", :args => "2>&1").should == "hello"
+  end
+
   describe "with a single argument" do
     before(:each) do
       @dir = tmp("exec_with_dir", false)
@@ -58,7 +67,7 @@ describe :process_exec, :shared => true do
     end
 
     it "creates an argument array with shell parsing semantics for whitespace" do
-      ruby_exe('exec "echo a b  c 	d"', :escape => true).should == "a b c d\n"
+      ruby_exe('exec "echo a b  c   d"', :escape => true).should == "a b c d\n"
     end
   end
 
@@ -107,6 +116,34 @@ describe :process_exec, :shared => true do
       lambda { @object.exec([]) }.should raise_error(ArgumentError)
       lambda { @object.exec([:a]) }.should raise_error(ArgumentError)
       lambda { @object.exec([:a, :b, :c]) }.should raise_error(ArgumentError)
+    end
+  end
+
+  describe "with an options Hash" do
+    describe "with Integer option keys" do
+      before :each do
+        @name = tmp("exec_fd_map.txt")
+        @io = tmp("exec_fd_map_parent.txt")
+      end
+
+      after :each do
+        rm_r @name, @io
+      end
+
+      it "maps the key to a file descriptor in the child that inherits the file descriptor from the parent specified by the value" do
+        cmd = <<-EOC
+          f = File.open "#{@name}", "w+"
+          child_fd = f.fileno + 1
+          File.open("#{@io}", "w") { |io| io.print child_fd }
+          exec "#{RUBY_EXE}", "#{fixture __FILE__, "map_fd.rb"}", child_fd.to_s, { child_fd => f }
+          EOC
+
+        ruby_exe(cmd, :escape => true)
+        child_fd = IO.read(@io).to_i
+        child_fd.to_i.should > STDERR.fileno
+
+        @name.should have_data("writing to fd: #{child_fd}")
+      end
     end
   end
 end

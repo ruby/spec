@@ -47,20 +47,20 @@ module Super
         a << "A#foo"
       end
       def self.foo(a)
-        a << "A::foo"
+        a << "A.foo"
       end
       def self.bar(a)
-        a << "A::bar"
+        a << "A.bar"
         foo(a)
       end
     end
     class B < A
       def self.foo(a)
-        a << "B::foo"
+        a << "B.foo"
         super(a)
       end
       def self.bar(a)
-        a << "B::bar"
+        a << "B.bar"
         super(a)
       end
     end
@@ -153,6 +153,34 @@ module Super
     end
   end
 
+  module MultiSuperTargets
+    module M
+      def foo
+        super
+      end
+    end
+
+    class BaseA
+      def foo
+        :BaseA
+      end
+    end
+
+    class BaseB
+      def foo
+        :BaseB
+      end
+    end
+
+    class A < BaseA
+      include M
+    end
+
+    class B < BaseB
+      include M
+    end
+  end
+
   module MS3
     module ModA
       def foo(a)
@@ -173,11 +201,11 @@ module Super
     end
     class B < A
       def self.foo(a)
-        a << "B::foo"
+        a << "B.foo"
         super(a)
       end
       def self.bar(a)
-        a << "B::bar"
+        a << "B.bar"
         super(a)
       end
     end
@@ -305,4 +333,41 @@ module Super
       end
     end
   end
+
+  class AnonymousModuleIncludedTwiceBase
+    def self.whatever
+      mod = Module.new do
+        def a(array)
+          array << "anon"
+          super
+        end
+      end
+
+      include mod
+    end
+
+    def a(array)
+      array << "non-anon"
+    end
+  end
+
+  class AnonymousModuleIncludedTwice < AnonymousModuleIncludedTwiceBase
+    whatever
+    whatever
+  end
+
+  module ZSuperWithBlock
+    class A
+      def a
+        yield
+      end
+    end
+
+    class B < A
+      def a
+        super { 14 }
+      end
+    end
+  end
+
 end

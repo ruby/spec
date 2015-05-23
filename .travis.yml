@@ -1,24 +1,10 @@
 language: ruby
 script:
-  - bundle exec mspec .
-rvm:
-  - 2.1.2
-  - ruby-head
-  - rbx-2
-  - jruby-1.7.12
-  - jruby-head
-allow_failures:
- - rvm: ruby-head
- - rvm: rbx-2
- - rvm: jruby-1.7.12
- - rvm: jruby-head
+  - bundle exec mspec -fd -t ruby
 notifications:
-  recipients:
-    - brixen@gmail.com
-  irc:
-    channels:
-      - "chat.freenode.net#rubyspec"
-    on_success: change
-    on_failure: change
-    template:
-      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+  email: false
+rvm:
+  - 2.0.0
+  - 2.1
+  - 2.2
+  - ruby-head

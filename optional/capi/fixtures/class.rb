@@ -65,6 +65,10 @@ class CApiClassSpecs
     end
   end
 
+  class SubM < Super
+    include M
+  end
+
   class SubSub < Sub
     def call_super_method
       :subclass_method
@@ -73,6 +77,7 @@ class CApiClassSpecs
 
   class A
     C = 1
+    autoload :D, File.expand_path('../path_to_class.rb', __FILE__)
 
     class B
     end

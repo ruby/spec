@@ -3,11 +3,15 @@ require File.expand_path('../fixtures/class', __FILE__)
 
 load_extension("class")
 
-autoload :ClassUnderAutoload, "#{extension_path}/class_under_autoload_spec"
+autoload :ClassUnderAutoload, "#{object_path}/class_under_autoload_spec"
 
 describe :rb_path_to_class, :shared => true do
   it "returns a class or module from a scoped String" do
     @s.send(@method, "CApiClassSpecs::A::B").should equal(CApiClassSpecs::A::B)
+  end
+
+  it "resolves autoload constants" do
+    @s.send(@method, "CApiClassSpecs::A::D").name.should == "CApiClassSpecs::A::D"
   end
 
   it "raises an ArgumentError if a constant in the path does not exist" do
@@ -22,10 +26,8 @@ describe :rb_path_to_class, :shared => true do
     lambda { @s.send(@method, "CApiClassSpecs::A::C") }.should raise_error(TypeError)
   end
 
-  ruby_bug '#5691', '1.9.3' do
-    it "raises an ArgumentError even if a constant in the path exists on toplevel" do
-      lambda { @s.send(@method, "CApiClassSpecs::Object") }.should raise_error(ArgumentError)
-    end
+  it "raises an ArgumentError even if a constant in the path exists on toplevel" do
+    lambda { @s.send(@method, "CApiClassSpecs::Object") }.should raise_error(ArgumentError)
   end
 end
 
@@ -104,6 +106,16 @@ describe "C-API Class function" do
 
     it "returns a string for an anonymous class" do
       @s.rb_class2name(Class.new).should be_kind_of(String)
+    end
+  end
+
+  describe "rb_class_path" do
+    it "returns a String of a class path with no scope modifiers" do
+      @s.rb_class_path(Array).should == "Array"
+    end
+
+    it "returns a String of a class path with scope modifiers" do
+      @s.rb_class_path(File::Stat).should == "File::Stat"
     end
   end
 
@@ -264,6 +276,24 @@ describe "C-API Class function" do
 
     it "returns nil if the class has no superclass" do
       @s.rb_class_superclass(BasicObject).should be_nil
+    end
+  end
+
+  describe "rb_class_real" do
+    it "returns the class of an object ignoring the singleton class" do
+      obj = CApiClassSpecs::Sub.new
+      def obj.some_method() end
+
+      @s.rb_class_real(obj).should == CApiClassSpecs::Sub
+    end
+
+    it "returns the class of an object ignoring included modules" do
+      obj = CApiClassSpecs::SubM.new
+      @s.rb_class_real(obj).should == CApiClassSpecs::SubM
+    end
+
+    it "returns 0 if passed 0" do
+      @s.rb_class_real(0).should == 0
     end
   end
 end

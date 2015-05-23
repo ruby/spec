@@ -120,14 +120,14 @@ module EnumerableSpecs
       @values
     end
   end
-  
+
   class EnumConvertable
     attr_accessor :called
     attr_accessor :sym
     def initialize(delegate)
       @delegate = delegate
     end
-    
+
     def to_enum(sym)
       self.called = :to_enum
       self.sym = sym
@@ -270,6 +270,19 @@ module EnumerableSpecs
 
     def initialize_dup(arg)
       @initialize_dup_called = true
+    end
+  end
+
+  class Freezy
+    include Enumerable
+
+    def each
+      yield 1
+      yield 2
+    end
+
+    def to_a
+      super.freeze
     end
   end
 end # EnumerableSpecs utility classes

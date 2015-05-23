@@ -23,11 +23,35 @@ describe "ObjectSpace.define_finalizer" do
     ObjectSpace.define_finalizer("garbage", handler).should == [0, handler]
   end
 
+  ruby_version_is ""..."2.1" do
+    it "raises ArgumentError trying to define a finalizer on a non-reference" do
+      lambda {
+        ObjectSpace.define_finalizer(:blah) { 1 }
+      }.should raise_error(ArgumentError)
+    end
+  end
+
+  ruby_version_is "2.1"..."2.2" do
+    it "raises RuntimeError trying to define a finalizer on a non-reference" do
+      lambda {
+        ObjectSpace.define_finalizer(:blah) { 1 }
+      }.should raise_error(RuntimeError)
+    end
+  end
+
+  ruby_version_is "2.2" do
+    it "raises ArgumentError trying to define a finalizer on a non-reference" do
+      lambda {
+        ObjectSpace.define_finalizer(:blah) { 1 }
+      }.should raise_error(ArgumentError)
+    end
+  end
+
   # see [ruby-core:24095]
   with_feature :fork do
     it "calls finalizer on process termination" do
       rd, wr = IO.pipe
-      if Kernel::fork then
+      if Kernel.fork then
         wr.close
         rd.read.should == "finalized"
         rd.close
@@ -42,7 +66,7 @@ describe "ObjectSpace.define_finalizer" do
 
     it "calls finalizer at exit even if it is self-referencing" do
       rd, wr = IO.pipe
-      if Kernel::fork then
+      if Kernel.fork then
         wr.close
         rd.read.should == "finalized"
         rd.close

@@ -63,7 +63,7 @@ describe "C-API String function" do
       str.should == "abcde"
     end
 
-    it "returns a string that can be concatentated to another string" do
+    it "returns a string that can be concatenated to another string" do
       str = @s.rb_str_buf_new(10, "defg")
       ("abcde" + str).should == "abcde"
     end
@@ -117,7 +117,7 @@ describe "C-API String function" do
 
   describe "rb_usascii_str_new" do
     it "creates a new String with US-ASCII Encoding from a char buffer of len characters" do
-      str = encode("abc", "us-ascii")
+      str = "abc".force_encoding("us-ascii")
       result = @s.rb_usascii_str_new("abcdef", 3)
       result.should == str
       result.encoding.should == Encoding::US_ASCII
@@ -126,7 +126,7 @@ describe "C-API String function" do
 
   describe "rb_usascii_str_new_cstr" do
     it "creates a new String with US-ASCII Encoding" do
-      str = encode("abc", "us-ascii")
+      str = "abc".force_encoding("us-ascii")
       result = @s.rb_usascii_str_new_cstr("abc")
       result.should == str
       result.encoding.should == Encoding::US_ASCII
@@ -337,8 +337,8 @@ describe "C-API String function" do
 
   describe "rb_str_subseq" do
     it "returns a byte-indexed substring" do
-      str = encode("\x00\x01\x02\x03\x04", "binary")
-      @s.rb_str_subseq(str, 1, 2).should == encode("\x01\x02", "binary")
+      str = "\x00\x01\x02\x03\x04".force_encoding("binary")
+      @s.rb_str_subseq(str, 1, 2).should == "\x01\x02".force_encoding("binary")
     end
   end
 
@@ -387,6 +387,19 @@ describe "C-API String function" do
 
       str.should == "NEW CONTENT"
       ret.should == str
+    end
+
+    it "returns a pointer to the contents of encoded pointer-sized string" do
+      s = "70パク".
+        encode(Encoding::UTF_16LE).
+        force_encoding(Encoding::UTF_16LE).
+        encode(Encoding::UTF_8)
+
+      chars = []
+      @s.RSTRING_PTR_iterate(s) do |c|
+        chars << c
+      end
+      chars.should == [55, 48, 227, 131, 145, 227, 130, 175]
     end
   end
 
@@ -441,7 +454,7 @@ describe "C-API String function" do
     end
 
     it "increases the size of the string" do
-      expected = Object.encode("test", "US-ASCII")
+      expected = "test".force_encoding("US-ASCII")
       str = @s.rb_str_resize(expected.dup, 12)
       str.size.should == 12
       @s.RSTRING_LEN(str).should == 12
