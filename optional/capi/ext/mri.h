@@ -5,8 +5,6 @@
 #undef HAVE_RB_STR_PTR
 #undef HAVE_RB_STR_PTR_READONLY
 
-#undef HAVE_STR2CSTR
-#undef HAVE_RB_STR2CSTR
 #undef HAVE_RB_PROTECT_INSPECT
 
 /* RubySpec assumes following are public API */

@@ -25,27 +25,6 @@ static VALUE string_spec_rb_cstr_to_inum(VALUE self, VALUE str, VALUE inum, VALU
 }
 #endif
 
-#ifdef HAVE_RB_STR2CSTR
-VALUE string_spec_rb_str2cstr(VALUE self, VALUE str, VALUE return_length) {
-  if(return_length == Qtrue) {
-    long len = 0;
-    char* ptr = rb_str2cstr(str, &len);
-    VALUE ary = rb_ary_new();
-    rb_ary_push(ary, rb_str_new2(ptr));
-    rb_ary_push(ary, INT2FIX(len));
-    return ary;
-  } else {
-    return rb_str_new2(rb_str2cstr(str, NULL));
-  }
-}
-
-VALUE string_spec_rb_str2cstr_replace(VALUE self, VALUE str) {
-  char* ptr = rb_str2cstr(str, NULL);
-  ptr[0] = 'f'; ptr[1] = 'o'; ptr[2] = 'o'; ptr[3] = 0;
-  return Qnil;
-}
-#endif
-
 #ifdef HAVE_RB_STR2INUM
 VALUE string_spec_rb_str2inum(VALUE self, VALUE str, VALUE inum) {
   int num = FIX2INT(inum);
@@ -450,18 +429,6 @@ VALUE string_spec_RSTRING_PTR_after_funcall(VALUE self, VALUE str, VALUE cb) {
 }
 #endif
 
-#ifdef HAVE_STR2CSTR
-VALUE string_spec_STR2CSTR(VALUE self, VALUE str) {
-  return rb_str_new2(STR2CSTR(str));
-}
-
-VALUE string_spec_STR2CSTR_replace(VALUE self, VALUE str) {
-  char* ptr = STR2CSTR(str);
-  ptr[0] = 'f'; ptr[1] = 'o'; ptr[2] = 'o'; ptr[3] = 0;
-  return Qnil;
-}
-#endif
-
 #ifdef HAVE_STRINGVALUE
 VALUE string_spec_StringValue(VALUE self, VALUE str) {
   return StringValue(str);
@@ -525,11 +492,6 @@ void Init_string_spec() {
 
 #ifdef HAVE_RB_CSTR_TO_INUM
   rb_define_method(cls, "rb_cstr_to_inum", string_spec_rb_cstr_to_inum, 3);
-#endif
-
-#ifdef HAVE_RB_STR2CSTR
-  rb_define_method(cls, "rb_str2cstr", string_spec_rb_str2cstr, 2);
-  rb_define_method(cls, "rb_str2cstr_replace", string_spec_rb_str2cstr_replace, 1);
 #endif
 
 #ifdef HAVE_RB_STR2INUM
@@ -715,11 +677,6 @@ void Init_string_spec() {
   rb_define_method(cls, "RSTRING_PTR_assign", string_spec_RSTRING_PTR_assign, 2);
   rb_define_method(cls, "RSTRING_PTR_after_funcall",
       string_spec_RSTRING_PTR_after_funcall, 2);
-#endif
-
-#ifdef HAVE_STR2CSTR
-  rb_define_method(cls, "STR2CSTR", string_spec_STR2CSTR, 1);
-  rb_define_method(cls, "STR2CSTR_replace", string_spec_STR2CSTR_replace, 1);
 #endif
 
 #ifdef HAVE_STRINGVALUE

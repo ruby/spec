@@ -501,7 +501,6 @@
 /* String */
 #define HAVE_RB_CSTR2INUM                  1
 #define HAVE_RB_CSTR_TO_INUM               1
-#define HAVE_RB_STR2CSTR                   1
 #define HAVE_RB_STR2INUM                   1
 #define HAVE_RB_STR_APPEND                 1
 #define HAVE_RB_STR_BUF_CAT                1
@@ -533,7 +532,6 @@
 #define HAVE_RB_STR_TO_STR                 1
 #define HAVE_RSTRING_LEN                   1
 #define HAVE_RSTRING_PTR                   1
-#define HAVE_STR2CSTR                      1
 #define HAVE_STRINGVALUE                   1
 
 #define HAVE_RB_STR_FREE                   1
