@@ -134,7 +134,6 @@ describe "C-API Hash function" do
       end
     end
 
-    # TODO: make this shared so it runs on 1.8.7
     describe "rb_hash_lookup" do
       it "returns the value associated with the key" do
         hsh = {:chunky => 'bacon'}
