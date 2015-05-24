@@ -71,7 +71,7 @@ end
 
 describe :kernel_methods_supers, :shared => true do
   before :all do
-    @ms = [stasy(:pro), stasy(:pub)]
+    @ms = [:pro, :pub]
   end
 
   it "returns a unique list for an object extended by a module" do

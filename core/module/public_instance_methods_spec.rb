@@ -41,12 +41,12 @@ end
 describe :module_public_instance_methods_supers, :shared => true do
   it "returns a unique list for a class including a module" do
     m = ReflectSpecs::D.public_instance_methods(*@object)
-    m.select { |x| x == stasy(:pub) }.sort.should == [stasy(:pub)]
+    m.select { |x| x == :pub }.sort.should == [:pub]
   end
 
   it "returns a unique list for a subclass" do
     m = ReflectSpecs::E.public_instance_methods(*@object)
-    m.select { |x| x == stasy(:pub) }.sort.should == [stasy(:pub)]
+    m.select { |x| x == :pub }.sort.should == [:pub]
   end
 end
 
