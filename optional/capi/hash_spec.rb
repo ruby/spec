@@ -121,7 +121,7 @@ describe "C-API Hash function" do
     end
   end
 
-  ruby_version_is "2.1" do
+  ruby_version_is "2.2" do
     describe "rb_hash_size" do
       it "returns the size of the hash" do
         hsh = {:fast => 'car', :good => 'music'}
