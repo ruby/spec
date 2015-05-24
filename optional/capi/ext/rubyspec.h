@@ -268,7 +268,6 @@
 /* Float */
 #define HAVE_RB_FLOAT_NEW                  1
 #define HAVE_RB_RFLOAT                     1
-#define HAVE_RFLOAT                        1
 #define HAVE_RFLOAT_VALUE                  1
 
 /* Globals */
