@@ -210,7 +210,6 @@ VALUE string_spec_rb_str_new(VALUE self, VALUE str, VALUE len) {
 #endif
 
 #ifdef HAVE_RB_STR_NEW2
-#ifdef RUBY_VERSION_IS_1_9
 VALUE string_spec_rb_str_new2(VALUE self, VALUE str) {
   if(NIL_P(str)) {
     return rb_str_new2("");
@@ -218,15 +217,6 @@ VALUE string_spec_rb_str_new2(VALUE self, VALUE str) {
     return rb_str_new2(RSTRING_PTR(str));
   }
 }
-#else
-VALUE string_spec_rb_str_new2(VALUE self, VALUE str) {
-  if(NIL_P(str)) {
-    return rb_str_new2(NULL);
-  } else {
-    return rb_str_new2(RSTRING_PTR(str));
-  }
-}
-#endif
 #endif
 
 #ifdef HAVE_RB_STR_ENCODE
@@ -236,7 +226,6 @@ VALUE string_spec_rb_str_encode(VALUE self, VALUE str, VALUE enc, VALUE flags, V
 #endif
 
 #ifdef HAVE_RB_STR_NEW_CSTR
-#ifdef RUBY_VERSION_IS_1_9
 VALUE string_spec_rb_str_new_cstr(VALUE self, VALUE str) {
   if(NIL_P(str)) {
     return rb_str_new_cstr("");
@@ -244,15 +233,6 @@ VALUE string_spec_rb_str_new_cstr(VALUE self, VALUE str) {
     return rb_str_new_cstr(RSTRING_PTR(str));
   }
 }
-#else
-VALUE string_spec_rb_str_new_cstr(VALUE self, VALUE str) {
-  if(NIL_P(str)) {
-    return rb_str_new_cstr(NULL);
-  } else {
-    return rb_str_new_cstr(RSTRING_PTR(str));
-  }
-}
-#endif
 #endif
 
 #ifdef HAVE_RB_EXTERNAL_STR_NEW
