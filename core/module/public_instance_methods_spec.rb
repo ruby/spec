@@ -4,7 +4,6 @@ require File.expand_path('../../../fixtures/reflection', __FILE__)
 
 # TODO: rewrite
 
-# As of MRI 1.9 #public_instance_methods returns an Array of Symbols
 describe "Module#public_instance_methods" do
   it "returns a list of public methods in module and its ancestors" do
     methods = ModuleSpecs::CountsMixin.public_instance_methods

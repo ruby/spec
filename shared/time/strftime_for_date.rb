@@ -105,10 +105,8 @@ describe :strftime_date, :shared => true do
     @d2000_4_6.strftime("%S").should == "00"
   end
 
-  ruby_version_is "1.9" do
-    it "should be able to show the number of seconds since the unix epoch" do
-      @d2000_4_6.strftime("%s").should == "954979200"
-    end
+  it "should be able to show the number of seconds since the unix epoch" do
+    @d2000_4_6.strftime("%s").should == "954979200"
   end
 
   it "should be able to add a tab" do

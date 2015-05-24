@@ -153,7 +153,7 @@ print m.map { |x| x.to_s }.join("")
   end
 
   class A
-    # 1.9 as Kernel#public_method, so we don't want this one to clash:
+    # There is Kernel#public_method, so we don't want this one to clash
     def pub_method; :public_method; end
 
     def undefed_method; :undefed_method; end
