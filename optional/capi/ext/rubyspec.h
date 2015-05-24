@@ -531,7 +531,6 @@
 #define HAVE_RB_STR_SPLIT                  1
 #define HAVE_RB_STR_SUBSTR                 1
 #define HAVE_RB_STR_TO_STR                 1
-#define HAVE_RSTRING                       1
 #define HAVE_RSTRING_LEN                   1
 #define HAVE_RSTRING_PTR                   1
 #define HAVE_STR2CSTR                      1

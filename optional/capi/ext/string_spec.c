@@ -402,60 +402,6 @@ VALUE string_spec_rb_str_to_str(VALUE self, VALUE arg) {
 }
 #endif
 
-#ifdef HAVE_RSTRING
-VALUE string_spec_RSTRING_len(VALUE self, VALUE str) {
-  return INT2FIX(RSTRING(str)->len);
-}
-
-VALUE string_spec_RSTRING_ptr_iterate(VALUE self, VALUE str) {
-  int i;
-  char* ptr;
-
-  ptr = RSTRING(str)->ptr;
-  for(i = 0; i < RSTRING_LEN(str); i++) {
-    rb_yield(INT2FIX(ptr[i]));
-  }
-  return Qnil;
-}
-
-VALUE string_spec_RSTRING_ptr_assign(VALUE self, VALUE str, VALUE chr) {
-  int i;
-  char c;
-  char* ptr;
-
-  ptr = RSTRING(str)->ptr;
-  c = FIX2INT(chr);
-
-  for(i = 0; i < RSTRING_LEN(str); i++) {
-    ptr[i] = c;
-  }
-  return Qnil;
-}
-
-VALUE string_spec_RSTRING_ptr_assign_call(VALUE self, VALUE str) {
-  char *ptr = RSTRING(str)->ptr;
-
-  ptr[1] = 'x';
-  RSTRING(str)->len = 2;
-  rb_str_concat(str, rb_str_new2("d"));
-  return str;
-}
-
-VALUE string_spec_RSTRING_ptr_assign_funcall(VALUE self, VALUE str) {
-  char *ptr = RSTRING(str)->ptr;
-
-  ptr[1] = 'x';
-  rb_funcall(str, rb_intern("<<"), 1, rb_str_new2("e"));
-  return str;
-}
-
-VALUE string_spec_RSTRING_ptr_write(VALUE self, VALUE str, VALUE text) {
-  strcpy(RSTRING(str)->ptr, RSTRING_PTR(text));
-  RSTRING(str)->len = RSTRING_LEN(text);
-  return Qnil;
-}
-#endif
-
 #ifdef HAVE_RSTRING_LEN
 VALUE string_spec_RSTRING_LEN(VALUE self, VALUE str) {
   return INT2FIX(RSTRING_LEN(str));
@@ -754,16 +700,6 @@ void Init_string_spec() {
 
 #ifdef HAVE_RB_STR_TO_STR
   rb_define_method(cls, "rb_str_to_str", string_spec_rb_str_to_str, 1);
-#endif
-
-#ifdef HAVE_RSTRING
-  rb_define_method(cls, "RSTRING_ptr_iterate", string_spec_RSTRING_ptr_iterate, 1);
-  rb_define_method(cls, "RSTRING_ptr_assign", string_spec_RSTRING_ptr_assign, 2);
-  rb_define_method(cls, "RSTRING_ptr_assign_call", string_spec_RSTRING_ptr_assign_call, 1);
-  rb_define_method(cls, "RSTRING_ptr_write", string_spec_RSTRING_ptr_write, 2);
-  rb_define_method(cls, "RSTRING_ptr_assign_funcall",
-      string_spec_RSTRING_ptr_assign_funcall, 1);
-  rb_define_method(cls, "RSTRING_len", string_spec_RSTRING_len, 1);
 #endif
 
 #ifdef HAVE_RSTRING_LEN
