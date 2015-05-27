@@ -26,6 +26,12 @@ describe "Dir.glob" do
   it_behaves_like :dir_glob_recursive, :[]
 end
 
+with_feature :encoding do
+  describe "Dir.glob" do
+    it_behaves_like :dir_glob_encoding, :glob
+  end
+end
+
 describe "Dir.glob" do
   before :all do
     DirSpecs.create_mock_dirs
@@ -38,19 +44,6 @@ describe "Dir.glob" do
     Dir.chdir @cwd
 
     DirSpecs.delete_mock_dirs
-  end
-
-  with_feature :encoding do
-    describe "with encoding" do
-      it "returns Strings in the encoding of the pattern" do
-        a = "file_one*".force_encoding Encoding::IBM437
-        b = "file_two*".force_encoding Encoding::EUC_JP
-        files = Dir.glob([a, b])
-
-        files.first.encoding.should equal(Encoding::IBM437)
-        files.last.encoding.should equal(Encoding::EUC_JP)
-      end
-    end
   end
 
   it "can take an array of patterns" do
