@@ -23,7 +23,7 @@ describe "Dir.glob" do
     DirSpecs.delete_mock_dirs
   end
 
-  it_behaves_like :dir_glob_recursive, :[]
+  it_behaves_like :dir_glob_recursive, :glob
 end
 
 with_feature :encoding do
