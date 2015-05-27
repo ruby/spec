@@ -2,7 +2,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "Module#private_class_method" do
-  before(:each) do
+  before :each do
     # This is not in classes.rb because after marking a class method private it
     # will stay private.
     class << ModuleSpecs::Parent

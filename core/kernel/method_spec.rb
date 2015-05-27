@@ -5,7 +5,7 @@ require File.expand_path('../fixtures/classes', __FILE__)
 describe "Kernel#method" do
   it_behaves_like(:kernel_method, :method)
 
-  before(:each) do
+  before :each do
     @obj = KernelSpecs::A.new
   end
 

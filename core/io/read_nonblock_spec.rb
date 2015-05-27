@@ -2,11 +2,11 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "IO#read_nonblock" do
-  before(:each) do
+  before :each do
     @read, @write = IO.pipe
   end
 
-  after(:each) do
+  after :each do
     @read.close rescue nil
     @write.close rescue nil
   end

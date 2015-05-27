@@ -224,11 +224,11 @@ describe "Predefined globals $1..N" do
 end
 
 describe "Predefined global $stdout" do
-  before(:each) do
+  before :each do
     @old_stdout = $stdout
   end
 
-  after(:each) do
+  after :each do
     $stdout = @old_stdout
   end
 

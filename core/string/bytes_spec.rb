@@ -2,7 +2,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "String#bytes" do
-  before(:each) do
+  before :each do
     @utf8 = "東京"
     @ascii = 'Tokyo'
     @utf8_ascii = @utf8 + @ascii
@@ -38,7 +38,7 @@ end
 
 with_feature :encoding do
   describe "String#bytes" do
-    before(:each) do
+    before :each do
       @utf8 = "東京"
       @ascii = 'Tokyo'
       @utf8_ascii = @utf8 + @ascii

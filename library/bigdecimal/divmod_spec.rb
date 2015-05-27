@@ -46,7 +46,7 @@ end
 
 describe "BigDecimal#divmod" do
 
-  before(:each) do
+  before :each do
     @a = BigDecimal("42.00000000000000000001")
 
     @zero = BigDecimal("0")
