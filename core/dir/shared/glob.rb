@@ -342,8 +342,8 @@ describe :dir_glob_encoding, :shared => true do
       a = "file_one*".force_encoding Encoding::IBM437
       b = "file_two*".force_encoding Encoding::EUC_JP
 
-      Dir.send(@method, a).first.encoding.should equal(Encoding::UTF8)
-      Dir.send(@method, b).first.encoding.should equal(Encoding::UTF8)
+      Dir.send(@method, a).first.encoding.should equal(Encoding::UTF_8)
+      Dir.send(@method, b).first.encoding.should equal(Encoding::UTF_8)
     end
   end
 
