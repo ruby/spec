@@ -2,6 +2,7 @@ language: ruby
 os:
   - linux
   - osx
+osx_image: beta-xcode6.3
 rvm:
   - 2.0.0
   - 2.1
