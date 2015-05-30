@@ -445,18 +445,30 @@ describe "Marshal.dump" do
       end
     end
 
-    ruby_version_is "2.2" do
-      ruby_bug "#10887", "2.2.0.81" do
-        it "dumps the zone and the offset" do
-          with_timezone 'AST', 3 do
-            dump = Marshal.dump(@t)
-            dump.should == "\x04\bIu:\tTime\r#{@t_dump}\a:\voffseti\x020*:\tzoneI\"\bAST\x06:\x06EF"
-          end
+    ruby_version_is "2.2"..."2.3" do
+      it "dumps the zone and the offset" do
+        with_timezone 'AST', 3 do
+          dump = Marshal.dump(@t)
+          dump.should == "\x04\bIu:\tTime\r#{@t_dump}\a:\voffseti\x020*:\tzone\"\bAST"
+        end
 
-          it "dumps the zone, but not the offset if zone is UTC" do
-            dump = Marshal.dump(@utc)
-            dump.should == "\x04\bIu:\tTime\r#{@utc_dump}\x06:\tzoneI\"\bUTC\x06:\x06EF"
-          end
+        it "dumps the zone, but not the offset if zone is UTC" do
+          dump = Marshal.dump(@utc)
+          dump.should == "\x04\bIu:\tTime\r#{@utc_dump}\x06:\tzone\"\bUTC"
+        end
+      end
+    end
+
+    ruby_version_is "2.3" do
+      it "dumps the zone and the offset" do
+        with_timezone 'AST', 3 do
+          dump = Marshal.dump(@t)
+          dump.should == "\x04\bIu:\tTime\r#{@t_dump}\a:\voffseti\x020*:\tzoneI\"\bAST\x06:\x06EF"
+        end
+
+        it "dumps the zone, but not the offset if zone is UTC" do
+          dump = Marshal.dump(@utc)
+          dump.should == "\x04\bIu:\tTime\r#{@utc_dump}\x06:\tzoneI\"\bUTC\x06:\x06EF"
         end
       end
     end
