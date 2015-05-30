@@ -337,11 +337,27 @@ describe :dir_glob_encoding, :shared => true do
     DirSpecs.delete_mock_dirs
   end
 
-  it "returns Strings in the encoding of the pattern" do
-    a = "file_one*".force_encoding Encoding::IBM437
-    b = "file_two*".force_encoding Encoding::EUC_JP
+  # TODO: This version split is there because the
+  # ruby_bug should only apply to 2.2.0 - 2.2.2
+  ruby_version_is ""..."2.2" do
+    it "returns Strings in the encoding of the pattern" do
+      a = "file_one*".force_encoding Encoding::IBM437
+      b = "file_two*".force_encoding Encoding::EUC_JP
 
-    Dir.send(@method, a).first.encoding.should equal(Encoding::IBM437)
-    Dir.send(@method, b).first.encoding.should equal(Encoding::EUC_JP)
+      Dir.send(@method, a).first.encoding.should equal(Encoding::IBM437)
+      Dir.send(@method, b).first.encoding.should equal(Encoding::EUC_JP)
+    end
+  end
+
+  ruby_version_is "2.2" do
+    ruby_bug "", "2.2.2" do
+      it "returns Strings in the encoding of the pattern" do
+        a = "file_one*".force_encoding Encoding::IBM437
+        b = "file_two*".force_encoding Encoding::EUC_JP
+
+        Dir.send(@method, a).first.encoding.should equal(Encoding::IBM437)
+        Dir.send(@method, b).first.encoding.should equal(Encoding::EUC_JP)
+      end
+    end
   end
 end
