@@ -608,4 +608,20 @@ describe "Regexp with character classes" do
   it "matches unicode script properties" do
     "a\u06E9b".match(/\p{Arabic}/).to_a.should == ["\u06E9"]
   end
+
+  it "matches unicode Han properties" do
+    "松本行弘 Ruby".match(/\p{Han}+/u).to_a.should == ["松本行弘"]
+  end
+
+  it "matches unicode Hiragana properties" do
+    "Ruby（ルビー）、まつもとゆきひろ".match(/\p{Hiragana}+/u).to_a.should == ["まつもとゆきひろ"]
+  end
+
+  it "matches unicode Katakana properties" do
+    "Ruby（ルビー）、まつもとゆきひろ".match(/\p{Katakana}+/u).to_a.should == ["ルビ"]
+  end
+
+  it "matches unicode Hangul properties" do
+    "루비(Ruby)".match(/\p{Hangul}+/u).to_a.should == ["루비"]
+  end
 end
