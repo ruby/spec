@@ -97,8 +97,8 @@ describe "Regexp with character classes" do
   end
 
   it "doesn't match non-ASCII characters with [[:ascii:]]" do
-    ('/[[:ascii:]]/').match("\u{80}").should be_nil
-    ('/[[:ascii:]]/').match("\u{9898}").should be_nil
+    /[[:ascii:]]/.match("\u{80}").should be_nil
+    /[[:ascii:]]/.match("\u{9898}").should be_nil
   end
 
   it "matches Unicode letter characters with [[:alnum:]]" do
