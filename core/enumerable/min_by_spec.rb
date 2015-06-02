@@ -72,6 +72,12 @@ describe "Enumerable#min_by" do
           end
         end
       end
+
+      context "when n is nil" do
+        it "returns the minimum element" do
+          @enum.min_by(nil) { |i| i.to_s }.should == 1
+        end
+      end
     end
   end
 end

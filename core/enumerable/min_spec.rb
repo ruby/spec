@@ -115,5 +115,11 @@ describe "Enumerable#min" do
         end
       end
     end
+
+    context "that is nil" do
+      it "returns the minimum element" do
+        @e_ints.min(nil).should == 22
+      end
+    end
   end
 end

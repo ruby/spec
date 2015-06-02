@@ -111,5 +111,11 @@ describe "Enumerable#max" do
         end
       end
     end
+
+    context "that is nil" do
+      it "returns the maximum element" do
+        @e_ints.max(nil).should == 1010101010
+      end
+    end
   end
 end
