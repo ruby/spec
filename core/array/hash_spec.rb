@@ -11,14 +11,12 @@ describe "Array#hash" do
     end
   end
 
-  ruby_bug "#", "1.8.6.277" do
-    it "properly handles recursive arrays" do
-      empty = ArraySpecs.empty_recursive_array
-      lambda { empty.hash }.should_not raise_error
+  it "properly handles recursive arrays" do
+    empty = ArraySpecs.empty_recursive_array
+    lambda { empty.hash }.should_not raise_error
 
-      array = ArraySpecs.recursive_array
-      lambda { empty.hash }.should_not raise_error
-    end
+    array = ArraySpecs.recursive_array
+    lambda { empty.hash }.should_not raise_error
   end
 
   ruby_bug "redmine #1852", "1.9.1" do
