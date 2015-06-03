@@ -14,14 +14,7 @@ module ProcessSpecs
     end
 
     def wait_for_daemon
-      10.times do
-        return true if File.exist? @signal and
-                       File.exist? @data and
-                       File.size? @data
-        sleep 0.1
-      end
-
-      return false
+      sleep 0.1 until File.exist? @signal
     end
 
     def invoke(behavior, arguments=[])
