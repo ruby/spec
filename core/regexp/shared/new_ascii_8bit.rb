@@ -520,23 +520,25 @@ describe :regexp_new_regexp_ascii_8bit, :shared => true do
     (r.options & Regexp::IGNORECASE).should == 0
   end
 
-  it "sets the encoding to UTF-8 if the Regexp literal has the 'u' option" do
-    Regexp.send(@method, /Hi/u).encoding.should == Encoding::UTF_8
-  end
+  not_supported_on :opal do
+    it "sets the encoding to UTF-8 if the Regexp literal has the 'u' option" do
+      Regexp.send(@method, /Hi/u).encoding.should == Encoding::UTF_8
+    end
 
-  it "sets the encoding to EUC-JP if the Regexp literal has the 'e' option" do
-    Regexp.send(@method, /Hi/e).encoding.should == Encoding::EUC_JP
-  end
+    it "sets the encoding to EUC-JP if the Regexp literal has the 'e' option" do
+      Regexp.send(@method, /Hi/e).encoding.should == Encoding::EUC_JP
+    end
 
-  it "sets the encoding to Windows-31J if the Regexp literal has the 's' option" do
-    Regexp.send(@method, /Hi/s).encoding.should == Encoding::Windows_31J
-  end
+    it "sets the encoding to Windows-31J if the Regexp literal has the 's' option" do
+      Regexp.send(@method, /Hi/s).encoding.should == Encoding::Windows_31J
+    end
 
-  it "sets the encoding to US-ASCII if the Regexp literal has the 'n' option and the source String is ASCII only" do
-    Regexp.send(@method, /Hi/n).encoding.should == Encoding::US_ASCII
-  end
+    it "sets the encoding to US-ASCII if the Regexp literal has the 'n' option and the source String is ASCII only" do
+      Regexp.send(@method, /Hi/n).encoding.should == Encoding::US_ASCII
+    end
 
-  it "sets the encoding to source String's encoding if the Regexp literal has the 'n' option and the source String is not ASCII only" do
-    Regexp.send(@method, Regexp.new("\\xff", nil, 'n')).encoding.should == Encoding::ASCII_8BIT
+    it "sets the encoding to source String's encoding if the Regexp literal has the 'n' option and the source String is not ASCII only" do
+      Regexp.send(@method, Regexp.new("\\xff", nil, 'n')).encoding.should == Encoding::ASCII_8BIT
+    end
   end
 end
