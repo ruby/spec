@@ -566,7 +566,9 @@
 #define HAVE_RB_IS_CLASS_ID                1
 #define HAVE_RB_IS_CONST_ID                1
 #define HAVE_RB_IS_INSTANCE_ID             1
+#ifdef RUBY_VERSION_IS_2_2
 #define HAVE_RB_SYM2STR                    1
+#endif
 
 /* Thread */
 #define HAVE_RB_THREAD_ALONE               1
