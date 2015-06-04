@@ -288,14 +288,16 @@ describe "Numeric#step" do
   describe "when no block is given" do
     describe "returned Enumerator" do
       describe "size" do
-        it "raises an ArgumentError when step is 0" do
-          enum = 1.step(5, 0)
-          lambda { enum.size }.should raise_error(ArgumentError)
-        end
+        ruby_version_is "2.1" do
+          it "raises an ArgumentError when step is 0" do
+            enum = 1.step(5, 0)
+            lambda { enum.size }.should raise_error(ArgumentError)
+          end
 
-        it "raises an ArgumentError when step is 0.0" do
-          enum = 1.step(2, 0.0)
-          lambda { enum.size }.should raise_error(ArgumentError)
+          it "raises an ArgumentError when step is 0.0" do
+            enum = 1.step(2, 0.0)
+            lambda { enum.size }.should raise_error(ArgumentError)
+          end
         end
 
         describe "when self, stop and step are Fixnums and step is positive" do
