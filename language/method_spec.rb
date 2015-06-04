@@ -996,13 +996,12 @@ describe "A method" do
         h.should == {"a" => 1, b: 2}
 
         h = {"a" => 1}
-        m(h).first.should equal(h)
+        m(h).first.should == h
 
         h = {}
         r = m(h)
         r.first.should be_nil
         r.last.should == {}
-        r.last.should_not equal(h)
 
         hh = {}
         h = mock("keyword splat empty hash")
@@ -1010,7 +1009,6 @@ describe "A method" do
         r = m(h)
         r.first.should be_nil
         r.last.should == {}
-        r.last.should_not equal(hh)
 
         h = mock("keyword splat")
         h.should_receive(:to_hash).and_return({"a" => 1, a: 2})
