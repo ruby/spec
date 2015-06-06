@@ -76,7 +76,7 @@ describe "BasicObject subclass" do
     obj.instance_variable_set(:@test, :value)
     obj.instance_variable_get(:@test).should == :value
 
-    lambda { obj.send(:hash) }.should_not raise_error
+    obj.respond_to?(:hash).should == true
   end
 
   describe "BasicObject references" do
