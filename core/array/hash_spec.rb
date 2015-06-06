@@ -13,10 +13,10 @@ describe "Array#hash" do
 
   it "properly handles recursive arrays" do
     empty = ArraySpecs.empty_recursive_array
-    empty.hash.should be_kind_of(Fixnum)
+    lambda { empty.hash }.should_not raise_error
 
     array = ArraySpecs.recursive_array
-    array.hash.should be_kind_of(Fixnum)
+    lambda { empty.hash }.should_not raise_error
   end
 
   it "returns the same hash for equal recursive arrays" do

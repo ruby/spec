@@ -7,13 +7,17 @@ describe "Regexp#source" do
     /x(.)xz/.source.should == "x(.)xz"
   end
 
-  it "has US-ASCII encoding when created from an ASCII-only \\u{} literal" do
-    re = /[\u{20}-\u{7E}]/
-    re.source.encoding.should equal(Encoding::US_ASCII)
+  not_compliant_on :opal do
+    it "has US-ASCII encoding when created from an ASCII-only \\u{} literal" do
+      re = /[\u{20}-\u{7E}]/
+      re.source.encoding.should equal(Encoding::US_ASCII)
+    end
   end
 
-  it "has UTF-8 encoding when created from a non-ASCII-only \\u{} literal" do
-    re = /[\u{20}-\u{7EE}]/
-    re.source.encoding.should equal(Encoding::UTF_8)
+  not_compliant_on :opal do
+    it "has UTF-8 encoding when created from a non-ASCII-only \\u{} literal" do
+      re = /[\u{20}-\u{7EE}]/
+      re.source.encoding.should equal(Encoding::UTF_8)
+    end
   end
 end
