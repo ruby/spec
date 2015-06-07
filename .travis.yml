@@ -12,4 +12,6 @@ script:
 matrix:
   allow_failures:
     - os: osx
+      rvm: 2.0.0-p598
+    - os: osx
       rvm: ruby-head
