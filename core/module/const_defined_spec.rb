@@ -2,6 +2,7 @@
 
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../../../fixtures/constants', __FILE__)
+require File.expand_path('../fixtures/constant_unicode', __FILE__)
 
 describe "Module#const_defined?" do
   it "returns true if the given Symbol names a constant defined in the receiver" do
@@ -47,7 +48,7 @@ describe "Module#const_defined?" do
   end
 
   it "returns true when passed a constant name with unicode characters" do
-    ConstantSpecs.const_defined?("CS_CONSTλ").should be_true
+    ConstantUnicodeSpecs.const_defined?("CS_CONSTλ").should be_true
   end
 
   it "returns true when passed a constant name with EUC-JP characters" do
