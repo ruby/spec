@@ -10,7 +10,7 @@ rvm:
 install:
   - git clone https://github.com/ruby/mspec.git ../mspec
 script:
-  - ../mspec/bin/mspec -fd -t ruby
+  - ../mspec/bin/mspec
 matrix:
   allow_failures:
     - rvm: 2.0.0-p598
