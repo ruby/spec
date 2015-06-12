@@ -72,8 +72,9 @@ describe :kernel_load, :shared => true do
   end
 
   it "does not add the loaded path to $LOADED_FEATURES" do
+    saved_loaded_features = $LOADED_FEATURES.dup
     @object.load(@path).should be_true
-    $LOADED_FEATURES.should == []
+    $LOADED_FEATURES.should == saved_loaded_features
   end
 
   it "raises a LoadError if passed a non-extensioned path that does not exist but a .rb extensioned path does exist" do
