@@ -38,6 +38,7 @@ describe "ARGF.lineno" do
 
   it "aliases to $." do
     argv [@file1, @file2, @file1, @file2] do
+      ARGF.lineno = 0
       ARGF.gets
       $..should == 1
       ARGF.gets
