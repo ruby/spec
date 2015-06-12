@@ -131,7 +131,7 @@ describe "Module#const_defined?" do
 
   ruby_version_is "2.1" do
     it "returns true or false for the nested name" do
-      ConstantSpecs.const_defined?("A::Name").should == false
+      ConstantSpecs.const_defined?("NotExist::Name").should == false
       ConstantSpecs.const_defined?("::Name").should == false
       ConstantSpecs.const_defined?("::Object").should == true
       ConstantSpecs.const_defined?("ClassA::CS_CONST10").should == true
