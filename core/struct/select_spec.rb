@@ -25,6 +25,9 @@ describe "Struct#select" do
     end
   end
 
+  before :all do
+    @method_args = nil
+  end
   it_behaves_like :struct_accessor, :select
   it_behaves_like :enumeratorized_with_origin_size, :select, Struct.new(:foo).new
 end

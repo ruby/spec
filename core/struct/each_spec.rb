@@ -22,6 +22,9 @@ describe "Struct#each" do
     car.each.should be_an_instance_of(enumerator_class)
   end
 
+  before :all do
+    @method_args = nil
+  end
   it_behaves_like :struct_accessor, :each
   it_behaves_like :enumeratorized_with_origin_size, :each, StructClasses::Car.new('Ford', 'Ranger')
 end
