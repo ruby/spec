@@ -52,8 +52,12 @@ describe "ARGF.seek" do
       ARGF.gets.should == @file2.last[-6..-1]
     end
   end
+end
 
+describe "ARGF.seek" do
   it "takes at least one argument (offset)" do
-    lambda { ARGF.seek }.should raise_error(ArgumentError)
+    argv([]) do
+      lambda { ARGF.seek }.should raise_error(ArgumentError)
+    end
   end
 end

@@ -41,7 +41,9 @@ describe "ARGF.close" do
       end
     end
   end
+end
 
+describe "ARGF.close" do
   it "does not close STDIN" do
     ruby_exe("ARGV.replace(['-']); ARGF.close; print ARGF.closed?").should == "false"
   end
