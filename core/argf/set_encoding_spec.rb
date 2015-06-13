@@ -6,10 +6,6 @@ describe "ARGF.set_encoding" do
     @file = fixture __FILE__, "file1.txt"
   end
 
-  after :each do
-    ARGF.close unless ARGF.closed?
-  end
-
   it "sets the external encoding when passed an encoding instance" do
     enc = ruby_exe('ARGF.set_encoding(Encoding::UTF_8); print ARGF.gets.encoding', args: [@file])
     enc.should == "UTF-8"
