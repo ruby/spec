@@ -119,12 +119,12 @@ describe :kernel_load, :shared => true do
   end
 
   describe "(shell expansion)" do
-    before :all do
+    before :each do
       @env_home = ENV["HOME"]
       ENV["HOME"] = CODE_LOADING_DIR
     end
 
-    after :all do
+    after :each do
       ENV["HOME"] = @env_home
     end
 
