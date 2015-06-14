@@ -70,7 +70,11 @@ module NetHTTPSpecs
 
     def stop_server
       @server.shutdown if @server
-      @server_thread.join if @server_thread
+      if @server_thread
+        ruby_version_is "2.2" do # earlier versions can stay blocked on IO.select
+          @server_thread.join
+        end
+      end
     end
   end
 end
