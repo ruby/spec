@@ -26,11 +26,11 @@ ruby_version_is "2.3" do
     end
 
     it "returns nil when passed empty block" do
-      [1, 2, 3].bsearch_index({}).should be_nil
+      [1, 2, 3].bsearch_index {}.should be_nil
     end
 
     it "returns nil when passed block with false" do
-      [1, 2, 3].bsearch_index({ false }).should be_nil
+      [1, 2, 3].bsearch_index { false }.should be_nil
     end
 
     context "minimum mode" do
