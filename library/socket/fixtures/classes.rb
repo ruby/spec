@@ -103,8 +103,8 @@ module SocketSpecs
 
     def shutdown
       log "SpecTCPServer shutting down"
-      @server.close
       @thread.join
+      @server.close
     end
 
     def log(message)
