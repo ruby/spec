@@ -3,7 +3,9 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Regexp#source" do
   it "returns the original string of the pattern" do
-    /ab+c/ix.source.should == "ab+c"
+    not_supported_on :opal do
+      /ab+c/ix.source.should == "ab+c"
+    end
     /x(.)xz/.source.should == "x(.)xz"
   end
 
