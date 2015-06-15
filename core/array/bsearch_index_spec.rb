@@ -12,7 +12,7 @@ ruby_version_is "2.3" do
         @enum.should be_an_instance_of(enumerator_class)
       end
 
-      it "returns nil for #size" do
+      it "returns an Enumerator with unknown size" do
         @enum.size.should be_nil
       end
 
@@ -29,28 +29,19 @@ ruby_version_is "2.3" do
       [1, 2, 3].bsearch_index {}.should be_nil
     end
 
-    it "returns nil when block returns false" do
-      [1, 2, 3].bsearch_index { false }.should be_nil
-    end
-
     context "minimum mode" do
       before :each do
         @array = [0, 4, 7, 10, 12]
       end
 
-      it "returns index of first element which element is greater or equal to 4" do
+      it "returns index of first element which satisfies the block" do
         @array.bsearch_index { |x| x >= 4 }.should == 1
-      end
-
-      it "returns index of first element which element is greater or equal to 6" do
         @array.bsearch_index { |x| x >= 6 }.should == 2
-      end
-
-      it "returns index of first element which element is greater or equal to -1" do
         @array.bsearch_index { |x| x >= -1 }.should == 0
       end
 
-      it "returns nil when block condition does not satisfy" do
+      it "returns nil when block condition is never satisfied" do
+        @array.bsearch_index { false }.should be_nil
         @array.bsearch_index { |x| x >= 100 }.should be_nil
       end
     end
@@ -68,34 +59,28 @@ ruby_version_is "2.3" do
         @array.bsearch_index { |x| 4 - x / 2 }.should be_nil
       end
 
-      it "returns nil when block returns a positive number" do
+      it "returns nil when block never returns 0" do
         @array.bsearch_index { |x| 1 }.should be_nil
-      end
-
-      it "returns middle element when block returns zero" do
-        @array.bsearch_index { |x| 0 }.should == 2
-      end
-
-      it "returns nil when block returns a negative number" do
         @array.bsearch_index { |x| -1 }.should be_nil
       end
 
-      context "magnitude doesn't effect the result" do
+      it "returns the middle element when block always returns zero" do
+        @array.bsearch_index { |x| 0 }.should == 2
+      end
+
+      context "magnitude does not effect the result" do
         it "returns the index of any matched elements where element is between 4n <= xn < 8n" do
           [1, 2].should include(@array.bsearch_index { |x| (1 - x / 4) * (2**100) })
         end
 
-        it "returns nil when block returns multiples of 1" do
+        it "returns nil when block never returns 0" do
           @array.bsearch_index { |x| 1 * (2**100) }.should be_nil
-        end
-
-        it "returns nil when block returns multiples of -1" do
           @array.bsearch_index { |x| (-1) * (2**100) }.should be_nil
         end
-      end
 
-      it "returns the index of any matched elements for which the block yields true" do
-        [1, 2].should include(@array.bsearch_index { |x| (2**100).coerce((1 - x / 4) * (2**100)).first })
+        it "handles values from Bignum#coerce" do
+          [1, 2].should include(@array.bsearch_index { |x| (2**100).coerce((1 - x / 4) * (2**100)).first })
+        end
       end
     end
   end
