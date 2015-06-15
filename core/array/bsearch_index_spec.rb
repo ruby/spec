@@ -81,7 +81,7 @@ ruby_version_is "2.3" do
       end
 
       context "magnitude doesn't effect the result" do
-        it "returns the index of any matched elements where element is between 4n <= xn < 8n, where n is 2**100" do
+        it "returns the index of any matched elements where element is between 4n <= xn < 8n" do
           [1, 2].should include(@array.bsearch_index { |x| (1 - x / 4) * (2**100) })
         end
 
