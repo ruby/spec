@@ -28,5 +28,11 @@ describe :enumerable_collect, :shared => true do
     enum.each { |i| -i }.should == [-2, -5, -3, -6, -1, -4]
   end
 
+  it "#collect & #map returns nil when use next in block" do
+    enumerable = [1, 2, 3, 4, 5]
+    enumerable.collect { |i| next }.should == [nil, nil, nil, nil, nil]
+    enumerable.map { |i| next }.should == [nil, nil, nil, nil, nil]
+  end
+
   it_should_behave_like :enumerable_enumeratorized_with_origin_size
 end
