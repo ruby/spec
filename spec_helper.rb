@@ -29,7 +29,7 @@ unless ENV['MSPEC_RUNNER']
 end
 
 dir = "../fixtures/code"
-use_realpath = respond_to?(:require_relative) && File.respond_to?(:realpath)
+use_realpath = File.respond_to?(:realpath)
 CODE_LOADING_DIR = use_realpath ? File.realpath(dir, __FILE__) : File.expand_path(dir, __FILE__)
 
 minimum_version = "1.5.17"
