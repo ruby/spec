@@ -109,10 +109,12 @@ END
   end
 
   not_compliant_on :rubinius do
-    it "accepts a safe level as second argument" do
-      input = "<b><%=- 2+2 %>"
-      safe_level = 3
-      lambda { ERB.new(input, safe_level).result }.should_not raise_error
+    ruby_version_is ''...'2.2' do
+      it "accepts a safe level as second argument" do
+        input = "<b><%=- 2+2 %>"
+        safe_level = 3
+        lambda { ERB.new(input, safe_level).result }.should_not raise_error
+      end
     end
   end
 
