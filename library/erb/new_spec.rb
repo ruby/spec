@@ -109,7 +109,7 @@ END
   end
 
   not_compliant_on :rubinius do
-    ruby_version_is ''...'2.2' do
+    ruby_version_is ''...'2.3' do
       it "accepts a safe level as second argument" do
         input = "<b><%=- 2+2 %>"
         safe_level = 3
