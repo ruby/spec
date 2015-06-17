@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ruby/mspec.git
-  revision: d22e29aed26299ae9749684e67f14bb5b7f9023d
+  revision: 70f193931b17facc7984856762111fafb20a1efb
   specs:
     mspec (1.8.0)
 
@@ -15,4 +15,4 @@ DEPENDENCIES
   mspec!
 
 BUNDLED WITH
-   1.10.3
+   1.10.4
