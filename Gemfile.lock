@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/ruby/mspec.git
-  revision: 312d99ce934a8e776280e5bd40dbeb8040ced18f
+  revision: d22e29aed26299ae9749684e67f14bb5b7f9023d
   specs:
-    mspec (1.7.0)
+    mspec (1.8.0)
 
 GEM
   remote: https://rubygems.org/
