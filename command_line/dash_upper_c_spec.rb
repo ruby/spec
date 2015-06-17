@@ -3,7 +3,7 @@ require File.expand_path('../../spec_helper', __FILE__)
 describe 'The -C command line option' do
   before :all do
     @script  = fixture(__FILE__, 'dash_upper_c_script.rb')
-    @tempdir = File.dirname(@script)
+    @tempdir = File.realpath(File.dirname(@script))
   end
 
   it 'changes the PWD when using a file' do
