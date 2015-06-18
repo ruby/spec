@@ -632,33 +632,17 @@ describe "A block" do
       @y.m(1, 2) { |_, _| _ }.should == 1
     end
   end
-end
 
-describe "block arguments" do
-  context "raises an SyntaxError for identical block arguments" do
-    it "lambda" do
+  describe "taking identically-named arguments" do
+    it "raises a SyntaxError for standard arguments" do
       lambda { eval "lambda { |x,x| }" }.should raise_error(SyntaxError)
-    end
-
-    it "->" do
       lambda { eval "->(x,x) {}" }.should raise_error(SyntaxError)
-    end
-
-    it "Proc" do
       lambda { eval "Proc.new { |x,x| }" }.should raise_error(SyntaxError)
     end
-  end
 
-  context "not raises an SyntaxError for identical underscores as block arguments" do
-    it "lambda" do
+    it "accepts unnamed arguments" do
       lambda { eval "lambda { |_,_| }" }.should_not raise_error(SyntaxError)
-    end
-
-    it "->" do
       lambda { eval "->(_,_) {}" }.should_not raise_error(SyntaxError)
-    end
-
-    it "Proc" do
       lambda { eval "Proc.new { |_,_| }" }.should_not raise_error(SyntaxError)
     end
   end
