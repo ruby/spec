@@ -267,6 +267,48 @@ end
 
 # TODO: rewrite all specs above this
 
+describe "String#[]" do
+  it "returns substring by index" do
+    "rubyspec"[0].should == "r"
+  end
+
+  it "returns substring by index (backward)" do
+    "rubyspec"[-1].should == "c"
+  end
+
+  it "returns substring by start and length" do
+    "rubyspec"[0, 4].should == "ruby"
+  end
+
+  it "returns empty string if start is at end of string" do
+    "rubyspec"[8, 4].should == ""
+  end
+
+  it "returns nil if start is out of string" do
+    "rubyspec"[9, 4].should be_nil
+  end
+
+  it "returns substring by range" do
+    "rubyspec"[0..3].should == "ruby"
+  end
+
+  it "returns substring by regexp" do
+    "rubyspec"[/ruby/].should == "ruby"
+  end
+
+  it "returns substring by regexp and capture" do
+    "rubyspec"[/(?<lang>ruby)/, "lang"].should == "ruby"
+  end
+
+  it "returns substring by match string" do
+    "rubyspec"["ruby"].should == "ruby"
+  end
+
+  it "returns nil if not found match string" do
+    "rubyspec"["python"].should be_nil
+  end
+end
+
 with_feature :encoding do
   describe "Ruby String interpolation" do
     it "creates a String having an Encoding compatible with all components" do
