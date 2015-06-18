@@ -634,6 +634,36 @@ describe "A block" do
   end
 end
 
+describe "block arguments" do
+  context "raises an SyntaxError for identical block arguments" do
+    it "lambda" do
+      lambda { eval "lambda { |x,x| }" }.should raise_error(SyntaxError)
+    end
+
+    it "->" do
+      lambda { eval "->(x,x) {}" }.should raise_error(SyntaxError)
+    end
+
+    it "Proc" do
+      lambda { eval "Proc.new { |x,x| }" }.should raise_error(SyntaxError)
+    end
+  end
+
+  context "not raises an SyntaxError for identical underscores as block arguments" do
+    it "lambda" do
+      lambda { eval "lambda { |_,_| }" }.should_not raise_error(SyntaxError)
+    end
+
+    it "->" do
+      lambda { eval "->(_,_) {}" }.should_not raise_error(SyntaxError)
+    end
+
+    it "Proc" do
+      lambda { eval "Proc.new { |_,_| }" }.should_not raise_error(SyntaxError)
+    end
+  end
+end
+
 describe "Block-local variables" do
   # Examples phrased so the concatenation of the describe and it blocks make
   # grammatical sense.
