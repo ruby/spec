@@ -26,11 +26,11 @@ This is very easy, just run the command below in your `rubyspec` directory.
 ### Guards
 
 Different guards are available as defined by mspec.
-In general, the usage of guards shuld be minimized as possible.
+In general, the usage of guards should be minimized as possible.
 
 The following guards are deprecated and should not be used in new code:
 * `not_compliant_on`: Simply tag the spec as failing instead.  
-  If it makes sense to test part of the example, split it (an example should have only one or a couple `should`).
+  If it makes sense to test part of the example, split it (an example should have only one or a few `should`).
 * `compliant_on` / `deviates_on`: RubySpec defines common behavior and not implementation details.  
   Use the implementation suite of tests/specs for these.
 
