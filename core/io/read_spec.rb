@@ -551,12 +551,9 @@ describe "IO#read with large data" do
 
     @fname = tmp("io_read.txt")
     touch(@fname) { |f| f.write @data }
-
-    @io = open @fname, "r"
   end
 
   after :each do
-    @io.close
     rm_r @fname
   end
 
