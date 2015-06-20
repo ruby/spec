@@ -146,7 +146,7 @@ describe "File.open" do
 
   it "opens the file when call with fd" do
     @fh = File.open(@file)
-    fh_copy = File.open(fh_orig.fileno)
+    fh_copy = File.open(@fh.fileno)
     fh_copy.autoclose = false
     fh_copy.should be_kind_of(File)
     File.exist?(@file).should == true
