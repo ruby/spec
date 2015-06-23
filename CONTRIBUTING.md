@@ -23,6 +23,12 @@ This is very easy, just run the command below in your `rubyspec` directory.
 
     $ ruby --disable-gem ../mspec/bin/mkspec 
 
+You might also want to search for:
+
+    it "needs to be reviewed for spec completeness"
+
+which indicates the file was generated but the method unspecified.
+
 ### Guards
 
 Different guards are available as defined by mspec.
