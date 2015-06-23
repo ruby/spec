@@ -274,7 +274,7 @@ describe "Ruby String literals" do
 
   def long_string_literals
     "Beautiful is better than ugly." \
-    "Explicit is better than implicit." \
+    "Explicit is better than implicit."
   end
 
   it "on a single line with spaces in between are concatenated together" do
