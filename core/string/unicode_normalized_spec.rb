@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 
 ruby_version_is "2.2" do
@@ -11,36 +12,30 @@ ruby_version_is "2.2" do
     # http://unicode.org/faq/normalization.html#6
     context "returns normalized form of string by default" do
       it "03D3 (ϓ) GREEK UPSILON WITH ACUTE AND HOOK SYMBOL" do
-        unicode_03d3 = 'ϓ'
-
-        "\u03D3".unicode_normalize(:nfc).should        == unicode_03d3
-        "\u03D2\u0301".unicode_normalize(:nfd).should  == unicode_03d3
-        "\u038E".unicode_normalize(:nfkc).should       == unicode_03d3
-        "\u03A5\u0301".unicode_normalize(:nfkd).should == unicode_03d3
+        "\u03D3".unicode_normalize(:nfc).should  == "\u03D3"
+        "\u03D3".unicode_normalize(:nfd).should  == "\u03D2\u0301"
+        "\u03D3".unicode_normalize(:nfkc).should == "\u038E"
+        "\u03D3".unicode_normalize(:nfkd).should == "\u03A5\u0301"
       end
 
       it "03D4 (ϔ) GREEK UPSILON WITH DIAERESIS AND HOOK SYMBOL" do
-        unicode_03d4 = 'ϔ'
-
-        "\u03D4".unicode_normalize(:nfc).should        == unicode_03d4
-        "\u03D2\u0308".unicode_normalize(:nfd).should  == unicode_03d4
-        "\u03AB".unicode_normalize(:nfkc).should       == unicode_03d4
-        "\u03A5\u0308".unicode_normalize(:nfkd).should == unicode_03d4
+        "\u03D4".unicode_normalize(:nfc).should  == "\u03D4"
+        "\u03D4".unicode_normalize(:nfd).should  == "\u03D2\u0308"
+        "\u03D4".unicode_normalize(:nfkc).should == "\u03AB"
+        "\u03D4".unicode_normalize(:nfkd).should == "\u03A5\u0308"
       end
 
       it "1E9B (ẛ) LATIN SMALL LETTER LONG S WITH DOT ABOVE" do
-        unicode_1e9b = 'ẛ'
-
-        "\u1E9B".unicode_normalize(:nfc).should        == unicode_1e9b
-        "\u017F\u0307".unicode_normalize(:nfd).should  == unicode_1e9b
-        "\u1E61".unicode_normalize(:nfkc).should       == unicode_1e9b
-        "\u0073\u0307".unicode_normalize(:nfkd).should == unicode_1e9b
+        "\u1E9B".unicode_normalize(:nfc).should  == "\u1E9B"
+        "\u1E9B".unicode_normalize(:nfd).should  == "\u017F\u0307"
+        "\u1E9B".unicode_normalize(:nfkc).should == "\u1E61"
+        "\u1E9B".unicode_normalize(:nfkd).should == "\u0073\u0307"
       end
     end
   end
 
   describe "String#unicode_normalize!" do
-    it "modified original string (nfc)" do
+    it "modifies original string (nfc)" do
       str = "a\u0300"
       str.unicode_normalize!(:nfc)
 
@@ -48,15 +43,15 @@ ruby_version_is "2.2" do
       str.should == "à"
     end
 
-    it "modified original string (nfd)" do
-      str = "a\u00E0"
+    it "modifies self in place" do
+      str = "\u00E0"
       str.unicode_normalize!(:nfd)
 
       str.should_not == "a\u00E0"
-      str.should == "aà"
+      str.should == "à"
     end
 
-    it "modified original string (nfkc)" do
+    it "modifies self in place" do
       str = "a\u0300"
       str.unicode_normalize!(:nfkc)
 
@@ -64,12 +59,12 @@ ruby_version_is "2.2" do
       str.should == "à"
     end
 
-    it "modified original string (nfkd)" do
-      str = "a\u00E0"
+    it "modifies self in place" do
+      str = "\u00E0"
       str.unicode_normalize!(:nfkd)
 
       str.should_not == "a\u00E0"
-      str.should == "aà"
+      str.should == "à"
     end
   end
 
