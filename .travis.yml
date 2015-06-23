@@ -16,3 +16,4 @@ matrix:
     - rvm: 2.0.0-p598
     - os: osx
       rvm: ruby-head
+before_install: gem install bundler -v 1.10.4
