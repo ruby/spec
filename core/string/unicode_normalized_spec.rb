@@ -43,7 +43,7 @@ ruby_version_is "2.2" do
       str.should == "à"
     end
 
-    it "modifies self in place" do
+    it "modifies self in place (nfd)" do
       str = "\u00E0"
       str.unicode_normalize!(:nfd)
 
@@ -51,7 +51,7 @@ ruby_version_is "2.2" do
       str.should == "à"
     end
 
-    it "modifies self in place" do
+    it "modifies self in place (nfkc)" do
       str = "a\u0300"
       str.unicode_normalize!(:nfkc)
 
@@ -59,7 +59,7 @@ ruby_version_is "2.2" do
       str.should == "à"
     end
 
-    it "modifies self in place" do
+    it "modifies self in place (nfkd)" do
       str = "\u00E0"
       str.unicode_normalize!(:nfkd)
 
