@@ -267,7 +267,7 @@ end
 
 # TODO: rewrite all specs above this
 
-describe "Ruby String Concatenation by spaces" do
+describe "Ruby String literals" do
   def str_concat
     "foo" "bar" "baz"
   end
@@ -275,16 +275,14 @@ describe "Ruby String Concatenation by spaces" do
   def long_string_literals
     "Beautiful is better than ugly." \
     "Explicit is better than implicit." \
-    "Simple is better than complex." \
-    "Complex is better than complicated."
   end
 
-  it "returns concatenated string (str_concat)" do
+  it "on a single line with spaces in between are concatenated together" do
     str_concat.should == "foobarbaz"
   end
 
-  it "returns concatenated string (long_string_literals)" do
-    long_string_literals.should == "Beautiful is better than ugly.Explicit is better than implicit.Simple is better than complex.Complex is better than complicated."
+  it "on multiple lines with newlines and backslash in between are concatenated together" do
+    long_string_literals.should == "Beautiful is better than ugly.Explicit is better than implicit."
   end
 end
 
