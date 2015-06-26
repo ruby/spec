@@ -110,8 +110,8 @@ describe "Comparable#==" do
 
   context "when #<=> is not defined" do
     before :each do
-      @a = ComparableSpecs::WithoutEqualDefined.new
-      @b = ComparableSpecs::WithoutEqualDefined.new
+      @a = ComparableSpecs::WithoutCompareDefined.new
+      @b = ComparableSpecs::WithoutCompareDefined.new
     end
 
     it "returns true for identical objects" do

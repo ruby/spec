@@ -13,7 +13,7 @@ module ComparableSpecs
     end
   end
 
-  class WithoutEqualDefined
+  class WithoutCompareDefined
     include Comparable
   end
 end
