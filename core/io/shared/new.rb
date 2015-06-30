@@ -310,16 +310,36 @@ describe :io_new_errors, :shared => true do
   end
 
   ruby_version_is "2.1" do
-    it "raises an error if passed binary/text mode two ways" do
-      ["wb", "wt"].each do |mode|
-        [:binmode, :textmode].each do |key|
-          [true, false].each do |value|
-            lambda {
-              @io = IO.send(@method, @fd, mode, key => value)
-            }.should raise_error(ArgumentError)
-          end
-        end
-      end
+    it "raises an error if passed matching binary/text mode two ways" do
+      lambda {
+        @io = IO.send(@method, @fd, "wb", :binmode => true)
+      }.should raise_error(ArgumentError)
+      lambda {
+        @io = IO.send(@method, @fd, "wt", :textmode => true)
+      }.should raise_error(ArgumentError)
+
+      lambda {
+        @io = IO.send(@method, @fd, "wb", :textmode => false)
+      }.should raise_error(ArgumentError)
+      lambda {
+        @io = IO.send(@method, @fd, "wt", :binmode => false)
+      }.should raise_error(ArgumentError)
+    end
+
+    it "raises an error if passed conflicting binary/text mode two ways" do
+      lambda {
+        @io = IO.send(@method, @fd, "wb", :binmode => false)
+      }.should raise_error(ArgumentError)
+      lambda {
+        @io = IO.send(@method, @fd, "wt", :textmode => false)
+      }.should raise_error(ArgumentError)
+
+      lambda {
+        @io = IO.send(@method, @fd, "wb", :textmode => true)
+      }.should raise_error(ArgumentError)
+      lambda {
+        @io = IO.send(@method, @fd, "wt", :binmode => true)
+      }.should raise_error(ArgumentError)
     end
   end
 
