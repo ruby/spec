@@ -10,7 +10,7 @@ describe :io_new, :shared => true do
   end
 
   after :each do
-    if @io and !@io.closed?
+    if @io
       @io.close
     elsif @fd
       IO.new(@fd, "w").close
