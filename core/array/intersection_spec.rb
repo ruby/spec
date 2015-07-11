@@ -40,7 +40,9 @@ describe "Array#&" do
   end
 
   it "determines equivalence between elements in the sense of eql?" do
-    ([5.0, 4.0] & [5, 4]).should == []
+    not_supported_on :opal do
+      ([5.0, 4.0] & [5, 4]).should == []
+    end
     str = "x"
     ([str] & [str.dup]).should == [str]
 
