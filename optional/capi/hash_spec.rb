@@ -16,7 +16,7 @@ describe "C-API Hash function" do
 
     it "converts a Bignum returned by #hash to a Fixnum" do
       obj = mock("rb_hash bignum")
-      obj.should_receive(:hash).and_return(bignum_value())
+      obj.should_receive(:hash).and_return(bignum_value)
 
       # The actual conversion is an implementation detail.
       # We only care that ultimately we get a Fixnum instance.
