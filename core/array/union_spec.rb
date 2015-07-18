@@ -45,18 +45,18 @@ describe "Array#|" do
 
     obj1 = mock('1')
     obj2 = mock('2')
-    obj1.should_receive(:hash).at_least(1).and_return(0)
-    obj2.should_receive(:hash).at_least(1).and_return(0)
-    obj2.should_receive(:eql?).at_least(1).and_return(true)
+    # Can't use should_receive because it uses hash and eql? internally
+    def obj1.hash; 0; end
+    def obj2.hash; 0; end
+    def obj1.eql? a; true; end
+    def obj2.eql? a; true; end
 
     ([obj1] | [obj2]).should == [obj1]
     ([obj1, obj1, obj2, obj2] | [obj2]).should == [obj1]
 
-    obj1 = mock('3')
-    obj2 = mock('4')
-    obj1.should_receive(:hash).at_least(1).and_return(0)
-    obj2.should_receive(:hash).at_least(1).and_return(0)
-    obj2.should_receive(:eql?).at_least(1).and_return(false)
+    # Can't use should_receive because it uses hash and eql? internally
+    def obj1.eql? a; false; end
+    def obj2.eql? a; false; end
 
     ([obj1] | [obj2]).should == [obj1, obj2]
     ([obj1, obj1, obj2, obj2] | [obj2]).should == [obj1, obj2]
@@ -70,5 +70,14 @@ describe "Array#|" do
 
   it "does not call to_ary on array subclasses" do
     ([1, 2] | ArraySpecs::ToAryArray[5, 6]).should == [1, 2, 5, 6]
+  end
+
+  it "properly handles an identical item even when its #eql? isn't reflexive" do
+    x = mock('x')
+    # Can't use should_receive because it uses hash and eql? internally
+    def x.hash; 42; end
+    def x.eql? a; false; end # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
+
+    ([x] | [x]).should == [x]
   end
 end
