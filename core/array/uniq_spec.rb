@@ -98,6 +98,14 @@ describe "Array#uniq" do
   it "returns subclass instance on Array subclasses" do
     ArraySpecs::MyArray[1, 2, 3].uniq.should be_an_instance_of(ArraySpecs::MyArray)
   end
+
+  it "properly handles an identical item even when its #eql? isn't reflexive" do
+    x = mock('x')
+    x.should_receive(:hash).at_least(1).and_return(42)
+    x.stub!(:eql?).and_return(false) # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
+
+    [x, x].uniq.should == [x]
+  end
 end
 
 describe "Array#uniq!" do
@@ -124,6 +132,33 @@ describe "Array#uniq!" do
     array.should == expected
   end
 
+  it "compares elements first with hash" do
+    # Can't use should_receive because it uses hash internally
+    x = mock('0')
+    def x.hash() 0 end
+    y = mock('0')
+    def y.hash() 0 end
+
+    a = [x, y]
+    a.uniq!
+    a.should == [x, y]
+  end
+
+  it "does not compare elements with different hash codes via eql?" do
+    # Can't use should_receive because it uses hash and eql? internally
+    x = mock('0')
+    def x.eql?(o) raise("Shouldn't receive eql?") end
+    y = mock('1')
+    def y.eql?(o) raise("Shouldn't receive eql?") end
+
+    def x.hash() 0 end
+    def y.hash() 1 end
+
+    a = [x, y]
+    a.uniq!
+    a.should == [x, y]
+  end
+
   it "returns nil if no changes are made to the array" do
     [ "a", "b", "c" ].uniq!.should == nil
   end
@@ -147,5 +182,15 @@ describe "Array#uniq!" do
   it "compares elements based on the value returned from the block" do
     a = [1, 2, 3, 4]
     a.uniq! { |x| x >= 2 ? 1 : 0 }.should == [1, 2]
+  end
+
+  it "properly handles an identical item even when its #eql? isn't reflexive" do
+    x = mock('x')
+    x.should_receive(:hash).at_least(1).and_return(42)
+    x.stub!(:eql?).and_return(false) # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
+
+    a = [x, x]
+    a.uniq!
+    a.should == [x]
   end
 end

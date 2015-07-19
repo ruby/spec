@@ -75,4 +75,12 @@ describe "Array#&" do
   it "does not call to_ary on array subclasses" do
     ([5, 6] & ArraySpecs::ToAryArray[1, 2, 5, 6]).should == [5, 6]
   end
+
+  it "properly handles an identical item even when its #eql? isn't reflexive" do
+    x = mock('x')
+    x.should_receive(:hash).at_least(1).and_return(42)
+    x.stub!(:eql?).and_return(false) # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
+
+    ([x] & [x]).should == [x]
+  end
 end
