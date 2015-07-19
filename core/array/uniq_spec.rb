@@ -98,6 +98,14 @@ describe "Array#uniq" do
   it "returns subclass instance on Array subclasses" do
     ArraySpecs::MyArray[1, 2, 3].uniq.should be_an_instance_of(ArraySpecs::MyArray)
   end
+
+  it "properly handles an identical item even when its #eql? isn't reflexive" do
+    x = mock('x')
+    x.should_receive(:hash).any_number_of_times.and_return(42)
+    x.stub!(:eql?).and_return(false)
+
+    [x, x].uniq.should == [x]
+  end
 end
 
 describe "Array#uniq!" do
@@ -147,5 +155,15 @@ describe "Array#uniq!" do
   it "compares elements based on the value returned from the block" do
     a = [1, 2, 3, 4]
     a.uniq! { |x| x >= 2 ? 1 : 0 }.should == [1, 2]
+  end
+
+  it "properly handles an identical item even when its #eql? isn't reflexive" do
+    x = mock('x')
+    x.should_receive(:hash).any_number_of_times.and_return(42)
+    x.stub!(:eql?).and_return(false)
+
+    a = [x, x]
+    a.uniq!
+    a.should == [x]
   end
 end
