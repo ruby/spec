@@ -132,6 +132,33 @@ describe "Array#uniq!" do
     array.should == expected
   end
 
+  it "compares elements first with hash" do
+    # Can't use should_receive because it uses hash internally
+    x = mock('0')
+    def x.hash() 0 end
+    y = mock('0')
+    def y.hash() 0 end
+
+    a = [x, y]
+    a.uniq!
+    a.should == [x, y]
+  end
+
+  it "does not compare elements with different hash codes via eql?" do
+    # Can't use should_receive because it uses hash and eql? internally
+    x = mock('0')
+    def x.eql?(o) raise("Shouldn't receive eql?") end
+    y = mock('1')
+    def y.eql?(o) raise("Shouldn't receive eql?") end
+
+    def x.hash() 0 end
+    def y.hash() 1 end
+
+    a = [x, y]
+    a.uniq!
+    a.should == [x, y]
+  end
+
   it "returns nil if no changes are made to the array" do
     [ "a", "b", "c" ].uniq!.should == nil
   end
