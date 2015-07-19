@@ -101,8 +101,8 @@ describe "Array#uniq" do
 
   it "properly handles an identical item even when its #eql? isn't reflexive" do
     x = mock('x')
-    x.should_receive(:hash).any_number_of_times.and_return(42)
-    x.stub!(:eql?).and_return(false)
+    x.should_receive(:hash).at_least(1).and_return(42)
+    x.stub!(:eql?).and_return(false) # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
 
     [x, x].uniq.should == [x]
   end
@@ -186,8 +186,8 @@ describe "Array#uniq!" do
 
   it "properly handles an identical item even when its #eql? isn't reflexive" do
     x = mock('x')
-    x.should_receive(:hash).any_number_of_times.and_return(42)
-    x.stub!(:eql?).and_return(false)
+    x.should_receive(:hash).at_least(1).and_return(42)
+    x.stub!(:eql?).and_return(false) # Stubbed for clarity and latitude in implementation; not actually sent by MRI.
 
     a = [x, x]
     a.uniq!
