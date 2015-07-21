@@ -11,8 +11,10 @@ describe "Bignum#/" do
     (bignum_value(88) / 4294967295.5).should be_close(2147483648.25, TOLERANCE)
   end
 
-  it "does NOT raise ZeroDivisionError if other is zero and is a Float" do
-    (bignum_value / 0.0).to_s.should == 'Infinity'
-    (bignum_value / -0.0).to_s.should == '-Infinity'
+  not_supported_on :opal do
+    it "does NOT raise ZeroDivisionError if other is zero and is a Float" do
+      (bignum_value / 0.0).to_s.should == 'Infinity'
+      (bignum_value / -0.0).to_s.should == '-Infinity'
+    end
   end
 end

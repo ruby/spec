@@ -13,7 +13,9 @@ describe "Bignum#<=" do
   end
 
   it "returns false if compares with near float" do
-    (@bignum <= (@bignum + 0.0)).should == false
+    not_supported_on :opal do
+      (@bignum <= (@bignum + 0.0)).should == false
+    end
     (@bignum <= (@bignum + 0.5)).should == false
   end
 

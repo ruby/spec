@@ -55,8 +55,10 @@ describe "Bignum#<=>" do
         (-bignum_value(0xffff) <=> -bignum_value.to_f).should == -1
       end
 
-      it "returns 0 when other is equal" do
-        (-bignum_value <=> -bignum_value.to_f).should == 0
+      not_supported_on :opal do
+        it "returns 0 when other is equal" do
+          (-bignum_value <=> -bignum_value.to_f).should == 0
+        end
       end
 
       it "returns 1 when self is negative and other is smaller" do
@@ -77,8 +79,10 @@ describe "Bignum#<=>" do
         (bignum_value <=> bignum_value(0xfffe).to_f).should == -1
       end
 
-      it "returns 0 when other is equal" do
-        (bignum_value <=> bignum_value.to_f).should == 0
+      not_supported_on :opal do
+        it "returns 0 when other is equal" do
+          (bignum_value <=> bignum_value.to_f).should == 0
+        end
       end
 
       it "returns 1 when other is smaller" do
