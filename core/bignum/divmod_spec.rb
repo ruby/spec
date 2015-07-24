@@ -14,6 +14,8 @@ describe "Bignum#divmod" do
     @bignum.divmod(4).should == [2305843009213693965, 3]
     @bignum.divmod(13).should == [709490156681136604, 11]
 
+    @bignum.divmod(4.5).should == [2049638230412172288, 3.5]
+
     not_supported_on :opal do
       @bignum.divmod(4.0).should == [2305843009213693952, 0.0]
       @bignum.divmod(13.0).should == [709490156681136640, 8.0]
