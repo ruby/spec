@@ -126,7 +126,15 @@ describe :hash_eql_additional, :shared => true do
     b[:a] = 5
     a.send(@method, b).should be_true
 
-    c = new_hash("a" => 5)
+    not_supported_on :opal do
+      c = new_hash("a" => 5)
+      a.send(@method, c).should be_false
+    end
+
+    c = new_hash("A" => 5)
+    a.send(@method, c).should be_false
+
+    c = new_hash(:a => 6)
     a.send(@method, c).should be_false
   end
 
