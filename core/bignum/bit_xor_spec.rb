@@ -30,12 +30,12 @@ describe "Bignum#^" do
   end
 
   it "raises a TypeError when passed a Float" do
-    lambda { @bignum ^ 14.5 }.should raise_error(TypeError)
     not_supported_on :opal do
       lambda {
         bignum_value ^ bignum_value(0xffff).to_f
       }.should raise_error(TypeError)
     end
+    lambda { @bignum ^ 14.5 }.should raise_error(TypeError)
   end
 
   it "raises a TypeError and does not call #to_int when defined on an object" do
