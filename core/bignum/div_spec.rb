@@ -6,7 +6,7 @@ describe "Bignum#div" do
 
   it "returns a result of integer division of self by a float argument" do
     bignum_value(88).div(4294967295.5).should eql(2147483648)
-    not_supported_on :opal do 
+    not_supported_on :opal do
       bignum_value(88).div(4294967295.0).should eql(2147483648)
       bignum_value(88).div(bignum_value(88).to_f).should eql(1)
       bignum_value(88).div(-bignum_value(88).to_f).should eql(-1)

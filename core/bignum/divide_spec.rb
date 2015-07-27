@@ -5,7 +5,7 @@ describe "Bignum#/" do
   it_behaves_like(:bignum_divide, :/)
 
   it "returns self divided by float" do
-    not_supported_on :opal do 
+    not_supported_on :opal do
       (bignum_value(88) / 4294967295.0).should be_close(2147483648.5, TOLERANCE)
     end
     (bignum_value(88) / 4294967295.5).should be_close(2147483648.25, TOLERANCE)
