@@ -1,4 +1,4 @@
-describe :env_to_hash, :shared => true do
+describe :env_to_hash, shared: true do
   it "returns the ENV as a hash" do
     ENV["foo"] = "bar"
     h = ENV.send(@method)
