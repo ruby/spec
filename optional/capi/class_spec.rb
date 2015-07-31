@@ -5,7 +5,7 @@ load_extension("class")
 
 autoload :ClassUnderAutoload, "#{object_path}/class_under_autoload_spec"
 
-describe :rb_path_to_class, :shared => true do
+describe :rb_path_to_class, shared: true do
   it "returns a class or module from a scoped String" do
     @s.send(@method, "CApiClassSpecs::A::B").should equal(CApiClassSpecs::A::B)
   end

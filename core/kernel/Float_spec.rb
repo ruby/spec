@@ -1,7 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
-describe :kernel_float, :shared => true do
+describe :kernel_float, shared: true do
   it "returns the identical Float for numeric Floats" do
     float = 1.12
     float2 = @object.send(:Float, float)

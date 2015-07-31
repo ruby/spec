@@ -751,7 +751,7 @@ describe "String#%" do
 
   describe "when format string contains %{} sections" do
     it "replaces %{} sections with values from passed-in hash" do
-      ("%{foo}bar" % {:foo => 'oof'}).should == "oofbar"
+      ("%{foo}bar" % {foo: 'oof'}).should == "oofbar"
     end
 
     it "raises KeyError if key is missing from passed-in hash" do
@@ -765,7 +765,7 @@ describe "String#%" do
 
   describe "when format string contains %<> formats" do
     it "uses the named argument for the format's value" do
-      ("%<foo>d" % {:foo => 1}).should == "1"
+      ("%<foo>d" % {foo: 1}).should == "1"
     end
 
     it "raises KeyError if key is missing from passed-in hash" do
