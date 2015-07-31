@@ -279,7 +279,7 @@ describe "String#gsub with pattern and Hash" do
   end
 
   it "ignores non-String keys" do
-    "hello".gsub(/(ll)/, 'll' => 'r', ll: 'z').should == "hero"
+    "tattoo".gsub(/(tt)/, 'tt' => 'b', tt: 'z').should == "taboo"
   end
 
   it "uses a key's value as many times as needed" do
