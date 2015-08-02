@@ -161,7 +161,7 @@ describe :kernel_float, shared: true do
     end
 
     it "returns Infinity for '2#{e}1000'" do
-      @object.send(:Float, "2#{e}1000").should == (1.0/0)
+      @object.send(:Float, "2#{e}1000").should == Float::INFINITY
     end
 
     it "returns 0 for '2#{e}-1000'" do
