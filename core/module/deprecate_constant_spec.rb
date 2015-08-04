@@ -35,5 +35,13 @@ ruby_version_is "2.3" do
       lambda { @module::PUBLIC1 }.should complain(@pattern)
       lambda { @module::PUBLIC2 }.should complain(@pattern)
     end
+    
+    it "returns self" do
+      @module.deprecate_constant(:PUBLIC1).should equal(@module)
+    end
+    
+    it "raises a NameError when given an undefined name" do
+      lambda { @module.deprecate_constant :UNDEFINED }.should raise_error(NameError)
+    end
   end
 end
