@@ -9,6 +9,7 @@ ruby_version_is "2.3" do
       @module::PUBLIC2 = @value
       @module::PRIVATE = @value
       @module.private_constant :PRIVATE
+      @module.deprecate_constant :PRIVATE
       @pattern = /deprecated/
     end
     
@@ -24,7 +25,7 @@ ruby_version_is "2.3" do
         @module.deprecate_constant :PUBLIC1
 
         lambda { @module::PUBLIC1 }.should complain(@pattern)
-        lambda { @module.const_get :PUBLIC1 }.should complain(@pattern)
+        lambda { @module.const_get :PRIVATE }.should complain(@pattern)
       end
     end
     
