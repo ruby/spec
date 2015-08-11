@@ -9,14 +9,15 @@ end
 
 describe "The class keyword" do
   it "creates a new class with semicolon" do
-    class C; end
-    C.should be_an_instance_of(Class)
+    class ClassSpecsKeywordWithSemicolon; end
+    ClassSpecsKeywordWithSemicolon.should be_an_instance_of(Class)
   end
 
   ruby_version_is "2.3" do
     it "does not raise a SyntaxError when opening a class without a semicolon" do
-      lambda { eval "class C end" }.should_not raise_error(SyntaxError)
-      C.should be_an_instance_of(Class)
+      lambda { eval "class ClassSpecsKeywordWithoutSemicolon end" }
+        .should_not raise_error(SyntaxError)
+      ClassSpecsKeywordWithoutSemicolon.should be_an_instance_of(Class)
     end
   end
 end

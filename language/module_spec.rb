@@ -3,8 +3,8 @@ require File.expand_path('../fixtures/module', __FILE__)
 
 describe "The module keyword" do
   it "creates a new module without semicolon" do
-    module M end
-    M.should be_an_instance_of(Module)
+    module ModuleSpecsKeywordWithoutSemicolon end
+    ModuleSpecsKeywordWithoutSemicolon.should be_an_instance_of(Module)
   end
 
   it "creates a new module with a non-qualified constant name" do
