@@ -12,7 +12,7 @@ install:
 script:
   - ../mspec/bin/mspec
 matrix:
-  allow_failures:
+  exclude:
     - os: osx
       rvm: ruby-head
 branches:
