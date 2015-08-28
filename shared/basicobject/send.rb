@@ -104,16 +104,7 @@ describe :basicobject_send, shared: true do
     end
   end
 
-  not_compliant_on :rubinius do
-    # Confirm commit r24306
-    it "has an arity of -1" do
-      method(@method).arity.should == -1
-    end
-  end
-
-  deviates_on :rubinius do
-    it "has an arity of -2" do
-      method(@method).arity.should == -2
-    end
+  it "has a negative arity" do
+    method(@method).arity.should < 0
   end
 end
