@@ -30,33 +30,48 @@ describe "File#flock" do
   it "returns false if trying to lock an exclusively locked file" do
     @file.flock File::LOCK_EX
 
-    File.open(@name, "w") do |f2|
-      f2.flock(File::LOCK_EX | File::LOCK_NB).should == false
-    end
+    ruby_exe(<<-END_OF_CODE, escape: true).should == "false"
+      File.open('#{@name}', "w") do |f2|
+        print f2.flock(File::LOCK_EX | File::LOCK_NB).to_s
+      end
+    END_OF_CODE
   end
 
   it "blocks if trying to lock an exclusively locked file" do
     @file.flock File::LOCK_EX
 
-    running = false
     t = Thread.new do
-      ScratchPad << :before
-
-      running = true
-      File.open(@name, "w") do |f2|
-        f2.flock(File::LOCK_EX)
-      end
-
-      ScratchPad << :after
+      ruby_exe(<<-END_OF_CODE, escape: true)
+        File.open('#{@name}', "w") do |f2|
+          begin
+            f2.puts Process.pid
+            f2.puts "before"
+            f2.flush
+            f2.flock(File::LOCK_EX)
+            f2.puts "after"
+          rescue Interrupt
+            f2.puts "interrupt"
+          end
+        end
+      END_OF_CODE
     end
 
-    Thread.pass until running
-    sleep 0.5
+    begin
+      @file.seek(0, IO::SEEK_SET)
+      begin
+        s = @file.read_nonblock(127)
+      rescue EOFError, Errno::EAGAIN, Errno::EWOULDBLOCK
+      end
+    end until /before/ =~ s.to_s
 
-    t.kill
+    sleep 0.5
+    Process.kill("INT", s.to_i)
     t.join
 
-    ScratchPad.recorded.should == [:before]
+    @file.seek(0, IO::SEEK_SET)
+    a = @file.read.to_s.strip.split(/\s+/)
+    a.shift
+    a.should == [ 'before', 'interrupt' ]
   end
 
   it "returns 0 if trying to lock a non-exclusively locked file" do
