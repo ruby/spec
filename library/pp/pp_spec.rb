@@ -1,6 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require 'pp'
-require 'stringio'
 
 describe "PP.pp" do
   before :each do
@@ -18,14 +17,14 @@ describe "PP.pp" do
   end
     
   it 'allows specifying out explicitly' do
-    $stdout = StringIO.new
-    other_out = StringIO.new
+    $stdout = IOStub.new
+    other_out = IOStub.new
     array = [1, 2, 3]
     
     PP.pp array, other_out
     
-    other_out.string.should == "[1, 2, 3]\n"
-    $stdout.string.should == ''
+    other_out.to_s.should == "[1, 2, 3]\n"
+    $stdout.to_s.should == ''
   end
   
   it "needs to be reviewed for spec completeness"
