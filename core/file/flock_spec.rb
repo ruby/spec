@@ -40,38 +40,27 @@ describe "File#flock" do
   it "blocks if trying to lock an exclusively locked file" do
     @file.flock File::LOCK_EX
 
-    t = Thread.new do
-      ruby_exe(<<-END_OF_CODE, escape: true)
+    out = ruby_exe(<<-END_OF_CODE, escape: true)
+      running = false
+
+      t = Thread.new do
         File.open('#{@name}', "w") do |f2|
-          begin
-            f2.puts Process.pid
-            f2.puts "before"
-            f2.flush
-            f2.flock(File::LOCK_EX)
-            f2.puts "after"
-          rescue Interrupt
-            f2.puts "interrupt"
-          end
+          puts "before"
+          running = true
+          f2.flock(File::LOCK_EX)
+          puts "after"
         end
-      END_OF_CODE
-    end
-
-    begin
-      @file.seek(0, IO::SEEK_SET)
-      begin
-        s = @file.read_nonblock(127)
-      rescue EOFError, Errno::EAGAIN, Errno::EWOULDBLOCK
       end
-    end until /before/ =~ s.to_s
 
-    sleep 0.5
-    Process.kill("INT", s.to_i)
-    t.join
+      Thread.pass until running
+      Thread.pass while t.status and t.status != "sleep"
+      sleep 0.1
 
-    @file.seek(0, IO::SEEK_SET)
-    a = @file.read.to_s.strip.split(/\s+/)
-    a.shift
-    a.should == [ 'before', 'interrupt' ]
+      t.kill
+      t.join
+    END_OF_CODE
+
+    out.should == "before\n"
   end
 
   it "returns 0 if trying to lock a non-exclusively locked file" do
