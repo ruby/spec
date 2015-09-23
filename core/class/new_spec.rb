@@ -63,6 +63,13 @@ describe "Class.new with a block given" do
       Howdy.name.should == 'Howdy'
       klass.get_class_name.should == 'Howdy'    
     end
+    
+    it "named classes in a module" do
+      klass = CoreClassSpecs::ANON_CLASS_FOR_NEW.call
+      
+      CoreClassSpecs::NamedInModule.name.should == 'CoreClassSpecs::NamedInModule'
+      klass.get_class_name.should == 'CoreClassSpecs::NamedInModule'
+    end
   
     it "anonymous classes" do
       klass = Class.new do
