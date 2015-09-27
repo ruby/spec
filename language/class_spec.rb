@@ -126,8 +126,8 @@ describe "A class definition" do
     class ClassSpecs::Singleton; class << self; :singleton; end; end.should == :singleton
   end
 
-  describe "create class within the block" do
-    it "named classes" do
+  describe "within a block creates a new class in the lexical scope" do
+    it "for named classes at the toplevel" do
       klass = Class.new do
         class Howdy
         end
@@ -141,14 +141,14 @@ describe "A class definition" do
       klass.get_class_name.should == 'Howdy'
     end
 
-    it "named classes in a module" do
+    it "for named classes in a module" do
       klass = ClassSpecs::ANON_CLASS_FOR_NEW.call
 
       ClassSpecs::NamedInModule.name.should == 'ClassSpecs::NamedInModule'
       klass.get_class_name.should == 'ClassSpecs::NamedInModule'
     end
 
-    it "anonymous classes" do
+    it "for anonymous classes" do
       klass = Class.new do
         def self.get_class
           Class.new do
@@ -166,7 +166,7 @@ describe "A class definition" do
       klass.get_result.should == 'bar'
     end
 
-    it "anonymous classes with constant assigned" do
+    it "for anonymous classes assigned to a constant" do
       klass = Class.new do
         AnonWithConstant = Class.new
 
