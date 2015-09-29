@@ -10,9 +10,18 @@ describe "File::Stat#birthtime" do
     rm_r @file
   end
 
-  it "returns the birthtime of a File::Stat object" do
-    st = File.stat(@file)
-    st.birthtime.should be_kind_of(Time)
-    st.birthtime.should <= Time.now
+  platform_is :windows, :darwin do
+    it "returns the birthtime of a File::Stat object" do
+      st = File.stat(@file)
+      st.birthtime.should be_kind_of(Time)
+      st.birthtime.should <= Time.now
+    end
+  end
+
+  platform_is :linux, :openbsd, :freebsd, :netbsd do
+    it "raises an NotImplementedError" do
+      st = File.stat(@file)
+      lambda { st.birthtime }.should raise_error(NotImplementedError)
+    end
   end
 end
