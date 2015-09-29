@@ -250,20 +250,22 @@ describe "A lambda literal -> () { }" do
       end
     end
 
-    describe "with circular optional argument reference" do
-      it "shadows an existing local with the same name as the argument" do
-        a = 1
-        -> (a=a) { a }.call.should == nil
-      end
+    ruby_version_is "2.2" do
+      describe "with circular optional argument reference" do
+        it "shadows an existing local with the same name as the argument" do
+          a = 1
+          -> (a=a) { a }.call.should == nil
+        end
 
-      it "shadows an existing method with the same name as the argument" do
-        def a; 1; end
-        -> (a=a) { a }.call.should == nil
-      end
+        it "shadows an existing method with the same name as the argument" do
+          def a; 1; end
+          -> (a=a) { a }.call.should == nil
+        end
 
-      it "calls an existing method with the same name as the argument if explicitly using ()" do
-        def a; 1; end
-        -> (a=a()) { a }.call.should == 1
+        it "calls an existing method with the same name as the argument if explicitly using ()" do
+          def a; 1; end
+          -> (a=a()) { a }.call.should == 1
+        end
       end
     end
   end
