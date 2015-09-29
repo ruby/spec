@@ -27,5 +27,11 @@ ruby_version_is "2.2" do
       a = 1
       proc { a = 2; binding.local_variables }.call.should == [:a]
     end
+
+    it "includes new variables defined in the binding" do
+      b = binding
+      b.local_variable_set :a, 42
+      b.local_variables.should == [:a, :b]
+    end
   end
 end
