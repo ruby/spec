@@ -33,6 +33,10 @@ describe "Regexp#match" do
   it "returns a MatchData object, when argument is a Symbol" do
     /(.)(.)(.)/.match(:abc).should be_kind_of(MatchData)
   end
+  
+  it "raises a TypeError on an uninitialized Regexp" do
+    lambda { Regexp.allocate.match('foo') }.should raise_error(TypeError)
+  end
 
   describe "with [string, position]" do
     describe "when given a positive position" do
