@@ -39,9 +39,10 @@ describe "IO#close" do
   end
 
   ruby_version_is "2.3" do
-    it "does not raise anything when self was already closed" do
+    it "does nothing if already closed" do
       @io.close
-      lambda { @io.close }.should_not raise_error
+
+      @io.close.should be_nil
     end
   end
 end
