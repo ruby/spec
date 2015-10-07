@@ -22,6 +22,10 @@ describe "Regexp#options" do
       (/cat/xi.options & Regexp::EXTENDED).should_not == 0
     end
   end
+  
+  it "retrieves options on an empty expression" do
+    //.options.should == 0
+  end
 
   it "raises a TypeError on an uninitialized Regexp" do
     lambda { Regexp.allocate.options }.should raise_error(TypeError)
