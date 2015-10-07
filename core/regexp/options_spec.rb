@@ -23,8 +23,9 @@ describe "Regexp#options" do
     end
   end
   
-  it "retrieves options on an empty expression" do
+  it "returns 0 for a Regexp literal without options" do
     //.options.should == 0
+    /abc/.options.should == 0
   end
 
   it "raises a TypeError on an uninitialized Regexp" do
