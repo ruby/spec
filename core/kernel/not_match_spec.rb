@@ -2,9 +2,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "Kernel#!~" do
-  it "needs to be reviewed for spec completeness"
-
-  it 'calls =~ internally negates the result' do
+  it 'calls =~ internally and negates the result' do
     obj = Object.new
     obj.should_receive(:=~).and_return(true)
     (obj !~ :foo).should == false
