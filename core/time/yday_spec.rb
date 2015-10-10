@@ -10,12 +10,11 @@ describe "Time#yday" do
   it 'returns the correct value for each day of each month' do
     days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-    previous = 0
+    yday = 1
     days.each_with_index do |days, month|
       days.times do |day|
-        yday = Time.new(2014, month+1, day+1).yday
-        yday.should == previous+1
-        previous = yday
+        Time.new(2014, month+1, day+1).yday.should == yday
+        yday += 1
       end
     end
   end
