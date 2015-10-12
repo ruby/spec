@@ -22,7 +22,7 @@ describe "Regexp#options" do
       (/cat/xi.options & Regexp::EXTENDED).should_not == 0
     end
   end
-  
+
   it "returns 0 for a Regexp literal without options" do
     //.options.should == 0
     /abc/.options.should == 0

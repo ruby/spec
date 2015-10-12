@@ -53,7 +53,7 @@ module DefinedSpecs
       x = 2
       defined? x
     end
-    
+
     def local_variable_defined_nil
       x = nil
       defined? x
@@ -72,7 +72,7 @@ module DefinedSpecs
       @instance_variable_defined = 1
       defined? @instance_variable_defined
     end
-    
+
     def instance_variable_defined_nil
       @instance_variable_defined_nil = nil
       defined? @instance_variable_defined_nil
