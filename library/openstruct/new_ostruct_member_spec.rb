@@ -4,13 +4,12 @@ require "ostruct"
 describe "OpenStruct#new_ostruct_member when passed [method_name]" do
   before :each do
     @os = OpenStruct.new
-    @os.instance_variable_set(:@table, age: 20)
   end
 
   it "creates an attribute reader method for the passed method_name" do
     @os.respond_to?(:age).should be_false
     @os.send :new_ostruct_member, :age
-    @os.method(:age).call.should == 20
+    @os.respond_to?(:age).should be_true
   end
 
   it "creates an attribute writer method for the passed method_name" do
