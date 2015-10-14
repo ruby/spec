@@ -26,4 +26,10 @@ describe "The undef keyword" do
     obj.respond_to?(:method1).should == false
     obj.respond_to?(:method2).should == false
   end
+
+  it "raises a NameError when passed a missing name" do
+    lambda { class ::UndefSpecClass; undef not_exist; end }.should raise_error(NameError)
+    # a NameError and not a NoMethodError
+    lambda { class ::UndefSpecClass; undef not_exist; end }.should_not raise_error(NoMethodError)
+  end
 end
