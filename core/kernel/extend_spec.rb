@@ -57,7 +57,7 @@ describe "Kernel#extend" do
   end
 
   it "raises a TypeError when the argument is not a Module" do
-    lambda { KernelSpecs::M.send(:extend, Class.new) }.should raise_error(TypeError)
+    lambda { mock('o').extend(Class.new) }.should raise_error(TypeError)
   end
 
   describe "on frozen instance" do
