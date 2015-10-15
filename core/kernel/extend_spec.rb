@@ -69,5 +69,9 @@ describe "Kernel#extend" do
     it "raises a RuntimeError" do
       lambda { @frozen.extend @module }.should raise_error(RuntimeError)
     end
+
+    it "raises a TypeError when the argument is not a Module" do
+      lambda { KernelSpecs::M.send(:extend, Class.new) }.should raise_error(TypeError)
+    end
   end
 end
