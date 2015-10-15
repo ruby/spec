@@ -57,7 +57,9 @@ describe "Kernel#extend" do
   end
 
   it "raises a TypeError when the argument is not a Module" do
-    lambda { mock('o').extend(Class.new) }.should raise_error(TypeError)
+    o = mock('o')
+    klass = Class.new
+    lambda { o.extend(klass) }.should raise_error(TypeError)
   end
 
   describe "on frozen instance" do
