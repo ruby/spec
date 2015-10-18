@@ -5,6 +5,18 @@ describe "Struct" do
   it "includes Enumerable" do
     Struct.include?(Enumerable).should == true
   end
+  
+  it "allows class to be modified via a block" do
+    klass = Struct.new(:version) do
+      def platform
+        :ruby
+      end
+    end
+    instance = klass.new('2.2')
+    
+    instance.version.should == '2.2'
+    instance.platform.should == :ruby
+  end
 end
 
 describe "Struct anonymous class instance methods" do
