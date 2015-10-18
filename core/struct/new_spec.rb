@@ -83,6 +83,14 @@ describe "Struct.new" do
       instance.version.should == '2.2'
       instance.platform.should == :ruby
     end
+
+    it "passes same struct class to the block" do
+      given = nil
+      klass = Struct.new(:attr) do |block_parameter|
+        given = block_parameter
+      end
+      klass.should equal(given)
+    end
   end
 
   context "on subclasses" do
