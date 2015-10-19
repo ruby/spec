@@ -75,6 +75,7 @@ describe "The alias keyword" do
     end
 
     AliasObject.__klass_method.should == 7
+    lambda { Object.__klass_method }.should raise_error(NoMethodError)
   end
   
   it "operates on the class/module metaclass when used in instance_exec" do
@@ -83,6 +84,7 @@ describe "The alias keyword" do
     end
 
     AliasObject.__klass_method2.should == 7
+    lambda { Object.__klass_method2 }.should raise_error(NoMethodError)
   end
 
   it "operates on methods defined via attr, attr_reader, and attr_accessor" do

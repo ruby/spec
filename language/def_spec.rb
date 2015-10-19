@@ -533,6 +533,7 @@ describe "A method definition inside an instance_eval" do
     end
     
     m.klass_method.should == :test
+    lambda { Object.klass_method }.should raise_error(NoMethodError)
   end
   
   it "creates a class method when instance_eval is within class" do
@@ -545,6 +546,7 @@ describe "A method definition inside an instance_eval" do
     end
     
     m.klass_method.should == :test
+    lambda { Object.klass_method }.should raise_error(NoMethodError)
   end
 end
 
@@ -571,6 +573,7 @@ describe "A method definition inside an instance_exec" do
     end
     
     m.klass_method.should == 1
+    lambda { Object.klass_method }.should raise_error(NoMethodError)
   end
   
   it "creates a class method when instance_exec is within class" do
@@ -585,6 +588,7 @@ describe "A method definition inside an instance_exec" do
     end
     
     m.klass_method.should == 2
+    lambda { Object.klass_method }.should raise_error(NoMethodError)
   end
 end
 
