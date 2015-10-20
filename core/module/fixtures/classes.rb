@@ -1,7 +1,7 @@
 module ModuleSpecs
   def self.without_test_modules(modules)
     ignore = %w[MSpec PP::ObjectMixin ModuleSpecs::IncludedInObject MainSpecs::Module ConstantSpecs::ModuleA]
-    modules.reject { |k| ignore.any? { |name| k.name.start_with?(name) } }
+    modules.reject { |k| ignore.include?(k.name) }
   end
   
   CONST = :plain_constant
