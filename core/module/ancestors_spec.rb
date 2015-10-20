@@ -3,14 +3,14 @@ require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "Module#ancestors" do
   it "returns a list of modules included in self (including self)" do
-    BasicObject.ancestors.should         == [BasicObject]
-    ModuleSpecs.ancestors.should         == [ModuleSpecs]
-    ModuleSpecs::Basic.ancestors.should  == [ModuleSpecs::Basic]
-    ModuleSpecs::Super.ancestors.should  == [ModuleSpecs::Super, ModuleSpecs::Basic]
-    ModuleSpecs.without_test_classes(ModuleSpecs::Parent.ancestors)
-    .should                              == [ModuleSpecs::Parent, Object, Kernel, BasicObject]
-    ModuleSpecs.without_test_classes(ModuleSpecs::Child.ancestors)
-    .should                              == [ModuleSpecs::Child, ModuleSpecs::Super, ModuleSpecs::Basic, ModuleSpecs::Parent, Object, Kernel, BasicObject]
+    BasicObject.ancestors.should == [BasicObject]
+    ModuleSpecs.ancestors.should == [ModuleSpecs]
+    ModuleSpecs::Basic.ancestors.should == [ModuleSpecs::Basic]
+    ModuleSpecs::Super.ancestors.should == [ModuleSpecs::Super, ModuleSpecs::Basic]
+    ModuleSpecs.without_test_modules(ModuleSpecs::Parent.ancestors).should ==
+      [ModuleSpecs::Parent, Object, Kernel, BasicObject]
+    ModuleSpecs.without_test_modules(ModuleSpecs::Child.ancestors).should ==
+      [ModuleSpecs::Child, ModuleSpecs::Super, ModuleSpecs::Basic, ModuleSpecs::Parent, Object, Kernel, BasicObject]
   end  
 
   it "returns only modules and classes" do
