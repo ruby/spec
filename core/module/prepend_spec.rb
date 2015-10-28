@@ -4,7 +4,7 @@ require File.expand_path('../fixtures/classes', __FILE__)
 describe "Module#prepend" do
   ruby_version_is "2.1" do
     it "is a public method" do
-      Module.should have_public_instance_method(:prepend, true)
+      Module.should have_public_instance_method(:prepend, false)
     end
   end
 
