@@ -47,19 +47,19 @@ describe "Dir.entries" do
     encoding = Encoding.find("filesystem")
     encoding = Encoding::ASCII_8BIT if encoding == Encoding::US_ASCII
     entries.should include("こんにちは.txt".force_encoding(encoding))
-    entries.first.encoding.should equal(Encoding.find("filesystem"))
+    entries.grep(".").encoding.should equal(Encoding.find("filesystem"))
   end
 
   it "returns entries encoded with the specified encoding" do
     dir = File.join(DirSpecs.mock_dir, 'special')
     entries = Dir.entries dir, encoding: "euc-jp"
-    entries.first.encoding.should equal(Encoding::EUC_JP)
+    entries.grep(".").encoding.should equal(Encoding::EUC_JP)
   end
 
   it "returns entries transcoded to the default internal encoding" do
     Encoding.default_internal = Encoding::EUC_KR
     entries = Dir.entries File.join(DirSpecs.mock_dir, 'special')
-    entries.first.encoding.should equal(Encoding::EUC_KR)
+    entries.grep(".").encoding.should equal(Encoding::EUC_KR)
   end
 
   it "raises a SystemCallError if called with a nonexistent diretory" do
