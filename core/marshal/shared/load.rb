@@ -761,20 +761,22 @@ describe :marshal_load, shared: true do
   end
 
   describe "for a wrapped C pointer" do
-    it "loads" do
-      data = "\004\bd:\rUserData" \
-             "[\a[\b\"\aCN\"\vnobodyi\021[\b\"\aDC\"\fexamplei\e"
+    not_supported_on :opal do
+      it "loads" do
+        data = "\004\bd:\rUserData" \
+               "[\a[\b\"\aCN\"\vnobodyi\021[\b\"\aDC\"\fexamplei\e"
 
-      expected = UserData.parse 'CN=nobody/DC=example'
+        expected = UserData.parse 'CN=nobody/DC=example'
 
-      Marshal.send(@method, data).to_a.should == expected.to_a
-    end
+        Marshal.send(@method, data).to_a.should == expected.to_a
+      end
 
-    it "raises TypeError when the local class is missing _data_load" do
-      data = "\004\bd:\027UserDataUnloadable" \
-             "[\a[\b\"\aCN\"\vnobodyi\021[\b\"\aDC\"\fexamplei\e"
+      it "raises TypeError when the local class is missing _data_load" do
+        data = "\004\bd:\027UserDataUnloadable" \
+               "[\a[\b\"\aCN\"\vnobodyi\021[\b\"\aDC\"\fexamplei\e"
 
-      lambda { Marshal.send(@method, data) }.should raise_error(TypeError)
+        lambda { Marshal.send(@method, data) }.should raise_error(TypeError)
+      end
     end
 
     it "raises ArgumentError when the local class is a regular object" do
