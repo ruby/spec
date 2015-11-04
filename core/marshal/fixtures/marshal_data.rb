@@ -145,20 +145,22 @@ class UserCustomConstructorString < String
   end
 end
 
-require 'openssl'
+not_supported_on :opal do
+  require 'openssl'
 
-class UserData < OpenSSL::X509::Name
-  alias _dump_data to_a
+  class UserData < OpenSSL::X509::Name
+    alias _dump_data to_a
 
-  def _load_data entries
-    entries.each do |entry|
-      add_entry(*entry)
+    def _load_data entries
+      entries.each do |entry|
+        add_entry(*entry)
+      end
     end
   end
-end
 
-class UserDataUnloadable < UserData
-  undef _load_data
+  class UserDataUnloadable < UserData
+    undef _load_data
+  end
 end
 
 module Meths
