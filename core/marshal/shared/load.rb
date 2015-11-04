@@ -776,7 +776,7 @@ describe :marshal_load, shared: true do
       Marshal.send(@method, data).path.should == '.'
     end
 
-    it "raises TypeError when the local class is missing _data_load" do
+    it "raises TypeError when the local class is missing _load_data" do
       class UnloadableDumpableDir < Dir
         def _dump_data
           path
