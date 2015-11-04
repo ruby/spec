@@ -182,6 +182,12 @@ module MarshalSpec
     end
   end
 
+  class BasicObjectSubWithRespondToFalse < BasicObject
+    def respond_to?(method_name, include_all=false)
+      false
+    end
+  end
+
   def self.random_data
     randomizer = Random.new(42)
     1000.times{randomizer.rand} # Make sure we exhaust his first state of 624 random words
