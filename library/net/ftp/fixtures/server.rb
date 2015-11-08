@@ -14,6 +14,7 @@ module NetFTPSpecs
     def serve_once
       @thread = Thread.new do
         @socket = @server.accept
+        @socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_OOBINLINE, 1)
         begin
           handle_request
         ensure
