@@ -1,3 +1,5 @@
 require "net/ftp"
 
-Net::FTP.default_passive = false
+if defined?(Net::FTP.default_passive)
+  Net::FTP.default_passive = false
+end
