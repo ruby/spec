@@ -68,7 +68,7 @@ ruby_version_is "2.2" do
     end
   end
 
-  describe "unicode_normalized?" do
+  describe "String#unicode_normalized?" do
     it "returns true if str is in Unicode normalization form (nfc)" do
       str = "a\u0300"
       str.unicode_normalized?(:nfc).should be_false
