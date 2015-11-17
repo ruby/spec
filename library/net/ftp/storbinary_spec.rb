@@ -11,7 +11,7 @@ describe "Net::FTP#storbinary" do
     @tmp_file = tmp("binaryfile", false)
 
     @ftp = Net::FTP.new
-    @ftp.connect("localhost", 9921)
+    @ftp.connect(@server.hostname, @server.server_port)
   end
 
   after :each do
