@@ -12,7 +12,7 @@ ruby_version_is "2.3" do
     end
 
     it "returns an instance of Proc" do
-      @hash.to_proc.should.be_an_instance_of Proc
+      @hash.to_proc.should be_an_instance_of Proc
     end
 
     describe "the returned proc" do
@@ -21,12 +21,12 @@ ruby_version_is "2.3" do
       end
 
       context "with a stored key" do
-        it "returns the pared value" do
+        it "returns the paired value" do
           @proc.call(@key).should equal(@value)
         end
       end
 
-      context "with a no stored key" do
+      context "with no stored key" do
         it "returns nil" do
           @proc.call(@unstored).should be_nil
         end
@@ -43,7 +43,7 @@ ruby_version_is "2.3" do
 
         context "when the hash has a default proc" do
           it "returns an evaluated value from the default proc" do
-            @hash.default_proc = -> hash, called_with {  [hash.keys, called_with] }
+            @hash.default_proc = -> hash, called_with { [hash.keys, called_with] }
             @proc.call(@unstored).should == [[@key], @unstored]
           end
         end
