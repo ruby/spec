@@ -25,7 +25,7 @@ ruby_version_is "2.2" do
 
     if has_dir_fileno
       it "returns the file descriptor of the dir" do
-        @dir.fileno.should.be_kind_of(Fixnum)
+        @dir.fileno.should be_kind_of(Fixnum)
       end
     else
       it "raises an error when not implemented on the platform" do
