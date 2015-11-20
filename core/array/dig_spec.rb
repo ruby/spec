@@ -19,5 +19,11 @@ ruby_version_is '2.3' do
       lambda { [10].dig() }.should raise_error(ArgumentError)
     end
 
+    it "calls #dig on the result of #at with the remaining arguments" do
+      h = [[nil, [nil, nil, 42]]]
+      h[0].should_receive(:dig).with(1, 2).and_return(42)
+      h.dig(0, 1, 2).should == 42
+    end
+
   end
 end

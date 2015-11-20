@@ -3,7 +3,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 ruby_version_is '2.3' do
   describe "Hash#dig" do
 
-    it "returns [] with one arg" do
+    it "returns #[] with one arg" do
       h = { 0 => false, :a => 1 }
       h.dig(:a).should == 1
       h.dig(0).should be_false
@@ -35,6 +35,12 @@ ruby_version_is '2.3' do
       # MRI does not recurse values returned from `obj.dig`
       h.dig(:foo, 1, 0, 0).should == [ 42 ]
       h.dig(:foo, 1, 0, 0, 10).should == [ 42 ]
+    end
+
+    it "calls #dig on the result of #[] with the remaining arguments" do
+      h = { foo: { bar: { baz: 42 } } }
+      h[:foo].should_receive(:dig).with(:bar, :baz).and_return(42)
+      h.dig(:foo, :bar, :baz).should == 42
     end
 
   end
