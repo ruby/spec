@@ -3,7 +3,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 ruby_version_is '2.3' do
   describe "Array#dig" do
 
-    it "returns at with one arg" do
+    it "returns #at with one arg" do
       ['a'].dig(0).should == 'a'
       ['a'].dig(1).should be_nil
     end
