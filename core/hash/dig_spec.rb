@@ -13,6 +13,7 @@ ruby_version_is '2.3' do
     it "does recurse" do
       h = { foo: { bar: { baz: 1 } } }
       h.dig(:foo, :bar, :baz).should == 1
+      h.dig(:foo, :bar, :nope).should be_nil
       h.dig(:foo, :baz).should be_nil
       h.dig(:bar, :baz, :foo).should be_nil
     end
