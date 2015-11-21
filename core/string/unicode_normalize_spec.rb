@@ -28,6 +28,10 @@ ruby_version_is "2.2" do
       end.should raise_error(Encoding::CompatibilityError)
     end
 
+    it "raises an ArgumentError if the specified form is invalid" do
+      lambda { @angstrom.unicode_normalize(:invalid_form) }.should raise_error(ArgumentError)
+    end
+
     # http://unicode.org/faq/normalization.html#6
     context "returns normalized form of string by default" do
       it "03D3 (ϓ) GREEK UPSILON WITH ACUTE AND HOOK SYMBOL" do
@@ -91,6 +95,16 @@ ruby_version_is "2.2" do
 
       str.should_not == "a\u00E0"
       str.should == "à"
+    end
+
+    it "raises an Encoding::CompatibilityError if the string is not in an unicode encoding" do
+      ohm = "\u2126"
+      lambda { ohm.force_encoding("ISO-8859-1").unicode_normalize! }.should raise_error(Encoding::CompatibilityError)
+    end
+
+    it "raises an ArgumentError if the specified form is invalid" do
+      ohm = "\u2126"
+      lambda { ohm.unicode_normalize!(:invalid_form) }.should raise_error(ArgumentError)
     end
   end
 end
