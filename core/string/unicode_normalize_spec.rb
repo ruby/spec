@@ -54,6 +54,13 @@ ruby_version_is "2.2" do
   end
 
   describe "String#unicode_normalize!" do
+    it "normalizes code points and modifies the receiving string" do
+      angstrom = "\u212b"
+      angstrom.unicode_normalize!
+      angstrom.should == "\u00c5"
+      angstrom.should_not == "\u212b"
+    end
+
     it "modifies original string (nfc)" do
       str = "a\u0300"
       str.unicode_normalize!(:nfc)
