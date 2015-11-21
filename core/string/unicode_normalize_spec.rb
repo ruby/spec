@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 
+# Examples taken from http://www.unicode.org/reports/tr15/#Norm_Forms
+
 ruby_version_is "2.2" do
   describe "String#unicode_normalize" do
     before :each do
