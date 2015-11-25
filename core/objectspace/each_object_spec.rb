@@ -171,6 +171,29 @@ describe "ObjectSpace.each_object" do
     alive.should_not be_nil
   end
 
+  describe "on singleton classes" do
+    before :each do
+      @klass = Class.new
+      instance = @klass.new
+      @sclass = instance.singleton_class
+      @meta = @klass.singleton_class
+    end
+
+    ruby_version_is ""..."2.3" do
+      it "does not walk singleton classes" do
+        @sclass.should be_kind_of(@meta)
+        ObjectSpace.each_object(@meta).to_a.should_not include(@sclass)
+      end
+    end
+
+    ruby_version_is "2.3" do
+      it "walks singleton classes" do
+        @sclass.should be_kind_of(@meta)
+        ObjectSpace.each_object(@meta).to_a.should include(@sclass)
+      end
+    end
+  end
+
   it "walks a class and its normal descendants when passed the class's singleton class" do
     a = Class.new
     b = Class.new(a)
