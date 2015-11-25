@@ -172,20 +172,25 @@ describe "ObjectSpace.each_object" do
   end
 
   it "walks a class and its normal descendants when passed the class's singleton class" do
-    expected = [
-      a = Class.new,
-      b = Class.new(a),
-      c = Class.new(a),
-      d = Class.new(b)
-    ].sort_by(&:object_id)
+    a = Class.new
+    b = Class.new(a)
+    c = Class.new(a)
+    d = Class.new(b)
 
-    c_sing = c.new
-    class << c_sing; end # singleton class should not be walked
+    c_instance = c.new
+    c_sclass = c_instance.singleton_class
+
+    expected = [ a, b, c, d ]
+
+    # singleton classes should be walked only on >= 2.3
+    ruby_version_is "2.3" do
+      expected << c_sclass
+    end
 
     b.extend Enumerable # included modules should not be walked
 
-    classes = ObjectSpace.each_object(a.singleton_class).to_a.sort_by(&:object_id)
+    classes = ObjectSpace.each_object(a.singleton_class).to_a
 
-    classes.should == expected
+    classes.sort_by(&:object_id).should == expected.sort_by(&:object_id)
   end
 end
