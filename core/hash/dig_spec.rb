@@ -29,9 +29,9 @@ ruby_version_is '2.3' do
 
       h.dig(:foo, 0, :bar).should == [ 1 ]
       h.dig(:foo, 0, :bar, 0).should == 1
-      h.dig(:foo, 0, :bar, 0, 0).should be_nil
+      lambda { h.dig(:foo, 0, :bar, 0, 0) }.should raise_error(TypeError)
       h.dig(:foo, 1, 1).should == 'str'
-      h.dig(:foo, 1, 1, 0).should be_nil
+      lambda { h.dig(:foo, 1, 1, 0) }.should raise_error(TypeError)
       # MRI does not recurse values returned from `obj.dig`
       h.dig(:foo, 1, 0, 0).should == [ 42 ]
       h.dig(:foo, 1, 0, 0, 10).should == [ 42 ]
