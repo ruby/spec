@@ -212,6 +212,7 @@ describe "ObjectSpace.each_object" do
     # singleton classes should be walked only on >= 2.3
     ruby_version_is "2.3" do
       expected << c_sclass
+      c_sclass.should be_kind_of(a.singleton_class)
     end
 
     b.extend Enumerable # included modules should not be walked
