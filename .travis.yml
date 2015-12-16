@@ -1,6 +1,6 @@
 sudo: false
 language: ruby
-rvm:
+rbenv:
   - 2.0.0-p647
   - 2.1.7
   - 2.2.3
