@@ -1,22 +1,40 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is '2.3' do
   describe "Thread#name" do
-    before do
-      @thread = Thread.new { 3 }
-      @thread.name = :thread_name
+    before :each do
+      @thread = Thread.new {}
+    end
+
+    it "is nil initially" do
+      @thread.name.should == nil
     end
 
     it "returns the thread name" do
-      @thread.name.should == :thread_name
+      @thread.name = "thread_name"
+      @thread.name.should == "thread_name"
     end
   end
 
   describe "Thread#name=" do
-    it "sets a different thread name" do
-      @thread.name = :new_thread_name
-      @thread.name.should == :new_thread_name
+    before :each do
+      @thread = Thread.new {}
+    end
+
+    it "can be set to a String" do
+      @thread.name = "new thread name"
+      @thread.name.should == "new thread name"
+    end
+
+    it "raises an ArgumentError if the name includes a null byte" do
+      lambda {
+        @thread.name = "new thread\0name"
+      }.should raise_error(ArgumentError)
+    end
+
+    it "can be reset to nil" do
+      @thread.name = nil
+      @thread.name.should == nil
     end
   end
 end
