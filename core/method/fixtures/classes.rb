@@ -78,7 +78,6 @@ module MethodSpecs
     def one_req_two_opt_with_splat_and_block(a, b=nil, c=nil, *d, &blk); end
 
     def one_key(a: 1); end
-    def one_keyreq(a:); end
     def one_keyrest(**a); end
 
     define_method(:zero_defined_method, Proc.new {||})
