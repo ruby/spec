@@ -183,6 +183,13 @@ describe "ObjectSpace.each_object" do
       @meta = @klass.singleton_class
     end
 
+    it "does not walk hidden metaclasses" do
+      klass = Class.new.singleton_class
+      ancestors = ObjectSpace.each_object(Class).select { |c| klass.is_a? c }
+      hidden = ancestors.find { |h| h.inspect.include? klass.inspect }
+      hidden.should == nil
+    end
+
     ruby_version_is ""..."2.3" do
       it "does not walk singleton classes" do
         @sclass.should be_kind_of(@meta)
