@@ -13,6 +13,14 @@ module NoMethodErrorSpecs
   class NoMethodErrorD; end
 end
 
+class NameErrorSpecs
+  class ReceiverClass
+    def call_undefined_class_variable
+      @@doesnt_exist
+    end
+  end
+end
+
 module ExceptionSpecs
   class Exceptional < Exception; end
 

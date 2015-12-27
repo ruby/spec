@@ -1,13 +1,10 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/common', __FILE__)
 
 ruby_version_is "2.3" do
   describe "NameError#receiver" do
     class ::ReceiverClass
       def call_undefined_class_variable; @@doesnt_exist end
-    end
-
-    after :all do
-      Object.send(:remove_const, :ReceiverClass)
     end
 
     it "returns the object that raised the exception" do
@@ -26,8 +23,8 @@ ruby_version_is "2.3" do
 
     it "returns a class when an undefined constant is called" do
       -> {
-        ReceiverClass::DoesntExist
-      }.should raise_error(NameError) {|e| e.receiver.should equal(ReceiverClass) }
+        NameErrorSpecs::ReceiverClass::DoesntExist
+      }.should raise_error(NameError) {|e| e.receiver.should equal(NameErrorSpecs::ReceiverClass) }
     end
 
     it "returns the Object class when an undefined class variable is called" do
@@ -38,8 +35,8 @@ ruby_version_is "2.3" do
 
     it "returns a class when an undefined class variable is called in a subclass' namespace" do
       -> {
-        ReceiverClass.new.call_undefined_class_variable
-      }.should raise_error(NameError) {|e| e.receiver.should equal(ReceiverClass) }
+        NameErrorSpecs::ReceiverClass.new.call_undefined_class_variable
+      }.should raise_error(NameError) {|e| e.receiver.should equal(NameErrorSpecs::ReceiverClass) }
     end
 
     it "returns the receiver when raised from #instance_variable_get" do
