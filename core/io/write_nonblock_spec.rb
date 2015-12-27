@@ -44,9 +44,24 @@ describe 'IO#write_nonblock' do
     @write.close
   end
 
-  it 'raises IO::EAGAINWaitWritable when the operation would block' do
-    proc { loop { @write.write_nonblock('a' * 10_000) } }
-      .should raise_error(IO::EAGAINWaitWritable)
+  it "raises EAGAIN or a subclass when the write would block" do
+    lambda {
+      loop { @write.write_nonblock('a' * 10_000) }
+    }.should raise_error(Errno::EAGAIN)
+  end
+
+  it "raises an exception extending IO::WaitWritable when the write would block" do
+    lambda {
+      loop { @write.write_nonblock('a' * 10_000) }
+    }.should raise_error(IO::WaitWritable)
+  end
+
+  ruby_version_is "2.1" do
+    it 'raises IO::EAGAINWaitWritable when the operation would block' do
+      lambda {
+        loop { @write.write_nonblock('a' * 10_000) }
+      }.should raise_error(IO::EAGAINWaitWritable)
+    end
   end
 end
 
