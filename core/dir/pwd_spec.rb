@@ -30,4 +30,4 @@ describe "Dir.pwd" do
       Dir.pwd.should == @name
     end
   end
-end
+end if Encoding.find('locale') == Encoding::UTF_8
