@@ -16,18 +16,22 @@ describe "Dir.pwd" do
 end
 
 describe "Dir.pwd" do
-  before :all do
-    @name = tmp("あ")
+  before :each do
+    @name = tmp("あ").force_encoding('binary')
+    @fs_encoding = Encoding.find('filesystem')
   end
 
-  after :all do
+  after :each do
     rm_r @name
   end
 
-  it "correctly displays dirs with unicode characters in them" do
+  it "correctly handles dirs with unicode characters in them" do
     Dir.mkdir @name
     Dir.chdir @name do
-      Dir.pwd.should == @name
+      if @fs_encoding == Encoding::UTF_8
+        Dir.pwd.encoding.should == Encoding::UTF_8
+      end
+      Dir.pwd.force_encoding('binary').should == @name
     end
   end
-end if Encoding.find('locale') == Encoding::UTF_8
+end
