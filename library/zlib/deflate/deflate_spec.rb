@@ -70,6 +70,7 @@ describe "Zlib::Deflate#deflate" do
     end
 
     it "deflates chunked data" do
+      @deflator.finish
       @chunks.map { |chunk| chunk.length }.should == [16384, 16384]
     end
 
@@ -96,6 +97,7 @@ describe "Zlib::Deflate#deflate" do
     end
 
     it "deflates only first chunk" do
+      @deflator.finish
       @chunks.map { |chunk| chunk.length }.should == [16384]
     end
 
