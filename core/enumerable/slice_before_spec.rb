@@ -71,6 +71,14 @@ describe "Enumerable#slice_before" do
         end
       end
     end
+
+    ruby_version_is "2.3" do
+      it "does not accept arguments" do
+        lambda {
+          @enum.slice_before(1) {}
+        }.should raise_error(ArgumentError)
+      end
+    end
   end
 
   it "raises an ArgumentError when given an incorrect number of arguments" do
