@@ -58,17 +58,6 @@ describe "Enumerable#slice_before" do
           end
           e.to_a
         end
-
-        quarantine! do # need to double-check with ruby-core. Might be wrong or too specific
-          it "duplicates the argument directly without calling dup" do
-            arg = EnumerableSpecs::Undupable.new
-            e = @enum.slice_before(arg) do |i, init|
-              init.initialize_dup_called.should be_true
-              false
-            end
-            e.to_a.should == [[7, 6, 5, 4, 3, 2, 1]]
-          end
-        end
       end
     end
 
