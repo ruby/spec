@@ -1,13 +1,22 @@
-# RubySpec
+# The Ruby Spec Suite
 
 [![Build Status](https://travis-ci.org/ruby/spec.svg)](https://travis-ci.org/ruby/spec)
 
-RubySpec is an executable specification for the Ruby programming language.  
-The specs describe the Ruby language syntax as well as the core and standard library classes.
+The Ruby Spec Suite is a test suite for the behavior of the Ruby programming language.
 
-The RubySpec files are written using a RSpec-like syntax.
-MSpec is the purpose-built framework for running RubySpec.
+It focuses on describing the behavior of Ruby and not just being a set of test cases.
+Having the behavior clearly explained for every example has several advantages:
+
+* It is easier to understand the intent of the author
+* It documents how recent versions of Ruby should behave
+* It helps Ruby implementations to agree on a common behavior
+
+The specs are written with syntax similar to RSpec 2.
+They are run with MSpec, the purpose-built framework for running RubySpec.
 For more information, see the [MSpec](http://github.com/ruby/mspec) project.
+
+The specs describe the [language syntax](language/), the [core library](core/) and the [standard library](library/).
+The language specs are grouped by keyword while the core and standard library specs are grouped by class and method.
 
 ### Running the specs
 
