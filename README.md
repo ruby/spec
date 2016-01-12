@@ -69,3 +69,11 @@ In similar fashion, the following commands run the respective specs:
 ### Contributing
 
 See [CONTRIBUTING.md](https://github.com/ruby/spec/blob/master/CONTRIBUTING.md).
+
+### History and RubySpec
+
+This project was originally born from [Rubinius](https://github.com/rubinius/rubinius) tests being converting to the spec style.
+These specs were later extracted to their own repository, RubySpec, with a specific vision and principles.
+At the end of 2015, Brian Shirai, the creator of RubySpec, decided to [end RubySpec](http://rubinius.com/2014/12/31/matz-s-ruby-developers-don-t-use-rubyspec/).
+A couple months later, the different repositories were merged and [the project was revived](http://eregon.github.io/rubyspec/2015/07/29/rubyspec-is-reborn.html).
+On 12 January 2016, the name was changed to "The Ruby Spec Suite" for clarity and to let the RubySpec ideology rest in peace.
