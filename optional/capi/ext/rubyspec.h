@@ -1,7 +1,7 @@
 #ifndef RUBYSPEC_H
 #define RUBYSPEC_H
 
-/* Define convenience macros similar to the RubySpec guards to assist
+/* Define convenience macros similar to the mspec guards to assist
  * with version incompatibilities.
  */
 
