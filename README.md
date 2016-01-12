@@ -4,8 +4,10 @@
 
 The Ruby Spec Suite is a test suite for the behavior of the Ruby programming language.
 
-It focuses on describing the behavior of Ruby and not just being a set of test cases.
-Having the behavior clearly explained for every example has several advantages:
+It is not a standardized specification like the ISO one, and does not aim to become one.
+Instead, it is a practical tool to describe and test the behavior of Ruby with code.
+
+Every example code has a textual description, which presents several advantages:
 
 * It is easier to understand the intent of the author
 * It documents how recent versions of Ruby should behave
