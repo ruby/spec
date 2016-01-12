@@ -12,7 +12,7 @@ Having the behavior clearly explained for every example has several advantages:
 * It helps Ruby implementations to agree on a common behavior
 
 The specs are written with syntax similar to RSpec 2.
-They are run with MSpec, the purpose-built framework for running RubySpec.
+They are run with MSpec, the purpose-built framework for running the Ruby Spec Suite.
 For more information, see the [MSpec](http://github.com/ruby/mspec) project.
 
 The specs describe the [language syntax](language/), the [core library](core/) and the [standard library](library/).
@@ -26,17 +26,17 @@ First, clone this repository:
 
 Then move to it:
 
-    $ cd rubyspec
+    $ cd spec
 
 Clone [MSpec](http://github.com/ruby/mspec):
 
     $ git clone https://github.com/ruby/mspec.git ../mspec
 
-And run the RubySpec suite:
+And run the spec suite:
 
     $ ../mspec/bin/mspec
 
-This will execute all the RubySpec specs using the executable named `ruby` on your current PATH.
+This will execute all the specs using the executable named `ruby` on your current PATH.
 
 ### Running Specs with a Specific Ruby Implementation
 
