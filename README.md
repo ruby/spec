@@ -1,6 +1,6 @@
 # RubySpec
 
-[![Build Status](https://travis-ci.org/ruby/rubyspec.svg)](https://travis-ci.org/ruby/rubyspec)
+[![Build Status](https://travis-ci.org/ruby/spec.svg)](https://travis-ci.org/ruby/spec)
 
 RubySpec is an executable specification for the Ruby programming language.  
 The specs describe the Ruby language syntax as well as the core and standard library classes.
@@ -13,7 +13,7 @@ For more information, see the [MSpec](http://github.com/ruby/mspec) project.
 
 First, clone this repository:
 
-    $ git clone https://github.com/ruby/rubyspec.git
+    $ git clone https://github.com/ruby/spec.git
 
 Then move to it:
 
@@ -59,4 +59,4 @@ In similar fashion, the following commands run the respective specs:
 
 ### Contributing
 
-See [CONTRIBUTING.md](https://github.com/ruby/rubyspec/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/ruby/spec/blob/master/CONTRIBUTING.md).
