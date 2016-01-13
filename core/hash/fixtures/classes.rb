@@ -25,7 +25,7 @@ module HashSpecs
 
   class ToHashHash < hash_class
     def to_hash
-      new_hash "to_hash" => "was", "called!" => "duh."
+      { "to_hash" => "was", "called!" => "duh." }
     end
   end
 
@@ -34,13 +34,13 @@ module HashSpecs
   end
 
   def self.empty_frozen_hash
-    @empty ||= new_hash
+    @empty ||= {}
     @empty.freeze
     @empty
   end
 
   def self.frozen_hash
-    @hash ||= new_hash(1 => 2, 3 => 4)
+    @hash ||= { 1 => 2, 3 => 4 }
     @hash.freeze
     @hash
   end

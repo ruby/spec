@@ -7,7 +7,7 @@ describe "Hash#initialize" do
   end
 
   it "can be used to reset default_proc" do
-    h = new_hash("foo" => 1, "bar" => 2)
+    h = { "foo" => 1, "bar" => 2 }
     h.default_proc.should == nil
     h.instance_eval { initialize { |h, k| k * 2 } }
     h.default_proc.should_not == nil
