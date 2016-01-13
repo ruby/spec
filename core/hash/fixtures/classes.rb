@@ -1,7 +1,7 @@
 module HashSpecs
-  class MyHash < hash_class; end
+  class MyHash < Hash; end
 
-  class MyInitializerHash < hash_class
+  class MyInitializerHash < Hash
 
     def initialize
       raise "Constructor called"
@@ -9,7 +9,7 @@ module HashSpecs
 
   end
 
-  class NewHash < hash_class
+  class NewHash < Hash
     def initialize(*args)
       args.each_with_index do |val, index|
         self[index] = val
@@ -17,13 +17,13 @@ module HashSpecs
     end
   end
 
-  class DefaultHash < hash_class
+  class DefaultHash < Hash
     def default(key)
       100
     end
   end
 
-  class ToHashHash < hash_class
+  class ToHashHash < Hash
     def to_hash
       { "to_hash" => "was", "called!" => "duh." }
     end

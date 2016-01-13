@@ -50,8 +50,8 @@ describe "Hash#merge" do
     HashSpecs::MyHash[1 => 2, 3 => 4].merge({ 1 => 2 }).should be_an_instance_of(HashSpecs::MyHash)
     HashSpecs::MyHash[].merge({ 1 => 2 }).should be_an_instance_of(HashSpecs::MyHash)
 
-    { 1 => 2, 3 => 4 }.merge(HashSpecs::MyHash[1 => 2]).class.should == hash_class
-    {}.merge(HashSpecs::MyHash[1 => 2]).class.should == hash_class
+    { 1 => 2, 3 => 4 }.merge(HashSpecs::MyHash[1 => 2]).class.should == Hash
+    {}.merge(HashSpecs::MyHash[1 => 2]).class.should == Hash
   end
 
   it "processes entries with same order as each()" do

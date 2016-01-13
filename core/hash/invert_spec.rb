@@ -21,7 +21,7 @@ describe "Hash#invert" do
   end
 
   it "does not return subclass instances for subclasses" do
-    HashSpecs::MyHash[1 => 2, 3 => 4].invert.class.should == hash_class
-    HashSpecs::MyHash[].invert.class.should == hash_class
+    HashSpecs::MyHash[1 => 2, 3 => 4].invert.class.should == Hash
+    HashSpecs::MyHash[].invert.class.should == Hash
   end
 end

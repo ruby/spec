@@ -2,7 +2,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Hash" do
   it "includes Enumerable" do
-    hash_class.include?(Enumerable).should == true
+    Hash.include?(Enumerable).should == true
   end
 end
 
