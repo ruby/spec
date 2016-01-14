@@ -5,8 +5,9 @@ describe "Float constant" do
     Float::DIG.should == 15
   end
 
-  it "EPSILON is" do
-    Float::EPSILON.should == eval("0.0000000000000002220446049250313080847263336181640625")
+  it "EPSILON is 2.220446049250313e-16" do
+    Float::EPSILON.should == 2.0 ** -52
+    Float::EPSILON.should == 2.220446049250313e-16
   end
 
   it "MANT_DIG is 53" do
