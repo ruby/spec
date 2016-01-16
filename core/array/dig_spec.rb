@@ -33,7 +33,7 @@ ruby_version_is '2.3' do
       }.should raise_error(TypeError)
     end
 
-    it "raises without any args" do
+    it "raises an ArgumentError if no arguments provided" do
       lambda {
         [10].dig()
       }.should raise_error(ArgumentError)

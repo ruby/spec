@@ -28,7 +28,7 @@ ruby_version_is '2.3' do
       h.dig(:foo, :zot, :xyz).should == nil
     end
 
-    it "raises without args" do
+    it "raises an ArgumentError if no arguments provided" do
       lambda { { the: 'borg' }.dig() }.should raise_error(ArgumentError)
     end
 
