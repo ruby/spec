@@ -25,6 +25,27 @@ describe "IO#read_nonblock" do
     end
   end
 
+  ruby_version_is "2.3" do
+    context "when exception option is set to false" do
+      context "when there is no data" do
+        it "returns :wait_readable" do
+          @read.read_nonblock(5, exception: false).should == :wait_readable
+        end
+      end
+
+      context "when the end is reached" do
+        it "returns nil" do
+          @write << "hello"
+          @write.close
+
+          @read.read_nonblock(5)
+
+          @read.read_nonblock(5, exception: false).should be_nil
+        end
+      end
+    end
+  end
+
   it "returns at most the number of bytes requested" do
     @write << "hello"
     @read.read_nonblock(4).should == "hell"
@@ -43,6 +64,13 @@ describe "IO#read_nonblock" do
     @write.write "1"
     @read.read_nonblock(0).should == ""
     @read.read_nonblock(1).should == "1"
+  end
+
+  it "reads into the passed buffer" do
+    buffer = ""
+    @write.write("1")
+    @read.read_nonblock(1, buffer)
+    buffer.should == "1"
   end
 
   it "raises IOError on closed stream" do
