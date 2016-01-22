@@ -215,4 +215,15 @@ describe "The super keyword" do
     Super::ZSuperWithRestAndOthers::B.new.m_modified(1, 2, 3, 4, 5).should == [3, 14, 5]
   end
 
+  describe 'when using keyword arguments' do
+    it 'passes any given keyword arguments to the parent' do
+      b = Super::KeywordArguments::B.new
+      b.foo(:number => 10).should == {:number => 10}
+    end
+
+    it 'does not pass any keyword arguments to the parent when none are given' do
+      b = Super::KeywordArguments::B.new
+      b.foo.should == {}
+    end
+  end
 end
