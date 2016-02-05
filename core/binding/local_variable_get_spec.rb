@@ -28,5 +28,20 @@ ruby_version_is "2.1" do
 
       bind.local_variable_get(:a).should == 42
     end
+
+    it 'gets a local variable defined in a parent scope' do
+      number = 10
+
+      lambda {
+        binding.local_variable_get(:number)
+      }.call.should == 10
+    end
+
+    it 'gets a local variable defined using eval()' do
+      bind = binding
+      bind.eval('number = 10')
+
+      bind.local_variable_get(:number).should == 10
+    end
   end
 end
