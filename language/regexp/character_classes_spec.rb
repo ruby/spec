@@ -149,7 +149,7 @@ describe "Regexp with character classes" do
     end
   end
 
-  ruby_version_is "2.2" do
+  ruby_version_is "2.2"..."2.4" do
     it "doesn't match Unicode Mongolian vowel seperator characters with [[:blank:]]" do
       "\u{180E}".match(/[[:blank:]]/).to_a.should == []
     end
