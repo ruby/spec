@@ -290,6 +290,11 @@ describe "Multiple assignment" do
       a[1], a[2] = 1
       a.should == [nil, 1, nil]
     end
+
+    it "assigns constants" do
+      A, B = 1
+      [A, B].should == [1, nil]
+    end
   end
 
   context "with a single splatted RHS value" do
@@ -523,6 +528,11 @@ describe "Multiple assignment" do
       [a, b, c, d].should == [1, [2], 3, 4]
       x.should == [1, 2, 3, 4]
     end
+
+    it "assigns constants" do
+      (*A) = *1
+      A.should == [1]
+    end
   end
 
   context "with a MRHS value" do
@@ -705,6 +715,17 @@ describe "Multiple assignment" do
     it "does not mutate the assigned Array" do
       x = ((a, *b, c, d) = 1, 2, 3, 4, 5)
       x.should == [1, 2, 3, 4, 5]
+    end
+
+    it "assigns RHS values to LHS constants" do
+      A, B = 1, 2
+      A.should == 1
+      B.should == 2
+    end
+
+    it "assigns all RHS values as an array to a single LHS constant" do
+      A = 1, 2, 3
+      A.should == [1, 2, 3]
     end
   end
 
