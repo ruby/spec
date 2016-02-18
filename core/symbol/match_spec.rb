@@ -28,7 +28,9 @@ end
 ruby_version_is "2.4" do
   describe "Symbol#match" do
     it "returns the MatchData" do
-      :abc.match(/b/)[0].should == 'b'
+      result = :abc.match(/b/)
+      result.should be_kind_of(MatchData)
+      result[0].should == 'b'
     end
 
     it "returns nil if there is no match" do
