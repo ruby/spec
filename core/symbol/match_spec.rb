@@ -19,6 +19,8 @@ describe "Symbol#=~" do
   it_behaves_like :symbol_match, :=~
 end
 
-describe "Symbol#match" do
-  it_behaves_like :symbol_match, :match
+ruby_version_is ""..."2.4" do
+  describe "Symbol#match" do
+    it_behaves_like :symbol_match, :match
+  end
 end
