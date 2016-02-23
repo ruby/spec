@@ -1,6 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Fixnum#[]" do
+  it "behaves like (n >> b) & 1" do
+    0b101[1].should == 0
+    0b101[2].should == 1
+  end
+
   it "returns 1 if the nth bit is set" do
     15[1].should == 1
   end
