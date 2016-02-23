@@ -292,8 +292,10 @@ describe "Multiple assignment" do
     end
 
     it "assigns constants" do
-      A, B = 1
-      [A, B].should == [1, nil]
+      module VariableSpecs
+        SINGLE_RHS_1, SINGLE_RHS_2 = 1
+        [SINGLE_RHS_1, SINGLE_RHS_2].should == [1, nil]
+      end
     end
   end
 
@@ -530,8 +532,10 @@ describe "Multiple assignment" do
     end
 
     it "assigns constants" do
-      (*A) = *1
-      A.should == [1]
+      module VariableSpecs
+        (*SINGLE_SPLATTED_RHS) = *1
+        SINGLE_SPLATTED_RHS.should == [1]
+      end
     end
   end
 
@@ -718,14 +722,18 @@ describe "Multiple assignment" do
     end
 
     it "assigns RHS values to LHS constants" do
-      A, B = 1, 2
-      A.should == 1
-      B.should == 2
+      module VariableSpecs
+        MRHS_VALUES_1, MRHS_VALUES_2 = 1, 2
+        MRHS_VALUES_1.should == 1
+        MRHS_VALUES_2.should == 2
+      end
     end
 
     it "assigns all RHS values as an array to a single LHS constant" do
-      A = 1, 2, 3
-      A.should == [1, 2, 3]
+      module VariableSpecs
+        MRHS_VALUES = 1, 2, 3
+        MRHS_VALUES.should == [1, 2, 3]
+      end
     end
   end
 
