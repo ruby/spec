@@ -221,13 +221,11 @@ describe :marshal_load, shared: true do
         y.tainted?.should be_true
         y.first.tainted?.should be_false
       end
-    end
 
-    it "does not taint Floats" do
-      x = [1.2]
-      y = Marshal.send(@method, Marshal.dump(x).taint)
-      y.tainted?.should be_true
-      ruby_version_is "2.2" do
+      it "does not taint Floats" do
+        x = [1.2]
+        y = Marshal.send(@method, Marshal.dump(x).taint)
+        y.tainted?.should be_true
         y.first.tainted?.should be_false
       end
     end
