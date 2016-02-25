@@ -227,7 +227,9 @@ describe :marshal_load, shared: true do
       x = [1.2]
       y = Marshal.send(@method, Marshal.dump(x).taint)
       y.tainted?.should be_true
-      y.first.tainted?.should be_false
+      ruby_version_is "2.2" do
+        y.first.tainted?.should be_false
+      end
     end
   end
 
