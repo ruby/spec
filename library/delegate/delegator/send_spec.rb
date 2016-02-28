@@ -37,5 +37,9 @@ describe "SimpleDelegator.new" do
       @delegate.send(:priv, 42).should == [:priv, 42]
       @delegate.__send__(:priv, 42).should == [:priv, 42]
     end
+
+    it "doesn't forward toplevel private method calls" do
+      lambda{ @delegate.sprintf("") }.should raise_error( NoMethodError )
+    end
   end
 end
