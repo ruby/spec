@@ -19,10 +19,23 @@ describe "SimpleDelegator.new" do
     lambda{ @delegate.priv }.should raise_error( NoMethodError )
   end
 
+  ruby_version_is "2.5" do
+    it "forward private method calls if called in function form" do
+      @delegate.instance_eval {priv(42)}.should == [:priv, 42]
+    end
+  end
+
   ruby_version_is ""..."2.5" do
     it "doesn't forward private method calls even via send or __send__" do
       lambda{ @delegate.send(:priv, 42)     }.should raise_error( NoMethodError )
       lambda{ @delegate.__send__(:priv, 42) }.should raise_error( NoMethodError )
+    end
+  end
+
+  ruby_version_is "2.5" do
+    it "forwards private method calls even via send or __send__" do
+      @delegate.send(:priv, 42).should == [:priv, 42]
+      @delegate.__send__(:priv, 42).should == [:priv, 42]
     end
   end
 end
