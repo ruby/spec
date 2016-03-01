@@ -14,6 +14,6 @@ describe "BasicObject#singleton_method_undefined" do
     class << BasicObjectSpecs::SingletonMethod
       undef_method :singleton_method_to_undefine
     end
-    ScratchPad.recorded.should == [:method_undefined, :singleton_method_to_undefine]
+    ScratchPad.recorded.should == [:singleton_method_undefined, :singleton_method_to_undefine]
   end
 end

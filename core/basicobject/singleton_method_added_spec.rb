@@ -14,13 +14,13 @@ describe "BasicObject#singleton_method_added" do
     obj = BasicObject.new
 
     def obj.singleton_method_added(name)
-      ScratchPad.record [:method_added, name]
+      ScratchPad.record [:singleton_method_added, name]
     end
 
     def obj.new_singleton_method
     end
 
-    ScratchPad.recorded.should == [:method_added, :new_singleton_method]
+    ScratchPad.recorded.should == [:singleton_method_added, :new_singleton_method]
   end
 
   it "is not called for instance methods" do
@@ -43,7 +43,7 @@ describe "BasicObject#singleton_method_added" do
       def self.new_method_on_self
       end
     end
-    ScratchPad.recorded.should == [:method_added, :new_method_on_self]
+    ScratchPad.recorded.should == [:singleton_method_added, :new_method_on_self]
   end
 
   it "is called when a method is defined in the singleton class" do
@@ -53,7 +53,7 @@ describe "BasicObject#singleton_method_added" do
         end
       end
     end
-    ScratchPad.recorded.should == [:method_added, :new_method_on_singleton]
+    ScratchPad.recorded.should == [:singleton_method_added, :new_method_on_singleton]
   end
 
   it "is called when a method is defined with alias_method in the singleton class" do
@@ -62,7 +62,7 @@ describe "BasicObject#singleton_method_added" do
         alias_method :new_method_on_singleton_with_alias_method, :singleton_method_to_alias
       end
     end
-    ScratchPad.recorded.should == [:method_added, :new_method_on_singleton_with_alias_method]
+    ScratchPad.recorded.should == [:singleton_method_added, :new_method_on_singleton_with_alias_method]
   end
 
   it "is called when a method is defined with syntax alias in the singleton class" do
@@ -71,7 +71,7 @@ describe "BasicObject#singleton_method_added" do
         alias new_method_on_singleton_with_syntax_alias singleton_method_to_alias
       end
     end
-    ScratchPad.recorded.should == [:method_added, :new_method_on_singleton_with_syntax_alias]
+    ScratchPad.recorded.should == [:singleton_method_added, :new_method_on_singleton_with_syntax_alias]
   end
 
   it "is called when define_method is used in the singleton class" do
@@ -81,6 +81,6 @@ describe "BasicObject#singleton_method_added" do
         end
       end
     end
-    ScratchPad.recorded.should == [:method_added, :new_method_with_define_method]
+    ScratchPad.recorded.should == [:singleton_method_added, :new_method_with_define_method]
   end
 end
