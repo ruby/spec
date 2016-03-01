@@ -115,6 +115,23 @@ describe "Module#define_method when name is :initialize" do
 end
 
 describe "Module#define_method" do
+  it "does not call method_added on a BasicObject singleton class" do
+    object = BasicObject
+    def_target = class << object; self; end
+
+    method_added_messages = []
+
+    def_target.class_exec do
+      define_method(:method_added) { |name| method_added_messages << "howdy #{name}" }
+    end
+
+    def_target.class_exec do
+      define_method(:method_added) { |*args| }
+    end
+
+    method_added_messages.should == []
+  end
+
   it "defines the given method as an instance method with the given name in self" do
     class DefineMethodSpecClass
       def test1
