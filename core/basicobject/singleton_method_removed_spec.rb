@@ -11,7 +11,7 @@ describe "BasicObject#singleton_method_removed" do
   end
 
   it "is called when a method is removed on self" do
-    class << KernelSpecs::SingletonMethod
+    class << BasicObjectSpecs::SingletonMethod
       remove_method :singleton_method_to_remove
     end
     ScratchPad.recorded.should == [:method_removed, :singleton_method_to_remove]

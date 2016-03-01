@@ -1,4 +1,4 @@
-module KernelSpecs
+module BasicObjectSpecs
   class SingletonMethod
     def self.singleton_method_added name
       ScratchPad.record [:method_added, name]
