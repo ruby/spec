@@ -10,7 +10,35 @@ describe "BasicObject#singleton_method_added" do
     BasicObject.should have_private_instance_method(:singleton_method_added)
   end
 
-  it "is called when a method is defined on self" do
+  it "is called when a singleton method is defined on an object" do
+    obj = BasicObject.new
+
+    def obj.singleton_method_added(name)
+      ScratchPad.record [:method_added, name]
+    end
+
+    def obj.new_singleton_method
+    end
+
+    ScratchPad.recorded.should == [:method_added, :new_singleton_method]
+  end
+
+  it "is not called for instance methods" do
+    ScratchPad.record []
+
+    Module.new do
+      def self.singleton_method_added(name)
+        ScratchPad << name
+      end
+
+      def new_instance_method
+      end
+    end
+
+    ScratchPad.recorded.should_not include(:new_instance_method)
+  end
+
+  it "is called when a singleton method is defined on a module" do
     class BasicObjectSpecs::SingletonMethod
       def self.new_method_on_self
       end
