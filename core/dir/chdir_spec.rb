@@ -20,7 +20,7 @@ describe "Dir.chdir" do
 
   it "defaults to $HOME with no arguments" do
     if ENV['HOME']
-      Dir.chdir      
+      Dir.chdir
       current_dir = Dir.pwd
 
       Dir.chdir(ENV['HOME'])
