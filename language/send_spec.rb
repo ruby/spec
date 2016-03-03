@@ -202,14 +202,6 @@ describe "Invoking a method" do
       lambda { no_such_method() }.should raise_error NoMethodError
       lambda { no_such_method(1,2,3) }.should raise_error NoMethodError
     end
-
-    it 'adds the receiver to the raised exception' do
-      begin
-        no_such_method
-      rescue NameError => error
-        error.receiver.should == self
-      end
-    end
   end
 
 end
