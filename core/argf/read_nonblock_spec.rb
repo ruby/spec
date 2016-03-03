@@ -15,34 +15,24 @@ describe 'ARGF.read_nonblock' do
     @chunk2 = File.read(@file2_name, 4)
   end
 
-  after do
-    ARGF.close unless ARGF.closed?
-  end
-
   it 'reads up to the given amount of bytes' do
-    argv [@file1_name] do
-      ARGF.read_nonblock(4).should == @chunk1
+    argf [@file1_name] do
+      @argf.read_nonblock(4).should == @chunk1
     end
   end
 
   describe 'when using multiple files' do
     it 'reads up to the given amount of bytes from the first file' do
-      argv [@file1_name, @file2_name] do
-        ARGF.read_nonblock(4).should == @chunk1
+      argf [@file1_name, @file2_name] do
+        @argf.read_nonblock(4).should == @chunk1
       end
     end
 
     it 'returns an empty String when reading after having read the first file in its entirety' do
-      argv [@file1_name, @file2_name] do
-        ARGF.read_nonblock(File.size(@file1_name)).should == @file1
-        ARGF.read_nonblock(4).should == ''
+      argf [@file1_name, @file2_name] do
+        @argf.read_nonblock(File.size(@file1_name)).should == @file1
+        @argf.read_nonblock(4).should == ''
       end
-    end
-  end
-
-  describe 'when ARGV is empty' do
-    it 'raises EOFError' do
-      proc { argv [] { ARGF.read_nonblock(4) } }.should raise_error(EOFError)
     end
   end
 
@@ -65,10 +55,12 @@ describe 'ARGF.read_nonblock' do
     stdin.should == 'IO::EAGAINWaitReadable'
   end
 
-  it 'returns :wait_readable when the :exception is set to false' do
-    input = 'p ARGF.read_nonblock(4, nil, exception: false)'
-    stdin = ruby_exe(input, escape: true)
+  ruby_version_is "2.3" do
+    it 'returns :wait_readable when the :exception is set to false' do
+      input = 'p ARGF.read_nonblock(4, nil, exception: false)'
+      stdin = ruby_exe(input, escape: true)
 
-    stdin.strip.should == ':wait_readable'
+      stdin.strip.should == ':wait_readable'
+    end
   end
 end
