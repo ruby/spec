@@ -1,7 +1,7 @@
 describe :hash_less_than, shared: true do
   before do
-    @h1 = new_hash(a: 1, b: 2)
-    @h2 = new_hash(a: 1, b: 2, c: 3)
+    @h1 = { a: 1, b: 2 }
+    @h2 = { a: 1, b: 2, c: 3 }
   end
 
   it "returns true if self is a subset of the other hash" do
@@ -15,7 +15,7 @@ describe :hash_less_than, shared: true do
   it "converts the right operand to a hash before comparing" do
     o = Object.new
     def o.to_hash
-      new_hash(a: 1, b: 2, c: 3)
+      { a: 1, b: 2, c: 3 }
     end
 
     @h1.send(@method, o).should be_true

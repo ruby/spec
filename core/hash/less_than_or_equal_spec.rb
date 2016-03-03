@@ -7,7 +7,7 @@ describe "Hash#<=" do
   it_behaves_like :hash_less_than, :<=
 
   it "returns true if both hashes are identical" do
-    h = new_hash(a: 1, b: 2)
+    h = { a: 1, b: 2 }
     (h <= h).should be_true
   end
 end
