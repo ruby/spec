@@ -23,6 +23,10 @@
    (RUBY_VERSION_MAJOR == (major) && RUBY_VERSION_MINOR < (minor)) || \
    (RUBY_VERSION_MAJOR == (major) && RUBY_VERSION_MINOR == (minor) && RUBY_VERSION_TEENY < (teeny)))
 
+#if RUBY_VERSION_MAJOR > 2 || (RUBY_VERSION_MAJOR == 2 && RUBY_VERSION_MINOR >= 3)
+#define RUBY_VERSION_IS_2_3
+#endif
+
 #if RUBY_VERSION_MAJOR > 2 || (RUBY_VERSION_MAJOR == 2 && RUBY_VERSION_MINOR >= 2)
 #define RUBY_VERSION_IS_2_2
 #endif
@@ -596,7 +600,9 @@
 #define HAVE_RB_TIME_INTERVAL              1
 #define HAVE_RB_TIME_TIMEVAL               1
 #define HAVE_RB_TIME_TIMESPEC              1
+#ifdef RUBY_VERSION_IS_2_3
 #define HAVE_RB_TIME_TIMESPEC_NEW          1
+#endif
 
 /* Util */
 #define HAVE_RB_SCAN_ARGS                  1

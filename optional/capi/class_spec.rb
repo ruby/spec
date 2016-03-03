@@ -241,8 +241,10 @@ describe "C-API Class function" do
       ClassUnderAutoload.name.should == "ClassUnderAutoload"
     end
 
-    it "raises a TypeError if class is defined and its superclass mismatches the given one" do
-      lambda { @s.rb_define_class_under(CApiClassSpecs, "Sub", nil) }.should raise_error(TypeError)
+    ruby_version_is "2.3" do
+      it "raises a TypeError if class is defined and its superclass mismatches the given one" do
+        lambda { @s.rb_define_class_under(CApiClassSpecs, "Sub", nil) }.should raise_error(TypeError)
+      end
     end
   end
 
@@ -274,8 +276,10 @@ describe "C-API Class function" do
       ClassIdUnderAutoload.name.should == "ClassIdUnderAutoload"
     end
 
-    it "raises a TypeError if class is defined and its superclass mismatches the given one" do
-      lambda { @s.rb_define_class_id_under(CApiClassSpecs, :Sub, nil) }.should raise_error(TypeError)
+    ruby_version_is "2.3" do
+      it "raises a TypeError if class is defined and its superclass mismatches the given one" do
+        lambda { @s.rb_define_class_id_under(CApiClassSpecs, :Sub, nil) }.should raise_error(TypeError)
+      end
     end
   end
 
