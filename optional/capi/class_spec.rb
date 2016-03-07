@@ -192,13 +192,8 @@ describe "C-API Class function" do
       CApiClassSpecs::Super.should be_ancestor_of(CApiClassSpecs::ClassUnder1)
     end
 
-    it "uses Object as the superclass if NULL is passed" do
-      @s.rb_define_class_under(CApiClassSpecs, "ClassUnder2", nil)
-      Object.should be_ancestor_of(CApiClassSpecs::ClassUnder2)
-    end
-
     it "sets the class name" do
-      cls = @s.rb_define_class_under(CApiClassSpecs, "ClassUnder3", nil)
+      cls = @s.rb_define_class_under(CApiClassSpecs, "ClassUnder3", Object)
       cls.name.should == "CApiClassSpecs::ClassUnder3"
     end
 
@@ -243,7 +238,7 @@ describe "C-API Class function" do
 
     ruby_version_is "2.3" do
       it "raises a TypeError if class is defined and its superclass mismatches the given one" do
-        lambda { @s.rb_define_class_under(CApiClassSpecs, "Sub", nil) }.should raise_error(TypeError)
+        lambda { @s.rb_define_class_under(CApiClassSpecs, "Sub", Object) }.should raise_error(TypeError)
       end
     end
   end
@@ -255,13 +250,8 @@ describe "C-API Class function" do
       CApiClassSpecs::Super.should be_ancestor_of(CApiClassSpecs::ClassIdUnder1)
     end
 
-    it "uses Object as the superclass if NULL is passed" do
-      @s.rb_define_class_id_under(CApiClassSpecs, :ClassIdUnder2, nil)
-      Object.should be_ancestor_of(CApiClassSpecs::ClassIdUnder2)
-    end
-
     it "sets the class name" do
-      cls = @s.rb_define_class_id_under(CApiClassSpecs, :ClassIdUnder3, nil)
+      cls = @s.rb_define_class_id_under(CApiClassSpecs, :ClassIdUnder3, Object)
       cls.name.should == "CApiClassSpecs::ClassIdUnder3"
     end
 
@@ -278,7 +268,7 @@ describe "C-API Class function" do
 
     ruby_version_is "2.3" do
       it "raises a TypeError if class is defined and its superclass mismatches the given one" do
-        lambda { @s.rb_define_class_id_under(CApiClassSpecs, :Sub, nil) }.should raise_error(TypeError)
+        lambda { @s.rb_define_class_id_under(CApiClassSpecs, :Sub, Object) }.should raise_error(TypeError)
       end
     end
   end
