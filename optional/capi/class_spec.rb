@@ -304,23 +304,6 @@ describe "C-API Class function" do
     end
   end
 
-  describe "rb_class_inherited" do
-    before :each do
-      @subclass = Class.new
-    end
-
-    it "calls superclass.inherited(subclass)" do
-      @s.rb_class_inherited(CApiClassSpecs::Inherited, @subclass).should equal(@subclass)
-    end
-
-    it "calls Object.inherited(subclass) if superclass is C NULL" do
-      Object.should_receive(:inherited).with(@subclass)
-
-      # Pass false to have the specs helper C function pass NULL
-      @s.rb_class_inherited(false, @subclass)
-    end
-  end
-
   describe "rb_class_new" do
     it "returns an new subclass of the superclass" do
       subclass = @s.rb_class_new(CApiClassSpecs::NewClass)

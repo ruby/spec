@@ -49,16 +49,6 @@ static VALUE class_spec_rb_path_to_class(VALUE self, VALUE path) {
 }
 #endif
 
-#ifdef HAVE_RB_CLASS_INHERITED
-static VALUE class_spec_rb_class_inherited(VALUE self, VALUE super, VALUE klass) {
-  if(super == Qfalse) {
-    return rb_class_inherited((VALUE)(0), klass);
-  } else {
-    return rb_class_inherited(super, klass);
-  }
-}
-#endif
-
 #ifdef HAVE_RB_CLASS_NEW
 static VALUE class_spec_rb_class_new(VALUE self, VALUE super) {
   return rb_class_new(super);
@@ -196,10 +186,6 @@ void Init_class_spec() {
 
 #ifdef HAVE_RB_PATH_TO_CLASS
   rb_define_method(cls, "rb_path_to_class", class_spec_rb_path_to_class, 1);
-#endif
-
-#ifdef HAVE_RB_CLASS_INHERITED
-  rb_define_method(cls, "rb_class_inherited", class_spec_rb_class_inherited, 2);
 #endif
 
 #ifdef HAVE_RB_CLASS_NEW
