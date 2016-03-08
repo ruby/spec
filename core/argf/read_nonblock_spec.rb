@@ -51,7 +51,7 @@ describe 'ARGF.read_nonblock' do
   ruby_version_is "2.1" do
     it 'raises IO::EAGAINWaitReadable when STDIN is empty' do
       input = 'ARGF.read_nonblock(4) rescue print $!.class'
-      stdin = ruby_exe(input, escape: true)
+      stdin = IO.popen([RUBY_EXE, '-e', input], "r+", &:read)
 
       stdin.should == 'IO::EAGAINWaitReadable'
     end
@@ -60,7 +60,7 @@ describe 'ARGF.read_nonblock' do
   ruby_version_is "2.3" do
     it 'returns :wait_readable when the :exception is set to false' do
       input = 'p ARGF.read_nonblock(4, nil, exception: false)'
-      stdin = ruby_exe(input, escape: true)
+      stdin = IO.popen([RUBY_EXE, '-e', input], "r+", &:read)
 
       stdin.strip.should == ':wait_readable'
     end
