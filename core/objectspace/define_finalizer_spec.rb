@@ -51,31 +51,39 @@ describe "ObjectSpace.define_finalizer" do
   with_feature :fork do
     it "calls finalizer on process termination" do
       rd, wr = IO.pipe
-      if Kernel.fork then
-        wr.close
-        rd.read.should == "finalized"
-        rd.close
-      else
+      pid = Process.fork do
         rd.close
         handler = ObjectSpaceFixtures.scoped(wr)
         obj = "Test"
         ObjectSpace.define_finalizer(obj, handler)
         exit 0
       end
+
+      wr.close
+      begin
+        rd.read.should == "finalized"
+      ensure
+        rd.close
+        Process.wait pid
+      end
     end
 
     it "calls finalizer at exit even if it is self-referencing" do
       rd, wr = IO.pipe
-      if Kernel.fork then
-        wr.close
-        rd.read.should == "finalized"
-        rd.close
-      else
+      pid = Process.fork do
         rd.close
         obj = "Test"
         handler = Proc.new { wr.write "finalized"; wr.close }
         ObjectSpace.define_finalizer(obj, handler)
         exit 0
+      end
+
+      wr.close
+      begin
+        rd.read.should == "finalized"
+      ensure
+        rd.close
+        Process.wait pid
       end
     end
   end
