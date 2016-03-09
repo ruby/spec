@@ -106,11 +106,13 @@ describe "C-API Thread function" do
     end
 
     it "handles throwing an exception in the thread" do
-      proc = lambda { |x| raise NotImplementedError }
+      proc = lambda { |x| raise "my error" }
       thr = @t.rb_thread_create(proc, nil)
       thr.should be_kind_of(Thread)
 
-      lambda { thr.join }.should raise_error(NotImplementedError)
+      lambda {
+        thr.join
+      }.should raise_error(RuntimeError, "my error")
     end
 
     it "sets the thread's group" do
