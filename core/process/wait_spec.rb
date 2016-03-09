@@ -1,6 +1,13 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Process.wait" do
+  before :all do
+    begin
+      Process.waitall
+    rescue NotImplementedError
+    end
+  end
+
   it "raises an Errno::ECHILD if there are no child processes" do
     lambda { Process.wait }.should raise_error(Errno::ECHILD)
   end
