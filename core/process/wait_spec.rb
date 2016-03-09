@@ -90,6 +90,7 @@ describe "Process.wait" do
       # wait for the child to setup its TERM handler
       write.close
       read.read(1)
+      read.close
 
       Process.kill("TERM", pid)
       Process.wait.should == pid
