@@ -114,8 +114,13 @@ describe "C-API Thread function" do
     end
 
     it "sets the thread's group" do
-      thread_group = @t.rb_thread_create(lambda {}, nil).group
-      thread_group.should be_an_instance_of(ThreadGroup)
+      thr = @t.rb_thread_create(lambda { |x| }, nil)
+      begin
+        thread_group = thr.group
+        thread_group.should be_an_instance_of(ThreadGroup)
+      ensure
+        thr.join
+      end
     end
   end
 

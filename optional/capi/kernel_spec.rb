@@ -397,10 +397,11 @@ describe "C-API Kernel function" do
     after :each do
       @r.close
       @w.close
+      Process.wait @pid
     end
 
     it "runs a C function on shutdown" do
-      fork {
+      @pid = fork {
         @s.rb_set_end_proc(@w)
       }
 
