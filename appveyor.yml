@@ -7,6 +7,7 @@ install:
   - git clone https://github.com/ruby/mspec.git ../mspec
 build: off
 test_script:
+  - SET CHECK_LEAKS=true
   - ../mspec/bin/mspec -fs
 branches:
   only:
