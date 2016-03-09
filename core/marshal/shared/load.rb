@@ -773,7 +773,12 @@ describe :marshal_load, shared: true do
 
       data = "\x04\bd:\x10DumpableDirI\"\x06.\x06:\x06ET"
 
-      Marshal.send(@method, data).path.should == '.'
+      dir = Marshal.send(@method, data)
+      begin
+        dir.path.should == '.'
+      ensure
+        dir.close
+      end
     end
 
     it "raises TypeError when the local class is missing _load_data" do
