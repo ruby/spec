@@ -274,7 +274,8 @@ describe "CApiTimeSpecs" do
 
       it "returns time object in localtime if offset given equals INT_MAX" do
         @s.rb_time_timespec_new(1447087832, 476451125, 0x7fffffff).should == Time.at(1447087832, 476451.125).localtime
-        @s.rb_time_timespec_new(1447087832, 476451125, 0x7fffffff).gmtoff.should == Time.now.gmtoff
+        t = Time.now
+        @s.rb_time_timespec_new(t.tv_sec, t.tv_nsec, 0x7fffffff).gmtoff.should == t.gmtoff
       end
 
       it "raises an ArgumentError if offset passed is not within range of -86400 and 86400 (exclusive)" do
