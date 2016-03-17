@@ -14,23 +14,6 @@ describe "OpenStruct.new when frozen" do
     @os.name.should == "John Smith"
   end
 
-  ruby_version_is ""..."2.1" do
-    it "is not writeable" do
-      lambda{ @os.age = 42 }.should raise_error( TypeError )
-    end
-
-    it "cannot create new fields" do
-      lambda{ @os.state = :new }.should raise_error( TypeError )
-    end
-
-    it "creates a frozen clone" do
-      f = @os.clone
-      f.age.should == 70
-      lambda{ f.age = 0 }.should raise_error( TypeError )
-      lambda{ f.state = :newer }.should raise_error( TypeError )
-    end
-  end
-
   it "is not writeable" do
     lambda{ @os.age = 42 }.should raise_error( RuntimeError )
   end

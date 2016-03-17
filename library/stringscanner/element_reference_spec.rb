@@ -42,22 +42,6 @@ describe "StringScanner#[]" do
     lambda { @s[0..2]}.should raise_error(TypeError)
   end
 
-  ruby_version_is ""..."2.1" do
-    it "raises a TypeError when a String is as argument" do
-      @s.scan(/(\w+) (\w+) (\d+) /)
-      lambda { @s["wday"]}.should raise_error(TypeError)
-      @s.scan(/(?<wday>\w+) (?<month>\w+) (?<day>\d+) /)
-      @s["wday"].should be_nil
-    end
-
-    it "raises a TypeError when a Symbol is as argument" do
-      @s.scan(/(\w+) (\w+) (\d+) /)
-      lambda { @s[:wday]}.should raise_error(TypeError)
-      @s.scan(/(?<wday>\w+) (?<month>\w+) (?<day>\d+) /)
-      @s[:wday].should be_nil
-    end
-  end
-
   it "raises a IndexError when there's no named capture" do
     @s.scan(/(\w+) (\w+) (\d+) /)
     lambda { @s["wday"]}.should raise_error(IndexError)

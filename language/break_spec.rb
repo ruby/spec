@@ -116,13 +116,6 @@ describe "The break statement in a lambda" do
     end
 
     not_compliant_on :rubinius do
-      ruby_version_is ""..."2.1" do
-        it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
-          lambda { @program.break_in_nested_scope_yield }.should raise_error(LocalJumpError)
-          ScratchPad.recorded.should == [:a, :d, :aaa, :b]
-        end
-      end
-
       it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
         @program.break_in_nested_scope_yield
         expected = [:a, :d, :aaa, :b, :bbb]
@@ -163,13 +156,6 @@ describe "The break statement in a lambda" do
     # the lambda as a block, which in this case means breaking to a scope that
     # has returned. This is a subtle and confusing semantic where a block pass
     # is removing the lambda-ness of a lambda.
-    ruby_version_is ""..."2.1" do
-      it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
-        lambda { @program.break_in_method_yield }.should raise_error(LocalJumpError)
-        ScratchPad.recorded.should == [:a, :la, :ld, :aaa, :lb]
-      end
-    end
-
     it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
       @program.break_in_method_yield
       ScratchPad.recorded.should == [:a, :la, :ld, :aaa, :lb, :bbb, :b]

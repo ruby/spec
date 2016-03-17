@@ -2,12 +2,6 @@ require File.expand_path('../../fixtures/marshal_data', __FILE__)
 require 'stringio'
 
 describe :marshal_load, shared: true do
-  ruby_version_is ""..."2.1" do
-    before :all do
-      @num_self_class = 0
-    end
-  end
-
   before :all do
     @num_self_class = 1
   end

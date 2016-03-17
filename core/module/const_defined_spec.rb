@@ -120,13 +120,6 @@ describe "Module#const_defined?" do
     lambda { ConstantSpecs.const_defined? "!Name" }.should raise_error(NameError)
   end
 
-  ruby_version_is ""..."2.1" do
-    it "raises a NameError for the nested name" do
-      lambda { ConstantSpecs.const_defined? "::Name" }.should raise_error(NameError)
-      lambda { ConstantSpecs.const_defined? "A::Name" }.should raise_error(NameError)
-    end
-  end
-
   it "returns true or false for the nested name" do
     ConstantSpecs.const_defined?("NotExist::Name").should == false
     ConstantSpecs.const_defined?("::Name").should == false

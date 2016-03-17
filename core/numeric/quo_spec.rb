@@ -46,17 +46,6 @@ describe "Numeric#quo" do
     lambda { 13.quo(:symbol) }.should raise_error(TypeError)
   end
 
-  ruby_version_is ""..."2.1" do
-    it "returns the result of calling self#/ with other" do
-      obj = NumericSpecs::Subclass.new
-      obj.should_receive(:coerce).twice.and_return([19,19])
-      obj.should_receive(:<=>).any_number_of_times.and_return(1)
-      obj.should_receive(:/).and_return(20)
-
-      obj.quo(19).should == 20
-    end
-  end
-
   it "returns the result of calling self#/ with other" do
     obj = NumericSpecs::Subclass.new
     obj.should_receive(:to_r).and_return(19.quo(20))
