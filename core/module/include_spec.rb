@@ -34,17 +34,17 @@ describe "Module#include" do
 
   it "adds all ancestor modules when a previously included module is included again" do
     ModuleSpecs::MultipleIncludes.ancestors.should include(ModuleSpecs::MA, ModuleSpecs::MB)
-    ModuleSpecs::MB.send(:include, ModuleSpecs::MC)
-    ModuleSpecs::MultipleIncludes.send(:include, ModuleSpecs::MB)
+    ModuleSpecs::MB.include(ModuleSpecs::MC)
+    ModuleSpecs::MultipleIncludes.include(ModuleSpecs::MB)
     ModuleSpecs::MultipleIncludes.ancestors.should include(ModuleSpecs::MA, ModuleSpecs::MB, ModuleSpecs::MC)
   end
 
   it "raises a TypeError when the argument is not a Module" do
-    lambda { ModuleSpecs::Basic.send(:include, Class.new) }.should raise_error(TypeError)
+    lambda { ModuleSpecs::Basic.include(Class.new) }.should raise_error(TypeError)
   end
 
   it "does not raise a TypeError when the argument is an instance of a subclass of Module" do
-    lambda { ModuleSpecs::SubclassSpec.send(:include, ModuleSpecs::Subclass.new) }.should_not raise_error(TypeError)
+    lambda { ModuleSpecs::SubclassSpec.include(ModuleSpecs::Subclass.new) }.should_not raise_error(TypeError)
   end
 
   it "imports constants to modules and classes" do
@@ -55,7 +55,7 @@ describe "Module#include" do
 
   it "shadows constants from outer scopes" do
     ModuleSpecs::ShadowingOuter::Foo.get.should == 123
-    ModuleSpecs::ShadowingOuter::Foo.send(:include, ModuleSpecs::ShadowingOuter::N)
+    ModuleSpecs::ShadowingOuter::Foo.include(ModuleSpecs::ShadowingOuter::N)
     ModuleSpecs::ShadowingOuter::Foo.get.should == 456
   end
 
