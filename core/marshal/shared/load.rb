@@ -8,10 +8,8 @@ describe :marshal_load, shared: true do
     end
   end
 
-  ruby_version_is "2.1" do
-    before :all do
-      @num_self_class = 1
-    end
+  before :all do
+    @num_self_class = 1
   end
 
   it "raises an ArgumentError when the dumped data is truncated" do

@@ -314,10 +314,8 @@ describe "C-API Encoding function" do
       end
     end
 
-    ruby_version_is "2.1" do
-      it "raises a RuntimeError if the second argument is a Symbol" do
-        lambda { @s.rb_enc_copy(:symbol, @obj) }.should raise_error(RuntimeError)
-      end
+    it "raises a RuntimeError if the second argument is a Symbol" do
+      lambda { @s.rb_enc_copy(:symbol, @obj) }.should raise_error(RuntimeError)
     end
 
     it "sets the encoding of a Regexp to that of the second argument" do
@@ -373,10 +371,8 @@ describe "C-API Encoding function" do
       end
     end
 
-    ruby_version_is "2.1" do
-      it "raises a RuntimeError if the argument is Symbol" do
-        lambda { @s.rb_enc_associate(:symbol, "US-ASCII") }.should raise_error(RuntimeError)
-      end
+    it "raises a RuntimeError if the argument is Symbol" do
+      lambda { @s.rb_enc_associate(:symbol, "US-ASCII") }.should raise_error(RuntimeError)
     end
 
     it "sets the encoding of a Regexp to the encoding" do
@@ -408,11 +404,9 @@ describe "C-API Encoding function" do
       end
     end
 
-    ruby_version_is "2.1" do
-      it "sets the encoding of a Symbol to the encoding" do
-        index = @s.rb_enc_find_index("UTF-8")
-        lambda { @s.rb_enc_associate_index(:symbol, index) }.should raise_error(RuntimeError)
-      end
+    it "sets the encoding of a Symbol to the encoding" do
+      index = @s.rb_enc_find_index("UTF-8")
+      lambda { @s.rb_enc_associate_index(:symbol, index) }.should raise_error(RuntimeError)
     end
   end
 

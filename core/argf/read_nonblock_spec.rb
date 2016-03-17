@@ -48,13 +48,11 @@ describe 'ARGF.read_nonblock' do
     stdin.should == @chunk1
   end
 
-  ruby_version_is "2.1" do
-    it 'raises IO::EAGAINWaitReadable when STDIN is empty' do
-      input = 'ARGF.read_nonblock(4) rescue print $!.class'
-      stdin = IO.popen([RUBY_EXE, '-e', input], "r+", &:read)
+  it 'raises IO::EAGAINWaitReadable when STDIN is empty' do
+    input = 'ARGF.read_nonblock(4) rescue print $!.class'
+    stdin = IO.popen([RUBY_EXE, '-e', input], "r+", &:read)
 
-      stdin.should == 'IO::EAGAINWaitReadable'
-    end
+    stdin.should == 'IO::EAGAINWaitReadable'
   end
 
   ruby_version_is "2.3" do

@@ -2,10 +2,8 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "Module#prepend" do
-  ruby_version_is "2.1" do
-    it "is a public method" do
-      Module.should have_public_instance_method(:prepend, false)
-    end
+  it "is a public method" do
+    Module.should have_public_instance_method(:prepend, false)
   end
 
   it "does not affect the superclass" do

@@ -131,29 +131,27 @@ describe "C-API Util function" do
       end
     end
 
-    ruby_version_is "2.1" do
-      # r43934
-      it "rejects non-keyword arguments" do
-        h = {1 => 2, 3 => 4}
-        lambda {
-          @o.rb_scan_args([h], "0:", 1, @acc)
-        }.should raise_error(ArgumentError)
-        ScratchPad.recorded.should == []
-      end
+    # r43934
+    it "rejects non-keyword arguments" do
+      h = {1 => 2, 3 => 4}
+      lambda {
+        @o.rb_scan_args([h], "0:", 1, @acc)
+      }.should raise_error(ArgumentError)
+      ScratchPad.recorded.should == []
+    end
 
-      it "rejects required and non-keyword arguments" do
-        h = {1 => 2, 3 => 4}
-        lambda {
-          @o.rb_scan_args([1, h], "1:", 2, @acc)
-        }.should raise_error(ArgumentError)
-        ScratchPad.recorded.should == []
-      end
+    it "rejects required and non-keyword arguments" do
+      h = {1 => 2, 3 => 4}
+      lambda {
+        @o.rb_scan_args([1, h], "1:", 2, @acc)
+      }.should raise_error(ArgumentError)
+      ScratchPad.recorded.should == []
+    end
 
-      it "considers the hash as a post argument when there is a splat" do
-        h = {1 => 2, 3 => 4}
-        @o.rb_scan_args([1, 2, 3, 4, 5, h], "11*1:&", 6, @acc, &@prc).should == 6
-        ScratchPad.recorded.should == [1, 2, [3, 4, 5], h, nil, @prc]
-      end
+    it "considers the hash as a post argument when there is a splat" do
+      h = {1 => 2, 3 => 4}
+      @o.rb_scan_args([1, 2, 3, 4, 5, h], "11*1:&", 6, @acc, &@prc).should == 6
+      ScratchPad.recorded.should == [1, 2, [3, 4, 5], h, nil, @prc]
     end
   end
 

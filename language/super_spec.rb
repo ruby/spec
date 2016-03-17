@@ -221,19 +221,17 @@ describe "The super keyword" do
       b.foo(:number => 10).should == {:number => 10}
     end
 
-    ruby_version_is "2.1" do
-      it "passes any given keyword arguments including optional and required ones to the parent" do
-        class Super::KeywordArguments::C
-          eval <<-RUBY
-          def foo(a:, b: 'b', **)
-            super
-          end
-          RUBY
+    it "passes any given keyword arguments including optional and required ones to the parent" do
+      class Super::KeywordArguments::C
+        eval <<-RUBY
+        def foo(a:, b: 'b', **)
+          super
         end
-        c = Super::KeywordArguments::C.new
-
-        c.foo(a: 'a', c: 'c').should == {a: 'a', b: 'b', c: 'c'}
+        RUBY
       end
+      c = Super::KeywordArguments::C.new
+
+      c.foo(a: 'a', c: 'c').should == {a: 'a', b: 'b', c: 'c'}
     end
 
     it 'does not pass any keyword arguments to the parent when none are given' do

@@ -80,11 +80,9 @@ describe "Defining a method" do
     end
   end
 
-  ruby_version_is "2.1" do
-    it "returns a symbol of the method name" do
-      method_name = def some_method; end
-      method_name.should == :some_method
-    end
+  it "returns a symbol of the method name" do
+    method_name = def some_method; end
+    method_name.should == :some_method
   end
 end
 

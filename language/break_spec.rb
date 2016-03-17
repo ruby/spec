@@ -123,12 +123,10 @@ describe "The break statement in a lambda" do
         end
       end
 
-      ruby_version_is "2.1" do
-        it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
-          @program.break_in_nested_scope_yield
-          expected = [:a, :d, :aaa, :b, :bbb]
-          ScratchPad.recorded.should == [:a, :d, :aaa, :b, :bbb, :e]
-        end
+      it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
+        @program.break_in_nested_scope_yield
+        expected = [:a, :d, :aaa, :b, :bbb]
+        ScratchPad.recorded.should == [:a, :d, :aaa, :b, :bbb, :e]
       end
     end
   end
@@ -172,11 +170,9 @@ describe "The break statement in a lambda" do
       end
     end
 
-    ruby_version_is "2.1" do
-      it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
-        @program.break_in_method_yield
-        ScratchPad.recorded.should == [:a, :la, :ld, :aaa, :lb, :bbb, :b]
-      end
+    it "raises a LocalJumpError when yielding to a lambda passed as a block argument" do
+      @program.break_in_method_yield
+      ScratchPad.recorded.should == [:a, :la, :ld, :aaa, :lb, :bbb, :b]
     end
   end
 end

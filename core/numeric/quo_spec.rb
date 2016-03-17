@@ -23,29 +23,27 @@ describe "Numeric#quo" do
     lambda { -bignum_value.quo(0) }.should raise_error(ZeroDivisionError)
   end
 
-  ruby_version_is "2.1" do
-    it "calls #to_r to convert the object to a Rational" do
-      obj = NumericSpecs::Subclass.new
-      obj.should_receive(:to_r).and_return(Rational(1))
+  it "calls #to_r to convert the object to a Rational" do
+    obj = NumericSpecs::Subclass.new
+    obj.should_receive(:to_r).and_return(Rational(1))
 
-      obj.quo(19).should == Rational(1, 19)
-    end
+    obj.quo(19).should == Rational(1, 19)
+  end
 
-    it "raises a TypeError of #to_r does not return a Rational" do
-      obj = NumericSpecs::Subclass.new
-      obj.should_receive(:to_r).and_return(1)
+  it "raises a TypeError of #to_r does not return a Rational" do
+    obj = NumericSpecs::Subclass.new
+    obj.should_receive(:to_r).and_return(1)
 
-      lambda { obj.quo(19) }.should raise_error(TypeError)
-    end
+    lambda { obj.quo(19) }.should raise_error(TypeError)
+  end
 
-    it "raises a TypeError when given a non-Integer" do
-      lambda {
-        (obj = mock('x')).should_not_receive(:to_int)
-        13.quo(obj)
-      }.should raise_error(TypeError)
-      lambda { 13.quo("10")    }.should raise_error(TypeError)
-      lambda { 13.quo(:symbol) }.should raise_error(TypeError)
-    end
+  it "raises a TypeError when given a non-Integer" do
+    lambda {
+      (obj = mock('x')).should_not_receive(:to_int)
+      13.quo(obj)
+    }.should raise_error(TypeError)
+    lambda { 13.quo("10")    }.should raise_error(TypeError)
+    lambda { 13.quo(:symbol) }.should raise_error(TypeError)
   end
 
   ruby_version_is ""..."2.1" do
@@ -59,12 +57,10 @@ describe "Numeric#quo" do
     end
   end
 
-  ruby_version_is "2.1" do
-    it "returns the result of calling self#/ with other" do
-      obj = NumericSpecs::Subclass.new
-      obj.should_receive(:to_r).and_return(19.quo(20))
+  it "returns the result of calling self#/ with other" do
+    obj = NumericSpecs::Subclass.new
+    obj.should_receive(:to_r).and_return(19.quo(20))
 
-      obj.quo(19).should == 1.quo(20)
-    end
+    obj.quo(19).should == 1.quo(20)
   end
 end

@@ -17,11 +17,9 @@ describe "OpenStruct#method_missing when called with a method name ending in '='
     end
   end
 
-  ruby_version_is "2.1" do
-    it "raises a TypeError when self is frozen" do
-      @os.freeze
-      lambda { @os.method_missing(:test=, "test") }.should raise_error(RuntimeError)
-    end
+  it "raises a TypeError when self is frozen" do
+    @os.freeze
+    lambda { @os.method_missing(:test=, "test") }.should raise_error(RuntimeError)
   end
 
   it "creates accessor methods" do

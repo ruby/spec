@@ -19,10 +19,8 @@ describe "IO#read_nonblock" do
     lambda { @read.read_nonblock(5) }.should raise_error(IO::WaitReadable)
   end
 
-  ruby_version_is "2.1" do
-    it "raises IO::EAGAINWaitReadable when there is no data" do
-      lambda { @read.read_nonblock(5) }.should raise_error(IO::EAGAINWaitReadable)
-    end
+  it "raises IO::EAGAINWaitReadable when there is no data" do
+    lambda { @read.read_nonblock(5) }.should raise_error(IO::EAGAINWaitReadable)
   end
 
   ruby_version_is "2.3" do

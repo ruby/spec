@@ -32,11 +32,9 @@ describe "Thread::SizedQueue#max=" do
     end
   end
 
-  ruby_version_is "2.1" do
-    it "raises a TypeError when given a non-numeric value" do
-      lambda { @sized_queue.max = "foo" }.should raise_error(TypeError)
-      lambda { @sized_queue.max = Object.new }.should raise_error(TypeError)
-    end
+  it "raises a TypeError when given a non-numeric value" do
+    lambda { @sized_queue.max = "foo" }.should raise_error(TypeError)
+    lambda { @sized_queue.max = Object.new }.should raise_error(TypeError)
   end
 
   it "raises an argument error when set to zero" do

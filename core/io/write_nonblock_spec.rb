@@ -56,12 +56,10 @@ describe 'IO#write_nonblock' do
     }.should raise_error(IO::WaitWritable)
   end
 
-  ruby_version_is "2.1" do
-    it 'raises IO::EAGAINWaitWritable when the operation would block' do
-      lambda {
-        loop { @write.write_nonblock('a' * 10_000) }
-      }.should raise_error(IO::EAGAINWaitWritable)
-    end
+  it 'raises IO::EAGAINWaitWritable when the operation would block' do
+    lambda {
+      loop { @write.write_nonblock('a' * 10_000) }
+    }.should raise_error(IO::EAGAINWaitWritable)
   end
 
   ruby_version_is "2.3" do

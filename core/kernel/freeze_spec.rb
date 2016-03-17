@@ -41,11 +41,9 @@ describe "Kernel#freeze" do
       end
     end
 
-    ruby_version_is "2.1" do
-      it "has no effect since it is already frozen" do
-        :sym.frozen?.should be_true
-        :sym.freeze
-      end
+    it "has no effect since it is already frozen" do
+      :sym.frozen?.should be_true
+      :sym.freeze
     end
   end
 

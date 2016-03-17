@@ -16,11 +16,9 @@ describe "Thread::SizedQueue#new" do
     end
   end
 
-  ruby_version_is "2.1" do
-    it "raises a TypeError when the given argument is not Numeric" do
-      lambda { SizedQueue.new("foo") }.should raise_error(TypeError)
-      lambda { SizedQueue.new(Object.new) }.should raise_error(TypeError)
-    end
+  it "raises a TypeError when the given argument is not Numeric" do
+    lambda { SizedQueue.new("foo") }.should raise_error(TypeError)
+    lambda { SizedQueue.new(Object.new) }.should raise_error(TypeError)
   end
 
   it "raises an argument error when no argument is given" do

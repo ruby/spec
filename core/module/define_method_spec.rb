@@ -73,21 +73,19 @@ end
 
 describe "Module#define_method when name is not a special private name" do
   describe "given an UnboundMethod" do
-    ruby_version_is "2.1" do
-      it "sets the visibility of the method to the current visibility" do
-        m = Module.new do
-          def foo
-          end
-          private :foo
+    it "sets the visibility of the method to the current visibility" do
+      m = Module.new do
+        def foo
         end
-        klass = Class.new do
-          define_method(:bar, m.instance_method(:foo))
-          private
-          define_method(:baz, m.instance_method(:foo))
-        end
-        klass.should have_public_instance_method(:bar)
-        klass.should have_private_instance_method(:baz)
+        private :foo
       end
+      klass = Class.new do
+        define_method(:bar, m.instance_method(:foo))
+        private
+        define_method(:baz, m.instance_method(:foo))
+      end
+      klass.should have_public_instance_method(:bar)
+      klass.should have_private_instance_method(:baz)
     end
   end
 end
@@ -286,12 +284,10 @@ describe "Module#define_method" do
     end
   end
 
-  ruby_version_is "2.1" do
-    it "returns its symbol" do
-      class DefineMethodSpecClass
-        method = define_method("return_test") { || true }
-        method.should == :return_test
-      end
+  it "returns its symbol" do
+    class DefineMethodSpecClass
+      method = define_method("return_test") { || true }
+      method.should == :return_test
     end
   end
 
