@@ -9,7 +9,7 @@ module DirSpecs
   def self.nonexistent
     name = File.join mock_dir, "nonexistent00"
     name = name.next while File.exist? name
-    File.join mock_dir, name
+    name
   end
 
   # TODO: make these relative to the mock_dir
