@@ -8,4 +8,4 @@ install:
 build: off
 test_script:
   - SET CHECK_LEAKS=true
-  - ../mspec/bin/mspec -fs
+  - ../mspec/bin/mspec -ff
