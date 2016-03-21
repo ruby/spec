@@ -236,6 +236,20 @@ module ModuleSpecs
       alias_method :alias_super_call, :super_call
       alias_method :super_call, :alias_super_call
     end
+
+    class RedefineAfterAlias
+      include Parent
+
+      def super_call(arg)
+        super(arg)
+      end
+
+      alias_method :alias_super_call, :super_call
+
+      def super_call(arg)
+        :wrong
+      end
+    end
   end
 
 
