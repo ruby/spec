@@ -1,13 +1,9 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require fixture __FILE__, 'spec_helper'
 require 'coverage'
 
-# Clear old results from the result hash
-# https://bugs.ruby-lang.org/issues/12220
-def filtered_result
-  Coverage.result.select { |_k, v| v.any? }
-end
-
 describe 'Coverage.result' do
+  extend Coverage::SpecHelper
   before :all do
     @class_file = fixture __FILE__, 'some_class.rb'
     @config_file = fixture __FILE__, 'start_coverage.rb'
