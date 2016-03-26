@@ -110,7 +110,12 @@ module DirSpecs
   end
 
   def self.delete_mock_dirs
-    rm_r mock_dir
+    begin
+      rm_r mock_dir
+    rescue Errno::ENOTEMPTY => e
+      puts Dir["#{mock_dir}/**/*"]
+      raise e
+    end
   end
 
   def self.mock_rmdir(*dirs)
