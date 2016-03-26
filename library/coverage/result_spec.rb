@@ -37,12 +37,8 @@ describe 'Coverage.result' do
     Coverage.start
     require @class_file.chomp('.rb')
     Coverage.result
-    begin
-      Coverage.result
-      fails 'Second call should give an exception'
-    rescue RuntimeError
-      $!.message.should == 'coverage measurement is not enabled'
-    end
+    -> { Coverage.result }
+      .should raise_error(RuntimeError, 'coverage measurement is not enabled')
   end
 
   it 'second run should give same result' do
@@ -78,14 +74,14 @@ describe 'Coverage.result' do
 
   it 'should list coverage for the required file starting coverage' do
     require @config_file.chomp('.rb')
-    result = Coverage.result.select{ |k,v| v.any? || k == @config_file }
+    result = Coverage.result.select { |k, v| v.any? || k == @config_file }
 
     result.should == { @config_file => [] }
   end
 
   it 'should list coverage for the loaded file starting coverage' do
     load @config_file
-    result = Coverage.result.select{ |k,v| v.any? || k == @config_file }
+    result = Coverage.result.select { |k, v| v.any? || k == @config_file }
 
     result.should == { @config_file => [] }
   end
