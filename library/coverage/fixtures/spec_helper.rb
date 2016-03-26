@@ -1,4 +1,4 @@
-module Coverage
+module CoverageSpecs
   module SpecHelper
     # Clear old results from the result hash
     # https://bugs.ruby-lang.org/issues/12220

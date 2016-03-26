@@ -4,7 +4,6 @@ require 'coverage'
 
 ruby_version_is '2.3' do
   describe 'Coverage.peek_result' do
-    extend Coverage::SpecHelper
     before :all do
       @class_file = fixture __FILE__, 'some_class.rb'
       @second_class_file = fixture __FILE__, 'second_class.rb'

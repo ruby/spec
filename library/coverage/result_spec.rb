@@ -3,7 +3,7 @@ require fixture __FILE__, 'spec_helper'
 require 'coverage'
 
 describe 'Coverage.result' do
-  extend Coverage::SpecHelper
+  extend CoverageSpecs::SpecHelper
   before :all do
     @class_file = fixture __FILE__, 'some_class.rb'
     @config_file = fixture __FILE__, 'start_coverage.rb'
