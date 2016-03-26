@@ -3,7 +3,6 @@ require fixture __FILE__, 'spec_helper'
 require 'coverage'
 
 describe 'Coverage.result' do
-  extend CoverageSpecs::SpecHelper
   before :all do
     @class_file = fixture __FILE__, 'some_class.rb'
     @config_file = fixture __FILE__, 'start_coverage.rb'
@@ -17,7 +16,7 @@ describe 'Coverage.result' do
   it 'gives the covered files as a hash with arrays of count or nil' do
     Coverage.start
     require @class_file.chomp('.rb')
-    result = filtered_result
+    result = CoverageSpecs.filtered_result
 
     result.should == {
       @class_file => [
@@ -28,7 +27,7 @@ describe 'Coverage.result' do
 
   it 'no requires/loads should give empty hash' do
     Coverage.start
-    result = filtered_result
+    result = CoverageSpecs.filtered_result
 
     result.should == {}
   end
@@ -44,11 +43,11 @@ describe 'Coverage.result' do
   it 'second run should give same result' do
     Coverage.start
     load @class_file
-    result1 = filtered_result
+    result1 = CoverageSpecs.filtered_result
 
     Coverage.start
     load @class_file
-    result2 = filtered_result
+    result2 = CoverageSpecs.filtered_result
 
     result2.should == result1
   end
@@ -59,7 +58,7 @@ describe 'Coverage.result' do
     Coverage.result
 
     Coverage.start
-    result = filtered_result
+    result = CoverageSpecs.filtered_result
 
     result.should == {}
   end
@@ -67,7 +66,7 @@ describe 'Coverage.result' do
   it 'second Coverage.start does nothing' do
     Coverage.start
     require @config_file.chomp('.rb')
-    result = filtered_result
+    result = CoverageSpecs.filtered_result
 
     result.should == { @config_file => [1, 1, 1] }
   end
