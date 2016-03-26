@@ -84,8 +84,6 @@ module DirSpecs
         special/}
 
         special/test{1}/file[1]
-
-        special/こんにちは.txt
       ]
 
       platform_is_not :windows do
@@ -94,6 +92,8 @@ module DirSpecs
           special/?
 
           special/|
+
+          special/こんにちは.txt
         ]
       end
     end
