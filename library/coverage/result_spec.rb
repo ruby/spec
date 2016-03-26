@@ -20,6 +20,36 @@ describe 'Coverage.result' do
     result.should == { @class_file => [nil, nil, 1, nil, nil, 1, nil, nil, 0, nil, nil, nil, nil, nil, nil, nil] }
   end
 
+  it 'no requires/loads should give empty hash' do
+    Coverage.start
+    result = Coverage.result
+
+    result.should == {}
+  end
+
+  it 'second call should give exception' do
+    Coverage.start
+    require @class_file.chomp('.rb')
+    Coverage.result
+    begin
+      Coverage.result
+      fails 'Second call should give an exception'
+    rescue RuntimeError
+      $!.message.should == 'coverage measurement is not enabled'
+    end
+  end
+
+  it 'second run should give empty hash' do
+    Coverage.start
+    require @class_file.chomp('.rb')
+    Coverage.result
+
+    Coverage.start
+    result = Coverage.result
+
+    result.should == {}
+  end
+
   it 'second Coverage.start does nothing' do
     Coverage.start
     require @config_file.chomp('.rb')
