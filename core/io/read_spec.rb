@@ -109,13 +109,15 @@ describe "IO.read from a pipe" do
     IO.read("|sh -c 'echo hello'").should == "hello\n"
   end
 
-  it "opens a pipe to a fork if the rest is -" do
-    str = IO.read("|-")
-    if str # parent
-      str.should == "hello from child\n"
-    else #child
-      puts "hello from child"
-      exit!
+  with_feature :fork do
+    it "opens a pipe to a fork if the rest is -" do
+      str = IO.read("|-")
+      if str # parent
+        str.should == "hello from child\n"
+      else #child
+        puts "hello from child"
+        exit!
+      end
     end
   end
 
