@@ -140,7 +140,7 @@ describe :rb_thread_blocking_region, shared: true do
     end
 
     # Wait until it's blocking...
-    sleep 1
+    Thread.pass while thr.status and thr.status != "sleep"
 
     # Wake it up, causing the unblock function to be run.
     thr.wakeup
