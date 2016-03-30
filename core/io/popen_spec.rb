@@ -83,7 +83,7 @@ describe "IO.popen" do
   it "coerces mode argument with #to_str" do
     mode = mock("mode")
     mode.should_receive(:to_str).and_return("r")
-    @io = IO.popen("true", mode)
+    @io = IO.popen("#{RUBY_EXE} -e 'exit 0'", mode)
   end
 end
 
