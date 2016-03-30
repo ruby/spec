@@ -106,7 +106,11 @@ end
 
 describe "IO.read from a pipe" do
   it "runs the rest as a subprocess and returns the standard output" do
-    IO.read("|sh -c 'echo hello'").should == "hello\n"
+    cmd = "|sh -c 'echo hello'"
+    platform_is :windows do
+      cmd = "|cmd.exe /C echo hello"
+    end
+    IO.read(cmd).should == "hello\n"
   end
 
   with_feature :fork do
@@ -122,13 +126,27 @@ describe "IO.read from a pipe" do
   end
 
   it "reads only the specified number of bytes requested" do
-    IO.read("|sh -c 'echo hello'", 1).should == "h"
+    cmd = "|sh -c 'echo hello'"
+    platform_is :windows do
+      cmd = "|cmd.exe /C echo hello"
+    end
+    IO.read(cmd, 1).should == "h"
   end
 
   it "raises Errno::ESPIPE if passed an offset" do
-    lambda {
-      IO.read("|sh -c 'echo hello'", 1, 1)
-    }.should raise_error(Errno::ESPIPE)
+    platform_is_not :windows do
+      cmd = "|sh -c 'echo hello'"
+      lambda {
+        IO.read(cmd, 1, 1)
+      }.should raise_error(Errno::ESPIPE)
+    end
+    # TODO: https://bugs.ruby-lang.org/issues/12230
+    platform_is :windows do
+      cmd = "|cmd.exe /C echo hello"
+      lambda {
+        IO.read(cmd, 1, 1)
+      }.should raise_error(Errno::EINVAL)
+    end
   end
 end
 
@@ -290,8 +308,8 @@ platform_is :windows do
     end
 
     after :each do
-      rm_r @fname
       @io.close if @io
+      rm_r @fname
     end
 
     it "normalizes line endings in text mode" do
