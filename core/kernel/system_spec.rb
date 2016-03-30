@@ -49,13 +49,20 @@ describe :kernel_system, shared: true do
   end
 
   it "does not expand shell variables when given multiples arguments" do
-    lambda { @object.system("echo", @shell_var) }.should output_to_fd("#{@shell_var}\n")
+    platform_is_not :windows do
+      lambda { @object.system("echo", @shell_var) }.should output_to_fd("#{@shell_var}\n")
+    end
+    platform_is :windows do
+      # TODO: but on Windows it does - fix this once there's clarity on https://bugs.ruby-lang.org/issues/12231
+      lambda { @object.system("echo", @shell_var) }.should output_to_fd("foo\n")
+    end
   end
 
   platform_is :windows do
-    it "runs commands starting with @ using shell (as comments)" do
-      # unsure of a better way to confirm this, since success means it does nothing
-      @object.system('@does_not_exist').should == true
+    it "runs commands starting with any number of @ using shell" do
+      @object.system('does_not_exist').should == nil
+      @object.system('@does_not_exist').should == false
+      @object.system("@@@#{RUBY_EXE} -e 'exit 0'").should == true
     end
   end
 end
