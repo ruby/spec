@@ -11,7 +11,7 @@ describe :kernel_system, shared: true do
   end
 
   it "returns false when the command exits with a non-zero exit status" do
-    @object.system("false").should == false
+    @object.system("#{RUBY_EXE} -e 'exit 1'").should == false
   end
 
   it "returns nil when command execution fails" do
