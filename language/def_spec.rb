@@ -209,7 +209,7 @@ describe "A singleton method definition" do
   end
 
   it "can be declared for a local variable" do
-    a = "hi"
+    a = Object.new
     def a.foo
       5
     end
@@ -217,7 +217,7 @@ describe "A singleton method definition" do
   end
 
   it "can be declared for an instance variable" do
-    @a = "hi"
+    @a = Object.new
     def @a.foo
       6
     end
@@ -233,7 +233,7 @@ describe "A singleton method definition" do
   end
 
   it "can be declared for a class variable" do
-    @@a = "hi"
+    @@a = Object.new
     def @@a.foo
       8
     end
@@ -344,7 +344,7 @@ end
 
 describe "A singleton method defined with extreme default arguments" do
   it "may use a method definition as a default" do
-    $__a = "hi"
+    $__a = Object.new
     def $__a.foo(x = (def $__a.foo; "hello"; end;1));x;end
 
     $__a.foo(42).should == 42
@@ -353,7 +353,7 @@ describe "A singleton method defined with extreme default arguments" do
   end
 
   it "may use an fcall as a default" do
-    a = 'hi'
+    a = Object.new
     def a.bar
       1
     end
@@ -365,14 +365,14 @@ describe "A singleton method defined with extreme default arguments" do
   end
 
   it "evaluates the defaults in the singleton scope" do
-    a = "hi"
+    a = Object.new
     def a.foo(x = ($foo_self = self; nil)); 5 ;end
     a.foo
     $foo_self.should == a
   end
 
   it "may use preceding arguments as defaults" do
-    a = 'hi'
+    a = Object.new
     def a.foo(obj, width=obj.length)
       width
     end
@@ -380,7 +380,7 @@ describe "A singleton method defined with extreme default arguments" do
   end
 
   it "may use a lambda as a default" do
-    a = 'hi'
+    a = Object.new
     def a.foo(output = 'a', prc = lambda {|n| output * n})
       prc.call(5)
     end
