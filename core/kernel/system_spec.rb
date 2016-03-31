@@ -48,12 +48,16 @@ describe :kernel_system, shared: true do
     lambda { @object.system("echo #{@shell_var}") }.should output_to_fd("foo\n")
   end
 
-  it "does not expand shell variables when given multiples arguments" do
-    platform_is_not :windows do
+  platform_is_not :windows do
+    it "does not expand shell variables when given multiples arguments" do
       lambda { @object.system("echo", @shell_var) }.should output_to_fd("#{@shell_var}\n")
     end
-    platform_is :windows do
-      # TODO: but on Windows it does - fix this once there's clarity on https://bugs.ruby-lang.org/issues/12231
+  end
+
+  platform_is :windows do
+    it "does expand shell variables when given multiples arguments" do
+      # TODO: It should not expand shell variables on Windows
+      # once https://bugs.ruby-lang.org/issues/12231 is fixed
       lambda { @object.system("echo", @shell_var) }.should output_to_fd("foo\n")
     end
   end

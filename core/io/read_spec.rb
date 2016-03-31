@@ -133,18 +133,20 @@ describe "IO.read from a pipe" do
     IO.read(cmd, 1).should == "h"
   end
 
-  it "raises Errno::ESPIPE if passed an offset" do
-    platform_is_not :windows do
-      cmd = "|sh -c 'echo hello'"
+  platform_is_not :windows do
+    it "raises Errno::ESPIPE if passed an offset" do
       lambda {
-        IO.read(cmd, 1, 1)
+        IO.read("|sh -c 'echo hello'", 1, 1)
       }.should raise_error(Errno::ESPIPE)
     end
-    # TODO: https://bugs.ruby-lang.org/issues/12230
-    platform_is :windows do
-      cmd = "|cmd.exe /C echo hello"
+  end
+
+  platform_is :windows do
+    # TODO: It should raise Errno::ESPIPE on Windows as well
+    # once https://bugs.ruby-lang.org/issues/12230 is fixed.
+    it "raises Errno::EINVAL if passed an offset" do
       lambda {
-        IO.read(cmd, 1, 1)
+        IO.read("|cmd.exe /C echo hello", 1, 1)
       }.should raise_error(Errno::EINVAL)
     end
   end
