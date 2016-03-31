@@ -311,10 +311,14 @@ describe "A method defined with extreme default arguments" do
   end
 
   it "may use an fcall as a default" do
-    def foo(x = caller())
+    def bar
+      1
+    end
+    def foo(x = bar())
       x
     end
-    foo.shift.should be_kind_of(String)
+    foo.should == 1
+    foo(2).should == 2
   end
 
   it "evaluates the defaults in the method's scope" do
@@ -349,11 +353,15 @@ describe "A singleton method defined with extreme default arguments" do
   end
 
   it "may use an fcall as a default" do
-    a = "hi"
-    def a.foo(x = caller())
+    a = 'hi'
+    def a.bar
+      1
+    end
+    def a.foo(x = bar())
       x
     end
-    a.foo.shift.should be_kind_of(String)
+    a.foo.should == 1
+    a.foo(2).should == 2
   end
 
   it "evaluates the defaults in the singleton scope" do
