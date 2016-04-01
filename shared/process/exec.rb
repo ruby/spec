@@ -151,25 +151,23 @@ describe :process_exec, shared: true do
   end
 
   describe "with a command array" do
-    platform_is_not :windows do
-      it "uses the first element as the command name and the second as the argv[0] value" do
+    it "uses the first element as the command name and the second as the argv[0] value" do
+      platform_is_not :windows do
         ruby_exe('exec(["/bin/sh", "argv_zero"], "-c", "echo $0")', escape: true).should == "argv_zero\n"
       end
-      it "coerces the argument using to_ary" do
-        ruby_exe('o = Object.new; def o.to_ary; ["/bin/sh", "argv_zero"]; end; exec(o, "-c", "echo $0")', escape: true).should == "argv_zero\n"
+      platform_is :windows do
+        ruby_exe('exec(["cmd.exe", "/C"], "/C", "echo", "argv_zero")', escape: true).should == "argv_zero\n"
       end
     end
 
-    # TODO: this works on ruby 2.0.0 but it's broken on 2.2.4p230
-    # Leaving it commented out until https://bugs.ruby-lang.org/issues/12234 is resolved
-    # platform_is :windows do
-    #   it "uses the first element as the command name and the second as the argv[0] value" do
-    #     ruby_exe('exec(["cmd.exe", "/C"], "echo", "argv_zero")', escape: true).should == "argv_zero\n"
-    #   end
-    #   it "coerces the argument using to_ary" do
-    #     ruby_exe('o = Object.new; def o.to_ary; ["cmd.exe", "/C"]; end; exec(o, "echo", "argv_zero")', escape: true).should == "argv_zero\n"
-    #   end
-    # end
+    it "coerces the argument using to_ary" do
+      platform_is_not :windows do
+        ruby_exe('o = Object.new; def o.to_ary; ["/bin/sh", "argv_zero"]; end; exec(o, "-c", "echo $0")', escape: true).should == "argv_zero\n"
+      end
+      platform_is :windows do
+        ruby_exe('o = Object.new; def o.to_ary; ["cmd.exe", "/C"]; end; exec(o, "/C", "echo", "argv_zero")', escape: true).should == "argv_zero\n"
+      end
+    end
 
     it "raises an ArgumentError if the Array does not have exactly two elements" do
       lambda { @object.exec([]) }.should raise_error(ArgumentError)
