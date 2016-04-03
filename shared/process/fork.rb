@@ -1,7 +1,7 @@
 describe :process_fork, shared: true do
   platform_is :windows do
-    it "returns true from #respond_to?" do
-      @object.respond_to?(:fork).should be_true
+    it "returns false from #respond_to?" do
+      @object.respond_to?(:fork).should be_false
     end
 
     it "raises a NotImplementedError when called" do
