@@ -3,32 +3,41 @@ require File.expand_path('../fixtures/common', __FILE__)
 
 describe "Process.kill" do
   before :each do
-    @sp = ProcessSpecs::Signalizer.new
-  end
-
-  after :each do
-    @sp.cleanup
+    @pid = Process.pid
   end
 
   it "raises an ArgumentError for unknown signals" do
-    lambda { Process.kill("FOO", @sp.pid) }.should raise_error(ArgumentError)
+    lambda { Process.kill("FOO", @pid) }.should raise_error(ArgumentError)
   end
 
   it "raises an ArgumentError if passed a lowercase signal name" do
-    lambda { Process.kill("term", @sp.pid) }.should raise_error(ArgumentError)
+    lambda { Process.kill("term", @pid) }.should raise_error(ArgumentError)
   end
 
   it "raises an ArgumentError if signal is not a Fixnum or String" do
     signal = mock("process kill signal")
     signal.should_not_receive(:to_int)
 
-    lambda { Process.kill(signal, @sp.pid) }.should raise_error(ArgumentError)
+    lambda { Process.kill(signal, @pid) }.should raise_error(ArgumentError)
   end
 
   it "raises Errno::ESRCH if the process does not exist" do
-    Process.kill("SIGTERM", @sp.pid)
-    @sp.result.should == "signaled"
-    lambda { Process.kill("SIGTERM", @sp.pid) }.should raise_error(Errno::ESRCH)
+    pid = Process.spawn(ruby_cmd("sleep 10"))
+    Process.kill("SIGKILL", pid)
+    Process.wait(pid)
+    lambda {
+      Process.kill("SIGKILL", pid)
+    }.should raise_error(Errno::ESRCH)
+  end
+end
+
+describe "Process.kill" do
+  before :each do
+    @sp = ProcessSpecs::Signalizer.new
+  end
+
+  after :each do
+    @sp.cleanup
   end
 
   it "accepts a Symbol as a signal name" do
