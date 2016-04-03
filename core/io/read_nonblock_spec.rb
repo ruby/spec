@@ -11,16 +11,28 @@ describe "IO#read_nonblock" do
     @write.close if @write && !@write.closed?
   end
 
-  it "raises EAGAIN or a subclass when there is no data" do
-    lambda { @read.read_nonblock(5) }.should raise_error(Errno::EAGAIN)
-  end
-
   it "raises an exception extending IO::WaitReadable when there is no data" do
     lambda { @read.read_nonblock(5) }.should raise_error(IO::WaitReadable)
   end
 
-  it "raises IO::EAGAINWaitReadable when there is no data" do
-    lambda { @read.read_nonblock(5) }.should raise_error(IO::EAGAINWaitReadable)
+  platform_is_not :windows do
+    it "raises EAGAIN or a subclass when there is no data" do
+      lambda { @read.read_nonblock(5) }.should raise_error(Errno::EAGAIN)
+    end
+
+    it "raises IO::EAGAINWaitReadable when there is no data" do
+      lambda { @read.read_nonblock(5) }.should raise_error(IO::EAGAINWaitReadable)
+    end
+  end
+
+  platform_is :windows do
+    it "raises EWOULDBLOCK or a subclass when there is no data" do
+      lambda { @read.read_nonblock(5) }.should raise_error(Errno::EWOULDBLOCK)
+    end
+
+    it "raises IO::EWOULDBLOCKWaitReadable when there is no data" do
+      lambda { @read.read_nonblock(5) }.should raise_error(IO::EWOULDBLOCKWaitReadable)
+    end
   end
 
   ruby_version_is "2.3" do
