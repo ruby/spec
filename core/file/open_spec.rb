@@ -196,20 +196,22 @@ describe "File.open" do
     lambda { File.open(@nonexistent, File::NONBLOCK) }.should raise_error(Errno::ENOENT)
   end
 
-  platform_is_not :openbsd do
+  platform_is_not :openbsd, :windows do
     it "opens a file that no exists when use File::TRUNC mode" do
       lambda { File.open(@nonexistent, File::TRUNC) }.should raise_error(Errno::ENOENT)
     end
   end
 
-  platform_is :openbsd do
-    it "opens a file that no exists when use File::TRUNC mode" do
+  platform_is :openbsd, :windows do
+    it "does not open a file that does no exists when using File::TRUNC mode" do
       lambda { File.open(@nonexistent, File::TRUNC) }.should raise_error(Errno::EINVAL)
     end
   end
 
-  it "opens a file that no exists when use File::NOCTTY mode" do
-    lambda { File.open(@nonexistent, File::NOCTTY) }.should raise_error(Errno::ENOENT)
+  platform_is_not :windows do
+    it "opens a file that no exists when use File::NOCTTY mode" do
+      lambda { File.open(@nonexistent, File::NOCTTY) }.should raise_error(Errno::ENOENT)
+    end
   end
 
   it "opens a file that no exists when use File::CREAT mode" do
@@ -398,8 +400,7 @@ describe "File.open" do
     }.should raise_error(IOError)
   end
 
-  platform_is_not :openbsd do
-
+  platform_is_not :openbsd, :windows do
     it "truncates the file when passed File::TRUNC mode" do
       File.open(@file, File::RDWR) { |f| f.puts "hello file" }
       @fh = File.open(@file, File::TRUNC)
@@ -411,7 +412,6 @@ describe "File.open" do
         f.gets.should == nil
       end
     end
-
   end
 
   it "opens a file when use File::WRONLY|File::TRUNC mode" do
@@ -425,7 +425,7 @@ describe "File.open" do
     end
   end
 
-  platform_is_not :openbsd do
+  platform_is_not :openbsd, :windows do
     it "can't write in a block when call open with File::TRUNC mode" do
       lambda {
         File.open(@file, File::TRUNC) do |f|
@@ -443,7 +443,7 @@ describe "File.open" do
     end
   end
 
-  platform_is :openbsd do
+  platform_is :openbsd, :windows do
     it "can't write in a block when call open with File::TRUNC mode" do
       lambda {
         File.open(@file, File::TRUNC) do |f|
@@ -624,6 +624,8 @@ describe "File.open when passed a file descriptor" do
   end
 end
 
-describe "File.open" do
-  it_behaves_like :open_directory, :open
+platform_is_not :windows do
+  describe "File.open" do
+    it_behaves_like :open_directory, :open
+  end
 end

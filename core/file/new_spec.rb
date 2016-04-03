@@ -148,5 +148,7 @@ describe "File.new" do
     lambda { File.new(@fh.fileno, @flags) }.should raise_error(Errno::EINVAL)
   end
 
-  it_behaves_like :open_directory, :new
+  platform_is_not :windows do
+    it_behaves_like :open_directory, :new
+  end
 end
