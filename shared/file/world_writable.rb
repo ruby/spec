@@ -26,21 +26,21 @@ describe :file_world_writable, shared: true do
       File.chmod(0700, @file)
       @object.world_writable?(@file).should be_nil
     end
-  end
 
-  # We don't specify what the Fixnum is because it's system dependent
-  it "returns a Fixnum if the file is chmod 777" do
-    File.chmod(0777, @file)
-    @object.world_writable?(@file).should be_an_instance_of(Fixnum)
-  end
+    # We don't specify what the Fixnum is because it's system dependent
+    it "returns a Fixnum if the file is chmod 777" do
+      File.chmod(0777, @file)
+      @object.world_writable?(@file).should be_an_instance_of(Fixnum)
+    end
 
-  it "returns a Fixnum if the file is a directory and chmod 777" do
-    dir = rand().to_s + '-ww'
-    Dir.mkdir(dir)
-    Dir.exist?(dir).should be_true
-    File.chmod(0777, dir)
-    @object.world_writable?(dir).should be_an_instance_of(Fixnum)
-    Dir.rmdir(dir)
+    it "returns a Fixnum if the file is a directory and chmod 777" do
+      dir = rand().to_s + '-ww'
+      Dir.mkdir(dir)
+      Dir.exist?(dir).should be_true
+      File.chmod(0777, dir)
+      @object.world_writable?(dir).should be_an_instance_of(Fixnum)
+      Dir.rmdir(dir)
+    end
   end
 
   it "coerces the argument with #to_path" do

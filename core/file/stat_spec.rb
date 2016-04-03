@@ -18,7 +18,7 @@ describe "File.stat" do
 
   it "returns information for a file that has been deleted but is still open" do
     File.open(@file) do |f|
-      rm_r @link, @file
+      rm_r @file
 
       st = f.stat
 
