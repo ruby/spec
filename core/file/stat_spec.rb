@@ -6,12 +6,10 @@ describe "File.stat" do
 end
 
 describe "File.stat" do
-
   before :each do
     @file = tmp('i_exist')
     @link = tmp('i_am_a_symlink')
     touch(@file) { |f| f.write "rubinius" }
-    File.symlink(@file, @link)
   end
 
   after :each do
@@ -28,7 +26,7 @@ describe "File.stat" do
       st.zero?.should == false
       st.size.should == 8
       st.size?.should == 8
-      st.blksize.should > 0
+      st.blksize.should >= 0
       st.atime.should be_kind_of(Time)
       st.ctime.should be_kind_of(Time)
       st.mtime.should be_kind_of(Time)
@@ -37,6 +35,7 @@ describe "File.stat" do
 
   platform_is_not :windows do
     it "returns a File::Stat object with file properties for a symlink" do
+      File.symlink(@file, @link)
       st = File.stat(@link)
 
       st.file?.should == true
