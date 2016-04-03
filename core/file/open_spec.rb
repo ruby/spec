@@ -605,7 +605,7 @@ describe "File.open when passed a file descriptor" do
   end
 
   it "opens a file" do
-    @file = File.open(@fd)
+    @file = File.open(@fd, "w")
     @file.should be_an_instance_of(File)
     @file.fileno.should equal(@fd)
     @file.write @content
@@ -614,7 +614,7 @@ describe "File.open when passed a file descriptor" do
   end
 
   it "opens a file when passed a block" do
-    @file = File.open(@fd) do |f|
+    @file = File.open(@fd, "w") do |f|
       f.should be_an_instance_of(File)
       f.fileno.should equal(@fd)
       f.write @content
