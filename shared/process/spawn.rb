@@ -7,6 +7,11 @@ describe :process_spawn, shared: true do
     rm_r @name
   end
 
+  newline = "\n"
+  platform_is :windows do
+    newline = "\r\n"
+  end
+
   it "executes the given command" do
     lambda { Process.wait @object.spawn("echo spawn") }.should output_to_fd("spawn\n")
   end
@@ -475,11 +480,6 @@ describe :process_spawn, shared: true do
       end
     end
 
-    newline = "\n"
-    platform_is :windows do
-      newline = "\r\n"
-    end
-
     it "does not close STDIN" do
       cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
       ruby_exe(cmd, args: "> #{@output}")
@@ -538,11 +538,6 @@ describe :process_spawn, shared: true do
           end
         end
       end
-    end
-
-    newline = "\n"
-    platform_is :windows do
-      newline = "\r\n"
     end
 
     it "does not close STDIN" do
