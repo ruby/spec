@@ -21,7 +21,7 @@ describe "Dir.mktmpdir when passed no arguments" do
   end
 end
 
-describe "Dir.mkdir when passed a block" do
+describe "Dir.mktmpdir when passed a block" do
   before :each do
     Dir.stub!(:tmpdir).and_return("/tmp")
     FileUtils.stub!(:remove_entry)
