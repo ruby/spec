@@ -54,35 +54,14 @@ describe 'IO#write_nonblock' do
   it "raises an exception extending IO::WaitWritable when the write would block" do
     lambda {
       loop { @write.write_nonblock('a' * 10_000) }
-    }.should raise_error(IO::WaitWritable)
-  end
-
-  platform_is_not :windows do
-    it "raises EAGAIN or a subclass when the write would block" do
-      lambda {
-        loop { @write.write_nonblock('a' * 10_000) }
-      }.should raise_error(Errno::EAGAIN)
-    end
-
-    it 'raises IO::EAGAINWaitWritable when the operation would block' do
-      lambda {
-        loop { @write.write_nonblock('a' * 10_000) }
-      }.should raise_error(IO::EAGAINWaitWritable)
-    end
-  end
-
-  platform_is :windows do
-    it "raises EWOULDBLOCK or a subclass when the write would block" do
-      lambda {
-        loop { @write.write_nonblock('a' * 10_000) }
-      }.should raise_error(Errno::EWOULDBLOCK)
-    end
-
-    it 'raises IO::EWOULDBLOCKWaitReadable when the operation would block' do
-      lambda {
-        loop { @write.write_nonblock('a' * 10_000) }
-      }.should raise_error(IO::EWOULDBLOCKWaitReadable)
-    end
+    }.should raise_error(IO::WaitWritable) { |e|
+      platform_is_not :windows do
+        e.should be_kind_of(Errno::EAGAIN)
+      end
+      platform_is :windows do
+        e.should be_kind_of(Errno::EWOULDBLOCK)
+      end
+    }
   end
 
   ruby_version_is "2.3" do
