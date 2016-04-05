@@ -131,17 +131,17 @@ describe "File.open" do
     # it should be possible to write to such a file via returned descriptior,
     # even though the file permissions are r-r-r.
 
-    File.open(@file, "w", 0444) { |f| f.puts("test") }
-    @file.should have_data("test\n")
+    File.open(@file, "w", 0444) { |f| f.write("test") }
+    @file.should have_data("test")
   end
 
   it "opens the existing file, does not change permissions even when they are specified" do
     File.chmod(0664, @file)
     orig_perms = File.stat(@file).mode.to_s(8)
-    File.open(@file, "w", 0444) { |f| f.puts("test") }
+    File.open(@file, "w", 0444) { |f| f.write("test") }
 
     File.stat(@file).mode.to_s(8).should == orig_perms
-    @file.should have_data("test\n")
+    @file.should have_data("test")
   end
 
   platform_is_not :windows do
