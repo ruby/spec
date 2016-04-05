@@ -9,12 +9,7 @@ describe "Resolv#getaddresses" do
   it "resolves localhost" do
     res = Resolv.new([Resolv::Hosts.new])
 
-    addresses = nil
-
-    lambda {
-      addresses = res.getaddresses("localhost")
-    }.should_not raise_error(Resolv::ResolvError)
-
+    addresses = res.getaddresses("localhost")
     addresses.should_not == nil
     addresses.size.should > 0
   end
