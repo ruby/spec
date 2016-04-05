@@ -183,7 +183,7 @@ describe "File.expand_path" do
 
     it "expands a path when the default external encoding is ASCII-8BIT" do
       Encoding.default_external = Encoding::ASCII_8BIT
-      File.expand_path("\xde\xad\xbe\xaf", "/").should == "/\xde\xad\xbe\xaf"
+      File.expand_path("\xde\xad\xbe\xaf", @rootdir).should == "#{@rootdir}\xde\xad\xbe\xaf"
     end
 
     it "expands a path with multi-byte characters" do
