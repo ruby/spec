@@ -141,6 +141,7 @@ describe "IO.read from a pipe" do
     end
   end
 
+quarantine! do # The process tried to write to a nonexistent pipe.
   platform_is :windows do
     # TODO: It should raise Errno::ESPIPE on Windows as well
     # once https://bugs.ruby-lang.org/issues/12230 is fixed.
@@ -150,6 +151,7 @@ describe "IO.read from a pipe" do
       }.should raise_error(Errno::EINVAL)
     end
   end
+end
 end
 
 describe "IO.read on an empty file" do
