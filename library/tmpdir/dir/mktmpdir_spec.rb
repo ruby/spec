@@ -23,7 +23,8 @@ end
 
 describe "Dir.mktmpdir when passed a block" do
   before :each do
-    Dir.stub!(:tmpdir).and_return("/tmp")
+    @real_tmp_root = tmp('')
+    Dir.stub!(:tmpdir).and_return(@real_tmp_root)
     FileUtils.stub!(:remove_entry)
     FileUtils.stub!(:remove_entry_secure)
   end
@@ -38,7 +39,7 @@ describe "Dir.mktmpdir when passed a block" do
     Dir.mktmpdir do |path|
       @tmpdir = path
       called = true
-      path.should =~ /^\/tmp\//
+      path.start_with?(@real_tmp_root).should be_true
     end
     called.should be_true
   end
