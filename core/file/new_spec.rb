@@ -145,7 +145,10 @@ describe "File.new" do
 
   it "can't alter mode or permissions when opening a file" do
     @fh = File.new(@file)
-    lambda { File.new(@fh.fileno, @flags) }.should raise_error(Errno::EINVAL)
+    lambda {
+      f = File.new(@fh.fileno, @flags)
+      f.autoclose = false
+    }.should raise_error(Errno::EINVAL)
   end
 
   platform_is_not :windows do
