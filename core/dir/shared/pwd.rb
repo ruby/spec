@@ -2,6 +2,9 @@ describe :dir_pwd, shared: true do
   with_feature :encoding do
     before :each do
       @fs_encoding = Encoding.find('filesystem')
+      if @fs_encoding == Encoding::US_ASCII
+        @fs_encoding = Encoding::ASCII_8BIT
+      end
     end
   end
 
