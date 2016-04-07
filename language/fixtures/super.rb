@@ -471,4 +471,26 @@ module Super
     class C < A
     end
   end
+
+  module FromBasicObject
+    def __send__(name, *args, &block)
+      super
+    end
+  end
+
+  module IntermediateBasic
+    include FromBasicObject
+  end
+
+  class IncludesFromBasic
+    include FromBasicObject
+
+    def foobar; 43; end
+  end
+
+  class IncludesIntermediate
+    include IntermediateBasic
+
+    def foobar; 42; end
+  end
 end

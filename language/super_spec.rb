@@ -53,6 +53,14 @@ describe "The super keyword" do
     Super::MS3::B.bar([]).should == ["B.bar","ModA#bar","B.foo","ModA#foo"]
   end
 
+  it "searches BasicObject from a module for methods defined there" do
+    Super::IncludesFromBasic.new.__send__(:foobar).should == 43
+  end
+
+  it "searches BasicObject through another module for methods defined there" do
+    Super::IncludesIntermediate.new.__send__(:foobar).should == 42
+  end
+
   it "calls the correct method when the method visibility is modified" do
     Super::MS4::A.new.example.should == 5
   end
