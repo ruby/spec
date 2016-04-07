@@ -499,7 +499,6 @@ module Super
       def foobar(array)
         array << :base
       end
-
     end
 
     class Foo < Base
