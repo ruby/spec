@@ -167,6 +167,22 @@ describe "The super keyword" do
     Super::AliasWithSuper::Trigger.foo.should == [:b, :a]
   end
 
+  it "find super from a singleton class" do
+    obj = Super::SingletonCase::Foo.new
+    def obj.foobar(array)
+      array << :singleton
+      super
+    end
+    obj.foobar([]).should == [:singleton, :foo, :base]
+  end
+
+  it "finds super on other objects if a singleton class aliased the method" do
+    orig_obj = Super::SingletonAliasCase::Foo.new
+    orig_obj.alias_on_singleton
+    orig_obj.new_foobar([]).should == [:foo, :base]
+    Super::SingletonAliasCase::Foo.new.foobar([]).should == [:foo, :base]
+  end
+
   it "passes along modified rest args when they weren't originally empty" do
     Super::RestArgsWithSuper::B.new.a("bar").should == ["bar", "foo"]
   end
