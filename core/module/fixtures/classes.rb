@@ -545,6 +545,33 @@ module ModuleSpecs
       ScratchPad.record base
     end
   end
+
+  module SingletonOnModuleCase
+    module Foo
+      class << Foo
+        def included(base)
+          base.included_called
+          super
+        end
+      end
+    end
+
+    class Bar
+      @included_called = false
+
+      class << self
+        def included_called
+          @included_called = true
+        end
+
+        def included_called?
+          @included_called
+        end
+      end
+
+      include Foo
+    end
+  end
 end
 
 class Object
