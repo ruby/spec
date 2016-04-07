@@ -42,7 +42,7 @@ This will execute all the specs using the executable named `ruby` on your curren
 
 ### Running Specs with a Specific Ruby Implementation
 
-Use the `-t` option to specify the Ruby implementation with which to run the specs.  
+Use the `-t` option to specify the Ruby implementation with which to run the specs.
 The argument may be a full path to the Ruby binary.
 
     $ ../mspec/bin/mspec -t /path/to/some/bin/ruby
@@ -57,7 +57,7 @@ You can also pass a directory, in which case all specs in that directories will 
 
     $ ../mspec/bin/mspec core/kernel
 
-Finally, you can also run them per group as defined in `default.mspec`.  
+Finally, you can also run them per group as defined in `default.mspec`.
 The following command will run all language specs:
 
     $ ../mspec/bin/mspec :language
