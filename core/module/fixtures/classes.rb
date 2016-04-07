@@ -568,8 +568,6 @@ module ModuleSpecs
           @included_called
         end
       end
-
-      include Foo
     end
   end
 end
