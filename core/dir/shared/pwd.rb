@@ -2,9 +2,6 @@ describe :dir_pwd, shared: true do
   with_feature :encoding do
     before :each do
       @fs_encoding = Encoding.find('filesystem')
-      if @fs_encoding == Encoding::US_ASCII
-        @fs_encoding = Encoding::ASCII_8BIT
-      end
     end
   end
 
@@ -24,7 +21,12 @@ describe :dir_pwd, shared: true do
 
   with_feature :encoding do
     it "returns a String with the filesystem encoding" do
-      Dir.send(@method).encoding.should equal(@fs_encoding)
+      enc = Dir.send(@method).encoding
+      if @fs_encoding == Encoding::US_ASCII
+        [Encoding::US_ASCII, Encoding::ASCII_8BIT].should include(enc)
+      else
+        enc.should equal(@fs_encoding)
+      end
     end
   end
 end
