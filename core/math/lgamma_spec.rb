@@ -9,6 +9,10 @@ describe "Math.lgamma" do
     Math.lgamma(-1).should == [infinity_value, 1]
   end
 
+  it "returns [Infinity, -1] when passed -0.0" do
+    Math.lgamma(-0.0).should  == [infinity_value, -1]
+  end
+
   it "returns [log(sqrt(PI)), 1] when passed 0.5" do
     lg1 = Math.lgamma(0.5)
     lg1[0].should be_close(Math.log(Math.sqrt(Math::PI)), TOLERANCE)
