@@ -4,6 +4,8 @@ describe "File::Stat#<=>" do
   before :each do
     @name1 = tmp("i_exist")
     @name2 = tmp("i_exist_too")
+    touch @name1
+    touch @name2
     @file1 = File.new @name1, "w"
     @file2 = File.new @name2, "w"
   end
