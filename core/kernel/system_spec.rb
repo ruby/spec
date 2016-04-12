@@ -56,8 +56,7 @@ describe :kernel_system, shared: true do
 
   platform_is :windows do
     it "does expand shell variables when given multiples arguments" do
-      # TODO: It should not expand shell variables on Windows
-      # once https://bugs.ruby-lang.org/issues/12231 is fixed
+      # See https://bugs.ruby-lang.org/issues/12231
       lambda { @object.system("echo", @shell_var) }.should output_to_fd("foo\n")
     end
   end
