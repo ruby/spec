@@ -63,7 +63,7 @@ describe :kernel_system, shared: true do
 
   platform_is :windows do
     it "runs commands starting with any number of @ using shell" do
-      @object.system('does_not_exist', err: File::NULL).should == nil
+      `#{RUBY_EXE} -e "p system 'does_not_exist'" 2>NUL`.chomp.should == "nil"
       @object.system('@does_not_exist').should == false
       @object.system("@@@#{RUBY_EXE} -e 'exit 0'").should == true
     end
