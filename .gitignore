@@ -1,3 +1,5 @@
 Gemfile.lock
 rubyspec_temp
 spec/rubyspec/optional/capi/ext
+.ruby-version
+.ruby-gemset
