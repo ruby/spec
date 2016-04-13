@@ -1,17 +1,14 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require 'socket'
+require 'resolv'
 
 describe "Resolv#getaddresses" do
-  before :all do
-    require 'resolv'
+  platform_is_not :windows do
+    it "resolves localhost" do
+      res = Resolv.new([Resolv::Hosts.new])
+
+      addresses = res.getaddresses("localhost")
+      addresses.should_not == nil
+      addresses.size.should > 0
+    end
   end
-
-  it "resolves localhost" do
-    res = Resolv.new([Resolv::Hosts.new])
-
-    addresses = res.getaddresses("localhost")
-    addresses.should_not == nil
-    addresses.size.should > 0
-  end
-
 end
