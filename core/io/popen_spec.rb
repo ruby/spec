@@ -72,7 +72,12 @@ describe "IO.popen" do
     @io = IO.popen("#{RUBY_EXE} -e sleep")
     Process.kill "KILL", @io.pid
     @io.close
-    $?.exitstatus.should be_nil
+    platform_is_not :windows do
+      $?.signaled?.should == true
+    end
+    platform_is :windows do
+      $?.exited?.should == true
+    end
   end
 
   it "returns an instance of a subclass when called on a subclass" do
