@@ -10,7 +10,7 @@ describe :file_sticky, shared: true do
 
   platform_is_not :windows, :darwin, :freebsd, :netbsd, :openbsd, :solaris do
     it "returns true if the named file has the sticky bit, otherwise false" do
-      Dir.mkdir @dir, 1755
+      Dir.mkdir @dir, 01755
 
       @object.send(@method, @dir).should == true
       @object.send(@method, '/').should == false
