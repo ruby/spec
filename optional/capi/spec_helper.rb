@@ -50,14 +50,12 @@ def compile_extension(name)
 
   ruby_header     = File.join(hdrdir, "ruby.h")
   rubyspec_header = File.join(path, "rubyspec.h")
-  mri_header      = File.join(path, "mri.h")
 
   return lib if File.exist?(signature) and
                 IO.read(signature).chomp == CAPI_RUBY_SIGNATURE and
                 File.exist?(lib) and File.mtime(lib) > File.mtime(source) and
                 File.mtime(lib) > File.mtime(ruby_header) and
                 File.mtime(lib) > File.mtime(rubyspec_header) and
-                File.mtime(lib) > File.mtime(mri_header)
 
   # avoid problems where compilation failed but previous shlib exists
   File.delete lib if File.exist? lib
