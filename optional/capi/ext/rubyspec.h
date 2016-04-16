@@ -532,8 +532,6 @@
 #define HAVE_RB_STR_NEW4                   1
 #define HAVE_RB_STR_NEW5                   1
 #define HAVE_RB_STR_PLUS                   1
-#define HAVE_RB_STR_PTR                    1
-#define HAVE_RB_STR_PTR_READONLY           1
 #define HAVE_RB_STR_RESIZE                 1
 #define HAVE_RB_STR_SET_LEN                1
 #define HAVE_RB_STR_SPLIT                  1
