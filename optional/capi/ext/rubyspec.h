@@ -72,8 +72,6 @@
 #define HAVE_RB_ARY_TO_S                   1
 #define HAVE_RB_ARY_UNSHIFT                1
 #define HAVE_RB_ASSOC_NEW                  1
-#define HAVE_RB_INSPECTING_P               1
-#define HAVE_RB_PROTECT_INSPECT            1
 
 #define HAVE_RB_EACH                       1
 #define HAVE_RB_ITERATE                    1
