@@ -56,6 +56,7 @@ def compile_extension(name)
                 File.exist?(lib) and File.mtime(lib) > File.mtime(source) and
                 File.mtime(lib) > File.mtime(ruby_header) and
                 File.mtime(lib) > File.mtime(rubyspec_header) and
+                true            # sentinel
 
   # avoid problems where compilation failed but previous shlib exists
   File.delete lib if File.exist? lib
