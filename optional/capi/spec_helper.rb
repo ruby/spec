@@ -4,7 +4,8 @@ $extmk = false
 require 'rbconfig'
 require 'fileutils'
 
-objdir = File.expand_path("spec/rubyspec/optional/capi/ext")
+rootdir = File.expand_path('../../..', __FILE__)
+objdir = "#{rootdir}/ext/#{RUBY_NAME}/#{RUBY_VERSION}"
 
 define_method(:object_path) {objdir}
 FileUtils.makedirs(objdir)
