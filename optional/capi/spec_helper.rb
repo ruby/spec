@@ -5,10 +5,16 @@ require 'rbconfig'
 require 'fileutils'
 
 rootdir = File.expand_path('../../..', __FILE__)
-objdir = "#{rootdir}/ext/#{RUBY_NAME}/#{RUBY_VERSION}"
+OBJDIR = "#{rootdir}/ext/#{RUBY_NAME}/#{RUBY_VERSION}"
+FileUtils.makedirs(OBJDIR)
 
-define_method(:object_path) {objdir}
-FileUtils.makedirs(objdir)
+def extension_path
+  File.expand_path("../ext", __FILE__)
+end
+
+def object_path
+  OBJDIR
+end
 
 def compile_extension(name)
   preloadenv = RbConfig::CONFIG["PRELOADENV"] || "LD_PRELOAD"
@@ -92,10 +98,6 @@ def compile_extension(name)
   lib
 ensure
   ENV[preloadenv] = preload if preloadenv
-end
-
-def extension_path
-  File.expand_path("../ext", __FILE__)
 end
 
 def load_extension(name)
