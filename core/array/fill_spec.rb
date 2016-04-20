@@ -205,10 +205,12 @@ describe "Array#fill with (filler, index, length)" do
     lambda { [].fill('a', obj) }.should raise_error(TypeError)
   end
 
-  it "raises an ArgumentError or RangeError for too-large sizes" do
-    arr = [1, 2, 3]
-    lambda { arr.fill(10, 1, fixnum_max) }.should raise_error(ArgumentError)
-    lambda { arr.fill(10, 1, bignum_value) }.should raise_error(RangeError)
+  not_supported_on :opal do
+    it "raises an ArgumentError or RangeError for too-large sizes" do
+      arr = [1, 2, 3]
+      lambda { arr.fill(10, 1, fixnum_max) }.should raise_error(ArgumentError)
+      lambda { arr.fill(10, 1, bignum_value) }.should raise_error(RangeError)
+    end
   end
 end
 
