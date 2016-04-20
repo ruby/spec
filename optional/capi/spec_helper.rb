@@ -10,8 +10,6 @@ objdir = "#{rootdir}/ext/#{RUBY_NAME}/#{RUBY_VERSION}"
 define_method(:object_path) {objdir}
 FileUtils.makedirs(objdir)
 
-CAPI_RUBY_SIGNATURE = "#{RUBY_NAME}-#{RUBY_VERSION}"
-
 def compile_extension(name)
   preloadenv = RbConfig::CONFIG["PRELOADENV"] || "LD_PRELOAD"
   preload, ENV[preloadenv] = ENV[preloadenv], nil if preloadenv
@@ -47,14 +45,11 @@ def compile_extension(name)
   source    = File.join(path, "#{ext}.c")
   obj       = File.join(objdir, "#{ext}.#{RbConfig::CONFIG['OBJEXT']}")
   lib       = File.join(objdir, "#{ext}.#{RbConfig::CONFIG['DLEXT']}")
-  signature = File.join(objdir, "#{ext}.sig")
 
   ruby_header     = File.join(hdrdir, "ruby.h")
   rubyspec_header = File.join(path, "rubyspec.h")
 
-  return lib if File.exist?(signature) and
-                IO.read(signature).chomp == CAPI_RUBY_SIGNATURE and
-                File.exist?(lib) and File.mtime(lib) > File.mtime(source) and
+  return lib if File.exist?(lib) and File.mtime(lib) > File.mtime(source) and
                 File.mtime(lib) > File.mtime(ruby_header) and
                 File.mtime(lib) > File.mtime(rubyspec_header) and
                 true            # sentinel
@@ -93,8 +88,6 @@ def compile_extension(name)
     puts "ERROR:\n#{link_cmd}\n#{output}"
     raise "Unable to link \"#{source}\""
   end
-
-  File.open(signature, "w") { |f| f.puts CAPI_RUBY_SIGNATURE }
 
   lib
 ensure
