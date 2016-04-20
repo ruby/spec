@@ -1,5 +1,5 @@
-Gemfile.lock
-rubyspec_temp
+/Gemfile.lock
+/rubyspec_temp
 /ext
-.ruby-version
-.ruby-gemset
+/.ruby-version
+/.ruby-gemset
