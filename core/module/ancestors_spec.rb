@@ -38,5 +38,33 @@ describe "Module#ancestors" do
                                       BasicObject)
 
     end
+
+    describe 'for a standalone module' do
+      it 'does not include Class' do
+        s_mod = ModuleSpecs.singleton_class
+        s_mod.ancestors.should_not include(Class)
+      end
+
+      it 'does not include other singleton classes' do
+        s_standalone_mod = ModuleSpecs.singleton_class
+        s_module = Module.singleton_class
+        s_object = Object.singleton_class
+        s_basic_object = BasicObject.singleton_class
+
+        s_standalone_mod.ancestors.should_not include(s_module, s_object, s_basic_object)
+      end
+
+      it 'includes its own singleton class' do
+        s_mod = ModuleSpecs.singleton_class
+
+        s_mod.ancestors.should include(s_mod)
+      end
+
+      it 'includes standard chain' do
+        s_mod = ModuleSpecs.singleton_class
+
+        s_mod.ancestors.should include(Module, Object, Kernel, BasicObject)
+      end
+    end
   end
 end
