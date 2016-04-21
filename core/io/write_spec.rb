@@ -152,7 +152,7 @@ platform_is :windows do
       @io = new_io(@fname, "w")
       @io.write "a\r\nb\r\nc"
       @io.close
-      @fname.should have_data("a\nb\nc")
+      @fname.should have_data("a\nb\nc", "r")
     end
 
     it "does not normalize line endings in binary mode" do
