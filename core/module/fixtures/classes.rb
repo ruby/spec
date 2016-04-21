@@ -570,6 +570,12 @@ module ModuleSpecs
       end
     end
   end
+
+  module CaseCompareOnSingleton
+    def self.===(*)
+      raise 'method contents are irrelevant to test'
+    end
+  end
 end
 
 class Object
