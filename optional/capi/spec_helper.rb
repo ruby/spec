@@ -4,8 +4,7 @@ $extmk = false
 require 'rbconfig'
 require 'fileutils'
 
-rootdir = File.expand_path('../../..', __FILE__)
-OBJDIR = "#{rootdir}/ext/#{RUBY_NAME}/#{RUBY_VERSION}"
+OBJDIR ||= File.expand_path("../../../ext/#{RUBY_NAME}/#{RUBY_VERSION}", __FILE__)
 FileUtils.makedirs(OBJDIR)
 
 def extension_path
