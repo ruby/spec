@@ -167,9 +167,4 @@ describe "C-API Thread function" do
   describe "rb_thread_call_without_gvl" do
     it_behaves_like :rb_thread_blocking_region, :rb_thread_call_without_gvl
   end
-  
-  describe "rb_thread_call_without_gvl2" do
-    it_behaves_like :rb_thread_blocking_region, :rb_thread_call_without_gvl2
-  end
 end
-
