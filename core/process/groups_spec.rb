@@ -19,7 +19,24 @@ describe "Process.groups" do
         Process.groups = groups
         Process.groups.sort.should == groups.sort
       else
-        lambda { Process.groups = [] }.should raise_error(Errno::EPERM)
+        platform_is :aix do
+          # setgroups() is not part of the POSIX standard,
+          # so its behavior varis from OS to OS.  AIX allows a non-root
+          # process to set the supplementary group IDs, as long as
+          # they are presently in its supplementary group IDs.
+          # The order of the following three tests matter.
+          # After this process executes "Process.groups = []"
+          # it should no longer be able to set any supplementary
+          # group IDs, even if it originally belonged to them.
+          Process.groups = groups
+          Process.groups.sort.should == groups.sort
+          Process.groups = []
+          Process.groups.should == []
+          lambda { Process.groups = groups }.should raise_error(Errno::EPERM)
+        end
+        platform_is_not :aix do
+          lambda { Process.groups = [] }.should raise_error(Errno::EPERM)
+        end
       end
     end
   end
