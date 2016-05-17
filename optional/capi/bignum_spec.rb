@@ -96,11 +96,9 @@ describe "CApiBignumSpecs" do
   end
 
   describe "rb_big_pack" do
-    it "packs a Bignum" do
-      val = @s.rb_big_pack(bignum_value)
-
-      val.kind_of?(Bignum).should == true
-      val.should == bignum_value
+    it "packs a Bignum into an unsigned long" do
+      val = @s.rb_big_pack(@max_ulong)
+      val.should == @max_ulong
     end
   end
 
