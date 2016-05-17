@@ -7,8 +7,9 @@ describe "Process.setsid" do
       pid = Process.fork {
         begin
           read.close
+          write << "\n"
           pgid = Process.setsid
-          write << pgid.class.to_s
+          write << pgid
           write.close
         rescue Exception => e
           write << e << e.backtrace
@@ -16,11 +17,15 @@ describe "Process.setsid" do
         Process.exit!
       }
       write.close
-      klass = read.gets
+      read.gets
+      pgid = Process.getsid(pid)
+      pgid_child = read.gets
       read.close
       Process.wait pid
 
-      klass.should == Fixnum.to_s
+      pgid_child = Integer(pgid_child)
+      pgid_child.should == pgid
+      pgid_child.should_not == Process.getsid
     end
   end
 end
