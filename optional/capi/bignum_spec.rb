@@ -3,7 +3,9 @@ require File.expand_path('../spec_helper', __FILE__)
 load_extension("bignum")
 
 def ensure_bignum(n)
-  0xffff_ffff_ffff_ffff_ffff.coerce(n)[0]
+  val = 0xffff_ffff_ffff_ffff_ffff.coerce(n)[0]
+  raise "Bignum#coerce returned Fixnum" if val.is_a?(Fixnum)
+  val
 end
 
 describe "CApiBignumSpecs" do
