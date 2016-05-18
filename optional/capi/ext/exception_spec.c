@@ -30,7 +30,7 @@ VALUE exception_spec_rb_exc_new3(VALUE self, VALUE str) {
 
 #ifdef HAVE_RB_EXC_RAISE
 VALUE exception_spec_rb_exc_raise(VALUE self, VALUE exc) {
-  rb_exc_raise(exc);
+    if (self != Qundef) rb_exc_raise(exc);
   return Qnil;
 }
 #endif
