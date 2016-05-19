@@ -616,6 +616,8 @@
 #include "rubinius.h"
 #elif defined(JRUBY)
 #include "jruby.h"
+#elif defined(JRUBY_TRUFFLE)
+#include "jruby_truffle.h"
 #endif
 
 #endif
