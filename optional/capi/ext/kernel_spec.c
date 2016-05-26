@@ -288,7 +288,7 @@ static VALUE kernel_spec_rb_funcall_with_block(VALUE self, VALUE obj, VALUE meth
 }
 #endif
 
-void Init_kernel_spec() {
+void Init_kernel_spec(void) {
   VALUE cls;
   cls = rb_define_class("CApiKernelSpecs", rb_cObject);
 

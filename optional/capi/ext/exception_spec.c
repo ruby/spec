@@ -42,7 +42,7 @@ VALUE exception_spec_rb_set_errinfo(VALUE self, VALUE exc) {
 }
 #endif
 
-void Init_exception_spec() {
+void Init_exception_spec(void) {
   VALUE cls;
   cls = rb_define_class("CApiExceptionSpecs", rb_cObject);
 

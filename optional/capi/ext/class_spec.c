@@ -167,7 +167,7 @@ static VALUE class_spec_include_module(VALUE self, VALUE klass, VALUE module) {
 }
 #endif
 
-void Init_class_spec() {
+void Init_class_spec(void) {
   VALUE cls;
   cls = rb_define_class("CApiClassSpecs", rb_cObject);
 
