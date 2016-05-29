@@ -132,11 +132,13 @@ describe "IO#puts" do
       File.binread(@name).should == "\r"
     end
 
-    it "writes lf when IO is opened with newline: :lf" do
-      File.open(@name, 'wt', newline: :lf) do |file|
-        file.puts
+    platform_is_not :windows do # https://bugs.ruby-lang.org/issues/12436
+      it "writes lf when IO is opened with newline: :lf" do
+        File.open(@name, 'wt', newline: :lf) do |file|
+          file.puts
+        end
+        File.binread(@name).should == "\n"
       end
-      File.binread(@name).should == "\n"
     end
   end
 end
