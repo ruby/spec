@@ -203,7 +203,9 @@ describe "A block" do
 
   it "does not capture a local when the block argument has the same name" do
     var = 1
-    proc { |&var| var[2] }[&proc { |x| x }].should == 2
+    proc { |&var|
+      var.call(2)
+    }.call { |x| x }.should == 2
     var.should == 1
   end
 
