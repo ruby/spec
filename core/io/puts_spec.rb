@@ -119,24 +119,24 @@ describe "IO#puts" do
 
   with_feature :encoding do
     it "writes crlf when IO is opened with newline: :crlf" do
-      File.open(@name, 'w', newline: :crlf) do |file|
+      File.open(@name, 'wb', newline: :crlf) do |file|
         file.puts
       end
-      File.read(@name).should == "\r\n"
+      File.binread(@name).should == "\r\n"
     end
 
     it "writes cr when IO is opened with newline: :cr" do
-      File.open(@name, 'w', newline: :cr) do |file|
+      File.open(@name, 'wb', newline: :cr) do |file|
         file.puts
       end
-      File.read(@name).should == "\r"
+      File.binread(@name).should == "\r"
     end
 
     it "writes lf when IO is opened with newline: :lf" do
-      File.open(@name, 'w', newline: :lf) do |file|
+      File.open(@name, 'wb', newline: :lf) do |file|
         file.puts
       end
-      File.read(@name).should == "\n"
+      File.binread(@name).should == "\n"
     end
   end
 end
