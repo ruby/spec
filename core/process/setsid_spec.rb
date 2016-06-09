@@ -20,8 +20,7 @@ describe "Process.setsid" do
       }
       write.close
       read2.close
-      pgid_child = read.gets
-      pgid_child = Integer(pgid_child)
+      pgid_child = Integer(read.gets)
       read.close
       platform_is_not :aix do
         # AIX does not allow Process.getsid(pid)
