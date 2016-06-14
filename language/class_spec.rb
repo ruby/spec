@@ -88,7 +88,7 @@ describe "A class definition" do
   end
 
   # [Bug #12367] [ruby-core:75446]
-  ruby_version_is "2.2" do # Until backported
+  ruby_version_is "2.4" do # Until backported
     it "raises an error when reopening a class with Object as superclass" do
       module ClassSpecs
         class SuperclassReopenedObject < A
