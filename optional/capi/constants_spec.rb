@@ -11,8 +11,10 @@ describe "C-API constant" do
     @s.rb_cArray.should == Array
   end
 
-  specify "rb_cBignum references the Bignum class" do
-    @s.rb_cBignum.should == Bignum
+  if CApiConstantsSpecs.method_defined?(:rb_cBignum)
+    specify "rb_cBignum references the Bignum class" do
+      @s.rb_cBignum.should == Bignum
+    end
   end
 
   specify "rb_cClass references the Class class" do
@@ -39,8 +41,10 @@ describe "C-API constant" do
     @s.rb_cFile.should == File
   end
 
-  specify "rb_cFixnum references the Fixnum class" do
-    @s.rb_cFixnum.should == Fixnum
+  if CApiConstantsSpecs.method_defined?(:rb_cFixnum)
+    specify "rb_cFixnum references the Fixnum class" do
+      @s.rb_cFixnum.should == Fixnum
+    end
   end
 
   specify "rb_cFloat references the Float class" do
