@@ -11,7 +11,7 @@ describe "C-API constant" do
     @s.rb_cArray.should == Array
   end
 
-  if CApiConstantsSpecs.method_defined?(:rb_cBignum)
+  ruby_version_is ""..."2.4" do
     specify "rb_cBignum references the Bignum class" do
       @s.rb_cBignum.should == Bignum
     end
@@ -41,7 +41,7 @@ describe "C-API constant" do
     @s.rb_cFile.should == File
   end
 
-  if CApiConstantsSpecs.method_defined?(:rb_cFixnum)
+  ruby_version_is ""..."2.4" do
     specify "rb_cFixnum references the Fixnum class" do
       @s.rb_cFixnum.should == Fixnum
     end
