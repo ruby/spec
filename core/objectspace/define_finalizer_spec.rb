@@ -86,7 +86,7 @@ describe "ObjectSpace.define_finalizer" do
       rd1, wr1 = IO.pipe
       rd2, wr2 = IO.pipe
 
-      if Kernel::fork then
+      if pid = Kernel::fork then
         wr1.close
         wr2.close
 
@@ -95,6 +95,7 @@ describe "ObjectSpace.define_finalizer" do
 
         rd1.close
         rd2.close
+        Process.wait pid
       else
         rd1.close
         rd2.close
