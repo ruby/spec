@@ -1,6 +1,6 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
-describe "Thread#thread_variable_key?" do
+describe "Thread#thread_variable?" do
   before :each do
     @t = Thread.new { }
   end
