@@ -86,17 +86,7 @@ describe "ObjectSpace.define_finalizer" do
       rd1, wr1 = IO.pipe
       rd2, wr2 = IO.pipe
 
-      if pid = Kernel::fork then
-        wr1.close
-        wr2.close
-
-        rd1.read.should == "finalized1"
-        rd2.read.should == "finalized2"
-
-        rd1.close
-        rd2.close
-        Process.wait pid
-      else
+      pid = Kernel::fork do
         rd1.close
         rd2.close
         obj = mock("ObjectSpace.define_finalizer multiple")
@@ -106,6 +96,16 @@ describe "ObjectSpace.define_finalizer" do
 
         exit 0
       end
+
+      wr1.close
+      wr2.close
+
+      rd1.read.should == "finalized1"
+      rd2.read.should == "finalized2"
+
+      rd1.close
+      rd2.close
+      Process.wait pid
     end
   end
 end
