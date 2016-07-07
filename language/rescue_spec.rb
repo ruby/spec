@@ -1,4 +1,5 @@
 require File.expand_path('../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/rescue', __FILE__)
 
 class SpecificExampleException < StandardError
 end
@@ -84,6 +85,12 @@ describe "The rescue keyword" do
     ScratchPad.recorded.should == [:one, :two]
   end
 
+  it "will execute an else block only if no exceptions were raised in a method" do
+    result = RescueSpecs.begin_else(false, ScratchPad)
+    result.should == :val
+    ScratchPad.recorded.should == [:one, :else_ran]
+  end
+
   it "will not execute an else block if an exception was raised" do
     result = begin
       ScratchPad << :one
@@ -96,6 +103,12 @@ describe "The rescue keyword" do
     end
     result.should == :val
     ScratchPad.recorded.should == [:one, :two]
+  end
+
+  it "will not execute an else block if an exception was raised in a method" do
+    result = RescueSpecs.begin_else(true, ScratchPad)
+    result.should == :rescue_val
+    ScratchPad.recorded.should == [:one, :rescue_ran]
   end
 
   it "will not rescue errors raised in an else block in the rescue block above it" do
