@@ -86,9 +86,15 @@ describe "The rescue keyword" do
   end
 
   it "will execute an else block only if no exceptions were raised in a method" do
-    result = RescueSpecs.begin_else(false, ScratchPad)
+    result = RescueSpecs.begin_else(false)
     result.should == :val
     ScratchPad.recorded.should == [:one, :else_ran]
+  end
+
+  it "will execute an else block but use the outer scope return value in a method" do
+    result = RescueSpecs.begin_else_return(false)
+    result.should == :return_val
+    ScratchPad.recorded.should == [:one, :else_ran, :outside_begin]
   end
 
   it "will not execute an else block if an exception was raised" do
@@ -106,9 +112,15 @@ describe "The rescue keyword" do
   end
 
   it "will not execute an else block if an exception was raised in a method" do
-    result = RescueSpecs.begin_else(true, ScratchPad)
+    result = RescueSpecs.begin_else(true)
     result.should == :rescue_val
     ScratchPad.recorded.should == [:one, :rescue_ran]
+  end
+
+  it "will not execute an else block but will use the outer scope return value in a method" do
+    result = RescueSpecs.begin_else_return(true)
+    result.should == :return_val
+    ScratchPad.recorded.should == [:one, :rescue_ran, :outside_begin]
   end
 
   it "will not rescue errors raised in an else block in the rescue block above it" do

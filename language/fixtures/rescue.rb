@@ -1,14 +1,29 @@
 module RescueSpecs
-  def self.begin_else(raise_exception, scratch_pad)
+  def self.begin_else(raise_exception)
     begin
-      scratch_pad << :one
+      ScratchPad << :one
       raise "an error occurred" if raise_exception
     rescue
-      scratch_pad << :rescue_ran
+      ScratchPad << :rescue_ran
       :rescue_val
     else
-      scratch_pad << :else_ran
+      ScratchPad << :else_ran
       :val
     end
+  end
+
+  def self.begin_else_return(raise_exception)
+    begin
+      ScratchPad << :one
+      raise "an error occurred" if raise_exception
+    rescue
+      ScratchPad << :rescue_ran
+      :rescue_val
+    else
+      ScratchPad << :else_ran
+      :val
+    end
+    ScratchPad << :outside_begin
+    :return_val
   end
 end
