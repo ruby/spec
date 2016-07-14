@@ -60,6 +60,9 @@ ruby_version_is "2.3" do
 
       eval("obj&.m += 3")
       obj.m.should == 3
+
+      obj = nil
+      eval("obj&.m += 3").should == nil
     end
   end
 end
