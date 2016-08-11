@@ -14,7 +14,7 @@ describe "The -e command line option" do
   end
 
   it "uses '-e' as file" do
-    ruby_exe("puts __FILE__").chomp.should == "-e"
+    ruby_exe("puts __FILE__", escape: false).chomp.should == "-e"
   end
 
   #needs to test return => LocalJumpError
