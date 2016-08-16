@@ -14,17 +14,9 @@ describe "Find.find" do
   end
 
   describe "when called without a block" do
-    ruby_version_is ""..."1.9" do
-      it "raises a LocalJumpError" do
-        lambda { Find.find(FindDirSpecs.mock_dir) }.should raise_error(LocalJumpError)
-      end
-    end
-
-    ruby_version_is "1.9" do
-      it "returns an Enumerator" do
-        Find.find(FindDirSpecs.mock_dir).should be_an_instance_of(enumerator_class)
-        Find.find(FindDirSpecs.mock_dir).to_a.sort.should == FindDirSpecs.expected_paths
-      end
+    it "returns an Enumerator" do
+      Find.find(FindDirSpecs.mock_dir).should be_an_instance_of(enumerator_class)
+      Find.find(FindDirSpecs.mock_dir).to_a.sort.should == FindDirSpecs.expected_paths
     end
   end
 

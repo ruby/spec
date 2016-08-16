@@ -19,7 +19,7 @@ describe "Struct::Group" do
       @g.gid.should == `id -g`.strip.to_i
     end
 
-    it "returns an array of users belonging to the group" do 
+    it "returns an array of users belonging to the group" do
       @g.mem.is_a?(Array).should == true
     end
 

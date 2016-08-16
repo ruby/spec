@@ -2,18 +2,18 @@ require File.expand_path('../../../../spec_helper', __FILE__)
 require File.expand_path('../../fixtures/classes', __FILE__)
 
 describe "TCPSocket#setsockopt" do
-  before :all do
-    SocketSpecs::SpecTCPServer.start
+  before :each do
+    @server = SocketSpecs::SpecTCPServer.new
+    @hostname = @server.hostname
   end
 
-  before(:each) do
-    hostname = SocketSpecs::SpecTCPServer.get.hostname
-    port = SocketSpecs::SpecTCPServer.get.port
-    @sock = TCPSocket.new(hostname, port)
+  before :each do
+    @sock = TCPSocket.new @hostname, SocketSpecs.port
   end
 
   after :each do
     @sock.close unless @sock.closed?
+    @server.shutdown
   end
 
   describe "using constants" do
@@ -22,28 +22,26 @@ describe "TCPSocket#setsockopt" do
     end
   end
 
-  ruby_version_is "1.9" do
-    describe "using symbols" do
-      it "sets the TCP nodelay to 1" do
-        @sock.setsockopt(:IPPROTO_TCP, :TCP_NODELAY, 1).should == 0
-      end
-
-      context "without prefix" do
-        it "sets the TCP nodelay to 1" do
-          @sock.setsockopt(:TCP, :NODELAY, 1).should == 0
-        end
-      end
+  describe "using symbols" do
+    it "sets the TCP nodelay to 1" do
+      @sock.setsockopt(:IPPROTO_TCP, :TCP_NODELAY, 1).should == 0
     end
 
-    describe "using strings" do
+    context "without prefix" do
       it "sets the TCP nodelay to 1" do
-        @sock.setsockopt('IPPROTO_TCP', 'TCP_NODELAY', 1).should == 0
+        @sock.setsockopt(:TCP, :NODELAY, 1).should == 0
       end
+    end
+  end
 
-      context "without prefix" do
-        it "sets the TCP nodelay to 1" do
-          @sock.setsockopt('TCP', 'NODELAY', 1).should == 0
-        end
+  describe "using strings" do
+    it "sets the TCP nodelay to 1" do
+      @sock.setsockopt('IPPROTO_TCP', 'TCP_NODELAY', 1).should == 0
+    end
+
+    context "without prefix" do
+      it "sets the TCP nodelay to 1" do
+        @sock.setsockopt('TCP', 'NODELAY', 1).should == 0
       end
     end
   end
