@@ -12,7 +12,9 @@ describe "Addrinfo.udp" do
     [Socket::PF_INET, Socket::PF_INET6].should include(@addrinfo.pfamily)
     @addrinfo.ip_port.should == 13
     @addrinfo.socktype.should == Socket::SOCK_DGRAM
-    @addrinfo.protocol.should == Socket::IPPROTO_UDP
+    platform_is_not :solaris do
+      @addrinfo.protocol.should == Socket::IPPROTO_UDP
+    end
   end
 
 end

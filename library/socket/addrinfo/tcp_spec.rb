@@ -12,7 +12,9 @@ describe "Addrinfo.tcp" do
     [Socket::PF_INET, Socket::PF_INET6].should include(@addrinfo.pfamily)
     @addrinfo.ip_port.should == 25
     @addrinfo.socktype.should == Socket::SOCK_STREAM
-    @addrinfo.protocol.should == Socket::IPPROTO_TCP
+    platform_is_not :solaris do
+      @addrinfo.protocol.should == Socket::IPPROTO_TCP
+    end
   end
 
 end
