@@ -9,7 +9,7 @@ describe "Addrinfo#canonname" do
   end
 
   it "returns the canonical name for a host" do
-    canonname = @addrinfos.map { |a| a.canonname }.find { |name| name.include?("localhost") }
+    canonname = @addrinfos.map { |a| a.canonname }.find { |name| name and name.include?("localhost") }
     canonname.should include("localhost")
   end
 
