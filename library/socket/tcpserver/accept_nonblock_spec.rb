@@ -34,4 +34,16 @@ describe "Socket::TCPServer.accept_nonblock" do
     @server.close
     lambda { @server.accept }.should raise_error(IOError)
   end
+
+  describe 'without a connected client' do
+    it 'raises error' do
+      lambda { @server.accept_nonblock }.should raise_error(IO::WaitReadable)
+    end
+
+    ruby_version_is '2.3' do
+      it 'returns :wait_readable in exceptionless mode' do
+        @server.accept_nonblock(exception: false).should == :wait_readable
+      end
+    end
+  end
 end
