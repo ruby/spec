@@ -5,9 +5,11 @@ rvm:
   - 2.2.4
   - 2.3.0
   - ruby-head
+  - jruby-head
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - rvm: jruby-head
 install:
   - git clone https://github.com/ruby/mspec.git ../mspec
 script:
