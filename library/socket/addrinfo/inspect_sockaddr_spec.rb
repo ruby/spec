@@ -16,8 +16,10 @@ describe 'Addrinfo#inspect_sockaddr' do
     Addrinfo.tcp(ip, 0).inspect_sockaddr.should == '2001:db8:85a3::8a2e:370:7334'
   end
 
-  it 'UNIX' do
-    Addrinfo.unix('/tmp/sock').inspect_sockaddr.should == '/tmp/sock'
-    Addrinfo.unix('rel').inspect_sockaddr.should == 'UNIX rel'
+  platform_is_not :windows do
+    it 'UNIX' do
+      Addrinfo.unix('/tmp/sock').inspect_sockaddr.should == '/tmp/sock'
+      Addrinfo.unix('rel').inspect_sockaddr.should == 'UNIX rel'
+    end
   end
 end
