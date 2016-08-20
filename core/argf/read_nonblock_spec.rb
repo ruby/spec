@@ -51,7 +51,7 @@ platform_is_not :windows do
 
     it 'raises IO::EAGAINWaitReadable when STDIN is empty' do
       input = 'ARGF.read_nonblock(4) rescue print $!.class'
-      stdin = IO.popen([RUBY_EXE, '-e', input], "r+", &:read)
+      stdin = ruby_exe(input)
 
       stdin.should == 'IO::EAGAINWaitReadable'
     end
@@ -59,7 +59,7 @@ platform_is_not :windows do
     ruby_version_is "2.3" do
       it 'returns :wait_readable when the :exception is set to false' do
         input = 'p ARGF.read_nonblock(4, nil, exception: false)'
-        stdin = IO.popen([RUBY_EXE, '-e', input], "r+", &:read)
+        stdin = ruby_exe(input)
 
         stdin.strip.should == ':wait_readable'
       end
