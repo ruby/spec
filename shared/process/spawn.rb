@@ -1,3 +1,33 @@
+newline = "\n"
+platform_is :windows do
+  newline = "\r\n"
+end
+
+describe :process_spawn_does_not_close_std_streams, shared: true do
+  platform_is_not :windows do
+    it "does not close STDIN" do
+      code = "STDOUT.puts STDIN.read(0).inspect"
+      cmd = "Process.wait spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
+      ruby_exe(cmd, args: "> #{@output}")
+      @output.should have_data(%[""#{newline}])
+    end
+
+    it "does not close STDOUT" do
+      code = "STDOUT.puts 'hello'"
+      cmd = "Process.wait spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
+      ruby_exe(cmd, args: "> #{@output}")
+      @output.should have_data("hello#{newline}")
+    end
+
+    it "does not close STDERR" do
+      code = "STDERR.puts 'hello'"
+      cmd = "Process.wait spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
+      ruby_exe(cmd, args: "2> #{@output}")
+      @output.should have_data("hello#{newline}")
+    end
+  end
+end
+
 describe :process_spawn, shared: true do
   before :each do
     @name = tmp("kernel_spawn.txt")
@@ -5,11 +35,6 @@ describe :process_spawn, shared: true do
 
   after :each do
     rm_r @name
-  end
-
-  newline = "\n"
-  platform_is :windows do
-    newline = "\r\n"
   end
 
   it "executes the given command" do
@@ -467,7 +492,6 @@ describe :process_spawn, shared: true do
     before :each do
       @output = tmp("spawn_close_others_true")
       @options = { close_others: true }
-      @command = %[Process.wait spawn("#{RUBY_EXE}", "-e", "%s", #{@options.inspect})]
     end
 
     after :each do
@@ -487,32 +511,13 @@ describe :process_spawn, shared: true do
       end
     end
 
-    platform_is_not :windows do
-      it "does not close STDIN" do
-        cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
-        ruby_exe(cmd, args: "> #{@output}")
-        @output.should have_data(%[""#{newline}])
-      end
-
-      it "does not close STDOUT" do
-        cmd = @command % ["STDOUT.puts 'hello'"]
-        ruby_exe(cmd, args: "> #{@output}")
-        @output.should have_data("hello#{newline}")
-      end
-
-      it "does not close STDERR" do
-        cmd = @command % ["STDERR.puts 'hello'"]
-        ruby_exe(cmd, args: "2> #{@output}")
-        @output.should have_data("hello#{newline}")
-      end
-    end
+    it_should_behave_like :process_spawn_does_not_close_std_streams
   end
 
   context "when passed close_others: false" do
     before :each do
       @output = tmp("spawn_close_others_false")
       @options = { close_others: false }
-      @command = %[Process.wait spawn("#{RUBY_EXE}", "-e", "%s", #{@options.inspect})]
     end
 
     after :each do
@@ -549,25 +554,7 @@ describe :process_spawn, shared: true do
       end
     end
 
-    platform_is_not :windows do
-      it "does not close STDIN" do
-        cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
-        ruby_exe(cmd, args: "> #{@output}")
-        @output.should have_data(%[""#{newline}])
-      end
-
-      it "does not close STDOUT" do
-        cmd = @command % ["STDOUT.puts 'hello'"]
-        ruby_exe(cmd, args: "> #{@output}")
-        @output.should have_data("hello#{newline}")
-      end
-
-      it "does not close STDERR" do
-        cmd = @command % ["STDERR.puts 'hello'"]
-        ruby_exe(cmd, args: "2> #{@output}")
-        @output.should have_data("hello#{newline}")
-      end
-    end
+    it_should_behave_like :process_spawn_does_not_close_std_streams
   end
 
   # error handling
