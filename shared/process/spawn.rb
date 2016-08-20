@@ -227,18 +227,20 @@ describe :process_spawn, shared: true do
 
   # Use the system ruby when the environment is empty as it could easily break launchers.
 
-  it "unsets other environment variables when given a true :unsetenv_others option" do
-    ENV["FOO"] = "BAR"
-    lambda do
-      Process.wait @object.spawn('ruby', fixture(__FILE__, "env.rb"), unsetenv_others: true)
-    end.should output_to_fd("")
-  end
+  platform_is_not :windows do
+    it "unsets other environment variables when given a true :unsetenv_others option" do
+      ENV["FOO"] = "BAR"
+      lambda do
+        Process.wait @object.spawn('ruby', fixture(__FILE__, "env.rb"), unsetenv_others: true)
+      end.should output_to_fd("")
+    end
 
-  it "unsets other environment variables when given a non-false :unsetenv_others option" do
-    ENV["FOO"] = "BAR"
-    lambda do
-      Process.wait @object.spawn('ruby', fixture(__FILE__, "env.rb"), unsetenv_others: :true)
-    end.should output_to_fd("")
+    it "unsets other environment variables when given a non-false :unsetenv_others option" do
+      ENV["FOO"] = "BAR"
+      lambda do
+        Process.wait @object.spawn('ruby', fixture(__FILE__, "env.rb"), unsetenv_others: :true)
+      end.should output_to_fd("")
+    end
   end
 
   it "does not unset other environment variables when given a false :unsetenv_others option" do
@@ -255,10 +257,12 @@ describe :process_spawn, shared: true do
     end.should output_to_fd("BAR")
   end
 
-  it "does not unset environment variables included in the environment hash" do
-    lambda do
-      Process.wait @object.spawn({"FOO" => "BAR"}, 'ruby', fixture(__FILE__, "env.rb"), unsetenv_others: true)
-    end.should output_to_fd("BAR")
+  platform_is_not :windows do
+    it "does not unset environment variables included in the environment hash" do
+      lambda do
+        Process.wait @object.spawn({"FOO" => "BAR"}, 'ruby', fixture(__FILE__, "env.rb"), unsetenv_others: true)
+      end.should output_to_fd("BAR")
+    end
   end
 
   # :pgroup
@@ -483,22 +487,24 @@ describe :process_spawn, shared: true do
       end
     end
 
-    it "does not close STDIN" do
-      cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
-      ruby_exe(cmd, args: "> #{@output}")
-      @output.should have_data(%[""#{newline}])
-    end
+    platform_is_not :windows do
+      it "does not close STDIN" do
+        cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
+        ruby_exe(cmd, args: "> #{@output}")
+        @output.should have_data(%[""#{newline}])
+      end
 
-    it "does not close STDOUT" do
-      cmd = @command % ["STDOUT.puts 'hello'"]
-      ruby_exe(cmd, args: "> #{@output}")
-      @output.should have_data("hello#{newline}")
-    end
+      it "does not close STDOUT" do
+        cmd = @command % ["STDOUT.puts 'hello'"]
+        ruby_exe(cmd, args: "> #{@output}")
+        @output.should have_data("hello#{newline}")
+      end
 
-    it "does not close STDERR" do
-      cmd = @command % ["STDERR.puts 'hello'"]
-      ruby_exe(cmd, args: "2> #{@output}")
-      @output.should have_data("hello#{newline}")
+      it "does not close STDERR" do
+        cmd = @command % ["STDERR.puts 'hello'"]
+        ruby_exe(cmd, args: "2> #{@output}")
+        @output.should have_data("hello#{newline}")
+      end
     end
   end
 
@@ -543,22 +549,24 @@ describe :process_spawn, shared: true do
       end
     end
 
-    it "does not close STDIN" do
-      cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
-      ruby_exe(cmd, args: "> #{@output}")
-      @output.should have_data(%[""#{newline}])
-    end
+    platform_is_not :windows do
+      it "does not close STDIN" do
+        cmd = @command % ["STDOUT.puts STDIN.read(0).inspect"]
+        ruby_exe(cmd, args: "> #{@output}")
+        @output.should have_data(%[""#{newline}])
+      end
 
-    it "does not close STDOUT" do
-      cmd = @command % ["STDOUT.puts 'hello'"]
-      ruby_exe(cmd, args: "> #{@output}")
-      @output.should have_data("hello#{newline}")
-    end
+      it "does not close STDOUT" do
+        cmd = @command % ["STDOUT.puts 'hello'"]
+        ruby_exe(cmd, args: "> #{@output}")
+        @output.should have_data("hello#{newline}")
+      end
 
-    it "does not close STDERR" do
-      cmd = @command % ["STDERR.puts 'hello'"]
-      ruby_exe(cmd, args: "2> #{@output}")
-      @output.should have_data("hello#{newline}")
+      it "does not close STDERR" do
+        cmd = @command % ["STDERR.puts 'hello'"]
+        ruby_exe(cmd, args: "2> #{@output}")
+        @output.should have_data("hello#{newline}")
+      end
     end
   end
 

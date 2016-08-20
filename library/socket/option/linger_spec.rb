@@ -48,8 +48,10 @@ describe "Socket::Option#linger" do
     lambda { so.linger }.should raise_error(TypeError)
   end
 
-  it "raises TypeError if option has not good size" do
-    so = Socket::Option.int(:AF_UNSPEC, :SOL_SOCKET, :LINGER, 1)
-    lambda { so.linger }.should raise_error(TypeError)
+  platform_is_not :windows do
+    it "raises TypeError if option has not good size" do
+      so = Socket::Option.int(:AF_UNSPEC, :SOL_SOCKET, :LINGER, 1)
+      lambda { so.linger }.should raise_error(TypeError)
+    end
   end
 end
