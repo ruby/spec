@@ -250,8 +250,6 @@ describe :process_spawn, shared: true do
 
   # :unsetenv_others
 
-  # Use the system ruby when the environment is empty as it could easily break launchers.
-
   platform_is_not :windows do
     it "unsets other environment variables when given a true :unsetenv_others option" do
       ENV["FOO"] = "BAR"
