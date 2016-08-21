@@ -59,7 +59,7 @@ platform_is_not :windows do
       after do
         $stdin = @stdin
         @w.close
-        @r.close
+        @r.close unless @r.closed?
       end
 
       it 'raises IO::EAGAINWaitReadable when empty' do
