@@ -49,19 +49,33 @@ platform_is_not :windows do
       stdin.should == @chunk1
     end
 
-    it 'raises IO::EAGAINWaitReadable when STDIN is empty' do
-      input = 'ARGF.read_nonblock(4) rescue print $!.class'
-      stdin = ruby_exe(input)
+    context "with STDIN" do
+      before do
+        @r, @w = IO.pipe
+        @stdin = $stdin
+        $stdin = @r
+      end
 
-      stdin.should == 'IO::EAGAINWaitReadable'
-    end
+      after do
+        $stdin = @stdin
+        @w.close
+        @r.close
+      end
 
-    ruby_version_is "2.3" do
-      it 'returns :wait_readable when the :exception is set to false' do
-        input = 'p ARGF.read_nonblock(4, nil, exception: false)'
-        stdin = ruby_exe(input)
+      it 'raises IO::EAGAINWaitReadable when empty' do
+        argf ['-'] do
+          lambda {
+            @argf.read_nonblock(4)
+          }.should raise_error(IO::EAGAINWaitReadable)
+        end
+      end
 
-        stdin.strip.should == ':wait_readable'
+      ruby_version_is "2.3" do
+        it 'returns :wait_readable when the :exception is set to false' do
+          argf ['-'] do
+            @argf.read_nonblock(4, nil, exception: false).should == :wait_readable
+          end
+        end
       end
     end
   end
