@@ -1,3 +1,4 @@
+# coding: utf-8
 describe :socket_pack_sockaddr_in, shared: true do
   it "packs and unpacks" do
     sockaddr_in = Socket.public_send(@method, 0, nil)
@@ -21,9 +22,26 @@ end
 
 describe :socket_pack_sockaddr_un, shared: true do
   platform_is_not :windows do
+    it 'should be idempotent' do
+      bytes = Socket.public_send(@method, '/tmp/foo').bytes
+      bytes[2..9].should == [47, 116, 109, 112, 47, 102, 111, 111]
+      bytes[10..-1].all?(&:zero?).should == true
+    end
+
     it "packs and unpacks" do
       sockaddr_un = Socket.public_send(@method, '/tmp/s')
       Socket.unpack_sockaddr_un(sockaddr_un).should == '/tmp/s'
+    end
+
+    it "handles correctly paths with multibyte chars" do
+      sockaddr_un = Socket.public_send(@method, '/home/вася/sock')
+      path = Socket.unpack_sockaddr_un(sockaddr_un).encode('UTF-8', 'UTF-8')
+      path.should == '/home/вася/sock'
+    end
+
+    it "raises if path length exceeds max size" do
+      long_path = Array.new(512, 0).join
+      lambda { Socket.public_send(@method, long_path) }.should raise_error(ArgumentError)
     end
   end
 end
