@@ -1,6 +1,7 @@
-dir = "../fixtures/code"
 use_realpath = File.respond_to?(:realpath)
-CODE_LOADING_DIR = use_realpath ? File.realpath(dir, __FILE__) : File.expand_path(dir, __FILE__)
+root = File.dirname(__FILE__)
+dir = "fixtures/code"
+CODE_LOADING_DIR = use_realpath ? File.realpath(dir, root) : File.expand_path(dir, root)
 
 # Running directly with ruby some_spec.rb
 unless ENV['MSPEC_RUNNER']
