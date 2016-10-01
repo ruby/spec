@@ -1,5 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
+describe "Interrupt" do
+  it "is a subclass of SignalException" do
+    Interrupt.superclass.should == SignalException
+  end
+end
+
 describe "Interrupt.new" do
   it "returns an instance of interrupt with no message given" do
     e = Interrupt.new
