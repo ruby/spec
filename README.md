@@ -1,7 +1,7 @@
 # The Ruby Spec Suite
 
 [![Build Status](https://travis-ci.org/ruby/spec.svg)](https://travis-ci.org/ruby/spec)
-[![Build Status](https://ci.appveyor.com/api/projects/status/1gs6f399320o44b1?svg=true)](https://ci.appveyor.com/project/eregon/spec)
+[![Build Status](https://ci.appveyor.com/api/projects/status/1gs6f399320o44b1?svg=true)](https://ci.appveyor.com/project/eregon/spec-x948i)
 
 The Ruby Spec Suite is a test suite for the behavior of the Ruby programming language.
 
