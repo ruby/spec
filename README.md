@@ -21,6 +21,12 @@ For more information, see the [MSpec](http://github.com/ruby/mspec) project.
 The specs describe the [language syntax](language/), the [core library](core/) and the [standard library](library/).
 The language specs are grouped by keyword while the core and standard library specs are grouped by class and method.
 
+ruby/spec is known to be tested in these implementations for every commit:
+* [MRI](http://rubyci.org/) on 30 platforms and 4 versions
+* [JRuby](https://github.com/jruby/jruby/tree/master/spec/ruby) on Travis for both 1.7 and 9.x
+* [JRuby+Truffle](https://github.com/jruby/jruby/wiki/Truffle#rubyspec) on Travis
+* [Opal](https://github.com/opal/opal/tree/master/spec) on Travis
+
 ### Running the specs
 
 First, clone this repository:
