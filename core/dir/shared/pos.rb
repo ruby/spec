@@ -46,6 +46,6 @@ describe :dir_pos_set, shared: true do
 
     a.should_not == b
     b.should_not == c
-    c.should     == a
+    c.should == a
   end
 end

@@ -49,7 +49,7 @@ describe "String#delete" do
   end
 
   it "deletes multibyte characters" do
-    "四月".delete("月").should     == "四"
+    "四月".delete("月").should == "四"
     '哥哥我倒'.delete('哥').should == "我倒"
   end
 

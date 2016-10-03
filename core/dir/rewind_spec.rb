@@ -30,7 +30,7 @@ describe "Dir#rewind" do
 
     a.should_not == b
     b.should_not == c
-    c.should     == a
+    c.should == a
 
     second.should_not == prejmp
   end

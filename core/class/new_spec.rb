@@ -21,7 +21,7 @@ describe "Class.new with a block given" do
       end
     end
 
-    klass.message.should     == "text"
+    klass.message.should == "text"
     klass.new.hello.should == "hello again"
   end
 

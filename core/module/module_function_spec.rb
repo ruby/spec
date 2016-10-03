@@ -33,7 +33,7 @@ describe "Module#module_function with specific method names" do
       module_function :test, :test2
     end
 
-    m.respond_to?(:test).should  == true
+    m.respond_to?(:test).should == true
     m.respond_to?(:test2).should == true
     m.respond_to?(:test3).should == false
   end
@@ -109,7 +109,7 @@ describe "Module#module_function with specific method names" do
       module_function o, o2
     end
 
-    m.respond_to?(:test).should  == true
+    m.respond_to?(:test).should == true
     m.respond_to?(:test2).should == true
   end
 

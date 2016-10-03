@@ -132,18 +132,18 @@ describe "Literal Regexps" do
   it "supports conditional regular expressions with positional capture groups" do
     pattern = /\A(foo)?(?(1)(T)|(F))\z/
 
-    pattern.should  =~ 'fooT'
-    pattern.should  =~ 'F'
-    pattern.should_not  =~ 'fooF'
-    pattern.should_not  =~ 'T'
+    pattern.should =~ 'fooT'
+    pattern.should =~ 'F'
+    pattern.should_not =~ 'fooF'
+    pattern.should_not =~ 'T'
   end
 
   it "supports conditional regular expressions with positional capture groups" do
     pattern = /\A(?<word>foo)?(?(<word>)(T)|(F))\z/
 
-    pattern.should  =~ 'fooT'
-    pattern.should  =~ 'F'
-    pattern.should_not  =~ 'fooF'
-    pattern.should_not  =~ 'T'
+    pattern.should =~ 'fooT'
+    pattern.should =~ 'F'
+    pattern.should_not =~ 'fooF'
+    pattern.should_not =~ 'T'
   end
 end
