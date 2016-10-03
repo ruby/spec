@@ -18,7 +18,7 @@ The specs are written with syntax similar to RSpec 2.
 They are run with MSpec, the purpose-built framework for running the Ruby Spec Suite.
 For more information, see the [MSpec](http://github.com/ruby/mspec) project.
 
-The specs describe the [language syntax](language/), the [core library](core/) and the [standard library](library/).
+The specs describe the [language syntax](language/), the [core library](core/), the [standard library](library/), the [C API for extensions](optional/capi) and the [command line flags](command_line/).
 The language specs are grouped by keyword while the core and standard library specs are grouped by class and method.
 
 ruby/spec is known to be tested in these implementations for every commit:
