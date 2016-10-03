@@ -73,7 +73,7 @@ describe "Module#define_method when given an UnboundMethod" do
   it "sets the new method's visibility to the current frame's visibility" do
     foo = Class.new do
       def ziggy
-	'piggy'
+        'piggy'
       end
       private :ziggy
 
