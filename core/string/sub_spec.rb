@@ -374,11 +374,9 @@ describe "String#sub! with pattern and block" do
     a.should == "hello"
   end
 
-  not_compliant_on :rubinius do
-    it "raises a RuntimeError if the string is modified while substituting" do
-      str = "hello"
-      lambda { str.sub!(//) { str << 'x' } }.should raise_error(RuntimeError)
-    end
+  it "raises a RuntimeError if the string is modified while substituting" do
+    str = "hello"
+    lambda { str.sub!(//) { str << 'x' } }.should raise_error(RuntimeError)
   end
 
   it "raises a RuntimeError when self is frozen" do

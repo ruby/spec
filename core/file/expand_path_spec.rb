@@ -112,16 +112,8 @@ describe "File.expand_path" do
       File.expand_path('~/a','~/b').should == "#{@home}/a"
     end
 
-    not_compliant_on :rubinius, :macruby do
-      it "does not replace multiple '/' at the beginning of the path" do
-        File.expand_path('////some/path').should == "////some/path"
-      end
-    end
-
-    deviates_on :rubinius, :macruby do
-      it "replaces multiple '/' with a single '/' at the beginning of the path" do
-        File.expand_path('////some/path').should == "/some/path"
-      end
+    it "does not replace multiple '/' at the beginning of the path" do
+      File.expand_path('////some/path').should == "////some/path"
     end
 
     it "replaces multiple '/' with a single '/'" do
