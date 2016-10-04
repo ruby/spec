@@ -6,5 +6,5 @@
 * investigate slow specs (run with -fp) and make them faster.
 * restore some caller specs from 642bf529
 * restore refinements specs and update. See 56c5528f and f20a62e8.
-* remove not_compliant_on/diverge_on guards, these specs are
+* remove not_compliant_on/deviates_on guards, these specs are
   implementation-specific and either should be generalized or removed.
