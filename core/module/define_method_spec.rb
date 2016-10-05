@@ -225,7 +225,7 @@ describe "Module#define_method" do
   it "does not change the arity check style of the original proc" do
     class DefineMethodSpecClass
       prc = Proc.new { || true }
-      method = define_method("proc_style_test", &prc)
+      define_method("proc_style_test", &prc)
     end
 
     obj = DefineMethodSpecClass.new

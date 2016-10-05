@@ -141,7 +141,7 @@ describe :regexp_new_string_ascii_8bit, shared: true do
     end
 
     it "accepts a backspace followed by a character" do
-      Regexp.send(@method, "\\N").should == /#{"\x5cN"}/
+      Regexp.send(@method, "\\N").should == /#{"\x5c"+"N"}/
     end
 
     it "accepts a one-digit octal value" do
@@ -349,7 +349,7 @@ describe :regexp_new_string_ascii_8bit, shared: true do
     end
 
     it "accepts multiple consecutive '\\' characters" do
-      Regexp.send(@method, "\\\\\\N").should == /#{"\\\\\\N"}/
+      Regexp.send(@method, "\\\\\\N").should == /#{"\\\\\\"+"N"}/
     end
 
     it "accepts characters and escaped octal digits" do
