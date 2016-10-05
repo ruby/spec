@@ -96,7 +96,7 @@ describe "Module#module_function with specific method names" do
       module_function :test
     end
 
-    m.public_methods.map {|m| m.to_s }.include?('test').should == true
+    m.public_methods.map {|me| me.to_s }.include?('test').should == true
   end
 
   it "tries to convert the given names to strings using to_str" do
