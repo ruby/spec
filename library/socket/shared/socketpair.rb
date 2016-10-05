@@ -7,5 +7,12 @@ describe :socket_socketpair, shared: true do
       s1.close
       s2.close
     end
+
+    it "responses with array of two sockets" do
+      s1, s2 = Socket.socketpair(:UNIX, :STREAM)
+
+      s1.should be_an_instance_of(Socket)
+      s2.should be_an_instance_of(Socket)
+    end
   end
 end
