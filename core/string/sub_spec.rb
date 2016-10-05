@@ -4,7 +4,7 @@ require File.expand_path('../fixtures/classes.rb', __FILE__)
 describe "String#sub with pattern, replacement" do
   it "returns a copy of self when no modification is made" do
     a = "hello"
-    b = a.sub /w.*$/, "*"
+    b = a.sub(/w.*$/, "*")
 
     b.should_not equal(a)
     b.should == "hello"
