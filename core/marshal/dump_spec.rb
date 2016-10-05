@@ -557,7 +557,7 @@ describe "Marshal.dump" do
   end
 
   it "raises a TypeError if dumping a MatchData instance" do
-    lambda { Marshal.dump /(.)/.match("foo") }.should raise_error(TypeError)
+    lambda { Marshal.dump(/(.)/.match("foo")) }.should raise_error(TypeError)
   end
 
   it "returns an untainted string if object is untainted" do

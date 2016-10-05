@@ -21,7 +21,7 @@ module BlockSpecs
 
   class Yield
     def splat(*args)
-      yield *args
+      yield(*args)
     end
 
     def two_args
