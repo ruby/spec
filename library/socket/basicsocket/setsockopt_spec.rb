@@ -183,7 +183,7 @@ describe "BasicSocket#setsockopt" do
       @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE).bool.should == true
     end
 
-    platform_is_not :freebsd, :solaris do
+    platform_is_not :freebsd, :solaris, :darwin do
       it 'linger' do
         option = Socket::Option.linger(true, 10)
         @sock.setsockopt(option).should == 0
@@ -191,7 +191,7 @@ describe "BasicSocket#setsockopt" do
       end
     end
 
-    platform_is :freebsd, :solaris do
+    platform_is :freebsd, :solaris, :darwin do
       it 'linger' do
         option = Socket::Option.linger(true, 10)
         @sock.setsockopt(option).should == 0
