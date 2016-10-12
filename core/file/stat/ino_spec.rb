@@ -28,7 +28,7 @@ describe "File::Stat#ino" do
     end
 
     ruby_version_is "2.3" do
-      it "returns the ino of a File::Stat object" do
+      it "returns BY_HANDLE_FILE_INFORMATION.nFileIndexHigh/Low of a File::Stat object" do
         st = File.stat(@file)
         st.ino.should be_kind_of(Integer)
         st.ino.should > 0
