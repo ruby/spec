@@ -308,7 +308,6 @@ describe "Operators" do
   def oops; raise end
 
   it "? : has higher precedence than rescue" do
-
     (true ? oops : 0 rescue 10).should == 10
   end
 
