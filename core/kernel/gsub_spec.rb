@@ -30,6 +30,7 @@ ruby_version_is ""..."1.9" do
 
       orig_value = $_ = "bye"
       gsub(/$/, "!").should == "bye!"
+      orig_value.should == "bye"
     end
 
     it "accepts Regexps as patterns" do

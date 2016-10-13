@@ -45,13 +45,13 @@ describe "IO#gets" do
     end
 
     it "updates lineno with each invocation" do
-      while line = @io.gets
+      while @io.gets
         @io.lineno.should == @count += 1
       end
     end
 
     it "updates $. with each invocation" do
-      while line = @io.gets
+      while @io.gets
         $..should == @count += 1
       end
     end
@@ -69,13 +69,13 @@ describe "IO#gets" do
     end
 
     it "updates lineno with each invocation" do
-      while line = @io.gets(nil)
+      while @io.gets(nil)
         @io.lineno.should == @count += 1
       end
     end
 
     it "updates $. with each invocation" do
-      while line = @io.gets(nil)
+      while @io.gets(nil)
         $..should == @count += 1
       end
     end
@@ -103,13 +103,13 @@ describe "IO#gets" do
     end
 
     it "updates lineno with each invocation" do
-      while line = @io.gets("")
+      while @io.gets("")
         @io.lineno.should == @count += 1
       end
     end
 
     it "updates $. with each invocation" do
-      while line = @io.gets("")
+      while @io.gets("")
         $..should == @count += 1
       end
     end
@@ -127,13 +127,13 @@ describe "IO#gets" do
     end
 
     it "updates lineno with each invocation" do
-      while (line = @io.gets("la"))
+      while (@io.gets("la"))
         @io.lineno.should == @count += 1
       end
     end
 
     it "updates $. with each invocation" do
-      while line = @io.gets("la")
+      while @io.gets("la")
         $..should == @count += 1
       end
     end

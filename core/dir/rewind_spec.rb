@@ -20,19 +20,15 @@ describe "Dir#rewind" do
   end
 
   it "resets the next read to start from the first entry" do
-    first   = @dir.pos
-    a       = @dir.read
-    b       = @dir.read
-    prejmp  = @dir.pos
-    ret     = @dir.rewind
-    second  = @dir.pos
-    c       = @dir.read
-
+    @dir.pos.should == 0
+    a = @dir.read
+    b = @dir.read
     a.should_not == b
-    b.should_not == c
+    @dir.pos.should > 0
+    @dir.rewind
+    @dir.pos.should == 0
+    c = @dir.read
     c.should == a
-
-    second.should_not == prejmp
   end
 
   it "returns the Dir instance" do

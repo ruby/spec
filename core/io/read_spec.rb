@@ -206,9 +206,8 @@ describe "IO#read" do
   end
 
   it "consumes zero bytes when reading zero bytes" do
-    pre_pos = @io.pos
-
     @io.read(0).should == ''
+    @io.pos.should == 0
 
     @io.getc.chr.should == '1'
   end

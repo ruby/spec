@@ -18,7 +18,6 @@ with_feature :continuation_library do
 
     it "is possible to call a continuation multiple times" do
       i = 0
-      cont = nil
       @cont = nil
       @object.callcc {|c| @cont = c}
       i += 1
@@ -27,13 +26,11 @@ with_feature :continuation_library do
     end
 
     it "returns the results of a block if continuation is not called" do
-      cont = nil
       a = @object.callcc {|c| 0}
       a.should == 0
     end
 
     it "returns the results of continuation once called" do
-      cont = nil
       @cont = nil
       a = @object.callcc {|c| @cont = c; 0}
       @cont.call(1) if a == 0

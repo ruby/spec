@@ -19,7 +19,6 @@ describe "Literal Regexps" do
   it "caches the Regexp object" do
     rs = []
     2.times do |i|
-      x = 1
       rs << /foo/
     end
     rs[0].should equal(rs[1])

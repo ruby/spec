@@ -211,8 +211,6 @@ describe "Module#module_function as a toggle (no arguments) in a Module body" do
           module_eval " def test2() end "
         }
 
-    c = Class.new { include m }
-
     m.respond_to?(:test1).should == false
     m.respond_to?(:test2).should == false
   end

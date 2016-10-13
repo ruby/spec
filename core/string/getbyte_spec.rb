@@ -10,7 +10,7 @@ describe "String#getbyte" do
     "b".getbyte(0).should == 98
 
     # copy-on-write case
-    str1, str2 = "fooXbar".split("X")
+    _str1, str2 = "fooXbar".split("X")
     str2.getbyte(0).should == 98
   end
 
@@ -18,7 +18,7 @@ describe "String#getbyte" do
     "glark".getbyte(-1).should == "glark".getbyte(4)
 
     # copy-on-write case
-    str1, str2 = "fooXbar".split("X")
+    _str1, str2 = "fooXbar".split("X")
     str2.getbyte(-1).should == 114
   end
 
