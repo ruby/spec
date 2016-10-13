@@ -398,7 +398,7 @@ describe "String#sub with pattern and Hash" do
   end
 
   it "removes keys that don't correspond to matches" do
-    "hello".sub(/./, 'z' => 'L', 'z' => 'b', 'o' => 'ow').should == "ello"
+    "hello".sub(/./, 'z' => 'b', 'o' => 'ow').should == "ello"
   end
 
   it "ignores non-String keys" do
@@ -483,7 +483,7 @@ describe "String#sub! with pattern and Hash" do
   end
 
   it "removes keys that don't correspond to matches" do
-    "hello".sub!(/./, 'z' => 'L', 'z' => 'b', 'o' => 'ow').should == "ello"
+    "hello".sub!(/./, 'z' => 'b', 'o' => 'ow').should == "ello"
   end
 
   it "ignores non-String keys" do

@@ -91,7 +91,6 @@ describe "The break statement in a lambda" do
 
     it "returns from the lambda" do
       @program.break_in_nested_scope_yield
-      expected = [:a, :d, :aaa, :b, :bbb]
       ScratchPad.recorded.should == [:a, :d, :aaa, :b, :bbb, :e]
     end
   end

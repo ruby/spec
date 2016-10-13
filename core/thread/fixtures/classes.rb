@@ -148,7 +148,7 @@ module ThreadSpecs
   end
 
   def self.dying_thread_ensures(kill_method_name=:kill)
-    t = Thread.new do
+    Thread.new do
       begin
         Thread.current.send(kill_method_name)
       ensure
@@ -158,7 +158,7 @@ module ThreadSpecs
   end
 
   def self.dying_thread_with_outer_ensure(kill_method_name=:kill)
-    t = Thread.new do
+    Thread.new do
       begin
         begin
           Thread.current.send(kill_method_name)
@@ -270,17 +270,16 @@ module ThreadSpecs
     main_thread2(critical_thread)
   end
 
-  def self.create_critical_thread()
-    critical_thread = Thread.new do
+  def self.create_critical_thread
+    Thread.new do
       Thread.critical = true
       yield
       Thread.critical = false
     end
-    return critical_thread
   end
 
   def self.create_and_kill_critical_thread(passAfterKill=false)
-    critical_thread = ThreadSpecs.create_critical_thread do
+    ThreadSpecs.create_critical_thread do
       Thread.current.kill
       if passAfterKill
         Thread.pass
