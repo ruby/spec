@@ -1,4 +1,3 @@
-# -*- encoding: ascii-8bit -*-
 require File.expand_path('../../../../spec_helper', __FILE__)
 require 'stringio'
 require 'zlib'
@@ -6,7 +5,8 @@ require 'zlib'
 describe "GzipWriter#write" do
   before :each do
     @data = '12345abcde'
-    @zip = "\037\213\b\000,\334\321G\000\00334261MLJNI\005\000\235\005\000$\n\000\000\000"
+    @zip = [31, 139, 8, 0, 44, 220, 209, 71, 0, 3, 51, 52, 50, 54, 49, 77,
+            76, 74, 78, 73, 5, 0, 157, 5, 0, 36, 10, 0, 0, 0].pack('C*')
     @io = StringIO.new ""
   end
 
@@ -16,7 +16,7 @@ describe "GzipWriter#write" do
     end
 
     # skip gzip header for now
-    @io.string[10..-1].should == @zip[10..-1]
+    @io.string.unpack('C*')[10..-1].should == @zip.unpack('C*')[10..-1]
   end
 
   it "returns the number of bytes in the input" do
@@ -31,7 +31,6 @@ describe "GzipWriter#write" do
     Zlib::GzipWriter.wrap @io do |gzio|
       gzio.write input
     end
-
-    @io.string.size.should == 8176
+    @io.string.size.should == 8174
   end
 end
