@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/common', __FILE__)
 
@@ -167,14 +168,15 @@ describe "File.expand_path" do
       path = "./a".force_encoding Encoding::CP1251
       File.expand_path(path).encoding.should equal(Encoding::CP1251)
 
-      weird_path = "\xde\xad\xbe\xaf".force_encoding Encoding::ASCII_8BIT
+      weird_path = [222, 173, 190, 175].pack('C*')
       File.expand_path(weird_path).encoding.should equal(Encoding::ASCII_8BIT)
     end
 
     platform_is_not :windows do
       it "expands a path when the default external encoding is ASCII-8BIT" do
         Encoding.default_external = Encoding::ASCII_8BIT
-        File.expand_path("\xde\xad\xbe\xaf", @rootdir).should == "#{@rootdir}\xde\xad\xbe\xaf"
+        path_8bit = [222, 173, 190, 175].pack('C*')
+        File.expand_path( path_8bit, @rootdir).should == "#{@rootdir}" + path_8bit
       end
     end
 
