@@ -175,7 +175,8 @@ describe "File.expand_path" do
     platform_is_not :windows do
       it "expands a path when the default external encoding is ASCII-8BIT" do
         Encoding.default_external = Encoding::ASCII_8BIT
-        File.expand_path( [222, 173, 190, 175].pack('C*'), @rootdir).should == "#{@rootdir}" +  [222, 173, 190, 175].pack('C*')
+        path_8bit = [222, 173, 190, 175].pack('C*')
+        File.expand_path( path_8bit, @rootdir).should == "#{@rootdir}" + path_8bit
       end
     end
 
