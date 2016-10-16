@@ -1,3 +1,4 @@
+# -*- encoding: binary -*-
 class UserDefined
   class Nested
     def ==(other)

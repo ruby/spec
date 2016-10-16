@@ -1,3 +1,4 @@
+# -*- encoding: binary -*-
 require File.expand_path('../../fixtures/marshal_data', __FILE__)
 require 'stringio'
 
