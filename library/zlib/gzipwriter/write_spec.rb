@@ -31,6 +31,6 @@ describe "GzipWriter#write" do
     Zlib::GzipWriter.wrap @io do |gzio|
       gzio.write input
     end
-    @io.string.size.should == 8174
+    @io.string.size.should == 8176
   end
 end
