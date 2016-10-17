@@ -4,7 +4,7 @@ require 'zlib'
 
 describe "Zlib::GzipFile#close" do
   it "finishes the stream and closes the io" do
-    io = StringIO.new ""
+    io = StringIO.new "".b
     Zlib::GzipWriter.wrap io do |gzio|
       gzio.close
 
