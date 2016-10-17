@@ -223,7 +223,9 @@ end
 describe "IO#gets" do
   before :each do
     @name = tmp("io_gets")
-    touch(@name) { |f| f.write "朝日" + "\xE3\x81" * 100 }
+    # create filename "朝日" + "\xE3\x81" * 100 to avoid utf-8 conflicts
+    filename = "朝日" + ([227,129].pack('C*') * 100).force_encoding('utf-8')
+    touch(@name) { |f| f.write filename }
     @io = new_io @name, fmode("r:utf-8")
   end
 
@@ -237,7 +239,9 @@ describe "IO#gets" do
   end
 
   it "read limit bytes and extra bytes with maximum of 16" do
-    @io.gets(7).should == "朝日\xE3" + "\x81\xE3" * 8
+    # create str "朝日\xE3" + "\x81\xE3" * 8 to avoid utf-8 conflicts
+    str = "朝日" + ([227] + [129,227] * 8).pack('C*').force_encoding('utf-8')
+    @io.gets(7).should == str
   end
 end
 
