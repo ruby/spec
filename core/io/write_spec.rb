@@ -93,7 +93,6 @@ describe "IO.write" do
 
   it "writes binary data if no encoding is given" do
     IO.write(@filename, 'Hëllö'.encode('ISO-8859-1'))
-    [72, 235, 108, 108, 246].pack('C*')
     xEB = [235].pack('C*')
     xF6 = [246].pack('C*')
     File.binread(@filename).should == ("H" + xEB + "ll" + xF6).force_encoding(Encoding::ASCII_8BIT)
