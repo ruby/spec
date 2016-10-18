@@ -223,9 +223,9 @@ end
 describe "IO#gets" do
   before :each do
     @name = tmp("io_gets")
-    # create filename "朝日" + "\xE3\x81" * 100 to avoid utf-8 conflicts
-    filename = "朝日" + ([227,129].pack('C*') * 100).force_encoding('utf-8')
-    touch(@name) { |f| f.write filename }
+    # create data "朝日" + "\xE3\x81" * 100 to avoid utf-8 conflicts
+    data = "朝日" + ([227,129].pack('C*') * 100).force_encoding('utf-8')
+    touch(@name) { |f| f.write data }
     @io = new_io @name, fmode("r:utf-8")
   end
 
