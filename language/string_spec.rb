@@ -2,6 +2,10 @@
 
 require File.expand_path('../../spec_helper', __FILE__)
 
+ruby_version_is "2.3" do
+  require File.expand_path('../fixtures/squiggly_heredoc', __FILE__)
+end
+
 # TODO: rewrite these horrid specs. it "are..." seriously?!
 
 describe "Ruby character strings" do
@@ -174,6 +178,12 @@ HERE
     HERE
 
     s.should == '    foo bar#{@ip}' + "\n"
+  end
+
+  ruby_version_is "2.3" do
+    it "allows HEREDOC with <<~'identifier', allowing to indent identifier and content" do
+      StringSpecs.squiggly_message.should == "character density, n.:\n  The number of very weird people in the office.\n"
+    end
   end
 
   it "calls #to_s when the object is not a String" do
