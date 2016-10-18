@@ -68,9 +68,10 @@ describe "IO#write on a file" do
       File.open(@filename, "w") do |file|
         file.write('Hëllö'.encode('ISO-8859-1'))
       end
-    xEB = [235].pack('C*')
-    xF6 = [246].pack('C*')
-    File.binread(@filename).should == ("H" + xEB + "ll" + xF6).force_encoding(Encoding::ASCII_8BIT)
+      ë = ([235].pack('U')).encode('ISO-8859-1')
+      ö = ([246].pack('U')).encode('ISO-8859-1')
+      res = "H#{ë}ll#{ö}"
+      File.binread(@filename).should == res.force_encoding(Encoding::ASCII_8BIT)
     end
   end
 end
