@@ -3,15 +3,10 @@ require File.expand_path('../../fixtures/classes', __FILE__)
 require File.expand_path('../shared/basic', __FILE__)
 require File.expand_path('../shared/numeric_basic', __FILE__)
 require File.expand_path('../shared/integer', __FILE__)
-require 'fiddle'
-
-def pointer_size_is size
-  yield if Fiddle::SIZEOF_INTPTR_T == size
-end
 
 ruby_version_is '2.3' do
 
-  pointer_size_is 8 do
+  platform_is wordsize: 64 do
 
     describe "Array#pack with format 'J'" do
       it_behaves_like :array_pack_basic, 'J'
@@ -67,7 +62,7 @@ ruby_version_is '2.3' do
       it_behaves_like :array_pack_64bit_be, 'j!>'
     end
 
-    pointer_size_is 4 do
+  platform_is wordsize: 32 do
 
       describe "Array#pack with format 'J'" do
         it_behaves_like :array_pack_basic, 'J'
