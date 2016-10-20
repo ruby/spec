@@ -24,60 +24,60 @@ ruby_version_is '2.3' do
 
     platform_is_not :mingw32 do
       describe "Array#pack with format 'J'" do
-        describe "Array#pack with modifier '_'" do
+        describe "with modifier '_'" do
           it_behaves_like :array_pack_64bit_le, 'J_'
         end
 
-        describe "Array#pack with modifier '!'" do
+        describe "with modifier '!'" do
           it_behaves_like :array_pack_64bit_le, 'J!'
         end
 
-        describe "Array#pack with modifier '<' and '_'" do
+        describe "with modifier '<' and '_'" do
           it_behaves_like :array_pack_64bit_le, 'J<_'
           it_behaves_like :array_pack_64bit_le, 'J_<'
         end
 
-        describe "Array#pack with modifier '<' and '!'" do
+        describe "with modifier '<' and '!'" do
           it_behaves_like :array_pack_64bit_le, 'J<!'
           it_behaves_like :array_pack_64bit_le, 'J!<'
         end
 
-        describe "Array#pack with modifier '>' and '_'" do
+        describe "with modifier '>' and '_'" do
           it_behaves_like :array_pack_64bit_be, 'J>_'
           it_behaves_like :array_pack_64bit_be, 'J_>'
         end
 
-        describe "Array#pack with modifier '>' and '!'" do
+        describe "with modifier '>' and '!'" do
           it_behaves_like :array_pack_64bit_be, 'J>!'
           it_behaves_like :array_pack_64bit_be, 'J!>'
         end
       end
 
       describe "Array#pack with format 'j'" do
-        describe "Array#pack with modifier '_'" do
+        describe "with modifier '_'" do
           it_behaves_like :array_pack_64bit_le, 'j_'
         end
 
-        describe "Array#pack with modifier '!'" do
+        describe "with modifier '!'" do
           it_behaves_like :array_pack_64bit_le, 'j!'
         end
 
-        describe "Array#pack with modifier '<' and '_'" do
+        describe "with modifier '<' and '_'" do
           it_behaves_like :array_pack_64bit_le, 'j<_'
           it_behaves_like :array_pack_64bit_le, 'j_<'
         end
 
-        describe "Array#pack with modifier '<' and '!'" do
+        describe "with modifier '<' and '!'" do
           it_behaves_like :array_pack_64bit_le, 'j<!'
           it_behaves_like :array_pack_64bit_le, 'j!<'
         end
 
-        describe "Array#pack with modifier '>' and '_'" do
+        describe "with modifier '>' and '_'" do
           it_behaves_like :array_pack_64bit_be, 'j>_'
           it_behaves_like :array_pack_64bit_be, 'j_>'
         end
 
-        describe "Array#pack with modifier '>' and '!'" do
+        describe "with modifier '>' and '!'" do
           it_behaves_like :array_pack_64bit_be, 'j>!'
           it_behaves_like :array_pack_64bit_be, 'j!>'
         end
@@ -86,60 +86,60 @@ ruby_version_is '2.3' do
 
     platform_is :mingw32 do
       describe "Array#pack with format 'J'" do
-        describe "Array#pack with modifier '_'" do
+        describe "with modifier '_'" do
           it_behaves_like :array_pack_32bit_le, 'J_'
         end
 
-        describe "Array#pack with modifier '!'" do
+        describe "with modifier '!'" do
           it_behaves_like :array_pack_32bit_le, 'J!'
         end
 
-        describe "Array#pack with modifier '<' and '_'" do
+        describe "with modifier '<' and '_'" do
           it_behaves_like :array_pack_32bit_le, 'J<_'
           it_behaves_like :array_pack_32bit_le, 'J_<'
         end
 
-        describe "Array#pack with modifier '<' and '!'" do
+        describe "with modifier '<' and '!'" do
           it_behaves_like :array_pack_32bit_le, 'J<!'
           it_behaves_like :array_pack_32bit_le, 'J!<'
         end
 
-        describe "Array#pack with modifier '>' and '_'" do
+        describe "with modifier '>' and '_'" do
           it_behaves_like :array_pack_32bit_be, 'J>_'
           it_behaves_like :array_pack_32bit_be, 'J_>'
         end
 
-        describe "Array#pack with modifier '>' and '!'" do
+        describe "with modifier '>' and '!'" do
           it_behaves_like :array_pack_32bit_be, 'J>!'
           it_behaves_like :array_pack_32bit_be, 'J!>'
         end
       end
 
       describe "Array#pack with format 'j'" do
-        describe "Array#pack with modifier '_'" do
+        describe "with modifier '_'" do
           it_behaves_like :array_pack_32bit_le, 'j_'
         end
 
-        describe "Array#pack with modifier '!'" do
+        describe "with modifier '!'" do
           it_behaves_like :array_pack_32bit_le, 'j!'
         end
 
-        describe "Array#pack with modifier '<' and '_'" do
+        describe "with modifier '<' and '_'" do
           it_behaves_like :array_pack_32bit_le, 'j<_'
           it_behaves_like :array_pack_32bit_le, 'j_<'
         end
 
-        describe "Array#pack with modifier '<' and '!'" do
+        describe "with modifier '<' and '!'" do
           it_behaves_like :array_pack_32bit_le, 'j<!'
           it_behaves_like :array_pack_32bit_le, 'j!<'
         end
 
-        describe "Array#pack with modifier '>' and '_'" do
+        describe "with modifier '>' and '_'" do
           it_behaves_like :array_pack_32bit_be, 'j>_'
           it_behaves_like :array_pack_32bit_be, 'j_>'
         end
 
-        describe "Array#pack with modifier '>' and '!'" do
+        describe "with modifier '>' and '!'" do
           it_behaves_like :array_pack_32bit_be, 'j>!'
           it_behaves_like :array_pack_32bit_be, 'j!>'
         end
@@ -165,60 +165,60 @@ ruby_version_is '2.3' do
     end
 
     describe "Array#pack with format 'J'" do
-      describe "Array#pack with modifier '_'" do
+      describe "with modifier '_'" do
         it_behaves_like :array_pack_32bit_le, 'J_'
       end
 
-      describe "Array#pack with modifier '!'" do
+      describe "with modifier '!'" do
         it_behaves_like :array_pack_32bit_le, 'J!'
       end
 
-      describe "Array#pack with modifier '<' and '_'" do
+      describe "with modifier '<' and '_'" do
         it_behaves_like :array_pack_32bit_le, 'J<_'
         it_behaves_like :array_pack_32bit_le, 'J_<'
       end
 
-      describe "Array#pack with modifier '<' and '!'" do
+      describe "with modifier '<' and '!'" do
         it_behaves_like :array_pack_32bit_le, 'J<!'
         it_behaves_like :array_pack_32bit_le, 'J!<'
       end
 
-      describe "Array#pack with modifier '>' and '_'" do
+      describe "with modifier '>' and '_'" do
         it_behaves_like :array_pack_32bit_be, 'J>_'
         it_behaves_like :array_pack_32bit_be, 'J_>'
       end
 
-      describe "Array#pack with modifier '>' and '!'" do
+      describe "with modifier '>' and '!'" do
         it_behaves_like :array_pack_32bit_be, 'J>!'
         it_behaves_like :array_pack_32bit_be, 'J!>'
       end
     end
 
     describe "Array#pack with format 'j'" do
-      describe "Array#pack with modifier '_'" do
+      describe "with modifier '_'" do
         it_behaves_like :array_pack_32bit_le, 'j_'
       end
 
-      describe "Array#pack with modifier '!'" do
+      describe "with modifier '!'" do
         it_behaves_like :array_pack_32bit_le, 'j!'
       end
 
-      describe "Array#pack with modifier '<' and '_'" do
+      describe "with modifier '<' and '_'" do
         it_behaves_like :array_pack_32bit_le, 'j<_'
         it_behaves_like :array_pack_32bit_le, 'j_<'
       end
 
-      describe "Array#pack with modifier '<' and '!'" do
+      describe "with modifier '<' and '!'" do
         it_behaves_like :array_pack_32bit_le, 'j<!'
         it_behaves_like :array_pack_32bit_le, 'j!<'
       end
 
-      describe "Array#pack with modifier '>' and '_'" do
+      describe "with modifier '>' and '_'" do
         it_behaves_like :array_pack_32bit_be, 'j>_'
         it_behaves_like :array_pack_32bit_be, 'j_>'
       end
 
-      describe "Array#pack with modifier '>' and '!'" do
+      describe "with modifier '>' and '!'" do
         it_behaves_like :array_pack_32bit_be, 'j>!'
         it_behaves_like :array_pack_32bit_be, 'j!>'
       end
