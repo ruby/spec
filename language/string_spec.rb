@@ -131,58 +131,6 @@ describe "Ruby character strings" do
     '\t\n\r\f\b\a\e =b\030'.should == "\\t\\n\\r\\f\\b\\a\\e =b\\030"
   end
 
-  it "allows HEREDOC with <<identifier, interpolated" do
-    s = <<HERE
-foo bar#{@ip}
-HERE
-    s.should == "foo barxxx\n"
-  end
-
-  it 'allow HEREDOC with <<"identifier", interpolated' do
-    s = <<"HERE"
-foo bar#{@ip}
-HERE
-    s.should == "foo barxxx\n"
-  end
-
-  it "allows HEREDOC with <<'identifier', no interpolation" do
-    s = <<'HERE'
-foo bar#{@ip}
-HERE
-    s.should == 'foo bar#{@ip}' + "\n"
-  end
-
-  it "allows HEREDOC with <<-identifier, allowing to indent identifier, interpolated" do
-    s = <<-HERE
-    foo bar#{@ip}
-    HERE
-
-    s.should == "    foo barxxx\n"
-  end
-
-  it 'allow HEREDOC with <<-"identifier", allowing to indent identifier, interpolated' do
-    s = <<-"HERE"
-    foo bar#{@ip}
-    HERE
-
-    s.should == "    foo barxxx\n"
-  end
-
-  it "allows HEREDOC with <<-'identifier', allowing to indent identifier, no interpolation" do
-    s = <<-'HERE'
-    foo bar#{@ip}
-    HERE
-
-    s.should == '    foo bar#{@ip}' + "\n"
-  end
-
-  ruby_version_is "2.3" do
-    it "allows HEREDOC with <<~'identifier', allowing to indent identifier and content" do
-      require File.expand_path('../fixtures/squiggly_heredoc', __FILE__)
-      StringSpecs.squiggly_message.should == "character density, n.:\n  The number of very weird people in the office.\n"
-    end
-  end
-
   it "calls #to_s when the object is not a String" do
     obj = mock('to_s')
     obj.stub!(:to_s).and_return('42')
