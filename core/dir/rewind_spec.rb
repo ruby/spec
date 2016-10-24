@@ -20,13 +20,10 @@ describe "Dir#rewind" do
   end
 
   it "resets the next read to start from the first entry" do
-    @dir.pos.should == 0
     a = @dir.read
     b = @dir.read
     a.should_not == b
-    @dir.pos.should > 0
     @dir.rewind
-    @dir.pos.should == 0
     c = @dir.read
     c.should == a
   end
