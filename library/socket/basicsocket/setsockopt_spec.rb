@@ -183,20 +183,13 @@ describe "BasicSocket#setsockopt" do
       @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE).bool.should == true
     end
 
-    platform_is_not :freebsd, :solaris, :darwin do
-      it 'linger' do
-        option = Socket::Option.linger(true, 10)
-        @sock.setsockopt(option).should == 0
-        @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER).linger.should == [true, 10]
-      end
-    end
-
-    platform_is :freebsd, :solaris, :darwin do
-      it 'linger' do
-        option = Socket::Option.linger(true, 10)
-        @sock.setsockopt(option).should == 0
-        @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER).linger.should == [Socket::SO_LINGER, 10]
-      end
+    it 'linger' do
+      option = Socket::Option.linger(true, 10)
+      @sock.setsockopt(option).should == 0
+      onoff, seconds = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER).linger
+      seconds.should == 10
+      # Both results can be produced depending on the OS and value of Socket::SO_LINGER
+      [true, Socket::SO_LINGER].should include(onoff)
     end
   end
 end
