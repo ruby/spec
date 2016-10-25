@@ -70,7 +70,7 @@ describe "Socket::Constants" do
     end
   end
 
-  platform_is_not :solaris, :windows do
+  platform_is_not :solaris, :windows, :aix do
     it "defines multicast options" do
       consts = ["IP_MAX_MEMBERSHIPS"]
       consts.each do |c|
