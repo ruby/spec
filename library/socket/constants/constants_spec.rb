@@ -56,7 +56,6 @@ describe "Socket::Constants" do
     consts.each do |c|
       Socket::Constants.should have_constant(c)
     end
-
   end
 
   it "defines multicast options" do
