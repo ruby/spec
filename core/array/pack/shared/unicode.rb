@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding: binary -*-
 
 describe :array_pack_unicode, shared: true do
   it "encodes ASCII values as a Unicode codepoint" do
