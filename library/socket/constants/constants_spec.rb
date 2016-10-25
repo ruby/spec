@@ -11,16 +11,28 @@ describe "Socket::Constants" do
   end
 
   it "defines protocol families" do
-    consts = ["PF_INET6", "PF_INET", "PF_IPX", "PF_UNIX", "PF_UNSPEC"]
+    consts = ["PF_INET6", "PF_INET", "PF_UNIX", "PF_UNSPEC"]
     consts.each do |c|
       Socket::Constants.should have_constant(c)
     end
   end
 
+  platform_is_not :aix do
+    it "defines PF_IPX protocol" do
+      Socket::Constants.should have_constant("PF_IPX")
+    end
+  end
+
   it "defines address families" do
-    consts = ["AF_INET6", "AF_INET", "AF_IPX", "AF_UNIX", "AF_UNSPEC"]
+    consts = ["AF_INET6", "AF_INET", "AF_UNIX", "AF_UNSPEC"]
     consts.each do |c|
       Socket::Constants.should have_constant(c)
+    end
+  end
+
+  platform_is_not :aix do
+    it "defines AF_IPX address" do
+      Socket::Constants.should have_constant("AF_IPX")
     end
   end
 
