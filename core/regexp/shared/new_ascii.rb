@@ -1,3 +1,4 @@
+# -*- encoding: binary -*-
 describe :regexp_new_ascii, shared: true do
   it "requires one argument and creates a new regular expression object" do
     Regexp.send(@method, '').is_a?(Regexp).should == true
