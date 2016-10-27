@@ -170,19 +170,37 @@ describe "BasicSocket#setsockopt" do
     n.unpack('i')[0].should >= 1000
   end
 
+  platform_is_not :aix do
+    describe 'accepts Socket::Option as argument' do
+      it 'boolean' do
+        option = Socket::Option.bool(:INET, :SOCKET, :KEEPALIVE, true)
+        @sock.setsockopt(option).should == 0
+        @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE).bool.should == true
+      end
+
+      it 'int' do
+        option = Socket::Option.int(:INET, :SOCKET, :KEEPALIVE, 1)
+        @sock.setsockopt(option).should == 0
+        @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE).bool.should == true
+      end
+    end
+  end
+
+  platform_is :aix do
+    describe 'accepts Socket::Option as argument' do
+      it 'boolean' do
+        option = Socket::Option.bool(:INET, :SOCKET, :KEEPALIVE, true)
+        @sock.setsockopt(option).should == 0
+      end
+
+      it 'int' do
+        option = Socket::Option.int(:INET, :SOCKET, :KEEPALIVE, 1)
+        @sock.setsockopt(option).should == 0
+      end
+    end
+  end
+
   describe 'accepts Socket::Option as argument' do
-    it 'boolean' do
-      option = Socket::Option.bool(:INET, :SOCKET, :KEEPALIVE, true)
-      @sock.setsockopt(option).should == 0
-      @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE).bool.should == true
-    end
-
-    it 'int' do
-      option = Socket::Option.int(:INET, :SOCKET, :KEEPALIVE, 1)
-      @sock.setsockopt(option).should == 0
-      @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE).bool.should == true
-    end
-
     it 'linger' do
       option = Socket::Option.linger(true, 10)
       @sock.setsockopt(option).should == 0
