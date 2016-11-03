@@ -11,13 +11,15 @@ process_is_foreground do
         @stdin_back = STDIN.dup
         @stdout_back = STDOUT.dup
         STDIN.reopen(@file, 'r')
-        STDOUT.reopen("/dev/null")
+        null = (IO.const_defined?(:NULL) ? IO::NULL :
+                  PlatformGuard.windows? ? "nul" : "/dev/null")
+        STDOUT.reopen(null)
       end
 
       after :each do
-        rm_r @file
         STDIN.reopen(@stdin_back)
         @stdin_back.close
+        rm_r @file
         STDOUT.reopen(@stdout_back)
         @stdout_back.close
       end
