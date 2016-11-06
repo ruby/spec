@@ -229,8 +229,8 @@ describe "Module#prepend" do
     end
   end
 
-  ruby_version_is ''...'2.4' do
-    it "accepts no-arguments" do
+  ruby_version_is '2.4' do
+    it "doesn't accept no-arguments" do
       lambda {
         Module.new do
           prepend
