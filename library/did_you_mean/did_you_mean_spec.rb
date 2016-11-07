@@ -1,4 +1,4 @@
-ruby_version_is "2.3" do
+ruby_version_is "2.3"..."2.4" do
   describe "with an incorrect spelling of" do
     describe "a constant" do
       it "suggests a correction to Ojbect" do
