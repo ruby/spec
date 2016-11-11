@@ -4,8 +4,11 @@ describe "Process.groups" do
   platform_is_not :windows do
     it "gets an Array of the gids of groups in the supplemental group access list" do
       groups = `id -G`.scan(/\d+/).map { |i| i.to_i }
+      gid = Process.gid
 
-      Process.groups.sort.should == groups.sort
+      expected = (groups.sort - [gid]).sort
+      actual = (Process.groups - [gid]).sort
+      actual.should == expected
     end
 
     # NOTE: This is kind of sketchy.
