@@ -250,18 +250,26 @@ describe :process_spawn, shared: true do
 
   # :unsetenv_others
 
+  ruby_cmd_options =
+    begin
+      require "rbconfig"
+      RbConfig::CONFIG["CC"] == "icc" ? "--disable-gems" : nil
+    rescue LoadError
+      nil
+    end
+
   platform_is_not :windows do
     it "unsets other environment variables when given a true :unsetenv_others option" do
       ENV["FOO"] = "BAR"
       lambda do
-        Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: true)
+        Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb"), options: ruby_cmd_options), unsetenv_others: true)
       end.should output_to_fd("")
     end
 
     it "unsets other environment variables when given a non-false :unsetenv_others option" do
       ENV["FOO"] = "BAR"
       lambda do
-        Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: :true)
+        Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb"), options: ruby_cmd_options), unsetenv_others: :true)
       end.should output_to_fd("")
     end
   end
@@ -269,21 +277,21 @@ describe :process_spawn, shared: true do
   it "does not unset other environment variables when given a false :unsetenv_others option" do
     ENV["FOO"] = "BAR"
     lambda do
-      Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: false)
+      Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb"), options: ruby_cmd_options), unsetenv_others: false)
     end.should output_to_fd("BAR")
   end
 
   it "does not unset other environment variables when given a nil :unsetenv_others option" do
     ENV["FOO"] = "BAR"
     lambda do
-      Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: nil)
+      Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb"), options: ruby_cmd_options), unsetenv_others: nil)
     end.should output_to_fd("BAR")
   end
 
   platform_is_not :windows do
     it "does not unset environment variables included in the environment hash" do
       lambda do
-        Process.wait @object.spawn({"FOO" => "BAR"}, ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: true)
+        Process.wait @object.spawn({"FOO" => "BAR"}, ruby_cmd(fixture(__FILE__, "env.rb"), options: ruby_cmd_options), unsetenv_others: true)
       end.should output_to_fd("BAR")
     end
   end
