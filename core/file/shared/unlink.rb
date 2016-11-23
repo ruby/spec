@@ -1,7 +1,7 @@
 describe :file_unlink, shared: true do
   before :each do
-    @file1 = 'test.txt'
-    @file2 = 'test2.txt'
+    @file1 = tmp('test.txt')
+    @file2 = tmp('test2.txt')
 
     touch @file1
     touch @file2
