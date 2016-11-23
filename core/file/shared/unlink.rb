@@ -39,13 +39,9 @@ describe :file_unlink, shared: true do
   end
 
   it "coerces a given parameter into a string if possible" do
-    class Coercable
-      def to_str
-        "test.txt"
-      end
-    end
-
-    File.send(@method, Coercable.new).should == 1
+    mock = mock("to_str")
+    mock.should_receive(:to_str).and_return(@file1)
+    File.send(@method, mock).should == 1
   end
 
   it "accepts an object that has a #to_path method" do
