@@ -255,6 +255,7 @@ describe :process_spawn, shared: true do
       ENV["FOO"] = "BAR"
       lambda do
         Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb"), options: "--disable-gems"), unsetenv_others: true)
+        $?.success?.should be_true
       end.should output_to_fd("")
     end
 
@@ -262,6 +263,7 @@ describe :process_spawn, shared: true do
       ENV["FOO"] = "BAR"
       lambda do
         Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb"), options: "--disable-gems"), unsetenv_others: :true)
+        $?.success?.should be_true
       end.should output_to_fd("")
     end
   end
@@ -270,6 +272,7 @@ describe :process_spawn, shared: true do
     ENV["FOO"] = "BAR"
     lambda do
       Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: false)
+      $?.success?.should be_true
     end.should output_to_fd("BAR")
   end
 
@@ -277,6 +280,7 @@ describe :process_spawn, shared: true do
     ENV["FOO"] = "BAR"
     lambda do
       Process.wait @object.spawn(ruby_cmd(fixture(__FILE__, "env.rb")), unsetenv_others: nil)
+      $?.success?.should be_true
     end.should output_to_fd("BAR")
   end
 
@@ -284,6 +288,7 @@ describe :process_spawn, shared: true do
     it "does not unset environment variables included in the environment hash" do
       lambda do
         Process.wait @object.spawn({"FOO" => "BAR"}, ruby_cmd(fixture(__FILE__, "env.rb"), options: "--disable-gems"), unsetenv_others: true)
+        $?.success?.should be_true
       end.should output_to_fd("BAR")
     end
   end
