@@ -4,6 +4,9 @@ unless MSpec.retrieve(:features).key?(:readline)
     require 'readline'
   rescue LoadError
   else
-    MSpec.enable_feature :readline
+    # rb-readline behaves quite differently
+    if $".grep(/\brbreadline\.rb$/).empty?
+      MSpec.enable_feature :readline
+    end
   end
 end
