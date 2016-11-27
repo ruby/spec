@@ -553,6 +553,24 @@ describe "File.open" do
     @fh = File.open(@file, options)
   end
 
+  ruby_version_is "2.3" do
+    it "accepts extra flags as a keyword argument and combine with a string mode" do
+      lambda {
+        File.open(@file, "w", flags: File::EXCL) { }
+      }.should raise_error(Errno::EEXIST)
+
+      lambda {
+        File.open(@file, mode: "w", flags: File::EXCL) { }
+      }.should raise_error(Errno::EEXIST)
+    end
+
+    it "accepts extra flags as a keyword argument and combine with an integer mode" do
+      lambda {
+        File.open(@file, File::WRONLY | File::CREAT, flags: File::EXCL) { }
+      }.should raise_error(Errno::EEXIST)
+    end
+  end
+
   platform_is_not :windows do
     describe "on a FIFO" do
       before :each do
