@@ -1,35 +1,30 @@
-require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../spec_helper', __FILE__)
 
 process_is_foreground do
   with_feature :readline do
-    require 'readline'
-
     describe "Readline.readline" do
       before :each do
         @file = tmp('readline')
-        File.open(@file, 'w') do |file|
-          file.puts "test\n"
-        end
-        @stdin_back = STDIN.dup
-        @stdout_back = STDOUT.dup
-        STDIN.reopen(@file, 'r')
-        STDOUT.reopen("/dev/null")
+        touch(@file) { |f|
+          f.puts "test"
+        }
       end
 
       after :each do
         rm_r @file
-        STDIN.reopen(@stdin_back)
-        @stdin_back.close
-        STDOUT.reopen(@stdout_back)
-        @stdout_back.close
       end
 
-      it "returns the input string" do
-        Readline.readline.should == "test"
-      end
+      # Somehow those specs block on Windows
+      platform_is_not :windows do
+        it "returns the input string" do
+          out = ruby_exe('puts Readline.readline', options: "-rreadline", args: "< #{@file}")
+          out.should == "test\ntest\n"
+        end
 
-      it "taints the returned strings" do
-        Readline.readline.tainted?.should be_true
+        it "taints the returned strings" do
+          out = ruby_exe('puts Readline.readline.tainted?', options: "-rreadline", args: "< #{@file}")
+          out.should == "test\ntrue\n"
+        end
       end
     end
   end
