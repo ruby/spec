@@ -14,14 +14,17 @@ process_is_foreground do
         rm_r @file
       end
 
-      it "returns the input string" do
-        out = ruby_exe('puts Readline.readline', options: "-rreadline", args: "< #{@file}")
-        out.should == "test\ntest\n"
-      end
+      # Somehow those specs block on Windows
+      platform_is_not :windows do
+        it "returns the input string" do
+          out = ruby_exe('puts Readline.readline', options: "-rreadline", args: "< #{@file}")
+          out.should == "test\ntest\n"
+        end
 
-      it "taints the returned strings" do
-        out = ruby_exe('puts Readline.readline.tainted?', options: "-rreadline", args: "< #{@file}")
-        out.should == "test\ntrue\n"
+        it "taints the returned strings" do
+          out = ruby_exe('puts Readline.readline.tainted?', options: "-rreadline", args: "< #{@file}")
+          out.should == "test\ntrue\n"
+        end
       end
     end
   end
