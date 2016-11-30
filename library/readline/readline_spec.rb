@@ -5,25 +5,27 @@ process_is_foreground do
     describe "Readline.readline" do
       before :each do
         @file = tmp('readline')
+        @out = tmp('out.txt')
         touch(@file) { |f|
           f.puts "test"
         }
+        @options = { options: "-rreadline", args: [@out, "< #{@file}"] }
       end
 
       after :each do
-        rm_r @file
+        rm_r @file, @out
       end
 
       # Somehow those specs block on Windows
       platform_is_not :windows do
         it "returns the input string" do
-          out = ruby_exe('puts Readline.readline', options: "-rreadline", args: "< #{@file}")
-          out.should == "test\ntest\n"
+          ruby_exe('File.write ARGV[0], Readline.readline', @options)
+          File.read(@out).should == "test"
         end
 
         it "taints the returned strings" do
-          out = ruby_exe('puts Readline.readline.tainted?', options: "-rreadline", args: "< #{@file}")
-          out.should == "test\ntrue\n"
+          ruby_exe('File.write ARGV[0], Readline.readline.tainted?', @options)
+          File.read(@out).should == "true"
         end
       end
     end
