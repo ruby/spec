@@ -518,6 +518,25 @@ describe "File.open" do
     File.size(@file).should == 0
   end
 
+  ruby_version_is "2.3" do
+    platform_is :linux do
+      if defined?(File::TMPFILE)
+        it "creates an unnamed temporary file with File::TMPFILE" do
+          dir = tmp("").chomp("/")
+          rm_r @file
+          Dir["#{dir}/*"].should == []
+          File.open(dir, "r+", flags: File::TMPFILE) do |io|
+            io.write("ruby")
+            io.flush
+            io.rewind
+            io.read.should == "ruby"
+            Dir["#{dir}/*"].should == []
+          end
+        end
+      end
+    end
+  end
+
   it "raises a TypeError if passed a filename that is not a String or Integer type" do
     lambda { File.open(true)  }.should raise_error(TypeError)
     lambda { File.open(false) }.should raise_error(TypeError)
