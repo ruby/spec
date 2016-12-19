@@ -85,7 +85,9 @@ describe "TCPServer.new" do
     }.should raise_error(Errno::EADDRINUSE)
   end
 
-  platform_is_not :windows do
+  platform_is_not :windows, :aix do
+    # A known bug in AIX.  getsockopt(2) does not properly set
+    # the fifth argument for SO_REUSEADDR.
     it "sets SO_REUSEADDR on the resulting server" do
       @server = TCPServer.new('127.0.0.1', SocketSpecs.port)
       @server.getsockopt(:SOCKET, :REUSEADDR).data.should_not == "\x00\x00\x00\x00"
