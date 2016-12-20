@@ -85,7 +85,7 @@ def compile_extension(name)
   ldshared  = RbConfig::CONFIG["LDSHARED"]
   ldshared += " #{RbConfig::CONFIG["ARCH_FLAG"]}" if RbConfig::CONFIG["ARCH_FLAG"]
   libpath   = "-L#{path}"
-  libs      = "#{RbConfig::CONFIG["LIBRUBYARG_SHARED"]} #{RbConfig::CONFIG["LIBS"]}"
+  libs      = RbConfig::CONFIG["LIBS"]
   dldflags  = "#{RbConfig::CONFIG["LDFLAGS"]} #{RbConfig::CONFIG["DLDFLAGS"]}"
   dldflags.sub!(/-Wl,-soname,\S+/, '')
 
