@@ -3,12 +3,12 @@ platform_is :windows do
 
   describe "WIN32OLE_EVENT.new" do
     before :each do
-      @ole = WIN32OLE.new('InternetExplorer.Application')
+      @ie = WIN32OLE.new('InternetExplorer.Application')
       @event = ''
     end
 
     after :each do
-      @ole = nil
+      @ie.Quit
     end
 
     it "raises TypeError given invalid argument" do
@@ -16,7 +16,7 @@ platform_is :windows do
     end
 
     it "raises RuntimeError if event does not exist" do
-      lambda { WIN32OLE_EVENT.new(@ole, 'A') }.should raise_error RuntimeError
+      lambda { WIN32OLE_EVENT.new(@ie, 'A') }.should raise_error RuntimeError
     end
 
     it "raises RuntimeError if OLE object has no events" do
@@ -25,10 +25,8 @@ platform_is :windows do
     end
 
     it "creates WIN32OLE_EVENT object" do
-      ev = WIN32OLE_EVENT.new(@ole, 'DWebBrowserEvents')
+      ev = WIN32OLE_EVENT.new(@ie, 'DWebBrowserEvents')
       ev.should be_kind_of WIN32OLE_EVENT
     end
-
   end
-
 end

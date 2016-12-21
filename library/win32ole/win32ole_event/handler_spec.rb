@@ -4,25 +4,23 @@ platform_is :windows do
   # TODO: need specs here
   describe "WIN32OLE_EVENT#handler" do
     before :each do
-      @ole = WIN32OLE.new('InternetExplorer.Application')
+      @ie = WIN32OLE.new('InternetExplorer.Application')
       @event = ''
     end
 
     after :each do
-      @ole = nil
+      @ie.Quit
     end
-
   end
 
   describe "WIN32OLE_EVENT#handler=" do
     before :each do
-      @ole = WIN32OLE.new('InternetExplorer.Application')
+      @ie = WIN32OLE.new('InternetExplorer.Application')
       @event = ''
     end
 
     after :each do
-      @ole = nil
+      @ie.Quit
     end
-
   end
 end

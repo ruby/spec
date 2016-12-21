@@ -4,13 +4,12 @@ platform_is :windows do
   # TODO Add an expectation!
   describe "WIN32OLE_EVENT#off_event" do
     before :each do
-      @ole = WIN32OLE.new('InternetExplorer.Application')
+      @ie = WIN32OLE.new('InternetExplorer.Application')
       @event = ''
     end
 
     after :each do
-      @ole = nil
+      @ie.Quit
     end
-
   end
 end

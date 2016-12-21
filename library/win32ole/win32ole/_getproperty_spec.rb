@@ -3,13 +3,15 @@ platform_is :windows do
 
   describe "WIN32OLE#_getproperty" do
     before :each do
-      @ie = WIN32OLE.new 'InternetExplorer.application'
+      @ie = WIN32OLE.new('InternetExplorer.Application')
+    end
+
+    after :each do
+      @ie.Quit
     end
 
     it "gets name" do
       @ie._getproperty(0, [], []).should =~ /explorer/i
     end
-
   end
-
 end
