@@ -15,13 +15,13 @@ describe :io_tty, shared: true do
         # workaround for not configured environment
       end
     end
+  end
 
-    it "returns false if this stream is not a terminal device (TTY)" do
-      File.open(__FILE__) { |f| f.send(@method) }.should == false
-    end
+  it "returns false if this stream is not a terminal device (TTY)" do
+    File.open(__FILE__) { |f| f.send(@method) }.should == false
+  end
 
-    it "raises IOError on closed stream" do
-      lambda { IOSpecs.closed_io.send @method }.should raise_error(IOError)
-    end
+  it "raises IOError on closed stream" do
+    lambda { IOSpecs.closed_io.send @method }.should raise_error(IOError)
   end
 end
