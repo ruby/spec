@@ -3,7 +3,11 @@ platform_is :windows do
 
   describe :win32ole_ole_method, shared: true do
     before :each do
-      @ie = WIN32OLE.new("InternetExplorer.application")
+      @ie = WIN32OLE.new('InternetExplorer.Application')
+    end
+
+    after :each do
+      @ie.Quit
     end
 
     it "raises ArgumentError if no argument is given" do
@@ -15,7 +19,5 @@ platform_is :windows do
       result.kind_of?(WIN32OLE_METHOD).should be_true
       result.name.should == 'Quit'
     end
-
   end
-
 end

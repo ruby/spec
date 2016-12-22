@@ -3,7 +3,11 @@ platform_is :windows do
 
   describe "WIN32OLE#ole_methods" do
     before :each do
-      @ie = WIN32OLE.new 'InternetExplorer.application'
+      @ie = WIN32OLE.new('InternetExplorer.Application')
+    end
+
+    after :each do
+      @ie.Quit
     end
 
     it "raises ArgumentError if argument is given" do
@@ -17,7 +21,5 @@ platform_is :windows do
     it "contains a 'AddRef' method for Internet Explorer" do
       @ie.ole_methods.map { |m| m.name }.include?('AddRef').should be_true
     end
-
   end
-
 end
