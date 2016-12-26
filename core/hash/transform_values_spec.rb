@@ -29,6 +29,7 @@ ruby_version_is "2.4" do
   describe "Hash#transform_values!" do
     before :each do
       @hash = { a: 1, b: 2, c: 3 }
+      @initial_pairs = @hash.dup
     end
 
     it "returns self" do
@@ -47,6 +48,23 @@ ruby_version_is "2.4" do
         enumerator.size.should == @hash.size
         enumerator.each(&:succ)
         @hash.should == { a: 2, b: 3, c: 4 }
+      end
+    end
+
+    describe "on frozen instance" do
+      before :each do
+        @hash.freeze
+      end
+
+      it "keeps pairs and raises a RuntimeError" do
+        ->{ @hash.transform_values!(&:succ) }.should raise_error(RuntimeError)
+        @hash.should == @initial_pairs
+      end
+
+      context "when no block is given" do
+        it "does not raise an exception" do
+          @hash.transform_values!.should be_an_instance_of(enumerator_class)
+        end
       end
     end
   end
