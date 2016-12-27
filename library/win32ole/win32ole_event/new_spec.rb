@@ -3,8 +3,13 @@ platform_is :windows do
 
   describe "WIN32OLE_EVENT.new" do
     before :each do
-      @ie = WIN32OLE.new('InternetExplorer.Application')
-      @event = ''
+      retried = false
+      begin
+        @ie = WIN32OLE.new('InternetExplorer.Application')
+      rescue WIN32OLERuntimeError
+        retried = true
+        retry
+      end
     end
 
     after :each do
