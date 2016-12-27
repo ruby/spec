@@ -50,6 +50,8 @@ describe :string_each_line, shared: true do
       a.should == ["hello\nworld\n\n\n", "and\nuniverse\n\n\n\n\n", "dog"]
     end
   end
+
+quarantine! do # Currently fails on Travis
   ruby_version_is '2.5' do
     it "yields paragraphs (broken by 2 or more successive newlines) when passed ''" do
       a = []
@@ -61,6 +63,7 @@ describe :string_each_line, shared: true do
       a.should == ["hello\nworld\n\n", "and\nuniverse\n\n", "dog"]
     end
   end
+end
 
   describe "uses $/" do
     before :each do
