@@ -8,7 +8,7 @@ platform_is :windows do
     end
 
     after :each do
-      @ie.Quit
+      @ie.Quit if @ie
     end
 
     it "raises TypeError given invalid argument" do
