@@ -41,6 +41,12 @@ ruby_version_is "2.4" do
       :a.match(/(.)/)[0].should == 'a'
       $1.should == "a"
     end
+
+    ruby_version_is "2.5" do
+      it "returns nil when given nil" do
+        :''.match(nil).should be_nil
+      end
+    end
   end
 end
 
@@ -65,6 +71,12 @@ ruby_version_is "2.4" do
     it "takes matching position as the 2nd argument" do
       :string.match?(/str/i, 0).should be_true
       :string.match?(/str/i, 1).should be_false
+    end
+
+    ruby_version_is "2.5" do
+      it "returns false when given nil" do
+        :''.match?(nil).should be_false
+      end
     end
   end
 end
