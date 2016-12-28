@@ -1,15 +1,11 @@
+require File.expand_path('../../fixtures/classes', __FILE__)
+
 platform_is :windows do
   require 'win32ole'
 
   describe "WIN32OLE_EVENT.new" do
     before :each do
-      retried = false
-      begin
-        @ie = WIN32OLE.new('InternetExplorer.Application')
-      rescue WIN32OLERuntimeError
-        retried = true
-        retry
-      end
+      @ie = WIN32OLESpecs.new_ole('InternetExplorer.Application')
     end
 
     after :each do
@@ -25,7 +21,7 @@ platform_is :windows do
     end
 
     it "raises RuntimeError if OLE object has no events" do
-      dict = WIN32OLE.new('Scripting.Dictionary')
+      dict = WIN32OLESpecs.new_ole('Scripting.Dictionary')
       lambda { WIN32OLE_EVENT.new(dict) }.should raise_error RuntimeError
     end
 

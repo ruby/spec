@@ -1,3 +1,5 @@
+require File.expand_path('../../fixtures/classes', __FILE__)
+
 platform_is :windows do
   require 'win32ole'
 
@@ -16,7 +18,7 @@ platform_is :windows do
 
   describe "WIN32OLE_EVENT#on_event with no argument" do
     before :each do
-      @ie     = WIN32OLE.new('InternetExplorer.Application')
+      @ie     = WIN32OLESpecs.new_ole('InternetExplorer.Application')
       @ev     = WIN32OLE_EVENT.new(@ie, 'DWebBrowserEvents')
       @event  = ''
       @event2 = ''
