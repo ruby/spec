@@ -491,12 +491,12 @@ describe :process_spawn, shared: true do
     end
   end
 
-  it "does NOT redirect both STDERR and STDOUT at the time to the given name" do
-    # this behavior is not guaranteed; it may be changed after 1.9.3 or later.  [ruby-dev:41433]
-    touch @name
-    Process.wait @object.spawn(ruby_cmd("print(:glark); STDOUT.flush; STDERR.print(:bang)"),
-                               [:out, :err] => @name)
-    @name.should have_data("")
+  ruby_version_is "2.2" do
+    it "redirects both STDERR and STDOUT at the time to the given name" do
+      touch @name
+      Process.wait @object.spawn(ruby_cmd("print(:glark); STDOUT.flush; STDERR.print(:bang)"), [:out, :err] => @name)
+      File.read(@name).should == "glarkbang"
+    end
   end
 
   context "when passed close_others: true" do
