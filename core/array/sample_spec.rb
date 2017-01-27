@@ -3,12 +3,18 @@ require File.expand_path('../fixtures/classes', __FILE__)
 
 describe "Array#sample" do
   it "samples evenly" do
+    ary = [0, 1, 2, 3]
     3.times do |i|
-      samples = 4000.times.map { 4.times.to_a.sample(3)[i] }
-      counts = samples.group_by(&:itself).map { |a, b| b.size }
-      counts.each { |count| (800..1200).should include(count) }
+      counts = [0, 0, 0, 0]
+      4000.times do
+        counts[ary.sample(3)[i]] += 1
+      end
+      counts.each do |count|
+        (800..1200).should include(count)
+      end
     end
   end
+
   it "returns nil for an empty Array" do
     [].sample.should be_nil
   end
