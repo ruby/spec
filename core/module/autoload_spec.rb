@@ -374,6 +374,8 @@ describe "Module#autoload" do
       t2_val.should == t1_val
 
       t2_exc.should be_nil
+
+      ModuleSpecs::Autoload.send(:remove_const, :Concur)
     end
   end
 
