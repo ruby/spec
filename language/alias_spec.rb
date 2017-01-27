@@ -140,8 +140,7 @@ describe "The alias keyword" do
         test_without_check(*args)
       end
     end
-    sub = Class.new(alias_class)
-    sub.class_eval do
+    sub = Class.new(alias_class) do
       alias test_without_check test
       alias test test_with_check
     end

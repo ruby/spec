@@ -164,8 +164,7 @@ describe "Operators" do
     (2-3-4).should == -5
     (4-3+2).should == 3
 
-    binary_plus = Class.new(String)
-    binary_plus.class_eval do
+    binary_plus = Class.new(String) do
       alias_method :plus, :+
       def +(a)
         plus(a) + "!"
