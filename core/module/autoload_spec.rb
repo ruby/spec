@@ -43,6 +43,7 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.should_not have_constant(:X)
     ModuleSpecs::Autoload.autoload :X, fixture(__FILE__, "autoload_x.rb")
     ModuleSpecs::Autoload::X.should == :x
+    ModuleSpecs::Autoload.send(:remove_const, :X)
   end
 
   it "loads the registered constant into a dynamically created class" do
@@ -261,6 +262,7 @@ describe "Module#autoload" do
 
     ModuleSpecs::Autoload::W::Y.should be_kind_of(Class)
     ScratchPad.recorded.should == :loaded
+    ModuleSpecs::Autoload::W.send(:remove_const, :Y)
   end
 
   it "calls #to_path on non-string filenames" do
