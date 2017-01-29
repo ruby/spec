@@ -10,9 +10,10 @@ matrix:
     - rvm: 2.2.6
     - rvm: 2.3.3
     - rvm: 2.4.0
-    - rvm: ruby-head
+      env: CHECK_LEAKS=true
     - rvm: 2.4.0
       env: MSPEC_OPTS=-R2
+    - rvm: ruby-head
 branches:
   only:
     - master
