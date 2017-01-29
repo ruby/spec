@@ -12,7 +12,7 @@ matrix:
     - rvm: 2.4.0
       env: CHECK_LEAKS=true
     - rvm: 2.4.0
-      env: MSPEC_OPTS=-R2
+      env: MSPEC_OPTS="-R2 -ff"
     - rvm: ruby-head
 branches:
   only:
