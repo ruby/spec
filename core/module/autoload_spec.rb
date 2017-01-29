@@ -442,6 +442,10 @@ describe "Module#autoload" do
 
         # check that the autoloaded file was evaled exactly once
         ScratchPad.recorded.get.should == mod_count
+
+        mod_names.each do |mod_name|
+          Object.send(:remove_const, mod_name)
+        end
       end
     end
   end
