@@ -292,7 +292,6 @@
 #endif
 
 /* Util */
-#undef HAVE_RB_SCAN_ARGS
 #undef HAVE_RUBY_SETENV
 #undef HAVE_RUBY_STRDUP
 
