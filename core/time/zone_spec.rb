@@ -3,9 +3,8 @@ require File.expand_path('../../../spec_helper', __FILE__)
 describe "Time#zone" do
   platform_is_not :windows do
     it "returns the time zone used for time" do
-      # Testing with Asia/Kuwait here because it doesn't have DST.
-      with_timezone("Asia/Kuwait") do
-        Time.now.zone.should == "AST"
+      with_timezone("America/New_York") do
+        Time.now.zone.should == "EST"
       end
     end
   end
