@@ -15,6 +15,18 @@ describe "File.mtime" do
     File.mtime(@filename).should be_close(@mtime, 2.0)
   end
 
+  platform_is :linux do
+    it "returns the modification Time of the file with microseconds" do
+      3.times do
+        touch(@filename)
+        @mtime = File.mtime(@filename)
+        break if @mtime.usec > 0
+        sleep 0.001
+      end
+      @mtime.usec.should > 0
+    end
+  end
+
   it "raises an Errno::ENOENT exception if the file is not found" do
     lambda { File.mtime('bogus') }.should raise_error(Errno::ENOENT)
   end

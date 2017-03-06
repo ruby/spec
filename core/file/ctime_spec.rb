@@ -14,6 +14,21 @@ describe "File.ctime" do
     File.ctime(@file).should be_kind_of(Time)
   end
 
+  platform_is :linux do
+    it "Returns the change time for the named file (the time at which directory information about the file was changed, not the file itself) with microseconds." do
+      file = tmp('ctime')
+      3.times do
+        touch file
+        @ctime = File.ctime(file)
+        break if @ctime.usec > 0
+        rm_r file
+        sleep 0.001
+      end
+      rm_r file
+      @ctime.usec.should > 0
+    end
+  end
+
   it "accepts an object that has a #to_path method" do
     File.ctime(mock_to_path(@file))
   end
