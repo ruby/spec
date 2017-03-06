@@ -15,6 +15,17 @@ describe "File.atime" do
     File.atime(@file).should be_kind_of(Time)
   end
 
+  platform_is :linux do
+    it "returns the last access time for the named file with microseconds" do
+      3.times do
+        @atime = File.atime(@file)
+        break if @atime.usec > 0
+        sleep 0.001
+      end
+      @atime.usec.should > 0
+    end
+  end
+
   it "raises an Errno::ENOENT exception if the file is not found" do
     lambda { File.atime('a_fake_file') }.should raise_error(Errno::ENOENT)
   end
