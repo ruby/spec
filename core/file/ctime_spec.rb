@@ -17,7 +17,7 @@ describe "File.ctime" do
   platform_is :linux do
     it "returns the change time for the named file (the time at which directory information about the file was changed, not the file itself) with microseconds." do
       file = tmp('ctime')
-      3.times do
+      10.times do
         touch file
         @ctime = File.ctime(file)
         break if @ctime.usec > 0
