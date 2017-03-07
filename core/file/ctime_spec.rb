@@ -9,13 +9,13 @@ describe "File.ctime" do
     @file = nil
   end
 
-  it "Returns the change time for the named file (the time at which directory information about the file was changed, not the file itself)." do
+  it "returns the change time for the named file (the time at which directory information about the file was changed, not the file itself)." do
     File.ctime(@file)
     File.ctime(@file).should be_kind_of(Time)
   end
 
   platform_is :linux do
-    it "Returns the change time for the named file (the time at which directory information about the file was changed, not the file itself) with microseconds." do
+    it "returns the change time for the named file (the time at which directory information about the file was changed, not the file itself) with microseconds." do
       file = tmp('ctime')
       3.times do
         touch file
@@ -48,7 +48,7 @@ describe "File#ctime" do
     @file = nil
   end
 
-  it "Returns the change time for the named file (the time at which directory information about the file was changed, not the file itself)." do
+  it "returns the change time for the named file (the time at which directory information about the file was changed, not the file itself)." do
     @file.ctime
     @file.ctime.should be_kind_of(Time)
   end
