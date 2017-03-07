@@ -16,16 +16,21 @@ describe "File.ctime" do
 
   platform_is :linux do
     it "returns the change time for the named file (the time at which directory information about the file was changed, not the file itself) with microseconds." do
-      file = tmp('ctime')
-      10.times do
-        touch file
-        @ctime = File.ctime(file)
-        break if @ctime.usec > 0
+      supports_subseconds = Integer(`stat -c%z '#{__FILE__}'`[/\.(\d+)/, 1])
+      if supports_subseconds
+        file = tmp('ctime')
+        10.times do
+          touch file
+          @ctime = File.ctime(file)
+          break if @ctime.usec > 0
+          rm_r file
+          sleep 0.001
+        end
         rm_r file
-        sleep 0.001
+        @ctime.usec.should > 0
+      else
+        File.ctime(__FILE__).usec.should == 0
       end
-      rm_r file
-      @ctime.usec.should > 0
     end
   end
 

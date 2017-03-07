@@ -17,9 +17,14 @@ describe "File.mtime" do
 
   platform_is :linux do
     it "returns the modification Time of the file with microseconds" do
-      expected_time = Time.at(Time.now.to_i + 0.123456)
-      File.utime 0, expected_time, @filename
-      File.mtime(@filename).usec.should == expected_time.usec
+      supports_subseconds = Integer(`stat -c%y '#{__FILE__}'`[/\.(\d+)/, 1])
+      if supports_subseconds != 0
+        expected_time = Time.at(Time.now.to_i + 0.123456)
+        File.utime 0, expected_time, @filename
+        File.mtime(@filename).usec.should == expected_time.usec
+      else
+        File.mtime(__FILE__).usec.should == 0
+      end
     end
   end
 
