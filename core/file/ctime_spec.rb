@@ -16,7 +16,7 @@ describe "File.ctime" do
 
   platform_is :linux do
     it "returns the change time for the named file (the time at which directory information about the file was changed, not the file itself) with microseconds." do
-      supports_subseconds = Integer(`stat -c%z '#{__FILE__}'`[/\.(\d+)/, 1])
+      supports_subseconds = Integer(`stat -c%z '#{__FILE__}'`[/\.(\d+)/, 1], 10)
       if supports_subseconds
         file = tmp('ctime')
         10.times do
