@@ -17,13 +17,9 @@ describe "File.mtime" do
 
   platform_is :linux do
     it "returns the modification Time of the file with microseconds" do
-      3.times do
-        touch(@filename)
-        @mtime = File.mtime(@filename)
-        break if @mtime.usec > 0
-        sleep 0.001
-      end
-      @mtime.usec.should > 0
+      expected_time = Time.at(Time.now.to_i + 0.123456)
+      File.utime 0, expected_time, @filename
+      File.mtime(@filename).usec.should == expected_time.usec
     end
   end
 

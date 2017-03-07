@@ -16,13 +16,11 @@ describe "File.atime" do
   end
 
   platform_is :linux do
+    ## NOTE also that some Linux systems disable atime (e.g. via mount params) for better filesystem speed.
     it "returns the last access time for the named file with microseconds" do
-      3.times do
-        @atime = File.atime(@file)
-        break if @atime.usec > 0
-        sleep 0.001
-      end
-      @atime.usec.should > 0
+      expected_time = Time.at(Time.now.to_i + 0.123456)
+      File.utime expected_time, 0, @file
+      File.atime(@file).usec.should == expected_time.usec
     end
   end
 
