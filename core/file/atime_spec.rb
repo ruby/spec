@@ -24,7 +24,7 @@ describe "File.atime" do
         File.utime expected_time, 0, @file
         File.atime(@file).usec.should == expected_time.usec
       else
-        File.atime(__FILE__).should == 0
+        File.atime(__FILE__).usec.should == 0
       end
     end
   end
