@@ -4,7 +4,8 @@ describe "Time#zone" do
   platform_is_not :windows do
     it "returns the time zone used for time" do
       with_timezone("America/New_York") do
-        Time.now.zone.should == "EST"
+        Time.new(2001, 1, 1, 0, 0, 0).zone.should == "EST"
+        Time.new(2001, 7, 1, 0, 0, 0).zone.should == "EDT"
       end
     end
   end
