@@ -6,6 +6,7 @@ describe "Time#zone" do
       with_timezone("America/New_York") do
         Time.new(2001, 1, 1, 0, 0, 0).zone.should == "EST"
         Time.new(2001, 7, 1, 0, 0, 0).zone.should == "EDT"
+        %w[EST EDT].should include Time.now.zone
       end
     end
   end
