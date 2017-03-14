@@ -14,18 +14,18 @@ describe "String#%" do
     ("%d%% %s" % [10, "of chickens!"]).should == "10% of chickens!"
   end
 
-  it "formats single % characters at the end as literal %s" do
+  it "formats single % character at the end as literal %" do
     ("%" % []).should == "%"
     ("foo%" % []).should == "foo%"
   end
 
-  it "formats single % characters before a newline as literal %s" do
+  it "formats single % character before a newline as literal %" do
     ("%\n" % []).should == "%\n"
     ("foo%\n" % []).should == "foo%\n"
     ("%\n.3f" % 1.2).should == "%\n.3f"
   end
 
-  it "formats single % characters before a NUL as literal %s" do
+  it "formats single % character before a NUL as literal %" do
     ("%\0" % []).should == "%\0"
     ("foo%\0" % []).should == "foo%\0"
     ("%\0.3f" % 1.2).should == "%\0.3f"
