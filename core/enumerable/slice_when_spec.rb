@@ -27,6 +27,15 @@ ruby_version_is "2.2" do
         end.to_a
         times_called.should == (@enum_length - 1)
       end
+
+      it "doesn't yield an empty array if the block matches the first or the last time" do
+        @enum.slice_when { true }.to_a.should == [[10], [9], [7], [6], [4], [3], [2], [1]]
+      end
+
+      it "doesn't yield an empty array on a small enumerable" do
+        EnumerableSpecs::Empty.new.slice_when { raise }.to_a.should == []
+        EnumerableSpecs::Numerous.new(42).slice_when { raise }.to_a.should == [[42]]
+      end
     end
 
     context "when not given a block" do
