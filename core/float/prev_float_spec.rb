@@ -26,7 +26,7 @@ ruby_version_is "2.2" do
       (-1.0).prev_float.should == -1.0 - Float::EPSILON
     end
 
-    it "reverses the effect of next_float" do
+    it "reverses the effect of next_float for all Floats except -INFINITY and -0.0" do
       num = rand
       num.next_float.prev_float.should == num
     end
