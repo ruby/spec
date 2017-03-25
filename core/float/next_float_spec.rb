@@ -13,6 +13,10 @@ ruby_version_is "2.2" do
       [0.0, barely_positive].should include midpoint
     end
 
+    it "returns Float::INFINITY for Float::INFINITY" do
+      Float::INFINITY.next_float.should == Float::INFINITY
+    end
+
     it "steps directly between MAX and INFINITY" do
       (-Float::INFINITY).next_float.should == -Float::MAX
       Float::MAX.next_float.should == Float::INFINITY
