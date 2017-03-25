@@ -34,9 +34,6 @@ ruby_version_is "2.2" do
     it "returns positive zero when stepping downward from just above zero" do
       x = 0.0.next_float.prev_float
       (1/x).should == Float::INFINITY
-      x = (-0.0).next_float.prev_float
-      (1/x).should == Float::INFINITY
-      x.prev_float.should < 0
     end
 
     it "returns NAN if NAN was the receiver" do
