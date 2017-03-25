@@ -36,6 +36,10 @@ ruby_version_is "2.2" do
       (1/x).should == Float::INFINITY
     end
 
+    it "gives the same result for -0.0 as for +0.0" do
+      (0.0).prev_float.should == (-0.0).prev_float
+    end
+
     it "returns NAN if NAN was the receiver" do
       Float::NAN.prev_float.nan?.should == true
     end
