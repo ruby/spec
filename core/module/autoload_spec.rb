@@ -400,7 +400,7 @@ describe "Module#autoload" do
   end
 
   describe "(concurrently)" do
-    ruby_bug "#10892", "2.3" do
+    ruby_bug "#10892", ""..."2.3" do
       it "blocks others threads while doing an autoload" do
         file_path     = fixture(__FILE__, "repeated_concurrent_autoload.rb")
         autoload_path = file_path.sub(/\.rb\Z/, '')
