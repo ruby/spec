@@ -15,6 +15,9 @@ class MSpecScript
   # Command line specs
   set :command_line, [ 'command_line' ]
 
+  # Security specs
+  set :security, [ 'security' ]
+
   # C extension API specs
   set :capi, [ 'optional/capi' ]
 
@@ -22,7 +25,7 @@ class MSpecScript
   set :optional, get(:capi)
 
   # An ordered list of the directories containing specs to run
-  set :files, get(:command_line) + get(:language) + get(:core) + get(:library) + get(:optional)
+  set :files, get(:command_line) + get(:language) + get(:core) + get(:library) + get(:security) + get(:optional)
 
   # This set of files is run by mspec ci
   set :ci_files, get(:files)
@@ -39,6 +42,7 @@ class MSpecScript
                         [%r(core/),         'tags/1.9/core/'],
                         [%r(command_line/), 'tags/1.9/command_line/'],
                         [%r(library/),      'tags/1.9/library/'],
+                        [%r(security/),     'tags/1.9/security/'],
                         [/_spec.rb$/,       '_tags.txt']
                       ]
 
