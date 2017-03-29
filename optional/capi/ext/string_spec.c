@@ -263,6 +263,12 @@ VALUE string_spec_rb_str_plus(VALUE self, VALUE str1, VALUE str2) {
 }
 #endif
 
+#ifdef HAVE_RB_STR_TIMES
+VALUE string_spec_rb_str_times(VALUE self, VALUE str, VALUE times) {
+  return rb_str_times(str, times);
+}
+#endif
+
 #ifdef HAVE_RB_STR_RESIZE
 VALUE string_spec_rb_str_resize(VALUE self, VALUE str, VALUE size) {
   return rb_str_resize(str, FIX2INT(size));
@@ -556,6 +562,10 @@ void Init_string_spec(void) {
 
 #ifdef HAVE_RB_STR_PLUS
   rb_define_method(cls, "rb_str_plus", string_spec_rb_str_plus, 2);
+#endif
+
+#ifdef HAVE_RB_STR_TIMES
+  rb_define_method(cls, "rb_str_times", string_spec_rb_str_times, 2);
 #endif
 
 #ifdef HAVE_RB_STR_RESIZE
