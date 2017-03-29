@@ -67,6 +67,7 @@
 #define HAVE_RB_ARY_POP                    1
 #define HAVE_RB_ARY_PUSH                   1
 #define HAVE_RB_ARY_REVERSE                1
+#define HAVE_RB_ARY_ROTATE                 1
 #define HAVE_RB_ARY_SHIFT                  1
 #define HAVE_RB_ARY_STORE                  1
 #define HAVE_RB_ARY_CONCAT                 1
