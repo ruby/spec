@@ -745,4 +745,22 @@ describe "C-API String function" do
       s.should == "abc, 42, 2.70"
     end
   end
+
+  describe "rb_String" do
+    it "returns the passed argument if it is a string" do
+      @s.rb_String("a").should == "a"
+    end
+
+    it "tries to convert the passed argument to a string by calling #to_str first" do
+      @s.rb_String(ValidTostrTest.new).should == "ruby"
+    end
+
+    it "raises a TypeError if #to_str does not return a string" do
+      lambda { @s.rb_String(InvalidTostrTest.new) }.should raise_error(TypeError)
+    end
+
+    it "tries to convert the passed argument to a string by calling #to_s" do
+      @s.rb_String({"bar" => "foo"}).should == '{"bar"=>"foo"}'
+    end
+  end
 end

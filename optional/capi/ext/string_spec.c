@@ -425,6 +425,12 @@ static VALUE string_spec_rb_usascii_str_new_cstr(VALUE self, VALUE str) {
 }
 #endif
 
+#ifdef HAVE_RB_STRING
+static VALUE string_spec_rb_String(VALUE self, VALUE val) {
+  return rb_String(val);
+}
+#endif
+
 void Init_string_spec(void) {
   VALUE cls;
   cls = rb_define_class("CApiStringSpecs", rb_cObject);
@@ -636,6 +642,10 @@ void Init_string_spec(void) {
 
 #ifdef HAVE_RB_USASCII_STR_NEW_CSTR
   rb_define_method(cls, "rb_usascii_str_new_cstr", string_spec_rb_usascii_str_new_cstr, 1);
+#endif
+
+#ifdef HAVE_RB_STRING
+  rb_define_method(cls, "rb_String", string_spec_rb_String, 1);
 #endif
 }
 
