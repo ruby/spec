@@ -248,6 +248,32 @@ describe "C-API String function" do
     end
   end
 
+  describe "rb_str_times" do
+    it "returns an empty string if the times argument is 0" do
+      @s.rb_str_times("abc", 0).should == ""
+    end
+
+    it "returns a new string containing the specified number of copies of the string" do
+      @s.rb_str_times("abc", 3).should == "abcabcabc"
+    end
+
+    it "raises an ArgumentError if the times argument is less than 0" do
+      lambda { @s.rb_str_times("abc", -1) }.should raise_error(ArgumentError)
+    end
+
+    platform_is wordsize: 32 do
+      it "raises an ArgumentError if the length of the resulting string doesn't fit into a long" do
+        lambda { @s.rb_str_times("abc", 1 << 31 - 1) }.should raise_error(ArgumentError)
+      end
+    end
+
+    platform_is wordsize: 64 do
+      it "raises an ArgumentError if the length of the resulting string doesn't fit into a long" do
+        lambda { @s.rb_str_times("abc", 1 << 63 - 1) }.should raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe "rb_str_buf_cat" do
     it "concatenates a C string to a ruby string" do
       @s.rb_str_buf_cat("Your house is on fire").should == "Your house is on fire?"
