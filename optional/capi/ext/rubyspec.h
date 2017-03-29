@@ -306,6 +306,7 @@
 
 /* Hash */
 #define HAVE_RB_HASH                       1
+#define HAVE_RB_HASH2                      1
 #define HAVE_RB_HASH_DUP                   1
 #define HAVE_RB_HASH_FREEZE                1
 #define HAVE_RB_HASH_AREF                  1
