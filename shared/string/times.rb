@@ -50,15 +50,7 @@ describe :string_times, shared: true do
     end
   end
 
-  platform_is wordsize: 32 do
-    it "raises an ArgumentError if the length of the resulting string doesn't fit into a long" do
-      lambda { @object.call("abc", 1 << 31 - 1) }.should raise_error(ArgumentError)
-    end
-  end
-
-  platform_is wordsize: 64 do
-    it "raises an ArgumentError if the length of the resulting string doesn't fit into a long" do
-      lambda { @object.call("abc", 1 << 63 - 1) }.should raise_error(ArgumentError)
-    end
+  it "raises an ArgumentError if the length of the resulting string doesn't fit into a fixnum" do
+    lambda { @object.call("abc", fixnum_max) }.should raise_error(ArgumentError)
   end
 end
