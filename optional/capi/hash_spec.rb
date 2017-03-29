@@ -201,4 +201,30 @@ describe "C-API Hash function" do
       end
     end
   end
+
+  describe "rb_Hash" do
+    it "returns an empty hash when the argument is nil" do
+      @s.rb_Hash(nil).should == {}
+    end
+
+    it "returns an empty hash when the argument is []" do
+      @s.rb_Hash([]).should == {}
+    end
+
+    it "tries to convert the passed argument to a hash by calling #to_hash" do
+      h = BasicObject.new
+      def h.to_hash; {"bar" => "foo"}; end
+      @s.rb_Hash(h).should == {"bar" => "foo"}
+    end
+
+    it "raises a TypeError if the argument does not respond to #to_hash" do
+      lambda { @s.rb_Hash(42) }.should raise_error(TypeError)
+    end
+
+    it "raises a TypeError if #to_hash does not return a hash" do
+      h = BasicObject.new
+      def h.to_hash; 42; end
+      lambda { @s.rb_Hash(h) }.should raise_error(TypeError)
+    end
+  end
 end
