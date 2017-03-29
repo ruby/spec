@@ -108,6 +108,17 @@ describe "C-API Array function" do
     end
   end
 
+  describe "rb_ary_rotate" do
+    it "rotates the array so that the element at the specified position comes first" do
+      @s.rb_ary_rotate([1, 2, 3, 4], 2).should == [3, 4, 1, 2]
+      @s.rb_ary_rotate([1, 2, 3, 4], -3).should == [2, 3, 4, 1]
+    end
+
+    it "raises a RuntimeError if the array is frozen" do
+      lambda { @s.rb_ary_rotate([].freeze, 1) }.should raise_error(RuntimeError)
+    end
+  end
+
   describe "rb_ary_entry" do
     it "returns nil when passed an empty array" do
       @s.rb_ary_entry([], 0).should == nil

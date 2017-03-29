@@ -168,6 +168,12 @@ static VALUE array_spec_rb_ary_reverse(VALUE self, VALUE array) {
 }
 #endif
 
+#ifdef HAVE_RB_ARY_ROTATE
+static VALUE array_spec_rb_ary_rotate(VALUE self, VALUE array, VALUE count) {
+  return rb_ary_rotate(array, NUM2LONG(count));
+}
+#endif
+
 #ifdef HAVE_RB_ARY_SHIFT
 static VALUE array_spec_rb_ary_shift(VALUE self, VALUE array) {
   return rb_ary_shift(array);
@@ -364,6 +370,10 @@ void Init_array_spec(void) {
 
 #ifdef HAVE_RB_ARY_REVERSE
   rb_define_method(cls, "rb_ary_reverse", array_spec_rb_ary_reverse, 1);
+#endif
+
+#ifdef HAVE_RB_ARY_ROTATE
+  rb_define_method(cls, "rb_ary_rotate", array_spec_rb_ary_rotate, 2);
 #endif
 
 #ifdef HAVE_RB_ARY_SHIFT
