@@ -60,6 +60,18 @@ describe "C-API Array function" do
     end
   end
 
+  ruby_version_is "2.1" do
+    describe "rb_ary_cat" do
+      it "pushes the given objects onto the end of the array" do
+        @s.rb_ary_cat([1, 2], 3, 4).should == [1, 2, 3, 4]
+      end
+
+      it "raises a RuntimeError if the array is frozen" do
+        lambda { @s.rb_ary_cat([].freeze, 1) }.should raise_error(RuntimeError)
+      end
+    end
+  end
+
   describe "rb_ary_pop" do
     it "removes and returns the last element in the array" do
       a = [1,2,3]

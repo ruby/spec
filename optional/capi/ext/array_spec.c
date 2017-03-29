@@ -154,6 +154,14 @@ static VALUE array_spec_rb_ary_push(VALUE self, VALUE array, VALUE item) {
 }
 #endif
 
+#ifdef HAVE_RB_ARY_CAT
+static VALUE array_spec_rb_ary_cat(int argc, VALUE *argv, VALUE self) {
+  VALUE ary, args;
+  rb_scan_args(argc, argv, "1*", &ary, &args);
+  return rb_ary_cat(ary, RARRAY_PTR(args), RARRAY_LEN(args));
+}
+#endif
+
 #ifdef HAVE_RB_ARY_REVERSE
 static VALUE array_spec_rb_ary_reverse(VALUE self, VALUE array) {
   return rb_ary_reverse(array);
@@ -348,6 +356,10 @@ void Init_array_spec(void) {
 
 #ifdef HAVE_RB_ARY_PUSH
   rb_define_method(cls, "rb_ary_push", array_spec_rb_ary_push, 2);
+#endif
+
+#ifdef HAVE_RB_ARY_CAT
+  rb_define_method(cls, "rb_ary_cat", array_spec_rb_ary_cat, -1);
 #endif
 
 #ifdef HAVE_RB_ARY_REVERSE
