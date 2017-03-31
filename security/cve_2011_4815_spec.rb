@@ -27,7 +27,7 @@ describe "String#hash" do
 end
 
 describe "Symbol#hash" do
-  ruby_bug "#13376", "2.3"..."2.4" do
+  ruby_bug "#13376", "2.3.0"..."2.3.4" do
     it_behaves_like :resists_cve_2011_4815, ':a'
   end
 end
