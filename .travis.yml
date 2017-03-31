@@ -16,7 +16,7 @@ matrix:
     - os: linux
       rvm: 2.2.6
     - os: linux
-      rvm: 2.3.3
+      rvm: 2.3.4
     - os: linux
       rvm: 2.4.0
       env: CHECK_LEAKS=true
