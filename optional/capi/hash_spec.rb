@@ -144,16 +144,14 @@ describe "C-API Hash function" do
     end
   end
 
-  ruby_version_is "2.2" do
-    describe "rb_hash_size" do
-      it "returns the size of the hash" do
-        hsh = {fast: 'car', good: 'music'}
-        @s.rb_hash_size(hsh).should == 2
-      end
+  describe "rb_hash_size" do
+    it "returns the size of the hash" do
+      hsh = {fast: 'car', good: 'music'}
+      @s.rb_hash_size(hsh).should == 2
+    end
 
-      it "returns zero for an empty hash" do
-        @s.rb_hash_size({}).should == 0
-      end
+    it "returns zero for an empty hash" do
+      @s.rb_hash_size({}).should == 0
     end
   end
 
@@ -190,15 +188,13 @@ describe "C-API Hash function" do
     end
   end
 
-  ruby_version_is "2.2" do
-    describe "rb_hash_set_ifnone" do
-      it "sets the default value of non existing keys" do
-        hash = {}
+  describe "rb_hash_set_ifnone" do
+    it "sets the default value of non existing keys" do
+      hash = {}
 
-        @s.rb_hash_set_ifnone(hash, 10)
+      @s.rb_hash_set_ifnone(hash, 10)
 
-        hash[:chunky].should == 10
-      end
+      hash[:chunky].should == 10
     end
   end
 
