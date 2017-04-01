@@ -65,6 +65,18 @@ describe "C-API Struct function" do
     @struct = @klass.new
   end
 
+  describe "rb_struct_define" do
+    ruby_version_is "2.2" do
+      it "raises an ArgumentError if arguments contain duplicate member name" do
+        lambda { @s.rb_struct_define(nil, "a", "b", "a") }.should raise_error(ArgumentError)
+      end
+    end
+
+    it "raises a NameError if an invalid constant name is given" do
+      lambda { @s.rb_struct_define("foo", "a", "b", "c") }.should raise_error(NameError)
+    end
+  end
+
   describe "rb_struct_aref" do
     it "returns the value of a struct member with a symbol key" do
       @struct[:a] = 2
