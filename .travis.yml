@@ -12,8 +12,6 @@ matrix:
       rvm: 2.4.0
       env: MSPEC_OPTS="-R2 -ff"
     - os: linux
-      rvm: 2.1.10
-    - os: linux
       rvm: 2.2.6
     - os: linux
       rvm: 2.3.4
