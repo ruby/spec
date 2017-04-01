@@ -97,10 +97,8 @@ describe "C-API Struct function" do
   end
 
   describe "rb_struct_define" do
-    ruby_version_is "2.2" do
-      it "raises an ArgumentError if arguments contain duplicate member name" do
-        lambda { @s.rb_struct_define(nil, "a", "b", "a") }.should raise_error(ArgumentError)
-      end
+    it "raises an ArgumentError if arguments contain duplicate member name" do
+      lambda { @s.rb_struct_define(nil, "a", "b", "a") }.should raise_error(ArgumentError)
     end
 
     it "raises a NameError if an invalid constant name is given" do

@@ -31,21 +31,11 @@
 #define RUBY_VERSION_IS_2_3
 #endif
 
-#if RUBY_VERSION_MAJOR > 2 || (RUBY_VERSION_MAJOR == 2 && RUBY_VERSION_MINOR >= 2)
-#define RUBY_VERSION_IS_2_2
-#endif
-
-#if RUBY_VERSION_MAJOR > 2 || (RUBY_VERSION_MAJOR == 2 && RUBY_VERSION_MINOR >= 1)
-#define RUBY_VERSION_IS_2_1
-#endif
-
 /* Define all function flags */
 
 /* Array */
 #define HAVE_RB_ARRAY                      1
-#ifdef RUBY_VERSION_IS_2_1
 #define HAVE_RARRAY_AREF                   1
-#endif
 #define HAVE_RARRAY_LEN                    1
 #define HAVE_RARRAY_PTR                    1
 #define HAVE_RB_ARY_AREF                   1
@@ -61,16 +51,12 @@
 #define HAVE_RB_ARY_NEW2                   1
 #define HAVE_RB_ARY_NEW_CAPA               1
 #define HAVE_RB_ARY_NEW3                   1
-#ifdef RUBY_VERSION_IS_2_1
 #define HAVE_RB_ARY_NEW_FROM_ARGS          1
-#endif
 #define HAVE_RB_ARY_NEW4                   1
 #define HAVE_RB_ARY_NEW_FROM_VALUES        1
 #define HAVE_RB_ARY_POP                    1
 #define HAVE_RB_ARY_PUSH                   1
-#ifdef RUBY_VERSION_IS_2_1
 #define HAVE_RB_ARY_CAT                    1
-#endif
 #define HAVE_RB_ARY_REVERSE                1
 #define HAVE_RB_ARY_ROTATE                 1
 #define HAVE_RB_ARY_SHIFT                  1
@@ -88,14 +74,7 @@
 #define HAVE_RB_MEM_CLEAR                  1
 
 /* Bignum */
-#if RUBY_VERSION_BEFORE(2,2,0)
-#define HAVE_RBIGNUM_NEGATIVE_P            1
-#define HAVE_RBIGNUM_POSITIVE_P            1
-#define HAVE_RBIGNUM_SIGN                  1
-#define HAVE_RBIGNUM_LEN                   1
-#else
 #define HAVE_ABSINT_SIZE                   1
-#endif
 #define HAVE_RB_BIG2DBL                    1
 #define HAVE_RB_DBL2BIG                    1
 #define HAVE_RB_BIG2LL                     1
@@ -324,17 +303,11 @@
 #define HAVE_RB_HASH_LOOKUP                1
 #define HAVE_RB_HASH_LOOKUP2               1
 #define HAVE_RB_HASH_NEW                   1
-#ifdef RUBY_VERSION_IS_2_1
 #define HAVE_RB_HASH_SET_IFNONE            1
-#endif
-#ifdef RUBY_VERSION_IS_2_2
 #define HAVE_RB_HASH_SIZE                  1
-#endif
 
 /* Integer */
-#ifdef RUBY_VERSION_IS_2_1
 #define HAVE_RB_INTEGER_PACK               1
-#endif
 
 /* IO */
 #define HAVE_GET_OPEN_FILE                 1
@@ -513,10 +486,8 @@
 #define HAVE_RB_RATIONAL_NEW               1
 #define HAVE_RB_RATIONAL_NEW1              1
 #define HAVE_RB_RATIONAL_NEW2              1
-#ifdef RUBY_VERSION_IS_2_2
 #define HAVE_RB_RATIONAL_NUM               1
 #define HAVE_RB_RATIONAL_DEN               1
-#endif
 
 /* Regexp */
 #define HAVE_RB_BACKREF_GET                1
@@ -595,23 +566,14 @@
 #define HAVE_RB_IS_CLASS_ID                1
 #define HAVE_RB_IS_CONST_ID                1
 #define HAVE_RB_IS_INSTANCE_ID             1
-#ifdef RUBY_VERSION_IS_2_2
 #define HAVE_RB_SYM2STR                    1
-#endif
 
 /* Thread */
 #define HAVE_RB_THREAD_ALONE               1
-#if RUBY_VERSION_BEFORE(2,2,0)
-#define HAVE_RB_THREAD_BLOCKING_REGION     1
-#endif
 #define HAVE_RB_THREAD_CALL_WITHOUT_GVL    1
-#define HAVE_RB_THREAD_CALL_WITHOUT_GVL2   1
 #define HAVE_RB_THREAD_CURRENT             1
 #define HAVE_RB_THREAD_LOCAL_AREF          1
 #define HAVE_RB_THREAD_LOCAL_ASET          1
-#if RUBY_VERSION_BEFORE(2,2,0)
-#define HAVE_RB_THREAD_SELECT              1
-#endif
 #define HAVE_RB_THREAD_WAIT_FOR            1
 #define HAVE_RB_THREAD_WAKEUP              1
 #define HAVE_RB_THREAD_CREATE              1
