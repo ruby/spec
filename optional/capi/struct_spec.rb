@@ -151,6 +151,12 @@ describe "C-API Struct function" do
     end
   end
 
+  describe "rb_struct_members" do
+    it "returns the struct members as an array of symbols" do
+      @s.rb_struct_members(@struct).should == [:a, :b, :c]
+    end
+  end
+
   describe "rb_struct_aset" do
     it "sets the value of a struct member with a symbol key" do
       @s.rb_struct_aset(@struct, :a, 1)

@@ -26,6 +26,13 @@ static VALUE struct_spec_rb_struct_s_members(VALUE self, VALUE klass)
 }
 #endif
 
+#ifdef HAVE_RB_STRUCT_MEMBERS
+static VALUE struct_spec_rb_struct_members(VALUE self, VALUE st)
+{
+  return rb_ary_dup(rb_struct_members(st));
+}
+#endif
+
 #ifdef HAVE_RB_STRUCT_ASET
 static VALUE struct_spec_rb_struct_aset(VALUE self, VALUE st, VALUE key, VALUE value) {
   return rb_struct_aset(st, key, value);
@@ -92,6 +99,10 @@ void Init_struct_spec(void) {
 
 #ifdef HAVE_RB_STRUCT_S_MEMBERS
   rb_define_method(cls, "rb_struct_s_members", struct_spec_rb_struct_s_members, 1);
+#endif
+
+#ifdef HAVE_RB_STRUCT_MEMBERS
+  rb_define_method(cls, "rb_struct_members", struct_spec_rb_struct_members, 1);
 #endif
 
 #ifdef HAVE_RB_STRUCT_ASET
