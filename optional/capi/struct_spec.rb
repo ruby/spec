@@ -106,11 +106,11 @@ describe "C-API Struct function" do
   describe "rb_struct_getmember" do
     it "returns the value of a struct member" do
       @struct[:a] = 2
-      @s.rb_struct_aref(@struct, :a).should == 2
+      @s.rb_struct_getmember(@struct, :a).should == 2
     end
 
     it "raises a NameError if the struct member does not exist" do
-      lambda { @s.rb_struct_aref(@struct, :d) }.should raise_error(NameError)
+      lambda { @s.rb_struct_getmember(@struct, :d) }.should raise_error(NameError)
     end
   end
 
