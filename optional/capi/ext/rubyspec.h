@@ -59,6 +59,7 @@
 #define HAVE_RB_ARY_JOIN                   1
 #define HAVE_RB_ARY_NEW                    1
 #define HAVE_RB_ARY_NEW2                   1
+#define HAVE_RB_ARY_NEW_CAPA               1
 #define HAVE_RB_ARY_NEW3                   1
 #ifdef RUBY_VERSION_IS_2_1
 #define HAVE_RB_ARY_NEW_FROM_ARGS          1
