@@ -29,7 +29,7 @@ describe "C-API Struct function" do
     end
 
     it "returns the member names as Symbols" do
-      @struct.members.sort.should == [:a, :b, :c]
+      @struct.members.should == [:a, :b, :c]
     end
   end
 end
@@ -52,7 +52,7 @@ describe "C-API Struct function" do
     end
 
     it "returns the member names as Symbols" do
-      @struct.members.sort.should == [:a, :b, :c]
+      @struct.members.should == [:a, :b, :c]
     end
   end
 end
@@ -84,7 +84,7 @@ describe "C-API Struct function" do
     end
 
     it "returns the member names as Symbols" do
-      @struct.members.sort.should == [:a, :b, :c]
+      @struct.members.should == [:a, :b, :c]
     end
   end
 end
