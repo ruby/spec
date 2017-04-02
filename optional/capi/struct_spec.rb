@@ -139,6 +139,11 @@ describe "C-API Struct function" do
     it "raises a NameError if the struct member does not exist" do
       lambda { @s.rb_struct_aset(@struct, :d, 1) }.should raise_error(NameError)
     end
+
+    it "raises an IndexError if the given index is out of range" do
+      lambda { @s.rb_struct_aset(@struct, -4, 1) }.should raise_error(IndexError)
+      lambda { @s.rb_struct_aset(@struct, 3, 1) }.should raise_error(IndexError)
+    end
   end
 
   describe "rb_struct_new" do
