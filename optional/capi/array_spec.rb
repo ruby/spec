@@ -61,8 +61,14 @@ describe "C-API Array function" do
   end
 
   describe "rb_ary_new4" do
-    it "returns returns an array with the passed values" do
+    it "returns an array with the passed values" do
       @s.rb_ary_new4(1,2,3).should == [1,2,3]
+    end
+  end
+
+  describe "rb_ary_new_from_values" do
+    it "returns an array with the passed values" do
+      @s.rb_ary_new_from_values(1,2,3).should == [1,2,3]
     end
   end
 

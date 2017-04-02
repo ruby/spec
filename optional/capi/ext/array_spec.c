@@ -147,6 +147,16 @@ static VALUE array_spec_rb_ary_new4(VALUE self, VALUE first, VALUE second, VALUE
 }
 #endif
 
+#ifdef HAVE_RB_ARY_NEW_FROM_VALUES
+static VALUE array_spec_rb_ary_new_from_values(VALUE self, VALUE first, VALUE second, VALUE third) {
+  VALUE values[3];
+  values[0] = first;
+  values[1] = second;
+  values[2] = third;
+  return rb_ary_new_from_values(3, values);
+}
+#endif
+
 #ifdef HAVE_RB_ARY_POP
 static VALUE array_spec_rb_ary_pop(VALUE self, VALUE array) {
   return rb_ary_pop(array);
@@ -364,6 +374,10 @@ void Init_array_spec(void) {
 
 #ifdef HAVE_RB_ARY_NEW4
   rb_define_method(cls, "rb_ary_new4", array_spec_rb_ary_new4, 3);
+#endif
+
+#ifdef HAVE_RB_ARY_NEW_FROM_VALUES
+  rb_define_method(cls, "rb_ary_new_from_values", array_spec_rb_ary_new_from_values, 3);
 #endif
 
 #ifdef HAVE_RB_ARY_POP
