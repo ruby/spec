@@ -580,6 +580,7 @@
 #define HAVE_RB_STRUCT_NEW                 1
 #define HAVE_RB_STRUCT_GETMEMBER           1
 #define HAVE_RB_STRUCT_S_MEMBERS           1
+#define HAVE_RB_STRUCT_MEMBERS             1
 #ifdef RUBY_VERSION_IS_2_4
 #define HAVE_RB_STRUCT_SIZE                1
 #endif
