@@ -119,6 +119,12 @@ static VALUE array_spec_rb_ary_new2(VALUE self, VALUE length) {
 }
 #endif
 
+#ifdef HAVE_RB_ARY_NEW_CAPA
+static VALUE array_spec_rb_ary_new_capa(VALUE self, VALUE length) {
+  return rb_ary_new_capa(NUM2LONG(length));
+}
+#endif
+
 #ifdef HAVE_RB_ARY_NEW3
 static VALUE array_spec_rb_ary_new3(VALUE self, VALUE first, VALUE second, VALUE third) {
   return rb_ary_new3(3, first, second, third);
@@ -342,6 +348,10 @@ void Init_array_spec(void) {
 
 #ifdef HAVE_RB_ARY_NEW2
   rb_define_method(cls, "rb_ary_new2", array_spec_rb_ary_new2, 1);
+#endif
+
+#ifdef HAVE_RB_ARY_NEW_CAPA
+  rb_define_method(cls, "rb_ary_new_capa", array_spec_rb_ary_new_capa, 1);
 #endif
 
 #ifdef HAVE_RB_ARY_NEW3

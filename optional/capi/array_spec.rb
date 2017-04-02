@@ -2,6 +2,16 @@ require File.expand_path('../spec_helper', __FILE__)
 
 load_extension("array")
 
+describe :rb_ary_new2, shared: true do
+  it "returns an empty array" do
+    @s.send(@method, 5).should == []
+  end
+
+  it "raises an ArgumentError when the given argument is negative" do
+    lambda { @s.send(@method, -1) }.should raise_error(ArgumentError)
+  end
+end
+
 describe "C-API Array function" do
   before :each do
     @s = CApiArraySpecs.new
@@ -31,9 +41,11 @@ describe "C-API Array function" do
   end
 
   describe "rb_ary_new2" do
-    it "returns an empty array" do
-      @s.rb_ary_new2(5).should == []
-    end
+    it_behaves_like :rb_ary_new2, :rb_ary_new2
+  end
+
+  describe "rb_ary_new_capa" do
+    it_behaves_like :rb_ary_new2, :rb_ary_new_capa
   end
 
   describe "rb_ary_new3" do
