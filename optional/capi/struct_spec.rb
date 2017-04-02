@@ -57,6 +57,37 @@ describe "C-API Struct function" do
   end
 end
 
+describe "C-API Struct function" do
+  before :each do
+    @s = CApiStructSpecs.new
+    @struct = @s.rb_struct_define_under(CApiStructSpecs, "CAPIStruct", "a", "b", "c")
+  end
+
+  describe "rb_struct_define_under" do
+    it "creates accessors for the struct members" do
+      instance = @struct.new
+      instance.a = 1
+      instance.b = 2
+      instance.c = 3
+      instance.a.should == 1
+      instance.b.should == 2
+      instance.c.should == 3
+    end
+
+    it "has a value of nil for the member of a newly created instance" do
+      # Verify that attributes are on an instance basis
+      CApiStructSpecs::CAPIStruct.new.b.should be_nil
+    end
+
+    it "creates a constant scoped under the namespace of the given class" do
+      CApiStructSpecs.const_defined?(:CAPIStruct).should be_true
+    end
+
+    it "returns the member names as Symbols" do
+      @struct.members.sort.should == [:a, :b, :c]
+    end
+  end
+end
 
 describe "C-API Struct function" do
   before :each do
