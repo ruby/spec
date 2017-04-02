@@ -144,6 +144,11 @@ describe "C-API Struct function" do
       lambda { @s.rb_struct_aset(@struct, -4, 1) }.should raise_error(IndexError)
       lambda { @s.rb_struct_aset(@struct, 3, 1) }.should raise_error(IndexError)
     end
+
+    it "raises a RuntimeError if the struct is frozen" do
+      @struct.freeze
+      lambda { @s.rb_struct_aset(@struct, :a, 1) }.should raise_error(RuntimeError)
+    end
   end
 
   describe "rb_struct_new" do
