@@ -468,12 +468,10 @@ describe :process_spawn, shared: true do
     end
   end
 
-  ruby_version_is "2.2" do
-    it "redirects both STDERR and STDOUT at the time to the given name" do
-      touch @name
-      Process.wait @object.spawn(ruby_cmd("print(:glark); STDOUT.flush; STDERR.print(:bang)"), [:out, :err] => @name)
-      File.read(@name).should == "glarkbang"
-    end
+  it "redirects both STDERR and STDOUT at the time to the given name" do
+    touch @name
+    Process.wait @object.spawn(ruby_cmd("print(:glark); STDOUT.flush; STDERR.print(:bang)"), [:out, :err] => @name)
+    File.read(@name).should == "glarkbang"
   end
 
   context "when passed close_others: true" do

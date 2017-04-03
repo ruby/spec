@@ -81,11 +81,9 @@ describe "Hash literal" do
     {a: 1, b: 2, "c" => 3}.should == h
   end
 
-  ruby_version_is "2.2" do
-    it "accepts mixed 'key: value', 'key => value' and '\"key\"': value' syntax" do
-      h = {:a => 1, :b => 2, "c" => 3, :d => 4}
-      eval('{a: 1, :b => 2, "c" => 3, "d": 4}').should == h
-    end
+  it "accepts mixed 'key: value', 'key => value' and '\"key\"': value' syntax" do
+    h = {:a => 1, :b => 2, "c" => 3, :d => 4}
+    eval('{a: 1, :b => 2, "c" => 3, "d": 4}').should == h
   end
 
   it "expands an '**{}' element into the containing Hash literal initialization" do
@@ -107,26 +105,13 @@ describe "Hash literal" do
     {a: 1, **h, c: 4}.should == {a: 1, b: 2, c: 4}
   end
 
-  ruby_version_is ""..."2.2" do
-    it "expands an '**{}' element with containing Hash literal keys taking precedence" do
-      {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 1, b: 3, c: 3}
-    end
-
-    it "merges multiple nested '**obj' in Hash literals" do
-      h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
-      h.should == {a: 1, b: 3, c: 4, d: 5}
-    end
+  it "expands an '**{}' element with the last key/value pair taking precedence" do
+    {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 2, b: 3, c: 3}
   end
 
-  ruby_version_is "2.2" do
-    it "expands an '**{}' element with the last key/value pair taking precedence" do
-      {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 2, b: 3, c: 3}
-    end
-
-    it "merges multiple nested '**obj' in Hash literals" do
-      h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
-      h.should == {a: 2, b: 3, c: 4, d: 6}
-    end
+  it "merges multiple nested '**obj' in Hash literals" do
+    h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
+    h.should == {a: 2, b: 3, c: 4, d: 6}
   end
 
   it "calls #to_hash to expand an '**obj' element" do

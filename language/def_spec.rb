@@ -165,41 +165,26 @@ describe "An instance method with a default argument" do
     foo(2,3,3).should == [2,3,[3]]
   end
 
-  ruby_version_is ""..."2.2" do
-    it "calls a method with the same name as the local" do
-      def bar
-        1
-      end
-      def foo(bar = bar)
-        bar
-      end
-      foo.should == 1
-      foo(2).should == 2
+  it "shadows an existing method with the same name as the local" do
+    def bar
+      1
     end
+    def foo(bar = bar)
+      bar
+    end
+    foo.should == nil
+    foo(2).should == 2
   end
 
-  ruby_version_is "2.2" do
-    it "shadows an existing method with the same name as the local" do
-      def bar
-        1
-      end
-      def foo(bar = bar)
-        bar
-      end
-      foo.should == nil
-      foo(2).should == 2
+  it "calls a method with the same name as the local when explicitly using ()" do
+    def bar
+      1
     end
-
-    it "calls a method with the same name as the local when explicitly using ()" do
-      def bar
-        1
-      end
-      def foo(bar = bar())
-        bar
-      end
-      foo.should == 1
-      foo(2).should == 2
+    def foo(bar = bar())
+      bar
     end
+    foo.should == 1
+    foo(2).should == 2
   end
 end
 
