@@ -74,12 +74,14 @@ describe "Time#zone" do
     Time.now.utc.zone.should == "UTC"
   end
 
-  it "defaults to UTC when bad zones given" do
-    with_timezone("hello-foo") do
-      Time.now.utc_offset.should == 0
-    end
-    with_timezone("1,2") do
-      Time.now.utc_offset.should == 0
+  platform_is_not :aix do
+    it "defaults to UTC when bad zones given" do
+      with_timezone("hello-foo") do
+        Time.now.utc_offset.should == 0
+      end
+      with_timezone("1,2") do
+        Time.now.utc_offset.should == 0
+      end
     end
   end
 end
