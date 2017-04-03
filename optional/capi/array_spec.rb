@@ -205,9 +205,8 @@ describe "C-API Array function" do
       a.should == [1, 2, 5]
     end
 
-    it "raises on IndexError if the negative index is greater than the length" do
+    it "raises an IndexError if the negative index is greater than the length" do
       a = [1, 2, 3]
-
       lambda { @s.rb_ary_store(a, -10, 5) }.should raise_error(IndexError)
     end
 
