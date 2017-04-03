@@ -215,6 +215,11 @@ describe "C-API Array function" do
       @s.rb_ary_store(a, 2, 7)
       a.should == [nil, nil, 7]
     end
+
+    it "raises a RuntimeError if the array is frozen" do
+      a = [1, 2, 3].freeze
+      lambda { @s.rb_ary_store(a, 1, 5) }.should raise_error(RuntimeError)
+    end
   end
 
   describe "rb_ary_concat" do
