@@ -29,6 +29,27 @@ describe "CApiModule" do
     end
   end
 
+  describe "rb_define_module" do
+    it "returns the module if it is already defined" do
+      mod = @m.rb_define_module("CApiModuleSpecsModuleA")
+      mod.const_get(:X).should == 1
+    end
+
+    it "raises a TypeError if the constant is not a module" do
+      ::CApiModuleSpecsGlobalConst = 7
+      lambda { @m.rb_define_module("CApiModuleSpecsGlobalConst") }.should raise_error(TypeError)
+      Object.send :remove_const, :CApiModuleSpecsGlobalConst
+    end
+
+    it "defines a new module at toplevel" do
+      mod = @m.rb_define_module("CApiModuleSpecsModuleB")
+      mod.should be_kind_of(Module)
+      mod.name.should == "CApiModuleSpecsModuleB"
+      ::CApiModuleSpecsModuleB.should be_kind_of(Module)
+      Object.send :remove_const, :CApiModuleSpecsModuleB
+    end
+  end
+
   describe "rb_define_module_under" do
     it "creates a new module inside the inner class" do
       mod = @m.rb_define_module_under(CApiModuleSpecs, "ModuleSpecsModuleUnder1")
