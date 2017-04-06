@@ -36,6 +36,12 @@ describe "String#crypt" do
     lambda { "hello".crypt("a\x00") }.should raise_error(ArgumentError)
   end
 
+  ruby_version_is "2.3" do
+    it "raises an ArgumentError when the string contains NUL character" do
+      lambda { "poison\0null".crypt("aa") }.should raise_error(ArgumentError)
+    end
+  end
+
   it "calls #to_str to converts the salt arg to a String" do
     obj = mock('aa')
     obj.should_receive(:to_str).and_return("aa")
