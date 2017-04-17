@@ -56,6 +56,60 @@ describe "Class.new with a block given" do
 
     ScratchPad.recorded.should == [CoreClassSpecs::Inherited::D, klass]
   end
+  
+  describe "create class within the block" do
+    it "named classes" do
+      klass = Class.new do
+        class Howdy
+        end
+  
+        def self.get_class_name
+          Howdy.name
+        end  
+      end
+
+      Howdy.name.should == 'Howdy'
+      klass.get_class_name.should == 'Howdy'    
+    end
+    
+    it "named classes in a module" do
+      klass = CoreClassSpecs::ANON_CLASS_FOR_NEW.call
+      
+      CoreClassSpecs::NamedInModule.name.should == 'CoreClassSpecs::NamedInModule'
+      klass.get_class_name.should == 'CoreClassSpecs::NamedInModule'
+    end
+  
+    it "anonymous classes" do
+      klass = Class.new do
+        def self.get_class
+          Class.new do
+            def self.foo
+              'bar'
+            end
+          end
+        end
+  
+        def self.get_result
+          get_class.foo
+        end  
+      end
+
+      klass.get_result.should == 'bar'    
+    end
+    
+    it "anonymous classes with constant assigned" do
+      klass = Class.new do
+        AnonWithConstant = Class.new
+  
+        def self.get_class_name
+          AnonWithConstant.name
+        end  
+      end
+
+      AnonWithConstant.name.should == 'AnonWithConstant'
+      klass.get_class_name.should == 'AnonWithConstant'
+    end
+  end  
 end
 
 describe "Class.new" do
