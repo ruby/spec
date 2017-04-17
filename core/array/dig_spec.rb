@@ -8,6 +8,11 @@ ruby_version_is '2.3' do
       ['a'].dig(1).should be_nil
     end
 
+    it "returns nil if given a non-numeric index" do
+      ['a'].dig(:first).should be_nil
+      ['a'].dig('first').should be_nil
+    end
+
     it "recurses array elements" do
       a = [ [ 1, [2, '3'] ] ]
       a.dig(0, 0).should == 1
