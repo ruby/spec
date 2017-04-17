@@ -27,5 +27,8 @@ describe :enumerable_find_all, shared: true do
     multi.send(@method) {|e| e == [3, 4, 5] }.should == [[3, 4, 5]]
   end
 
+  before :all do
+    @method_args = nil
+  end
   it_should_behave_like :enumerable_enumeratorized_with_origin_size
 end
