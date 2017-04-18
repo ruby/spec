@@ -19,8 +19,10 @@ describe "SimpleDelegator.new" do
     lambda{ @delegate.priv }.should raise_error( NoMethodError )
   end
 
-  it "doesn't forward private method calls even via send or __send__" do
-    lambda{ @delegate.send(:priv, 42)     }.should raise_error( NoMethodError )
-    lambda{ @delegate.__send__(:priv, 42) }.should raise_error( NoMethodError )
+  ruby_version_is ""..."2.4" do
+    it "doesn't forward private method calls even via send or __send__" do
+      lambda{ @delegate.send(:priv, 42)     }.should raise_error( NoMethodError )
+      lambda{ @delegate.__send__(:priv, 42) }.should raise_error( NoMethodError )
+    end
   end
 end
