@@ -16,7 +16,7 @@ describe "Dir.home" do
 
   platform_is_not :windows do
     it "returns the named user's home directory as a string if called with an argument" do
-      Dir.home(ENV['USER']).should == home_directory
+      Dir.home(ENV['USER']).should == ENV['HOME']
     end
   end
 
