@@ -3,6 +3,12 @@ require File.expand_path('../fixtures/common', __FILE__)
 
 describe "Dir.home" do
   it "returns the current user's home directory as a string if called without arguments" do
+    home_directory = ENV['HOME']
+    platform_is :windows do
+      path = ENV['HOMEDRIVE'] + ENV['HOMEPATH']
+      home_directory = path.tr('\\', '/').chomp('/')
+    end
+
     Dir.home.should == home_directory
   end
 
