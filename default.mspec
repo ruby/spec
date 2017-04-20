@@ -1,7 +1,5 @@
 # Configuration file for Ruby >= 2.0 implementations.
 
-require 'mspec/guards/platform'
-
 class MSpecScript
   # Language features specs
   set :language, [ 'language' ]
