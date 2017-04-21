@@ -26,7 +26,7 @@ describe :kernel_require_basic, shared: true do
     end
 
     # Can't make a file unreadable on these platforms
-    platform_is_not os: [:windows, :cygwin] do
+    platform_is_not :windows, :cygwin do
       describe "with an unreadable file" do
         before :each do
           @path = tmp("unreadable_file.rb")
