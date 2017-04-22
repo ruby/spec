@@ -107,6 +107,15 @@ describe "Hash#compare_by_identity" do
     @idh.size.should == 1
     @idh.keys.first.object_id.should == foo.object_id
   end
+
+  ruby_bug "#12855", "2.2.0"..."2.4.1" do
+    it "gives different identity for string literals" do
+      @idh['foo'] = 1
+      @idh['foo'] = 2
+      @idh.values.should == [1, 2]
+      @idh.size.should == 2
+    end
+  end
 end
 
 describe "Hash#compare_by_identity?" do
