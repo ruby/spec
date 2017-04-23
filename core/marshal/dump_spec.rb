@@ -351,11 +351,13 @@ describe "Marshal.dump" do
       st = Struct.new("Thick").new
       st.instance_variable_set(:@ivar, 1)
       Marshal.dump(st).should == "\004\bIS:\022Struct::Thick\000\006:\n@ivari\006"
+      Struct.send(:remove_const, :Thick)
     end
 
     it "dumps an extended Struct" do
       st = Struct.new("Extended", :a, :b).new
       Marshal.dump(st.extend(Meths)).should == "\004\be:\nMethsS:\025Struct::Extended\a:\006a0:\006b0"
+      Struct.send(:remove_const, :Extended)
     end
   end
 

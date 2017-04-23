@@ -128,6 +128,7 @@ describe "Module#autoload" do
 
     ModuleSpecs::Autoload.autoload :S, filename
     ModuleSpecs::Autoload.autoload?(:S).should be_nil
+    ModuleSpecs::Autoload.send(:remove_const, :S)
   end
 
   it "retains the autoload even if the request to require fails" do
