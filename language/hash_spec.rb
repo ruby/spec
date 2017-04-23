@@ -45,7 +45,7 @@ describe "Hash literal" do
   it "checks duplicated keys on initialization" do
     -> {
       @h = eval "{foo: :bar, foo: :foo}"
-    }.should complain(/key :foo is duplicated/)
+    }.should complain(/key :foo is duplicated|duplicated key/)
     @h.keys.size.should == 1
     @h.should == {foo: :foo}
   end
@@ -110,14 +110,14 @@ describe "Hash literal" do
   it "expands an '**{}' element with the last key/value pair taking precedence" do
     -> {
       @h = eval "{a: 1, **{a: 2, b: 3, c: 1}, c: 3}"
-    }.should complain(/key :a is duplicated/)
+    }.should complain(/key :a is duplicated|duplicated key/)
     @h.should == {a: 2, b: 3, c: 3}
   end
 
   it "merges multiple nested '**obj' in Hash literals" do
     -> {
       @h = eval "{a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}"
-    }.should complain(/key :a is duplicated/)
+    }.should complain(/key :a is duplicated|duplicated key/)
     @h.should == {a: 2, b: 3, c: 4, d: 6}
   end
 
