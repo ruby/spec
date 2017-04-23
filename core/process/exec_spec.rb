@@ -78,7 +78,9 @@ describe "Process.exec" do
 
     platform_is_not :windows do
       it "subjects the specified command to shell expansion" do
-        result = ruby_exe('Process.exec "echo *"', escape: true, dir: @dir)
+        result = Dir.chdir(@dir) do
+          ruby_exe('Process.exec "echo *"', escape: true)
+        end
         result.chomp.should == @name
       end
 
@@ -90,7 +92,10 @@ describe "Process.exec" do
     platform_is :windows do
       # There is no shell expansion on Windows
       it "does not subject the specified command to shell expansion on Windows" do
-        ruby_exe('Process.exec "echo *"', escape: true, dir: @dir).should == "*\n"
+        result = Dir.chdir(@dir) do
+          ruby_exe('Process.exec "echo *"', escape: true)
+        end
+        result.should == "*\n"
       end
 
       it "does not create an argument array with shell parsing semantics for whitespace on Windows" do
