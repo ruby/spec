@@ -1044,17 +1044,23 @@ TRUE                 TrueClass   Synonym for true.
 describe "The predefined global constants" do
   it "includes TRUE" do
     Object.const_defined?(:TRUE).should == true
-    TRUE.should equal(true)
+    -> {
+      TRUE.should equal(true)
+    }.should complain(/constant ::TRUE is deprecated/)
   end
 
   it "includes FALSE" do
     Object.const_defined?(:FALSE).should == true
-    FALSE.should equal(false)
+    -> {
+      FALSE.should equal(false)
+    }.should complain(/constant ::FALSE is deprecated/)
   end
 
   it "includes NIL" do
     Object.const_defined?(:NIL).should == true
-    NIL.should equal(nil)
+    -> {
+      NIL.should equal(nil)
+    }.should complain(/constant ::NIL is deprecated/)
   end
 
   it "includes STDIN" do
