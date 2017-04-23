@@ -112,13 +112,17 @@ describe :io_new, shared: true do
     @io.external_encoding.should == Encoding::ISO_8859_1
   end
 
-  it "ingores the :encoding option when the :external_encoding option is present" do
-    @io = IO.send(@method, @fd, 'w', {external_encoding: 'utf-8', encoding: 'iso-8859-1:iso-8859-1'})
+  it "ignores the :encoding option when the :external_encoding option is present" do
+    lambda {
+      @io = IO.send(@method, @fd, 'w', {external_encoding: 'utf-8', encoding: 'iso-8859-1:iso-8859-1'})
+    }.should complain(/Ignoring encoding parameter/)
     @io.external_encoding.to_s.should == 'UTF-8'
   end
 
-  it "ingores the :encoding option when the :internal_encoding option is present" do
-    @io = IO.send(@method, @fd, 'w', {internal_encoding: 'ibm866', encoding: 'iso-8859-1:iso-8859-1'})
+  it "ignores the :encoding option when the :internal_encoding option is present" do
+    lambda {
+      @io = IO.send(@method, @fd, 'w', {internal_encoding: 'ibm866', encoding: 'iso-8859-1:iso-8859-1'})
+    }.should complain(/Ignoring encoding parameter/)
     @io.internal_encoding.to_s.should == 'IBM866'
   end
 
