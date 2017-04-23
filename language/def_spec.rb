@@ -189,10 +189,6 @@ describe "An instance method with a default argument" do
 end
 
 describe "A singleton method definition" do
-  after :all do
-    Object.__send__(:remove_class_variable, :@@a)
-  end
-
   it "can be declared for a local variable" do
     a = Object.new
     def a.foo
@@ -215,14 +211,6 @@ describe "A singleton method definition" do
       7
     end
     $__a__.foo.should == 7
-  end
-
-  it "can be declared for a class variable" do
-    @@a = Object.new
-    def @@a.foo
-      8
-    end
-    @@a.foo.should == 8
   end
 
   it "can be declared with an empty method body" do
