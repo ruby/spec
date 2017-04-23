@@ -100,7 +100,10 @@ describe "Bignum#<=>" do
 
     it "returns nil if #coerce raises an exception" do
       @num.should_receive(:coerce).with(@big).and_raise(RuntimeError)
-      (@big <=> @num).should be_nil
+      lambda {
+        @result = (@big <=> @num)
+      }.should complain(/Numerical comparison operators will no more rescue exceptions/)
+      @result.should be_nil
     end
 
     it "raises an exception if #coerce raises a non-StandardError exception" do
