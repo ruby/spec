@@ -8,6 +8,10 @@ describe "C-API Struct function" do
     @struct = @s.rb_struct_define("CAPIStruct", "a", "b", "c")
   end
 
+  after :each do
+    Struct.send(:remove_const, :CAPIStruct)
+  end
+
   describe "rb_struct_define" do
     it "creates accessors for the struct members" do
       instance = @struct.new

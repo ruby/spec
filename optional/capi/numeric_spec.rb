@@ -372,7 +372,10 @@ describe "CApiNumericSpecs" do
     end
 
     it "returns nil if passed nil" do
-      @s.rb_num_coerce_cmp(nil, 2, :<=>).should be_nil
+      -> {
+        @result = @s.rb_num_coerce_cmp(nil, 2, :<=>)
+      }.should complain(/comparison operators will no more rescue exceptions/)
+      @result.should be_nil
     end
 
     it "returns nil if #coerce does not return an Array" do

@@ -24,7 +24,9 @@ describe "CApiModule" do
     end
 
     it "sets an existing constant's value" do
-      @m.rb_const_set(CApiModuleSpecs::C, :Z, 8)
+      -> {
+        @m.rb_const_set(CApiModuleSpecs::C, :Z, 8)
+      }.should complain(/already initialized constant/)
       CApiModuleSpecs::C::Z.should == 8
     end
   end
@@ -60,7 +62,9 @@ describe "CApiModule" do
     end
 
     it "sets an existing constant's value" do
-      @m.rb_define_const(CApiModuleSpecs::C, "Z", 9)
+      -> {
+        @m.rb_define_const(CApiModuleSpecs::C, "Z", 9)
+      }.should complain(/already initialized constant/)
       CApiModuleSpecs::C::Z.should == 9
     end
   end
