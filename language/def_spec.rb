@@ -169,9 +169,11 @@ describe "An instance method with a default argument" do
     def bar
       1
     end
-    def foo(bar = bar)
-      bar
-    end
+    -> {
+      eval "def foo(bar = bar)
+        bar
+      end"
+    }.should complain(/circular argument reference/)
     foo.should == nil
     foo(2).should == 2
   end

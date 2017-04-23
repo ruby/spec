@@ -828,12 +828,18 @@ describe "Post-args" do
     describe "with a circular argument reference" do
       it "shadows an existing local with the same name as the argument" do
         a = 1
-        proc { |a=a| a }.call.should == nil
+        -> {
+          @proc = eval "proc { |a=a| a }"
+        }.should complain(/circular argument reference/)
+        @proc.call.should == nil
       end
 
       it "shadows an existing method with the same name as the argument" do
         def a; 1; end
-        proc { |a=a| a }.call.should == nil
+        -> {
+          @proc = eval "proc { |a=a| a }"
+        }.should complain(/circular argument reference/)
+        @proc.call.should == nil
       end
 
       it "calls an existing method with the same name as the argument if explicitly using ()" do

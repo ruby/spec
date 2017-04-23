@@ -257,12 +257,18 @@ describe "A lambda literal -> () { }" do
     describe "with circular optional argument reference" do
       it "shadows an existing local with the same name as the argument" do
         a = 1
-        -> (a=a) { a }.call.should == nil
+        -> {
+          @proc = eval "-> (a=a) { a }"
+        }.should complain(/circular argument reference/)
+        @proc.call.should == nil
       end
 
       it "shadows an existing method with the same name as the argument" do
         def a; 1; end
-        -> (a=a) { a }.call.should == nil
+        -> {
+          @proc = eval "-> (a=a) { a }"
+        }.should complain(/circular argument reference/)
+        @proc.call.should == nil
       end
 
       it "calls an existing method with the same name as the argument if explicitly using ()" do
