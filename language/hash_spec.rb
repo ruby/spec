@@ -43,9 +43,11 @@ describe "Hash literal" do
   end
 
   it "checks duplicated keys on initialization" do
-    h = {foo: :bar, foo: :foo}
-    h.keys.size.should == 1
-    h.should == {foo: :foo}
+    -> {
+      @h = eval "{foo: :bar, foo: :foo}"
+    }.should complain(/key :foo is duplicated/)
+    @h.keys.size.should == 1
+    @h.should == {foo: :foo}
   end
 
   it "accepts a hanging comma" do
@@ -106,12 +108,17 @@ describe "Hash literal" do
   end
 
   it "expands an '**{}' element with the last key/value pair taking precedence" do
-    {a: 1, **{a: 2, b: 3, c: 1}, c: 3}.should == {a: 2, b: 3, c: 3}
+    -> {
+      @h = eval "{a: 1, **{a: 2, b: 3, c: 1}, c: 3}"
+    }.should complain(/key :a is duplicated/)
+    @h.should == {a: 2, b: 3, c: 3}
   end
 
   it "merges multiple nested '**obj' in Hash literals" do
-    h = {a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}
-    h.should == {a: 2, b: 3, c: 4, d: 6}
+    -> {
+      @h = eval "{a: 1, **{a: 2, **{b: 3, **{c: 4}}, **{d: 5}, }, **{d: 6}}"
+    }.should complain(/key :a is duplicated/)
+    @h.should == {a: 2, b: 3, c: 4, d: 6}
   end
 
   it "calls #to_hash to expand an '**obj' element" do

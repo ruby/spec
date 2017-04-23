@@ -35,7 +35,10 @@ describe "Regexps with repetition" do
   end
 
   it "does not treat {m,n}+ as possessive" do
-    /foo(A{0,1}+)Abar/.match("fooAAAbar").to_a.should == ["fooAAAbar", "AA"]
+    -> {
+      @regexp = eval "/foo(A{0,1}+)Abar/"
+    }.should complain(/nested repeat operato/)
+    @regexp.match("fooAAAbar").to_a.should == ["fooAAAbar", "AA"]
   end
 
   it "supports ? (0 or 1 of previous subexpression)" do
