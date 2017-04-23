@@ -76,7 +76,7 @@ module KernelSpecs
   end
 
   class Method
-    public :abort, :exec, :exit, :exit!, :fork, :system
+    public :abort, :exit, :exit!, :fork, :system
   end
 
   class Methods
