@@ -311,7 +311,10 @@ describe "A lambda expression 'lambda { ... }'" do
     end
 
     it "can be created" do
-      implicit_lambda = meth { 1 }
+      implicit_lambda = nil
+      -> {
+        implicit_lambda = meth { 1 }
+      }.should complain(/tried to create Proc object without a block/)
 
       implicit_lambda.lambda?.should be_true
       implicit_lambda.call.should == 1
