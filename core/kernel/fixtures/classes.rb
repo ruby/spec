@@ -77,7 +77,6 @@ module KernelSpecs
 
   class Method
     public :abort, :exec, :exit, :exit!, :fork, :system
-    public :spawn if respond_to?(:spawn, true)
   end
 
   class Methods
