@@ -288,9 +288,12 @@ describe "Module#autoload" do
   end
 
   it "shares the autoload request across dup'ed copies of modules" do
+    require fixture(__FILE__, "autoload_s.rb")
     filename = fixture(__FILE__, "autoload_t.rb")
     mod1 = Module.new { autoload :T, filename }
-    ModuleSpecs::Autoload::S = mod1
+    lambda {
+      ModuleSpecs::Autoload::S = mod1
+    }.should complain(/already initialized constant/)
     mod2 = mod1.dup
 
     mod1.autoload?(:T).should == filename
