@@ -38,6 +38,7 @@ module ProcessSpecs
         fail "not supported on windows"
       end
       @script = fixture __FILE__, "kill.rb"
+      @pid = nil
       @pid_file = tmp("process_kill_signal_file")
       rm_r @pid_file
 
