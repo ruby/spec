@@ -219,8 +219,11 @@ describe :numeric_step, :shared => true do
     ruby_version_is ""..."2.4" do
       error = ArgumentError
     end
-    ruby_version_is "2.4" do
+    ruby_version_is "2.4"..."2.5" do
       error = TypeError
+    end
+    ruby_version_is "2.5" do
+      error = ArgumentError
     end
 
     describe "with self and stop as Fixnums" do
@@ -292,8 +295,11 @@ describe :numeric_step, :shared => true do
           ruby_version_is ""..."2.4" do
             error = ArgumentError
           end
-          ruby_version_is "2.4" do
+          ruby_version_is "2.4"..."2.5" do
             error = TypeError
+          end
+          ruby_version_is "2.5" do
+            error = ArgumentError
           end
 
           describe "with self and stop as Fixnums" do
