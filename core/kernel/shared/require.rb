@@ -544,10 +544,12 @@ describe :kernel_require, shared: true do
 
       t2 = Thread.new do
         Thread.pass until t1[:in_concurrent_rb]
+        $VERBOSE, @verbose = nil, $VERBOSE
         begin
           t2_res = @object.require(@path)
           ScratchPad.recorded << :t2_post
         ensure
+          $VERBOSE = @verbose
           fin = true
         end
       end
@@ -607,10 +609,12 @@ describe :kernel_require, shared: true do
 
       t2 = Thread.new do
         Thread.pass until t1[:in_concurrent_rb]
+        $VERBOSE, @verbose = nil, $VERBOSE
         begin
           t2_res = @object.require(@path)
           ScratchPad.recorded << :t2_post
         ensure
+          $VERBOSE = @verbose
           fin = true
         end
       end
