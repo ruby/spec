@@ -8,7 +8,7 @@ describe "Method#curry" do
 
     c = x.method(:foo).curry
     c.should be_kind_of(Proc)
-    c.(1).(2, 3).should == [1,2,3]
+    c.call(1).call(2, 3).should == [1,2,3]
   end
 
   describe "with optional arity argument" do
