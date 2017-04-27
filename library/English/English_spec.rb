@@ -131,8 +131,13 @@ describe "English" do
   end
 
   it "aliases $IGNORECASE to $=" do
-    $IGNORECASE.should_not be_nil
-    $IGNORECASE.should == $=
+    $VERBOSE, verbose = nil, $VERBOSE
+    begin
+      $IGNORECASE.should_not be_nil
+      $IGNORECASE.should == $=
+    ensure
+      $VERBOSE = verbose
+    end
   end
 
   it "aliases $ARGV to $*" do
