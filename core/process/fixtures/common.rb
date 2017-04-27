@@ -13,7 +13,7 @@ module ProcessSpecs
     end
 
     def wait_for_daemon
-      sleep 0.1 until File.exist?(@data) and File.size?(@data)
+      sleep 0.001 until File.exist?(@data) and File.size?(@data)
     end
 
     def invoke(behavior, arguments=[])
