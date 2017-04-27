@@ -119,10 +119,7 @@ describe "English" do
   end
 
   it "aliases $CHILD_STATUS to $?" do
-    begin
-      `missing_program_name`
-    rescue
-    end
+    ruby_exe('exit 0')
     $CHILD_STATUS.should_not be_nil
     $CHILD_STATUS.should == $?
   end
