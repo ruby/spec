@@ -481,6 +481,21 @@ describe :kernel_require, shared: true do
     end
   end
 
+    ruby_version_is "2.5" do
+      it "complex, enumerator, rational and thread are already required" do
+        provided = %w[complex enumerator rational thread]
+        features = ruby_exe("puts $LOADED_FEATURES", options: '--disable-gems')
+        provided.each { |feature|
+          features.should =~ /\b#{feature}\.(rb|so|jar)$/
+        }
+
+        code = provided.map { |f| "puts require #{f.inspect}\n" }.join
+        required = ruby_exe(code, options: '--disable-gems')
+        required.should == "false\n" * provided.size
+      end
+    end
+  end
+
   describe "(shell expansion)" do
     before :each do
       @path = File.expand_path("load_fixture.rb", CODE_LOADING_DIR)
