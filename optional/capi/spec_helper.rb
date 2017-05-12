@@ -6,7 +6,7 @@ require 'fileutils'
 require 'tmpdir'
 
 OBJDIR ||= File.expand_path("../../../ext/#{RUBY_NAME}/#{RUBY_VERSION}", __FILE__)
-FileUtils.makedirs(OBJDIR)
+mkdir_p(OBJDIR)
 
 def extension_path
   File.expand_path("../ext", __FILE__)
