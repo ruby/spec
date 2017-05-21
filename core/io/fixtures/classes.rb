@@ -71,8 +71,7 @@ module IOSpecs
   end
 
   def self.lines_r_separator
-    [ "Voici la ligne une.\nQui \303\250 la linea due.\n\n\n" \
-      "Aqu\303\255 est\303\241 la l\303\255nea tr",
+    [ "Voici la ligne une.\nQui \303\250 la linea due.\n\n\nAqu\303\255 est\303\241 la l\303\255nea tr",
       "es.\nIst hier",
       " Linie vier",
       ".\n\nEst\303\241 aqui a linha cinco.\nHer",
@@ -95,8 +94,7 @@ module IOSpecs
 
   def self.lines_arbitrary_separator
     [ "Voici la ligne une.\nQui \303\250",
-      " la linea due.\n\n\nAqu\303\255 est\303\241 la l\303\255nea tres.\n" \
-      "Ist hier Linie vier.\n\nEst\303\241 aqui a linha cinco.\nHere is line six.\n" ]
+      " la linea due.\n\n\nAqu\303\255 est\303\241 la l\303\255nea tres.\nIst hier Linie vier.\n\nEst\303\241 aqui a linha cinco.\nHere is line six.\n" ]
   end
 
   def self.paragraphs
