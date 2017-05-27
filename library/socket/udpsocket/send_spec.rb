@@ -5,8 +5,8 @@ describe "UDPSocket.send" do
   before :each do
     @ready = false
     @server_thread = Thread.new do
+      @server = UDPSocket.open
       begin
-        @server = UDPSocket.open
         @server.bind(nil, SocketSpecs.port)
         @ready = true
         begin
@@ -16,7 +16,7 @@ describe "UDPSocket.send" do
           retry
         end
       ensure
-        @server.close if @server && !@server.closed?
+        @server.close if !@server.closed?
       end
     end
     Thread.pass while @server_thread.status and !@ready
