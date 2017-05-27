@@ -24,7 +24,7 @@ describe "UDPSocket.send" do
 
   it "sends data in ad hoc mode" do
     @socket = UDPSocket.open
-    @socket.send("ad hoc", 0, SocketSpecs.hostname,SocketSpecs.port)
+    @socket.send("ad hoc", 0, SocketSpecs.hostname, SocketSpecs.port)
     @socket.close
     @server_thread.join
 
@@ -36,7 +36,7 @@ describe "UDPSocket.send" do
 
   it "sends data in ad hoc mode (with port given as a String)" do
     @socket = UDPSocket.open
-    @socket.send("ad hoc", 0, SocketSpecs.hostname,SocketSpecs.str_port)
+    @socket.send("ad hoc", 0, SocketSpecs.hostname, SocketSpecs.str_port)
     @socket.close
     @server_thread.join
 
@@ -48,7 +48,7 @@ describe "UDPSocket.send" do
 
   it "sends data in connection mode" do
     @socket = UDPSocket.open
-    @socket.connect(SocketSpecs.hostname,SocketSpecs.port)
+    @socket.connect(SocketSpecs.hostname, SocketSpecs.port)
     @socket.send("connection-based", 0)
     @socket.close
     @server_thread.join
@@ -61,12 +61,14 @@ describe "UDPSocket.send" do
 
   it "raises EMSGSIZE if data is too too big" do
     @socket = UDPSocket.open
-
-    lambda do
-      @socket.send('1' * 100_000, 0, SocketSpecs.hostname, SocketSpecs.str_port)
-    end.should raise_error(Errno::EMSGSIZE)
-
-    @socket.close
-    @server_thread.exit
+    begin
+      lambda do
+        @socket.send('1' * 100_000, 0, SocketSpecs.hostname, SocketSpecs.str_port)
+      end.should raise_error(Errno::EMSGSIZE)
+    ensure
+      @socket.send("ad hoc", 0, SocketSpecs.hostname, SocketSpecs.port)
+      @socket.close
+      @server_thread.join
+    end
   end
 end
