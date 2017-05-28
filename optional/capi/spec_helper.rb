@@ -36,7 +36,7 @@ def compile_extension(name)
   tmpdir = tmp("cext_#{name}")
   Dir.mkdir(tmpdir)
   begin
-    ["jruby.h", "rubinius.h", "truffleruby.h", "rubyspec.h", "#{ext}.c"].each do |file|
+    ["rubyspec.h", "#{ext}.c"].each do |file|
       cp "#{extension_path}/#{file}", "#{tmpdir}/#{file}"
     end
 
