@@ -22,14 +22,13 @@ def compile_extension(name)
   end
 
   ext = "#{name}_spec"
-  source = "#{extension_path}/#{ext}.c"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   ruby_header = "#{RbConfig::CONFIG['rubyhdrdir']}/ruby.h"
 
   return lib if File.exist?(lib) and
-                File.mtime(lib) > File.mtime(source) and
-                File.mtime(lib) > File.mtime(ruby_header) and
                 File.mtime(lib) > File.mtime("#{extension_path}/rubyspec.h") and
+                File.mtime(lib) > File.mtime("#{extension_path}/#{ext}.c") and
+                File.mtime(lib) > File.mtime(ruby_header) and
                 true            # sentinel
 
   # Copy needed source files to tmpdir
