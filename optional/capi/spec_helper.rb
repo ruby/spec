@@ -58,9 +58,7 @@ def compile_extension(name)
       raise "make failed:\n#{output}" unless $?.success?
       $stderr.puts output if debug
 
-      Dir.glob("*.#{RbConfig::CONFIG['DLEXT']}") do |file|
-        cp file, "#{object_path}/#{file}"
-      end
+      cp File.basename(lib), lib
     end
   ensure
     rm_r tmpdir
