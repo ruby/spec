@@ -51,13 +51,15 @@ def compile_extension(name)
       else
         File.write("extconf.rb", "require 'mkmf'\n" +
           "$ruby = ENV.values_at('RUBY_EXE', 'RUBY_FLAGS').join(' ')\n" +
+          # MRI magic to consider building non-bundled extensions
+          "$extout = nil\n" +
           "create_makefile(#{ext.inspect})\n")
         output = ruby_exe("extconf.rb")
         raise "extconf failed:\n#{output}" unless $?.success?
         $stderr.puts output if debug
       end
 
-      output = `make V=1 TARGET_SO_DIR=./`
+      output = `make V=1`
       raise "make failed:\n#{output}" unless $?.success?
       $stderr.puts output if debug
 
