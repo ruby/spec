@@ -1,5 +1,8 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
+# MRI magic to use built but not installed ruby
+$extmk = false
+
 require 'rbconfig'
 
 OBJDIR ||= File.expand_path("../../../ext/#{RUBY_NAME}/#{RUBY_VERSION}", __FILE__)
@@ -47,6 +50,7 @@ def compile_extension(name)
         create_makefile(ext, tmpdir)
       else
         File.write("extconf.rb", "require 'mkmf'\n" +
+          "$ruby = ENV.values_at('RUBY_EXE', 'RUBY_FLAGS').join(' ')\n" +
           "create_makefile(#{ext.inspect})\n")
         output = ruby_exe("extconf.rb")
         raise "extconf failed:\n#{output}" unless $?.success?
