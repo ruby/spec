@@ -18,11 +18,7 @@ end
 
 def compile_extension(name)
   debug = false
-  run_mkmf_in_process = false
-
-  if RUBY_NAME == 'truffleruby'
-    run_mkmf_in_process = true
-  end
+  run_mkmf_in_process = RUBY_NAME == 'truffleruby'
 
   ext = "#{name}_spec"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
