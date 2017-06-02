@@ -300,8 +300,8 @@ describe "String#split with Regexp" do
     "AabB".split(/([a-z])+/).should == ["A", "b", "B"]
   end
 
-  it "applies the limit only to the number of matches, not to the number of captures" do
-    "aBa".split(/(B)()/, 2).should == ["a", "B", "", "a"]
+  it "applies the limit to the number of split substrings, without counting captures" do
+    "aBaBa".split(/(B)()()/, 2).should == ["a", "B", "", "", "aBa"]
   end
 
   it "does not include non-matching captures in the result array" do
