@@ -1,0 +1,12 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  DisplayCopNames: true
+  Exclude:
+    - command_line/fixtures/bad_syntax.rb
+  DisabledByDefault: true
+
+Lint:
+  Enabled: true
+# The cop registers too many false positives to `.should == something`
+Lint/Void:
+  Enabled: false
