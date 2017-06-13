@@ -5,7 +5,7 @@ $extmk = false
 
 require 'rbconfig'
 
-OBJDIR ||= File.expand_path("../../../ext/#{RUBY_NAME}/#{RUBY_VERSION}", __FILE__)
+OBJDIR ||= File.expand_path("../../../ext/#{RUBY_ENGINE}/#{RUBY_VERSION}", __FILE__)
 mkdir_p(OBJDIR)
 
 def extension_path
@@ -18,7 +18,7 @@ end
 
 def compile_extension(name)
   debug = false
-  run_mkmf_in_process = RUBY_NAME == 'truffleruby'
+  run_mkmf_in_process = RUBY_ENGINE == 'truffleruby'
 
   ext = "#{name}_spec"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
