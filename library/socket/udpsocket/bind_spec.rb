@@ -13,6 +13,11 @@ describe "UDPSocket.bind" do
 
   it "binds the socket to a port" do
     @socket.bind(SocketSpecs.hostname, 0)
+    @socket.addr[1].should be_kind_of(Integer)
+  end
+
+  it "raises Errno::EINVAL when already bound" do
+    @socket.bind(SocketSpecs.hostname, 0)
 
     lambda {
       @socket.bind(SocketSpecs.hostname, @socket.addr[1])
