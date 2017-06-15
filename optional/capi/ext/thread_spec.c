@@ -34,17 +34,21 @@ static void* blocking_gvl_func(void* data) {
     rv = read(rfd, &dummy, 1);
   } while (rv == -1 && errno == EINTR);
 
+  close(rfd);
+
   return (void*)((rv == 1) ? Qtrue : Qfalse);
 }
 
 static void unblock_gvl_func(void *data) {
   int wfd = *(int *)data;
-  char dummy = 0;
+  char dummy = 'A';
   ssize_t rv;
 
   do {
     rv = write(wfd, &dummy, 1);
   } while (rv == -1 && errno == EINTR);
+
+  close(wfd);
 }
 
 /* Returns true if the thread is interrupted. */
@@ -57,8 +61,6 @@ static VALUE thread_spec_rb_thread_call_without_gvl(VALUE self) {
   }
   ret = rb_thread_call_without_gvl(blocking_gvl_func, &fds[0],
                                    unblock_gvl_func, &fds[1]);
-  close(fds[0]);
-  close(fds[1]);
   return (VALUE)ret;
 }
 
