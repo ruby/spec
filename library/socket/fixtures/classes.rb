@@ -38,10 +38,6 @@ module SocketSpecs
     @port ||= find_available_port
   end
 
-  def self.str_port
-    port.to_s
-  end
-
   def self.local_port
     find_available_port
   end
