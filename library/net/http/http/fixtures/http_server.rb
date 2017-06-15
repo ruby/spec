@@ -80,9 +80,11 @@ module NetHTTPSpecs
         rescue Errno::EPIPE
           # Because WEBrick is not thread-safe and only catches IOError
         end
+        @server = nil
       end
       if @server_thread
         @server_thread.join
+        @server_thread = nil
       end
       timeout = WEBrick::Utils::TimeoutHandler
       timeout.terminate if timeout.respond_to?(:terminate)
