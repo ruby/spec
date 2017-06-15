@@ -47,7 +47,8 @@ module NetHTTPSpecs
     @server_thread = nil
 
     def port
-      @server ? @server.config[:Port] : 3333
+      raise "server not started" unless @server
+      @server.config[:Port]
     end
 
     def start_server
