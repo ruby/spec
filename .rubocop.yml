@@ -22,3 +22,7 @@ Lint/UnusedMethodArgument:
 # The cop registers too many false positives to `.should == something`
 Lint/Void:
   Enabled: false
+
+Lint/EmptyExpression:
+  Exclude:
+    - 'language/**/*.rb'
