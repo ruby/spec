@@ -9,6 +9,7 @@ AllCops:
 
 Lint:
   Enabled: true
+
 # The cop registers too many false positives to `.should == something`
 Lint/Void:
   Enabled: false
