@@ -10,6 +10,9 @@ AllCops:
 Lint:
   Enabled: true
 
+Lint/AssignmentInCondition:
+  Enabled: false
+
 Lint/LiteralInCondition:
   Enabled: false
 
