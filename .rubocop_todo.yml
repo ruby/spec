@@ -45,10 +45,9 @@ Lint/DuplicateMethods:
     - 'core/unboundmethod/fixtures/classes.rb'
     - 'fixtures/class.rb'
 
-# Offense count: 37
+# Offense count: 36
 Lint/EmptyExpression:
   Exclude:
-    - 'core/regexp/encoding_spec.rb'
     - 'language/and_spec.rb'
     - 'language/array_spec.rb'
     - 'language/def_spec.rb'
