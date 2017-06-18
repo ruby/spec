@@ -10,6 +10,15 @@ AllCops:
 Lint:
   Enabled: true
 
+Lint/LiteralInCondition:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
 # The cop registers too many false positives to `.should == something`
 Lint/Void:
   Enabled: false
