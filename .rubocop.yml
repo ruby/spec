@@ -13,10 +13,19 @@ Lint:
 Lint/LiteralInCondition:
   Enabled: false
 
+Lint/UnifiedInteger:
+  Enabled: false
+
 Lint/UnusedBlockArgument:
   Enabled: false
 
 Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Lint/UselessComparison:
   Enabled: false
 
 # The cop registers too many false positives to `.should == something`
