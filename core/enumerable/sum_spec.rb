@@ -8,7 +8,7 @@ ruby_version_is '2.4' do
       class << @enum
         def each
           yield 0
-          yield -1
+          yield(-1)
           yield 2
           yield 2/3r
         end
