@@ -8,7 +8,19 @@ describe :time_gmtime, shared: true do
     end
   end
 
-  it "raises a RuntimeError on a frozen time" do
-    lambda { Time.new.freeze.send(@method) }.should raise_error(RuntimeError)
+  describe "on a frozen time" do
+    it "does not raise an error if already in UTC" do
+      time = Time.gm(2007, 1, 9, 12, 0, 0)
+      time.freeze
+      time.send(@method).should equal(time)
+    end
+
+    it "raises a RuntimeError if the time is not UTC" do
+      with_timezone("CST", -6) do
+        time = Time.now
+        time.freeze
+        lambda { time.send(@method) }.should raise_error(RuntimeError)
+      end
+    end
   end
 end
