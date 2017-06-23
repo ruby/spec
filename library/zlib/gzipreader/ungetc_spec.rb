@@ -12,7 +12,7 @@ describe 'GzipReader#ungetc' do
 
   describe 'at the start of the stream' do
     before :each do
-      @gz = Zlib::GzipReader.new(@io)
+      @gz = Zlib::GzipReader.new(@io, external_encoding: Encoding::UTF_8)
     end
 
     describe 'with a single-byte character' do
@@ -100,7 +100,7 @@ describe 'GzipReader#ungetc' do
 
   describe 'in the middle of the stream' do
     before :each do
-      @gz = Zlib::GzipReader.new(@io)
+      @gz = Zlib::GzipReader.new(@io, external_encoding: Encoding::UTF_8)
       @gz.read 5
     end
 
@@ -181,7 +181,7 @@ describe 'GzipReader#ungetc' do
 
   describe 'at the end of the stream' do
     before :each do
-      @gz = Zlib::GzipReader.new(@io)
+      @gz = Zlib::GzipReader.new(@io, external_encoding: Encoding::UTF_8)
       @gz.read
     end
 
