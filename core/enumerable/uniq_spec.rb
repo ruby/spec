@@ -19,15 +19,9 @@ ruby_version_is '2.4' do
         end
       end
 
-      ruby_version_is '2.5' do
+      ruby_bug '#13669', ''...'2.5' do
         it 'returns all yield arguments as an array' do
           @enum.uniq { |_, label| label.downcase }.should == [[0, 'foo'], [2, 'bar']]
-        end
-      end
-
-      ruby_bug '#13669', ''...'2.5' do
-        it 'returns an array that contains only first argument of the yield' do
-          @enum.uniq { |_, label| label.downcase }.should == [0, 2]
         end
       end
     end
