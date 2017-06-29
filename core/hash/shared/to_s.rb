@@ -28,7 +28,7 @@ describe :hash_to_s, shared: true do
     str = "abc"
     str.should_not_receive(:to_s)
 
-    { a: str }.send(@method).should == %|{:a=>"abc"}|
+    { a: str }.send(@method).should == '{:a=>"abc"}'
   end
 
   it "calls #to_s on the object returned from #inspect if the Object isn't a String" do

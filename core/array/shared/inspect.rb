@@ -22,7 +22,7 @@ describe :array_inspect, shared: true do
     str = "abc"
     str.should_not_receive(:to_s)
 
-    [str].send(@method).should == %|["abc"]|
+    [str].send(@method).should == '["abc"]'
   end
 
   it "calls #to_s on the object returned from #inspect if the Object isn't a String" do
