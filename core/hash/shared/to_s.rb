@@ -28,7 +28,7 @@ describe :hash_to_s, shared: true do
     str = "abc"
     str.should_not_receive(:to_s)
 
-    new_hash(:a => str).send(@method).should == %|{:a=>"abc"}|
+    { a: str }.send(@method).should == %|{:a=>"abc"}|
   end
 
   it "calls #to_s on the object returned from #inspect if the Object isn't a String" do
@@ -36,7 +36,7 @@ describe :hash_to_s, shared: true do
     obj.should_receive(:inspect).and_return(obj)
     obj.should_receive(:to_s).and_return("abc")
 
-    new_hash(:a => obj).send(@method).should == "{:a=>abc}"
+    { a: obj }.send(@method).should == "{:a=>abc}"
   end
 
   it "does not call #to_str on the object returned from #inspect when it is not a String" do
@@ -44,7 +44,7 @@ describe :hash_to_s, shared: true do
     obj.should_receive(:inspect).and_return(obj)
     obj.should_not_receive(:to_str)
 
-    new_hash(:a => obj).send(@method).should =~ /^\{:a=>#<MockObject:0x[0-9a-f]+>\}$/
+    { a: obj }.send(@method).should =~ /^\{:a=>#<MockObject:0x[0-9a-f]+>\}$/
   end
 
   it "does not call #to_str on the object returned from #to_s when it is not a String" do
@@ -53,7 +53,7 @@ describe :hash_to_s, shared: true do
     obj.should_receive(:to_s).and_return(obj)
     obj.should_not_receive(:to_str)
 
-    new_hash(:a => obj).send(@method).should =~ /^\{:a=>#<MockObject:0x[0-9a-f]+>\}$/
+    { a: obj }.send(@method).should =~ /^\{:a=>#<MockObject:0x[0-9a-f]+>\}$/
   end
 
   it "does not swallow exceptions raised by #to_s" do
@@ -61,7 +61,7 @@ describe :hash_to_s, shared: true do
     obj.should_receive(:inspect).and_return(obj)
     obj.should_receive(:to_s).and_raise(Exception)
 
-    lambda { new_hash(:a => obj).send(@method) }.should raise_exception(Exception)
+    lambda { { a: obj }.send(@method) }.should raise_error(Exception)
   end
 
   it "handles hashes with recursive values" do
