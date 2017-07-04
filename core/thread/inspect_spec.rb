@@ -31,7 +31,7 @@ describe "Thread#inspect" do
   end
 
   it "describes a dying sleeping thread" do
-    ThreadSpecs.status_of_dying_sleeping_thread.status.should include('sleep')
+    ThreadSpecs.status_of_dying_sleeping_thread.inspect.should include('sleep')
   end
 
   it "reports aborting on a killed thread" do
