@@ -144,6 +144,16 @@ module ThreadSpecs
     status
   end
 
+  def self.status_of_dying_thread_after_sleep
+    t = dying_thread_ensures { Thread.stop; }
+    Thread.pass while t.status and t.status != 'sleep'
+    t.wakeup
+    Thread.pass while t.status and t.status == 'sleep'
+    status = Status.new t
+    t.join
+    status
+  end
+
   def self.dying_thread_ensures(kill_method_name=:kill)
     Thread.new do
       begin
