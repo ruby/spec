@@ -47,10 +47,4 @@ describe "Thread#stop?" do
   it "describes a dying sleeping thread" do
     ThreadSpecs.status_of_dying_sleeping_thread.stop?.should == true
   end
-
-  quarantine! do
-  it "reports aborting on a killed thread" do
-    ThreadSpecs.status_of_aborting_thread.stop?.should == false
-  end
-  end
 end

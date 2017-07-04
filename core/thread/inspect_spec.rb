@@ -34,9 +34,7 @@ describe "Thread#inspect" do
     ThreadSpecs.status_of_dying_sleeping_thread.status.should include('sleep')
   end
 
-  quarantine! do
   it "reports aborting on a killed thread" do
-    ThreadSpecs.status_of_aborting_thread.inspect.should include('aborting')
-  end
+    ThreadSpecs.status_of_dying_running_thread.inspect.should include('aborting')
   end
 end

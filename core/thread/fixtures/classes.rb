@@ -111,9 +111,6 @@ module ThreadSpecs
     status
   end
 
-  def self.status_of_aborting_thread
-  end
-
   def self.status_of_killed_thread
     t = Thread.new { sleep }
     Thread.pass while t.status and t.status != 'sleep'
