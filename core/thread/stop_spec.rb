@@ -48,3 +48,13 @@ describe "Thread#stop?" do
     ThreadSpecs.status_of_dying_sleeping_thread.stop?.should == true
   end
 end
+
+describe "Thread#status" do
+  it "describes a dying running thread" do
+    ThreadSpecs.status_of_dying_running_thread.status.should == 'aborting'
+  end
+
+  it "describes a dying sleeping thread" do
+    ThreadSpecs.status_of_dying_running_thread.status.should == 'aborting'
+  end
+end
