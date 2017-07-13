@@ -128,6 +128,16 @@ module BreakSpecs
         note :c
       end
     end
+
+    def break_in_another_thread
+      note :a
+      Thread.new do
+        note :b
+        break :break
+        note :c
+      end.value
+      note :d
+    end
   end
 
   class Lambda < Driver
