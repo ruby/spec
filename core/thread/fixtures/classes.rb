@@ -145,11 +145,14 @@ module ThreadSpecs
   end
 
   def self.status_of_dying_thread_after_sleep
-    t = dying_thread_ensures { Thread.stop; }
+    status = nil
+    t = dying_thread_ensures {
+      Thread.stop
+      status = Status.new(Thread.current)
+    }
     Thread.pass while t.status and t.status != 'sleep'
     t.wakeup
     Thread.pass while t.status and t.status == 'sleep'
-    status = Status.new t
     t.join
     status
   end
