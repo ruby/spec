@@ -131,12 +131,15 @@ module BreakSpecs
 
     def break_in_another_thread
       note :a
-      Thread.new do
+      thread = Thread.new do
         note :b
         break :break
         note :c
-      end.value
+      end
+      thread.join rescue nil
       note :d
+      thread.value
+      note :e
     end
   end
 

@@ -64,7 +64,7 @@ describe "The break statement in a captured block" do
   describe "from another thread" do
     it "raises a LocalJumpError when getting the value from another thread" do
       lambda { @program.break_in_another_thread }.should raise_error(LocalJumpError)
-      ScratchPad.recorded.should == [:a, :b]
+      ScratchPad.recorded.should == [:a, :b, :d]
     end
   end
 end
