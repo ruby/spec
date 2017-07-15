@@ -128,19 +128,6 @@ module BreakSpecs
         note :c
       end
     end
-
-    def break_in_another_thread
-      note :a
-      thread = Thread.new do
-        note :b
-        break :break
-        note :c
-      end
-      thread.join rescue nil
-      note :d
-      thread.value
-      note :e
-    end
   end
 
   class Lambda < Driver
