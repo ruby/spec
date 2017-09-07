@@ -31,6 +31,10 @@ ruby/spec describes the behavior of Ruby 2.2 and more recent Ruby versions.
 More precisely, every latest stable MRI release [passes](https://rubyci.org/) all specs of ruby/spec
 (latest 2.2.x, 2.3.x, 2.4.x, etc).
 
+For older specs try these commits:  
+* Ruby 2.0.0-p643 - [Suite](https://github.com/ruby/spec/commit/e8c46ebbf76d860a0dd50a5f45556d3bf7796ec5) using [MSpec](https://github.com/ruby/mspec/commit/658bb7cdbc503561a32f4a7ca11e1f8ea55065b4) (may encounter 1 fail and 3 errors)  
+* Ruby 2.1.10 - [Suite](https://github.com/ruby/spec/commit/96ba5d539892ed3436cf667d396b10458f95b6d0) using [MSpec](https://github.com/ruby/mspec/commit/1fa5f7d90503a95712ab378110cba17340269a9d)
+
 ### Running the specs
 
 First, clone this repository:
