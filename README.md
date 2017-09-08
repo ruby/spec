@@ -32,8 +32,8 @@ More precisely, every latest stable MRI release [passes](https://rubyci.org/) al
 (latest 2.2.x, 2.3.x, 2.4.x, etc).
 
 For older specs try these commits:  
-* Ruby 2.0.0-p643 - [Suite](https://github.com/ruby/spec/commit/e8c46ebbf76d860a0dd50a5f45556d3bf7796ec5) using [MSpec](https://github.com/ruby/mspec/commit/658bb7cdbc503561a32f4a7ca11e1f8ea55065b4) (may encounter 1 fail and 3 errors)  
-* Ruby 2.1.10 - [Suite](https://github.com/ruby/spec/commit/96ba5d539892ed3436cf667d396b10458f95b6d0) using [MSpec](https://github.com/ruby/mspec/commit/1fa5f7d90503a95712ab378110cba17340269a9d)
+* Ruby 2.0.0-p647 - [Suite](https://github.com/ruby/spec/commit/245862558761d5abc676843ef74f86c9bcc8ea8d) using [MSpec](https://github.com/ruby/mspec/commit/f90efa068791064f955de7a843e96e2d7d3041c2) (may encounter 2 failures)
+* Ruby 2.1.9 - [Suite](https://github.com/ruby/spec/commit/f029e65241374386077ac500add557ae65069b55) using [MSpec](https://github.com/ruby/mspec/commit/55568ea3918c6380e64db8c567d732fa5781efed)
 
 ### Running the specs
 
