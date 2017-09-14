@@ -50,7 +50,7 @@ describe "Thread#status" do
         sleep
       ensure
         q.push Thread.current.status
-      end 
+      end
     end
     q.pop
     t.kill
