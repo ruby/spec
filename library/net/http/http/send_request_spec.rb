@@ -84,35 +84,36 @@ describe "Net::HTTP#send_request" do
 
   describe "when passed type, path, body, headers" do
     it "sends a HTTP Request with the passed headers" do
-      response = @http.send_request("GET", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      referer = 'https://www.ruby-lang.org/'.freeze
+      response = @http.send_request("GET", "/request/header", "test=test", "referer" => referer)
+      response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("HEAD", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
+      # response = @http.send_request("HEAD", "/request/header", "test=test", "referer" => referer)
       # response.body.should be_nil
 
-      response = @http.send_request("POST", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      response = @http.send_request("POST", "/request/header", "test=test", "referer" => referer)
+      response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("PUT", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      # response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      # response = @http.send_request("PUT", "/request/header", "test=test", "referer" => referer)
+      # response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("DELETE", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      # response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      # response = @http.send_request("DELETE", "/request/header", "test=test", "referer" => referer)
+      # response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("PROPGET", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      # response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      # response = @http.send_request("PROPGET", "/request/header", "test=test", "referer" => referer)
+      # response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("PROPSET", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      # response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      # response = @http.send_request("PROPSET", "/request/header", "test=test", "referer" => referer)
+      # response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("OPTIONS", "/request/body", "test=test", "referer" => "http://www.rubyspec.org")
+      # response = @http.send_request("OPTIONS", "/request/body", "test=test", "referer" => referer)
       # response.body.should be_nil
 
-      # response = @http.send_request("LOCK", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      # response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      # response = @http.send_request("LOCK", "/request/header", "test=test", "referer" => referer)
+      # response.body.should include('"referer"=>["' + referer + '"]')
 
-      # response = @http.send_request("UNLOCK", "/request/header", "test=test", "referer" => "http://www.rubyspec.org")
-      # response.body.should include('"referer"=>["http://www.rubyspec.org"]')
+      # response = @http.send_request("UNLOCK", "/request/header", "test=test", "referer" => referer)
+      # response.body.should include('"referer"=>["' + referer + '"]')
     end
   end
 end
