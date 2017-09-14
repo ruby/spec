@@ -18,7 +18,7 @@ describe "The -e command line option" do
   end
 
   it "uses '-e' in $0" do
-    system(*RUBY_EXE.split, '-e', 'exit $0 == "-e" ? 0 : 1').should == true
+    system(*ruby_exe, '-e', 'exit $0 == "-e" ? 0 : 1').should == true
   end
 
   #needs to test return => LocalJumpError
