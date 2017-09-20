@@ -57,13 +57,15 @@ def compile_extension(name)
 
       make = ENV['MAKE']
       make ||= (RbConfig::CONFIG['host_os'].include?("mswin") ? "nmake" : "make")
-      if File.basename(make, ".*").casecmp("nmake") == 0
-        # suppress logo of nmake.exe to stderr
-        ENV["MAKEFLAGS"] = "l#{ENV["MAKEFLAGS"]}"
+      make_flags = ENV["MAKEFLAGS"] || ''
+
+      # suppress logo of nmake.exe to stderr
+      if File.basename(make, ".*").casecmp("nmake") == 0 and !make_flags.include?("l")
+        ENV["MAKEFLAGS"] = "l#{make_flags}"
       end
 
       opts = {}
-      if /(?:\A|\s)--jobserver-(?:auth|fds)=(\d+),(\d+)/ =~ ENV["MAKEFLAGS"]
+      if /(?:\A|\s)--jobserver-(?:auth|fds)=(\d+),(\d+)/ =~ make_flags
         begin
           r = IO.for_fd($1.to_i(10), "rb", autoclose: false)
           w = IO.for_fd($2.to_i(10), "wb", autoclose: false)
@@ -73,6 +75,7 @@ def compile_extension(name)
           opts[w] = w
         end
       end
+
       # Do not capture stderr as we want to show compiler warnings
       output = IO.popen([make, "V=1", "DESTDIR=", opts], &:read)
       raise "#{make} failed:\n#{output}" unless $?.success?
