@@ -57,7 +57,7 @@ def compile_extension(name)
 
       make = ENV['MAKE']
       make ||= (RbConfig::CONFIG['host_os'].include?("mswin") ? "nmake" : "make")
-      if File.basename(make, ".*").casecmp?("nmake")
+      if File.basename(make, ".*").casecmp("nmake") == 0
         # suppress logo of nmake.exe to stderr
         ENV["MAKEFLAGS"] = "l#{ENV["MAKEFLAGS"]}"
       end
