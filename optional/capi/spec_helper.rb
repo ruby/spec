@@ -77,7 +77,7 @@ def setup_make
   make_flags = ENV["MAKEFLAGS"] || ''
 
   # suppress logo of nmake.exe to stderr
-  if File.basename(make, ".*").casecmp("nmake") == 0 and !make_flags.include?("l")
+  if File.basename(make, ".*").downcase == "nmake" and !make_flags.include?("l")
     ENV["MAKEFLAGS"] = "l#{make_flags}"
   end
 
