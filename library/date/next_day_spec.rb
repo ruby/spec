@@ -1,5 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require 'Date'
+require 'date'
 
 describe "Date#next_day" do
   it "returns the next day" do
