@@ -2,6 +2,7 @@
 version: "{build}"
 clone_depth: 5
 init:
+  # To avoid duplicated executables in PATH, see https://github.com/ruby/spec/pull/468
   - set PATH=C:\ruby%RUBY_VERSION%\bin;C:\Program Files\7-Zip;C:\Program Files\AppVeyor\BuildAgent;C:\Program Files\Git\cmd;C:\Windows\system32;C:\Program Files;C:\Windows
   - if %ruby_version%==_trunk (
       appveyor DownloadFile https://dl.bintray.com/msp-greg/ruby_windows/ruby_trunk.7z -FileName C:\ruby_trunk.7z &
@@ -10,7 +11,7 @@ environment:
   matrix:
     - RUBY_VERSION: 23-x64
     - RUBY_VERSION: 24-x64
-    - RUBY_VERSION: _trunk
+    - RUBY_VERSION: _trunk # So the folder name is ruby_trunk
 install:
   - git clone https://github.com/ruby/mspec.git ../mspec
 build: off
