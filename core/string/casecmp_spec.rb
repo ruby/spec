@@ -117,4 +117,36 @@ describe "String#casecmp independent of case" do
       "B".casecmp(a).should == 1
     end
   end
+
+  ruby_version_is "2.4" do
+    describe 'String#casecmp? independent of case' do
+      it 'returns true when equal to other' do
+        'abc'.casecmp?('abc').should == true
+        'abc'.casecmp?('ABC').should == true
+      end
+
+      it 'returns false when not equal to other' do
+        'abc'.casecmp?('DEF').should == false
+        'abc'.casecmp?('def').should == false
+      end
+
+      describe 'for UNICODE characters' do
+        'äöü'.casecmp?('ÄÖÜ').should == true
+      end
+
+      describe "when comparing a subclass instance" do
+        it 'returns true when equal to other' do
+          a = StringSpecs::MyString.new "a"
+          'a'.casecmp?(a).should == true
+          'A'.casecmp?(a).should == true
+        end
+
+        it 'returns false when not equal to other' do
+          b = StringSpecs::MyString.new "a"
+          'b'.casecmp?(b).should == false
+          'B'.casecmp?(b).should == false
+        end
+      end
+    end
+  end
 end
