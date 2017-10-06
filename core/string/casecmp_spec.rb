@@ -130,8 +130,17 @@ describe "String#casecmp independent of case" do
         'abc'.casecmp?('def').should == false
       end
 
+      it "tries to convert other to string using to_str" do
+        other = mock('x')
+        other.should_receive(:to_str).and_return("abc")
+
+        "abc".casecmp?(other).should == true
+      end
+
       describe 'for UNICODE characters' do
-        'äöü'.casecmp?('ÄÖÜ').should == true
+        it 'returns true when downcase(:fold) on unicode' do
+          'äöü'.casecmp?('ÄÖÜ').should == true
+        end
       end
 
       describe "when comparing a subclass instance" do
@@ -145,6 +154,26 @@ describe "String#casecmp independent of case" do
           b = StringSpecs::MyString.new "a"
           'b'.casecmp?(b).should == false
           'B'.casecmp?(b).should == false
+        end
+      end
+
+      describe "in UTF-8 mode" do
+        describe "for non-ASCII characters" do
+          before :each do
+            @upper_a_tilde  = "\xc3\x83"
+            @lower_a_tilde  = "\xc3\xa3"
+            @upper_a_umlaut = "\xc3\x84"
+            @lower_a_umlaut = "\xc3\xa4"
+          end
+
+          it "returns false when numerically not equal to other" do
+            @upper_a_tilde.casecmp?(@lower_a_tilde).should == false
+            @upper_a_tilde.casecmp?(@upper_a_umlaut).should == false
+          end
+
+          it "returns true when numerically equal to other" do
+            @upper_a_tilde.casecmp?(@upper_a_tilde).should == true
+          end
         end
       end
     end
