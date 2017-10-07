@@ -84,50 +84,50 @@ ruby_version_is "2.4" do
 
     it "doesn't consider non-ascii characters equal that aren't" do
       # -- Latin-1 --
-      upper_a_tilde  = :"\xC3"
-      upper_a_umlaut = :"\xC4"
-      lower_a_tilde  = :"\xE3"
-      lower_a_umlaut = :"\xE4"
+      upper_a_tilde  = "\xC3".b.to_sym
+      upper_a_umlaut = "\xC4".b.to_sym
+      lower_a_tilde  = "\xE3".b.to_sym
+      lower_a_umlaut = "\xE4".b.to_sym
 
-      lower_a_tilde.casecmp(lower_a_umlaut).should_not == true
-      lower_a_umlaut.casecmp(lower_a_tilde).should_not == true
-      upper_a_tilde.casecmp(upper_a_umlaut).should_not == true
-      upper_a_umlaut.casecmp(upper_a_tilde).should_not == true
+      lower_a_tilde.casecmp?(lower_a_umlaut).should_not == true
+      lower_a_umlaut.casecmp?(lower_a_tilde).should_not == true
+      upper_a_tilde.casecmp?(upper_a_umlaut).should_not == true
+      upper_a_umlaut.casecmp?(upper_a_tilde).should_not == true
 
       # -- UTF-8 --
-      upper_a_tilde  = :"\xC3\x83"
-      upper_a_umlaut = :"\xC3\x84"
-      lower_a_tilde  = :"\xC3\xA3"
-      lower_a_umlaut = :"\xC3\xA4"
+      upper_a_tilde  = :"Ã"
+      lower_a_tilde  = :"ã"
+      upper_a_umlaut = :"Ä"
+      lower_a_umlaut = :"ä"
 
-      lower_a_tilde.casecmp(lower_a_umlaut).should_not == true
-      lower_a_umlaut.casecmp(lower_a_tilde).should_not == true
-      upper_a_tilde.casecmp(upper_a_umlaut).should_not == true
-      upper_a_umlaut.casecmp(upper_a_tilde).should_not == true
+      lower_a_tilde.casecmp?(lower_a_umlaut).should_not == true
+      lower_a_umlaut.casecmp?(lower_a_tilde).should_not == true
+      upper_a_tilde.casecmp?(upper_a_umlaut).should_not == true
+      upper_a_umlaut.casecmp?(upper_a_tilde).should_not == true
     end
 
     it "doesn't do case mapping for non-ascii characters" do
       # -- Latin-1 --
-      upper_a_tilde  = :"\xC3"
-      upper_a_umlaut = :"\xC4"
-      lower_a_tilde  = :"\xE3"
-      lower_a_umlaut = :"\xE4"
+      upper_a_tilde  = "\xC3".b.to_sym
+      upper_a_umlaut = "\xC4".b.to_sym
+      lower_a_tilde  = "\xE3".b.to_sym
+      lower_a_umlaut = "\xE4".b.to_sym
 
-      upper_a_tilde.casecmp(lower_a_tilde).should == false
-      upper_a_umlaut.casecmp(lower_a_umlaut).should == false
-      lower_a_tilde.casecmp(upper_a_tilde).should == false
-      lower_a_umlaut.casecmp(upper_a_umlaut).should == false
+      upper_a_tilde.casecmp?(lower_a_tilde).should == false
+      upper_a_umlaut.casecmp?(lower_a_umlaut).should == false
+      lower_a_tilde.casecmp?(upper_a_tilde).should == false
+      lower_a_umlaut.casecmp?(upper_a_umlaut).should == false
 
       # -- UTF-8 --
-      upper_a_tilde  = :"\xC3\x83"
-      upper_a_umlaut = :"\xC3\x84"
-      lower_a_tilde  = :"\xC3\xA3"
-      lower_a_umlaut = :"\xC3\xA4"
+      upper_a_tilde  = :"Ã"
+      lower_a_tilde  = :"ã"
+      upper_a_umlaut = :"Ä"
+      lower_a_umlaut = :"ä"
 
-      upper_a_tilde.casecmp(lower_a_tilde).should == false
-      upper_a_umlaut.casecmp(lower_a_umlaut).should == false
-      lower_a_tilde.casecmp(upper_a_tilde).should == false
-      lower_a_umlaut.casecmp(upper_a_umlaut).should == false
+      upper_a_tilde.casecmp?(lower_a_tilde).should == false
+      upper_a_umlaut.casecmp?(lower_a_umlaut).should == false
+      lower_a_tilde.casecmp?(upper_a_tilde).should == false
+      lower_a_umlaut.casecmp?(upper_a_umlaut).should == false
     end
   end
 end
