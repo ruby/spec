@@ -1,4 +1,4 @@
-# -*- encoding: binary -*-
+# -*- encoding: utf-8 -*-
 require File.expand_path('../../../spec_helper', __FILE__)
 
 describe "Symbol#casecmp with Symbol" do
@@ -11,10 +11,10 @@ describe "Symbol#casecmp with Symbol" do
 
   it "doesn't consider non-ascii characters equal that aren't" do
     # -- Latin-1 --
-    upper_a_tilde  = :"\xC3"
-    upper_a_umlaut = :"\xC4"
-    lower_a_tilde  = :"\xE3"
-    lower_a_umlaut = :"\xE4"
+    upper_a_tilde  = "\xC3".b.to_sym
+    upper_a_umlaut = "\xC4".b.to_sym
+    lower_a_tilde  = "\xE3".b.to_sym
+    lower_a_umlaut = "\xE4".b.to_sym
 
     lower_a_tilde.casecmp(lower_a_umlaut).should_not == 0
     lower_a_umlaut.casecmp(lower_a_tilde).should_not == 0
@@ -35,10 +35,10 @@ describe "Symbol#casecmp with Symbol" do
 
   it "doesn't do case mapping for non-ascii characters" do
     # -- Latin-1 --
-    upper_a_tilde  = :"\xC3"
-    upper_a_umlaut = :"\xC4"
-    lower_a_tilde  = :"\xE3"
-    lower_a_umlaut = :"\xE4"
+    upper_a_tilde  = "\xC3".b.to_sym
+    upper_a_umlaut = "\xC4".b.to_sym
+    lower_a_tilde  = "\xE3".b.to_sym
+    lower_a_umlaut = "\xE4".b.to_sym
 
     upper_a_tilde.casecmp(lower_a_tilde).should == -1
     upper_a_umlaut.casecmp(lower_a_umlaut).should == -1
