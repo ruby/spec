@@ -161,18 +161,21 @@ ruby_version_is "2.4" do
     describe "in UTF-8 mode" do
       describe "for non-ASCII characters" do
         before :each do
-          @upper_a_tilde  = "\xc3\x83"
-          @lower_a_tilde  = "\xc3\xa3"
-          @upper_a_umlaut = "\xc3\x84"
-          @lower_a_umlaut = "\xc3\xa4"
+          @upper_a_tilde  = "Ã"
+          @lower_a_tilde  = "ã"
+          @upper_a_umlaut = "Ä"
+          @lower_a_umlaut = "ä"
         end
 
-        it "returns false when numerically not equal to other" do
-          @upper_a_tilde.casecmp?(@lower_a_tilde).should == true # TODO
+        it "returns true when they are the same with normalized case" do
+          @upper_a_tilde.casecmp?(@lower_a_tilde).should == true
+        end
+
+        it "returns false when they are unrelated" do
           @upper_a_tilde.casecmp?(@upper_a_umlaut).should == false
         end
 
-        it "returns true when numerically equal to other" do
+        it "returns true when they have the same bytes" do
           @upper_a_tilde.casecmp?(@upper_a_tilde).should == true
         end
       end
