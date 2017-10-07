@@ -5,7 +5,7 @@ describe "Float#truncate" do
   it_behaves_like(:float_to_i, :truncate)
 
   ruby_version_is "2.4" do
-    it "returns self to an optionally given precision" do
+    it "returns self truncated to an optionally given precision" do
       2.1679.truncate(0).should   eql(2)
       7.1.truncate(1).should      eql(7.1)
       214.94.truncate(-1).should  eql(210)
