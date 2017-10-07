@@ -22,10 +22,10 @@ describe "Symbol#casecmp with Symbol" do
     upper_a_umlaut.casecmp(upper_a_tilde).should_not == 0
 
     # -- UTF-8 --
-    upper_a_tilde  = :"\xC3\x83"
-    upper_a_umlaut = :"\xC3\x84"
-    lower_a_tilde  = :"\xC3\xA3"
-    lower_a_umlaut = :"\xC3\xA4"
+    upper_a_tilde  = :"Ã"
+    lower_a_tilde  = :"ã"
+    upper_a_umlaut = :"Ä"
+    lower_a_umlaut = :"ä"
 
     lower_a_tilde.casecmp(lower_a_umlaut).should_not == 0
     lower_a_umlaut.casecmp(lower_a_tilde).should_not == 0
@@ -46,10 +46,10 @@ describe "Symbol#casecmp with Symbol" do
     lower_a_umlaut.casecmp(upper_a_umlaut).should == 1
 
     # -- UTF-8 --
-    upper_a_tilde  = :"\xC3\x83"
-    upper_a_umlaut = :"\xC3\x84"
-    lower_a_tilde  = :"\xC3\xA3"
-    lower_a_umlaut = :"\xC3\xA4"
+    upper_a_tilde  = :"Ã"
+    lower_a_tilde  = :"ã"
+    upper_a_umlaut = :"Ä"
+    lower_a_umlaut = :"ä"
 
     upper_a_tilde.casecmp(lower_a_tilde).should == -1
     upper_a_umlaut.casecmp(lower_a_umlaut).should == -1
