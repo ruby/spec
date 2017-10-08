@@ -1,16 +1,13 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/common', __FILE__)
 
-describe "Dir.empty?" do
-  ruby_version_is "2.4" do
+ruby_version_is "2.4" do
+  describe "Dir.empty?" do
     before :all do
-      DirSpecs.create_mock_dirs
-      @empty_dir = DirSpecs.mock_dir "empty_dir"
+      @empty_dir = tmp("empty_dir")
       mkdir_p @empty_dir
     end
 
     after :all do
-      DirSpecs.delete_mock_dirs
       rm_r @empty_dir
     end
 
@@ -20,18 +17,17 @@ describe "Dir.empty?" do
     end
 
     it "returns false for non-empty directories" do
-      result = Dir.empty? DirSpecs.mock_dir
+      result = Dir.empty? __dir__
       result.should be_false
     end
 
     it "returns false for a non-directory" do
-      first_file = DirSpecs.mock_dir_files.first
-      result = Dir.empty? "#{DirSpecs.mock_dir}/#{first_file}"
+      result = Dir.empty? __FILE__
       result.should be_false
     end
 
     it "raises ENOENT for nonexistent directories" do
-      lambda { Dir.empty?(DirSpecs.nonexistent) }.should raise_error(Errno::ENOENT)
+      lambda { Dir.empty? tmp("nonexistent") }.should raise_error(Errno::ENOENT)
     end
   end
 end
