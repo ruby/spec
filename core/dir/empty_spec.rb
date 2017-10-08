@@ -1,7 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/common', __FILE__)
 
-describe "Dir#empty?" do
+describe "Dir.empty?" do
   ruby_version_is "2.4" do
     before :all do
       DirSpecs.create_mock_dirs
