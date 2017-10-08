@@ -10,8 +10,8 @@ ruby_version_is "2.4" do
       12345.digits(7).should == [4,6,6,0,5]
     end
 
-    it "allows decimals for the radix" do
-      12345.digits(2.5).should == [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1]
+    it "converts the radix with #to_int" do
+      12345.digits(mock_int(2)).should == [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1]
     end
 
     it "returns [0] when called on 0, regardless of base" do
