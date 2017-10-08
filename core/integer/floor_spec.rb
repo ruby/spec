@@ -10,6 +10,8 @@ describe "Integer#floor" do
         1.floor.should eql(1)
         1.floor(0).should eql(1)
         1.floor(2).should eql(1.0)
+        1832.floor(3).should eql(1832.0)
+        -1832.floor(3).should eql(-1832.0)
       end
     end
 

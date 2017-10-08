@@ -10,6 +10,8 @@ describe "Integer#ceil" do
         1.ceil.should eql(1)
         1.ceil(0).should eql(1)
         1.ceil(2).should eql(1.0)
+        1832.ceil(3).should eql(1832.0)
+        -1832.ceil(3).should eql(-1832.0)
       end
     end
 
