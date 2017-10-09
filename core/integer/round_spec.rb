@@ -1,28 +1,16 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../shared/to_i', __FILE__)
+require File.expand_path('../shared/integer_rounding', __FILE__)
 
 describe "Integer#round" do
   it_behaves_like(:integer_to_i, :round)
+  it_behaves_like(:integer_rounding_positive_precision, :round)
 
-  ruby_version_is ""..."2.5" do
+  ruby_version_is ""..."2.5" do # Not just since 2.4
     it "rounds itself as a float if passed a positive precision" do
       [2, -4, 10**70, -10**100].each do |v|
         v.round(42).should eql(v.to_f)
       end
-    end
-  end
-
-  ruby_version_is "2.5" do
-    it "returns itself if passed a positive precision" do
-      [2, -4, 10**70, -10**100].each do |v|
-        v.round(42).should eql(v)
-      end
-    end
-  end
-
-  it "returns itself if passed zero" do
-    [2, -4, 10**70, -10**100].each do |v|
-      v.round(0).should eql(v)
     end
   end
 
@@ -77,10 +65,6 @@ describe "Integer#round" do
 
   ruby_version_is "2.4" do
     it "returns different rounded values depending on the half option" do
-      35.round(1, half: :up).should      eql(35.0)
-      35.round(1, half: :down).should    eql(35.0)
-      35.round(1, half: :even).should    eql(35.0)
-
       25.round(-1, half: :up).should      eql(30)
       25.round(-1, half: :down).should    eql(20)
       25.round(-1, half: :even).should    eql(20)
@@ -90,6 +74,22 @@ describe "Integer#round" do
       (-25).round(-1, half: :up).should   eql(-30)
       (-25).round(-1, half: :down).should eql(-20)
       (-25).round(-1, half: :even).should eql(-20)
+    end
+  end
+
+  ruby_version_is "2.4"..."2.5" do
+    it "returns itself as a float if passed a positive precision and the half option" do
+      35.round(1, half: :up).should      eql(35.0)
+      35.round(1, half: :down).should    eql(35.0)
+      35.round(1, half: :even).should    eql(35.0)
+    end
+  end
+
+  ruby_version_is "2.5" do
+    it "returns itself if passed a positive precision and the half option" do
+      35.round(1, half: :up).should      eql(35)
+      35.round(1, half: :down).should    eql(35)
+      35.round(1, half: :even).should    eql(35)
     end
   end
 end
