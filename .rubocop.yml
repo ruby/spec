@@ -7,6 +7,9 @@ AllCops:
     - command_line/fixtures/bad_syntax.rb
   DisabledByDefault: true
 
+Layout/TrailingWhitespace:
+  Enabled: true
+
 Lint:
   Enabled: true
 
