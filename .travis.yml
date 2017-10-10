@@ -8,16 +8,17 @@ script:
 matrix:
   include:
     - os: osx
-      rvm: 2.4.0
+      osx_image: xcode9
+      rvm: 2.4.2
     - os: linux
-      rvm: 2.4.1
+      rvm: 2.4.2
       env: MSPEC_OPTS="-R2 -ff"
     - os: linux
-      rvm: 2.2.7
+      rvm: 2.2.8
     - os: linux
-      rvm: 2.3.4
+      rvm: 2.3.5
     - os: linux
-      rvm: 2.4.1
+      rvm: 2.4.2
       env: CHECK_LEAKS=true RUBOCOP=true
     - os: linux
       rvm: ruby-head
