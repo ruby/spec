@@ -7,11 +7,21 @@ ruby_version_is "2.4" do
     end
 
     it "returns 1 for positive infinity" do
+      value = Complex(Float::INFINITY, 42).infinite?
+      value.should == 1
+    end
+
+    it "returns 1 for positive complex with infinite imaginary" do
       value = Complex(1, Float::INFINITY).infinite?
       value.should == 1
     end
 
     it "returns -1 for negative infinity" do
+      value = -Complex(Float::INFINITY, 42).infinite?
+      value.should == -1
+    end
+
+    it "returns -1 for negative complex with infinite imaginary" do
       value = -Complex(1, Float::INFINITY).infinite?
       value.should == -1
     end
