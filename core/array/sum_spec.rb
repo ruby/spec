@@ -34,20 +34,11 @@ ruby_version_is '2.4' do
       lambda { [1].sum([]) }.should raise_error(TypeError)
     end
 
-    it "may not respect redefinishion of :+ method of core classes" do
-      code = <<-RUBY
-        class Integer
-          def +(*args)
-            raise "Redefined method is called"
-          end
-        end;
-
-        [1, 2, 3].sum
-      RUBY
-      code = code.lines.map(&:chomp).join(' ')
-
-      # `system` call returns true if status code is 0 so there is no exception
-      system(ruby_cmd(code)).should be_true
+    it "calls + to sum the elements" do
+      a = mock("a")
+      b = mock("b")
+      a.should_receive(:+).with(b).and_return(42)
+      [b].sum(a).should == 42
     end
   end
 end
