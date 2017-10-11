@@ -12,6 +12,7 @@ ruby_version_is "2.4" do
         date = DateTime.new(2012, 12, 24, 12, 23, 00, '+03:00')
         time = date.to_time
 
+        time.strftime("%z").should == date.strftime("%z")
         time.year.should == date.year
         time.mon.should == date.mon
         time.day.should == date.day
