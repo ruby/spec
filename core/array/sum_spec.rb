@@ -1,5 +1,4 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/sum', __FILE__)
 
 ruby_version_is '2.4' do
   describe "Array#sum" do
@@ -36,14 +35,19 @@ ruby_version_is '2.4' do
     end
 
     it "may not respect redefinishion of :+ method of core classes" do
-      lambda {
-        ArraySpec::AdditionIsOverriden.call_explicit_adding
-      }.should raise_error(RuntimeError, "Redefined method is called")
+      code = <<-RUBY
+        class Integer
+          def +(*args)
+            raise "Redefined method is called"
+          end
+        end;
 
+        [1, 2, 3].sum
+      RUBY
+      code = code.lines.map(&:chomp).join(' ')
 
-      lambda {
-        ArraySpec::AdditionIsOverriden.call_sum
-      }.should_not raise_error
+      # `system` call returns true if status code is 0 so there is no exception
+      system(ruby_cmd(code)).should be_true
     end
   end
 end
