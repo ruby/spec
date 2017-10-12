@@ -15,6 +15,12 @@ describe "String.new" do
     end
   end
 
+  ruby_version_is "2.4" do
+    it "accepts a capacity argument" do
+      lambda { String.new("", capacity: 100_000) }.should_not raise_error
+    end
+  end
+
   it "returns a fully-formed String" do
     str = String.new
     str.size.should == 0
