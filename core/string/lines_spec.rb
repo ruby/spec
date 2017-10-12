@@ -10,4 +10,12 @@ describe "String#lines" do
     ary = "hello world".send(@method, ' ')
     ary.should == ["hello ", "world"]
   end
+
+  ruby_version_is '2.4' do
+    context "when `chomp` keyword argument is passed" do
+      it "removes carriage return characters" do
+        "hello \nworld\n".lines(chomp: true).should == ["hello ", "world"]
+      end
+    end
+  end
 end
