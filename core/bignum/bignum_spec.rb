@@ -19,7 +19,7 @@ describe "Bignum" do
 
   ruby_version_is '2.4' do
     it "is deprecated and unified into Integer" do
-      Bignum.should == Integer
+      Bignum.should equal(Integer)
     end
   end
 end

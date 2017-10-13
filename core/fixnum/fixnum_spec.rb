@@ -19,7 +19,7 @@ describe "Fixnum" do
 
   ruby_version_is '2.4' do
     it "is deprecated and unified into Integer" do
-      Fixnum.should == Integer
+      Fixnum.should equal(Integer)
     end
   end
 end

@@ -4,6 +4,11 @@ describe "Integer" do
   it "includes Comparable" do
     Integer.include?(Comparable).should == true
   end
+
+  it "represents big numbers as well" do
+    42.class.should equal(Integer)
+    bignum_value.class.should equal(Integer)
+  end
 end
 
 describe "Integer#integer?" do
