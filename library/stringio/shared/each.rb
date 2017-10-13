@@ -103,3 +103,12 @@ describe :stringio_each_not_readable, shared: true do
     lambda { io.send(@method) { |b| b } }.should raise_error(IOError)
   end
 end
+
+describe :stringio_each_chomp, shared: true do
+  it "yields each line with removed carriage return to the passed block" do
+    seen = []
+    io = StringIO.new("a b c d e\n1 2 3 4 5")
+    io.send(@method, chomp: true) {|s| seen << s }
+    seen.should == ["a b c d e", "1 2 3 4 5"]
+  end
+end
