@@ -19,7 +19,7 @@ describe "Array#&" do
 
   it "does not modify the original Array" do
     a = [1, 1, 3, 5]
-    a & [1, 2, 3]
+    (a & [1, 2, 3]).should == [1, 3]
     a.should == [1, 1, 3, 5]
   end
 
