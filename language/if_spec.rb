@@ -1,6 +1,24 @@
 require File.expand_path('../../spec_helper', __FILE__)
 
 describe "The if expression" do
+  ruby_version_is '2.4' do
+    it 'allows multiple assignments in conditional expression with non-nil values' do
+      c = []
+      if (a,b = [1,2])
+        c << 123
+      end
+      c.should == [123]
+    end
+
+    it 'allows multiple assignments in conditional with nil value' do
+      c = []
+      if (a,b = nil)
+        c << 123
+      end
+      c.should_not == [123]
+    end
+  end
+
   it "evaluates body if expression is true" do
     a = []
     if true
