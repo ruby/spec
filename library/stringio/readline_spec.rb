@@ -120,3 +120,12 @@ describe "StringIO#readline when in write-only mode" do
     lambda { io.readline }.should raise_error(IOError)
   end
 end
+
+ruby_version_is "2.4" do
+  describe "StringIO#readline when passed [chomp]" do
+    it "returns the data read without carriage returns" do
+      io = StringIO.new("this>is>an>example\n")
+      io.readline(chomp: true).should == "this>is>an>example"
+    end
+  end
+end
