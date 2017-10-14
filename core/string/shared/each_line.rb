@@ -136,9 +136,13 @@ end
 
   ruby_version_is '2.4' do
     context "when `chomp` keyword argument is passed" do
-      it "removes carriage return characters" do
+      it "removes new line characters" do
         a = []
         "hello \nworld\n".send(@method, chomp: true) { |s| a << s }
+        a.should == ["hello ", "world"]
+
+        a = []
+        "hello \r\nworld\r\n".send(@method, chomp: true) { |s| a << s }
         a.should == ["hello ", "world"]
       end
     end
