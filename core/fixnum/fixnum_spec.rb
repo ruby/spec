@@ -18,8 +18,14 @@ describe "Fixnum" do
   end
 
   ruby_version_is '2.4' do
-    it "is deprecated and unified into Integer" do
+    it "is unified into Integer" do
       Fixnum.should equal(Integer)
+    end
+
+    it "is deprecated" do
+      -> {
+        Fixnum
+      }.should complain(/constant ::Fixnum is deprecated/)
     end
   end
 end

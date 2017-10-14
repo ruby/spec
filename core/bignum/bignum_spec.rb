@@ -18,8 +18,14 @@ describe "Bignum" do
   end
 
   ruby_version_is '2.4' do
-    it "is deprecated and unified into Integer" do
+    it "unified into Integer" do
       Bignum.should equal(Integer)
+    end
+
+    it "is deprecated" do
+      -> {
+        Bignum
+      }.should complain(/constant ::Bignum is deprecated/)
     end
   end
 end
