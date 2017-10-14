@@ -3,7 +3,7 @@ require 'set'
 
 ruby_version_is '2.4' do
   describe "Set#compare_by_identity" do
-    it "compares its elements by identity" do
+    it "compares its members by identity" do
       a = "a"
       b1 = "b"
       b2 = "b"
@@ -12,6 +12,25 @@ ruby_version_is '2.4' do
       set.compare_by_identity
       set.merge([a, a, b1, b2])
       set.to_a.sort.should == [a, b1, b2].sort
+    end
+
+    it "causes future comparisons on the receiver to be made by identity" do
+      elt = [1]
+      set = Set.new
+      set << elt
+      set.member?(elt.dup).should be_true
+      set.compare_by_identity
+      set.member?(elt.dup).should be_false
+    end
+
+    it "rehashes internally so that old members can be looked up" do
+      set = Set.new
+      (1..10).each { |k| set << k }
+      o = Object.new
+      def o.hash; 123; end
+      set << o
+      set.compare_by_identity
+      set.member?(o).should be_true
     end
 
     it "returns self" do
@@ -28,7 +47,7 @@ ruby_version_is '2.4' do
       set.to_a.should == [:foo]
     end
 
-    it "uses the semantics of BasicObject#equal? to determine key identity" do
+    it "uses the semantics of BasicObject#equal? to determine members identity" do
       :a.equal?(:a).should == true
       Set.new.compare_by_identity.merge([:a, :a]).to_a.should == [:a]
 
@@ -47,6 +66,14 @@ ruby_version_is '2.4' do
       set.to_a.should == [:foo, obj]
     end
 
+    it "does not call #hash on members" do
+      elt = mock("element")
+      elt.should_not_receive(:hash)
+      set = Set.new.compare_by_identity
+      set << elt
+      set.member?(elt).should be_true
+    end
+
     it "regards #dup'd objects as having different identities" do
       a1 = "a"
       a2 = a1.dup
@@ -63,6 +90,13 @@ ruby_version_is '2.4' do
       set = Set.new.compare_by_identity
       set.merge([a1, a2])
       set.to_a.sort.should == [a1, a2].sort
+    end
+
+    it "raises a RuntimeError on frozen sets" do
+      set = Set.new.freeze
+      lambda {
+        set.compare_by_identity
+      }.should raise_error(RuntimeError, /frozen Hash/)
     end
 
     it "persists over #dups" do
