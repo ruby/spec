@@ -17,7 +17,8 @@ describe "String.new" do
 
   ruby_version_is "2.4" do
     it "accepts a capacity argument" do
-      lambda { String.new("", capacity: 100_000) }.should_not raise_error
+      String.new("", capacity: 100_000).should == ""
+      String.new("abc", capacity: 100_000).should == "abc"
     end
   end
 
