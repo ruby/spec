@@ -21,7 +21,7 @@ describe "Symbol#downcase" do
   end
 
   ruby_version_is '2.4' do
-    it "uncapitalizes all characters regardless of if it is Unicode" do
+    it "uncapitalizes all Unicode characters" do
       "ÄÖÜ".to_sym.downcase.should == :"äöü"
       "AOU".to_sym.downcase.should == :"aou"
     end
