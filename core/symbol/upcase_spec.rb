@@ -17,7 +17,7 @@ describe "Symbol#upcase" do
   end
 
   ruby_version_is '2.4' do
-    it "capitalizes all characters regardless of if it is Unicode" do
+    it "capitalizes all Unicode characters" do
       "äöü".to_sym.upcase.should == :"ÄÖÜ"
       "aou".to_sym.upcase.should == :"AOU"
     end
