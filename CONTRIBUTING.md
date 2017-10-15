@@ -48,6 +48,51 @@ You might also want to search for:
 
 which indicates the file was generated but the method unspecified.
 
+### Matchers and expectations
+
+Here is a list of frequently-used matchers, which should be enough for most specs.
+There are a few extra specific matchers used in the couple specs that need it.
+
+```ruby
+(1 + 2).should == 3 # Calls #==
+(1 + 2).should_not == 5
+
+File.should equal(File) # Calls #equal? (tests identity)
+(1 + 2).should eql(3) # Calls #eql? (Hash equality)
+
+1.should < 2
+2.should <= 2
+3.should >= 3
+4.should > 3
+
+"Hello".should =~ /l{2}/ # Calls #=~ (Regexp match)
+
+[].should be_empty # Calls #empty?
+[1,2,3].should include(2) # Calls #include?
+
+(0.1 + 0.2).should be_close(0.3, TOLERANCE) # (0.2-0.1).abs < TOLERANCE
+(0.0/0.0).should be_nan # Calls Float#nan?
+(1.0/0.0).should be_positive_infinity
+(-1.0/0.0).should be_negative_infinity
+
+3.14.should be_an_instance_of(Float) # Calls #instance_of?
+3.14.should be_kind_of(Numeric) # Calls #is_a?
+Numeric.should be_ancestor_of(Float) # Float.ancestors.include?(Numeric)
+
+3.14.should respond_to(:to_i) # Calls #respond_to?
+Fixnum.should have_instance_method(:+)
+Array.should have_method(:new)
+# Also have_constant, have_private_instance_method, have_singleton_method, etc
+
+-> {
+  raise "oops"
+}.should raise_error(RuntimeError, /oops/)
+
+-> {
+  Fixnum
+}.should complain(/constant ::Fixnum is deprecated/) # Expect a warning
+```
+
 ### Guards
 
 Different guards are available as defined by mspec.
