@@ -24,7 +24,14 @@ describe "The return keyword" do
 
   describe "in a Thread" do
     it "raises a LocalJumpError if used to exit a thread" do
-      lambda { Thread.new { return }.join }.should raise_error(LocalJumpError)
+      t = Thread.new {
+        begin
+          return
+        rescue LocalJumpError => e
+          e
+        end
+      }
+      t.value.should be_an_instance_of(LocalJumpError)
     end
   end
 

@@ -78,8 +78,11 @@ describe "C-API Thread function" do
     end
 
     it "handles throwing an exception in the thread" do
-      proc = lambda { |x| raise "my error" }
-      thr = @t.rb_thread_create(proc, nil)
+      prc = lambda { |x|
+        Thread.current.report_on_exception = false
+        raise "my error"
+      }
+      thr = @t.rb_thread_create(prc, nil)
       thr.should be_kind_of(Thread)
 
       lambda {
