@@ -96,6 +96,60 @@ Array.should have_method(:new)
 ### Guards
 
 Different guards are available as defined by mspec.
+Here is a list of the most commonly-used guards:
+
+```ruby
+ruby_version_is ""..."2.4" do
+  # Specs for RUBY_VERSION < 2.4
+end
+
+ruby_version_is "2.4" do
+  # Specs for RUBY_VERSION >= 2.4
+end
+
+platform_is :windows do
+  # Specs only valid on Windows
+end
+
+platform_is_not :windows do
+  # Specs valid on platforms other than Windows
+end
+
+platform_is :linux, :darwin do # OR
+end
+
+platform_is_not :linux, :darwin do # Not Linux and not Darwin
+end
+
+platform_is wordsize: 64 do
+  # 64-bit platform
+end
+
+big_endian do
+end
+
+
+ruby_bug '#13669', ''...'2.5' do
+  # In case there is a bug in MRI but the expected behavior is obvious
+  # First file a bug at https://bugs.ruby-lang.org/
+end
+
+
+# Combining guards
+guard -> { platform_is :windows and ruby_version_is ""..."2.3" } do
+  # Windows and RUBY_VERSION < 2.3
+end
+
+guard_not -> { platform_is :windows and ruby_version_is ""..."2.3" } do
+  # The opposite
+end
+
+# Custom guard
+max_uint = (1 << 32) - 1
+guard -> { max_uint <= fixnum_max } do
+end
+```
+
 In general, the usage of guards should be minimized as possible.
 
 There are no guards to define implementation-specific behavior because
