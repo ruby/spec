@@ -10,6 +10,7 @@ matrix:
     - os: osx
       osx_image: xcode9
       rvm: 2.4.2
+      env: CHECK_LEAKS=true
     - os: linux
       rvm: 2.4.2
       env: MSPEC_OPTS="-R2 -ff"
