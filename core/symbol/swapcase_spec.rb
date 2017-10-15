@@ -29,7 +29,7 @@ describe "Symbol#swapcase" do
   end
 
   ruby_version_is '2.4' do
-    it "swaps the case regardless of if it is Unicode" do
+    it "swaps the case for Unicode characters" do
       "äÖü".to_sym.swapcase.should == :"ÄöÜ"
       "aOu".to_sym.swapcase.should == :"AoU"
     end
