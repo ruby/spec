@@ -23,8 +23,8 @@ describe "Symbol#capitalize" do
 
   ruby_version_is '2.4' do
     it "capitalizes the first character if it is Unicode" do
-      "äöü".capitalize.should == :"Äöü"
-      "aou".capitalize.should == :"Aou"
+      :"äöü".capitalize.should == :"Äöü"
+      :"aou".capitalize.should == :"Aou"
     end
   end
 
