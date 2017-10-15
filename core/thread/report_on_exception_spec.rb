@@ -3,7 +3,7 @@ require File.expand_path('../../../spec_helper', __FILE__)
 ruby_version_is "2.4" do
   describe "Thread.report_on_exception" do
     it "defaults to false" do
-      Thread.report_on_exception.should == false
+      ruby_exe("p Thread.report_on_exception").should == "false\n"
     end
   end
 
