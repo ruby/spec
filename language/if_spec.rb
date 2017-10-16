@@ -2,26 +2,21 @@ require File.expand_path('../../spec_helper', __FILE__)
 
 describe "The if expression" do
   ruby_version_is '2.4' do
-    it 'allows multiple assignments in conditional expression with non-nil values' do
-      c = []
-      begin
-        if (a,b = [1,2])
-          c << 123
-        end
-      rescue SyntaxError
-      end
-      c.should == [123]
-    end
+    describe "multiple assignments in conditional expression" do
+      before(:each) { ScratchPad.record([]) }
+      after(:each)  { ScratchPad.clear }
 
-    it 'allows multiple assignments in conditional with nil value' do
-      c = []
-      begin
-        if (a,b = nil)
-          c << 123
-        end
-      rescue SyntaxError
+      it 'with non-nil values' do
+        collector = proc { |i| ScratchPad << i }
+        eval "if (a, b = [1, 2]); collector[123]; end"
+        ScratchPad.recorded.should == [123]
       end
-      c.should_not == [123]
+
+      it 'with nil values' do
+        collector = proc { |i| ScratchPad << i }
+        eval "if (a, b = nil); collector[123]; end"
+        ScratchPad.recorded.should == []
+      end
     end
   end
 
