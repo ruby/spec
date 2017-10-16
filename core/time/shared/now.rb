@@ -15,4 +15,11 @@ describe :time_now, shared: true do
     now.min.should == time[2].to_i
     now.sec.should == time[3].to_i
   end
+
+  it "preserves the local timezone" do
+    with_timezone("PDT", -8) do
+      now = TimeSpecs::MethodHolder.send(@method)
+      now.utc_offset.should == (-8 * 60 * 60)
+    end
+  end
 end
