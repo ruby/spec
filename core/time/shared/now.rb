@@ -5,4 +5,14 @@ describe :time_now, shared: true do
     TimeSpecs::SubTime.send(@method).should be_an_instance_of(TimeSpecs::SubTime)
     TimeSpecs::MethodHolder.send(@method).should be_an_instance_of(Time)
   end
+
+  it "sets the current time" do
+    check = `date "+%H:%M:%S"`.strip
+    time = check.match(/(\d{2})\:(\d{2})\:(\d{2})/)
+    now = TimeSpecs::MethodHolder.send(@method)
+
+    now.hour.should == time[1].to_i
+    now.min.should == time[2].to_i
+    now.sec.should == time[3].to_i
+  end
 end
