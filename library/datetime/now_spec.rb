@@ -8,25 +8,28 @@ describe "DateTime.now" do
 
   it "sets the current date" do
     dt = DateTime.now
-    d = Date.today
+    check = `date "+%Y-%m-%d"`.strip
+    date = check.match(/(\d{4})-(\d{2})-(\d{2})/)
 
-    dt.year.should == d.year
-    dt.mon.should == d.mon
-    dt.day.should == d.day
+    dt.year.should == date[1].to_i
+    dt.mon.should == date[2].to_i
+    dt.day.should == date[3].to_i
   end
 
   it "sets the current time" do
     dt = DateTime.now
-    t = Time.now
+    check = `date "+%H:%M:%S"`.strip
+    time = check.match(/(\d{2})\:(\d{2})\:(\d{2})/)
 
-    dt.hour.should == t.hour
-    dt.min.should == t.min
-    dt.sec.should == t.sec
+    dt.hour.should == time[1].to_i
+    dt.min.should == time[2].to_i
+    dt.sec.should == time[3].to_i
   end
 
   it "grabs the local timezone" do
-    dt = DateTime.now
-    t = Time.local(dt.year, dt.mon, dt.mday, dt.hour, dt.min, dt.sec)
-    dt.offset.to_i.should == t.utc_offset
+    with_timezone("PDT", -8) do
+      dt = DateTime.now
+      dt.zone.should == "-08:00"
+    end
   end
 end
