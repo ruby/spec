@@ -5,7 +5,7 @@ ruby_version_is '2.0' do
     it 'return the trace object from event' do
       trace = nil
       TracePoint.new(:line) { |tp| trace = tp.self }.enable
-      trace.should be_kind_of(MSpecEnv)
+      trace.equal?(self).should be_true
     end
   end
 end
