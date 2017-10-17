@@ -24,6 +24,15 @@ ruby_version_is "2.4" do
         enumerator.each(&:succ).should == { a: 2, b: 3, c: 4 }
       end
     end
+
+    it "returns a Hash instance, even on subclasses" do
+      klass = Class.new(Hash)
+      h = klass.new
+      h[:foo] = 42
+      r = h.transform_values{|v| 2 * v}
+      r[:foo].should == 84
+      r.class.should == Hash
+    end
   end
 
   describe "Hash#transform_values!" do
