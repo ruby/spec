@@ -1,12 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-
-module ClassSpecs
-  class A
-    def foo; end
-  end
-end
-
-def test; 'test' end
+require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is '2.0' do
   describe 'TracePoint.new' do
@@ -24,13 +17,16 @@ ruby_version_is '2.0' do
       event_name.should equal(:line)
 
       event_name = nil
-      ClassSpecs::A.new.foo
+      TracePointSpec::B.new.foo
       event_name.should equal(:line)
     end
 
-    it 'includes the matching event name if argument is string' do
+    it 'converts given event name as string into symbol using to_sym' do
       event_name = nil
-      TracePoint.new('return') { |tp| event_name = tp.event}.enable
+      (o = mock('return')).should_receive(:to_sym).and_return(:return)
+
+      TracePoint.new(o) { |tp| event_name = tp.event}.enable
+
       event_name.should equal(nil)
       test
       event_name.should equal(:return)
@@ -45,11 +41,37 @@ ruby_version_is '2.0' do
       test
       event_name.should equal(:call)
 
-      ClassSpecs::A.new.foo
+      TracePointSpec::B.new.foo
       event_name.should equal(:call)
 
       class B; end
       event_name.should equal(:end)
+    end
+
+    it 'raises a TypeError when the given object is not a string/symbol' do
+      o = mock('123')
+      -> { TracePoint.new(o) {}}.should raise_error(TypeError)
+
+      o.should_receive(:to_sym).and_return(123)
+      -> { TracePoint.new(o) {}}.should raise_error(TypeError)
+    end
+
+    it 'expects to be called with a block' do
+      begin
+        TracePoint.new(:line)
+      rescue => e
+        e.class.should equal(ThreadError)
+        e.message.should == 'must be called with a block'
+      end
+    end
+
+    it "raises a Argument error when the give argument doesn't match an event name" do
+      begin
+        TracePoint.new(:test)
+      rescue => e
+        e.class.should equal(ArgumentError)
+        e.message.should == 'unknown event: test'
+      end
     end
   end
 end
