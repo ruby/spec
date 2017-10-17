@@ -1,48 +1,28 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is '2.0' do
   describe 'TracePoint#defined_class' do
-    module A; def bar; end; end
-
-    class B
-      include A
-      def foo; end;
-    end
-
-    class C < B
-      def initialize
-        super
-      end
-
-      def foo
-        super
-      end
-
-      def bar
-        super
-      end
-    end
-
     it 'returns class or module of the method being called' do
-      class_name = nil
+      last_class_name = nil
       TracePoint.new(:call) do |tp|
-        class_name = tp.defined_class
+        last_class_name = tp.defined_class
       end.enable
 
-      B.new.foo
-      class_name.should equal(B)
+      TracePointSpec::B.new.foo
+      last_class_name.should equal(TracePointSpec::B)
 
-      B.new.bar
-      class_name.should equal(A)
+      TracePointSpec::B.new.bar
+      last_class_name.should equal(TracePointSpec::A)
 
-      c = C.new
-      class_name.should equal(C)
+      c = TracePointSpec::C.new
+      last_class_name.should equal(TracePointSpec::C)
 
       c.foo
-      class_name.should equal(B)
+      last_class_name.should equal(TracePointSpec::B)
 
       c.bar
-      class_name.should equal(A)
+      last_class_name.should equal(TracePointSpec::A)
     end
   end
 end

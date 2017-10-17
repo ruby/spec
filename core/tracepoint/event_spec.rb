@@ -1,12 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-
-module ClassSpecs
-  class A
-    def foo; end
-  end
-end
-
-def test; 'test' end
+require File.expand_path('../fixtures/classes', __FILE__)
 
 ruby_version_is '2.0' do
   describe 'TracePoint#event' do
@@ -19,7 +12,7 @@ ruby_version_is '2.0' do
       test
       event_name.should equal(:call)
 
-      ClassSpecs::A.new.foo
+      TracePointSpec::B.new.foo
       event_name.should equal(:call)
 
       class B; end
