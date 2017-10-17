@@ -1,9 +1,15 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
+module ClassSpecs
+  class A
+    def foo; end
+  end
+end
+
+def test; 'test' end
+
 ruby_version_is '2.0' do
   describe 'TracePoint.new' do
-    def test; 'test' end
-    class A; def foo; end end
     it 'returns a new TracePoint object, not enabled by default' do
       TracePoint.new(:call) {}.enabled?.should be_false
     end
@@ -18,7 +24,7 @@ ruby_version_is '2.0' do
       event_name.should equal(:line)
 
       event_name = nil
-      A.new.foo
+      ClassSpecs::A.new.foo
       event_name.should equal(:line)
     end
 
@@ -39,7 +45,7 @@ ruby_version_is '2.0' do
       test
       event_name.should equal(:call)
 
-      A.new.foo
+      ClassSpecs::A.new.foo
       event_name.should equal(:call)
 
       class B; end
