@@ -50,6 +50,14 @@ ruby_version_is "2.4" do
       @hash.should ==  { a: 2, b: 3, c: 4 }
     end
 
+    it "partially modifies the contents if we broke from the block" do
+      @hash.transform_values! do |v|
+        break if v == 3
+        100 + v
+      end
+      @hash.should == { a: 101, b: 102, c: 3}
+    end
+
     context "when no block is given" do
       it "returns a sized Enumerator" do
         enumerator = @hash.transform_values!
