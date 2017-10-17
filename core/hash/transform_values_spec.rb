@@ -65,6 +65,10 @@ ruby_version_is "2.4" do
         @hash.freeze
       end
 
+      it "raises a RuntimeError on an empty hash" do
+        ->{ {}.freeze.transform_values!(&:succ) }.should raise_error(RuntimeError)
+      end
+
       it "keeps pairs and raises a RuntimeError" do
         ->{ @hash.transform_values!(&:succ) }.should raise_error(RuntimeError)
         @hash.should == @initial_pairs
