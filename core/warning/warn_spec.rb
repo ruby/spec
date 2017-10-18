@@ -29,17 +29,17 @@ describe "Warning.warn" do
       RUBY
       ruby_exe(code, args: "2>&1").should == %Q["A WARNING!"\nwarning from stderr\nnil\n]
     end
+
+    it "is called by parser warnings" do
+      Warning.should_receive(:warn)
+      eval "{ key: :value, key: :value2 }"
+    end
   end
 
   ruby_version_is "2.5" do
     it "is called by Kernel.warn" do
       Warning.should_receive(:warn)
       Kernel.warn("Chunky bacon!")
-    end
-
-    it "is also called by parser warnings" do
-      Warning.should_receive(:warn)
-      eval "{ key: :value, key: :value2 }"
     end
   end
 end
