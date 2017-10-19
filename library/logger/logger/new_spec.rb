@@ -94,6 +94,25 @@ describe "Logger#new" do
       logger = Logger.new(STDERR, formatter: formatter)
       logger.formatter.should == formatter
     end
+
+    it "receives shift_period_suffix " do
+      shift_period_suffix = "%Y-%m-%d"
+      path                = tmp("shift_period_suffix_test.log")
+      now                 = Time.now
+      tomorrow            = Time.at(now.to_i + 60 * 60 * 24)
+      logger              = Logger.new(path, 'daily', shift_period_suffix: shift_period_suffix)
+
+      logger.add Logger::INFO, 'message'
+
+      Time.stub!(:now).and_return(tomorrow)
+      logger.add Logger::INFO, 'second message'
+
+      shifted_path = "#{path}.#{now.strftime(shift_period_suffix)}"
+
+      File.exist?(shifted_path).should == true
+
+      rm_r path, shifted_path
+    end
   end
 
 end
