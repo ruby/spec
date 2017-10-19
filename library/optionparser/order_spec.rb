@@ -3,7 +3,7 @@ require 'optparse'
 
 describe "OptionParser#order" do
   ruby_version_is '2.4' do
-    it "excepts `into` keyword argument and stores result in it" do
+    it "accepts `into` keyword argument and stores result in it" do
       options = {}
       parser = OptionParser.new do |opts|
         opts.on("-v", "--[no-]verbose", "Run verbosely")
@@ -18,7 +18,7 @@ end
 
 describe "OptionParser#order!" do
   ruby_version_is '2.4' do
-    it "excepts `into` keyword argument and stores result in it" do
+    it "accepts `into` keyword argument and stores result in it" do
       options = {}
       parser = OptionParser.new do |opts|
         opts.on("-v", "--[no-]verbose", "Run verbosely")
