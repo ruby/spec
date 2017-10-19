@@ -111,6 +111,8 @@ describe "Logger#new" do
 
       File.exist?(shifted_path).should == true
 
+      logger.close
+
       rm_r path, shifted_path
     end
   end
