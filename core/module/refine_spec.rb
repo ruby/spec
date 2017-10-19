@@ -75,12 +75,29 @@ ruby_version_is "2.2" do
       end.should raise_error(TypeError)
     end
 
-    it "raises TypeError if passed a module" do
-      lambda do
+    ruby_version_is "" ... "2.4" do
+      it "raises TypeError if passed a module" do
+        lambda do
+          Module.new do
+            refine(Enumerable) {}
+          end
+        end.should raise_error(TypeError)
+      end
+    end
+
+    ruby_version_is "2.4" do
+      it "accepts a module as argument" do
+        inner_self = nil
         Module.new do
-          refine(Enumerable) {}
+          refine(Enumerable) do
+            def blah
+            end
+            inner_self = self
+          end
         end
-      end.should raise_error(TypeError)
+
+        inner_self.public_instance_methods.should include(:blah)
+      end
     end
 
     it "raises ArgumentError if not given a block" do
@@ -302,24 +319,134 @@ ruby_version_is "2.2" do
       result.should == "foo from subclass"
     end
 
-    # When using indirect method access such as Kernel#send, Kernel#method
-    # or Kernel#respond_to? refinements are not honored for the caller
-    # context during method lookup.
-    context "method accesses indirectly" do
-      it "is not honored by Kernel#send" do
+    context "for methods accesses indirectly" do
+      ruby_version_is "" ... "2.4" do
+        it "is not honored by Kernel#send" do
+          refinement = Module.new do
+            refine ModuleSpecs::ClassWithFoo do
+              def foo; "foo from refinement"; end
+            end
+          end
+
+          result = nil
+          Module.new do
+            using refinement
+            result = ModuleSpecs::ClassWithFoo.new.send :foo
+          end
+
+          result.should == "foo"
+        end
+
+        it "is not honored by BasicObject#__send__" do
+          refinement = Module.new do
+            refine ModuleSpecs::ClassWithFoo do
+              def foo; "foo from refinement"; end
+            end
+          end
+
+          result = nil
+          Module.new do
+            using refinement
+            result = ModuleSpecs::ClassWithFoo.new.__send__ :foo
+          end
+
+          result.should == "foo"
+        end
+
+        it "is not honored by Symbol#to_proc" do
+          refinement = Module.new do
+            refine Integer do
+              def to_s
+                "(#{super})"
+              end
+            end
+          end
+
+          result = nil
+          Module.new do
+            using refinement
+            result = [1, 2, 3].map(&:to_s)
+          end
+
+          result.should == ["1", "2", "3"]
+        end
+      end
+
+      ruby_version_is "2.4" do
+        it "is honored by Kernel#send" do
+          refinement = Module.new do
+            refine ModuleSpecs::ClassWithFoo do
+              def foo; "foo from refinement"; end
+            end
+          end
+
+          result = nil
+          Module.new do
+            using refinement
+            result = ModuleSpecs::ClassWithFoo.new.send :foo
+          end
+
+          result.should == "foo from refinement"
+        end
+
+        it "is honored by BasicObject#__send__" do
+          refinement = Module.new do
+            refine ModuleSpecs::ClassWithFoo do
+              def foo; "foo from refinement"; end
+            end
+          end
+
+          result = nil
+          Module.new do
+            using refinement
+            result = ModuleSpecs::ClassWithFoo.new.__send__ :foo
+          end
+
+          result.should == "foo from refinement"
+        end
+
+        it "is honored by Symbol#to_proc" do
+          refinement = Module.new do
+            refine Integer do
+              def to_s
+                "(#{super})"
+              end
+            end
+          end
+
+          result = nil
+          Module.new do
+            using refinement
+            result = [1, 2, 3].map(&:to_s)
+          end
+
+          result.should == ["(1)", "(2)", "(3)"]
+        end
+      end
+
+      it "is honored by Kernel#binding" do
         refinement = Module.new do
-          refine ModuleSpecs::ClassWithFoo do
-            def foo; "foo from refinement"; end
+          refine String do
+            def to_s
+              "hello from refinement"
+            end
           end
         end
 
-        result = nil
-        Module.new do
+        klass = Class.new do
           using refinement
-          result = ModuleSpecs::ClassWithFoo.new.send :foo
+
+          def foo
+            "foo".to_s
+          end
+
+          def get_binding
+            binding
+          end
         end
 
-        result.should == "foo"
+        result = Kernel.eval("self.foo()", klass.new.get_binding)
+        result.should == "hello from refinement"
       end
 
       it "is not honored by Kernel#method" do
