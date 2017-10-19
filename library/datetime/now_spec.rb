@@ -7,11 +7,7 @@ describe "DateTime.now" do
   end
 
   it "sets the current date" do
-    dt = DateTime.now
-    date = Date.today
-    dt.year.should == date.year
-    dt.mon.should == date.mon
-    dt.day.should == date.day
+    (DateTime.now - Date.today).to_f.should be_close(0.0, 1.0)
   end
 
   it "sets the current time" do
