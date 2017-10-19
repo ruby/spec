@@ -7,16 +7,11 @@ describe :time_now, shared: true do
   end
 
   it "sets the current time" do
-    check = `date "+%H:%M:%S"`.strip
-    time = check.match(/(\d{2})\:(\d{2})\:(\d{2})/)
     now = TimeSpecs::MethodHolder.send(@method)
-
-    now.hour.should == time[1].to_i
-    now.min.should == time[2].to_i
-    now.sec.should == time[3].to_i
+    now.to_f.should be_close(Process.clock_gettime(Process::CLOCK_REALTIME), 10.0)
   end
 
-  it "preserves the local timezone" do
+  it "uses the local timezone" do
     with_timezone("PDT", -8) do
       now = TimeSpecs::MethodHolder.send(@method)
       now.utc_offset.should == (-8 * 60 * 60)
