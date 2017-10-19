@@ -88,6 +88,10 @@ Array.should have_method(:new)
   raise "oops"
 }.should raise_error(RuntimeError, /oops/)
 
+# To avoid! Instead, use an expectation testing what the code in the lambda does.
+# If an exception is raised, it will fail the example anyway.
+-> { ... }.should_not raise_error
+
 -> {
   Fixnum
 }.should complain(/constant ::Fixnum is deprecated/) # Expect a warning
