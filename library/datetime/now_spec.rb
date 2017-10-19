@@ -9,7 +9,6 @@ describe "DateTime.now" do
   it "sets the current date" do
     dt = DateTime.now
     date = Date.today
-
     dt.year.should == date.year
     dt.mon.should == date.mon
     dt.day.should == date.day
@@ -17,11 +16,8 @@ describe "DateTime.now" do
 
   it "sets the current time" do
     dt = DateTime.now
-    time = Time.now
-
-    dt.hour.should == time.hour
-    dt.min.should == time.min
-    dt.sec.should == time.sec
+    now = Time.now
+    (dt.to_time - now).should be_close(24 * 60 * 60)
   end
 
   it "grabs the local timezone" do
