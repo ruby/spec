@@ -1,4 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../fixtures/refine', __FILE__)
 
 ruby_version_is "2.2" do
   describe "Module#refine" do
@@ -116,6 +117,374 @@ ruby_version_is "2.2" do
       end
 
       lambda {"hello".foo}.should raise_error(NoMethodError)
+    end
+
+    # When defining multiple refinements in the same module,
+    # inside a refine block all refinements from the same
+    # module are active when a refined method is called
+    it "makes available all refinements from the same module" do
+      refinement = Module.new do
+        refine Integer do
+          def to_json_format
+            to_s
+          end
+        end
+
+        refine Array do
+          def to_json_format
+            "[" + map { |i| i.to_json_format }.join(", ") + "]"
+          end
+        end
+
+        refine Hash do
+          def to_json_format
+            "{" + map { |k, v| k.to_s.dump + ": " + v.to_json_format }.join(", ") + "}"
+          end
+        end
+      end
+
+      result = nil
+
+      Module.new do
+        using refinement
+
+        result = [{1 => 2}, {3 => 4}].to_json_format
+      end
+
+      result.should == '[{"1": 2}, {"3": 4}]'
+    end
+
+    it "does not make available methods from another refinement module" do
+      refinery_integer = Module.new do
+        refine Integer do
+          def to_json_format
+            to_s
+          end
+        end
+      end
+
+      refinery_array = Module.new do
+        refine Array do
+          def to_json_format
+            "[" + map { |i| i.to_json_format }.join(",") + "]"
+          end
+        end
+      end
+
+      result = nil
+
+      -> () {
+        Module.new do
+          using refinery_integer
+          using refinery_array
+
+          [1, 2].to_json_format
+        end
+      }.should raise_error(NoMethodError)
+    end
+
+    # method lookup:
+    #   * The prepended modules from the refinement for C
+    #   * The refinement for C
+    #   * The included modules from the refinement for C
+    #   * The prepended modules of C
+    #   * C
+    #   * The included modules of C
+    describe "method lookup" do
+      it "looks in the object singleton class first" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            def foo; "foo from refinement"; end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+
+          obj = ModuleSpecs::ClassWithFoo.new
+          class << obj
+            def foo; "foo from singleton class"; end
+          end
+          result = obj.foo
+        end
+
+        result.should == "foo from singleton class"
+      end
+
+      it "looks in prepended modules from the refinement first" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            include ModuleSpecs::IncludedModule
+            prepend ModuleSpecs::PrependedModule
+
+            def foo; "foo from refinement"; end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo from prepended module"
+      end
+
+      it "looks in refinement then" do
+        refinement = Module.new do
+          refine(ModuleSpecs::ClassWithFoo) do
+            include ModuleSpecs::IncludedModule
+
+            def foo; "foo from refinement"; end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo from refinement"
+      end
+
+      it "looks in included modules from the refinement then" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            include ModuleSpecs::IncludedModule
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo from included module"
+      end
+
+      it "looks in the class then" do
+        refinement = Module.new do
+          refine(ModuleSpecs::ClassWithFoo) { }
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo"
+      end
+    end
+
+
+    # methods in a subclass have priority over refinements in a superclass
+    it "does not override methods in subclasses" do
+      subclass = Class.new(ModuleSpecs::ClassWithFoo) do
+        def foo; "foo from subclass"; end
+      end
+
+      refinement = Module.new do
+        refine ModuleSpecs::ClassWithFoo do
+          def foo; "foo from refinement"; end
+        end
+      end
+
+      result = nil
+      Module.new do
+        using refinement
+        result = subclass.new.foo
+      end
+
+      result.should == "foo from subclass"
+    end
+
+    # When using indirect method access such as Kernel#send, Kernel#method
+    # or Kernel#respond_to? refinements are not honored for the caller
+    # context during method lookup.
+    context "method accesses indirectly" do
+      it "is not honored by Kernel#send" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo do
+            def foo; "foo from refinement"; end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.send :foo
+        end
+
+        result.should == "foo"
+      end
+
+      it "is not honored by Kernel#method" do
+        klass = Class.new
+        refinement = Module.new do
+          refine klass do
+            def foo; end
+          end
+        end
+
+        -> {
+          Module.new do
+            using refinement
+            klass.new.method(:foo)
+          end
+        }.should raise_error(NameError, /undefined method `foo'/)
+      end
+
+      it "is not honored by Kernel#respond_to?" do
+        klass = Class.new
+        refinement = Module.new do
+          refine klass do
+            def foo; end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = klass.new.respond_to?(:foo)
+        end
+
+        result.should == false
+      end
+    end
+
+    context "when super is called in a refinement" do
+      it "looks in the included to refinery module" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            include ModuleSpecs::IncludedModule
+
+            def foo
+              super
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo from included module"
+      end
+
+      it "looks in the refined class" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            def foo
+              super
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo"
+      end
+
+      # super in a method of a refinement invokes the method in the refined
+      # class even if there is another refinement which has been activated
+      # in the same context.
+      it "looks in the refined class even if there is another active refinement" do
+        refinement = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            def foo
+              "foo from refinement"
+            end
+          end
+        end
+
+        refinement_with_super = Module.new do
+          refine ModuleSpecs::ClassWithFoo  do
+            def foo
+              super
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          using refinement_with_super
+          result = ModuleSpecs::ClassWithFoo.new.foo
+        end
+
+        result.should == "foo"
+      end
+    end
+
+    # Refinements are inherited by module inclusion.
+    # That is, using activates all refinements in the ancestors of the specified module.
+    # Refinements in a descendant have priority over refinements in an ancestor.
+    context "module inclusion" do
+      it "activates all refinements from all ancestors" do
+        refinement_included = Module.new do
+          refine Integer do
+            def to_json_format
+              to_s
+            end
+          end
+        end
+
+        refinement = Module.new do
+          include refinement_included
+
+          refine Array do
+            def to_json_format
+              "[" + map { |i| i.to_s }.join(", ") + "]"
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = [5.to_json_format, [1, 2, 3].to_json_format]
+        end
+
+        result.should == ["5", "[1, 2, 3]"]
+      end
+
+      it "overrides methods of ancestors by methods in descendants" do
+        refinement_included = Module.new do
+          refine Integer do
+            def to_json_format
+              to_s
+            end
+          end
+        end
+
+        refinement = Module.new do
+          include refinement_included
+
+          refine Integer do
+            def to_json_format
+              "hello from refinement"
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = 5.to_json_format
+        end
+
+        result.should == "hello from refinement"
+      end
     end
   end
 end
