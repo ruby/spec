@@ -126,12 +126,13 @@ platform_is wordsize: 64 do
 end
 
 big_endian do
+  # Big-endian platform
 end
 
-
+# In case there is a bug in MRI but the expected behavior is obvious
+# First file a bug at https://bugs.ruby-lang.org/
+# It is better to use a ruby_version_is guard if there was a release with the fix
 ruby_bug '#13669', ''...'2.5' do
-  # In case there is a bug in MRI but the expected behavior is obvious
-  # First file a bug at https://bugs.ruby-lang.org/
 end
 
 
