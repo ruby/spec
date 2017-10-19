@@ -94,12 +94,6 @@ describe "Logger#new" do
       logger = Logger.new(STDERR, formatter: formatter)
       logger.formatter.should == formatter
     end
-
-    it "receives shift_period_suffix as keyword argument" do
-      shift_period_suffix = "%Y-%m-%d"
-
-      lambda { Logger.new(STDERR, shift_period_suffix: shift_period_suffix) }.should_not raise_error
-    end
   end
 
 end
