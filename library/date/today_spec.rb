@@ -9,6 +9,6 @@ describe "Date.today" do
   it "sets Date object to the current date" do
     today = Date.today
     now = Time.now
-    (today.to_time - now).should be_close(24 * 60 * 60)
+    (now - today.to_time).should be_close(0.0, 24 * 60 * 60)
   end
 end
