@@ -21,13 +21,16 @@ describe "Warning.warn" do
         $stdout.sync = true
         $stderr.sync = true
         def Warning.warn(msg)
-          return msg.upcase if msg.start_with?("A")
-          super
+          if msg.start_with?("A")
+            puts msg.upcase
+          else
+            super
+          end
         end
-        p Warning.warn("A warning!")
-        p Warning.warn("warning from stderr\n")
+        Warning.warn("A warning!")
+        Warning.warn("warning from stderr\n")
       RUBY
-      ruby_exe(code, args: "2>&1").should == %Q["A WARNING!"\nwarning from stderr\nnil\n]
+      ruby_exe(code, args: "2>&1").should == %Q[A WARNING!\nwarning from stderr\n]
     end
 
     it "is called by parser warnings" do
