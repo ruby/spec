@@ -20,7 +20,7 @@ module IOSpecs
       "Here is line six.\n" ]
   end
 
-  def self.lines_without_carriage_return
+  def self.lines_without_newline_characters
     [ "Voici la ligne une.",
       "Qui \303\250 la linea due.",
       "",
