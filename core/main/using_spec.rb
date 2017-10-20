@@ -64,8 +64,9 @@ ruby_version_is "2.0.0" do
         end
       EOS
 
-      x.before_using(cls.new).should == 'foo'
-      x.after_using(cls.new).should == 'bar'
+      obj = cls.new
+      x.before_using(obj).should == 'foo'
+      x.after_using(obj).should == 'bar'
     end
 
     it "propagates refinements added to existing modules after it is called" do
@@ -87,7 +88,8 @@ ruby_version_is "2.0.0" do
         end
       EOS
 
-      x.call_foo(cls.new).should == 'quux'
+      obj = cls.new
+      x.call_foo(obj).should == 'quux'
 
       mod.module_eval do
         refine(cls) do
@@ -95,7 +97,7 @@ ruby_version_is "2.0.0" do
         end
       end
 
-      x.call_bar(cls.new).should == 'quux'
+      x.call_bar(obj).should == 'quux'
     end
 
     it "does not propagate refinements of new modules added after it is called" do
