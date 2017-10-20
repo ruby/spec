@@ -27,7 +27,7 @@ describe "CSV#readlines" do
   end
 
   ruby_version_is '2.4' do
-    it "handles illegal input" do
+    it "handles illegal input with the liberal_parsing option" do
       illegal_input = '"Johnson, Dwayne",Dwayne "The Rock" Johnson'
       csv = CSV.new(illegal_input, liberal_parsing: true)
       result = csv.readlines
