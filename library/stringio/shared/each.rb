@@ -105,7 +105,7 @@ describe :stringio_each_not_readable, shared: true do
 end
 
 describe :stringio_each_chomp, shared: true do
-  it "yields each line with removed carriage return to the passed block" do
+  it "yields each line with removed newline characters to the passed block" do
     seen = []
     io = StringIO.new("a b c d e\n1 2 3 4 5")
     io.send(@method, chomp: true) {|s| seen << s }
