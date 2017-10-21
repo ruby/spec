@@ -107,8 +107,8 @@ end
 describe :stringio_each_chomp, shared: true do
   it "yields each line with removed newline characters to the passed block" do
     seen = []
-    io = StringIO.new("a b c d e\n1 2 3 4 5")
+    io = StringIO.new("a b \rc d e\n1 2 3 4 5\r\nthe end")
     io.send(@method, chomp: true) {|s| seen << s }
-    seen.should == ["a b c d e", "1 2 3 4 5"]
+    seen.should == ["a b \rc d e", "1 2 3 4 5", "the end"]
   end
 end

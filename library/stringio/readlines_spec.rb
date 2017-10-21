@@ -94,8 +94,8 @@ end
 ruby_version_is "2.4" do
   describe "StringIO#readlines when passed [chomp]" do
     it "returns the data read without a trailing newline character" do
-      io = StringIO.new("this>is>an>example\n")
-      io.readlines(chomp: true).should == ["this>is>an>example"]
+      io = StringIO.new("this>is\nan>example\r\n")
+      io.readlines(chomp: true).should == ["this>is", "an>example"]
     end
   end
 end
