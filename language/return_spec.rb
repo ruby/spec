@@ -249,4 +249,202 @@ describe "The return keyword" do
       ReturnSpecs::MethodWithBlock.new.method2.should == [0, 1, 2]
     end
   end
+
+  ruby_version_is '2.4' do
+    describe "at top level" do
+      it "stops file execution" do
+        ruby_exe(<<-END_OF_CODE).should == "before return\n"
+          puts "before return"
+          return
+
+          puts "after return"
+        END_OF_CODE
+
+        $?.exitstatus.should == 0
+      end
+
+      describe "within if" do
+        it "is allowed" do
+          ruby_exe(<<-END_OF_CODE).should == "before if\n"
+            puts "before if"
+            if true
+              return
+            end
+
+            puts "after if"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "within while loop" do
+        it "is allowed" do
+          ruby_exe(<<-END_OF_CODE).should == "before while\n"
+            puts "before while"
+            while true
+              return
+            end
+
+            puts "after while"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "within a begin" do
+        it "is allowed in begin block" do
+          ruby_exe(<<-END_OF_CODE).should == "before begin\n"
+            puts "before begin"
+            begin
+              return
+            end
+            puts "after begin"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+
+        it "is allowed in ensure block" do
+          ruby_exe(<<-END_OF_CODE).should == "before begin\n"
+            puts "before begin"
+            begin
+            ensure
+              return
+            end
+            puts "after begin"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+
+        it "is allowed in rescue block" do
+          ruby_exe(<<-END_OF_CODE).should == "before begin\n"
+            puts "before begin"
+            begin
+              raise
+            rescue RuntimeError
+              return
+            end
+            puts "after begin"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+
+        it "fires ensure block before returning" do
+          ruby_exe(<<-END_OF_CODE).should == "within ensure\n"
+            begin
+              return
+            ensure
+              puts "within ensure"
+            end
+
+            puts "after begin"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+
+        it "swallows exception if returns in ensure block" do
+          ruby_exe(<<-END_OF_CODE).should == ""
+            begin
+              raise
+            ensure
+              return
+            end
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "within a block" do
+        it "is allowed" do
+          ruby_exe(<<-END_OF_CODE).should == "before call\n"
+            puts "before call"
+            proc { return }.call
+
+            puts "after call"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "within a class" do
+        it "is allowed" do
+          ruby_exe(<<-END_OF_CODE).should == "before return\n"
+            class A
+              puts "before return"
+              return
+
+              puts "after return"
+            end
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "file loading" do
+        it "stops file loading and execution" do
+          require "tempfile"
+
+          temp = Tempfile.new(["loaded_file", ".rb"])
+          temp.write <<-END_OF_CODE
+            puts "before return"
+            return
+            puts "after return"
+          END_OF_CODE
+          temp.flush
+
+          ruby_exe(<<-END_OF_CODE).should == "before return\n"
+            load "#{temp.path}"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "file requiring" do
+        it "stops file loading and execution" do
+          require "tempfile"
+
+          temp = Tempfile.new(["required_file", ".rb"])
+          temp.write <<-END_OF_CODE
+            puts "before return"
+            return
+            puts "after return"
+          END_OF_CODE
+          temp.flush
+
+          ruby_exe(<<-END_OF_CODE).should == "before return\n"
+            require "#{temp.path}"
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+
+      describe "return with argument" do
+        it "is allowed" do
+          ruby_exe(<<-END_OF_CODE).should == ""
+            return 0
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+
+        it "does not affect exit status" do
+          ruby_exe(<<-END_OF_CODE).should == ""
+            return 10
+          END_OF_CODE
+
+          $?.exitstatus.should == 0
+        end
+      end
+    end
+  end
 end
