@@ -9,7 +9,7 @@ describe "The super keyword" do
     Super::S1::B.new.bar([]).should == ["B#bar","A#bar"]
   end
 
-  it "searches the full inheritence chain" do
+  it "searches the full inheritance chain" do
     Super::S2::B.new.foo([]).should == ["B#foo","A#baz"]
     Super::S2::B.new.baz([]).should == ["A#baz"]
     Super::S2::C.new.foo([]).should == ["B#foo","C#baz","A#baz"]
@@ -32,7 +32,7 @@ describe "The super keyword" do
     Super::MS1::B.new.bar([]).should == ["ModB#bar","ModA#bar"]
   end
 
-  it "searches the full inheritence chain including modules" do
+  it "searches the full inheritance chain including modules" do
     Super::MS2::B.new.foo([]).should == ["ModB#foo","A#baz"]
     Super::MS2::B.new.baz([]).should == ["A#baz"]
     Super::MS2::C.new.baz([]).should == ["C#baz","A#baz"]
