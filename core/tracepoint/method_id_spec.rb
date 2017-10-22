@@ -6,9 +6,10 @@ ruby_version_is '2.0' do
 
     it 'returns the name at the definition of the method being called' do
       method_name = nil
-      TracePoint.new(:call) { |tp| method_name = tp.method_id}.enable
-      test
-      method_name.should equal(:test)
+      TracePoint.new(:call) { |tp| method_name = tp.method_id}.enable do
+        test
+        method_name.should equal(:test)
+      end
     end
   end
 end

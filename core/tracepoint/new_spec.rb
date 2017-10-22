@@ -9,43 +9,44 @@ ruby_version_is '2.0' do
 
     it 'includes :line event when event is not specified' do
       event_name = nil
-      TracePoint.new() { |tp| event_name = tp.event }.enable
-      event_name.should equal(:line)
+      TracePoint.new() { |tp| event_name = tp.event }.enable do
+        event_name.should equal(:line)
 
-      event_name = nil
-      test
-      event_name.should equal(:line)
+        event_name = nil
+        test
+        event_name.should equal(:line)
 
-      event_name = nil
-      TracePointSpec::B.new.foo
-      event_name.should equal(:line)
+        event_name = nil
+        TracePointSpec::B.new.foo
+        event_name.should equal(:line)
+      end
     end
 
     it 'converts given event name as string into symbol using to_sym' do
       event_name = nil
       (o = mock('return')).should_receive(:to_sym).and_return(:return)
 
-      TracePoint.new(o) { |tp| event_name = tp.event}.enable
-
-      event_name.should equal(nil)
-      test
-      event_name.should equal(:return)
+      TracePoint.new(o) { |tp| event_name = tp.event}.enable do
+        event_name.should equal(nil)
+        test
+        event_name.should equal(:return)
+      end
     end
 
     it 'includes multiple events when multiple event names are passed as params' do
       event_name = nil
       TracePoint.new(:end, :call) do |tp|
         event_name = tp.event
-      end.enable
+      end.enable do
+        test
+        event_name.should equal(:call)
 
-      test
-      event_name.should equal(:call)
+        TracePointSpec::B.new.foo
+        event_name.should equal(:call)
 
-      TracePointSpec::B.new.foo
-      event_name.should equal(:call)
-
-      class B; end
-      event_name.should equal(:end)
+        class B; end
+        event_name.should equal(:end)
+      end
     end
 
     it 'raises a TypeError when the given object is not a string/symbol' do

@@ -7,22 +7,22 @@ ruby_version_is '2.0' do
       last_class_name = nil
       TracePoint.new(:call) do |tp|
         last_class_name = tp.defined_class
-      end.enable
+      end.enable do
+        TracePointSpec::B.new.foo
+        last_class_name.should equal(TracePointSpec::B)
 
-      TracePointSpec::B.new.foo
-      last_class_name.should equal(TracePointSpec::B)
+        TracePointSpec::B.new.bar
+        last_class_name.should equal(TracePointSpec::A)
 
-      TracePointSpec::B.new.bar
-      last_class_name.should equal(TracePointSpec::A)
+        c = TracePointSpec::C.new
+        last_class_name.should equal(TracePointSpec::C)
 
-      c = TracePointSpec::C.new
-      last_class_name.should equal(TracePointSpec::C)
+        c.foo
+        last_class_name.should equal(TracePointSpec::B)
 
-      c.foo
-      last_class_name.should equal(TracePointSpec::B)
-
-      c.bar
-      last_class_name.should equal(TracePointSpec::A)
+        c.bar
+        last_class_name.should equal(TracePointSpec::A)
+      end
     end
   end
 end

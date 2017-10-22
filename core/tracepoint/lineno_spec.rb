@@ -4,8 +4,9 @@ ruby_version_is '2.0' do
   describe 'TracePoint#lineno' do
     it 'returns the line number of the event' do
       lineno = nil
-      TracePoint.new(:line) { |tp| lineno = tp.lineno }.enable
-      lineno.should equal(8)
+      TracePoint.new(:line) { |tp| lineno = tp.lineno }.enable do
+        lineno.should equal(8)
+      end
     end
   end
 end

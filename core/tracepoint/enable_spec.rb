@@ -44,6 +44,7 @@ ruby_version_is '2.0' do
       event_name.should equal(:call)
       test
       method_name.equal?(:test).should be_true
+      trace.disable
     end
   end
 end
