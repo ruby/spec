@@ -6,7 +6,7 @@ describe "StringIO#gets when passed [separator]" do
     @io = StringIO.new("this>is>an>example")
   end
 
-  it "returns the data read till the next occurence of the passed separator" do
+  it "returns the data read till the next occurrence of the passed separator" do
     @io.gets(">").should == "this>"
     @io.gets(">").should == "is>"
     @io.gets(">").should == "an>"
@@ -72,7 +72,7 @@ describe "StringIO#gets when passed no argument" do
     @io = StringIO.new("this is\nan example\nfor StringIO#gets")
   end
 
-  it "returns the data read till the next occurence of $/ or till eof" do
+  it "returns the data read till the next occurrence of $/ or till eof" do
     @io.gets.should == "this is\n"
 
     begin

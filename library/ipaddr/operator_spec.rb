@@ -70,7 +70,7 @@ describe "IPAddr Operator" do
     @a.to_s.should == "3ffe:505:2::"
   end
 
-  it "checks whether an addres is included in a range" do
+  it "checks whether an address is included in a range" do
     @a.should include(IPAddr.new("3ffe:505:2::"))
     @a.should include(IPAddr.new("3ffe:505:2::1"))
     @a.should_not include(IPAddr.new("3ffe:505:3::"))

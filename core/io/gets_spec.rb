@@ -199,7 +199,7 @@ describe "IO#gets" do
     @io.gets(obj, 5).should == "one\n"
   end
 
-  it "reads to the default seperator when passed a single argument greater than the number of bytes to the separator" do
+  it "reads to the default separator when passed a single argument greater than the number of bytes to the separator" do
     @io.gets(6).should == "one\n"
   end
 
