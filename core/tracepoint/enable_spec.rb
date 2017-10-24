@@ -5,7 +5,7 @@ ruby_version_is '2.0' do
     def test; end
 
     it 'returns true if trace was enabled' do
-      event_name, method_name = nil
+      event_name, method_name = nil, nil
       trace = TracePoint.new(:call) do |tp|
         event_name = tp.event
         method_name = tp.method_id
@@ -20,10 +20,11 @@ ruby_version_is '2.0' do
       event_name.should equal(:call)
       test
       method_name.equal?(:test).should be_true
+      trace.disable
     end
 
     it 'returns false if trace was disabled' do
-      event_name, method_name = nil
+      event_name, method_name = nil, nil
       trace = TracePoint.new(:call) do |tp|
         event_name = tp.event
         method_name = tp.method_id
@@ -45,6 +46,20 @@ ruby_version_is '2.0' do
       test
       method_name.equal?(:test).should be_true
       trace.disable
+    end
+
+    it 'is enabled within a block' do
+      event_name = nil
+      TracePoint.new(:line) do |tp|
+        event_name = tp.event
+      end.enable { event_name.should equal(:line) }
+    end
+
+    it 'can accept param but they are initialized as nil within a block' do
+      event_name = nil
+      TracePoint.new(:line) do |tp|
+        event_name = tp.event
+      end.enable { |f| f.should equal(nil) }
     end
   end
 end
