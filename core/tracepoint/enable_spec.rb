@@ -55,11 +55,14 @@ ruby_version_is '2.0' do
       end.enable { event_name.should equal(:line) }
     end
 
-    it 'can accept param but they are initialized as nil within a block' do
+    it 'can accept param within a block but its initialized as nil' do
       event_name = nil
       TracePoint.new(:line) do |tp|
         event_name = tp.event
-      end.enable { |f| f.should equal(nil) }
+      end.enable do |*args|
+        event_name.should equal(:line)
+        args.should == [nil]
+      end
     end
   end
 end
