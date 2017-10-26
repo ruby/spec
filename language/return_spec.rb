@@ -252,6 +252,15 @@ describe "The return keyword" do
 
   ruby_version_is '2.4' do
     describe "at top level" do
+      before :each do
+        @filename = tmp("top_return.rb")
+        ScratchPad.record []
+      end
+
+      after do
+        rm_r @filename
+      end
+
       it "stops file execution" do
         ruby_exe(<<-END_OF_CODE).should == "before return\n"
           puts "before return"
@@ -265,72 +274,80 @@ describe "The return keyword" do
 
       describe "within if" do
         it "is allowed" do
-          ruby_exe(<<-END_OF_CODE).should == "before if\n"
-            puts "before if"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before if"
             if true
               return
             end
 
-            puts "after if"
+            ScratchPad << "after if"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before if"]
         end
       end
 
       describe "within while loop" do
         it "is allowed" do
-          ruby_exe(<<-END_OF_CODE).should == "before while\n"
-            puts "before while"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before while"
             while true
               return
             end
 
-            puts "after while"
+            ScratchPad << "after while"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before while"]
         end
       end
 
       describe "within a begin" do
         it "is allowed in begin block" do
-          ruby_exe(<<-END_OF_CODE).should == "before begin\n"
-            puts "before begin"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before begin"
             begin
               return
             end
-            puts "after begin"
+
+            ScratchPad << "after begin"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before begin"]
         end
 
         it "is allowed in ensure block" do
-          ruby_exe(<<-END_OF_CODE).should == "before begin\n"
-            puts "before begin"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before begin"
             begin
             ensure
               return
             end
-            puts "after begin"
+
+            ScratchPad << "after begin"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before begin"]
         end
 
         it "is allowed in rescue block" do
-          ruby_exe(<<-END_OF_CODE).should == "before begin\n"
-            puts "before begin"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before begin"
             begin
               raise
             rescue RuntimeError
               return
             end
-            puts "after begin"
+
+            ScratchPad << "after begin"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before begin"]
         end
 
         it "fires ensure block before returning" do
@@ -343,100 +360,99 @@ describe "The return keyword" do
 
             puts "after begin"
           END_OF_CODE
+        end
 
-          $?.exitstatus.should == 0
+        it "does not fire ensure block before returning while loads file" do
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before begin"
+            begin
+              return
+            ensure
+              ScratchPad << "within ensure"
+            end
+
+            ScratchPad << "after begin"
+          END_OF_CODE
+
+          load @filename
+          ScratchPad.recorded.should == ["before begin"]
         end
 
         it "swallows exception if returns in ensure block" do
-          ruby_exe(<<-END_OF_CODE).should == ""
+          File.write(@filename, <<-END_OF_CODE)
             begin
               raise
             ensure
+              ScratchPad << "before return"
               return
             end
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          ->() {
+            load @filename
+          }.should_not raise_error
+
+          ScratchPad.recorded.should == ["before return"]
         end
       end
 
       describe "within a block" do
         it "is allowed" do
-          ruby_exe(<<-END_OF_CODE).should == "before call\n"
-            puts "before call"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before call"
             proc { return }.call
 
-            puts "after call"
+            ScratchPad << "after call"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before call"]
         end
       end
 
       describe "within a class" do
         it "is allowed" do
-          ruby_exe(<<-END_OF_CODE).should == "before return\n"
+          File.write(@filename, <<-END_OF_CODE)
             class A
-              puts "before return"
+              ScratchPad << "before return"
               return
 
-              puts "after return"
+              ScratchPad << "after return"
             end
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before return"]
         end
       end
 
       describe "file loading" do
         it "stops file loading and execution" do
-          require "tempfile"
-
-          temp = Tempfile.new(["loaded_file", ".rb"])
-          temp.write <<-END_OF_CODE
-            puts "before return"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before return"
             return
-            puts "after return"
-          END_OF_CODE
-          temp.flush
-
-          ruby_exe(<<-END_OF_CODE).should == "before return\n"
-            load "#{temp.path}"
+            ScratchPad << "after return"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          load @filename
+          ScratchPad.recorded.should == ["before return"]
         end
       end
 
       describe "file requiring" do
         it "stops file loading and execution" do
-          require "tempfile"
-
-          temp = Tempfile.new(["required_file", ".rb"])
-          temp.write <<-END_OF_CODE
-            puts "before return"
+          File.write(@filename, <<-END_OF_CODE)
+            ScratchPad << "before return"
             return
-            puts "after return"
-          END_OF_CODE
-          temp.flush
-
-          ruby_exe(<<-END_OF_CODE).should == "before return\n"
-            require "#{temp.path}"
+            ScratchPad << "after return"
           END_OF_CODE
 
-          $?.exitstatus.should == 0
+          require @filename
+          ScratchPad.recorded.should == ["before return"]
         end
       end
 
       describe "return with argument" do
-        it "is allowed" do
-          ruby_exe(<<-END_OF_CODE).should == ""
-            return 0
-          END_OF_CODE
-
-          $?.exitstatus.should == 0
-        end
-
         it "does not affect exit status" do
           ruby_exe(<<-END_OF_CODE).should == ""
             return 10
