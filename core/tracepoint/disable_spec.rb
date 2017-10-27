@@ -31,5 +31,27 @@ ruby_version_is '2.0' do
       method_name.equal?(:test).should be_false
       event_name.should equal(nil)
     end
+
+    it 'is disabled within a block' do
+      event_name = nil
+      trace = TracePoint.new(:line) {}
+      trace.enable
+      trace.disable { puts 2 + 2 }.should == nil
+      trace.enabled?.should equal(true)
+      trace.disable
+    end
+
+    ruby_bug "#14057", "2.0"..."2.5" do
+      it 'can accept param within a block but it should not yield arguments' do
+        event_name = nil
+        trace = TracePoint.new(:line) {}
+        trace.enable
+        trace.disable do |*args|
+          args.should == []
+        end
+        trace.enabled?.should be_true
+        trace.disable
+      end
+    end
   end
 end
