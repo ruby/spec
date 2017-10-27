@@ -55,14 +55,16 @@ ruby_version_is '2.0' do
       end.enable { event_name.should equal(:line) }
     end
 
-    it 'can accept param within a block but its initialized as nil' do
-      event_name = nil
-      trace = TracePoint.new(:line) { |tp| event_name = tp.event }
-      trace.enable do |*args|
-        event_name.should equal(:line)
-        args.should == [nil]
+    ruby_bug "#14057", "2.0"..."2.5" do
+      it 'can accept param within a block but it should not yield arguments' do
+        event_name = nil
+        trace = TracePoint.new(:line) { |tp| event_name = tp.event }
+        trace.enable do |*args|
+          event_name.should equal(:line)
+          args.should == []
+        end
+        trace.enabled?.should be_false
       end
-      trace.enabled?.should be_false
     end
 
     it 'is enabled on calling with a block if it was already enabled' do
@@ -70,7 +72,7 @@ ruby_version_is '2.0' do
       trace = TracePoint.new(:line) { |tp|event_name = tp.event }
       trace.enable
       trace.enabled?.should be_true
-      trace.enable { event_name.should equal(:line) }
+      trace.enable { puts 2 + 2 }.should == nil
       trace.enabled?.should be_true
       trace.disable
     end
@@ -79,7 +81,7 @@ ruby_version_is '2.0' do
       nil' do
       event_name = nil
       trace = TracePoint.new(:line) { |tp|event_name = tp.event }
-      trace.enable { event_name.should equal(:line) } == nil
+      trace.enable { event_name.should equal(:line) }.should == nil
       trace.enabled?.should be_false
       trace.disable
     end
