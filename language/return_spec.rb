@@ -362,20 +362,22 @@ describe "The return keyword" do
           END_OF_CODE
         end
 
-        it "does not fire ensure block before returning while loads file" do
-          File.write(@filename, <<-END_OF_CODE)
-            ScratchPad << "before begin"
-            begin
-              return
-            ensure
-              ScratchPad << "within ensure"
-            end
+        ruby_bug "#14061", "2.4" do
+          it "fires ensure block before returning while loads file" do
+            File.write(@filename, <<-END_OF_CODE)
+              ScratchPad << "before begin"
+              begin
+                return
+              ensure
+                ScratchPad << "within ensure"
+              end
 
-            ScratchPad << "after begin"
-          END_OF_CODE
+              ScratchPad << "after begin"
+            END_OF_CODE
 
-          load @filename
-          ScratchPad.recorded.should == ["before begin"]
+            load @filename
+            ScratchPad.recorded.should == ["before begin"]
+          end
         end
 
         it "swallows exception if returns in ensure block" do
@@ -388,10 +390,7 @@ describe "The return keyword" do
             end
           END_OF_CODE
 
-          ->() {
-            load @filename
-          }.should_not raise_error
-
+          load @filename
           ScratchPad.recorded.should == ["before return"]
         end
       end
@@ -453,6 +452,7 @@ describe "The return keyword" do
       end
 
       describe "return with argument" do
+        # https://bugs.ruby-lang.org/issues/14062
         it "does not affect exit status" do
           ruby_exe(<<-END_OF_CODE).should == ""
             return 10
