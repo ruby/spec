@@ -68,13 +68,19 @@ ruby_version_is '2.0' do
     end
 
     it 'is enabled on calling with a block if it was already enabled' do
-      event_name = nil
-      trace = TracePoint.new(:line) { |tp|event_name = tp.event }
+      enabled = nil
+      trace = TracePoint.new(:line) {}
       trace.enable
       trace.enabled?.should be_true
-      trace.enable { puts 2 + 2 }.should == nil
-      trace.enabled?.should be_true
+      trace.enable { enabled = trace.enabled? }
+      enabled.should be_true
       trace.disable
+    end
+
+    it 'is enabled within a block & also returns true when its called with a block' do
+      trace = TracePoint.new(:line) {}
+      trace.enable { trace.enabled? }.should == true
+      trace.enabled?.should be_false
     end
 
     it 'is disabled after the block & expects the result of enable {} to equal
