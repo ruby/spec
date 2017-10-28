@@ -32,3 +32,28 @@ describe "Kernel.printf" do
     Kernel.printf(object, "%s", "string")
   end
 end
+
+require File.expand_path('../shared/sprintf', __FILE__)
+require "stringio"
+
+describe "Kernel#printf" do
+  context "io is specified" do
+    it_behaves_like :kernel_sprintf, -> (format, *args) {
+      io = StringIO.new
+      printf(io, format, *args)
+      io.string
+    }
+  end
+
+  context "io is not specified" do
+    it_behaves_like :kernel_sprintf, -> (format, *args) {
+      stdout = $stdout
+      $stdout = io = StringIO.new
+
+      printf(format, *args)
+
+      $stdout = stdout
+      io.string
+    }
+  end
+end
