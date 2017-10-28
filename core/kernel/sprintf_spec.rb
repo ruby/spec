@@ -308,3 +308,17 @@ end
 describe "Kernel.sprintf" do
   it "needs to be reviewed for spec completeness"
 end
+
+require File.expand_path('../shared/sprintf', __FILE__)
+
+describe "Kernel#sprintf" do
+  it_behaves_like :kernel_sprintf, -> (format, *args) {
+    sprintf(format, *args)
+  }
+end
+
+describe "Kernel.sprintf" do
+  it_behaves_like :kernel_sprintf, -> (format, *args) {
+    Kernel.sprintf(format, *args)
+  }
+end
