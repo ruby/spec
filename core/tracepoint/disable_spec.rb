@@ -32,11 +32,20 @@ ruby_version_is '2.0' do
       event_name.should equal(nil)
     end
 
-    it 'is disabled within a block' do
-      event_name = nil
+    it 'is disabled within a block & is enabled outside the block' do
+      enabled = nil
       trace = TracePoint.new(:line) {}
       trace.enable
-      trace.disable { puts 2 + 2 }.should == nil
+      trace.disable { enabled = trace.enabled? }
+      enabled.should be_false
+      trace.enabled?.should be_true
+      trace.disable
+    end
+
+    it 'is disabled within a block & also returns false when its called with a block' do
+      trace = TracePoint.new(:line) {}
+      trace.enable
+      trace.disable { trace.enabled? }.should == false
       trace.enabled?.should equal(true)
       trace.disable
     end
