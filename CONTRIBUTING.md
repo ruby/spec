@@ -137,6 +137,9 @@ end
 # First file a bug at https://bugs.ruby-lang.org/
 # It is better to use a ruby_version_is guard if there was a release with the fix
 ruby_bug '#13669', ''...'2.5' do
+  it "works like this" do
+    # Specify the expected behavior here, not the bug
+  end
 end
 
 
