@@ -7,13 +7,15 @@ describe "The if expression" do
       after(:each)  { ScratchPad.clear }
 
       it 'with non-nil values' do
-        eval "if (a, b = [1, 2]); ScratchPad << 123; end"
-        ScratchPad.recorded.should == [123]
+        ary = [1, 2]
+        eval "if (a, b = ary); ScratchPad.record [a, b]; end"
+        ScratchPad.recorded.should == [1, 2]
       end
 
       it 'with nil values' do
-        eval "if (a, b = nil); ScratchPad << 123; end"
-        ScratchPad.recorded.should == []
+        ary = nil
+        eval "if (a, b = ary); else; ScratchPad.record [a, b]; end"
+        ScratchPad.recorded.should == [nil, nil]
       end
     end
   end
