@@ -35,7 +35,13 @@ describe "Warning.warn" do
 
     it "is called by parser warnings" do
       Warning.should_receive(:warn)
-      eval "{ key: :value, key: :value2 }"
+      verbose = $VERBOSE
+      $VERBOSE = false
+      begin
+        eval "{ key: :value, key: :value2 }"
+      ensure
+        $VERBOSE = verbose
+      end
     end
   end
 
