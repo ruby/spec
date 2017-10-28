@@ -250,7 +250,7 @@ describe "The return keyword" do
     end
   end
 
-  ruby_version_is '2.4' do
+  ruby_version_is '2.4.2' do
     describe "at top level" do
       before :each do
         @filename = tmp("top_return.rb")
