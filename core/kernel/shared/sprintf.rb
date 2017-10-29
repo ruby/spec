@@ -876,4 +876,57 @@ describe :kernel_sprintf, shared: true do
       end
     end
   end
+
+  describe "reference by name" do
+    describe "%<name>s style" do
+      it "uses value passed in a hash argument" do
+        format("%<foo>d", foo: 123).should == "123"
+      end
+
+      it "supports flags, width, precision and type" do
+        format("%+20.10<foo>f", foo: 10.952).should == "      +10.9520000000"
+      end
+
+      it "allows to place name in any position" do
+        format("%+15.5<foo>f", foo: 10.952).should == "      +10.95200"
+        format("%+15<foo>.5f", foo: 10.952).should == "      +10.95200"
+        format("%+<foo>15.5f", foo: 10.952).should == "      +10.95200"
+        format("%<foo>+15.5f", foo: 10.952).should == "      +10.95200"
+      end
+
+      it "cannot be mixed with unnamed style" do
+        -> () {
+          format("%d %<foo>d", 1, foo: "123")
+        }.should raise_error(ArgumentError)
+      end
+    end
+
+    describe "%{name} style" do
+      it "uses value passed in a hash argument" do
+        format("%{foo}", foo: 123).should == "123"
+      end
+
+      it "does not support type style" do
+        format("%{foo}d", foo: 123).should == "123d"
+      end
+
+      it "supports flags, width and precision" do
+        format("%-20.5{foo}", foo: "123456789").should == "12345               "
+      end
+
+      it "cannot be mixed with unnamed style" do
+        -> () {
+          format("%d %{foo}", 1, foo: "123")
+        }.should raise_error(ArgumentError)
+      end
+
+      # strange behavior
+      # expected to call to_str and only then to_s
+      it "converts value to String with to_s" do
+        obj = mock("object")
+        obj.should_receive(:to_s).and_return("42")
+        format("%{foo}", foo: obj).should == "42"
+      end
+    end
+  end
 end
