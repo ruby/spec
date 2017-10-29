@@ -802,4 +802,32 @@ describe :kernel_sprintf, shared: true do
     end
   end
 
+  describe "width" do
+    it "specifies the minimum number of characters that will be written to the result" do
+      format("%10b", 10).should == "      1010"
+      format("%10B", 10).should == "      1010"
+      format("%10d", 112).should == "       112"
+      format("%10i", 112).should == "       112"
+      format("%10o", 87).should == "       127"
+      format("%10u", 112).should == "       112"
+      format("%10x", 196).should == "        c4"
+      format("%10X", 196).should == "        C4"
+
+      format("%20e", 109.52).should == "        1.095200e+02"
+      format("%20E", 109.52).should == "        1.095200E+02"
+      format("%20f", 10.952).should == "           10.952000"
+      format("%20g", 12.1234).should == "             12.1234"
+      format("%20G", 12.1234).should == "             12.1234"
+      format("%20a", 196).should == "           0x1.88p+7"
+      format("%20A", 196).should == "           0X1.88P+7"
+
+      format("%10c", 97).should == "         a"
+      format("%10p", []).should == "        []"
+      format("%10s", "abc").should == "       abc"
+    end
+
+    it "is ignored if argument's actual length is greater" do
+      format("%5d", 1234567890).should == "1234567890"
+    end
+  end
 end
