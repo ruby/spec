@@ -830,4 +830,50 @@ describe :kernel_sprintf, shared: true do
       format("%5d", 1234567890).should == "1234567890"
     end
   end
+
+  describe "precision" do
+    context "integer types" do
+      it "controls the number of decimal places displayed" do
+        format("%.6b", 10).should == "001010"
+        format("%.6B", 10).should == "001010"
+        format("%.5d", 112).should == "00112"
+        format("%.5i", 112).should == "00112"
+        format("%.5o", 87).should == "00127"
+        format("%.5u", 112).should == "00112"
+
+        format("%.5x", 196).should == "000c4"
+        format("%.5X", 196).should == "000C4"
+      end
+    end
+
+    context "float types" do
+      it "controls the number of decimal places displayed in fraction part" do
+        format("%.10e", 109.52).should == "1.0952000000e+02"
+        format("%.10E", 109.52).should == "1.0952000000E+02"
+        format("%.10f", 10.952).should == "10.9520000000"
+        format("%.10a", 196).should == "0x1.8800000000p+7"
+        format("%.10A", 196).should == "0X1.8800000000P+7"
+      end
+
+      # strange behavior
+      it "does not affect G format" do
+        format("%.10g", 12.1234).should == "12.1234" # expected "12.1234000000"
+        format("%.10g", 123456789).should == "123456789" # expected "1.2345700000e+08"
+      end
+    end
+
+    context "string formats" do
+      it "determines the maximum number of characters to be copied from the string" do
+        format("%.1p", [1]).should == "["
+        format("%.2p", [1]).should == "[1"
+        format("%.10p", [1]).should == "[1]"
+        format("%.0p", [1]).should == ""
+
+        format("%.1s", "abc").should == "a"
+        format("%.2s", "abc").should == "ab"
+        format("%.10s", "abc").should == "abc"
+        format("%.0s", "abc").should == ""
+      end
+    end
+  end
 end
