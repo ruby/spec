@@ -59,3 +59,13 @@ describe "StringIO#printf when self is not writable" do
     lambda { io.printf("test") }.should raise_error(IOError)
   end
 end
+
+require File.expand_path('../../../core/kernel/shared/sprintf', __FILE__)
+
+describe "StringIO#printf" do
+  it_behaves_like :kernel_sprintf, -> (format, *args) {
+    io = StringIO.new
+    io.printf(format, *args)
+    io.string
+  }
+end
