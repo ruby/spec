@@ -899,6 +899,12 @@ describe :kernel_sprintf, shared: true do
           format("%d %<foo>d", 1, foo: "123")
         }.should raise_error(ArgumentError)
       end
+
+      it "raises KeyError when there is no matching key" do
+        -> () {
+          format("%<foo>s", {})
+        }.should raise_error(KeyError)
+      end
     end
 
     describe "%{name} style" do
@@ -920,6 +926,12 @@ describe :kernel_sprintf, shared: true do
         }.should raise_error(ArgumentError)
       end
 
+      it "raises KeyError when there is no matching key" do
+        -> () {
+          format("%{foo}", {})
+        }.should raise_error(KeyError)
+      end
+
       # strange behavior
       # expected to call to_str and only then to_s
       it "converts value to String with to_s" do
@@ -930,3 +942,4 @@ describe :kernel_sprintf, shared: true do
     end
   end
 end
+
