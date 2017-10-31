@@ -1,5 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
+require File.expand_path('../shared/sprintf', __FILE__)
+require "stringio"
 
 describe "Kernel#printf" do
   it "is a private method" do
@@ -31,29 +33,27 @@ describe "Kernel.printf" do
     object.should_receive(:write).with("string")
     Kernel.printf(object, "%s", "string")
   end
-end
 
-require File.expand_path('../shared/sprintf', __FILE__)
-require "stringio"
+  describe "formatting" do
+    context "io is specified" do
+      it_behaves_like :kernel_sprintf, -> (format, *args) {
+        io = StringIO.new
+        printf(io, format, *args)
+        io.string
+      }
+    end
 
-describe "Kernel#printf" do
-  context "io is specified" do
-    it_behaves_like :kernel_sprintf, -> (format, *args) {
-      io = StringIO.new
-      printf(io, format, *args)
-      io.string
-    }
-  end
+    context "io is not specified" do
+      it_behaves_like :kernel_sprintf, -> (format, *args) {
+        stdout = $stdout
+        $stdout = io = StringIO.new
 
-  context "io is not specified" do
-    it_behaves_like :kernel_sprintf, -> (format, *args) {
-      stdout = $stdout
-      $stdout = io = StringIO.new
+        printf(format, *args)
 
-      printf(format, *args)
-
-      $stdout = stdout
-      io.string
-    }
+        $stdout = stdout
+        io.string
+      }
+    end
   end
 end
+
