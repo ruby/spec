@@ -8,7 +8,7 @@ ruby_version_is '2.0' do
       TracePoint.new(:end, :call) do |tp|
         event_name = tp.event
       end.enable do
-        test
+        TracePointSpec.test
         event_name.should equal(:call)
 
         TracePointSpec::B.new.foo
