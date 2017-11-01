@@ -58,21 +58,11 @@ ruby_version_is '2.0' do
     end
 
     it 'expects to be called with a block' do
-      begin
-        TracePoint.new(:line)
-      rescue => e
-        e.class.should equal(ThreadError)
-        e.message.should == 'must be called with a block'
-      end
+      -> { TracePoint.new(:line) }.should raise_error(ArgumentError)
     end
 
     it "raises a Argument error when the give argument doesn't match an event name" do
-      begin
-        TracePoint.new(:test)
-      rescue => e
-        e.class.should equal(ArgumentError)
-        e.message.should == 'unknown event: test'
-      end
+      -> { TracePoint.new(:test) }.should raise_error(ArgumentError)
     end
   end
 end
