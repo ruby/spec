@@ -13,7 +13,7 @@ ruby_version_is '2.0' do
         event_name.should equal(:line)
 
         event_name = nil
-        test
+        TracePointSpec.test
         event_name.should equal(:line)
 
         event_name = nil
@@ -28,7 +28,7 @@ ruby_version_is '2.0' do
 
       TracePoint.new(o) { |tp| event_name = tp.event}.enable do
         event_name.should equal(nil)
-        test
+        TracePointSpec.test
         event_name.should equal(:return)
       end
     end
@@ -38,7 +38,7 @@ ruby_version_is '2.0' do
       TracePoint.new(:end, :call) do |tp|
         event_name = tp.event
       end.enable do
-        test
+        TracePointSpec.test
         event_name.should equal(:call)
 
         TracePointSpec::B.new.foo
@@ -57,8 +57,10 @@ ruby_version_is '2.0' do
       -> { TracePoint.new(o) {}}.should raise_error(TypeError)
     end
 
-    it 'expects to be called with a block' do
-      -> { TracePoint.new(:line) }.should raise_error(ArgumentError)
+    ruby_bug "#140740", "2.0"..."2.5" do
+      it 'expects to be called with a block' do
+        -> { TracePoint.new(:line) }.should raise_error(ArgumentError)
+      end
     end
 
     it "raises a Argument error when the give argument doesn't match an event name" do

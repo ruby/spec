@@ -27,8 +27,8 @@ module TracePointSpec
       super
     end
   end
-end
 
-def test
-  'test'
+  def self.test
+    'test'
+  end
 end
