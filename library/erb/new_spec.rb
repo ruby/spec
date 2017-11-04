@@ -75,7 +75,7 @@ END
 END
 
     lambda {
-      ERB.new(input, nil, '-').result 
+      ERB.new(input, nil, '-').result
     }.should raise_error(SyntaxError)
   end
 
