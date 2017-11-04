@@ -14,7 +14,7 @@ ruby_version_is '2.4' do
       [].sum(-1).should == -1
     end
 
-    it "returns 0 if array is empty and init is omited" do
+    it "returns 0 if array is empty and init is omitted" do
       [].sum.should == 0
     end
 

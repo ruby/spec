@@ -22,7 +22,10 @@ Lint/BooleanSymbol:
 Lint/InterpolationCheck:
   Enabled: false
 
-Lint/LiteralInCondition:
+Lint/LiteralAsCondition:
+  Enabled: false
+
+Lint/UnneededRequireStatement:
   Enabled: false
 
 Lint/RescueWithoutErrorClass:
