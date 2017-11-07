@@ -9,9 +9,8 @@ describe "File#printf" do
       File.open(@filename, "w") do |f|
         f.printf(format, *args)
       end
-      string = File.read(@filename)
 
-      string
+      File.read(@filename)
     ensure
       rm_r @filename
     end
