@@ -5,26 +5,23 @@ describe :kernel_sprintf, shared: true do
 
   describe "integer formats" do
     it "converts argument into Integer with to_int" do
-      obj = mock("integer")
+      obj = Object.new
+      def obj.to_i; 10; end
+      def obj.to_int; 10; end
+
       obj.should_receive(:to_int).and_return(10)
       format("%b", obj).should == "1010"
     end
 
-    it "converts argument into Integer with to_i" do
-      obj = mock("integer")
+    it "converts argument into Integer with to_i if to_int isn't available" do
+      obj = Object.new
+      def obj.to_i; 10; end
+
       obj.should_receive(:to_i).and_return(10)
       format("%b", obj).should == "1010"
     end
 
-    it "uses to_int first" do
-      obj = Object.new
-      def obj.to_i;   0 end
-      def obj.to_int; 1 end
-
-      format("%b", obj).should == "1"
-    end
-
-    it "supports as many string formats as Kernel#Integer does" do
+    it "converts String argument with Kernel#Integer" do
       format("%d", "0b1010").should == "10"
       format("%d", "112").should == "112"
       format("%d", "0127").should == "87"
@@ -61,7 +58,7 @@ describe :kernel_sprintf, shared: true do
         format("%B", -10).should == "..1" + "0110"
       end
 
-      it "collapse negative number representation if it equals 1" do
+      it "collapse negative number representation if it equals -1" do
         format("%B", -1).should_not == "..11"
         format("%B", -1).should == "..1"
       end
@@ -72,12 +69,20 @@ describe :kernel_sprintf, shared: true do
         format("%d", 112).should == "112"
         format("%d", -112).should == "-112"
       end
+
+      it "works well with large numbers" do
+        format("%d", 1234567890987654321).should == "1234567890987654321"
+      end
     end
 
     describe "i" do
       it "converts argument as a decimal number" do
         format("%i", 112).should == "112"
         format("%i", -112).should == "-112"
+      end
+
+      it "worls well with large numbers" do
+        format("%i", 1234567890987654321).should == "1234567890987654321"
       end
     end
 
@@ -100,6 +105,10 @@ describe :kernel_sprintf, shared: true do
       it "converts argument as a decimal number" do
         format("%u", 112).should == "112"
         format("%u", -112).should == "-112"
+      end
+
+      it "works well with large numbers" do
+        format("%u", 1234567890987654321).should == "1234567890987654321"
       end
     end
 
@@ -148,14 +157,14 @@ describe :kernel_sprintf, shared: true do
     end
 
     describe "e" do
-      it "convets argument into exponential notation [-]d.dddddde[+-]dd" do
+      it "converts argument into exponential notation [-]d.dddddde[+-]dd" do
         format("%e", 109.52).should == "1.095200e+02"
         format("%e", -109.52).should == "-1.095200e+02"
         format("%e", 0.10952).should == "1.095200e-01"
         format("%e", -0.10952).should == "-1.095200e-01"
       end
 
-      it "cuts excessive digits" do
+      it "cuts excessive digits and keeps only 6 ones" do
         format("%e", 1.123456789).should == "1.123457e+00"
       end
 
@@ -184,7 +193,7 @@ describe :kernel_sprintf, shared: true do
         format("%E", -0.10952).should == "-1.095200E-01"
       end
 
-      it "cuts excessive digits" do
+      it "cuts excessive digits and keeps only 6 ones" do
         format("%E", 1.123456789).should == "1.123457E+00"
       end
 
@@ -211,7 +220,7 @@ describe :kernel_sprintf, shared: true do
         format("%f", -10.952).should == "-10.952000"
       end
 
-      it "cuts excessive digits" do
+      it "cuts excessive digits and keeps only 6 ones" do
         format("%f", 1.123456789).should == "1.123457"
       end
 
@@ -233,7 +242,7 @@ describe :kernel_sprintf, shared: true do
     end
 
     describe "g" do
-      context "the exponenta is less than -4" do
+      context "the exponent is less than -4" do
         it "converts a floating point number using exponential form" do
           format("%g", 0.0000123456).should == "1.23456e-05"
           format("%g", -0.0000123456).should == "-1.23456e-05"
@@ -243,7 +252,7 @@ describe :kernel_sprintf, shared: true do
         end
       end
 
-      context "the exponenta is greater than or equal to the precision (6 by default)" do
+      context "the exponent is greater than or equal to the precision (6 by default)" do
         it "converts a floating point number using exponential form" do
           format("%g", 1234567).should == "1.23457e+06"
           format("%g", 1234567890123).should == "1.23457e+12"
@@ -259,7 +268,7 @@ describe :kernel_sprintf, shared: true do
           format("%g", -123456).should == "-123456"
         end
 
-        it "cuts excessive digits in fractional part" do
+        it "cuts excessive digits in fractional part and keeps only 4 ones" do
           format("%g", 12.12341111).should == "12.1234"
           format("%g", -12.12341111).should == "-12.1234"
         end
@@ -270,12 +279,13 @@ describe :kernel_sprintf, shared: true do
           format("%g", 1.444444444).should == "1.44444"
         end
 
-        # strange behavior
         it "cuts fraction part to have only 6 digits at all" do
           format("%g", 1.1234567).should == "1.12346"
           format("%g", 12.1234567).should == "12.1235"
           format("%g", 123.1234567).should == "123.123"
           format("%g", 1234.1234567).should == "1234.12"
+          format("%g", 12345.1234567).should == "12345.1"
+          format("%g", 123456.1234567).should == "123456"
         end
       end
 
@@ -291,7 +301,7 @@ describe :kernel_sprintf, shared: true do
     end
 
     describe "G" do
-      context "the exponenta is less than -4" do
+      context "the exponent is less than -4" do
         it "converts a floating point number using exponential form and use an uppercase E" do
           format("%G", 0.0000123456).should == "1.23456E-05"
           format("%G", -0.0000123456).should == "-1.23456E-05"
@@ -301,7 +311,7 @@ describe :kernel_sprintf, shared: true do
         end
       end
 
-      context "the exponenta is greater than or equal to the precision (6 by default)" do
+      context "the exponent is greater than or equal to the precision (6 by default)" do
         it "converts a floating point number using exponential form" do
           format("%G", 1234567).should == "1.23457E+06"
           format("%G", 1234567890123).should == "1.23457E+12"
@@ -317,7 +327,7 @@ describe :kernel_sprintf, shared: true do
           format("%G", -123456).should == "-123456"
         end
 
-        it "cuts excessive digits in fractional part" do
+        it "cuts excessive digits in fractional part and keeps only 4 ones" do
           format("%G", 12.12341111).should == "12.1234"
           format("%G", -12.12341111).should == "-12.1234"
         end
@@ -328,7 +338,6 @@ describe :kernel_sprintf, shared: true do
           format("%G", 1.444444444).should == "1.44444"
         end
 
-        # strange behavior
         it "cuts fraction part to have only 6 digits at all" do
           format("%G", 1.1234567).should == "1.12346"
           format("%G", 12.1234567).should == "12.1235"
@@ -349,10 +358,6 @@ describe :kernel_sprintf, shared: true do
     end
 
     describe "a" do
-      # strange behavior
-      # from docs - Convert floating point argument as [-]0xh.hhhhp[+-]dd
-      # * p+7 => p+07 - two digits for exponenta
-      # * fraction part should be 4 digits long by default
       it "converts floating point argument as [-]0xh.hhhhp[+-]dd" do
         format("%a", 196).should == "0x1.88p+7"
         format("%a", -196).should == "-0x1.88p+7"
@@ -409,6 +414,12 @@ describe :kernel_sprintf, shared: true do
         }.should raise_error(ArgumentError)
       end
 
+      it "raises ArgumentError if argument is an empty string" do
+        -> () {
+          format("%c", "")
+        }.should raise_error(ArgumentError)
+      end
+
       it "supports Unicode characters" do
         format("%c", 1286).should == "Ԇ"
         format("%c", "ش").should == "ش"
@@ -434,8 +445,6 @@ describe :kernel_sprintf, shared: true do
         format("%s", obj).should == "abc"
       end
 
-      # strange behavior
-      # expected any core/std lib uses to_int/to_str/to_ary/to_hash for argument
       it "does not try to convert with to_str" do
         obj = BasicObject.new
         def obj.to_str
@@ -501,7 +510,6 @@ describe :kernel_sprintf, shared: true do
           format("% A", -196).should == "-0X1.88P+7"
         end
 
-        # strange behavior
         it "prevents converting negative argument to two's complement form" do
           format("% b", -10).should == "-1010"
           format("% B", -10).should == "-1010"
@@ -579,7 +587,7 @@ describe :kernel_sprintf, shared: true do
           format("%#o", 87).should == "0127"
         end
 
-        it "does nothing for negtive argument" do
+        it "does nothing for negative argument" do
           format("%#o", -87).should == "..7651"
         end
       end
@@ -622,7 +630,6 @@ describe :kernel_sprintf, shared: true do
           format("%#G", 123456).should == "123456."
         end
 
-        # strange behavior
         it "changes format from dd.dddd to exponential form for gG" do
           format("%#.0g", 123.4).should_not == "123."
           format("%#.0g", 123.4).should == "1.e+02"
@@ -714,7 +721,7 @@ describe :kernel_sprintf, shared: true do
           format("%020A", 196).should == "0X000000000001.88P+7"
         end
 
-        it "uses radix-1 when displays negative argument as a two's complemen" do
+        it "uses radix-1 when displays negative argument as a two's complement" do
           format("%010b", -10).should == "..11110110"
           format("%010B", -10).should == "..11110110"
           format("%010o", -87).should == "..77777651"
@@ -794,6 +801,29 @@ describe :kernel_sprintf, shared: true do
         format("%1$*2$s", "abc", 10).should == "       abc"
       end
 
+      it "left-justifies the result if specified with $ argument is negative" do
+        format("%1$*2$b", 10, -10).should == "1010      "
+        format("%1$*2$B", 10, -10).should == "1010      "
+        format("%1$*2$d", 112, -10).should == "112       "
+        format("%1$*2$i", 112, -10).should == "112       "
+        format("%1$*2$o", 87, -10).should == "127       "
+        format("%1$*2$u", 112, -10).should == "112       "
+        format("%1$*2$x", 196, -10).should == "c4        "
+        format("%1$*2$X", 196, -10).should == "C4        "
+
+        format("%1$*2$e", 109.52, -20).should == "1.095200e+02        "
+        format("%1$*2$E", 109.52, -20).should == "1.095200E+02        "
+        format("%1$*2$f", 10.952, -20).should == "10.952000           "
+        format("%1$*2$g", 12.1234, -20).should == "12.1234             "
+        format("%1$*2$G", 12.1234, -20).should == "12.1234             "
+        format("%1$*2$a", 196, -20).should == "0x1.88p+7           "
+        format("%1$*2$A", 196, -20).should == "0X1.88P+7           "
+
+        format("%1$*2$c", 97, -10).should == "a         "
+        format("%1$*2$p", [], -10).should == "[]        "
+        format("%1$*2$s", "abc", -10).should == "abc       "
+      end
+
       it "raises ArgumentError when is mixed with width" do
         -> () {
           format("%*10d", 10, 112)
@@ -855,10 +885,9 @@ describe :kernel_sprintf, shared: true do
         format("%.10A", 196).should == "0X1.8800000000P+7"
       end
 
-      # strange behavior
       it "does not affect G format" do
-        format("%.10g", 12.1234).should == "12.1234" # expected "12.1234000000"
-        format("%.10g", 123456789).should == "123456789" # expected "1.2345700000e+08"
+        format("%.10g", 12.1234).should == "12.1234"
+        format("%.10g", 123456789).should == "123456789"
       end
     end
 
@@ -932,11 +961,14 @@ describe :kernel_sprintf, shared: true do
         }.should raise_error(KeyError)
       end
 
-      # strange behavior
-      # expected to call to_str and only then to_s
       it "converts value to String with to_s" do
-        obj = mock("object")
+        obj = Object.new
+        def obj.to_s; end
+        def obj.to_str; end
+
         obj.should_receive(:to_s).and_return("42")
+        obj.should_not_receive(:to_str)
+
         format("%{foo}", foo: obj).should == "42"
       end
     end

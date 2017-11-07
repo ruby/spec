@@ -46,12 +46,14 @@ describe "Kernel.printf" do
     context "io is not specified" do
       it_behaves_like :kernel_sprintf, -> (format, *args) {
         stdout = $stdout
-        $stdout = io = StringIO.new
 
-        printf(format, *args)
-
-        $stdout = stdout
-        io.string
+        begin
+          $stdout = io = StringIO.new
+          printf(format, *args)
+          io.string
+        ensure
+          $stdout = stdout
+        end
       }
     end
   end

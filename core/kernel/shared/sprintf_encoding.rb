@@ -16,4 +16,13 @@ describe :kernel_sprintf_encoding, shared: true do
     result = format(string, argument)
     result.encoding.should equal(Encoding::UTF_8)
   end
+
+  it "raises Encoding::CompatibilityError if both encodings are ASCII compatible and there ano not ASCII characters" do
+    string = "Ä %s".encode('windows-1252')
+    argument = "Ђ".encode('windows-1251')
+
+    -> () {
+      format(string, argument)
+    }.should raise_error(Encoding::CompatibilityError)
+  end
 end
