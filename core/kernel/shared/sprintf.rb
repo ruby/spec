@@ -34,55 +34,33 @@ describe :kernel_sprintf, shared: true do
       }.should raise_error(TypeError)
     end
 
-    describe "b" do
-      it "converts argument as a binary number" do
-        format("%b", 10).should == "1010"
-      end
+    ["b", "B"].each do |f|
+      describe f do
+        it "converts argument as a binary number" do
+          format("%#{f}", 10).should == "1010"
+        end
 
-      it "displays negative number as a two's complement prefixed with '..1'" do
-        format("%b", -10).should == "..1" + "0110"
-      end
+        it "displays negative number as a two's complement prefixed with '..1'" do
+          format("%#{f}", -10).should == "..1" + "0110"
+        end
 
-      it "collapse negative number representation if it equals 1" do
-        format("%b", -1).should_not == "..11"
-        format("%b", -1).should == "..1"
-      end
-    end
-
-    describe "B" do
-      it "converts argument as a binary number" do
-        format("%B", 10).should == "1010"
-      end
-
-      it "displays negative number as a two's complement prefixed with '..1'" do
-        format("%B", -10).should == "..1" + "0110"
-      end
-
-      it "collapse negative number representation if it equals -1" do
-        format("%B", -1).should_not == "..11"
-        format("%B", -1).should == "..1"
+        it "collapse negative number representation if it equals 1" do
+          format("%#{f}", -1).should_not == "..11"
+          format("%#{f}", -1).should == "..1"
+        end
       end
     end
 
-    describe "d" do
-      it "converts argument as a decimal number" do
-        format("%d", 112).should == "112"
-        format("%d", -112).should == "-112"
-      end
+    ["d", "i", "u"].each do |f|
+      describe f do
+        it "converts argument as a decimal number" do
+          format("%#{f}", 112).should == "112"
+          format("%#{f}", -112).should == "-112"
+        end
 
-      it "works well with large numbers" do
-        format("%d", 1234567890987654321).should == "1234567890987654321"
-      end
-    end
-
-    describe "i" do
-      it "converts argument as a decimal number" do
-        format("%i", 112).should == "112"
-        format("%i", -112).should == "-112"
-      end
-
-      it "worls well with large numbers" do
-        format("%i", 1234567890987654321).should == "1234567890987654321"
+        it "works well with large numbers" do
+          format("%#{f}", 1234567890987654321).should == "1234567890987654321"
+        end
       end
     end
 
@@ -98,17 +76,6 @@ describe :kernel_sprintf, shared: true do
       it "collapse negative number representation if it equals 7" do
         format("%o", -1).should_not == "..77"
         format("%o", -1).should == "..7"
-      end
-    end
-
-    describe "u" do
-      it "converts argument as a decimal number" do
-        format("%u", 112).should == "112"
-        format("%u", -112).should == "-112"
-      end
-
-      it "works well with large numbers" do
-        format("%u", 1234567890987654321).should == "1234567890987654321"
       end
     end
 
@@ -156,61 +123,34 @@ describe :kernel_sprintf, shared: true do
       }.should raise_error(TypeError)
     end
 
-    describe "e" do
-      it "converts argument into exponential notation [-]d.dddddde[+-]dd" do
-        format("%e", 109.52).should == "1.095200e+02"
-        format("%e", -109.52).should == "-1.095200e+02"
-        format("%e", 0.10952).should == "1.095200e-01"
-        format("%e", -0.10952).should == "-1.095200e-01"
-      end
+    {"e" => "e", "E" => "E"}.each_pair do |f, exp|
+      describe f do
+        it "converts argument into exponential notation [-]d.dddddde[+-]dd" do
+          format("%#{f}", 109.52).should == "1.095200#{exp}+02"
+          format("%#{f}", -109.52).should == "-1.095200#{exp}+02"
+          format("%#{f}", 0.10952).should == "1.095200#{exp}-01"
+          format("%#{f}", -0.10952).should == "-1.095200#{exp}-01"
+        end
 
-      it "cuts excessive digits and keeps only 6 ones" do
-        format("%e", 1.123456789).should == "1.123457e+00"
-      end
+        it "cuts excessive digits and keeps only 6 ones" do
+          format("%#{f}", 1.123456789).should == "1.123457#{exp}+00"
+        end
 
-      it "rounds the last significant digit to the closest one" do
-        format("%e", 1.555555555).should == "1.555556e+00"
-        format("%e", -1.555555555).should == "-1.555556e+00"
-        format("%e", 1.444444444).should == "1.444444e+00"
-      end
+        it "rounds the last significant digit to the closest one" do
+          format("%#{f}", 1.555555555).should == "1.555556#{exp}+00"
+          format("%#{f}", -1.555555555).should == "-1.555556#{exp}+00"
+          format("%#{f}", 1.444444444).should == "1.444444#{exp}+00"
+        end
 
-      it "displays Float::INFINITY as Inf" do
-        format("%e", Float::INFINITY).should == "Inf"
-        format("%e", -Float::INFINITY).should == "-Inf"
-      end
+        it "displays Float::INFINITY as Inf" do
+          format("%#{f}", Float::INFINITY).should == "Inf"
+          format("%#{f}", -Float::INFINITY).should == "-Inf"
+        end
 
-      it "displays Float::NAN as NaN" do
-        format("%e", Float::NAN).should == "NaN"
-        format("%e", -Float::NAN).should == "NaN"
-      end
-    end
-
-    describe "E" do
-      it "convets floating point argument into exponential notation [-]d.dddddde[+-]dd" do
-        format("%E", 109.52).should == "1.095200E+02"
-        format("%E", -109.52).should == "-1.095200E+02"
-        format("%E", 0.10952).should == "1.095200E-01"
-        format("%E", -0.10952).should == "-1.095200E-01"
-      end
-
-      it "cuts excessive digits and keeps only 6 ones" do
-        format("%E", 1.123456789).should == "1.123457E+00"
-      end
-
-      it "rounds the last significant digit to the closest one" do
-        format("%E", 1.555555555).should == "1.555556E+00"
-        format("%E", -1.555555555).should == "-1.555556E+00"
-        format("%E", 1.444444444).should == "1.444444E+00"
-      end
-
-      it "displays Float::INFINITY as Inf" do
-        format("%E", Float::INFINITY).should == "Inf"
-        format("%E", -Float::INFINITY).should == "-Inf"
-      end
-
-      it "displays Float::NAN as NaN" do
-        format("%E", Float::NAN).should == "NaN"
-        format("%E", -Float::NAN).should == "NaN"
+        it "displays Float::NAN as NaN" do
+          format("%#{f}", Float::NAN).should == "NaN"
+          format("%#{f}", -Float::NAN).should == "NaN"
+        end
       end
     end
 
@@ -241,119 +181,64 @@ describe :kernel_sprintf, shared: true do
       end
     end
 
-    describe "g" do
-      context "the exponent is less than -4" do
-        it "converts a floating point number using exponential form" do
-          format("%g", 0.0000123456).should == "1.23456e-05"
-          format("%g", -0.0000123456).should == "-1.23456e-05"
+    {"g" => "e", "G" => "E"}.each_pair do |f, exp|
+      describe f do
+        context "the exponent is less than -4" do
+          it "converts a floating point number using exponential form" do
+            format("%#{f}", 0.0000123456).should == "1.23456#{exp}-05"
+            format("%#{f}", -0.0000123456).should == "-1.23456#{exp}-05"
 
-          format("%g", 0.000000000123456).should == "1.23456e-10"
-          format("%g", -0.000000000123456).should == "-1.23456e-10"
-        end
-      end
-
-      context "the exponent is greater than or equal to the precision (6 by default)" do
-        it "converts a floating point number using exponential form" do
-          format("%g", 1234567).should == "1.23457e+06"
-          format("%g", 1234567890123).should == "1.23457e+12"
-          format("%g", -1234567).should == "-1.23457e+06"
-        end
-      end
-
-      context "otherwise" do
-        it "converts a floating point number in dd.dddd form" do
-          format("%g", 0.0001).should == "0.0001"
-          format("%g", -0.0001).should == "-0.0001"
-          format("%g", 123456).should == "123456"
-          format("%g", -123456).should == "-123456"
+            format("%#{f}", 0.000000000123456).should == "1.23456#{exp}-10"
+            format("%#{f}", -0.000000000123456).should == "-1.23456#{exp}-10"
+          end
         end
 
-        it "cuts excessive digits in fractional part and keeps only 4 ones" do
-          format("%g", 12.12341111).should == "12.1234"
-          format("%g", -12.12341111).should == "-12.1234"
+        context "the exponent is greater than or equal to the precision (6 by default)" do
+          it "converts a floating point number using exponential form" do
+            format("%#{f}", 1234567).should == "1.23457#{exp}+06"
+            format("%#{f}", 1234567890123).should == "1.23457#{exp}+12"
+            format("%#{f}", -1234567).should == "-1.23457#{exp}+06"
+          end
         end
 
-        it "rounds the last significant digit to the closest one in fractional part" do
-          format("%g", 1.555555555).should == "1.55556"
-          format("%g", -1.555555555).should == "-1.55556"
-          format("%g", 1.444444444).should == "1.44444"
+        context "otherwise" do
+          it "converts a floating point number in dd.dddd form" do
+            format("%#{f}", 0.0001).should == "0.0001"
+            format("%#{f}", -0.0001).should == "-0.0001"
+            format("%#{f}", 123456).should == "123456"
+            format("%#{f}", -123456).should == "-123456"
+          end
+
+          it "cuts excessive digits in fractional part and keeps only 4 ones" do
+            format("%#{f}", 12.12341111).should == "12.1234"
+            format("%#{f}", -12.12341111).should == "-12.1234"
+          end
+
+          it "rounds the last significant digit to the closest one in fractional part" do
+            format("%#{f}", 1.555555555).should == "1.55556"
+            format("%#{f}", -1.555555555).should == "-1.55556"
+            format("%#{f}", 1.444444444).should == "1.44444"
+          end
+
+          it "cuts fraction part to have only 6 digits at all" do
+            format("%#{f}", 1.1234567).should == "1.12346"
+            format("%#{f}", 12.1234567).should == "12.1235"
+            format("%#{f}", 123.1234567).should == "123.123"
+            format("%#{f}", 1234.1234567).should == "1234.12"
+            format("%#{f}", 12345.1234567).should == "12345.1"
+            format("%#{f}", 123456.1234567).should == "123456"
+          end
         end
 
-        it "cuts fraction part to have only 6 digits at all" do
-          format("%g", 1.1234567).should == "1.12346"
-          format("%g", 12.1234567).should == "12.1235"
-          format("%g", 123.1234567).should == "123.123"
-          format("%g", 1234.1234567).should == "1234.12"
-          format("%g", 12345.1234567).should == "12345.1"
-          format("%g", 123456.1234567).should == "123456"
-        end
-      end
-
-      it "displays Float::INFINITY as Inf" do
-        format("%g", Float::INFINITY).should == "Inf"
-        format("%g", -Float::INFINITY).should == "-Inf"
-      end
-
-      it "displays Float::NAN as NaN" do
-        format("%g", Float::NAN).should == "NaN"
-        format("%g", -Float::NAN).should == "NaN"
-      end
-    end
-
-    describe "G" do
-      context "the exponent is less than -4" do
-        it "converts a floating point number using exponential form and use an uppercase E" do
-          format("%G", 0.0000123456).should == "1.23456E-05"
-          format("%G", -0.0000123456).should == "-1.23456E-05"
-
-          format("%G", 0.000000000123456).should == "1.23456E-10"
-          format("%G", -0.000000000123456).should == "-1.23456E-10"
-        end
-      end
-
-      context "the exponent is greater than or equal to the precision (6 by default)" do
-        it "converts a floating point number using exponential form" do
-          format("%G", 1234567).should == "1.23457E+06"
-          format("%G", 1234567890123).should == "1.23457E+12"
-          format("%G", -1234567).should == "-1.23457E+06"
-        end
-      end
-
-      context "otherwise" do
-        it "converts a floating point number in dd.dddd form" do
-          format("%G", 0.0001).should == "0.0001"
-          format("%G", -0.0001).should == "-0.0001"
-          format("%G", 123456).should == "123456"
-          format("%G", -123456).should == "-123456"
+        it "displays Float::INFINITY as Inf" do
+          format("%#{f}", Float::INFINITY).should == "Inf"
+          format("%#{f}", -Float::INFINITY).should == "-Inf"
         end
 
-        it "cuts excessive digits in fractional part and keeps only 4 ones" do
-          format("%G", 12.12341111).should == "12.1234"
-          format("%G", -12.12341111).should == "-12.1234"
+        it "displays Float::NAN as NaN" do
+          format("%#{f}", Float::NAN).should == "NaN"
+          format("%#{f}", -Float::NAN).should == "NaN"
         end
-
-        it "rounds the last significant digit to the closest one in fractional part" do
-          format("%G", 1.555555555).should == "1.55556"
-          format("%G", -1.555555555).should == "-1.55556"
-          format("%G", 1.444444444).should == "1.44444"
-        end
-
-        it "cuts fraction part to have only 6 digits at all" do
-          format("%G", 1.1234567).should == "1.12346"
-          format("%G", 12.1234567).should == "12.1235"
-          format("%G", 123.1234567).should == "123.123"
-          format("%G", 1234.1234567).should == "1234.12"
-        end
-      end
-
-      it "displays Float::INFINITY as Inf" do
-        format("%G", Float::INFINITY).should == "Inf"
-        format("%G", -Float::INFINITY).should == "-Inf"
-      end
-
-      it "displays Float::NAN as NaN" do
-        format("%G", Float::NAN).should == "NaN"
-        format("%G", -Float::NAN).should == "NaN"
       end
     end
 
