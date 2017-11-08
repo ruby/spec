@@ -57,6 +57,8 @@ Lint/FormatParameterMismatch:
   Exclude:
     - 'core/kernel/sprintf_spec.rb'
     - 'core/string/modulo_spec.rb'
+    - 'core/kernel/shared/sprintf.rb'
+    - 'core/kernel/shared/sprintf_encoding.rb'
 
 # Offense count: 25
 Lint/HandleExceptions:
