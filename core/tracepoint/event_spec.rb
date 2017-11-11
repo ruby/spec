@@ -14,7 +14,7 @@ ruby_version_is '2.0' do
         TracePointSpec::B.new.foo
         event_name.should equal(:call)
 
-        class B; end
+        class TracePointSpec::B; end
         event_name.should equal(:end)
       end
 
