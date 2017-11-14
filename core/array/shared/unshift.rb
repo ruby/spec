@@ -24,7 +24,6 @@ describe :array_unshift, shared: true do
 
   it "quietly ignores unshifting nothing" do
     [].send(@method).should == []
-    [].send(@method, *[]).should == []
   end
 
   it "properly handles recursive arrays" do
