@@ -6,11 +6,11 @@ describe "File#printf" do
     begin
       @filename = tmp("printf.txt")
 
-      File.open(@filename, "w") do |f|
+      File.open(@filename, "w", encoding: "utf-8") do |f|
         f.printf(format, *args)
       end
 
-      File.read(@filename)
+      File.read(@filename, encoding: "utf-8")
     ensure
       rm_r @filename
     end
