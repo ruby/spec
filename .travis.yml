@@ -26,6 +26,8 @@ matrix:
   allow_failures:
     - os: linux
       rvm: ruby-head
+  allow_failures:
+    - rvm: ruby-head
 branches:
   only:
     - master
