@@ -343,8 +343,18 @@ describe :kernel_sprintf, shared: true do
     end
 
     describe "%" do
-      it "displays percent sign itself" do
-        format("%").should == "%"
+      ruby_version_is ""..."2.5" do
+        it "alone displays the percent sign" do
+          format("%").should == "%"
+        end
+      end
+
+      ruby_version_is "2.5" do
+        it "alone raises an ArgumentError" do
+          -> {
+            format("%")
+          }.should raise_error(ArgumentError)
+        end
       end
 
       it "is escaped by %" do
@@ -859,4 +869,3 @@ describe :kernel_sprintf, shared: true do
     end
   end
 end
-
