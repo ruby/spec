@@ -75,10 +75,12 @@ describe 'IO#write_nonblock' do
     end
   end
 
-  it 'sets the IO in nonblock mode' do
-    require 'io/nonblock'
-    @write.nonblock?.should == false
-    @write.write_nonblock('a')
-    @write.nonblock?.should == true
+  platform_is_not :windows do
+    it 'sets the IO in nonblock mode' do
+      require 'io/nonblock'
+      @write.nonblock?.should == false
+      @write.write_nonblock('a')
+      @write.nonblock?.should == true
+    end
   end
 end
