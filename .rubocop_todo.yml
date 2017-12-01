@@ -6,14 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 6
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'core/kernel/trace_var_spec.rb'
-    - 'language/fixtures/argv_encoding.rb'
-    - 'language/fixtures/break.rb'
-    - 'shared/process/abort.rb'
-
 # Offense count: 3
 Lint/CircularArgumentReference:
   Exclude:
