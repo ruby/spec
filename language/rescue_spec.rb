@@ -279,7 +279,7 @@ describe "The rescue keyword" do
     invalid_rescuer = Object.new
     begin
       :foo
-    rescue rescuer
+    rescue invalid_rescuer
     end.should == :foo
   end
 
