@@ -319,6 +319,7 @@ describe "The rescue keyword" do
 
     it "requires the 'rescue' in method arguments to be wrapped in parens" do
       lambda { eval '1.+(1 rescue 1)' }.should raise_error(SyntaxError)
+      eval('1.+((1 rescue 1))').should == 2
     end
   end
 end
