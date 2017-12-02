@@ -124,3 +124,23 @@ describe "An ensure block inside a method" do
     @obj.explicit_return_in_method_with_ensure.should == :ensure
   end
 end
+
+ruby_version_is "2.5" do
+  describe "An ensure block inside 'do end' block" do
+    before :each do
+      ScratchPad.record []
+    end
+
+    it "is allowed" do
+      lambda = instance_eval <<-ruby
+        lambda do
+          raise
+        ensure
+          ScratchPad << :ensure
+        end
+      ruby
+      lambda.should raise_error(RuntimeError)
+      ScratchPad.recorded.should == [:ensure]
+    end
+  end
+end
