@@ -125,6 +125,39 @@ describe "An ensure block inside a method" do
   end
 end
 
+describe "An ensure block inside a class" do
+  before :each do
+    ScratchPad.record []
+  end
+
+  it "is allowed" do
+    lambda {
+      instance_eval <<-ruby
+        class EnsureInClassExample
+          raise
+        ensure
+          ScratchPad << :ensure
+        end
+      ruby
+    }.should raise_error(RuntimeError)
+
+    ScratchPad.recorded.should == [:ensure]
+  end
+end
+
+describe "An ensure block inside {} block" do
+  it "is not allowed" do
+    lambda {
+      instance_eval <<-ruby
+        lambda {
+          raise
+        ensure
+        }
+      ruby
+    }.should raise_error(SyntaxError)
+  end
+end
+
 ruby_version_is "2.5" do
   describe "An ensure block inside 'do end' block" do
     before :each do
