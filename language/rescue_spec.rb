@@ -197,7 +197,7 @@ describe "The rescue keyword" do
 
   it "will execute an else block even without rescue and ensure" do
     lambda {
-      instance_eval <<-ruby
+      eval <<-ruby
         begin
           ScratchPad << :begin
         else
@@ -297,26 +297,18 @@ describe "The rescue keyword" do
     end
 
     it "will not rescue exceptions except StandardError" do
-      [Exception, NoMemoryError, ScriptError, SecurityError, SystemExit, SystemStackError].each do |klass|
+      [ Exception.new, NoMemoryError.new, ScriptError.new, SecurityError.new,
+        SignalException.new('INT'), SystemExit.new, SystemStackError.new
+      ].each do |exception|
         lambda {
           begin
-            raise klass
+            raise exception
           rescue
             ScratchPad << :caught
           end
-        }.should raise_error(klass)
+        }.should raise_error(exception.class)
       end
       ScratchPad.recorded.should == []
-    end
-
-    it "will still rescue SignalException" do
-      begin
-        raise SignalException
-      rescue
-        ScratchPad << :caught
-      end
-
-      ScratchPad.recorded.should == [:caught]
     end
   end
 
@@ -379,7 +371,7 @@ describe "The rescue keyword" do
   end
 
   it "allows rescue in class" do
-    instance_eval <<-ruby
+    eval <<-ruby
       class RescueInClassExample
         raise SpecificExampleException
       rescue SpecificExampleException
@@ -392,7 +384,7 @@ describe "The rescue keyword" do
 
   it "does not allow rescue in {} block" do
     lambda {
-      instance_eval <<-ruby
+      eval <<-ruby
         lambda {
           raise SpecificExampleException
         rescue SpecificExampleException
@@ -404,7 +396,7 @@ describe "The rescue keyword" do
 
   ruby_version_is "2.5" do
     it "allows rescue in 'do end' block" do
-      lambda = instance_eval <<-ruby
+      lambda = eval <<-ruby
         lambda do
           raise SpecificExampleException
         rescue SpecificExampleException
@@ -442,7 +434,7 @@ describe "The rescue keyword" do
 
     it "doesn't except rescue expression" do
       lambda {
-        instance_eval <<-ruby
+        eval <<-ruby
           a = 1 rescue RuntimeError 2
         ruby
       }.should raise_error(SyntaxError)

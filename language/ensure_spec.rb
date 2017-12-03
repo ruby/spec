@@ -132,7 +132,7 @@ describe "An ensure block inside a class" do
 
   it "is allowed" do
     lambda {
-      instance_eval <<-ruby
+      eval <<-ruby
         class EnsureInClassExample
           raise
         ensure
@@ -148,7 +148,7 @@ end
 describe "An ensure block inside {} block" do
   it "is not allowed" do
     lambda {
-      instance_eval <<-ruby
+      eval <<-ruby
         lambda {
           raise
         ensure
@@ -165,7 +165,7 @@ ruby_version_is "2.5" do
     end
 
     it "is allowed" do
-      lambda = instance_eval <<-ruby
+      lambda = eval <<-ruby
         lambda do
           raise
         ensure
