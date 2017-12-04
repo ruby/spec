@@ -75,6 +75,7 @@ Lint/LiteralInInterpolation:
   Exclude:
     - 'language/defined_spec.rb'
     - 'language/fixtures/squiggly_heredoc.rb'
+    - 'core/module/refine_spec.rb'
 
 # Offense count: 16
 Lint/Loop:
