@@ -16,6 +16,16 @@ ruby_version_is "2.5" do
       @hash.transform_keys(&:succ).should ==  { b: 1, c: 2, d: 3 }
     end
 
+    it "keeps last pair if new keys conflict" do
+      @hash.transform_keys { |_| :a }.should == { a: 3 }
+    end
+
+    it "makes both hashes to share values" do
+      value = [1, 2, 3]
+      new_hash = { a: value }.transform_keys(&:upcase)
+      new_hash[:A].should equal(value)
+    end
+
     context "when no block is given" do
       it "returns a sized Enumerator" do
         enumerator = @hash.transform_keys
@@ -50,7 +60,7 @@ ruby_version_is "2.5" do
       @hash.should == { 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4}
     end
 
-    it "handles collisions silently by overwriting one by one" do
+    it "does not prevent conflicts between new keys and old ones" do
       @hash.transform_keys!(&:succ)
       @hash.should == { e: 1 }
     end
@@ -63,13 +73,16 @@ ruby_version_is "2.5" do
       @hash.should == { c: 1, d: 4}
     end
 
+    it "keeps later pair if new keys conflict" do
+      @hash.transform_keys! { |_| :a }.should == { a: 3 }
+    end
+
     context "when no block is given" do
       it "returns a sized Enumerator" do
         enumerator = @hash.transform_keys!
         enumerator.should be_an_instance_of(Enumerator)
         enumerator.size.should == @hash.size
-        enumerator.each(&:succ)
-        # @hash.should == ?
+        enumerator.each(&:upcase).should == { A: 1, B: 2, C: 3, D: 4 }
       end
     end
 
@@ -79,11 +92,11 @@ ruby_version_is "2.5" do
       end
 
       it "raises a RuntimeError on an empty hash" do
-        ->{ {}.freeze.transform_keys!(&:succ) }.should raise_error(RuntimeError)
+        ->{ {}.freeze.transform_keys!(&:upcase) }.should raise_error(RuntimeError)
       end
 
       it "keeps pairs and raises a RuntimeError" do
-        ->{ @hash.transform_keys!(&:succ) }.should raise_error(RuntimeError)
+        ->{ @hash.transform_keys!(&:upcase) }.should raise_error(RuntimeError)
         @hash.should == @initial_pairs
       end
 
