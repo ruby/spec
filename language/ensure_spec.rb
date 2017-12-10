@@ -7,50 +7,44 @@ describe "An ensure block inside a begin block" do
   end
 
   it "is executed when an exception is raised in it's corresponding begin block" do
-    begin
-      lambda {
-        begin
-          ScratchPad << :begin
-          raise "An exception occurred!"
-        ensure
-          ScratchPad << :ensure
-        end
-      }.should raise_error(RuntimeError)
+    lambda {
+      begin
+        ScratchPad << :begin
+        raise EnsureSpec::Error
+      ensure
+        ScratchPad << :ensure
+      end
+    }.should raise_error(EnsureSpec::Error)
 
-      ScratchPad.recorded.should == [:begin, :ensure]
-    end
+    ScratchPad.recorded.should == [:begin, :ensure]
   end
 
   it "is executed when an exception is raised and rescued in it's corresponding begin block" do
     begin
+      ScratchPad << :begin
+      raise "An exception occurred!"
+    rescue
+      ScratchPad << :rescue
+    ensure
+      ScratchPad << :ensure
+    end
+
+    ScratchPad.recorded.should == [:begin, :rescue, :ensure]
+  end
+
+  it "is executed even when a symbol is thrown in it's corresponding begin block" do
+    catch(:symbol) do
       begin
         ScratchPad << :begin
-        raise "An exception occurred!"
+        throw(:symbol)
       rescue
         ScratchPad << :rescue
       ensure
         ScratchPad << :ensure
       end
-
-      ScratchPad.recorded.should == [:begin, :rescue, :ensure]
     end
-  end
 
-  it "is executed even when a symbol is thrown in it's corresponding begin block" do
-    begin
-      catch(:symbol) do
-        begin
-          ScratchPad << :begin
-          throw(:symbol)
-        rescue
-          ScratchPad << :rescue
-        ensure
-          ScratchPad << :ensure
-        end
-      end
-
-      ScratchPad.recorded.should == [:begin, :ensure]
-    end
+    ScratchPad.recorded.should == [:begin, :ensure]
   end
 
   it "is executed when nothing is raised or thrown in it's corresponding begin block" do
@@ -102,7 +96,7 @@ describe "An ensure block inside a method" do
   end
 
   it "is executed when an exception is raised in the method" do
-    lambda { @obj.raise_in_method_with_ensure }.should raise_error(RuntimeError)
+    lambda { @obj.raise_in_method_with_ensure }.should raise_error(EnsureSpec::Error)
     @obj.executed.should == [:method, :ensure]
   end
 
@@ -135,12 +129,12 @@ describe "An ensure block inside a class" do
       eval <<-ruby
         class EnsureInClassExample
           ScratchPad << :class
-          raise
+          raise EnsureSpec::Error
         ensure
           ScratchPad << :ensure
         end
       ruby
-    }.should raise_error(RuntimeError)
+    }.should raise_error(EnsureSpec::Error)
 
     ScratchPad.recorded.should == [:class, :ensure]
   end
@@ -228,12 +222,12 @@ ruby_version_is "2.5" do
         eval(<<-ruby).call
           lambda do
             ScratchPad << :begin
-            raise "An exception occurred!"
+            raise EnsureSpec::Error
           ensure
             ScratchPad << :ensure
           end
         ruby
-      }.should raise_error(RuntimeError)
+      }.should raise_error(EnsureSpec::Error)
 
       ScratchPad.recorded.should == [:begin, :ensure]
     end
