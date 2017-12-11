@@ -54,6 +54,7 @@ describe "Enumerable#all?" do
     end
 
     it "gathers whole arrays as elements when each yields multiple" do
+      # This spec doesn't spec what it says it does
       multi = EnumerableSpecs::YieldsMultiWithFalse.new
       multi.all?.should be_true
     end

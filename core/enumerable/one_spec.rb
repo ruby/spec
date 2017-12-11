@@ -16,6 +16,7 @@ describe "Enumerable#one?" do
     end
 
     it "gathers initial args as elements when each yields multiple" do
+      # This spec doesn't spec what it says it does
       multi = EnumerableSpecs::YieldsMulti.new
       multi.one? {|e| e == 1 }.should be_true
     end
