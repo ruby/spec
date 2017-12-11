@@ -32,8 +32,8 @@ describe "Enumerable#one?" do
       describe "given a pattern argument" do
         # This spec should be replaced by more extensive ones
         it "returns true iff none match that pattern" do
-          @enum.one?(Integer).should == false
-          @enum2.one?(NilClass).should == true
+          EnumerableSpecs::Numerous.new.one?(Integer).should == false
+          [nil, false, true].one?(NilClass).should == true
         end
       end
     end

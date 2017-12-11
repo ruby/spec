@@ -22,8 +22,8 @@ describe "Enumerable#none?" do
     describe "given a pattern argument" do
       # This spec should be replaced by more extensive ones
       it "returns true iff none match that pattern" do
-        @enum.none?(Float).should == true
-        @enum2.none?(NilClass).should == false
+        EnumerableSpecs::Numerous.new.none?(Float).should == true
+        [nil, false, true].none?(NilClass).should == false
       end
     end
   end
