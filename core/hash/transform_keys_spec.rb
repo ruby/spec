@@ -45,18 +45,23 @@ ruby_version_is "2.5" do
       @hash.transform_keys!(&:succ).should equal(@hash)
     end
 
-    # it "updates self as transformed values with the given block" do
-    #   @hash.transform_keys!(&:succ)
-    #   @hash.should ==  ?
-    # end
+    it "updates self as transformed values with the given block" do
+      @hash.transform_keys!(&:to_s)
+      @hash.should == { 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4}
+    end
 
-    # it "partially modifies the contents if we broke from the block" do
-    #   @hash.transform_keys! do |v|
-    #     break if v == :c
-    #     v.succ
-    #   end
-    #   @hash.should == ?
-    # end
+    it "handles collisions silently by overwriting one by one" do
+      @hash.transform_keys!(&:succ)
+      @hash.should == { e: 1 }
+    end
+
+    it "partially modifies the contents if we broke from the block" do
+      @hash.transform_keys! do |v|
+        break if v == :c
+        v.succ
+      end
+      @hash.should == { c: 1, d: 4}
+    end
 
     context "when no block is given" do
       it "returns a sized Enumerator" do
