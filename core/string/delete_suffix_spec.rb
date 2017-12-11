@@ -41,7 +41,7 @@ describe "String#delete_suffix" do
 
   it "returns a subclass instance when called on a subclass instance" do
     s = StringSpecs::MyString.new('hello')
-    s.delete_prefix('ello').should be_an_instance_of(StringSpecs::MyString)
+    s.delete_suffix('ello').should be_an_instance_of(StringSpecs::MyString)
   end
 end
 
