@@ -20,6 +20,10 @@ ruby_version_is "2.5" do
       @hash.slice(:c, :a).keys.should == [:c, :a]
     end
 
+    it "returns only the keys of the original hash" do
+      @hsh.slice(:a, :chunky_bacon).should == { a: 1 }
+    end
+
     it "returns a Hash instance, even on subclasses" do
       klass = Class.new(Hash)
       h = klass.new
