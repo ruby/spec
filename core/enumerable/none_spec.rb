@@ -16,6 +16,16 @@ describe "Enumerable#none?" do
     multi = EnumerableSpecs::YieldsMultiWithFalse.new
     multi.none?.should be_false
   end
+
+  ruby_version_is "2.5" do
+    describe "given a pattern argument" do
+      # This spec should be replaced by more extensive ones
+      it "returns true iff none match that pattern" do
+        @enum.none?(Float).should == true
+        @enum2.none?(NilClass).should == false
+      end
+    end
+  end
 end
 
 describe "Enumerable#none? with a block" do

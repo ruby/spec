@@ -26,6 +26,16 @@ describe "Enumerable#one?" do
       multi.one? {|e, i| yielded << [e, i] }
       yielded.should == [[1, 2], [3, 4]]
     end
+
+    ruby_version_is "2.5" do
+      describe "given a pattern argument" do
+        # This spec should be replaced by more extensive ones
+        it "returns true iff none match that pattern" do
+          @enum.one?(Integer).should == false
+          @enum2.one?(NilClass).should == true
+        end
+      end
+    end
   end
 
   describe "when not passed a block" do
