@@ -42,4 +42,14 @@ describe "String#start_with?" do
   it "works for multibyte strings" do
     "céréale".start_with?("cér").should be_true
   end
+
+  ruby_version_is "2.5" do
+    it "supports regexps" do
+      regexp = /[h1]/
+      "hello".start_with?(regexp).should be_true
+      "1337".start_with?(regexp).should be_true
+      "foxes are 1337".start_with?(regexp).should be_false
+      "chunky\n12bacon".start_with?(/12/).should be_false
+    end
+  end
 end
