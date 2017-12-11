@@ -3,12 +3,22 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes.rb', __FILE__)
 
 describe "String#delete_prefix" do
-  it "returns a copy of the string, with the given prefix" do
+  it "returns a copy of the string, with the given prefix removed" do
     'hello'.delete_prefix('hell').should == 'o'
     'hello'.delete_prefix('hello').should == ''
-    'hello'.delete_prefix('hello!').should == 'hello'
-    'hello'.delete_prefix('ell').should == 'hello'
-    'hello'.delete_prefix('').should == 'hello'
+  end
+
+  it "returns a copy of the string, when the prefix isn't found" do
+    s = 'hello'
+    r = s.delete_prefix('hello!')
+    r.should_not equal s
+    r.should == s
+    r = s.delete_prefix('ell')
+    r.should_not equal s
+    r.should == s
+    r = s.delete_prefix('')
+    r.should_not equal s
+    r.should == s
   end
 
   it "taints resulting strings when other is tainted" do

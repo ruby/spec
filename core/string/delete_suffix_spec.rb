@@ -3,12 +3,22 @@ require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes.rb', __FILE__)
 
 describe "String#delete_suffix" do
-  it "returns a copy of the string, with the given prefix" do
+  it "returns a copy of the string, with the given suffix removed" do
     'hello'.delete_suffix('ello').should == 'h'
     'hello'.delete_suffix('hello').should == ''
-    'hello'.delete_suffix('!hello').should == 'hello'
-    'hello'.delete_suffix('ell').should == 'hello'
-    'hello'.delete_suffix('').should == 'hello'
+  end
+
+  it "returns a copy of the string, when the suffix isn't found" do
+    s = 'hello'
+    r = s.delete_suffix('!hello')
+    r.should_not equal s
+    r.should == s
+    r = s.delete_suffix('ell')
+    r.should_not equal s
+    r.should == s
+    r = s.delete_suffix('')
+    r.should_not equal s
+    r.should == s
   end
 
   it "taints resulting strings when other is tainted" do
