@@ -38,7 +38,7 @@ ruby_version_is "2.5" do
 
     it "accepts an options Hash" do
       a = Dir.children("#{DirSpecs.mock_dir}/deeply/nested", encoding: "utf-8").sort
-      a.should == %w|. .. .dotfile.ext directory|
+      a.should == %w|.dotfile.ext directory|
     end
 
     it "returns children encoded with the filesystem encoding by default" do
