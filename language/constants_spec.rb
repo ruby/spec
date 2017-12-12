@@ -425,6 +425,26 @@ describe "Constant resolution within a singleton class (class << obj)" do
   end
 end
 
+describe "top-level constant lookup" do
+  ruby_version_is "" ... "2.5" do
+    it "searches Object successfully when starts from class" do
+      ->() {
+        String::Hash.should == Hash
+      }.should complain(/toplevel constant Hash referenced by/)
+    end
+  end
+
+  it "searches Object unsuccessfully when starts from module" do
+    ->() { Enumerable::Hash }.should raise_error(NameError)
+  end
+
+  ruby_version_is "2.5" do
+    it "does not search Object after searching other scopes" do
+      ->() { String::Hash }.should raise_error(NameError)
+    end
+  end
+end
+
 describe "Module#private_constant marked constants" do
 
   it "remain private even when updated" do
