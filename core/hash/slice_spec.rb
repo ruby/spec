@@ -12,7 +12,7 @@ ruby_version_is "2.5" do
       ret.should be_an_instance_of(Hash)
     end
 
-    it "returns the requested subset, in that order" do
+    it "returns the requested subset" do
       @hash.slice(:c, :a).should == { c: 3, a: 1 }
     end
 
@@ -21,7 +21,7 @@ ruby_version_is "2.5" do
     end
 
     it "returns only the keys of the original hash" do
-      @hsh.slice(:a, :chunky_bacon).should == { a: 1 }
+      @hash.slice(:a, :chunky_bacon).should == { a: 1 }
     end
 
     it "returns a Hash instance, even on subclasses" do
