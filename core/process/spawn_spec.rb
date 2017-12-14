@@ -596,7 +596,7 @@ describe "Process.spawn" do
   end
 
   it "raises an Errno::EACCES or Errno::EISDIR when passed a directory" do
-    lambda { Process.spawn File.dirname(__FILE__) }.should  raise_error(SystemCallError) { |e|
+    lambda { Process.spawn File.dirname(__FILE__) }.should raise_error(SystemCallError) { |e|
       [Errno::EACCES, Errno::EISDIR].should include(e.class)
     }
   end
