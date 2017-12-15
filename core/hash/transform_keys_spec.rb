@@ -57,7 +57,7 @@ ruby_version_is "2.5" do
 
     it "updates self as transformed values with the given block" do
       @hash.transform_keys!(&:to_s)
-      @hash.should == { 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4}
+      @hash.should == { 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4 }
     end
 
     it "does not prevent conflicts between new keys and old ones" do
@@ -70,7 +70,7 @@ ruby_version_is "2.5" do
         break if v == :c
         v.succ
       end
-      @hash.should == { c: 1, d: 4}
+      @hash.should == { c: 1, d: 4 }
     end
 
     it "keeps later pair if new keys conflict" do
