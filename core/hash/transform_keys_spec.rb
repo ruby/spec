@@ -74,7 +74,7 @@ ruby_version_is "2.5" do
     end
 
     it "keeps later pair if new keys conflict" do
-      @hash.transform_keys! { |_| :a }.should == { a: 3 }
+      @hash.transform_keys! { |_| :a }.should == { a: 4 }
     end
 
     context "when no block is given" do
