@@ -1,6 +1,6 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
-ruby_version is '2.5' do
+ruby_version_is '2.5' do
   describe "Integer#nobits?" do
     it "returns true iff all no bits of the argument are set in the receiver" do
       42.nobits?(42).should == false
