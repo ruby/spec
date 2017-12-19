@@ -80,14 +80,25 @@ describe :rational_cmp_coerce, shared: true do
 end
 
 describe :rational_cmp_coerce_exception, shared: true do
-  ruby_version_is "" ... "2.5" do
-    it "rescues exception raised in other#coerce and returns nil" do
+  ruby_version_is ""..."2.5" do
+    it "rescues exception (StandardError and subclasses) raised in other#coerce and returns nil" do
       b = mock("numeric with failed #coerce")
-      b.should_receive(:coerce).and_raise(RuntimeError)
+      b.should_receive(:coerce).and_raise(RationalSpecs::CoerceError)
 
       -> {
         (Rational(3, 4) <=> b).should == nil
       }.should complain(/Numerical comparison operators will no more rescue exceptions of #coerce/)
+    end
+
+    it "does not rescue Exception and StandardError siblings raised in other#coerce" do
+      [ Exception.new, NoMemoryError.new, ScriptError.new, SecurityError.new,
+        SignalException.new('INT'), SystemExit.new, SystemStackError.new
+      ].each do |exception|
+        b = mock("numeric with failed #coerce")
+        b.should_receive(:coerce).and_raise(exception)
+
+        -> { Rational(3, 4) <=> b }.should raise_error(exception)
+      end
     end
   end
 
