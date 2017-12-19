@@ -91,9 +91,7 @@ describe :rational_cmp_coerce_exception, shared: true do
     end
 
     it "does not rescue Exception and StandardError siblings raised in other#coerce" do
-      [ Exception.new, NoMemoryError.new, ScriptError.new, SecurityError.new,
-        SignalException.new('INT'), SystemExit.new, SystemStackError.new
-      ].each do |exception|
+      [Exception, NoMemoryError].each do |exception|
         b = mock("numeric with failed #coerce")
         b.should_receive(:coerce).and_raise(exception)
 
