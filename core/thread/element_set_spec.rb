@@ -9,9 +9,10 @@ describe "Thread#[]=" do
   it "raises a #{frozen_error_class} if the thread is frozen" do
     running = false
     t = Thread.new do
-      t.freeze
+      th = Thread.current
+      th.freeze
       -> {
-        t[:foo] = "bar"
+        th[:foo] = "bar"
       }.should raise_error(frozen_error_class, /frozen/)
     end
     t.join
