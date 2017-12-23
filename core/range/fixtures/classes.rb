@@ -62,4 +62,7 @@ module RangeSpecs
 
   class MyRange < Range
   end
+
+  class ComparisionError < RuntimeError
+  end
 end
