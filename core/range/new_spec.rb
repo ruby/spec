@@ -37,9 +37,9 @@ describe "Range.new" do
     it "does not rescue exception raised in #<=> when compares the given start and end" do
       b = mock('a')
       a = mock('b')
-      a.should_receive(:<=>).with(b).and_raise(RangeSpecs::ComparisionError)
+      a.should_receive(:<=>).with(b).and_raise(RangeSpecs::ComparisonError)
 
-      -> { Range.new(a, b) }.should raise_error(RangeSpecs::ComparisionError)
+      -> { Range.new(a, b) }.should raise_error(RangeSpecs::ComparisonError)
     end
   end
 end
