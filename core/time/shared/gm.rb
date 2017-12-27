@@ -27,7 +27,11 @@ describe :time_gm, shared: true do
     time.nsec.should == 999
   end
 
-  platform_is :linux do
+  guard -> {
+    with_timezone 'right/UTC' do
+      (Time.gm(1972, 6, 30, 23, 59, 59) + 1).sec == 60
+    end
+  } do
     it "handles real leap seconds" do
       with_timezone 'right/UTC' do
         time = Time.send(@method, 1972, 6, 30, 23, 59, 60)
