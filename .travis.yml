@@ -12,7 +12,7 @@ matrix:
       rvm: 2.4.2
       env: CHECK_LEAKS=true
     - os: linux
-      rvm: 2.4.2
+      rvm: 2.5.0
       env: MSPEC_OPTS="-R2 -ff"
     - os: linux
       rvm: 2.2.8
@@ -20,6 +20,8 @@ matrix:
       rvm: 2.3.5
     - os: linux
       rvm: 2.4.2
+    - os: linux
+      rvm: 2.5.0
       env: CHECK_LEAKS=true RUBOCOP=true
     - os: linux
       rvm: ruby-head
