@@ -32,7 +32,7 @@ describe :time_gm, shared: true do
       (Time.gm(1972, 6, 30, 23, 59, 59) + 1).sec == 60
     end
   } do
-    it "handles real leap seconds" do
+    it "handles real leap seconds in zone 'right/UTC'" do
       with_timezone 'right/UTC' do
         time = Time.send(@method, 1972, 6, 30, 23, 59, 60)
 
@@ -46,6 +46,17 @@ describe :time_gm, shared: true do
   end
 
   it "handles bad leap seconds by carrying values forward" do
+    with_timezone 'UTC' do
+      time = Time.send(@method, 2017, 7, 5, 23, 59, 60)
+      time.sec.should == 0
+      time.min.should == 0
+      time.hour.should == 0
+      time.day.should == 6
+      time.month.should == 7
+    end
+  end
+
+  it "handles a value of 60 for seconds by carrying values forward in zone 'UTC'" do
     with_timezone 'UTC' do
       time = Time.send(@method, 1972, 6, 30, 23, 59, 60)
 
