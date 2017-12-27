@@ -39,17 +39,17 @@ describe :time_gm, shared: true do
         time.month.should == 6
       end
     end
+  end
 
-    it "handles bad leap seconds by carrying values forward" do
-      with_timezone 'UTC' do
-        time = Time.send(@method, 1972, 6, 30, 23, 59, 60)
+  it "handles bad leap seconds by carrying values forward" do
+    with_timezone 'UTC' do
+      time = Time.send(@method, 1972, 6, 30, 23, 59, 60)
 
-        time.sec.should == 0
-        time.min.should == 0
-        time.hour.should == 0
-        time.day.should == 1
-        time.month.should == 7
-      end
+      time.sec.should == 0
+      time.min.should == 0
+      time.hour.should == 0
+      time.day.should == 1
+      time.month.should == 7
     end
   end
 end
