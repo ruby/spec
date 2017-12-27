@@ -57,6 +57,7 @@ Lint/EmptyExpression:
 
 Lint/EmptyWhen:
   Exclude:
+    - language/case_spec.rb
     - optional/capi/spec_helper.rb
 
 Lint/UriRegexp:
