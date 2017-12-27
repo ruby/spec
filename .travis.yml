@@ -15,11 +15,11 @@ matrix:
       rvm: 2.5.0
       env: MSPEC_OPTS="-R2 -ff"
     - os: linux
-      rvm: 2.2.8
+      rvm: 2.2.9
     - os: linux
-      rvm: 2.3.5
+      rvm: 2.3.6
     - os: linux
-      rvm: 2.4.2
+      rvm: 2.4.3
     - os: linux
       rvm: 2.5.0
       env: CHECK_LEAKS=true RUBOCOP=true
