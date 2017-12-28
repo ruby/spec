@@ -109,7 +109,7 @@ describe "Net::FTP#initialize" do
 
           describe 'is not set' do
             it 'tries to connect to the host without a port' do
-              @ftp.should_receive(:connect).with('localhost')
+              @ftp.should_receive(:connect).with("localhost", *@port_args)
 
               @ftp.send(:initialize, 'localhost')
             end
