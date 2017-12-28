@@ -20,7 +20,6 @@ ruby_version_is "2.3" do
         ->{ @hash.fetch_values :a, :z }.should raise_error(KeyError)
       end
 
-
       it "returns the default value from block" do
         @hash.fetch_values(:z) { |key| "`#{key}' is not found" }.should == ["`z' is not found"]
         @hash.fetch_values(:a, :z) { |key| "`#{key}' is not found" }.should == [1, "`z' is not found"]
