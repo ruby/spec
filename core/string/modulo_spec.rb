@@ -770,22 +770,24 @@ describe "String#%" do
       end
 
       ruby_version_is "2.5" do
+        before :each do
+          @hash = { fooo: 1 }
+        end
+
         it "sets the passed-in hash as receiver for KeyError" do
-          begin
-            hash = {}
-            "%{foo}" % hash
-          rescue KeyError => err
-            err.receiver.should == hash
-          end
+          -> {
+            "%{foo}" % @hash
+          }.should raise_error(KeyError) { |err|
+            err.receiver.should == @hash
+          }
         end
 
         it "sets the missing key as key in KeyError" do
-          begin
-            hash = {}
-            "%{foo}" % hash
-          rescue KeyError => err
+          -> {
+            "%{foo}" % @hash
+          }.should raise_error(KeyError) { |err|
             err.key.should == :foo
-          end
+          }
         end
       end
     end

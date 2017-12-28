@@ -12,25 +12,29 @@ describe "ENV.fetch" do
   end
 
   context "when the key is not found" do
+    before :each do
+      @key = "should_never_be_set"
+    end
+
     it "raises a KeyError" do
-      lambda { ENV.fetch "should_never_be_set" }.should raise_error(KeyError)
+      lambda { ENV.fetch @key }.should raise_error(KeyError)
     end
 
     ruby_version_is "2.5" do
       it "sets the ENV as the receiver of KeyError" do
-        begin
-          ENV.fetch "should_never_be_set"
-        rescue KeyError => err
+        -> {
+          ENV.fetch @key
+        }.should raise_error(KeyError) { |err|
           err.receiver.should == ENV
-        end
+        }
       end
 
       it "sets the non-existent key as the key of KeyError" do
-        begin
-          ENV.fetch "should_never_be_set"
-        rescue KeyError => err
-          err.key.should == "should_never_be_set"
-        end
+        -> {
+          ENV.fetch @key
+        }.should raise_error(KeyError) { |err|
+          err.key.should == @key
+        }
       end
     end
   end

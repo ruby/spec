@@ -140,19 +140,19 @@ describe "C-API Hash function" do
     context "when key is not found" do
       ruby_version_is "2.5" do
         it "sets the hash as receiver for KeyError" do
-          begin
+          -> {
             @s.rb_hash_fetch(@hsh, :c)
-          rescue KeyError => err
+          }.should raise_error(KeyError) { |err|
             err.receiver.should == @hsh
-          end
+          }
         end
 
         it "sets the key as key for KeyError" do
-          begin
+          -> {
             @s.rb_hash_fetch(@hsh, :c)
-          rescue KeyError => err
+          }.should raise_error(KeyError) { |err|
             err.key.should == :c
-          end
+          }
         end
       end
     end

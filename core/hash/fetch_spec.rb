@@ -14,22 +14,25 @@ describe "Hash#fetch" do
     end
 
     ruby_version_is "2.5" do
+      before :each do
+        @hsh = { }
+        @key = :a
+      end
+
       it "sets the Hash as the reciever of KeyError" do
-        begin
-          hash = {}
-          hash.fetch(:a)
-        rescue KeyError => err
-          err.receiver.should == hash
-        end
+        -> {
+          @hsh.fetch(@key)
+        }.should raise_error(KeyError) { |err|
+          err.receiver.should == @hsh
+        }
       end
 
       it "sets the key attempted as key of KeyError" do
-        begin
-          hash = {}
-          hash.fetch(:a)
-        rescue KeyError => err
-          err.key.should == :a
-        end
+        -> {
+          @hsh.fetch(@key)
+        }.should raise_error(KeyError) { |err|
+          err.key.should == @key
+        }
       end
     end
   end

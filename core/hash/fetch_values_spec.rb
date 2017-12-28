@@ -42,20 +42,22 @@ ruby_version_is "2.5" do
     end
 
     describe "with unmatched keys" do
+      before :each do
+      end
       it "sets the Hash as the receiver of KeyError" do
-        begin
-          @hash.fetch_values :z
-        rescue KeyError => err
+        -> {
+          @hash.fetch_values :a, :z
+        }.should raise_error(KeyError) { |err|
           err.receiver.should == @hash
-        end
+        }
       end
 
       it "sets the unmatched key as the key of KeyError" do
-        begin
+        -> {
           @hash.fetch_values :a, :z
-        rescue KeyError => err
+        }.should raise_error(KeyError) { |err|
           err.key.should == :z
-        end
+        }
       end
     end
   end

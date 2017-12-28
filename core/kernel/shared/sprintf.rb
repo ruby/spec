@@ -832,22 +832,24 @@ describe :kernel_sprintf, shared: true do
         end
 
         ruby_version_is "2.5" do
+          before :each do
+            @hash = { fooo: 1 }
+          end
+
           it "sets the Hash attempting to format on as receiver of KeyError" do
-            begin
-              hash = { fooo: 1 }
-              format("%<foo>s", hash)
-            rescue KeyError => err
-              err.receiver.should == hash
-            end
+            -> () {
+              format("%<foo>s", @hash)
+            }.should raise_error(KeyError) { |err|
+                err.receiver.should == @hash
+            }
           end
 
           it "sets the faulty key in the formatter as key of KeyError" do
-            begin
-              hash = { fooo: 1 }
-              format("%<foo>s", hash)
-            rescue KeyError => err
+            -> () {
+              format("%<foo>s", @hash)
+            }.should raise_error(KeyError) { |err|
               err.key.should == :foo
-            end
+            }
           end
         end
       end
