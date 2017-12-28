@@ -147,6 +147,12 @@ describe "String#match" do
     regexp.should_receive(:match).and_return(:foo)
     'hello'.match(regexp).should == :foo
   end
+
+  ruby_version_is "2.5" do
+    it "returns nil when given nil" do
+      ''.match(nil).should be_nil
+    end
+  end
 end
 
 ruby_version_is "2.4" do
@@ -170,6 +176,12 @@ ruby_version_is "2.4" do
     it "takes matching position as the 2nd argument" do
       'string'.match?(/str/i, 0).should be_true
       'string'.match?(/str/i, 1).should be_false
+    end
+
+    ruby_version_is "2.5" do
+      it "returns false when given nil" do
+        ''.match?(nil).should be_false
+      end
     end
   end
 end
