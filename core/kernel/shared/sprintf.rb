@@ -824,10 +824,32 @@ describe :kernel_sprintf, shared: true do
         }.should raise_error(ArgumentError)
       end
 
-      it "raises KeyError when there is no matching key" do
-        -> () {
-          format("%<foo>s", {})
-        }.should raise_error(KeyError)
+      context "when there is no matching key" do
+        it "raises KeyError" do
+          -> () {
+            format("%<foo>s", {})
+          }.should raise_error(KeyError)
+        end
+
+        ruby_version_is "2.5" do
+          it "sets the Hash attempting to format on as receiver of KeyError" do
+            begin
+              hash = { fooo: 1 }
+              format("%<foo>s", hash)
+            rescue KeyError => err
+              err.receiver.should == hash
+            end
+          end
+
+          it "sets the faulty key in the formatter as key of KeyError" do
+            begin
+              hash = { fooo: 1 }
+              format("%<foo>s", hash)
+            rescue KeyError => err
+              err.key.should == :foo
+            end
+          end
+        end
       end
     end
 

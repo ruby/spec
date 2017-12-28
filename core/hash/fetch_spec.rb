@@ -6,10 +6,32 @@ describe "Hash#fetch" do
     { a: 1, b: -1 }.fetch(:b).should == -1
   end
 
-  it "raises a KeyError if key is not found" do
-    lambda { {}.fetch(:a)       }.should raise_error(KeyError)
-    lambda { Hash.new(5).fetch(:a)    }.should raise_error(KeyError)
-    lambda { Hash.new { 5 }.fetch(:a) }.should raise_error(KeyError)
+  context "when the key is not found" do
+    it "raises a KeyError" do
+      lambda { {}.fetch(:a)       }.should raise_error(KeyError)
+      lambda { Hash.new(5).fetch(:a)    }.should raise_error(KeyError)
+      lambda { Hash.new { 5 }.fetch(:a) }.should raise_error(KeyError)
+    end
+
+    ruby_version_is "2.5" do
+      it "sets the Hash as the reciever of KeyError" do
+        begin
+          hash = {}
+          hash.fetch(:a)
+        rescue KeyError => err
+          err.receiver.should == hash
+        end
+      end
+
+      it "sets the key attempted as key of KeyError" do
+        begin
+          hash = {}
+          hash.fetch(:a)
+        rescue KeyError => err
+          err.key.should == :a
+        end
+      end
+    end
   end
 
   it "returns default if key is not found when passed a default" do

@@ -20,6 +20,7 @@ ruby_version_is "2.3" do
         ->{ @hash.fetch_values :a, :z }.should raise_error(KeyError)
       end
 
+
       it "returns the default value from block" do
         @hash.fetch_values(:z) { |key| "`#{key}' is not found" }.should == ["`z' is not found"]
         @hash.fetch_values(:a, :z) { |key| "`#{key}' is not found" }.should == [1, "`z' is not found"]
@@ -29,6 +30,32 @@ ruby_version_is "2.3" do
     describe "without keys" do
       it "returns an empty Array" do
         @hash.fetch_values.should == []
+      end
+    end
+  end
+end
+
+ruby_version_is "2.5" do
+  describe "Hash#fetch_values" do
+    before :each do
+      @hash = { a: 1, b: 2, c: 3 }
+    end
+
+    describe "with unmatched keys" do
+      it "sets the Hash as the receiver of KeyError" do
+        begin
+          @hash.fetch_values :z
+        rescue KeyError => err
+          err.receiver.should == @hash
+        end
+      end
+
+      it "sets the unmatched key as the key of KeyError" do
+        begin
+          @hash.fetch_values :a, :z
+        rescue KeyError => err
+          err.key.should == :z
+        end
       end
     end
   end
