@@ -19,7 +19,7 @@ describe "Hash#fetch" do
         @key = :a
       end
 
-      it "sets the Hash as the reciever of KeyError" do
+      it "sets the Hash as the receiver of KeyError" do
         -> {
           @hsh.fetch(@key)
         }.should raise_error(KeyError) { |err|
@@ -27,7 +27,7 @@ describe "Hash#fetch" do
         }
       end
 
-      it "sets the key attempted as key of KeyError" do
+      it "sets the not-found key as key of KeyError" do
         -> {
           @hsh.fetch(@key)
         }.should raise_error(KeyError) { |err|
