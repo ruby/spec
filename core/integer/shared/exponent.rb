@@ -46,8 +46,6 @@ describe :integer_exponent, shared: true do
   end
 
   it "returns Float::INFINITY when the number is too big" do
-    2.send(@method, 27387904).class.should == Integer
-    2.send(@method, 427387904).class.should == Float
     2.send(@method, 427387904).should == Float::INFINITY
   end
 
