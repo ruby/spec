@@ -100,14 +100,13 @@ ruby_version_is "2.5" do
         2.pow(8, 15).should == 1
       end
 
-      it "doesn't work well with bignum" do
-        2.pow(61, 213693951).should eql(147138137)
-        2.pow(61, 9213693951).should eql 1
-
-        2.pow(61, 5843009213693951).should eql 1
-        2.pow(62, 5843009213693952).should eql 1
-        2.pow(63, 5843009213693953).should eql 1
-        2.pow(64, 5843009213693954).should eql 1
+      ruby_bug '#13669', '2.5'...'2.5.1' do
+        it "works well with bignums" do
+          2.pow(61, 5843009213693951).should eql 3697379018277258
+          2.pow(62, 5843009213693952).should eql 1551748822859776
+          2.pow(63, 5843009213693953).should eql 3103497645717974
+          2.pow(64, 5843009213693954).should eql  363986077738838
+        end
       end
 
       it "handles sign like #divmod does" do
