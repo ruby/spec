@@ -48,6 +48,24 @@ with_feature :fiber_library do
       lambda { fiber.transfer }.should raise_error(FiberError)
     end
 
+    it "works if Fibers in different Threads each transfer to a Fiber in the same Thread" do
+      # This catches a bug where Fibers are running on a thread-pool
+      # and Fibers from a different Ruby Thread reuse the same native thread.
+      # Caching the Ruby Thread based on the native thread is not correct in that case,
+      # and the check for "fiber called across threads" in Fiber#transfer
+      # might be incorrect based on that.
+      2.times do
+        Thread.new do
+          io_fiber = Fiber.new do |calling_fiber|
+            calling_fiber.transfer
+          end
+          io_fiber.transfer(Fiber.current)
+          value = Object.new
+          io_fiber.transfer(value).should equal value
+        end.join
+      end
+    end
+
     it "transfers control between a non-main thread's root fiber to a child fiber and back again" do
       states = []
       thread = Thread.new do
