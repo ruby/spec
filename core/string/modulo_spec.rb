@@ -764,8 +764,32 @@ describe "String#%" do
       ("%{foo}bar" % {foo: 'oof'}).should == "oofbar"
     end
 
-    it "raises KeyError if key is missing from passed-in hash" do
-      lambda {"%{foo}" % {}}.should raise_error(KeyError)
+    context "when key is missing from passed-in hash" do
+      it "raises KeyError" do
+        lambda {"%{foo}" % {}}.should raise_error(KeyError)
+      end
+
+      ruby_version_is "2.5" do
+        before :each do
+          @hash = { fooo: 1 }
+        end
+
+        it "sets the passed-in hash as receiver for KeyError" do
+          -> {
+            "%{foo}" % @hash
+          }.should raise_error(KeyError) { |err|
+            err.receiver.should == @hash
+          }
+        end
+
+        it "sets the missing key as key in KeyError" do
+          -> {
+            "%{foo}" % @hash
+          }.should raise_error(KeyError) { |err|
+            err.key.should == :foo
+          }
+        end
+      end
     end
 
     it "should raise ArgumentError if no hash given" do

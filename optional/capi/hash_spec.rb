@@ -136,6 +136,26 @@ describe "C-API Hash function" do
     it "raises a KeyError if the key is not found and no default is set" do
       lambda { @s.rb_hash_fetch(@hsh, :c) }.should raise_error(KeyError)
     end
+
+    context "when key is not found" do
+      ruby_version_is "2.5" do
+        it "sets the hash as receiver for KeyError" do
+          -> {
+            @s.rb_hash_fetch(@hsh, :c)
+          }.should raise_error(KeyError) { |err|
+            err.receiver.should == @hsh
+          }
+        end
+
+        it "sets the key as key for KeyError" do
+          -> {
+            @s.rb_hash_fetch(@hsh, :c)
+          }.should raise_error(KeyError) { |err|
+            err.key.should == :c
+          }
+        end
+      end
+    end
   end
 
   describe "rb_hash_foreach" do
