@@ -15,7 +15,7 @@ ruby_version_is "2.5" do
       2.pow(40).should eql 1099511627776
     end
 
-    it "overflows the answer to a bignum transparantly" do
+    it "overflows the answer to a bignum transparently" do
       2.pow(29).should eql 536870912
       2.pow(30).should eql 1073741824
       2.pow(31).should eql 2147483648
@@ -95,6 +95,19 @@ ruby_version_is "2.5" do
     context "second argument is passed" do
       it "returns modulo of self raised to the given power" do
         2.pow(5, 12).should == 8
+        2.pow(6, 13).should == 12
+        2.pow(7, 14).should == 2
+        2.pow(8, 15).should == 1
+      end
+
+      it "doesn't work well with bignum" do
+        2.pow(61, 213693951).should eql(147138137)
+        2.pow(61, 9213693951).should eql 1
+
+        2.pow(61, 5843009213693951).should eql 1
+        2.pow(62, 5843009213693952).should eql 1
+        2.pow(63, 5843009213693953).should eql 1
+        2.pow(64, 5843009213693954).should eql 1
       end
 
       it "handles sign like #divmod does" do
