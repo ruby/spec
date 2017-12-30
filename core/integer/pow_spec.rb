@@ -29,15 +29,15 @@ ruby_version_is "2.5" do
     end
 
     it "raises negative numbers to the given power" do
-      (-2).pow(29).should eql -536870912
-      (-2).pow(30).should eql 1073741824
-      (-2).pow(31).should eql -2147483648
-      (-2).pow(32).should eql 4294967296
+      (-2).pow(29).should eql(-536870912)
+      (-2).pow(30).should eql(1073741824)
+      (-2).pow(31).should eql(-2147483648)
+      (-2).pow(32).should eql(4294967296)
 
-      (-2).pow(61).should eql -2305843009213693952
-      (-2).pow(62).should eql 4611686018427387904
-      (-2).pow(63).should eql -9223372036854775808
-      (-2).pow(64).should eql 18446744073709551616
+      (-2).pow(61).should eql(-2305843009213693952)
+      (-2).pow(62).should eql(4611686018427387904)
+      (-2).pow(63).should eql(-9223372036854775808)
+      (-2).pow(64).should eql(18446744073709551616)
     end
 
     it "can raise 1 to a bignum safely" do
@@ -45,8 +45,8 @@ ruby_version_is "2.5" do
     end
 
     it "can raise -1 to a bignum safely" do
-      (-1).pow(4611686018427387904).should eql 1
-      (-1).pow(4611686018427387905).should eql -1
+      (-1).pow(4611686018427387904).should eql(1)
+      (-1).pow(4611686018427387905).should eql(-1)
     end
 
     it "returns Float::INFINITY when the number is too big" do
