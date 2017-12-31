@@ -15,6 +15,13 @@ describe :file_path, shared: true do
     @file.send(@method).should be_an_instance_of(String)
   end
 
+  it "calls to_str on argument and returns exect value" do
+    path = mock('path')
+    path.should_receive(:to_str).and_return(@path)
+    @file = File.new path
+    @file.send(@method).should == @path
+  end
+
   it "does not normalise the path it returns" do
     Dir.chdir(tmp("")) do
       unorm = "./#{@name}"
