@@ -1,4 +1,5 @@
 require File.expand_path('../spec_helper', __FILE__)
+require File.expand_path('../../../shared/hash/key_error', __FILE__)
 
 load_extension("hash")
 
@@ -138,23 +139,9 @@ describe "C-API Hash function" do
     end
 
     context "when key is not found" do
-      ruby_version_is "2.5" do
-        it "sets the hash as receiver for KeyError" do
-          -> {
-            @s.rb_hash_fetch(@hsh, :c)
-          }.should raise_error(KeyError) { |err|
-            err.receiver.should == @hsh
-          }
-        end
-
-        it "sets the key as key for KeyError" do
-          -> {
-            @s.rb_hash_fetch(@hsh, :c)
-          }.should raise_error(KeyError) { |err|
-            err.key.should == :c
-          }
-        end
-      end
+      it_behaves_like :key_error, -> (obj, key) {
+        @s.rb_hash_fetch(obj, key)
+      }, { a: 1 }
     end
   end
 

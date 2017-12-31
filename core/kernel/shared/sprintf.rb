@@ -1,3 +1,5 @@
+require File.expand_path('../../../../shared/hash/key_error', __FILE__)
+
 describe :kernel_sprintf, shared: true do
   def format(*args)
     @method.call(*args)
@@ -823,36 +825,6 @@ describe :kernel_sprintf, shared: true do
           format("%d %<foo>d", 1, foo: "123")
         }.should raise_error(ArgumentError)
       end
-
-      context "when there is no matching key" do
-        it "raises KeyError" do
-          -> () {
-            format("%<foo>s", {})
-          }.should raise_error(KeyError)
-        end
-
-        ruby_version_is "2.5" do
-          before :each do
-            @hash = { fooo: 1 }
-          end
-
-          it "sets the Hash attempting to format on as receiver of KeyError" do
-            -> () {
-              format("%<foo>s", @hash)
-            }.should raise_error(KeyError) { |err|
-                err.receiver.should == @hash
-            }
-          end
-
-          it "sets the faulty key in the formatter as key of KeyError" do
-            -> () {
-              format("%<foo>s", @hash)
-            }.should raise_error(KeyError) { |err|
-              err.key.should == :foo
-            }
-          end
-        end
-      end
     end
 
     describe "%{name} style" do
@@ -891,5 +863,15 @@ describe :kernel_sprintf, shared: true do
         format("%{foo}", foo: obj).should == "42"
       end
     end
+  end
+
+  describe "faulty key" do
+    before :all do
+      @base_method = @method
+    end
+
+    it_behaves_like :key_error, -> (obj, key) {
+      @base_method.call("%<#{key}>s", obj)
+    }, { foooo: 1 }
   end
 end

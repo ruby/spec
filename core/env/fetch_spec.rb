@@ -1,4 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require File.expand_path('../../../shared/hash/key_error', __FILE__)
 
 describe "ENV.fetch" do
   it "returns a value" do
@@ -12,31 +13,7 @@ describe "ENV.fetch" do
   end
 
   context "when the key is not found" do
-    before :each do
-      @key = "should_never_be_set"
-    end
-
-    it "raises a KeyError" do
-      lambda { ENV.fetch @key }.should raise_error(KeyError)
-    end
-
-    ruby_version_is "2.5" do
-      it "sets the ENV as the receiver of KeyError" do
-        -> {
-          ENV.fetch @key
-        }.should raise_error(KeyError) { |err|
-          err.receiver.should == ENV
-        }
-      end
-
-      it "sets the non-existent key as the key of KeyError" do
-        -> {
-          ENV.fetch @key
-        }.should raise_error(KeyError) { |err|
-          err.key.should == @key
-        }
-      end
-    end
+    it_behaves_like :key_error, ->(obj, key) { obj.fetch(key) }, ENV
   end
 
   it "provides the given default parameter" do

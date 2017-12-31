@@ -1,40 +1,14 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../fixtures/classes', __FILE__)
+require File.expand_path('../../../shared/hash/key_error', __FILE__)
 
 describe "Hash#fetch" do
-  it "returns the value for key" do
-    { a: 1, b: -1 }.fetch(:b).should == -1
+  context "when the key is not found" do
+    it_behaves_like :key_error, ->(obj, key) { obj.fetch(key) }, Hash.new(a: 5)
   end
 
-  context "when the key is not found" do
-    it "raises a KeyError" do
-      lambda { {}.fetch(:a)       }.should raise_error(KeyError)
-      lambda { Hash.new(5).fetch(:a)    }.should raise_error(KeyError)
-      lambda { Hash.new { 5 }.fetch(:a) }.should raise_error(KeyError)
-    end
-
-    ruby_version_is "2.5" do
-      before :each do
-        @hsh = { }
-        @key = :a
-      end
-
-      it "sets the Hash as the receiver of KeyError" do
-        -> {
-          @hsh.fetch(@key)
-        }.should raise_error(KeyError) { |err|
-          err.receiver.should == @hsh
-        }
-      end
-
-      it "sets the not-found key as key of KeyError" do
-        -> {
-          @hsh.fetch(@key)
-        }.should raise_error(KeyError) { |err|
-          err.key.should == @key
-        }
-      end
-    end
+  it "returns the value for key" do
+    { a: 1, b: -1 }.fetch(:b).should == -1
   end
 
   it "returns default if key is not found when passed a default" do
