@@ -51,4 +51,30 @@ describe :file_path, shared: true do
       @file.send(@method).encoding.should == Encoding.find("euc-jp")
     end
   end
+
+  ruby_version_is "2.5" do
+    platform_is :linux do
+      guard -> { defined?(File::TMPFILE) } do
+        before :each do
+          @dir = tmp("tmpfilespec")
+          mkdir_p @dir
+        end
+
+        after :each do
+          rm_r @dir
+        end
+
+        it "raises IOError if file was opened with File::TMPFILE" do
+          begin
+            File.open(@dir, File::RDWR | File::TMPFILE) do |f|
+              -> { f.send(@method) }.should raise_error(IOError)
+            end
+          rescue Errno::EOPNOTSUPP
+            # EOPNOTSUPP: no support from the filesystem
+            1.should == 1
+          end
+        end
+      end
+    end
+  end
 end
