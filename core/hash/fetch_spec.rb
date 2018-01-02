@@ -7,6 +7,7 @@ describe "Hash#fetch" do
     it_behaves_like :key_error, ->(obj, key) { obj.fetch(key) }, Hash.new(a: 5)
     it_behaves_like :key_error, ->(obj, key) { obj.fetch(key) }, {}
     it_behaves_like :key_error, ->(obj, key) { obj.fetch(key) }, Hash.new { 5 }
+    it_behaves_like :key_error, ->(obj, key) { obj.fetch(key) }, Hash.new(5)
   end
 
   it "returns the value for key" do
