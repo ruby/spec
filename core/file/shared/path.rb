@@ -15,7 +15,7 @@ describe :file_path, shared: true do
     @file.send(@method).should be_an_instance_of(String)
   end
 
-  it "calls to_str on argument and returns exect value" do
+  it "calls to_str on argument and returns exact value" do
     path = mock('path')
     path.should_receive(:to_str).and_return(@path)
     @file = File.new path
