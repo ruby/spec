@@ -10,7 +10,7 @@ describe :key_error, shared: true do
       -> {
         @method.call(@object, 'foo')
       }.should raise_error(KeyError) { |err|
-        err.receiver.should == @object
+        err.receiver.should equal(@object)
       }
     end
 
