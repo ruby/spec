@@ -24,4 +24,8 @@ describe "Thread#backtrace" do
     t.join
     t.backtrace.should == nil
   end
+
+  it "returns an array (which may be empty) immediately after the thread is created" do
+    Thread.new { sleep }.backtrace.should be_kind_of(Array)
+  end
 end
