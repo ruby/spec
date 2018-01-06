@@ -1,6 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require File.expand_path('../shared/arithmetic_coerce', __FILE__)
-require File.expand_path('../shared/divide', __FILE__)
 
 describe "Integer#/" do
   ruby_version_is "2.4"..."2.5" do
@@ -21,6 +20,12 @@ describe "Integer#/" do
       (-1 / 10).should == -1
     end
 
+    it "returns result the same class as the argument" do
+      (3 / 2).should == 1
+      (3 / 2.0).should == 1.5
+      (3 / Rational(2, 1)).should == Rational(3, 2)
+    end
+
     it "raises a ZeroDivisionError if the given argument is zero and not a Float" do
       lambda { 1 / 0 }.should raise_error(ZeroDivisionError)
     end
@@ -36,17 +41,28 @@ describe "Integer#/" do
     end
 
     it "raises a TypeError when given a non-Integer" do
-      lambda {
-        (obj = mock('10')).should_receive(:to_int).any_number_of_times.and_return(10)
-        13 / obj
-      }.should raise_error(TypeError)
-      lambda { 13 / "10"    }.should raise_error(TypeError)
-      lambda { 13 / :symbol }.should raise_error(TypeError)
+      lambda { 13 / mock('10') }.should raise_error(TypeError)
+      lambda { 13 / "10"       }.should raise_error(TypeError)
+      lambda { 13 / :symbol    }.should raise_error(TypeError)
     end
   end
 
   context "bignum" do
-    it_behaves_like(:bignum_divide, :/)
+    before :each do
+      @bignum = bignum_value(88)
+    end
+
+    it "returns self divided by other" do
+      (@bignum / 4).should == 2305843009213693974
+
+      (@bignum / bignum_value(2)).should == 1
+
+      (-(10**50) / -(10**40 + 1)).should == 9999999999
+      ((10**50) / (10**40 + 1)).should == 9999999999
+
+      ((-10**50) / (10**40 + 1)).should == -10000000000
+      ((10**50) / -(10**40 + 1)).should == -10000000000
+    end
 
     it "returns self divided by Float" do
       not_supported_on :opal do
@@ -55,9 +71,33 @@ describe "Integer#/" do
       (bignum_value(88) / 4294967295.5).should be_close(2147483648.25, TOLERANCE)
     end
 
+    it "returns result the same class as the argument" do
+      (@bignum / 4).should == 2305843009213693974
+      (@bignum / 4.0).should be_close(2305843009213693974, TOLERANCE)
+      (@bignum / Rational(4, 1)).should == Rational(2305843009213693974, 1)
+    end
+
     it "does NOT raise ZeroDivisionError if other is zero and is a Float" do
       (bignum_value / 0.0).to_s.should == 'Infinity'
       (bignum_value / -0.0).to_s.should == '-Infinity'
+    end
+
+    ruby_version_is ""..."2.4" do
+      it "raises a TypeError if other is zero and not a Float" do
+        lambda { @bignum.send(@method, 0) }.should raise_error(TypeError, /nil is not a symbol nor a string/)
+      end
+    end
+
+    ruby_version_is "2.4" do
+      it "raises a ZeroDivisionError if other is zero and not a Float" do
+        lambda { @bignum.send(@method, 0) }.should raise_error(ZeroDivisionError)
+      end
+    end
+
+    it "raises a TypeError when given a non-numeric" do
+      lambda { @bignum / mock('10') }.should raise_error(TypeError)
+      lambda { @bignum / "2" }.should raise_error(TypeError)
+      lambda { @bignum / :symbol }.should raise_error(TypeError)
     end
   end
 end

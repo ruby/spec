@@ -1,14 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../shared/divide', __FILE__)
 
 describe "Integer#div" do
   context "fixnum" do
-    describe "with a Fixnum" do
-      it "returns self divided by the given argument as an Integer" do
-        2.div(2).should == 1
-        1.div(2).should == 0
-        5.div(2).should == 2
-      end
+    it "returns self divided by the given argument as an Integer" do
+      2.div(2).should == 1
+      1.div(2).should == 0
+      5.div(2).should == 2
     end
 
     it "rounds towards -inf" do
@@ -24,6 +21,7 @@ describe "Integer#div" do
       1.div(0.169).should == 5
       -1.div(50.4).should == -1
       1.div(bignum_value).should == 0
+      1.div(Rational(1, 5)).should == 5
     end
 
     it "raises a ZeroDivisionError when the given argument is 0 and a Float" do
@@ -32,35 +30,71 @@ describe "Integer#div" do
       lambda { -10.div(0.0) }.should raise_error(ZeroDivisionError)
     end
 
-    it "raises a ZeroDivisionError when the given argument is 0" do
+    it "raises a ZeroDivisionError when the given argument is 0 and not a Float" do
       lambda { 13.div(0) }.should raise_error(ZeroDivisionError)
+      lambda { 13.div(-0) }.should raise_error(ZeroDivisionError)
     end
 
-    it "raises a TypeError when given a non-Integer" do
-      lambda {
-        (obj = mock('10')).should_receive(:to_int).any_number_of_times.and_return(10)
-        13.div(obj)
-      }.should raise_error(TypeError)
+    it "raises a TypeError when given a non-numeric argument" do
+      lambda { 13.div(mock('10')) }.should raise_error(TypeError)
       lambda { 5.div("2") }.should raise_error(TypeError)
+      lambda { 5.div(:"2") }.should raise_error(TypeError)
+      lambda { 5.div([]) }.should raise_error(TypeError)
     end
   end
 
   context "bignum" do
-    it_behaves_like(:bignum_divide, :div)
+    before :each do
+      @bignum = bignum_value(88)
+    end
+
+    it "returns self divided by other" do
+      @bignum.div(4).should == 2305843009213693974
+      @bignum.div(Rational(4, 1)).should == 2305843009213693974
+      @bignum.div(bignum_value(2)).should == 1
+
+      (-(10**50)).div(-(10**40 + 1)).should == 9999999999
+      (10**50).div(10**40 + 1).should == 9999999999
+
+      (-10**50).div(10**40 + 1).should == -10000000000
+      (10**50).div(-(10**40 + 1)).should == -10000000000
+    end
+
+    it "may be not accurate with Float argument" do
+      @bignum.div(1  ).should == 9223372036854775896
+      @bignum.div(1.0).should == 9223372036854775808
+
+      @bignum.div(4  ).should == 2305843009213693974
+      @bignum.div(4.0).should == 2305843009213693952
+
+      @bignum.div(21  ).should == 439208192231179804
+      @bignum.div(21.0).should == 439208192231179776
+    end
+
+    it "raises a TypeError when given a non-numeric" do
+      lambda { @bignum.div(mock("10")) }.should raise_error(TypeError)
+      lambda { @bignum.div("2") }.should raise_error(TypeError)
+      lambda { @bignum.div(:symbol) }.should raise_error(TypeError)
+    end
 
     it "returns a result of integer division of self by a float argument" do
-      bignum_value(88).div(4294967295.5).should eql(2147483648)
+      @bignum.div(4294967295.5).should eql(2147483648)
       not_supported_on :opal do
-        bignum_value(88).div(4294967295.0).should eql(2147483648)
-        bignum_value(88).div(bignum_value(88).to_f).should eql(1)
-        bignum_value(88).div(-bignum_value(88).to_f).should eql(-1)
+        @bignum.div(4294967295.0).should eql(2147483648)
+        @bignum.div(bignum_value(88).to_f).should eql(1)
+        @bignum.div(-bignum_value(88).to_f).should eql(-1)
       end
     end
 
     # #5490
-    it "raises ZeroDivisionError if the argument is Float zero" do
-      lambda { bignum_value(88).div(0.0) }.should raise_error(ZeroDivisionError)
-      lambda { bignum_value(88).div(-0.0) }.should raise_error(ZeroDivisionError)
+    it "raises ZeroDivisionError if the argument is 0 and is a Float" do
+      lambda { @bignum.div(0.0) }.should raise_error(ZeroDivisionError)
+      lambda { @bignum.div(-0.0) }.should raise_error(ZeroDivisionError)
+    end
+
+    it "raises ZeroDivisionError if the argument is 0 and is not a Float" do
+      lambda { @bignum.div(0) }.should raise_error(ZeroDivisionError)
+      lambda { @bignum.div(-0) }.should raise_error(ZeroDivisionError)
     end
   end
 end
