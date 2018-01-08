@@ -15,6 +15,27 @@ describe "Integer#div" do
       (-8192).div(-10).should == 819
     end
 
+    it "means (x / y).floor" do
+      5.div(2).should == (5 / 2).floor
+      5.div(2.0).should == (5 / 2.0).floor
+      5.div(-2).should == (5 / -2).floor
+
+      5.div(100).should == (5 / 100).floor
+      5.div(100.0).should == (5 / 100.0).floor
+      5.div(-100).should == (5 / -100).floor
+    end
+
+    it "calls #coerce and #div if argument responds to #coerce" do
+      x = mock("x")
+      y = mock("y")
+      result = mock("result")
+
+      y.should_receive(:coerce).and_return([x, y])
+      x.should_receive(:div).with(y).and_return(result)
+
+      10.div(y).should == result
+    end
+
     it "coerces self and the given argument to Floats and returns self divided by other as Fixnum" do
       1.div(0.2).should == 5
       1.div(0.16).should == 6
@@ -60,15 +81,32 @@ describe "Integer#div" do
       (10**50).div(-(10**40 + 1)).should == -10000000000
     end
 
-    it "may be not accurate with Float argument" do
-      @bignum.div(1  ).should == 9223372036854775896
-      @bignum.div(1.0).should == 9223372036854775808
+    it "calls #coerce and #div if argument responds to #coerce" do
+      x = mock("x")
+      y = mock("y")
+      result = mock("result")
 
-      @bignum.div(4  ).should == 2305843009213693974
-      @bignum.div(4.0).should == 2305843009213693952
+      y.should_receive(:coerce).and_return([x, y])
+      x.should_receive(:div).with(y).and_return(result)
 
-      @bignum.div(21  ).should == 439208192231179804
-      @bignum.div(21.0).should == 439208192231179776
+      @bignum.div(y).should == result
+    end
+
+    it "means (x / y).floor" do
+      @bignum.div(2).should == (@bignum / 2).floor
+      @bignum.div(-2).should == (@bignum / -2).floor
+
+      @bignum.div(@bignum+1).should == (@bignum / (@bignum+1)).floor
+      @bignum.div(-(@bignum+1)).should == (@bignum / -(@bignum+1)).floor
+
+      @bignum.div(2.0).should == (@bignum / 2.0).floor
+      @bignum.div(100.0).should == (@bignum / 100.0).floor
+    end
+
+    it "looses precision if passed Float argument" do
+      @bignum.div(1).should_not == @bignum.div(1.0)
+      @bignum.div(4).should_not == @bignum.div(4.0)
+      @bignum.div(21).should_not == @bignum.div(21.0)
     end
 
     it "raises a TypeError when given a non-numeric" do
