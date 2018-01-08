@@ -82,16 +82,8 @@ describe "Integer#/" do
       (bignum_value / -0.0).to_s.should == '-Infinity'
     end
 
-    ruby_version_is ""..."2.4" do
-      it "raises a TypeError if other is zero and not a Float" do
-        lambda { @bignum.send(@method, 0) }.should raise_error(TypeError, /nil is not a symbol nor a string/)
-      end
-    end
-
-    ruby_version_is "2.4" do
-      it "raises a ZeroDivisionError if other is zero and not a Float" do
-        lambda { @bignum.send(@method, 0) }.should raise_error(ZeroDivisionError)
-      end
+    it "raises a ZeroDivisionError if other is zero and not a Float" do
+      lambda { @bignum / 0 }.should raise_error(ZeroDivisionError)
     end
 
     it "raises a TypeError when given a non-numeric" do

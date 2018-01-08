@@ -165,7 +165,7 @@ describe "Integer#chr with an encoding argument" do
     lambda { -bignum_value.chr(Encoding::EUC_JP) }.should raise_error(RangeError)
   end
 
-  it "raises a RangeError is self is too large" do
+  it "raises a RangeError if self is too large" do
     lambda { 2206368128.chr(Encoding::UTF_8) }.should raise_error(RangeError)
   end
 
