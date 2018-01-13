@@ -166,10 +166,6 @@ Use the implementation test suite for these.
 
 If an implementation does not support some feature, simply tag the related specs as failing instead.
 
-### Style
-
-Do not leave any trailing space and respect the existing style.
-
 ### Shared Specs
 
 Often throughout Ruby, identical functionality is used by different methods and modules. In order 
@@ -232,3 +228,7 @@ end
 ```
 
 In the above example, the method being passed is a lambda that triggers the specific conditions of the shared spec.
+
+### Style
+
+Do not leave any trailing space and follow the existing style.
