@@ -197,7 +197,7 @@ describe :hash_key_p, shared: true do
   end
 end
 
-describe "Hash#key? do
+describe "Hash#key?" do
   it_behaves_like(:hash_key_p, :key?)
 end
 ```
