@@ -184,17 +184,24 @@ Defining a shared spec involves adding a `shared: true` option to the top-level 
 will signal not to run the specs directly by the runner.  Shared specs have access to two instance 
 variables from the implementor spec: `@method` and `@object`, which the implementor spec will pass in.
 
-Here's an example of a snippet of a shared spec and a spec that integrates it:
+Here's an example of a snippet of a shared spec and two specs which integrates it:
 
 ``` ruby
+# core/hash/shared/key.rb
 describe :hash_key_p, shared: true do
   it "returns true if the key's matching value was false" do
     { xyz: false }.send(@method, :xyz).should == true
   end
 end
 
+# core/hash/key_spec.rb
 describe "Hash#key?" do
-  it_behaves_like(:hash_key_p, :key?)
+  it_behaves_like :hash_key_p, :key?
+end
+
+# core/hash/include_spec.rb
+describe "Hash#include?" do
+  it_behaves_like :hash_key_p, :include?
 end
 ```
 
