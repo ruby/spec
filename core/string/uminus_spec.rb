@@ -17,5 +17,14 @@ ruby_version_is "2.3" do
       output.frozen?.should == true
       output.should == 'foo'
     end
+
+    ruby_version_is "2.5" do
+      it "returns the same object for equal unfrozen strings" do
+        origin = -"this string is frozen"
+        dynamic = -%w(this string is frozen).join(' ')
+
+        origin.should equal dynamic
+      end
+    end
   end
 end
