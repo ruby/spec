@@ -25,6 +25,10 @@ ruby_version_is "2.3" do
 
         origin.should equal dynamic
       end
+
+      it "returns the same object when it's called on the same String literal" do
+        (-"unfrozen string").should equal(-"unfrozen string")
+      end
     end
   end
 end
