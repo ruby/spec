@@ -39,6 +39,7 @@ ruby_version_is "2.3" do
 
         dynamic.should_not equal("this string is frozen".freeze)
         (-dynamic).should_not equal("this string is frozen".freeze)
+        (-dynamic).should_not equal(-"this string is frozen".freeze)
       end
     end
   end
