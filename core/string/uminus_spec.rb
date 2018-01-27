@@ -20,8 +20,8 @@ ruby_version_is "2.3" do
 
     ruby_version_is "2.5" do
       it "returns the same object for equal unfrozen strings" do
-        origin = "this string is frozen"
-        dynamic = %w(this string is frozen).join(' ')
+        origin = "this is a string"
+        dynamic = %w(this is a string).join(' ')
 
         origin.should_not equal(dynamic)
         (-origin).should equal(-dynamic)
