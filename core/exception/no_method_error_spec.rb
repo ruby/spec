@@ -58,9 +58,11 @@ describe "NoMethodError#message" do
   end
 
   it "calls receiver.inspect only when calling Exception#message" do
+    ScratchPad.record []
     test_class = Class.new do
       def inspect
-        raise NoMethodErrorSpecs::InstanceException
+        ScratchPad << :inspect_called
+        "<inspect>"
       end
     end
     instance = test_class.new
@@ -68,9 +70,9 @@ describe "NoMethodError#message" do
       instance.bar
     rescue Exception => e
       e.name.should == :bar
-      -> {
-        e.message
-      }.should raise_error(NoMethodErrorSpecs::InstanceException)
+      ScratchPad.recorded.should == []
+      e.message.should =~ /undefined method.+\bbar\b/
+      ScratchPad.recorded.should == [:inspect_called]
     end
   end
 end
