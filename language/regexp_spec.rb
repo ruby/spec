@@ -153,7 +153,7 @@ describe "Literal Regexps" do
   it "supports escaping characters when used as a terminator" do
     escapable_terminators.each do |c|
       ref = "(?-mix:#{c})"
-      pattern = eval ("%r" + c + "\\" + c + c)
+      pattern = eval("%r" + c + "\\" + c + c)
       pattern.to_s.should == ref
     end
   end
@@ -163,7 +163,7 @@ describe "Literal Regexps" do
     special_cases = ['(', '{', '[', '<', '\\', '=', '~']
     (all_terminators - special_cases - escapable_terminators).each do |c|
       ref = "(?-mix:\\#{c})"
-      pattern = eval ("%r" + c + "\\" + c + c)
+      pattern = eval("%r" + c + "\\" + c + c)
       pattern.to_s.should == ref
     end
   end
