@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#casecmp independent of case" do
   it "returns -1 when less than other" do

@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#rstrip" do
   it "returns a copy of self with trailing whitespace removed" do

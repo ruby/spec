@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/terminate.rb'
+require_relative 'shared/terminate'
 require 'strscan'
 
 describe "StringScanner#clear" do

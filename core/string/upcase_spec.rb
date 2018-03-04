@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#upcase" do
   it "returns a copy of self with all lowercase letters upcased" do

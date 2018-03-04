@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#empty?" do
   it "returns true if the string has a length of zero" do

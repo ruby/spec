@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/eos.rb'
+require_relative 'shared/eos'
 require 'strscan'
 
 describe "StringScanner#empty?" do

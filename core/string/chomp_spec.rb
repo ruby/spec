@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#chomp" do
   describe "when passed no argument" do

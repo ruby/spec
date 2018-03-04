@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#reverse" do
   it "returns a new string with the characters of self in reverse order" do

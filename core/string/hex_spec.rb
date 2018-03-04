@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 # TODO: Move actual results to String#to_int() and spec in terms of it
 describe "String#hex" do

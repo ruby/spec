@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#tr_s" do
   it "returns a string processed according to tr with newly duplicate characters removed" do

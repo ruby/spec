@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/eql.rb'
+require_relative 'shared/eql'
 
 
 describe "BigDecimal#==" do

@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#rpartition with String" do
   it "returns an array of substrings based on splitting on the given string" do

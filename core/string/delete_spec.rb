@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#delete" do
   it "returns a new string with the chars from the intersection of sets removed" do

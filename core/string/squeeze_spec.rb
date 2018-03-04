@@ -1,6 +1,6 @@
 # -*- encoding: binary -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 # TODO: rewrite all these specs
 

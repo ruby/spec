@@ -1,6 +1,6 @@
 # -*- encoding: binary -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#count" do
   it "counts occurrences of chars from the intersection of the specified sets" do

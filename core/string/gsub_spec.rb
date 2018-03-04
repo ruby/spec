@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe :string_gsub_named_capture, shared: true do
   it "replaces \\k named backreferences with the regexp's corresponding capture" do

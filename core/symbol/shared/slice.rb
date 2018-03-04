@@ -1,4 +1,4 @@
-require_relative '../fixtures/classes.rb'
+require_relative '../fixtures/classes'
 
 describe :symbol_slice, shared: true do
   describe "with an Integer index" do

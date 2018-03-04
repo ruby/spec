@@ -1,3 +1,3 @@
-require_relative 'recursive_require_fixture.rb'
+require_relative 'recursive_require_fixture'
 
 ScratchPad << :loaded

@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require_relative 'shared/random_bytes.rb'
+require_relative 'shared/random_bytes'
 
 if defined?(OpenSSL::Random.pseudo_bytes)
   describe "OpenSSL::Random.pseudo_bytes" do

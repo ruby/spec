@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/rest_size.rb'
+require_relative 'shared/rest_size'
 require 'strscan'
 
 describe "StringScanner#rest_size" do

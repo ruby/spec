@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
-require_relative 'shared/slice.rb'
+require_relative 'fixtures/classes'
+require_relative 'shared/slice'
 
 describe "String#slice" do
   it_behaves_like :string_slice, :slice

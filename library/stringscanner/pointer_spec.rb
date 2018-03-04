@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/pos.rb'
+require_relative 'shared/pos'
 require 'strscan'
 
 describe "StringScanner#pointer" do

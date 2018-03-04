@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/bol.rb'
+require_relative 'shared/bol'
 require 'strscan'
 
 describe "StringScanner#beginning_of_line?" do

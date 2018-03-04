@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/concat.rb'
+require_relative 'shared/concat'
 require 'strscan'
 
 describe "StringScanner#concat" do

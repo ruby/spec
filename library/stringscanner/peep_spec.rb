@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/peek.rb'
+require_relative 'shared/peek'
 require 'strscan'
 
 describe "StringScanner#peep" do

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
+require_relative 'fixtures/classes'
 
 describe "String#insert with index, other" do
   it "inserts other before the character at the given index" do

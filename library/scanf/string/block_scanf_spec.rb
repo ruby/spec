@@ -1,5 +1,5 @@
 require_relative '../../../spec_helper'
-require_relative 'shared/block_scanf.rb'
+require_relative 'shared/block_scanf'
 require 'scanf'
 
 describe "String#block_scanf" do

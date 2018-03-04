@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/coerce.rb'
+require_relative 'fixtures/coerce'
 require_relative 'shared/arithmetic_exception_in_coerce'
 
 describe "Float#/" do

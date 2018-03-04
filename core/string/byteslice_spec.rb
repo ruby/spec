@@ -1,7 +1,7 @@
 # -*- encoding: binary -*-
 require_relative '../../spec_helper'
-require_relative 'fixtures/classes.rb'
-require_relative 'shared/slice.rb'
+require_relative 'fixtures/classes'
+require_relative 'shared/slice'
 
 describe "String#byteslice" do
   it "needs to reviewed for spec completeness"
