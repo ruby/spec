@@ -1,5 +1,5 @@
-require File.expand_path('../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/defined', __FILE__)
+require_relative '../spec_helper'
+require_relative 'fixtures/defined'
 
 describe "The defined? keyword for literals" do
   it "returns 'self' for self" do

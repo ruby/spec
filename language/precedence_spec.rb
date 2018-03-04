@@ -1,5 +1,5 @@
-require File.expand_path('../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/precedence', __FILE__)
+require_relative '../spec_helper'
+require_relative 'fixtures/precedence'
 
 # Specifying the behavior of operators in combination could
 # lead to combinatorial explosion. A better way seems to be

@@ -1,4 +1,4 @@
 
-require File.expand_path("../data4.rb", __FILE__)
+require_relative 'data4.rb'
 
 p Object.const_defined?(:DATA)

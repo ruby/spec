@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-require File.expand_path('../../../spec_helper', __FILE__)
-require File.expand_path('../fixtures/classes.rb', __FILE__)
-require File.expand_path('../shared/slice.rb', __FILE__)
+require_relative '../../spec_helper'
+require_relative 'fixtures/classes.rb'
+require_relative 'shared/slice.rb'
 
 describe "String#slice" do
   it_behaves_like :string_slice, :slice
