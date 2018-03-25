@@ -212,7 +212,7 @@ describe "The rescue keyword" do
   end
 
   ruby_version_is '2.6' do
-    it "will not execute an else block even without rescue and ensure" do
+    it "raises SyntaxError when else is used without rescue and ensure" do
       lambda {
         eval <<-ruby
           begin
