@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 require 'bigdecimal'
 
-describe "BigDecimal.new" do
+describe "Kernel#BigDecimal" do
 
   it "creates a new object of class BigDecimal" do
     BigDecimal("3.14159").should be_kind_of(BigDecimal)
