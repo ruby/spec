@@ -17,7 +17,7 @@ matrix:
     - env: RUBOCOP=true
       rvm: 2.4.4
       script:
-        - gem install rubocop -v 0.52.0
+        - gem install rubocop -v 0.54.0
         - rubocop
   allow_failures:
     - rvm: ruby-head
