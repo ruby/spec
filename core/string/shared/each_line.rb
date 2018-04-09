@@ -136,7 +136,7 @@ end
 
   ruby_version_is '2.4' do
     context "when `chomp` keyword argument is passed" do
-      it "removes new line characters" do
+      it "removes new line characters when separator is not specified" do
         a = []
         "hello \nworld\n".send(@method, chomp: true) { |s| a << s }
         a.should == ["hello ", "world"]
@@ -144,6 +144,23 @@ end
         a = []
         "hello \r\nworld\r\n".send(@method, chomp: true) { |s| a << s }
         a.should == ["hello ", "world"]
+      end
+
+      it "removes only specified separator" do
+        a = []
+        "hello world".send(@method, ' ', chomp: true) { |s| a << s }
+        a.should == ["hello", "world"]
+      end
+
+      # https://bugs.ruby-lang.org/issues/14257
+      it "ignores new line characters when separator is specified" do
+        a = []
+        "hello\n world\n".send(@method, ' ', chomp: true) { |s| a << s }
+        a.should == ["hello\n", "world\n"]
+
+        a = []
+        "hello\r\n world\r\n".send(@method, ' ', chomp: true) { |s| a << s }
+        a.should == ["hello\r\n", "world\r\n"]
       end
     end
   end
