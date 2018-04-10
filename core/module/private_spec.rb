@@ -52,7 +52,7 @@ describe "Module#private" do
     end.should raise_error(NameError)
   end
 
-  ruby_bug "#14604", "2.3"..."2.5.1" do
+  ruby_bug "#14604", ""..."2.5.1" do
     it "only makes the method private in the class it is called on" do
       base = Class.new do
         def wrapped

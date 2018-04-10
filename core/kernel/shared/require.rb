@@ -454,7 +454,7 @@ describe :kernel_require, shared: true do
       ScratchPad.recorded.should == []
     end
 
-    ruby_version_is "2.3"..."2.5" do
+    ruby_version_is ""..."2.5" do
       it "complex, enumerator, rational, thread and unicode_normalize are already required" do
         provided = %w[complex enumerator rational thread unicode_normalize]
         features = ruby_exe("puts $LOADED_FEATURES", options: '--disable-gems')
