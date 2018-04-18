@@ -30,7 +30,7 @@ ruby/spec is known to be tested in these implementations for every commit:
 
 ruby/spec describes the behavior of Ruby 2.3 and more recent Ruby versions.
 More precisely, every latest stable MRI release [passes](https://rubyci.org/) all specs of ruby/spec
-(2.3.x, 2.4.x, etc).
+(2.3.x, 2.4.x, 2.5.x, etc).
 
 For older specs try these commits:
 * Ruby 2.0.0-p647 - [Suite](https://github.com/ruby/spec/commit/245862558761d5abc676843ef74f86c9bcc8ea8d) using [MSpec](https://github.com/ruby/mspec/commit/f90efa068791064f955de7a843e96e2d7d3041c2) (may encounter 2 failures)
