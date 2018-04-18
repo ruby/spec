@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 ruby_version_is "2.5" do
   describe "Exception#full_message" do
-    it "returns formatted string of exception using the same format that is used to printint an uncaught exceptions to stderr" do
+    it "returns formatted string of exception using the same format that is used to print an uncaught exceptions to stderr" do
       e = RuntimeError.new("Some runtime error")
       e.set_backtrace(["a.rb:1", "b.rb:2"])
 
