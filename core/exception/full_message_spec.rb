@@ -17,11 +17,11 @@ ruby_version_is "2.5" do
       it "supports :highlight option and adds escape sequences to highlight some strings" do
         e = RuntimeError.new("Some runtime error")
 
-        full_message = e.full_message(highlight: true)
+        full_message = e.full_message(highlight: true, order: :bottom)
         full_message.should include "\e[1mTraceback\e[m (most recent call last)"
         full_message.should include "\e[1mSome runtime error (\e[1;4mRuntimeError\e[m\e[1m)"
 
-        full_message = e.full_message(highlight: false)
+        full_message = e.full_message(highlight: false, order: :bottom)
         full_message.should include "Traceback (most recent call last)"
         full_message.should include "Some runtime error (RuntimeError)"
       end
