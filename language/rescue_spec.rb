@@ -373,7 +373,7 @@ describe "The rescue keyword" do
   it "evaluates rescue expressions only when needed" do
     begin
       ScratchPad << :foo
-    rescue -> { ScratchPad << :bar }.call
+    rescue -> { ScratchPad << :bar; StandardError }.call
     end
 
     ScratchPad.recorded.should == [:foo]
