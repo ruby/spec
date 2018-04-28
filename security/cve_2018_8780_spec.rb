@@ -1,10 +1,8 @@
 require_relative '../spec_helper'
 
-require 'tmpdir'
-
 describe "CVE-2018-8780 is resisted by" do
   before :all do
-    @root = File.realpath(Dir.mktmpdir('__test_dir__'))
+    @root = File.realpath(tmp(""))
   end
 
   it "Dir.glob by raising an exception when there is a NUL byte" do
