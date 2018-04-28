@@ -56,11 +56,13 @@ describe "Kernel#require_relative with a relative path" do
       ScratchPad.recorded.should == [:loaded]
     end
 
-    it "synthetic relative file path with a Windows path separator specified loads a relative path relative to the working directory" do
-      Dir.chdir @abs_dir do
-        Object.new.instance_eval("require_relative(#{File.basename(@path).inspect})", "bar\\foo.rb").should be_true
+    platform_is_not :windows do
+      it "synthetic relative file path with a Windows path separator specified loads a relative path relative to the working directory" do
+        Dir.chdir @abs_dir do
+          Object.new.instance_eval("require_relative(#{File.basename(@path).inspect})", "bar\\foo.rb").should be_true
+        end
+        ScratchPad.recorded.should == [:loaded]
       end
-      ScratchPad.recorded.should == [:loaded]
     end
 
     it "absolute file path loads a path relative to the absolute path" do
