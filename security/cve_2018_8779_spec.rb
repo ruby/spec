@@ -18,13 +18,13 @@ describe "CVE-2018-8779 is resisted by" do
   it "UNIXServer.open by raising an exception when there is a NUL byte" do
     lambda {
       UNIXServer.open(@path+"\0")
-    }.should raise_error(ArgumentError, /string contains null byte/)
+    }.should raise_error(ArgumentError, /(path name|string) contains null byte/)
   end
 
   it "UNIXSocket.open by raising an exception when there is a NUL byte" do
     lambda {
       UNIXSocket.open(@path+"\0")
-    }.should raise_error(ArgumentError, /string contains null byte/)
+    }.should raise_error(ArgumentError, /(path name|string) contains null byte/)
   end
 
 end
