@@ -10,7 +10,7 @@ describe "CVE-2018-8779 is resisted by" do
     @path = tmpfile.path
     tmpfile.close(true)
   end
-  
+
   after :each do
     File.unlink @path if @path && File.socket?(@path)
   end

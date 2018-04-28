@@ -41,7 +41,7 @@ describe "Kernel#require_relative with a relative path" do
   end
 
   describe "in an #instance_eval with a" do
-    
+
     it "synthetic file base name loads a file base name relative to the working directory" do
       Dir.chdir @abs_dir do
         Object.new.instance_eval("require_relative(#{File.basename(@path).inspect})", "foo.rb").should be_true
@@ -73,7 +73,7 @@ describe "Kernel#require_relative with a relative path" do
       Object.new.instance_eval("require_relative(#{root_relative.inspect})", "/").should be_true
       ScratchPad.recorded.should == [:loaded]
     end
-  
+
   end
 
   it "loads a file defining many methods" do

@@ -19,7 +19,7 @@ describe "CVE-2018-6914 is resisted by" do
       t.close!
     end
   end
-  
+
   it "Tempfile.new by deleting separators" do
     begin
       expect = Dir.glob(@traversal_path + '*').count
@@ -37,7 +37,7 @@ describe "CVE-2018-6914 is resisted by" do
     actual = Dir.glob(@traversal_path + '*').count
     actual.should == expect
   end
-  
+
   it "Dir.mktmpdir by deleting separators" do
     expect = Dir.glob(@traversal_path + '*').count
     Dir.mktmpdir(@traversal_path + 'foo')

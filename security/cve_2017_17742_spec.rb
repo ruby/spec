@@ -16,10 +16,10 @@ describe "WEBrick" do
       res.send_response io
       io.rewind
       res = Net::HTTPResponse.read_new(Net::BufferedIO.new(io))
-      res.code.should == '500' 
-      io.string.should_not =~ /hack/ 
+      res.code.should == '500'
+      io.string.should_not =~ /hack/
     end
-    
+
     it "for a response splitting cookie headers" do
       user_input = "malicious\r\nCookie: hack"
       config = WEBrick::Config::HTTP
@@ -30,7 +30,7 @@ describe "WEBrick" do
       io.rewind
       res = Net::HTTPResponse.read_new(Net::BufferedIO.new(io))
       res.code.should == '500'
-      io.string.should_not =~ /hack/ 
+      io.string.should_not =~ /hack/
     end
 
   end
