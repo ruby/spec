@@ -60,6 +60,32 @@ describe "Kernel#autoload" do
       ruby_exe(fixture(__FILE__, "autoload_frozen.rb")).should == "#{frozen_error_class} - nil"
     end
   end
+
+  describe "when called from included module's method" do
+    module KSAutoloadMethod
+      def setup_autoload
+        autoload :KSAutoloadFromIncludedModule, fixture(__FILE__, "autoload_from_included_module.rb")
+      end
+    end
+    class KSAutoloadMethodIncluder
+      include KSAutoloadMethod
+    end
+    KSAutoloadMethodIncluder.new.setup_autoload
+
+    it "setups the autoload on the included module" do
+      path = fixture(__FILE__, "autoload_from_included_module.rb")
+      KSAutoloadMethod.autoload?(:KSAutoloadFromIncludedModule).should == path
+    end
+
+    it "the autoload is reacheable from the class too" do
+      path = fixture(__FILE__, "autoload_from_included_module.rb")
+      KSAutoloadMethodIncluder.autoload?(:KSAutoloadFromIncludedModule).should == path
+    end
+
+    it "the autoload relative to the included module works" do
+      KSAutoloadMethod::KSAutoloadFromIncludedModule.loaded.should == :autoload_from_included_module
+    end
+  end
 end
 
 describe "Kernel#autoload?" do
@@ -106,6 +132,32 @@ describe "Kernel.autoload" do
     p = mock('path')
     p.should_receive(:to_path).and_return @non_existent
     Kernel.autoload :KSAutoloadAA, p
+  end
+
+  describe "when called from included module's method" do
+    module KSAutoloadMethod2
+      def setup_autoload
+        Kernel.autoload :KSAutoloadFromIncludedModule2, fixture(__FILE__, "autoload_from_included_module2.rb")
+      end
+    end
+    class KSAutoloadMethodIncluder2
+      include KSAutoloadMethod2
+    end
+    KSAutoloadMethodIncluder2.new.setup_autoload
+
+    it "setups the autoload on the included module" do
+      path = fixture(__FILE__, "autoload_from_included_module2.rb")
+      KSAutoloadMethod2.autoload?(:KSAutoloadFromIncludedModule2).should == path
+    end
+
+    it "the autoload is reacheable from the class too" do
+      path = fixture(__FILE__, "autoload_from_included_module2.rb")
+      KSAutoloadMethodIncluder2.autoload?(:KSAutoloadFromIncludedModule2).should == path
+    end
+
+    it "the autoload relative to the included module works" do
+      KSAutoloadMethod2::KSAutoloadFromIncludedModule2.loaded.should == :autoload_from_included_module2
+    end
   end
 end
 
