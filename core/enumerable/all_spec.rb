@@ -2,12 +2,11 @@ require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
 describe "Enumerable#all?" do
-
   before :each do
     @enum = EnumerableSpecs::Numerous.new
     @empty = EnumerableSpecs::Empty.new()
-    @enum1 = [0, 1, 2, -1]
-    @enum2 = [nil, false, true]
+    @enum1 = EnumerableSpecs::Numerous.new(0, 1, 2, -1)
+    @enum2 = EnumerableSpecs::Numerous.new(nil, false, true)
   end
 
   it "always returns true on empty enumeration" do
@@ -117,14 +116,16 @@ describe "Enumerable#all?" do
 
     it "gathers initial args as elements when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
-      multi.all? {|e| !(Array === e) }.should be_true
+      yielded = []
+      multi.all? { |e| yielded << e }
+      yielded.should == [1, 3, 6]
     end
 
     it "yields multiple arguments when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
       yielded = []
-      multi.all? {|e, i| yielded << [e, i] }
-      yielded.should == [[1, 2], [3, 4], [6, 7]]
+      multi.all? { |*args| yielded << args }
+      yielded.should == [[1, 2], [3, 4, 5], [6, 7, 8, 9]]
     end
   end
 end

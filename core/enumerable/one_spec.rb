@@ -18,14 +18,16 @@ describe "Enumerable#one?" do
     it "gathers initial args as elements when each yields multiple" do
       # This spec doesn't spec what it says it does
       multi = EnumerableSpecs::YieldsMulti.new
-      multi.one? {|e| e == 1 }.should be_true
+      yielded = []
+      multi.one? { |e| yielded << e; false }
+      yielded.should == [1, 3, 6]
     end
 
     it "yields multiple arguments when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
       yielded = []
-      multi.one? {|e, i| yielded << [e, i] }
-      yielded.should == [[1, 2], [3, 4]]
+      multi.one? { |*args| yielded << args; false }
+      yielded.should == [[1, 2], [3, 4, 5], [6, 7, 8, 9]]
     end
 
     ruby_version_is "2.5" do
