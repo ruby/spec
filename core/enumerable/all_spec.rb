@@ -20,6 +20,21 @@ describe "Enumerable#all?" do
     {}.all? { nil }.should == true
   end
 
+  it "raises an ArgumentError when more than 1 argument is provided" do
+    lambda { @enum.all?(1, 2, 3) }.should raise_error(ArgumentError)
+    lambda { [].all?(1, 2, 3) }.should raise_error(ArgumentError)
+    lambda { {}.all?(1, 2, 3) }.should raise_error(ArgumentError)
+  end
+
+  ruby_version_is ""..."2.5" do
+    it "raises an ArgumentError when any arguments provided" do
+      lambda { @enum.all?(Proc.new {}) }.should raise_error(ArgumentError)
+      lambda { @enum.all?(nil) }.should raise_error(ArgumentError)
+      lambda { @empty.all?(1) }.should raise_error(ArgumentError)
+      lambda { @enum1.all?(1) {} }.should raise_error(ArgumentError)
+    end
+  end
+
   it "does not hide exceptions out of #each" do
     lambda {
       EnumerableSpecs::ThrowingEach.new.all?
@@ -117,14 +132,14 @@ describe "Enumerable#all?" do
     it "gathers initial args as elements when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
       yielded = []
-      multi.all? { |e| yielded << e }
+      multi.all? { |e| yielded << e }.should == true
       yielded.should == [1, 3, 6]
     end
 
     it "yields multiple arguments when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
       yielded = []
-      multi.all? { |*args| yielded << args }
+      multi.all? { |*args| yielded << args }.should == true
       yielded.should == [[1, 2], [3, 4, 5], [6, 7, 8, 9]]
     end
   end

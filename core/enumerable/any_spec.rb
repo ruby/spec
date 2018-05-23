@@ -86,7 +86,7 @@ describe "Enumerable#any?" do
       @enum2.any? { |i| i == nil }.should == true
     end
 
-    it "any? should return false if the block never returns other than false or nil" do
+    it "returns false if the block never returns other than false or nil" do
       @enum.any? { false }.should == false
       @enum.any? { nil }.should == false
 
@@ -135,14 +135,14 @@ describe "Enumerable#any?" do
     it "gathers initial args as elements when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
       yielded = []
-      multi.any? { |e| yielded << e; false }
+      multi.any? { |e| yielded << e; false }.should == false
       yielded.should == [1, 3, 6]
     end
 
     it "yields multiple arguments when each yields multiple" do
       multi = EnumerableSpecs::YieldsMulti.new
       yielded = []
-      multi.any? { |*args| yielded << args; false }
+      multi.any? { |*args| yielded << args; false }.should == false
       yielded.should == [[1, 2], [3, 4, 5], [6, 7, 8, 9]]
     end
   end
@@ -196,7 +196,7 @@ describe "Enumerable#any?" do
         {a: 1, b: 2}.any?(pattern).should == true
       end
 
-      it "any? should return false if the block never returns other than false or nil" do
+      it "returns false if the block never returns other than false or nil" do
         pattern = EnumerableSpecs::Pattern.new { |x| nil }
         @enum1.any?(pattern).should == false
         pattern.yielded.should == [[0], [1], [2], [-1]]
