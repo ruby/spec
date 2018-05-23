@@ -149,18 +149,6 @@ describe "Enumerable#any?" do
 
   ruby_version_is "2.5" do
     describe 'when given a pattern argument' do
-      class EnumerableSpecs::Pattern
-        attr_reader :yielded
-        def initialize(&block)
-          @block = block
-          @yielded = []
-        end
-        def ===(*args)
-          @yielded << args
-          @block.call(*args)
-        end
-      end
-
       it "calls `===` on the pattern the return value " do
         pattern = EnumerableSpecs::Pattern.new { |x| x == 2 }
         @enum1.any?(pattern).should == true

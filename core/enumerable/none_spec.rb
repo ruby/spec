@@ -5,6 +5,8 @@ describe "Enumerable#none?" do
   before :each do
     @empty = EnumerableSpecs::Empty.new
     @enum = EnumerableSpecs::Numerous.new
+    @enum1 = EnumerableSpecs::Numerous.new(0, 1, 2, -1)
+    @enum2 = EnumerableSpecs::Numerous.new(nil, false, true)
   end
 
   it "always returns true on empty enumeration" do
@@ -102,11 +104,61 @@ describe "Enumerable#none?" do
   end
 
   ruby_version_is "2.5" do
-    describe "given a pattern argument" do
-      # This spec should be replaced by more extensive ones
-      it "returns true iff none match that pattern" do
-        EnumerableSpecs::Numerous.new.none?(Float).should == true
-        [nil, false, true].none?(NilClass).should == false
+    describe 'when given a pattern argument' do
+      it "calls `===` on the pattern the return value " do
+        pattern = EnumerableSpecs::Pattern.new { |x| x == 3 }
+        @enum1.none?(pattern).should == true
+        pattern.yielded.should == [[0], [1], [2], [-1]]
+      end
+
+      it "ignores block" do
+        @enum2.none?(Integer) { raise }.should == true
+        [1, 2, nil].none?(TrueClass) { raise }.should == true
+        {a: 1}.none?(Hash) { raise }.should == true
+      end
+
+      it "always returns true on empty enumeration" do
+        @empty.none?(Integer).should == true
+        [].none?(Integer).should == true
+        {}.none?(NilClass).should == true
+      end
+
+      it "does not hide exceptions out of #each" do
+        lambda {
+          EnumerableSpecs::ThrowingEach.new.none?(Integer)
+        }.should raise_error(RuntimeError)
+      end
+
+      it "returns true if the pattern never returns a truthy value" do
+        @enum2.none?(Integer).should == true
+        pattern = EnumerableSpecs::Pattern.new { |x| nil }
+        @enum.none?(pattern).should == true
+
+        [1, 42, 3].none?(pattern).should == true
+        {a: 1, b: 2}.none?(pattern).should == true
+      end
+
+      it "returns false if the pattern ever returns other than false or nil" do
+        pattern = EnumerableSpecs::Pattern.new { |x| x < 0 }
+        @enum1.none?(pattern).should == false
+        pattern.yielded.should == [[0], [1], [2], [-1]]
+
+        [1, 2, 3, -1].none?(pattern).should == false
+        {a: 1}.none?(Array).should == false
+      end
+
+      it "does not hide exceptions out of pattern#===" do
+        pattern = EnumerableSpecs::Pattern.new { raise "from pattern" }
+        lambda {
+          @enum.none?(pattern)
+        }.should raise_error(RuntimeError)
+      end
+
+      it "calls the pattern with gathered array when yielded with multiple arguments" do
+        multi = EnumerableSpecs::YieldsMulti.new
+        pattern = EnumerableSpecs::Pattern.new { false }
+        multi.none?(pattern).should == true
+        pattern.yielded.should == [[[1, 2]], [[3, 4, 5]], [[6, 7, 8, 9]]]
       end
     end
   end
