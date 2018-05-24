@@ -378,6 +378,26 @@ module KernelSpecs
       [3, 4]
     end
   end
+
+  module AutoloadMethod
+    def setup_autoload(file)
+      autoload :AutoloadFromIncludedModule, file
+    end
+  end
+
+  class AutoloadMethodIncluder
+    include AutoloadMethod
+  end
+
+  module AutoloadMethod2
+    def setup_autoload(file)
+      Kernel.autoload :AutoloadFromIncludedModule2, file
+    end
+  end
+
+  class AutoloadMethodIncluder2
+    include AutoloadMethod2
+  end
 end
 
 class EvalSpecs
