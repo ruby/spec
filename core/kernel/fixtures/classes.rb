@@ -398,6 +398,29 @@ module KernelSpecs
   class AutoloadMethodIncluder2
     include AutoloadMethod2
   end
+
+  class WarnInNestedCall
+    def f4(s = "", n)
+      f3(s, n)
+    end
+
+    def f3(s, n)
+      f2(s, n)
+    end
+
+    def f2(s, n)
+      f1(s, n)
+    end
+
+    def f1(s, n)
+      warn(s, uplevel: n)
+    end
+
+    def warn_call_lineno; method(:f1).source_location[1] + 1; end
+    def f1_call_lineno; method(:f2).source_location[1] + 1; end
+    def f2_call_lineno; method(:f3).source_location[1] + 1; end
+    def f3_call_lineno; method(:f4).source_location[1] + 1; end
+  end
 end
 
 class EvalSpecs
