@@ -30,7 +30,21 @@ describe 'String#-@' do
       (-"unfrozen string").should equal(-"unfrozen string")
       (-"unfrozen string").should_not equal(-"another unfrozen string")
     end
+  end
 
+  ruby_version_is "2.5"..."2.6" do
+    it "is an identity function if the string is frozen" do
+      dynamic = %w(this string is frozen).join(' ').freeze
+
+      (-dynamic).should equal(dynamic)
+
+      dynamic.should_not equal("this string is frozen".freeze)
+      (-dynamic).should_not equal("this string is frozen".freeze)
+      (-dynamic).should_not equal(-"this string is frozen".freeze)
+    end
+  end
+
+  ruby_version_is "2.6" do
     it "deduplicates frozen strings" do
       dynamic = %w(this string is frozen).join(' ').freeze
 
