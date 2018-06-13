@@ -92,7 +92,7 @@ describe "Kernel#warn" do
         -> { w.f4("foo", 3) }.should output(nil, %r|core/kernel/fixtures/classes.rb:#{w.f3_call_lineno}: warning: foo|)
       end
 
-      ruby_version_is "2.6" do
+      ruby_bug "#14846", "2.5"..."2.6" do
         it "does not prepend caller information if line number is too big" do
           w = KernelSpecs::WarnInNestedCall.new
           -> { w.f4("foo", 100) }.should output(nil, "warning: foo\n")
@@ -118,7 +118,7 @@ describe "Kernel#warn" do
         -> { warn "", uplevel: -100 }.should raise_error(ArgumentError)
       end
 
-      ruby_version_is "2.6" do
+      ruby_bug "#14846", "2.5"..."2.6" do
         it "raises ArgumentError if passed -1" do
           -> { warn "", uplevel: -1 }.should raise_error(ArgumentError)
         end
