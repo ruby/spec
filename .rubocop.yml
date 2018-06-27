@@ -12,6 +12,8 @@ Layout/TrailingWhitespace:
 
 Layout/TrailingBlankLines:
   Enabled: true
+  Exclude:
+    - library/coverage/fixtures/some_class.rb
 
 Lint:
   Enabled: true
