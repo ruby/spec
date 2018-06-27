@@ -1,11 +1,11 @@
 require_relative '../spec_helper'
 
 describe "The RUBYLIB environment variable" do
-  before (:each) do
+  before :each do
     @rubylib, ENV["RUBYLIB"] = ENV["RUBYLIB"], nil
   end
 
-  after (:each) do
+  after :each do
     ENV["RUBYLIB"] = @rubylib
   end
 
