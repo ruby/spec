@@ -1,5 +1,4 @@
-require_relative '../../../spec_helper'
-require 'socket'
+require_relative '../spec_helper'
 
 platform_is_not :windows do
   describe "Addrinfo#unix_path" do

@@ -1,5 +1,4 @@
-require_relative '../../../spec_helper'
-require 'socket'
+require_relative '../spec_helper'
 
 describe "Addrinfo#afamily" do
   describe "for an ipv4 socket" do

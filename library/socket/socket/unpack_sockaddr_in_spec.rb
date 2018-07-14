@@ -1,9 +1,7 @@
-require_relative '../../../spec_helper'
+require_relative '../spec_helper'
 require_relative '../fixtures/classes'
-require 'socket'
 
 describe "Socket.unpack_sockaddr_in" do
-
   it "decodes the host name and port number of a packed sockaddr_in" do
     sockaddr = Socket.sockaddr_in 3333, '127.0.0.1'
     Socket.unpack_sockaddr_in(sockaddr).should == [3333, '127.0.0.1']
@@ -12,6 +10,26 @@ describe "Socket.unpack_sockaddr_in" do
   it "gets the hostname and port number from a passed Addrinfo" do
     addrinfo = Addrinfo.tcp('127.0.0.1', 3333)
     Socket.unpack_sockaddr_in(addrinfo).should == [3333, '127.0.0.1']
+  end
+
+  describe 'using an IPv4 address' do
+    it 'returns an Array containing the port and IP address' do
+      port = 80
+      ip   = '127.0.0.1'
+      addr = Socket.pack_sockaddr_in(port, ip)
+
+      Socket.unpack_sockaddr_in(addr).should == [port, ip]
+    end
+  end
+
+  describe 'using an IPv6 address' do
+    it 'returns an Array containing the port and IP address' do
+      port = 80
+      ip   = '::1'
+      addr = Socket.pack_sockaddr_in(port, ip)
+
+      Socket.unpack_sockaddr_in(addr).should == [port, ip]
+    end
   end
 
   platform_is_not :windows do
@@ -25,5 +43,4 @@ describe "Socket.unpack_sockaddr_in" do
       lambda { Socket.unpack_sockaddr_in(addrinfo) }.should raise_error(ArgumentError)
     end
   end
-
 end

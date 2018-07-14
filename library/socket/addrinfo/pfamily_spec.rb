@@ -1,7 +1,12 @@
-require_relative '../../../spec_helper'
-require 'socket'
+require_relative '../spec_helper'
 
 describe "Addrinfo#pfamily" do
+  it 'returns PF_UNSPEC as the default socket family' do
+    sockaddr = Socket.pack_sockaddr_in(80, 'localhost')
+
+    Addrinfo.new(sockaddr).pfamily.should == Socket::PF_UNSPEC
+  end
+
   describe "for an ipv4 socket" do
 
     before :each do
