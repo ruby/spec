@@ -47,6 +47,39 @@ module SocketSpecs
     File.delete(path) if File.exist?(path)
   end
 
+  def self.each_ip_protocol
+    describe 'using IPv4' do
+      yield Socket::AF_INET, '127.0.0.1', 'AF_INET'
+    end
+
+    describe 'using IPv6' do
+      yield Socket::AF_INET6, '::1', 'AF_INET6'
+    end
+  end
+
+  def self.loop_with_timeout(timeout = 5)
+    require 'timeout'
+    time = Time.now
+
+    loop do
+      if Time.now - time >= timeout
+        raise TimeoutError, "Did not succeed within #{timeout} seconds"
+      end
+
+      sleep 0.01 # necessary on OSX; don't know why
+      yield
+    end
+  end
+
+  def self.wait_until_success(timeout = 5)
+    loop_with_timeout(timeout) do
+      begin
+        return yield
+      rescue
+      end
+    end
+  end
+
   # TCPServer echo server accepting one connection
   class SpecTCPServer
     attr_reader :hostname, :port

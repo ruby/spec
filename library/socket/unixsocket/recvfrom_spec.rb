@@ -1,4 +1,4 @@
-require_relative '../../../spec_helper'
+require_relative '../spec_helper'
 require_relative '../fixtures/classes'
 
 describe "UNIXSocket#recvfrom" do
@@ -43,5 +43,55 @@ describe "UNIXSocket#recvfrom" do
       sock.close
     end
   end
+end
 
+
+with_feature :unix_socket do
+  describe 'UNIXSocket#recvfrom' do
+    describe 'using a socket pair' do
+      before do
+        @client, @server = UNIXSocket.socketpair
+        @client.write('hello')
+      end
+
+      after do
+        @client.close
+        @server.close
+      end
+
+      it 'returns an Array containing the data and address information' do
+        @server.recvfrom(5).should == ['hello', ['AF_UNIX', '']]
+      end
+    end
+
+    # These specs are taken from the rdoc examples on UNIXSocket#recvfrom.
+    describe 'using a UNIX socket constructed using UNIXSocket.for_fd' do
+      before do
+        @path1 = tmp('unix_socket1')
+        @path2 = tmp('unix_socket2')
+
+        @client_raw = Socket.new(:UNIX, :DGRAM)
+        @client_raw.bind(Socket.sockaddr_un(@path1))
+
+        @server_raw = Socket.new(:UNIX, :DGRAM)
+        @server_raw.bind(Socket.sockaddr_un(@path2))
+
+        @socket = UNIXSocket.for_fd(@server_raw.fileno)
+      end
+
+      after do
+        @client_raw.close
+        @server_raw.close # also closes @socket
+
+        rm_r @path1
+        rm_r @path2
+      end
+
+      it 'returns an Array containing the data and address information' do
+        @client_raw.send('hello', 0, Socket.sockaddr_un(@path2))
+
+        @socket.recvfrom(5).should == ['hello', ['AF_UNIX', @path1]]
+      end
+    end
+  end
 end
