@@ -1,11 +1,9 @@
 require_relative '../spec_helper'
 require_relative '../fixtures/classes'
 
-include Socket::Constants
-
 describe "Socket#bind on SOCK_DGRAM socket" do
   before :each do
-    @sock = Socket.new(AF_INET, SOCK_DGRAM, 0)
+    @sock = Socket.new(Socket::AF_INET, Socket::SOCK_DGRAM, 0)
     @sockaddr = Socket.pack_sockaddr_in(0, "127.0.0.1")
   end
 
@@ -45,8 +43,8 @@ end
 
 describe "Socket#bind on SOCK_STREAM socket" do
   before :each do
-    @sock = Socket.new(AF_INET, SOCK_STREAM, 0)
-    @sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, true)
+    @sock = Socket.new(Socket::AF_INET, Socket::SOCK_STREAM, 0)
+    @sock.setsockopt(Socket::SOL_SOCKET, Socket::SO_REUSEADDR, true)
     @sockaddr = Socket.pack_sockaddr_in(0, "127.0.0.1")
   end
 
