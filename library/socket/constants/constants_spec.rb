@@ -1,6 +1,5 @@
 require_relative '../spec_helper'
 require_relative '../fixtures/classes'
-include Socket::Constants
 
 describe "Socket::Constants" do
   it "defines socket types" do
