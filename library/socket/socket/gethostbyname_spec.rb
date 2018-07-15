@@ -115,22 +115,24 @@ describe 'Socket.gethostbyname' do
     end
   end
 
-  describe 'using an IPv6 address' do
-    describe 'the returned Array' do
-      before do
-        @addr = Socket.gethostbyname('::1')
-      end
+  guard -> { SocketSpecs.ipv6_available? } do
+    describe 'using an IPv6 address' do
+      describe 'the returned Array' do
+        before do
+          @addr = Socket.gethostbyname('::1')
+        end
 
-      it 'includes the IP address as the first value' do
-        @addr[0].should == '::1'
-      end
+        it 'includes the IP address as the first value' do
+          @addr[0].should == '::1'
+        end
 
-      it 'includes the address type as the 3rd value' do
-        @addr[2].should == Socket::AF_INET6
-      end
+        it 'includes the address type as the 3rd value' do
+          @addr[2].should == Socket::AF_INET6
+        end
 
-      it 'includes the address string as the 4th value' do
-        @addr[3].should == [0, 0, 0, 0, 0, 0, 0, 1].pack('n8')
+        it 'includes the address string as the 4th value' do
+          @addr[3].should == [0, 0, 0, 0, 0, 0, 0, 1].pack('n8')
+        end
       end
     end
   end
