@@ -20,12 +20,12 @@ describe 'Socket.gethostbyname' do
   end
 
   it 'returns an Array' do
-    Socket.gethostbyname('localhost').should be_an_instance_of(Array)
+    Socket.gethostbyname(@hostname).should be_an_instance_of(Array)
   end
 
   describe 'the returned Array' do
     before do
-      @array = Socket.gethostbyname('localhost')
+      @array = Socket.gethostbyname(@hostname)
     end
 
     it 'includes the hostname as the first value' do
