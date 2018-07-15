@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require_relative '../fixtures/classes'
 
-describe 'Socket#accept' do
+describe 'Socket#sysaccept' do
   SocketSpecs.each_ip_protocol do |family, ip_address|
     before do
       @server   = Socket.new(family, :STREAM)
@@ -12,19 +12,21 @@ describe 'Socket#accept' do
       @server.close
     end
 
-    describe 'using an unbound socket'  do
-      it 'raises Errno::EINVAL' do
-        lambda { @server.sysaccept }.should raise_error(Errno::EINVAL)
-      end
-    end
-
-    describe "using a bound socket that's not listening" do
-      before do
-        @server.bind(@sockaddr)
+    platform_is_not :windows do # hangs
+      describe 'using an unbound socket'  do
+        it 'raises Errno::EINVAL' do
+          lambda { @server.sysaccept }.should raise_error(Errno::EINVAL)
+        end
       end
 
-      it 'raises Errno::EINVAL' do
-        lambda { @server.sysaccept }.should raise_error(Errno::EINVAL)
+      describe "using a bound socket that's not listening" do
+        before do
+          @server.bind(@sockaddr)
+        end
+
+        it 'raises Errno::EINVAL' do
+          lambda { @server.sysaccept }.should raise_error(Errno::EINVAL)
+        end
       end
     end
 

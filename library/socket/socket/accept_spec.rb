@@ -12,19 +12,21 @@ describe 'Socket#accept' do
       @server.close unless @server.closed?
     end
 
-    describe 'using an unbound socket'  do
-      it 'raises Errno::EINVAL' do
-        lambda { @server.accept }.should raise_error(Errno::EINVAL)
-      end
-    end
-
-    describe "using a bound socket that's not listening" do
-      before do
-        @server.bind(@sockaddr)
+    platform_is_not :windows do # hangs
+      describe 'using an unbound socket'  do
+        it 'raises Errno::EINVAL' do
+          lambda { @server.accept }.should raise_error(Errno::EINVAL)
+        end
       end
 
-      it 'raises Errno::EINVAL' do
-        lambda { @server.accept }.should raise_error(Errno::EINVAL)
+      describe "using a bound socket that's not listening" do
+        before do
+          @server.bind(@sockaddr)
+        end
+
+        it 'raises Errno::EINVAL' do
+          lambda { @server.accept }.should raise_error(Errno::EINVAL)
+        end
       end
     end
 
