@@ -4,7 +4,7 @@ describe 'UDPSocket#initialize' do
   after do
     @socket.close if @socket
   end
-  
+
   it 'initializes a new UDPSocket' do
     @socket = UDPSocket.new
     @socket.should be_an_instance_of(UDPSocket)
