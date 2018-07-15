@@ -15,21 +15,17 @@ describe "Socket#gethostbyname" do
 end
 
 describe 'Socket.gethostbyname' do
-  before do
-    @hostname = SocketSpecs.hostname_reverse_lookup
-  end
-
   it 'returns an Array' do
-    Socket.gethostbyname(@hostname).should be_an_instance_of(Array)
+    Socket.gethostbyname('127.0.0.1').should be_an_instance_of(Array)
   end
 
   describe 'the returned Array' do
     before do
-      @array = Socket.gethostbyname(@hostname)
+      @array = Socket.gethostbyname('127.0.0.1')
     end
 
     it 'includes the hostname as the first value' do
-      @array[0].should == @hostname
+      @array[0].should == '127.0.0.1'
     end
 
     it 'includes the aliases as the 2nd value' do

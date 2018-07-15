@@ -69,7 +69,7 @@ describe 'Socket.getnameinfo' do
 
   describe 'using a String as the first argument' do
     before do
-      @addr = Socket.sockaddr_in(80, @hostname)
+      @addr = Socket.sockaddr_in(80, '127.0.0.1')
     end
 
     it 'raises SocketError when using an invalid String' do
