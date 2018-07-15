@@ -51,22 +51,18 @@ describe "TCPSocket#gethostbyname" do
 end
 
 describe 'TCPSocket#gethostbyname' do
-  before do
-    @hostname = SocketSpecs.hostname_reverse_lookup
-  end
-
   it 'returns an Array' do
-    TCPSocket.gethostbyname(@hostname).should be_an_instance_of(Array)
+    TCPSocket.gethostbyname('127.0.0.1').should be_an_instance_of(Array)
   end
 
   describe 'using a hostname' do
     describe 'the returned Array' do
       before do
-        @array = TCPSocket.gethostbyname(@hostname)
+        @array = TCPSocket.gethostbyname('127.0.0.1')
       end
 
       it 'includes the canonical name as the 1st value' do
-        @array[0].should == @hostname
+        @array[0].should == '127.0.0.1'
       end
 
       it 'includes an array of alternative hostnames as the 2nd value' do
