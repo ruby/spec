@@ -51,14 +51,15 @@ describe 'TCPServer#sysaccept' do
       end
 
       after do
+        Socket.for_fd(@fd).close if @fd
         @client.close
       end
 
       it 'returns a new file descriptor as a Fixnum' do
-        fd = @server.sysaccept
+        @fd = @server.sysaccept
 
-        fd.should be_an_instance_of(Fixnum)
-        fd.should_not == @client.fileno
+        @fd.should be_an_instance_of(Fixnum)
+        @fd.should_not == @client.fileno
       end
     end
   end

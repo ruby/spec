@@ -3,17 +3,20 @@ require_relative '../fixtures/classes'
 
 describe 'Socket#connect_address' do
   describe 'using an unbound socket' do
-    it 'raises SocketError' do
-      sock = Socket.new(:INET, :STREAM)
+    after do
+      @sock.close
+    end
 
-      lambda { sock.connect_address }.should raise_error(SocketError)
+    it 'raises SocketError' do
+      @sock = Socket.new(:INET, :STREAM)
+
+      lambda { @sock.connect_address }.should raise_error(SocketError)
     end
   end
 
   describe 'using a socket bound to 0.0.0.0' do
     before do
       @sock = Socket.new(:INET, :STREAM)
-
       @sock.bind(Socket.sockaddr_in(0, '0.0.0.0'))
     end
 
@@ -53,7 +56,6 @@ describe 'Socket#connect_address' do
   describe 'using a socket bound to ::' do
     before do
       @sock = Socket.new(:INET6, :STREAM)
-
       @sock.bind(Socket.sockaddr_in(0, '::'))
     end
 

@@ -10,14 +10,14 @@ describe 'Addrinfo#connect_from' do
     end
 
     after do
+      @socket.close if @socket
       @server.close
     end
 
     describe 'using separate arguments' do
       it 'returns a Socket when no block is given' do
-        socket = @addr.connect_from(ip_address, 0)
-
-        socket.should be_an_instance_of(Socket)
+        @socket = @addr.connect_from(ip_address, 0)
+        @socket.should be_an_instance_of(Socket)
       end
 
       it 'yields the Socket when a block is given' do
@@ -27,18 +27,17 @@ describe 'Addrinfo#connect_from' do
       end
 
       it 'treats the last argument as a set of options if it is a Hash' do
-        socket = @addr.connect_from(ip_address, 0, timeout: 2)
-
-        socket.should be_an_instance_of(Socket)
+        @socket = @addr.connect_from(ip_address, 0, timeout: 2)
+        @socket.should be_an_instance_of(Socket)
       end
 
       it 'binds the socket to the local address' do
-        socket = @addr.connect_from(ip_address, 0)
+        @socket = @addr.connect_from(ip_address, 0)
 
-        socket.local_address.ip_address.should == ip_address
+        @socket.local_address.ip_address.should == ip_address
 
-        socket.local_address.ip_port.should > 0
-        socket.local_address.ip_port.should_not == @port
+        @socket.local_address.ip_port.should > 0
+        @socket.local_address.ip_port.should_not == @port
       end
     end
 
@@ -48,9 +47,8 @@ describe 'Addrinfo#connect_from' do
       end
 
       it 'returns a Socket when no block is given' do
-        socket = @addr.connect_from(@from_addr)
-
-        socket.should be_an_instance_of(Socket)
+        @socket = @addr.connect_from(@from_addr)
+        @socket.should be_an_instance_of(Socket)
       end
 
       it 'yields the Socket when a block is given' do
@@ -60,18 +58,17 @@ describe 'Addrinfo#connect_from' do
       end
 
       it 'treats the last argument as a set of options if it is a Hash' do
-        socket = @addr.connect_from(@from_addr, timeout: 2)
-
-        socket.should be_an_instance_of(Socket)
+        @socket = @addr.connect_from(@from_addr, timeout: 2)
+        @socket.should be_an_instance_of(Socket)
       end
 
       it 'binds the socket to the local address' do
-        socket = @addr.connect_from(@from_addr)
+        @socket = @addr.connect_from(@from_addr)
 
-        socket.local_address.ip_address.should == ip_address
+        @socket.local_address.ip_address.should == ip_address
 
-        socket.local_address.ip_port.should > 0
-        socket.local_address.ip_port.should_not == @port
+        @socket.local_address.ip_port.should > 0
+        @socket.local_address.ip_port.should_not == @port
       end
     end
   end

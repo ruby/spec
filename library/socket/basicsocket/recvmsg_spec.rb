@@ -118,21 +118,18 @@ describe 'BasicSocket#recvmsg' do
 
       describe 'without any data available' do
         it 'blocks the caller' do
-          lambda {
-            socket, _ = @server.accept
-            begin
-              socket.recvmsg
-            ensure
-              socket.close
-            end
-          }.should block_caller
+          socket, _ = @server.accept
+          begin
+            lambda { socket.recvmsg }.should block_caller
+          ensure
+            socket.close
+          end
         end
       end
 
       describe 'with data available' do
         before do
           @client.write('hello')
-
           @socket, _ = @server.accept
         end
 

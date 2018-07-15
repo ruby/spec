@@ -53,7 +53,7 @@ with_feature :unix_socket do
     after do
       @client.close
       @server.close
-
+      @io.close if @io
       @file.close
     end
 
@@ -61,7 +61,8 @@ with_feature :unix_socket do
       it 'returns an IO' do
         @client.send_io(@file)
 
-        @server.recv_io.should be_an_instance_of(IO)
+        @io = @server.recv_io
+        @io.should be_an_instance_of(IO)
       end
     end
 
@@ -69,7 +70,8 @@ with_feature :unix_socket do
       it 'returns an instance of the custom class' do
         @client.send_io(@file)
 
-        @server.recv_io(File).should be_an_instance_of(File)
+        @io = @server.recv_io(File)
+        @io.should be_an_instance_of(File)
       end
     end
 
@@ -77,7 +79,8 @@ with_feature :unix_socket do
       it 'opens the IO using the given mode' do
         @client.send_io(@file)
 
-        @server.recv_io(File, File::WRONLY).should be_an_instance_of(File)
+        @io = @server.recv_io(File, File::WRONLY)
+        @io.should be_an_instance_of(File)
       end
     end
   end

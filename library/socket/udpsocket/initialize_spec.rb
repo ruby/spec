@@ -1,24 +1,33 @@
 require_relative '../spec_helper'
 
 describe 'UDPSocket#initialize' do
+  after do
+    @socket.close if @socket
+  end
+  
   it 'initializes a new UDPSocket' do
-    UDPSocket.new.should be_an_instance_of(UDPSocket)
+    @socket = UDPSocket.new
+    @socket.should be_an_instance_of(UDPSocket)
   end
 
   it 'initializes a new UDPSocket using a Fixnum' do
-    UDPSocket.new(Socket::AF_INET).should be_an_instance_of(UDPSocket)
+    @socket = UDPSocket.new(Socket::AF_INET)
+    @socket.should be_an_instance_of(UDPSocket)
   end
 
   it 'initializes a new UDPSocket using a Symbol' do
-    UDPSocket.new(:INET).should be_an_instance_of(UDPSocket)
+    @socket = UDPSocket.new(:INET)
+    @socket.should be_an_instance_of(UDPSocket)
   end
 
   it 'initializes a new UDPSocket using a String' do
-    UDPSocket.new('INET').should be_an_instance_of(UDPSocket)
+    @socket = UDPSocket.new('INET')
+    @socket.should be_an_instance_of(UDPSocket)
   end
 
   it 'sets the socket to binmode' do
-    UDPSocket.new(:INET).binmode?.should be_true
+    @socket = UDPSocket.new(:INET)
+    @socket.binmode?.should be_true
   end
 
   it 'raises Errno::EAFNOSUPPORT when given an invalid address family' do

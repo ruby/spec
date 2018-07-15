@@ -26,6 +26,8 @@ describe :socket_socketpair, shared: true do
 
         s1.should be_an_instance_of(Socket)
         s2.should be_an_instance_of(Socket)
+        s1.close
+        s2.close
       end
     end
 
@@ -35,6 +37,8 @@ describe :socket_socketpair, shared: true do
 
         s1.should be_an_instance_of(Socket)
         s2.should be_an_instance_of(Socket)
+        s1.close
+        s2.close
       end
 
       it 'raises SocketError for an unknown address family' do
@@ -52,6 +56,8 @@ describe :socket_socketpair, shared: true do
 
         s1.should be_an_instance_of(Socket)
         s2.should be_an_instance_of(Socket)
+        s1.close
+        s2.close
       end
 
       it 'raises SocketError for an unknown address family' do
@@ -75,6 +81,8 @@ describe :socket_socketpair, shared: true do
 
         s1.should be_an_instance_of(Socket)
         s2.should be_an_instance_of(Socket)
+        s1.close
+        s2.close
       end
 
       it 'raises TypeError when #to_str does not return a String' do
@@ -110,16 +118,21 @@ describe :socket_socketpair, shared: true do
 
     it 'accepts a custom protocol as a Fixnum as the 3rd argument' do
       s1, s2 = Socket.public_send(@method, :UNIX, :STREAM, Socket::IPPROTO_IP)
-
       s1.should be_an_instance_of(Socket)
       s2.should be_an_instance_of(Socket)
+      s1.close
+      s2.close
     end
 
     it 'connects the returned Socket objects' do
       s1, s2 = Socket.public_send(@method, :UNIX, :STREAM)
-
-      s1.write('hello')
-      s2.recv(5).should == 'hello'
+      begin
+        s1.write('hello')
+        s2.recv(5).should == 'hello'
+      ensure
+        s1.close
+        s2.close
+      end
     end
   end
 end

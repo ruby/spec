@@ -69,11 +69,13 @@ describe 'TCPServer#accept_nonblock' do
       end
 
       after do
+        @socket.close if @socket
         @client.close
       end
 
       it 'returns a TCPSocket' do
-        @server.accept_nonblock.should be_an_instance_of(TCPSocket)
+        @socket = @server.accept_nonblock
+        @socket.should be_an_instance_of(TCPSocket)
       end
     end
   end

@@ -25,12 +25,14 @@ with_feature :unix_socket do
       end
 
       after do
+        Socket.for_fd(@fd).close if @fd
         @client.close
       end
 
       describe 'without any data' do
         it 'returns a Fixnum' do
-          @server.sysaccept.should be_an_instance_of(Fixnum)
+          @fd = @server.sysaccept
+          @fd.should be_an_instance_of(Fixnum)
         end
       end
 
@@ -40,7 +42,8 @@ with_feature :unix_socket do
         end
 
         it 'returns a Fixnum' do
-          @server.sysaccept.should be_an_instance_of(Fixnum)
+          @fd = @server.sysaccept
+          @fd.should be_an_instance_of(Fixnum)
         end
       end
     end
