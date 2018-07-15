@@ -69,7 +69,7 @@ describe 'Socket.getnameinfo' do
 
   describe 'using a String as the first argument' do
     before do
-      @addr = Socket.sockaddr_in(80, 'localhost')
+      @addr = Socket.sockaddr_in(80, @hostname)
     end
 
     it 'raises SocketError when using an invalid String' do
@@ -96,7 +96,7 @@ describe 'Socket.getnameinfo' do
   SocketSpecs.each_ip_protocol do |family, ip_address, family_name|
     describe 'using a 3 element Array as the first argument' do
       before do
-        @addr = [family_name, 80, 'localhost']
+        @addr = [family_name, 80, @hostname]
       end
 
       it 'raises ArgumentError when using an invalid Array' do

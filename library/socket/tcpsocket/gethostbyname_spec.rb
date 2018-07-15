@@ -56,13 +56,13 @@ describe 'TCPSocket#gethostbyname' do
   end
 
   it 'returns an Array' do
-    TCPSocket.gethostbyname('localhost').should be_an_instance_of(Array)
+    TCPSocket.gethostbyname(@hostname).should be_an_instance_of(Array)
   end
 
   describe 'using a hostname' do
     describe 'the returned Array' do
       before do
-        @array = TCPSocket.gethostbyname('localhost')
+        @array = TCPSocket.gethostbyname(@hostname)
       end
 
       it 'includes the canonical name as the 1st value' do
