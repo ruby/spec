@@ -4,7 +4,7 @@ require 'ipaddr'
 
 describe 'Socket.gethostbyaddr' do
   before do
-    @hostname = Socket.getaddrinfo('localhost', nil, 0, 0, 0, 0, true)[0][2]
+    @hostname = SocketSpecs.hostname_reverse_lookup
   end
 
   describe 'using an IPv4 address' do

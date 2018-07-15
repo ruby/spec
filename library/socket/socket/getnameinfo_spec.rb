@@ -64,7 +64,7 @@ end
 
 describe 'Socket.getnameinfo' do
   before do
-    @hostname = Socket.getaddrinfo('localhost', nil, 0, 0, 0, 0, true)[0][2]
+    @hostname = SocketSpecs.hostname_reverse_lookup
   end
 
   describe 'using a String as the first argument' do
