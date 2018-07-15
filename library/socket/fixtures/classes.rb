@@ -47,13 +47,27 @@ module SocketSpecs
     File.delete(path) if File.exist?(path)
   end
 
+  def self.ipv6_available?
+    @ipv6_available ||= begin
+      server = TCPServer.new('::1', 0)
+    rescue Errno::EADDRNOTAVAIL
+      :no
+    else
+      server.close
+      :yes
+    end
+    @ipv6_available == :yes
+  end
+
   def self.each_ip_protocol
     describe 'using IPv4' do
       yield Socket::AF_INET, '127.0.0.1', 'AF_INET'
     end
 
-    describe 'using IPv6' do
-      yield Socket::AF_INET6, '::1', 'AF_INET6'
+    guard -> { SocketSpecs.ipv6_available? } do
+      describe 'using IPv6' do
+        yield Socket::AF_INET6, '::1', 'AF_INET6'
+      end
     end
   end
 
