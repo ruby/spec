@@ -13,23 +13,25 @@ with_feature :unix_socket do
       before do
         @path = SocketSpecs.socket_path
         @server = UNIXServer.new(@path)
+        @socket = UNIXSocket.new(@path)
       end
 
       after do
+        @socket.close
         @server.close
         rm_r(@path)
       end
 
       it 'returns a new UNIXSocket' do
-        UNIXSocket.new(@path).should be_an_instance_of(UNIXSocket)
+        @socket.should be_an_instance_of(UNIXSocket)
       end
 
       it 'sets the socket path to an empty String' do
-        UNIXSocket.new(@path).path.should == ''
+        @socket.path.should == ''
       end
 
       it 'sets the socket to binmode' do
-        UNIXSocket.new(@path).binmode?.should be_true
+        @socket.binmode?.should be_true
       end
     end
   end

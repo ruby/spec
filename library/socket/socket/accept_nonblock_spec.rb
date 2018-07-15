@@ -88,19 +88,20 @@ describe 'Socket#accept_nonblock' do
         end
 
         after do
+          @socket.close if @socket
           @client.close
         end
 
         it 'returns an Array containing a Socket and an Addrinfo' do
-          socket, addrinfo = @server.accept_nonblock
+          @socket, addrinfo = @server.accept_nonblock
 
-          socket.should be_an_instance_of(Socket)
+          @socket.should be_an_instance_of(Socket)
           addrinfo.should be_an_instance_of(Addrinfo)
         end
 
         describe 'the returned Addrinfo' do
           before do
-            _, @addr = @server.accept_nonblock
+            @socket, @addr = @server.accept_nonblock
           end
 
           it 'uses AF_INET as the address family' do

@@ -37,6 +37,10 @@ describe 'Socket#accept' do
         @server_addr = Socket.sockaddr_in(server_ip, ip_address)
       end
 
+      after do
+        Socket.for_fd(@fd).close if @fd
+      end
+
       describe 'without a connected client' do
         before do
           @client = Socket.new(family, :STREAM)
@@ -48,7 +52,7 @@ describe 'Socket#accept' do
 
         it 'blocks the caller until a connection is available' do
           thread = Thread.new do
-            @server.sysaccept
+            @fd, _ = @server.sysaccept
           end
 
           @client.connect(@server_addr)
@@ -62,7 +66,6 @@ describe 'Socket#accept' do
       describe 'with a connected client' do
         before do
           @client = Socket.new(family, :STREAM)
-
           @client.connect(@server.getsockname)
         end
 
@@ -71,16 +74,16 @@ describe 'Socket#accept' do
         end
 
         it 'returns an Array containing a Fixnum and an Addrinfo' do
-          fd, addrinfo = @server.sysaccept
+          @fd, addrinfo = @server.sysaccept
 
-          fd.should be_an_instance_of(Fixnum)
+          @fd.should be_an_instance_of(Fixnum)
           addrinfo.should be_an_instance_of(Addrinfo)
         end
 
         it 'returns a new file descriptor' do
-          fd, _ = @server.sysaccept
+          @fd, _ = @server.sysaccept
 
-          fd.should_not == @client.fileno
+          @fd.should_not == @client.fileno
         end
       end
     end

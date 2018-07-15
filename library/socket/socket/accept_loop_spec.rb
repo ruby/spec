@@ -36,8 +36,12 @@ describe 'Socket.accept_loop' do
           break
         end
 
-        conn.should be_an_instance_of(Socket)
-        addr.should be_an_instance_of(Addrinfo)
+        begin
+          conn.should be_an_instance_of(Socket)
+          addr.should be_an_instance_of(Addrinfo)
+        ensure
+          conn.close
+        end
       end
     end
   end
@@ -64,8 +68,12 @@ describe 'Socket.accept_loop' do
           break
         end
 
-        conn.should be_an_instance_of(Socket)
-        addr.should be_an_instance_of(Addrinfo)
+        begin
+          conn.should be_an_instance_of(Socket)
+          addr.should be_an_instance_of(Addrinfo)
+        ensure
+          conn.close
+        end
       end
     end
   end

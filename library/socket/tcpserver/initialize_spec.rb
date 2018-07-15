@@ -1,11 +1,6 @@
 require_relative '../spec_helper'
 
 describe 'TCPServer#initialize' do
-  it "sets the socket to binmode" do
-    server = TCPServer.new(0)
-    server.binmode?.should be_true
-  end
-
   describe 'with a single Fixnum argument' do
     before do
       @server = TCPServer.new(0)
@@ -22,6 +17,10 @@ describe 'TCPServer#initialize' do
 
     it 'sets the hostname to 0.0.0.0' do
       @server.local_address.ip_address.should == '0.0.0.0'
+    end
+
+    it "sets the socket to binmode" do
+      @server.binmode?.should be_true
     end
   end
 

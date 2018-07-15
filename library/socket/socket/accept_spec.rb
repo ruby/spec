@@ -55,8 +55,13 @@ describe 'Socket#accept' do
           client.connect(@server_addr)
 
           thread.join(5)
-
-          thread.value.should be_an_instance_of(Array)
+          value = thread.value
+          begin
+            value.should be_an_instance_of(Array)
+          ensure
+            client.close
+            value[0].close
+          end
         end
       end
 
@@ -69,19 +74,20 @@ describe 'Socket#accept' do
         end
 
         after do
+          @socket.close if @socket
           @client.close
         end
 
         it 'returns an Array containing a Socket and an Addrinfo' do
-          socket, addrinfo = @server.accept
+          @socket, addrinfo = @server.accept
 
-          socket.should be_an_instance_of(Socket)
+          @socket.should be_an_instance_of(Socket)
           addrinfo.should be_an_instance_of(Addrinfo)
         end
 
         describe 'the returned Addrinfo' do
           before do
-            _, @addr = @server.accept
+            @socket, @addr = @server.accept
           end
 
           it 'uses AF_INET as the address family' do

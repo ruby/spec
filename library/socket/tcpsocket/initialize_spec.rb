@@ -15,15 +15,18 @@ describe 'TCPSocket#initialize' do
       end
 
       after do
+        @client.close if @client
         @server.close
       end
 
       it 'returns a TCPSocket when using a Fixnum as the port' do
-        TCPSocket.new(ip_address, @port).should be_an_instance_of(TCPSocket)
+        @client = TCPSocket.new(ip_address, @port)
+        @client.should be_an_instance_of(TCPSocket)
       end
 
       it 'returns a TCPSocket when using a String as the port' do
-        TCPSocket.new(ip_address, @port.to_s).should be_an_instance_of(TCPSocket)
+        @client = TCPSocket.new(ip_address, @port.to_s)
+        @client.should be_an_instance_of(TCPSocket)
       end
 
       it 'raises SocketError when the port number is a non numeric String' do
@@ -31,24 +34,25 @@ describe 'TCPSocket#initialize' do
       end
 
       it 'set the socket to binmode' do
-        TCPSocket.new(ip_address, @port).binmode?.should be_true
+        @client = TCPSocket.new(ip_address, @port)
+        @client.binmode?.should be_true
       end
 
       it 'connects to the right address' do
-        socket = TCPSocket.new(ip_address, @port)
+        @client = TCPSocket.new(ip_address, @port)
 
-        socket.remote_address.ip_address.should == @server.local_address.ip_address
-        socket.remote_address.ip_port.should    == @server.local_address.ip_port
+        @client.remote_address.ip_address.should == @server.local_address.ip_address
+        @client.remote_address.ip_port.should    == @server.local_address.ip_port
       end
 
       describe 'using a local address and service' do
         it 'binds the client socket to the local address and service' do
-          socket = TCPSocket.new(ip_address, @port, ip_address, 0)
+          @client = TCPSocket.new(ip_address, @port, ip_address, 0)
 
-          socket.local_address.ip_address.should == ip_address
+          @client.local_address.ip_address.should == ip_address
 
-          socket.local_address.ip_port.should > 0
-          socket.local_address.ip_port.should_not == @port
+          @client.local_address.ip_port.should > 0
+          @client.local_address.ip_port.should_not == @port
         end
       end
     end

@@ -86,11 +86,13 @@ describe 'TCPServer#accept' do
       end
 
       after do
+        @socket.close if @socket
         @client.close
       end
 
       it 'returns a TCPSocket' do
-        @server.accept.should be_an_instance_of(TCPSocket)
+        @socket = @server.accept
+        @socket.should be_an_instance_of(TCPSocket)
       end
     end
   end

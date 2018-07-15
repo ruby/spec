@@ -44,14 +44,15 @@ with_feature :unix_socket do
     after do
       @client.close
       @server.close
-
+      @io.close if @io
       @file.close
     end
 
     it 'sends an IO object' do
       @client.send_io(@file)
 
-      @server.recv_io.should be_an_instance_of(IO)
+      @io = @server.recv_io
+      @io.should be_an_instance_of(IO)
     end
   end
 end

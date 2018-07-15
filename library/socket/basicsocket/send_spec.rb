@@ -200,8 +200,11 @@ describe 'BasicSocket#send' do
           @client.send('a', Socket::MSG_OOB).should == 1
 
           socket, _ = @server.accept
-
-          socket.recv(1, Socket::MSG_OOB).should == 'a'
+          begin
+            socket.recv(1, Socket::MSG_OOB).should == 'a'
+          ensure
+            socket.close
+          end
         end
       end
     end

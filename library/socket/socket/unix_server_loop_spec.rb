@@ -23,15 +23,16 @@ with_feature :unix_socket do
       end
 
       after do
+        @sock.close if @sock
         @client.close if @client
       end
 
       it 'yields a Socket and an Addrinfo' do
-        sock, addr = nil
+        @sock, addr = nil
 
         thread = Thread.new do
           Socket.unix_server_loop(@path) do |socket, addrinfo|
-            sock = socket
+            @sock = socket
             addr = addrinfo
 
             break
@@ -42,7 +43,7 @@ with_feature :unix_socket do
 
         thread.join(2)
 
-        sock.should be_an_instance_of(Socket)
+        @sock.should be_an_instance_of(Socket)
         addr.should be_an_instance_of(Addrinfo)
       end
     end

@@ -15,15 +15,16 @@ describe 'Socket.tcp_server_loop' do
     end
 
     after do
+      @sock.close if @sock
       @client.close
     end
 
     it 'yields a Socket and an Addrinfo' do
-      sock, addr = nil
+      @sock, addr = nil
 
       thread = Thread.new do
         Socket.tcp_server_loop('127.0.0.1', @port) do |socket, addrinfo|
-          sock = socket
+          @sock = socket
           addr = addrinfo
 
           break
@@ -39,7 +40,7 @@ describe 'Socket.tcp_server_loop' do
       # complete.
       thread.join(2)
 
-      sock.should be_an_instance_of(Socket)
+      @sock.should be_an_instance_of(Socket)
       addr.should be_an_instance_of(Addrinfo)
     end
   end
