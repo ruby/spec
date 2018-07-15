@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 with_feature :unix_socket do
   describe 'UNIXSocket#remote_address' do
     before do
-      @path   = tmp('unix_socket')
+      @path   = SocketSpecs.socket_path
       @server = UNIXServer.new(@path)
       @client = UNIXSocket.new(@path)
     end

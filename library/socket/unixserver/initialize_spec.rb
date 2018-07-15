@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 with_feature :unix_socket do
   describe 'UNIXServer#initialize' do
     before do
-      @path = tmp('unix_socket')
+      @path = SocketSpecs.socket_path
     end
 
     after do

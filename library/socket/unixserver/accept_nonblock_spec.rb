@@ -38,7 +38,7 @@ end
 with_feature :unix_socket do
   describe 'UNIXServer#accept_nonblock' do
     before do
-      @path   = tmp('unix_socket')
+      @path   = SocketSpecs.socket_path
       @server = UNIXServer.new(@path)
     end
 

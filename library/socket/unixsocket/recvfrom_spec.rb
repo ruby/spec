@@ -2,7 +2,6 @@ require_relative '../spec_helper'
 require_relative '../fixtures/classes'
 
 describe "UNIXSocket#recvfrom" do
-
   platform_is_not :windows do
     before :each do
       @path = SocketSpecs.socket_path
@@ -67,8 +66,9 @@ with_feature :unix_socket do
     # These specs are taken from the rdoc examples on UNIXSocket#recvfrom.
     describe 'using a UNIX socket constructed using UNIXSocket.for_fd' do
       before do
-        @path1 = tmp('unix_socket1')
-        @path2 = tmp('unix_socket2')
+        @path1 = SocketSpecs.socket_path
+        @path2 = SocketSpecs.socket_path + '2'
+        rm_r(@path2)
 
         @client_raw = Socket.new(:UNIX, :DGRAM)
         @client_raw.bind(Socket.sockaddr_un(@path1))
