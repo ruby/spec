@@ -9,7 +9,7 @@ describe "Socket#getservbyname" do
   it "returns the port for service 'discard' with protocol 'tcp'" do
     Socket.getservbyname('discard', 'tcp').should == 9
   end
-  
+
   it 'returns the port for service "http"' do
     Socket.getservbyname('http').should == 80
   end
