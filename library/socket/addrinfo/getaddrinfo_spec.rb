@@ -35,16 +35,18 @@ describe 'Addrinfo.getaddrinfo' do
     end
   end
 
-  it 'sets a custom protocol family of the Addrinfo instances' do
-    array = Addrinfo.getaddrinfo('localhost', 80, Socket::PF_INET6)
+  guard -> { SocketSpecs.ipv6_available? } do
+    it 'sets a custom protocol family of the Addrinfo instances' do
+      array = Addrinfo.getaddrinfo('localhost', 80, Socket::PF_INET6)
 
-    array[0].pfamily.should == Socket::PF_INET6
-  end
+      array[0].pfamily.should == Socket::PF_INET6
+    end
 
-  it 'sets a corresponding address family based on a custom protocol family' do
-    array = Addrinfo.getaddrinfo('localhost', 80, Socket::PF_INET6)
+    it 'sets a corresponding address family based on a custom protocol family' do
+      array = Addrinfo.getaddrinfo('localhost', 80, Socket::PF_INET6)
 
-    array[0].afamily.should == Socket::AF_INET6
+      array[0].afamily.should == Socket::AF_INET6
+    end
   end
 
   it 'sets the default socket type of the Addrinfo instances' do
