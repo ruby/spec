@@ -13,6 +13,10 @@ module SocketSpecs
     Socket.getaddrinfo("::1", nil)[0][2]
   end
 
+  def self.hostname_reverse_lookup
+    Socket.getaddrinfo("127.0.0.1", nil, 0, 0, 0, 0, true)[0][2]
+  end
+
   def self.addr(which=:ipv4)
     case which
     when :ipv4

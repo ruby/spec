@@ -52,7 +52,7 @@ end
 
 describe 'TCPSocket#gethostbyname' do
   before do
-    @hostname = Socket.getaddrinfo('localhost', nil, 0, 0, 0, 0, true)[0][2]
+    @hostname = SocketSpecs.hostname_reverse_lookup
   end
 
   it 'returns an Array' do
