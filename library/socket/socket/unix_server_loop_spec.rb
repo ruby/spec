@@ -4,7 +4,7 @@ require_relative '../fixtures/classes'
 with_feature :unix_socket do
   describe 'Socket.unix_server_loop' do
     before do
-      @path = tmp('unix_socket')
+      @path = SocketSpecs.socket_path
     end
 
     after do
