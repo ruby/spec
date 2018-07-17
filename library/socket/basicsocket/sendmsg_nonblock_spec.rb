@@ -91,10 +91,10 @@ describe 'BasicSocket#sendmsg_nonblock' do
         @server.close
       end
 
-      it 'raises IO::EAGAINWaitReadable when the underlying buffer is full' do
+      it 'raises IO::WaitWritable when the underlying buffer is full' do
         lambda {
           10.times { @client.sendmsg_nonblock('hello' * 1_000_000) }
-        }.should raise_error(IO::EAGAINWaitReadable)
+        }.should raise_error(IO::WaitWritable)
       end
     end
   end

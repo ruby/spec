@@ -25,8 +25,8 @@ describe 'BasicSocket#recvmsg_nonblock' do
         end
 
         describe 'without any data available' do
-          it 'raises IO::EAGAINWaitReadable' do
-            lambda { @server.recvmsg_nonblock }.should raise_error(IO::EAGAINWaitReadable)
+          it 'raises an exception extending IO::WaitReadable' do
+            lambda { @server.recvmsg_nonblock }.should raise_error(IO::WaitReadable)
           end
         end
 
@@ -119,7 +119,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
       end
 
       describe 'without any data available' do
-        it 'raises IO::EAGAINWaitReadable' do
+        it 'raises IO::WaitReadable' do
           lambda {
             socket, _ = @server.accept
             begin
@@ -127,7 +127,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
             ensure
               socket.close
             end
-          }.should raise_error(IO::EAGAINWaitReadable)
+          }.should raise_error(IO::WaitReadable)
         end
       end
 

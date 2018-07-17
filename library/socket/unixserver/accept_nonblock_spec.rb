@@ -48,8 +48,8 @@ with_feature :unix_socket do
     end
 
     describe 'without a client' do
-      it 'raises IO::EAGAINWaitReadable' do
-        lambda { @server.accept_nonblock }.should raise_error(IO::EAGAINWaitReadable)
+      it 'raises IO::WaitReadable' do
+        lambda { @server.accept_nonblock }.should raise_error(IO::WaitReadable)
       end
     end
 

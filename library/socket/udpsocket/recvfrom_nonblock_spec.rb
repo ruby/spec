@@ -13,8 +13,8 @@ describe 'UDPSocket#recvfrom_nonblock' do
     end
 
     describe 'using an unbound socket' do
-      it 'raises IO::EAGAINWaitReadable' do
-        lambda { @server.recvfrom_nonblock(1) }.should raise_error(IO::EAGAINWaitReadable)
+      it 'raises IO::WaitReadable' do
+        lambda { @server.recvfrom_nonblock(1) }.should raise_error(IO::WaitReadable)
       end
     end
 
@@ -28,8 +28,8 @@ describe 'UDPSocket#recvfrom_nonblock' do
       end
 
       describe 'without any data available' do
-        it 'raises IO::EAGAINWaitReadable' do
-          lambda { @server.recvfrom_nonblock(1) }.should raise_error(IO::EAGAINWaitReadable)
+        it 'raises IO::WaitReadable' do
+          lambda { @server.recvfrom_nonblock(1) }.should raise_error(IO::WaitReadable)
         end
       end
 
