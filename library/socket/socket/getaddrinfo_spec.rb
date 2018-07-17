@@ -219,6 +219,11 @@ describe 'Socket.getaddrinfo' do
       array[6].should be_an_instance_of(Fixnum)
     end
 
+    ipproto_tcp = Socket::IPPROTO_TCP
+    platform_is :windows do
+      ipproto_tcp = 0
+    end
+
     it 'accepts a Fixnum as the socket type' do
       Socket.getaddrinfo(nil, 'http', :INET, Socket::SOCK_STREAM)[0].should == [
         'AF_INET',
@@ -227,7 +232,7 @@ describe 'Socket.getaddrinfo' do
         '127.0.0.1',
         Socket::AF_INET,
         Socket::SOCK_STREAM,
-        Socket::IPPROTO_TCP
+        ipproto_tcp
       ]
     end
 
@@ -239,7 +244,7 @@ describe 'Socket.getaddrinfo' do
         '127.0.0.1',
         Socket::AF_INET,
         Socket::SOCK_STREAM,
-        Socket::IPPROTO_TCP
+        ipproto_tcp
       ]
     end
 
@@ -251,7 +256,7 @@ describe 'Socket.getaddrinfo' do
         '127.0.0.1',
         Socket::AF_INET,
         Socket::SOCK_STREAM,
-        Socket::IPPROTO_TCP
+        ipproto_tcp
       ]
     end
 
@@ -267,7 +272,7 @@ describe 'Socket.getaddrinfo' do
         '127.0.0.1',
         Socket::AF_INET,
         Socket::SOCK_STREAM,
-        Socket::IPPROTO_TCP
+        ipproto_tcp
       ]
     end
 
