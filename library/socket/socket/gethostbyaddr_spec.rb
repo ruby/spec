@@ -3,10 +3,6 @@ require_relative '../fixtures/classes'
 require 'ipaddr'
 
 describe 'Socket.gethostbyaddr' do
-  before do
-    @hostname = SocketSpecs.hostname_reverse_lookup
-  end
-
   describe 'using an IPv4 address' do
     before do
       @addr = IPAddr.new('127.0.0.1').hton
@@ -23,7 +19,7 @@ describe 'Socket.gethostbyaddr' do
         end
 
         it 'includes the hostname as the first value' do
-          @array[0].should == @hostname
+          @array[0].should == SocketSpecs.hostname_reverse_lookup
         end
 
         it 'includes the aliases as the 2nd value' do
@@ -80,7 +76,7 @@ describe 'Socket.gethostbyaddr' do
           end
 
           it 'includes the hostname as the first value' do
-            @array[0].should =~ /#{@hostname}/
+            @array[0].should == SocketSpecs.hostname_reverse_lookup("::1")
           end
 
           it 'includes the aliases as the 2nd value' do
