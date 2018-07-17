@@ -12,9 +12,11 @@ describe 'UDPSocket#recvfrom_nonblock' do
       @server.close
     end
 
-    describe 'using an unbound socket' do
-      it 'raises IO::WaitReadable' do
-        lambda { @server.recvfrom_nonblock(1) }.should raise_error(IO::WaitReadable)
+    platform_is_not :windows do
+      describe 'using an unbound socket' do
+        it 'raises IO::WaitReadable' do
+          lambda { @server.recvfrom_nonblock(1) }.should raise_error(IO::WaitReadable)
+        end
       end
     end
 
@@ -33,48 +35,50 @@ describe 'UDPSocket#recvfrom_nonblock' do
         end
       end
 
-      describe 'with data available' do
-        before do
-          @client.write('hello')
-        end
-
-        it 'returns an Array containing the data and an Array' do
-          @server.recvfrom_nonblock(1).should be_an_instance_of(Array)
-        end
-
-        describe 'the returned Array' do
+      platform_is_not :windows do
+        describe 'with data available' do
           before do
-            @array = @server.recvfrom_nonblock(1)
+            @client.write('hello')
           end
 
-          it 'contains the data at index 0' do
-            @array[0].should == 'h'
+          it 'returns an Array containing the data and an Array' do
+            @server.recvfrom_nonblock(1).should be_an_instance_of(Array)
           end
 
-          it 'contains an Array at index 1' do
-            @array[1].should be_an_instance_of(Array)
-          end
-        end
+          describe 'the returned Array' do
+            before do
+              @array = @server.recvfrom_nonblock(1)
+            end
 
-        describe 'the returned address Array' do
-          before do
-            @addr = @server.recvfrom_nonblock(1)[1]
-          end
+            it 'contains the data at index 0' do
+              @array[0].should == 'h'
+            end
 
-          it 'uses the correct address family' do
-            @addr[0].should == family_name
-          end
-
-          it 'uses the port of the client' do
-            @addr[1].should == @client.local_address.ip_port
+            it 'contains an Array at index 1' do
+              @array[1].should be_an_instance_of(Array)
+            end
           end
 
-          it 'uses the hostname of the client' do
-            @addr[2].should == ip_address
-          end
+          describe 'the returned address Array' do
+            before do
+              @addr = @server.recvfrom_nonblock(1)[1]
+            end
 
-          it 'uses the IP address of the client' do
-            @addr[3].should == ip_address
+            it 'uses the correct address family' do
+              @addr[0].should == family_name
+            end
+
+            it 'uses the port of the client' do
+              @addr[1].should == @client.local_address.ip_port
+            end
+
+            it 'uses the hostname of the client' do
+              @addr[2].should == ip_address
+            end
+
+            it 'uses the IP address of the client' do
+              @addr[3].should == ip_address
+            end
           end
         end
       end

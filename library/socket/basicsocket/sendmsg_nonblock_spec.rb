@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../fixtures/classes'
 
 describe 'BasicSocket#sendmsg_nonblock' do
   SocketSpecs.each_ip_protocol do |family, ip_address|
@@ -16,8 +17,8 @@ describe 'BasicSocket#sendmsg_nonblock' do
       end
 
       describe 'without a destination address' do
-        it 'raises Errno::EDESTADDRREQ' do
-          lambda { @client.sendmsg_nonblock('hello') }.should raise_error(Errno::EDESTADDRREQ)
+        it "raises #{SocketSpecs.dest_addr_req_error}" do
+          lambda { @client.sendmsg_nonblock('hello') }.should raise_error(SocketSpecs.dest_addr_req_error)
         end
       end
 
@@ -75,26 +76,28 @@ describe 'BasicSocket#sendmsg_nonblock' do
       end
     end
 
-    describe 'using a connected TCP socket' do
-      before do
-        @client = Socket.new(family, :STREAM)
-        @server = Socket.new(family, :STREAM)
+    platform_is_not :windows do
+      describe 'using a connected TCP socket' do
+        before do
+          @client = Socket.new(family, :STREAM)
+          @server = Socket.new(family, :STREAM)
 
-        @server.bind(Socket.sockaddr_in(0, ip_address))
-        @server.listen(1)
+          @server.bind(Socket.sockaddr_in(0, ip_address))
+          @server.listen(1)
 
-        @client.connect(@server.getsockname)
-      end
+          @client.connect(@server.getsockname)
+        end
 
-      after do
-        @client.close
-        @server.close
-      end
+        after do
+          @client.close
+          @server.close
+        end
 
-      it 'raises IO::WaitWritable when the underlying buffer is full' do
-        lambda {
-          10.times { @client.sendmsg_nonblock('hello' * 1_000_000) }
-        }.should raise_error(IO::WaitWritable)
+        it 'raises IO::WaitWritable when the underlying buffer is full' do
+          lambda {
+            10.times { @client.sendmsg_nonblock('hello' * 1_000_000) }
+          }.should raise_error(IO::WaitWritable)
+        end
       end
     end
   end

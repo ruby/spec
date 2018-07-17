@@ -13,9 +13,11 @@ describe 'BasicSocket#recvmsg' do
         @server.close
       end
 
-      describe 'using an unbound socket' do
-        it 'blocks the caller' do
-          lambda { @server.recvmsg }.should block_caller
+      platform_is_not :windows do
+        describe 'using an unbound socket' do
+          it 'blocks the caller' do
+            lambda { @server.recvmsg }.should block_caller
+          end
         end
       end
 
@@ -66,8 +68,10 @@ describe 'BasicSocket#recvmsg' do
               @array[1].should be_an_instance_of(Addrinfo)
             end
 
-            it 'stores the flags at index 2' do
-              @array[2].should be_an_instance_of(Fixnum)
+            platform_is_not :windows do
+              it 'stores the flags at index 2' do
+                @array[2].should be_an_instance_of(Fixnum)
+              end
             end
 
             describe 'the returned Addrinfo' do
@@ -100,87 +104,89 @@ describe 'BasicSocket#recvmsg' do
       end
     end
 
-    describe 'using a connected socket' do
-      before do
-        @client = Socket.new(family, :STREAM)
-        @server = Socket.new(family, :STREAM)
-
-        @server.bind(Socket.sockaddr_in(0, ip_address))
-        @server.listen(1)
-
-        @client.connect(@server.getsockname)
-      end
-
-      after do
-        @client.close
-        @server.close
-      end
-
-      describe 'without any data available' do
-        it 'blocks the caller' do
-          socket, _ = @server.accept
-          begin
-            lambda { socket.recvmsg }.should block_caller
-          ensure
-            socket.close
-          end
-        end
-      end
-
-      describe 'with data available' do
+    platform_is_not :windows do
+      describe 'using a connected socket' do
         before do
-          @client.write('hello')
-          @socket, _ = @server.accept
+          @client = Socket.new(family, :STREAM)
+          @server = Socket.new(family, :STREAM)
+
+          @server.bind(Socket.sockaddr_in(0, ip_address))
+          @server.listen(1)
+
+          @client.connect(@server.getsockname)
         end
 
         after do
-          @socket.close
+          @client.close
+          @server.close
         end
 
-        it 'returns an Array containing the data, an Addrinfo and the flags' do
-          @socket.recvmsg.should be_an_instance_of(Array)
+        describe 'without any data available' do
+          it 'blocks the caller' do
+            socket, _ = @server.accept
+            begin
+              lambda { socket.recvmsg }.should block_caller
+            ensure
+              socket.close
+            end
+          end
         end
 
-        describe 'the returned Array' do
+        describe 'with data available' do
           before do
-            @array = @socket.recvmsg
+            @client.write('hello')
+            @socket, _ = @server.accept
           end
 
-          it 'stores the message at index 0' do
-            @array[0].should == 'hello'
+          after do
+            @socket.close
           end
 
-          it 'stores an Addrinfo at index 1' do
-            @array[1].should be_an_instance_of(Addrinfo)
+          it 'returns an Array containing the data, an Addrinfo and the flags' do
+            @socket.recvmsg.should be_an_instance_of(Array)
           end
 
-          it 'stores the flags at index 2' do
-            @array[2].should be_an_instance_of(Fixnum)
-          end
-
-          describe 'the returned Addrinfo' do
+          describe 'the returned Array' do
             before do
-              @addr = @array[1]
+              @array = @socket.recvmsg
             end
 
-            it 'raises when receiving the ip_address message' do
-              lambda { @addr.ip_address }.should raise_error(SocketError)
+            it 'stores the message at index 0' do
+              @array[0].should == 'hello'
             end
 
-            it 'uses the correct address family' do
-              @addr.afamily.should == Socket::AF_UNSPEC
+            it 'stores an Addrinfo at index 1' do
+              @array[1].should be_an_instance_of(Addrinfo)
             end
 
-            it 'returns 0 for the protocol family' do
-              @addr.pfamily.should == 0
+            it 'stores the flags at index 2' do
+              @array[2].should be_an_instance_of(Fixnum)
             end
 
-            it 'uses the correct socket type' do
-              @addr.socktype.should == Socket::SOCK_STREAM
-            end
+            describe 'the returned Addrinfo' do
+              before do
+                @addr = @array[1]
+              end
 
-            it 'raises when receiving the ip_port message' do
-              lambda { @addr.ip_port }.should raise_error(SocketError)
+              it 'raises when receiving the ip_address message' do
+                lambda { @addr.ip_address }.should raise_error(SocketError)
+              end
+
+              it 'uses the correct address family' do
+                @addr.afamily.should == Socket::AF_UNSPEC
+              end
+
+              it 'returns 0 for the protocol family' do
+                @addr.pfamily.should == 0
+              end
+
+              it 'uses the correct socket type' do
+                @addr.socktype.should == Socket::SOCK_STREAM
+              end
+
+              it 'raises when receiving the ip_port message' do
+                lambda { @addr.ip_port }.should raise_error(SocketError)
+              end
             end
           end
         end

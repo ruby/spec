@@ -92,59 +92,59 @@ describe 'Socket#connect_address' do
     end
   end
 
-  describe 'using an unbound UNIX socket' do
-    before do
-      @path = SocketSpecs.socket_path
-      @server = UNIXServer.new(@path)
-      @client = UNIXSocket.new(@path)
+  with_feature :unix_socket do
+    describe 'using an unbound UNIX socket' do
+      before do
+        @path = SocketSpecs.socket_path
+        @server = UNIXServer.new(@path)
+        @client = UNIXSocket.new(@path)
+      end
+
+      after do
+        @client.close
+        @server.close
+        rm_r(@path)
+      end
+
+      it 'raises SocketError' do
+        lambda { @client.connect_address }.should raise_error(SocketError)
+      end
     end
 
-    after do
-      @client.close
-      @server.close
+    describe 'using a bound UNIX socket' do
+      before do
+        @path = SocketSpecs.socket_path
+        @sock = UNIXServer.new(@path)
+      end
 
-      rm_r(@path)
-    end
+      after do
+        @sock.close
+        rm_r(@path)
+      end
 
-    it 'raises SocketError' do
-      lambda { @client.connect_address }.should raise_error(SocketError)
-    end
-  end
+      it 'returns an Addrinfo' do
+        @sock.connect_address.should be_an_instance_of(Addrinfo)
+      end
 
-  describe 'using a bound UNIX socket' do
-    before do
-      @path = SocketSpecs.socket_path
-      @sock = UNIXServer.new(@path)
-    end
+      it 'uses the correct socket path' do
+        @sock.connect_address.unix_path.should == @path
+      end
 
-    after do
-      @sock.close
+      it 'uses AF_UNIX as the address family' do
+        @sock.connect_address.afamily.should == Socket::AF_UNIX
+      end
 
-      rm_r(@path)
-    end
+      it 'uses PF_UNIX as the protocol family' do
+        @sock.connect_address.pfamily.should == Socket::PF_UNIX
+      end
 
-    it 'returns an Addrinfo' do
-      @sock.connect_address.should be_an_instance_of(Addrinfo)
-    end
+      it 'uses SOCK_STREAM as the socket type' do
+        @sock.connect_address.socktype.should == Socket::SOCK_STREAM
+      end
 
-    it 'uses the correct socket path' do
-      @sock.connect_address.unix_path.should == @path
-    end
-
-    it 'uses AF_UNIX as the address family' do
-      @sock.connect_address.afamily.should == Socket::AF_UNIX
-    end
-
-    it 'uses PF_UNIX as the protocol family' do
-      @sock.connect_address.pfamily.should == Socket::PF_UNIX
-    end
-
-    it 'uses SOCK_STREAM as the socket type' do
-      @sock.connect_address.socktype.should == Socket::SOCK_STREAM
-    end
-
-    it 'uses 0 as the protocol' do
-      @sock.connect_address.protocol.should == 0
+      it 'uses 0 as the protocol' do
+        @sock.connect_address.protocol.should == 0
+      end
     end
   end
 end

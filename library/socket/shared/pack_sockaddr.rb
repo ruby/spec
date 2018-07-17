@@ -39,7 +39,7 @@ describe :socket_pack_sockaddr_in, shared: true do
 end
 
 describe :socket_pack_sockaddr_un, shared: true do
-  platform_is_not :windows do
+  with_feature :unix_socket do
     it 'should be idempotent' do
       bytes = Socket.public_send(@method, '/tmp/foo').bytes
       bytes[2..9].should == [47, 116, 109, 112, 47, 102, 111, 111]

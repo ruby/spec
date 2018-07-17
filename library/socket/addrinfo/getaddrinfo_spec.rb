@@ -49,11 +49,13 @@ describe 'Addrinfo.getaddrinfo' do
     end
   end
 
-  it 'sets the default socket type of the Addrinfo instances' do
-    array    = Addrinfo.getaddrinfo('localhost', 80)
-    possible = [Socket::SOCK_STREAM, Socket::SOCK_DGRAM]
+  platform_is_not :windows do
+    it 'sets the default socket type of the Addrinfo instances' do
+      array    = Addrinfo.getaddrinfo('localhost', 80)
+      possible = [Socket::SOCK_STREAM, Socket::SOCK_DGRAM]
 
-    possible.should include(array[0].socktype)
+      possible.should include(array[0].socktype)
+    end
   end
 
   it 'sets a custom socket type of the Addrinfo instances' do
@@ -62,11 +64,13 @@ describe 'Addrinfo.getaddrinfo' do
     array[0].socktype.should == Socket::SOCK_DGRAM
   end
 
-  it 'sets the default socket protocol of the Addrinfo instances' do
-    array    = Addrinfo.getaddrinfo('localhost', 80)
-    possible = [Socket::IPPROTO_TCP, Socket::IPPROTO_UDP]
+  platform_is_not :windows do
+    it 'sets the default socket protocol of the Addrinfo instances' do
+      array    = Addrinfo.getaddrinfo('localhost', 80)
+      possible = [Socket::IPPROTO_TCP, Socket::IPPROTO_UDP]
 
-    possible.should include(array[0].protocol)
+      possible.should include(array[0].protocol)
+    end
   end
 
   it 'sets a custom socket protocol of the Addrinfo instances' do
