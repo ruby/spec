@@ -58,7 +58,9 @@ describe 'Addrinfo#ipv6_to_ipv4' do
     Addrinfo.ip('192.168.1.1').ipv6_to_ipv4.should be_nil
   end
 
-  it 'returns nil for a UNIX Addrinfo' do
-    Addrinfo.unix('foo').ipv6_to_ipv4.should be_nil
+  with_feature :unix_socket do
+    it 'returns nil for a UNIX Addrinfo' do
+      Addrinfo.unix('foo').ipv6_to_ipv4.should be_nil
+    end
   end
 end

@@ -32,7 +32,7 @@ describe 'Addrinfo#inspect_sockaddr' do
     end
   end
 
-  platform_is_not :windows do
+  with_feature :unix_socket do
     describe 'using a UNIX path' do
       it 'returns a String containing the UNIX path' do
         addr = Addrinfo.unix('/foo/bar')
