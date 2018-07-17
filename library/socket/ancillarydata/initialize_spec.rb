@@ -1,4 +1,4 @@
-require_relative '../../spec_helper'
+require_relative '../spec_helper'
 
 with_feature :ancillary_data do
   describe 'Socket::AncillaryData#initialize' do
