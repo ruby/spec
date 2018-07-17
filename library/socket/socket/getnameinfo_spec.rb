@@ -63,10 +63,6 @@ describe "Socket.getnameinfo" do
 end
 
 describe 'Socket.getnameinfo' do
-  before do
-    @hostname = SocketSpecs.hostname_reverse_lookup
-  end
-
   describe 'using a String as the first argument' do
     before do
       @addr = Socket.sockaddr_in(80, '127.0.0.1')
@@ -78,7 +74,7 @@ describe 'Socket.getnameinfo' do
 
     describe 'without custom flags' do
       it 'returns an Array containing the hostname and service name' do
-        Socket.getnameinfo(@addr).should == [@hostname, 'http']
+        Socket.getnameinfo(@addr).should == [SocketSpecs.hostname_reverse_lookup, 'http']
       end
     end
 
@@ -94,6 +90,10 @@ describe 'Socket.getnameinfo' do
   end
 
   SocketSpecs.each_ip_protocol do |family, ip_address, family_name|
+    before do
+      @hostname = SocketSpecs.hostname_reverse_lookup(ip_address)
+    end
+
     describe 'using a 3 element Array as the first argument' do
       before do
         @addr = [family_name, 80, @hostname]
@@ -107,7 +107,7 @@ describe 'Socket.getnameinfo' do
         it 'returns an Array containing the hostname and service name' do
           array = Socket.getnameinfo(@addr)
           array.should be_an_instance_of(Array)
-          array[0].should =~ /#{@hostname}/
+          array[0].should == @hostname
           array[1].should == 'http'
         end
       end
@@ -128,7 +128,7 @@ describe 'Socket.getnameinfo' do
         it 'returns an Array containing the hostname and service name' do
           array = Socket.getnameinfo(@addr)
           array.should be_an_instance_of(Array)
-          array[0].should =~ /#{@hostname}/
+          array[0].should == @hostname
           array[1].should == 'http'
         end
 
@@ -137,7 +137,7 @@ describe 'Socket.getnameinfo' do
 
           array = Socket.getnameinfo(addr)
           array.should be_an_instance_of(Array)
-          array[0].should =~ /#{@hostname}/
+          array[0].should == @hostname
           array[1].should == 'http'
         end
       end
