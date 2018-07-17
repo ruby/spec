@@ -1,16 +1,12 @@
 require 'socket'
 
 module SocketSpecs
-  # helper to get the hostname associated to 127.0.0.1
-  def self.hostname
+  # helper to get the hostname associated to 127.0.0.1 or the given ip
+  def self.hostname(ip = "127.0.0.1")
     # Calculate each time, without caching, since the result might
     # depend on things like do_not_reverse_lookup mode, which is
     # changing from test to test
-    Socket.getaddrinfo("127.0.0.1", nil)[0][2]
-  end
-
-  def self.hostnamev6
-    Socket.getaddrinfo("::1", nil)[0][2]
+    Socket.getaddrinfo(ip, nil)[0][2]
   end
 
   def self.hostname_reverse_lookup(ip = "127.0.0.1")
