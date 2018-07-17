@@ -32,7 +32,7 @@ describe "Socket.unpack_sockaddr_in" do
     end
   end
 
-  platform_is_not :windows do
+  with_feature :unix_socket do
     it "raises an ArgumentError when the sin_family is not AF_INET" do
       sockaddr = Socket.sockaddr_un '/tmp/x'
       lambda { Socket.unpack_sockaddr_in sockaddr }.should raise_error(ArgumentError)

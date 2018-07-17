@@ -10,7 +10,7 @@ describe "Addrinfo#protocol" do
     Addrinfo.tcp('::1', 80).protocol.should == Socket::IPPROTO_TCP
   end
 
-  platform_is_not :windows do
+  with_feature :unix_socket do
     describe "for a unix socket" do
       before :each do
         @addrinfo = Addrinfo.unix("/tmp/sock")

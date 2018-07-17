@@ -18,16 +18,18 @@ describe 'Addrinfo#marshal_load' do
     end
   end
 
-  describe 'using a UNIX socket' do
-    it 'returns a new Addrinfo' do
-      source = Addrinfo.unix('foo')
-      addr   = Marshal.load(Marshal.dump(source))
+  with_feature :unix_socket do
+    describe 'using a UNIX socket' do
+      it 'returns a new Addrinfo' do
+        source = Addrinfo.unix('foo')
+        addr   = Marshal.load(Marshal.dump(source))
 
-      addr.afamily.should   == source.afamily
-      addr.pfamily.should   == source.pfamily
-      addr.socktype.should  == source.socktype
-      addr.protocol.should  == source.protocol
-      addr.unix_path.should == source.unix_path
+        addr.afamily.should   == source.afamily
+        addr.pfamily.should   == source.pfamily
+        addr.socktype.should  == source.socktype
+        addr.protocol.should  == source.protocol
+        addr.unix_path.should == source.unix_path
+      end
     end
   end
 end

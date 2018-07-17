@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-platform_is_not :windows do
+with_feature :unix_socket do
   describe 'Addrinfo.unix' do
     it 'returns an Addrinfo instance' do
       Addrinfo.unix('socket').should be_an_instance_of(Addrinfo)

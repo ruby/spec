@@ -9,7 +9,7 @@ describe "Addrinfo#socktype" do
     Addrinfo.tcp('127.0.0.1', 80).socktype.should == Socket::SOCK_STREAM
   end
 
-  platform_is_not :windows do
+  with_feature :unix_socket do
     describe "for a unix socket" do
       before :each do
         @addrinfo = Addrinfo.unix("/tmp/sock")
