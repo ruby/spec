@@ -263,10 +263,10 @@ describe "Addrinfo#initialize" do
         @addrinfo.protocol.should == 0
       end
 
-      it "overwrites the socket type" do
-        sockaddr = ['AF_INET', 80, 'hostname', '127.0.0.1']
+      [:SOCK_STREAM, :SOCK_DGRAM, :SOCK_RAW, :SOCK_SEQPACKET].each do |type|
+        it "overwrites the socket type #{type}" do
+          sockaddr = ['AF_INET', 80, 'hostname', '127.0.0.1']
 
-        [:SOCK_STREAM, :SOCK_DGRAM, :SOCK_RAW, :SOCK_SEQPACKET].each do |type|
           value = Socket.const_get(type)
           addr  = Addrinfo.new(sockaddr, nil, value)
 
