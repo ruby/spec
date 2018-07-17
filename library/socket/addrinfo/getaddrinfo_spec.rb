@@ -53,7 +53,7 @@ describe 'Addrinfo.getaddrinfo' do
     array    = Addrinfo.getaddrinfo('localhost', 80)
     possible = [Socket::SOCK_STREAM, Socket::SOCK_DGRAM]
 
-    possible.include?(array[0].socktype).should == true
+    possible.should include(array[0].socktype)
   end
 
   it 'sets a custom socket type of the Addrinfo instances' do
@@ -66,7 +66,7 @@ describe 'Addrinfo.getaddrinfo' do
     array    = Addrinfo.getaddrinfo('localhost', 80)
     possible = [Socket::IPPROTO_TCP, Socket::IPPROTO_UDP]
 
-    possible.include?(array[0].protocol).should == true
+    possible.should include(array[0].protocol)
   end
 
   it 'sets a custom socket protocol of the Addrinfo instances' do
