@@ -1,7 +1,9 @@
 require_relative '../../spec_helper'
 
-describe 'Socket::AncillaryData#family' do
-  it 'returns the family as a Fixnum' do
-    Socket::AncillaryData.new(:INET, :SOCKET, :RIGHTS, '').family.should == Socket::AF_INET
+with_feature :ancillary_data do
+  describe 'Socket::AncillaryData#family' do
+    it 'returns the family as a Fixnum' do
+      Socket::AncillaryData.new(:INET, :SOCKET, :RIGHTS, '').family.should == Socket::AF_INET
+    end
   end
 end
