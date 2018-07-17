@@ -6,7 +6,7 @@ if %w[rbx truffleruby].include?(RUBY_ENGINE)
 end
 
 MSpec.enable_feature :sock_packet if Socket.const_defined?(:SOCK_PACKET)
-MSpec.enable_feature :unix_socket if Socket.const_defined?(:AF_UNIX)
+MSpec.enable_feature :unix_socket unless PlatformGuard.windows?
 MSpec.enable_feature :udp_cork if Socket.const_defined?(:UDP_CORK)
 MSpec.enable_feature :tcp_cork if Socket.const_defined?(:TCP_CORK)
 MSpec.enable_feature :ipv6_pktinfo if Socket.const_defined?(:IPV6_PKTINFO)
