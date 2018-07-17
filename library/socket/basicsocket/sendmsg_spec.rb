@@ -81,28 +81,30 @@ describe 'BasicSocket#sendmsg' do
       end
     end
 
-    describe 'using a connected TCP socket' do
-      before do
-        @client = Socket.new(family, :STREAM)
-        @server = Socket.new(family, :STREAM)
+    platform_is_not :windows do # spurious
+      describe 'using a connected TCP socket' do
+        before do
+          @client = Socket.new(family, :STREAM)
+          @server = Socket.new(family, :STREAM)
 
-        @server.bind(Socket.sockaddr_in(0, ip_address))
-        @server.listen(1)
+          @server.bind(Socket.sockaddr_in(0, ip_address))
+          @server.listen(1)
 
-        @client.connect(@server.getsockname)
-      end
+          @client.connect(@server.getsockname)
+        end
 
-      after do
-        @client.close
-        @server.close
-      end
+        after do
+          @client.close
+          @server.close
+        end
 
-      it 'blocks when the underlying buffer is full' do
-        # Buffer sizes may differ per platform, so sadly this is the only
-        # reliable way of testing blocking behaviour.
-        lambda do
-          10.times { @client.sendmsg('hello' * 1_000_000) }
-        end.should block_caller
+        it 'blocks when the underlying buffer is full' do
+          # Buffer sizes may differ per platform, so sadly this is the only
+          # reliable way of testing blocking behaviour.
+          lambda do
+            10.times { @client.sendmsg('hello' * 1_000_000) }
+          end.should block_caller
+        end
       end
     end
   end

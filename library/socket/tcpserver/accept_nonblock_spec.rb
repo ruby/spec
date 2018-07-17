@@ -63,19 +63,21 @@ describe 'TCPServer#accept_nonblock' do
       end
     end
 
-    describe 'with a connected client' do
-      before do
-        @client = TCPSocket.new(ip_address, @server.connect_address.ip_port)
-      end
+    platform_is_not :windows do # spurious
+      describe 'with a connected client' do
+        before do
+          @client = TCPSocket.new(ip_address, @server.connect_address.ip_port)
+        end
 
-      after do
-        @socket.close if @socket
-        @client.close
-      end
+        after do
+          @socket.close if @socket
+          @client.close
+        end
 
-      it 'returns a TCPSocket' do
-        @socket = @server.accept_nonblock
-        @socket.should be_an_instance_of(TCPSocket)
+        it 'returns a TCPSocket' do
+          @socket = @server.accept_nonblock
+          @socket.should be_an_instance_of(TCPSocket)
+        end
       end
     end
   end
