@@ -18,8 +18,10 @@ describe "Socket::Option#bool" do
     Socket::Option.bool(:INET, :SOCKET, :KEEPALIVE, false).bool.should == false
   end
 
-  it 'raises TypeError when called on a non boolean option' do
-    opt = Socket::Option.linger(1, 4)
-    lambda { opt.bool }.should raise_error(TypeError)
+  platform_is_not :windows do
+    it 'raises TypeError when called on a non boolean option' do
+      opt = Socket::Option.linger(1, 4)
+      lambda { opt.bool }.should raise_error(TypeError)
+    end
   end
 end

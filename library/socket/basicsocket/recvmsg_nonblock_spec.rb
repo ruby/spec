@@ -13,9 +13,11 @@ describe 'BasicSocket#recvmsg_nonblock' do
         @server.close
       end
 
-      describe 'using an unbound socket' do
-        it 'raises IO::EAGAINWaitReadable' do
-          lambda { @server.recvmsg_nonblock }.should raise_error(IO::EAGAINWaitReadable)
+      platform_is_not :windows do
+        describe 'using an unbound socket' do
+          it 'raises an exception extending IO::WaitReadable' do
+            lambda { @server.recvmsg_nonblock }.should raise_error(IO::WaitReadable)
+          end
         end
       end
 
@@ -50,8 +52,10 @@ describe 'BasicSocket#recvmsg_nonblock' do
           end
 
           describe 'with a maximum message length' do
-            it 'reads up to the maximum amount of bytes' do
-              @server.recvmsg_nonblock(2)[0].should == 'he'
+            platform_is_not :windows do
+              it 'reads up to the maximum amount of bytes' do
+                @server.recvmsg_nonblock(2)[0].should == 'he'
+              end
             end
           end
 
@@ -68,8 +72,10 @@ describe 'BasicSocket#recvmsg_nonblock' do
               @array[1].should be_an_instance_of(Addrinfo)
             end
 
-            it 'stores the flags at index 2' do
-              @array[2].should be_an_instance_of(Fixnum)
+            platform_is_not :windows do
+              it 'stores the flags at index 2' do
+                @array[2].should be_an_instance_of(Fixnum)
+              end
             end
 
             describe 'the returned Addrinfo' do
@@ -102,90 +108,92 @@ describe 'BasicSocket#recvmsg_nonblock' do
       end
     end
 
-    describe 'using a connected socket' do
-      before do
-        @client = Socket.new(family, :STREAM)
-        @server = Socket.new(family, :STREAM)
-
-        @server.bind(Socket.sockaddr_in(0, ip_address))
-        @server.listen(1)
-
-        @client.connect(@server.getsockname)
-      end
-
-      after do
-        @client.close
-        @server.close
-      end
-
-      describe 'without any data available' do
-        it 'raises IO::WaitReadable' do
-          lambda {
-            socket, _ = @server.accept
-            begin
-              socket.recvmsg_nonblock
-            ensure
-              socket.close
-            end
-          }.should raise_error(IO::WaitReadable)
-        end
-      end
-
-      describe 'with data available' do
+    platform_is_not :windows do
+      describe 'using a connected socket' do
         before do
-          @client.write('hello')
+          @client = Socket.new(family, :STREAM)
+          @server = Socket.new(family, :STREAM)
 
-          @socket, _ = @server.accept
+          @server.bind(Socket.sockaddr_in(0, ip_address))
+          @server.listen(1)
+
+          @client.connect(@server.getsockname)
         end
 
         after do
-          @socket.close
+          @client.close
+          @server.close
         end
 
-        it 'returns an Array containing the data, an Addrinfo and the flags' do
-          @socket.recvmsg_nonblock.should be_an_instance_of(Array)
+        describe 'without any data available' do
+          it 'raises IO::WaitReadable' do
+            lambda {
+              socket, _ = @server.accept
+              begin
+                socket.recvmsg_nonblock
+              ensure
+                socket.close
+              end
+            }.should raise_error(IO::WaitReadable)
+          end
         end
 
-        describe 'the returned Array' do
+        describe 'with data available' do
           before do
-            @array = @socket.recvmsg_nonblock
+            @client.write('hello')
+
+            @socket, _ = @server.accept
           end
 
-          it 'stores the message at index 0' do
-            @array[0].should == 'hello'
+          after do
+            @socket.close
           end
 
-          it 'stores an Addrinfo at index 1' do
-            @array[1].should be_an_instance_of(Addrinfo)
+          it 'returns an Array containing the data, an Addrinfo and the flags' do
+            @socket.recvmsg_nonblock.should be_an_instance_of(Array)
           end
 
-          it 'stores the flags at index 2' do
-            @array[2].should be_an_instance_of(Fixnum)
-          end
-
-          describe 'the returned Addrinfo' do
+          describe 'the returned Array' do
             before do
-              @addr = @array[1]
+              @array = @socket.recvmsg_nonblock
             end
 
-            it 'raises when receiving the ip_address message' do
-              lambda { @addr.ip_address }.should raise_error(SocketError)
+            it 'stores the message at index 0' do
+              @array[0].should == 'hello'
             end
 
-            it 'uses the correct address family' do
-              @addr.afamily.should == Socket::AF_UNSPEC
+            it 'stores an Addrinfo at index 1' do
+              @array[1].should be_an_instance_of(Addrinfo)
             end
 
-            it 'uses 0 for the protocol family' do
-              @addr.pfamily.should == 0
+            it 'stores the flags at index 2' do
+              @array[2].should be_an_instance_of(Fixnum)
             end
 
-            it 'uses the correct socket type' do
-              @addr.socktype.should == Socket::SOCK_STREAM
-            end
+            describe 'the returned Addrinfo' do
+              before do
+                @addr = @array[1]
+              end
 
-            it 'raises when receiving the ip_port message' do
-              lambda { @addr.ip_port }.should raise_error(SocketError)
+              it 'raises when receiving the ip_address message' do
+                lambda { @addr.ip_address }.should raise_error(SocketError)
+              end
+
+              it 'uses the correct address family' do
+                @addr.afamily.should == Socket::AF_UNSPEC
+              end
+
+              it 'uses 0 for the protocol family' do
+                @addr.pfamily.should == 0
+              end
+
+              it 'uses the correct socket type' do
+                @addr.socktype.should == Socket::SOCK_STREAM
+              end
+
+              it 'raises when receiving the ip_port message' do
+                lambda { @addr.ip_port }.should raise_error(SocketError)
+              end
             end
           end
         end

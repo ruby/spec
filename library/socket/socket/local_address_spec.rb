@@ -30,8 +30,10 @@ describe 'Socket#local_address' do
       @sock.local_address.ip_address.should == '0.0.0.0'
     end
 
-    it 'uses 0 as the port' do
-      @sock.local_address.ip_port.should == 0
+    platform_is_not :windows do
+      it 'uses 0 as the port' do
+        @sock.local_address.ip_port.should == 0
+      end
     end
 
     it 'uses 0 as the protocol' do

@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../fixtures/classes'
 
 describe 'BasicSocket#sendmsg' do
   SocketSpecs.each_ip_protocol do |family, ip_address|
@@ -15,9 +16,11 @@ describe 'BasicSocket#sendmsg' do
         @server.close
       end
 
-      describe 'without a destination address' do
-        it 'raises Errno::EDESTADDRREQ' do
-          lambda { @client.sendmsg('hello') }.should raise_error(Errno::EDESTADDRREQ)
+      platform_is_not :windows do
+        describe 'without a destination address' do
+          it "raises #{SocketSpecs.dest_addr_req_error}" do
+            lambda { @client.sendmsg('hello') }.should raise_error(SocketSpecs.dest_addr_req_error)
+          end
         end
       end
 

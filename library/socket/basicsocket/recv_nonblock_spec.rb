@@ -13,11 +13,13 @@ describe "Socket::BasicSocket#recv_nonblock" do
       @s2.close unless @s2.closed?
     end
 
-    describe 'using an unbound socket' do
+    platform_is_not :windows do
+      describe 'using an unbound socket' do
         it 'raises an exception extending IO::WaitReadable' do
           lambda { @s1.recv_nonblock(1) }.should raise_error(IO::WaitReadable)
         end
       end
+    end
 
     it "raises an exception extending IO::WaitReadable if there's no data available" do
       @s1.bind(Socket.pack_sockaddr_in(0, ip_address))

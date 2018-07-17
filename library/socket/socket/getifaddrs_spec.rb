@@ -60,46 +60,48 @@ describe 'Socket.getifaddrs' do
     end
   end
 
-  describe 'the Socket::Ifaddr broadcast address' do
-    before do
-      @addrs = @ifaddrs.map(&:broadaddr).compact
-    end
+    platform_is_not :windows do
+    describe 'the Socket::Ifaddr broadcast address' do
+      before do
+        @addrs = @ifaddrs.map(&:broadaddr).compact
+      end
 
-    it 'is an Addrinfo' do
-      @addrs.each do |addr|
-        addr.should be_an_instance_of(Addrinfo)
+      it 'is an Addrinfo' do
+        @addrs.each do |addr|
+          addr.should be_an_instance_of(Addrinfo)
+        end
+      end
+
+      it 'has an address family' do
+        @addrs.each do |addr|
+          addr.afamily.should be_an_instance_of(Fixnum)
+          addr.afamily.should_not == Socket::AF_UNSPEC
+        end
       end
     end
 
-    it 'has an address family' do
-      @addrs.each do |addr|
-        addr.afamily.should be_an_instance_of(Fixnum)
-        addr.afamily.should_not == Socket::AF_UNSPEC
+    describe 'the Socket::Ifaddr netmask address' do
+      before do
+        @addrs = @ifaddrs.map(&:netmask).compact
       end
-    end
-  end
 
-  describe 'the Socket::Ifaddr netmask address' do
-    before do
-      @addrs = @ifaddrs.map(&:netmask).compact
-    end
-
-    it 'is an Addrinfo' do
-      @addrs.each do |addr|
-        addr.should be_an_instance_of(Addrinfo)
+      it 'is an Addrinfo' do
+        @addrs.each do |addr|
+          addr.should be_an_instance_of(Addrinfo)
+        end
       end
-    end
 
-    it 'has an address family' do
-      @addrs.each do |addr|
-        addr.afamily.should be_an_instance_of(Fixnum)
-        addr.afamily.should_not == Socket::AF_UNSPEC
+      it 'has an address family' do
+        @addrs.each do |addr|
+          addr.afamily.should be_an_instance_of(Fixnum)
+          addr.afamily.should_not == Socket::AF_UNSPEC
+        end
       end
-    end
 
-    it 'has an IP address' do
-      @addrs.each do |addr|
-        addr.ip_address.should be_an_instance_of(String)
+      it 'has an IP address' do
+        @addrs.each do |addr|
+          addr.ip_address.should be_an_instance_of(String)
+        end
       end
     end
   end

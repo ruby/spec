@@ -111,10 +111,12 @@ describe 'Socket#bind' do
         lambda { @socket.bind(sockaddr1) }.should raise_error(Errno::EADDRNOTAVAIL)
       end
 
-      it 'raises Errno::EACCES when the user is not allowed to bind to the port' do
-        sockaddr1 = Socket.pack_sockaddr_in(1, ip_address)
+      platform_is_not :windows do
+        it 'raises Errno::EACCES when the user is not allowed to bind to the port' do
+          sockaddr1 = Socket.pack_sockaddr_in(1, ip_address)
 
-        lambda { @socket.bind(sockaddr1); }.should raise_error(Errno::EACCES)
+          lambda { @socket.bind(sockaddr1); }.should raise_error(Errno::EACCES)
+        end
       end
     end
 

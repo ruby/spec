@@ -112,9 +112,11 @@ describe 'Socket.getnameinfo' do
         end
       end
 
-      describe 'using NI_NUMERICHOST as the flag' do
-        it 'returns an Array containing the numeric hostname and service name' do
-          Socket.getnameinfo(@addr, Socket::NI_NUMERICHOST).should == [ip_address, 'http']
+      platform_is_not :windows do
+        describe 'using NI_NUMERICHOST as the flag' do
+          it 'returns an Array containing the numeric hostname and service name' do
+            Socket.getnameinfo(@addr, Socket::NI_NUMERICHOST).should == [ip_address, 'http']
+          end
         end
       end
     end

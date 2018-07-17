@@ -100,8 +100,8 @@ describe 'BasicSocket#send' do
       end
 
       describe 'without a destination address' do
-        it 'raises Errno::EDESTADDRREQ' do
-          lambda { @client.send('hello', 0) }.should raise_error(Errno::EDESTADDRREQ)
+        it "raises #{SocketSpecs.dest_addr_req_error}" do
+          lambda { @client.send('hello', 0) }.should raise_error(SocketSpecs.dest_addr_req_error)
         end
       end
 
@@ -113,7 +113,7 @@ describe 'BasicSocket#send' do
         it 'does not persist the connection after writing to the socket' do
           @client.send('hello', 0, @server.getsockname)
 
-          lambda { @client.send('hello', 0) }.should raise_error(Errno::EDESTADDRREQ)
+          lambda { @client.send('hello', 0) }.should raise_error(SocketSpecs.dest_addr_req_error)
         end
       end
 
@@ -177,33 +177,35 @@ describe 'BasicSocket#send' do
       end
     end
 
-    describe 'using a connected TCP socket' do
-      before do
-        @client = Socket.new(family, :STREAM)
-        @server = Socket.new(family, :STREAM)
+    platform_is_not :windows do
+      describe 'using a connected TCP socket' do
+        before do
+          @client = Socket.new(family, :STREAM)
+          @server = Socket.new(family, :STREAM)
 
-        @server.bind(Socket.sockaddr_in(0, ip_address))
-        @server.listen(1)
+          @server.bind(Socket.sockaddr_in(0, ip_address))
+          @server.listen(1)
 
-        @client.connect(@server.getsockname)
-      end
+          @client.connect(@server.getsockname)
+        end
 
-      after do
-        @client.close
-        @server.close
-      end
+        after do
+          @client.close
+          @server.close
+        end
 
-      describe 'using the MSG_OOB flag' do
-        it 'sends an out-of-band message' do
-          @server.setsockopt(:SOCKET, :OOBINLINE, true)
+        describe 'using the MSG_OOB flag' do
+          it 'sends an out-of-band message' do
+            @server.setsockopt(:SOCKET, :OOBINLINE, true)
 
-          @client.send('a', Socket::MSG_OOB).should == 1
+            @client.send('a', Socket::MSG_OOB).should == 1
 
-          socket, _ = @server.accept
-          begin
-            socket.recv(1, Socket::MSG_OOB).should == 'a'
-          ensure
-            socket.close
+            socket, _ = @server.accept
+            begin
+              socket.recv(1, Socket::MSG_OOB).should == 'a'
+            ensure
+              socket.close
+            end
           end
         end
       end

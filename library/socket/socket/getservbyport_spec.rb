@@ -1,8 +1,16 @@
 require_relative '../spec_helper'
 
 describe 'Socket.getservbyport' do
-  it 'returns the service name as a String' do
-    Socket.getservbyport(514).should == 'shell'
+  platform_is_not :windows do
+    it 'returns the service name as a String' do
+      Socket.getservbyport(514).should == 'shell'
+    end
+  end
+
+  platform_is :windows do
+    it 'returns the service name as a String' do
+      Socket.getservbyport(514).should == 'cmd'
+    end
   end
 
   it 'returns the service name when using a custom protocol name' do

@@ -247,8 +247,10 @@ describe 'BasicSocket#setsockopt' do
         end
       end
 
-      it 'raises Errno::EINVAL when setting an invalid option value' do
-        lambda { @socket.setsockopt(:SOCKET, :OOBINLINE, 'bla') }.should raise_error(Errno::EINVAL)
+      platform_is_not :windows do
+        it 'raises Errno::EINVAL when setting an invalid option value' do
+          lambda { @socket.setsockopt(:SOCKET, :OOBINLINE, 'bla') }.should raise_error(Errno::EINVAL)
+        end
       end
     end
 
@@ -311,20 +313,22 @@ describe 'BasicSocket#setsockopt' do
     end
   end
 
-  describe 'using a UNIX socket' do
-    before do
-      @path = SocketSpecs.socket_path
-      @server = UNIXServer.new(@path)
-    end
+  with_feature :unix_socket do
+    describe 'using a UNIX socket' do
+      before do
+        @path = SocketSpecs.socket_path
+        @server = UNIXServer.new(@path)
+      end
 
-    after do
-      @server.close
-      rm_r @path
-    end
+      after do
+        @server.close
+        rm_r @path
+      end
 
-    it 'sets a boolean option' do
-      @server.setsockopt(:SOCKET, :REUSEADDR, true)
-      @server.getsockopt(:SOCKET, :REUSEADDR).bool.should == true
+      it 'sets a boolean option' do
+        @server.setsockopt(:SOCKET, :REUSEADDR, true)
+        @server.getsockopt(:SOCKET, :REUSEADDR).bool.should == true
+      end
     end
   end
 end

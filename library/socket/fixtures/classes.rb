@@ -98,6 +98,14 @@ module SocketSpecs
     end
   end
 
+  def self.dest_addr_req_error
+    error = Errno::EDESTADDRREQ
+    platform_is :windows do
+      error = Errno::ENOTCONN
+    end
+    error
+  end
+
   # TCPServer echo server accepting one connection
   class SpecTCPServer
     attr_reader :hostname, :port

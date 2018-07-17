@@ -95,8 +95,8 @@ describe 'UDPSocket#send' do
 
     describe 'using a disconnected socket' do
       describe 'without a destination address' do
-        it 'raises Errno::EDESTADDRREQ' do
-          lambda { @client.send('hello', 0) }.should raise_error(Errno::EDESTADDRREQ)
+        it "raises #{SocketSpecs.dest_addr_req_error}" do
+          lambda { @client.send('hello', 0) }.should raise_error(SocketSpecs.dest_addr_req_error)
         end
       end
 
@@ -108,7 +108,7 @@ describe 'UDPSocket#send' do
         it 'does not persist the connection after sending data' do
           @client.send('hello', 0, @addr.ip_address, @addr.ip_port)
 
-          lambda { @client.send('hello', 0) }.should raise_error(Errno::EDESTADDRREQ)
+          lambda { @client.send('hello', 0) }.should raise_error(SocketSpecs.dest_addr_req_error)
         end
       end
 

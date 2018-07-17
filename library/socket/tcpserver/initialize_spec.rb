@@ -15,8 +15,10 @@ describe 'TCPServer#initialize' do
       @server.local_address.ip_port.should > 0
     end
 
-    it 'sets the hostname to 0.0.0.0' do
-      @server.local_address.ip_address.should == '0.0.0.0'
+    platform_is_not :windows do
+      it 'sets the hostname to 0.0.0.0' do
+        @server.local_address.ip_address.should == '0.0.0.0'
+      end
     end
 
     it "sets the socket to binmode" do
@@ -38,8 +40,10 @@ describe 'TCPServer#initialize' do
       @server.local_address.ip_port.should > 0
     end
 
-    it 'sets the hostname to 0.0.0.0' do
-      @server.local_address.ip_address.should == '0.0.0.0'
+    platform_is_not :windows do
+      it 'sets the hostname to 0.0.0.0' do
+        @server.local_address.ip_address.should == '0.0.0.0'
+      end
     end
   end
 

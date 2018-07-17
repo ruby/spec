@@ -110,8 +110,10 @@ describe 'Socket.gethostbyaddr' do
           Socket.gethostbyaddr(@addr, :INET6).should be_an_instance_of(Array)
         end
 
-        it 'raises SocketError when the address is not supported by the family' do
-          lambda { Socket.gethostbyaddr(@addr, :INET) }.should raise_error(SocketError)
+        platform_is_not :windows do
+          it 'raises SocketError when the address is not supported by the family' do
+            lambda { Socket.gethostbyaddr(@addr, :INET) }.should raise_error(SocketError)
+          end
         end
       end
     end
