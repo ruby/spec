@@ -107,7 +107,7 @@ describe 'Socket.getnameinfo' do
         it 'returns an Array containing the hostname and service name' do
           array = Socket.getnameinfo(@addr)
           array.should be_an_instance_of(Array)
-          array[0].should == @hostname
+          array[0].should include(@hostname)
           array[1].should == 'http'
         end
       end
