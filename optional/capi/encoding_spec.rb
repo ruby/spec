@@ -37,10 +37,12 @@ describe "C-API Encoding function" do
     @s = CApiEncodingSpecs.new
   end
 
-  describe "rb_enc_alias" do
-    it "creates an alias for an existing Encoding" do
-      @s.rb_enc_alias("ZOMGWTFBBQ", "UTF-8").should >= 0
-      Encoding.find("ZOMGWTFBBQ").name.should == "UTF-8"
+  ruby_version_is "2.6" do
+    describe "rb_enc_alias" do
+      it "creates an alias for an existing Encoding" do
+        @s.rb_enc_alias("ZOMGWTFBBQ", "UTF-8").should >= 0
+        Encoding.find("ZOMGWTFBBQ").name.should == "UTF-8"
+      end
     end
   end
 
