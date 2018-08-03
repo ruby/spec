@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../fixtures/classes'
 
 with_feature :unix_socket do
   describe 'UNIXServer#initialize' do

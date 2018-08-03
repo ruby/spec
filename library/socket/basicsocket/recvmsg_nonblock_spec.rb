@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../fixtures/classes'
 
 describe 'BasicSocket#recvmsg_nonblock' do
   SocketSpecs.each_ip_protocol do |family, ip_address|

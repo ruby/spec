@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../fixtures/classes'
 
 describe 'TCPServer#initialize' do
   describe 'with a single Fixnum argument' do

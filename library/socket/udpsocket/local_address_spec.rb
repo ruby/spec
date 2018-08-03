@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../fixtures/classes'
 
 describe 'UDPSocket#local_address' do
   SocketSpecs.each_ip_protocol do |family, ip_address|
