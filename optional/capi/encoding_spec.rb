@@ -150,9 +150,11 @@ describe "C-API Encoding function" do
       @s.send(@method, 1).should == -1
     end
 
-    it "returns -1 for an object without an encoding" do
-      obj = Object.new
-      @s.send(@method, obj).should == -1
+    ruby_version_is "2.6" do
+      it "returns -1 for an object without an encoding" do
+        obj = Object.new
+        @s.send(@method, obj).should == -1
+      end
     end
   end
 
