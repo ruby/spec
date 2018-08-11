@@ -16,7 +16,7 @@ def compile_extension(name)
   debug = false
   run_mkmf_in_process = RUBY_ENGINE == 'truffleruby'
 
-  extension_path = File.expand_path("../ext", __FILE__)
+  ext_dir = File.expand_path("../ext", __FILE__)
   ext = "#{name}_spec"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   ruby_header = "#{RbConfig::CONFIG['rubyhdrdir']}/ruby.h"
@@ -28,8 +28,8 @@ def compile_extension(name)
     # not found, then compile
   else
     case # if lib is older than headers, source or libruby, then recompile
-    when mtime <= File.mtime("#{extension_path}/rubyspec.h")
-    when mtime <= File.mtime("#{extension_path}/#{ext}.c")
+    when mtime <= File.mtime("#{ext_dir}/rubyspec.h")
+    when mtime <= File.mtime("#{ext_dir}/#{ext}.c")
     when mtime <= File.mtime(ruby_header)
     when libruby_so && mtime <= File.mtime("#{RbConfig::CONFIG['libdir']}/#{libruby_so}")
     else
@@ -42,7 +42,7 @@ def compile_extension(name)
   Dir.mkdir(tmpdir)
   begin
     ["rubyspec.h", "#{ext}.c"].each do |file|
-      cp "#{extension_path}/#{file}", "#{tmpdir}/#{file}"
+      cp "#{ext_dir}/#{file}", "#{tmpdir}/#{file}"
     end
 
     Dir.chdir(tmpdir) do
