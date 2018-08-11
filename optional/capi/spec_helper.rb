@@ -6,13 +6,13 @@ $extmk = false
 require 'rbconfig'
 
 OBJDIR ||= File.expand_path("../../../ext/#{RUBY_ENGINE}/#{RUBY_VERSION}", __FILE__)
-mkdir_p(OBJDIR)
 
 def extension_path
   File.expand_path("../ext", __FILE__)
 end
 
 def object_path
+  mkdir_p(OBJDIR)
   OBJDIR
 end
 
