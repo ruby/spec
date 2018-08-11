@@ -1,4 +1,4 @@
-require_relative '../../spec_helper'
+# Require the main spec_helper.rb at the end to let `ruby ...spec.rb` work
 
 # MRI magic to use built but not installed ruby
 $extmk = false
@@ -117,3 +117,7 @@ end
 
 # Constants
 CAPI_SIZEOF_LONG = [0].pack('l!').size
+
+# Require the main spec_helper.rb only here so load_extension() is defined
+# when running specs with `ruby ...spec.rb`
+require_relative '../../spec_helper'
