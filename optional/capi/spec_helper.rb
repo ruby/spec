@@ -7,10 +7,6 @@ require 'rbconfig'
 
 OBJDIR ||= File.expand_path("../../../ext/#{RUBY_ENGINE}/#{RUBY_VERSION}", __FILE__)
 
-def extension_path
-  File.expand_path("../ext", __FILE__)
-end
-
 def object_path
   mkdir_p(OBJDIR)
   OBJDIR
@@ -20,6 +16,7 @@ def compile_extension(name)
   debug = false
   run_mkmf_in_process = RUBY_ENGINE == 'truffleruby'
 
+  extension_path = File.expand_path("../ext", __FILE__)
   ext = "#{name}_spec"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   ruby_header = "#{RbConfig::CONFIG['rubyhdrdir']}/ruby.h"
