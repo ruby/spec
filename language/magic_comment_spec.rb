@@ -44,22 +44,20 @@ describe :magic_comments, shared: true do
 end
 
 describe "Magic comments" do
-  platform_is_not :windows do
-    describe "in stdin" do
-      it_behaves_like :magic_comments, :locale, -> file {
-        print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
-        ruby_exe(nil, args: "< #{fixture(__FILE__, file)}", options: "-r#{print_at_exit}")
-      }
-    end
+  describe "in stdin" do
+    it_behaves_like :magic_comments, :locale, -> file {
+      print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
+      ruby_exe(nil, args: "< #{fixture(__FILE__, file)}", options: "-r#{print_at_exit}")
+    }
+  end
 
-    describe "in an -e argument" do
-      it_behaves_like :magic_comments, :locale, -> file {
-        print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
-        # Use UTF-8, as it is the default source encoding for files
-        code = File.read(fixture(__FILE__, file), encoding: 'utf-8')
-        IO.popen([*ruby_exe, "-r", print_at_exit, "-e", code], &:read)
-      }
-    end
+  describe "in an -e argument" do
+    it_behaves_like :magic_comments, :locale, -> file {
+      print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
+      # Use UTF-8, as it is the default source encoding for files
+      code = File.read(fixture(__FILE__, file), encoding: 'utf-8')
+      IO.popen([*ruby_exe, "-r", print_at_exit, "-e", code], &:read)
+    }
   end
 
   describe "in the main file" do
