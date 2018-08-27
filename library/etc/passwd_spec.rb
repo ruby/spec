@@ -3,6 +3,11 @@ require 'etc'
 
 describe "Etc.passwd" do
   it "returns a Etc::Passwd struct" do
-    Etc.passwd.should be_an_instance_of(Etc::Passwd)
+    passwd = Etc.passwd
+    begin
+      passwd.should be_an_instance_of(Etc::Passwd)
+    ensure
+      Etc.endpwent
+    end
   end
 end
