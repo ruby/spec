@@ -50,7 +50,9 @@ describe "Magic comments" do
   describe "in an -e argument" do
     it_behaves_like :magic_comments, nil, -> file {
       print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
-      ruby_exe(nil, args: "-r#{print_at_exit} -e \"$(< #{fixture(__FILE__, file)})\"")
+      # Use UTF-8, as it is the default source encoding for files
+      code = File.read(fixture(__FILE__, file), encoding: 'utf-8')
+      IO.popen([*ruby_exe, "-r", print_at_exit, "-e", code], &:read)
     }
   end
 
