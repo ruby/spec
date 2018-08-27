@@ -51,13 +51,15 @@ describe "Magic comments" do
     }
   end
 
-  describe "in an -e argument" do
-    it_behaves_like :magic_comments, :locale, -> file {
-      print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
-      # Use UTF-8, as it is the default source encoding for files
-      code = File.read(fixture(__FILE__, file), encoding: 'utf-8')
-      IO.popen([*ruby_exe, "-r", print_at_exit, "-e", code], &:read)
-    }
+  platform_is_not :windows do
+    describe "in an -e argument" do
+      it_behaves_like :magic_comments, :locale, -> file {
+        print_at_exit = fixture(__FILE__, "print_magic_comment_result_at_exit.rb")
+        # Use UTF-8, as it is the default source encoding for files
+        code = File.read(fixture(__FILE__, file), encoding: 'utf-8')
+        IO.popen([*ruby_exe, "-r", print_at_exit, "-e", code], &:read)
+      }
+    end
   end
 
   describe "in the main file" do
