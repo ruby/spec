@@ -1,7 +1,7 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 require 'etc'
 
-platform_is :windows do
+platform_is_not :windows do
   describe "Etc.sysconf" do
     def should_be_integer_or_nil(value)
       if value.nil?
