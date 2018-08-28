@@ -21,10 +21,6 @@ describe 'The --encoding command line option' do
     it "if given two encodings as a separate argument" do
       ruby_exe(@test_string, options: '--disable-gems --encoding big5:utf-32be').should == [Encoding::Big5.name, Encoding::UTF_32BE.name].inspect
     end
-
-    it "if given two encodings as a separate argument" do
-      ruby_exe(@test_string, options: '--disable-gems --encoding big5:utf-32be').should == [Encoding::Big5.name, Encoding::UTF_32BE.name].inspect
-    end
   end
 
   it "does not accept a third encoding" do
