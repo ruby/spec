@@ -20,10 +20,15 @@ def compile_extension(name)
   ext = "#{name}_spec"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   ruby_header = "#{RbConfig::CONFIG['rubyhdrdir']}/ruby.h"
-  libruby_so = RbConfig::CONFIG['LIBRUBY_SO'] if RbConfig::CONFIG["ENABLE_SHARED"] == "yes"
-  if /mswin|mingw/ =~ RUBY_PLATFORM
-    libruby_so = RbConfig::CONFIG["LIBRUBY"] if RbConfig::CONFIG["ENABLE_SHARED"] == "yes"
+
+  if RbConfig::CONFIG["ENABLE_SHARED"] == "yes"
+    if PlatformGuard.windows?
+      libruby_so = "#{RbConfig::CONFIG['bindir']}/#{RbConfig::CONFIG['LIBRUBY_SO']}"
+    else
+      libruby_so = "#{RbConfig::CONFIG['libdir']}/#{RbConfig::CONFIG['LIBRUBY_SO']}"
+    end
   end
+
   begin
     mtime = File.mtime(lib)
   rescue Errno::ENOENT
@@ -33,7 +38,7 @@ def compile_extension(name)
     when mtime <= File.mtime("#{ext_dir}/rubyspec.h")
     when mtime <= File.mtime("#{ext_dir}/#{ext}.c")
     when mtime <= File.mtime(ruby_header)
-    when libruby_so && mtime <= File.mtime("#{RbConfig::CONFIG['libdir']}/#{libruby_so}")
+    when libruby_so && mtime <= File.mtime(libruby_so)
     else
       return lib # up-to-date
     end
