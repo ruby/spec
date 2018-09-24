@@ -78,13 +78,10 @@ with_feature :encoding do
 #          Encoding::ASCII_8BIT, Encoding::Emacs_Mule)
 #      end.should raise_error(Encoding::ConverterNotFoundError)
       begin
-        Encoding::Converter.search_convpath(Encoding::ASCII_8BIT.to_s, Encoding::Emacs_Mule)
+        Encoding::Converter.search_convpath(Encoding::ASCII_8BIT, Encoding::Emacs_Mule)
       rescue => e
         e.class.should == Encoding::ConverterNotFoundError
-      else
-        e.class.should == Encoding::ConverterNotFoundError
       end
-
     end
   end
 end
