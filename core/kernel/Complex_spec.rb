@@ -38,7 +38,7 @@ describe "Kernel.Complex()" do
   describe "when passed [Integer/Float]" do
     it "returns a new Complex number with 0 as the imaginary component" do
       # Guard against the Mathn library
-      conflicts_with :Prime do
+      guard -> { !defined?(Math.rsqrt) } do
         Complex(1).should be_an_instance_of(Complex)
         Complex(1).imag.should == 0
         Complex(1).real.should == 1

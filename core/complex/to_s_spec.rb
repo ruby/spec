@@ -16,7 +16,7 @@ describe "Complex#to_s" do
     Complex(-2.5, -1.5).to_s.should == "-2.5-1.5i"
 
     # Guard against the Mathn library
-    conflicts_with :Prime do
+    guard -> { !defined?(Math.rsqrt) } do
       Complex(1, 0).to_s.should == "1+0i"
       Complex(1, -0).to_s.should == "1+0i"
     end
