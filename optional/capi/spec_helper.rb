@@ -17,11 +17,11 @@ def compile_extension(name)
   run_mkmf_in_process = RUBY_ENGINE == 'truffleruby'
 
   core_ext_dir = File.expand_path("../ext", __FILE__)
-  
+
   spec_caller_location = caller_locations.find { |c| c.path.end_with?('_spec.rb') }
   spec_file_path = spec_caller_location.path
   spec_ext_dir = File.expand_path("../ext", spec_file_path)
-  
+
   ext = "#{name}_spec"
   lib = "#{object_path}/#{ext}.#{RbConfig::CONFIG['DLEXT']}"
   ruby_header = "#{RbConfig::CONFIG['rubyhdrdir']}/ruby.h"
