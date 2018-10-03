@@ -180,10 +180,10 @@ describe "Literal Regexps" do
   ruby_version_is ""..."2.4" do
     it "does not support handling unicode 9.0 characters with POSIX bracket expressions" do
       char_lowercase = "\u{104D8}" # OSAGE SMALL LETTER A
-      /[[:lower:]]/.match(char_lowercase).to_s.should.empty?
+      /[[:lower:]]/.match(char_lowercase).to_s.should == ""
 
       char_uppercase = "\u{104B0}" # OSAGE CAPITAL LETTER A
-      /[[:upper:]]/.match(char_lowercase).to_s.should.empty?
+      /[[:upper:]]/.match(char_lowercase).to_s.should == ""
     end
 
     it "supports handling unicode 8.0 characters with POSIX bracket expressions" do
