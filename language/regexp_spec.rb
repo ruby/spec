@@ -190,7 +190,7 @@ describe "Literal Regexps" do
       char_lowercase = "\u{A7B5}" # LATIN SMALL LETTER BETA
       /[[:lower:]]/.match(char_lowercase).to_s.should == char_lowercase
 
-      char_uppercase = "\u{A7B4}" # LATIN CAPTIAL LETTER BETA
+      char_uppercase = "\u{A7B4}" # LATIN CAPITAL LETTER BETA
       /[[:upper:]]/.match(char_uppercase).to_s.should == char_uppercase
     end
   end
