@@ -53,6 +53,9 @@ describe "Enumerable#all?" do
 
       EnumerableSpecs::Numerous.new('a','b','c').all?.should == true
       EnumerableSpecs::Numerous.new(0, "x", true).all?.should == true
+      EnumerableSpecs::Numerous.new([]).all?.should == true
+      EnumerableSpecs::Numerous.new([false]).all?.should == true
+      EnumerableSpecs::Numerous.new([nil]).all?.should == true
     end
 
     it "returns false if there are false or nil elements" do
@@ -65,12 +68,6 @@ describe "Enumerable#all?" do
       EnumerableSpecs::Numerous.new(1, nil, 2).all?.should == false
       EnumerableSpecs::Numerous.new(0, "x", false, true).all?.should == false
       @enum2.all?.should == false
-    end
-
-    it "gathers whole arrays as elements when each yields multiple" do
-      # This spec doesn't spec what it says it does
-      multi = EnumerableSpecs::YieldsMultiWithFalse.new
-      multi.all?.should be_true
     end
   end
 
