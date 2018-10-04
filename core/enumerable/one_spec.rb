@@ -42,19 +42,19 @@ describe "Enumerable#one?" do
   describe "with no block" do
     it "returns true if only one element evaluates to true" do
       [false, nil, true].one?.should be_true
+      [false, nil, []].one?.should be_true
+      [false, nil, [false]].one?.should be_true
+      [false, nil, [nil]].one?.should be_true
     end
 
     it "returns false if two elements evaluate to true" do
       [false, :value, nil, true].one?.should be_false
+      [false, [], nil, [false]].one?.should be_false
+      [false, [], nil, [nil]].one?.should be_false
     end
 
     it "returns false if all elements evaluate to false" do
-      [false, nil, false].one?.should be_false
-    end
-
-    it "gathers whole arrays as elements when each yields multiple" do
-      multi = EnumerableSpecs::YieldsMultiWithSingleTrue.new
-      multi.one?.should be_false
+      [false, nil].one?.should be_false
     end
   end
 
@@ -75,20 +75,6 @@ describe "Enumerable#one?" do
       lambda {
         @enum.one? { raise "from block" }
       }.should raise_error(RuntimeError)
-    end
-
-    it "gathers initial args as elements when each yields multiple" do
-      multi = EnumerableSpecs::YieldsMulti.new
-      yielded = []
-      multi.one? { |e| yielded << e; false }.should == false
-      yielded.should == [1, 3, 6]
-    end
-
-    it "yields multiple arguments when each yields multiple" do
-      multi = EnumerableSpecs::YieldsMulti.new
-      yielded = []
-      multi.one? { |*args| yielded << args; false }.should == false
-      yielded.should == [[1, 2], [3, 4, 5], [6, 7, 8, 9]]
     end
   end
 
