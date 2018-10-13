@@ -99,6 +99,17 @@ describe "IO.write" do
     File.binread(@filename).should == ("H" + xEB + "ll" + xF6).force_encoding(Encoding::ASCII_8BIT)
   end
 
+  ruby_version_is "2.5" do
+    describe "with multiple arguments" do
+      it "writes the two Strings to the pipe" do
+        r, w = IO.pipe
+        w.write("foo", "bar")
+        w.close
+        r.read.should == "foobar"
+      end
+    end
+  end
+
   platform_is_not :windows do
     describe "on a FIFO" do
       before :each do
