@@ -45,4 +45,12 @@ describe :kernel_kind_of, shared: true do
     lambda { @o.send(@method, :KindaClass) }.should raise_error(TypeError)
     lambda { @o.send(@method, Object.new) }.should raise_error(TypeError)
   end
+
+  it "does not take into account `class` method overriding" do
+    class_new = Class.new
+    def @o.class; class_new; end
+
+    @o.send(@method, class_new).should == false
+    @o.send(@method, KernelSpecs::KindaClass).should == true
+  end
 end
