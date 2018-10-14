@@ -17,7 +17,7 @@ describe "Proc#call on a Proc created with Kernel#lambda or Kernel#proc" do
   it_behaves_like :proc_call_on_proc_or_lambda, :call
 end
 
-ruby_version_is "2.6" do
+ruby_bug "#15118", ""..."2.6" do
   describe "Proc#[] with frozen_string_literals" do
     it "doesn't duplicate frozen strings" do
       ProcArefSpecs.aref.frozen?.should be_false
