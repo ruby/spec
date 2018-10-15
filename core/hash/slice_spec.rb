@@ -32,5 +32,21 @@ ruby_version_is "2.5" do
       r.should == {foo: 42}
       r.class.should == Hash
     end
+
+    it "uses the regular hash #[] method, even on subclasses that override it" do
+      ScratchPad.record []
+      klass = Class.new(Hash) do
+        def [](value)
+          ScratchPad << :used_subclassed_operator
+          super
+        end
+      end
+
+      h = klass.new
+      h[:foo] = 42
+      h.slice(:foo)
+
+      ScratchPad.recorded.should == []
+    end
   end
 end
