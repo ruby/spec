@@ -6,10 +6,11 @@ ruby_version_is "2.5" do
       @hash = { a: 1, b: 2, c: 3 }
     end
 
-    it "returns new hash" do
+    it "returns a new empty hash without arguments" do
       ret = @hash.slice
       ret.should_not equal(@hash)
       ret.should be_an_instance_of(Hash)
+      ret.should == {}
     end
 
     it "returns the requested subset" do
@@ -27,13 +28,14 @@ ruby_version_is "2.5" do
     it "returns a Hash instance, even on subclasses" do
       klass = Class.new(Hash)
       h = klass.new
+      h[:bar] = 12
       h[:foo] = 42
       r = h.slice(:foo)
       r.should == {foo: 42}
       r.class.should == Hash
     end
 
-    it "uses the regular hash #[] method, even on subclasses that override it" do
+    it "uses the regular Hash#[] method, even on subclasses that override it" do
       ScratchPad.record []
       klass = Class.new(Hash) do
         def [](value)
@@ -43,6 +45,7 @@ ruby_version_is "2.5" do
       end
 
       h = klass.new
+      h[:bar] = 12
       h[:foo] = 42
       h.slice(:foo)
 
