@@ -43,7 +43,7 @@ describe "Tempfile.open" do
   end
 
   it "passes the third argument (options) to open" do
-    Tempfile.open("specs", "/tmp", encoding: "IBM037:IBM037", binmode: true) do |tempfile|
+    Tempfile.open("specs", Dir.tmpdir, encoding: "IBM037:IBM037", binmode: true) do |tempfile|
       @tempfile = tempfile
       tempfile.external_encoding.should == Encoding.find("IBM037")
       tempfile.binmode?.should be_true
