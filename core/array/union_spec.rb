@@ -10,10 +10,9 @@ ruby_version_is "2.6" do
   describe "Array#union" do
     it_behaves_like :array_binary_union, :union
 
-    it "returns a copy when given no argument" do
-      x = [1, 2, 3]
-      x.union.should == x
-      x.union.should_not equal(x)
+    it "returns unique elements when given no argument" do
+      x = [1, 2, 3, 2]
+      x.union.should == [1, 2, 3]
     end
 
     it "does not return subclass instances for Array subclasses" do

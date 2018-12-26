@@ -7,7 +7,7 @@ ruby_version_is "2.6" do
     it_behaves_like :array_binary_difference, :-
 
     it "returns a copy when called without any parameter" do
-      x = [1, 2, 3]
+      x = [1, 2, 3, 2]
       x.difference.should == x
       x.difference.should_not equal x
     end
@@ -17,8 +17,8 @@ ruby_version_is "2.6" do
     end
 
     it "accepts multiple arguments" do
-      x = [1, 2, 3]
-      x.union([], [0, 1], [3, 4], [3]).should == [2]
+      x = [1, 2, 3, 1]
+      x.difference([], [0, 1], [3, 4], [3]).should == [2]
     end
   end
 end
