@@ -18,6 +18,7 @@ matrix:
       script:
         - gem install rubocop -v 0.54.0
         - rubocop
+    - rvm: 2.6.0
   allow_failures:
     - rvm: ruby-head
 branches:
