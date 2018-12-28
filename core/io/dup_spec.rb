@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "IO#dup" do
   before :each do
-    @file = tmp("rubinius_spec_io_dup_#{$$}_#{Time.now.to_f}")
+    @file = tmp("spec_io_dup")
     @f = File.open @file, 'w+'
     @i = @f.dup
 
