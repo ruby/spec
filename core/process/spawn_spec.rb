@@ -396,7 +396,7 @@ describe "Process.spawn" do
   platform_is :linux do
     describe "inside Dir.chdir" do
       def child_pids(pid)
-        `pgrep -P #{pid}`.lines.map { |pid| Integer(pid) }
+        `pgrep -P #{pid}`.lines.map { |child| Integer(child) }
       end
 
       it "does not create extra process without chdir" do
