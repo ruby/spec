@@ -1,9 +1,11 @@
 require_relative '../../spec_helper'
 
 describe "Process.clock_gettime" do
-  it 'can be called with all declared clocks' do
-    Process.constants.select { |c| c.to_s.start_with?('CLOCK_') }.each do |c|
-      Process.clock_gettime(Process.const_get(c)).should be_an_instance_of(Float)
+  platform_is_not :windows do
+    it 'can be called with all declared clocks' do
+      Process.constants.select { |c| c.to_s.start_with?('CLOCK_') }.each do |c|
+        Process.clock_gettime(Process.const_get(c)).should be_an_instance_of(Float)
+      end
     end
   end
 
