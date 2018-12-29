@@ -59,7 +59,7 @@ describe "File.expand_path" do
   platform_is_not :windows do
     before do
       @var_home = ENV['HOME'].chomp('/')
-      @db_home = Dir.home
+      @db_home = Dir.home(ENV['USER'])
     end
 
     # FIXME: these are insane!
