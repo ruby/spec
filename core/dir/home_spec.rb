@@ -15,6 +15,10 @@ describe "Dir.home" do
     it "returns the current user's home directory, reading $HOME first" do
       Dir.home.should == "/rubyspec_home"
     end
+
+    it "returns a non-frozen string" do
+      Dir.home.frozen?.should == false
+    end
   end
 
   describe "when called with the current user name" do
@@ -28,6 +32,10 @@ describe "Dir.home" do
       it "returns the named user's home directory, from the user database" do
         Dir.home(ENV['USER']).should == `echo ~#{ENV['USER']}`.chomp
       end
+    end
+
+    it "returns a non-frozen string" do
+      Dir.home(ENV['USER']).frozen?.should == false
     end
   end
 
