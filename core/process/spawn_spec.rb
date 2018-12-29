@@ -11,22 +11,22 @@ describe :process_spawn_does_not_close_std_streams, shared: true do
     it "does not close STDIN" do
       code = "STDOUT.puts STDIN.read(0).inspect"
       cmd = "Process.wait Process.spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
-      ruby_exe(cmd, args: "> #{@output}")
-      File.binread(@output).should == %[""#{newline}]
+      ruby_exe(cmd, args: "> #{@name}")
+      File.binread(@name).should == %[""#{newline}]
     end
 
     it "does not close STDOUT" do
       code = "STDOUT.puts 'hello'"
       cmd = "Process.wait Process.spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
-      ruby_exe(cmd, args: "> #{@output}")
-      File.binread(@output).should == "hello#{newline}"
+      ruby_exe(cmd, args: "> #{@name}")
+      File.binread(@name).should == "hello#{newline}"
     end
 
     it "does not close STDERR" do
       code = "STDERR.puts 'hello'"
       cmd = "Process.wait Process.spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
-      ruby_exe(cmd, args: "2> #{@output}")
-      File.binread(@output).should =~ /hello#{newline}/
+      ruby_exe(cmd, args: "2> #{@name}")
+      File.binread(@name).should =~ /hello#{newline}/
     end
   end
 end
@@ -534,22 +534,19 @@ describe "Process.spawn" do
 
   context "when passed close_others: true" do
     before :each do
-      @output = tmp("spawn_close_others_true")
       @options = { close_others: true }
     end
 
-    after :each do
-      rm_r @output
-    end
-
     it "closes file descriptors >= 3 in the child process even if fds are set close_on_exec=false" do
+      touch @name
       IO.pipe do |r, w|
         r.close_on_exec = false
         w.close_on_exec = false
+
         begin
           pid = Process.spawn(ruby_cmd("while File.exist? '#{@name}'; sleep 0.1; end"), @options)
           w.close
-          lambda { r.read_nonblock(1) }.should raise_error(EOFError)
+          r.read(1).should == nil
         ensure
           rm_r @name
           Process.wait(pid) if pid
@@ -562,20 +559,16 @@ describe "Process.spawn" do
 
   context "when passed close_others: false" do
     before :each do
-      @output = tmp("spawn_close_others_false")
       @options = { close_others: false }
     end
 
-    after :each do
-      rm_r @output
-    end
-
     it "closes file descriptors >= 3 in the child process because they are set close_on_exec by default" do
+      touch @name
       IO.pipe do |r, w|
         begin
           pid = Process.spawn(ruby_cmd("while File.exist? '#{@name}'; sleep 0.1; end"), @options)
           w.close
-          lambda { r.read_nonblock(1) }.should raise_error(EOFError)
+          r.read(1).should == nil
         ensure
           rm_r @name
           Process.wait(pid) if pid
@@ -588,13 +581,14 @@ describe "Process.spawn" do
         IO.pipe do |r, w|
           r.close_on_exec = false
           w.close_on_exec = false
+
+          code = "fd = IO.for_fd(#{w.fileno}); fd.write 'abc'; fd.close"
+          pid = Process.spawn(ruby_cmd(code), @options)
           begin
-            pid = Process.spawn(ruby_cmd("while File.exist? '#{@name}'; sleep 0.1; end"), @options)
             w.close
-            lambda { r.read_nonblock(1) }.should raise_error(Errno::EAGAIN)
+            r.read.should == 'abc'
           ensure
-            rm_r @name
-            Process.wait(pid) if pid
+            Process.wait(pid)
           end
         end
       end
