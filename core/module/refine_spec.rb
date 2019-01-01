@@ -579,6 +579,45 @@ describe "Module#refine" do
         result.should == true
       end
     end
+
+    ruby_version_is ""..."2.6" do
+      it "is not honored by &" do
+        refinement = Module.new do
+          refine String do
+            def to_proc(*args)
+              -> (*) { 'foo' }
+            end
+          end
+        end
+
+        -> do
+          Module.new do
+            using refinement
+            ["hola"].map(&"upcase")
+          end
+        end.should raise_error(TypeError, /wrong argument type String \(expected Proc\)/)
+      end
+    end
+
+    ruby_version_is "2.6" do
+      it "is honored by &" do
+        refinement = Module.new do
+          refine String do
+            def to_proc(*args)
+              -> (*) { 'foo' }
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinement
+          result = ["hola"].map(&"upcase")
+        end
+
+        result.should == ['foo']
+      end
+    end
   end
 
   context "when super is called in a refinement" do
