@@ -4,7 +4,7 @@
 [![Build Status](https://ci.appveyor.com/api/projects/status/1gs6f399320o44b1?svg=true)](https://ci.appveyor.com/project/eregon/spec-x948i)
 [![Gitter](https://badges.gitter.im/ruby/spec.svg)](https://gitter.im/ruby/spec)
 
-The Ruby Spec Suite is a test suite for the behavior of the Ruby programming language.
+The Ruby Spec Suite, abbreviated `ruby/spec`, is a test suite for the behavior of the Ruby programming language.
 
 It is not a standardized specification like the ISO one, and does not aim to become one.
 Instead, it is a practical tool to describe and test the behavior of Ruby with code.
