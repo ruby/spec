@@ -21,4 +21,3 @@ ruby_version_is "2.6" do
     ScratchPad.recorded[0].class.should == RubyVM::InstructionSequence
   end
 end
-
