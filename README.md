@@ -112,6 +112,7 @@ under the MIT license in ruby/spec.
 ### History and RubySpec
 
 This project was originally born from [Rubinius](https://github.com/rubinius/rubinius) tests being converted to the spec style.
+The revision history of these specs is available [here](https://github.com/ruby/spec/blob/2b886623/CHANGES.before-2008-05-10).
 These specs were later extracted to their own project, RubySpec, with a specific vision and principles.
 At the end of 2014, Brian Shirai, the creator of RubySpec, decided to [end RubySpec](http://rubinius.com/2014/12/31/matz-s-ruby-developers-don-t-use-rubyspec/).
 A couple months later, the different repositories were merged and [the project was revived](http://eregon.github.io/rubyspec/2015/07/29/rubyspec-is-reborn.html).
