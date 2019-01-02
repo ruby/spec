@@ -84,6 +84,30 @@ describe "The $SAFE variable" do
     end
   end
 
+  ruby_version_is "2.6" do
+    it "can be manually lowered" do
+      $SAFE = 1
+      $SAFE = 0
+      $SAFE.should == 0
+    end
+
+    it "is not Proc local" do
+      $SAFE.should == 0
+      proc {
+        $SAFE = 1
+      }.call
+      $SAFE.should == 1
+    end
+
+    it "is not lambda local" do
+      $SAFE.should == 0
+      lambda {
+        $SAFE = 1
+      }.call
+      $SAFE.should == 1
+    end
+  end
+
   it "can be read when default from Thread#safe_level" do
     Thread.current.safe_level.should == 0
   end
