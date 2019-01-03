@@ -762,22 +762,17 @@ end
 describe 'Local variable shadowing' do
   ruby_version_is ""..."2.6" do
     it "leads to warning in verbose mode" do
-      $VERBOSE, @verbose = true, $VERBOSE
-
       -> do
         eval <<-CODE
           a = [1, 2, 3]
           a.each { |a| a = 3 }
         CODE
-      end.should complain(/shadowing outer local variable/)
-
-      $VERBOSE = @verbose
+      end.should complain(/shadowing outer local variable/, verbose: true)
     end
   end
 
   ruby_version_is "2.6" do
     it "does not warn in verbose mode" do
-      $VERBOSE, @verbose = true, $VERBOSE
       result = nil
 
       -> do
@@ -785,11 +780,9 @@ describe 'Local variable shadowing' do
           a = [1, 2, 3]
           result = a.map { |a| a = 3 }
         CODE
-      end.should_not complain
+      end.should_not complain(verbose: true)
 
       result.should == [3, 3, 3]
-
-      $VERBOSE = @verbose
     end
   end
 end
