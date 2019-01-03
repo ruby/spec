@@ -116,6 +116,12 @@ describe "The $SAFE variable" do
       }.call
       $SAFE.should == 1
     end
+
+    it "is global like regular global variables" do
+      Thread.new { $SAFE }.value.should == 0
+      $SAFE = 1
+      Thread.new { $SAFE }.value.should == 1
+    end
   end
 
   it "can be read when default from Thread#safe_level" do
