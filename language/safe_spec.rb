@@ -41,20 +41,30 @@ describe "The $SAFE variable" do
 
   ruby_version_is ""..."2.6" do
     it "cannot be set to values below 0" do
-        lambda {
-          proc {
-            $SAFE = -100
-          }.call
-        }.should raise_error(SecurityError, /tried to downgrade safe level from 0 to -100/)
+      lambda {
+        proc {
+          $SAFE = -100
+        }.call
+      }.should raise_error(SecurityError, /tried to downgrade safe level from 0 to -100/)
+    end
+  end
+
+  ruby_version_is "2.6" do
+    it "raises ArgumentError when set to values below 0" do
+      lambda {
+        proc {
+          $SAFE = -100
+        }.call
+      }.should raise_error(ArgumentError, "$SAFE should be >= 0")
     end
   end
 
   it "cannot be set to values above 4" do
-      lambda {
-        proc {
-          $SAFE = 100
-        }.call
-      }.should raise_error(ArgumentError, /\$SAFE=2 to 4 are obsolete/)
+    lambda {
+      proc {
+        $SAFE = 100
+      }.call
+    }.should raise_error(ArgumentError, /\$SAFE=2 to 4 are obsolete/)
   end
 
   ruby_version_is ""..."2.6" do
