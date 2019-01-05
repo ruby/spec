@@ -2,6 +2,16 @@ sudo: false
 language: ruby
 install:
   - git clone https://github.com/ruby/mspec.git ../mspec
+before_install:
+  # fix Travis trunk build as of 2018-01-05
+  - |
+    rv="$(ruby -e 'STDOUT.write RUBY_VERSION')";
+    if [ "$rv" = "2.7.0" ]; then
+      lib="$(ruby -e 'STDOUT.write RbConfig::CONFIG["sitelibdir"]')";
+      echo "Processing 2.7.0 - $lib";
+      rm -rf $lib/rubygems;
+      rm -f  $lib/rubygems.rb $lib/ubygems.rb;
+    fi
 script:
   - ../mspec/bin/mspec $MSPEC_OPTS
 matrix:
