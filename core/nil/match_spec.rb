@@ -17,4 +17,3 @@ ruby_version_is "2.6" do
     end
   end
 end
-
