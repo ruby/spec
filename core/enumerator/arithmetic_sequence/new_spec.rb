@@ -1,7 +1,7 @@
 require_relative '../../../spec_helper'
 
 ruby_version_is "2.6" do
-  describe "Enumerator::ArithmeticSequence#new" do
+  describe "Enumerator::ArithmeticSequence.new" do
     it "is not defined" do
       lambda {
         Enumerator::ArithmeticSequence.new
@@ -9,7 +9,7 @@ ruby_version_is "2.6" do
     end
   end
 
-  describe "Enumerator::ArithmeticSequence#allocate" do
+  describe "Enumerator::ArithmeticSequence.allocate" do
     it "is not defined" do
       lambda {
         Enumerator::ArithmeticSequence.allocate
