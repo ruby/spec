@@ -1,7 +1,7 @@
 require_relative '../../../spec_helper'
 
 ruby_version_is "2.6" do
-  describe "Enumerator::ArithmeticSequence#each" do
+  describe "Enumerator::ArithmeticSequence#size" do
     context "for finite sequence" do
       it "returns the number of elements in this arithmetic sequence" do
         1.step(10).size.should == 10
