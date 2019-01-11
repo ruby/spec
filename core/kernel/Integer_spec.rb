@@ -142,6 +142,18 @@ describe :kernel_integer, shared: true do
           Integer(nil, exception: false).should == nil
         end
       end
+
+      describe "and passed a String that contains numbers" do
+        it "normally parses it and returns an Integer" do
+          Integer("42", exception: false).should == 42
+        end
+      end
+
+      describe "and passed a String that can't be converted to an Integer" do
+        it "swallows an error" do
+          Integer("abc", exception: false).should == nil
+        end
+      end
     end
   end
 end
