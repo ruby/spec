@@ -8,10 +8,10 @@ end
 
 describe :process_spawn_does_not_close_std_streams, shared: true do
   it "does not close STDIN" do
-    code = "STDOUT.puts STDIN.read(0).inspect"
+    code = "puts STDIN.read"
     cmd = "Process.wait Process.spawn(#{ruby_cmd(code).inspect}, #{@options.inspect})"
-    ruby_exe(cmd, args: "> #{@name}")
-    File.binread(@name).should == %[""#{newline}]
+    ruby_exe(cmd, args: "< #{fixture(__FILE__, "in.txt")} > #{@name}")
+    File.binread(@name).should == %[stdin#{newline}]
   end
 
   it "does not close STDOUT" do
