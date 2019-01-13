@@ -3,7 +3,7 @@ require_relative 'fixtures/common'
 
 describe "NoMethodError.new" do
   it "allows passing method args" do
-    NoMethodError.new("msg","name","args").args.should == "args"
+    NoMethodError.new("msg", "name", ["args"]).args.should == ["args"]
   end
 
   it "does not require a name" do
