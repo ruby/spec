@@ -9,6 +9,17 @@ describe "NoMethodError.new" do
   it "does not require a name" do
     NoMethodError.new("msg").message.should == "msg"
   end
+
+  ruby_version_is "2.6" do
+    it "accepts a :receiver keyword argument" do
+      receiver = mock("receiver")
+
+      error = NoMethodError.new("msg", :name, receiver: receiver)
+
+      error.receiver.should == receiver
+      error.name.should == :name
+    end
+  end
 end
 
 describe "NoMethodError#args" do
