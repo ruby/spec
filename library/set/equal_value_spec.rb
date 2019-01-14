@@ -27,7 +27,7 @@ describe "Set#==" do
 
   context "when comparing to a Set-like object" do
     it "returns true when a Set and a Set-like object contain the same elements" do
-      Set[1, 2, 3].should == SetLike.new([1, 2, 3])
+      Set[1, 2, 3].should == SetSpecs::SetLike.new([1, 2, 3])
     end
   end
 end

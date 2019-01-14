@@ -18,7 +18,7 @@ describe "Set#flatten" do
 
   context "when Set contains a Set-like object" do
     it "returns a copy of self with each included Set-like object flattened" do
-      Set[SetLike.new([1])].flatten.should == Set[1]
+      Set[SetSpecs::SetLike.new([1])].flatten.should == Set[1]
     end
   end
 end
@@ -47,7 +47,7 @@ describe "Set#flatten!" do
 
   context "when Set contains a Set-like object" do
     it "flattens self, including Set-like objects" do
-      Set[SetLike.new([1])].flatten!.should == Set[1]
+      Set[SetSpecs::SetLike.new([1])].flatten!.should == Set[1]
     end
   end
 end
