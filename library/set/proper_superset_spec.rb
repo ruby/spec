@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative 'shared/set_like'
+require_relative 'fixtures/set_like'
 require 'set'
 
 describe "Set#proper_superset?" do
