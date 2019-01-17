@@ -390,6 +390,11 @@ static VALUE string_spec_rb_string_value_cstr(VALUE self, VALUE str) {
   return c_str ? Qtrue : Qfalse;
 }
 
+static VALUE string_spec_rb_str_modify(VALUE self, VALUE str) {
+  rb_str_modify(str);
+  return str;
+}
+
 void Init_string_spec(void) {
   VALUE cls = rb_define_class("CApiStringSpecs", rb_cObject);
   rb_define_method(cls, "rb_cstr2inum", string_spec_rb_cstr2inum, 2);
@@ -458,6 +463,7 @@ void Init_string_spec(void) {
   rb_define_method(cls, "rb_usascii_str_new_cstr", string_spec_rb_usascii_str_new_cstr, 1);
   rb_define_method(cls, "rb_String", string_spec_rb_String, 1);
   rb_define_method(cls, "rb_string_value_cstr", string_spec_rb_string_value_cstr, 1);
+  rb_define_method(cls, "rb_str_modify", string_spec_rb_str_modify, 1);
 }
 
 #ifdef __cplusplus
