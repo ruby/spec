@@ -132,10 +132,12 @@ describe :kernel_Rational, shared: true do
         end
       end
 
-      describe "and nil arguments" do
-        it "raises a TypeError" do
-          lambda { Rational(nil, exception: false) }.should raise_error(TypeError, "can't convert nil into Rational")
-          lambda { Rational(nil, nil, exception: false) }.should raise_error(TypeError, "can't convert nil into Rational")
+      ruby_bug "#15525", "2.6"..."2.6.1" do
+        describe "and nil arguments" do
+          it "swallows an error" do
+            Rational(nil, exception: false).should == nil
+            Rational(nil, nil, exception: false).should == nil
+          end
         end
       end
     end

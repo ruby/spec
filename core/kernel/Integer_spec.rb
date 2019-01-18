@@ -125,15 +125,17 @@ describe :kernel_integer, shared: true do
         end
       end
 
-      describe "and passed NaN" do
-        it "raises a TypeError" do
-          lambda { Integer(nan_value, exception: false) }.should raise_error(FloatDomainError)
+      ruby_bug "#15525", "2.6"..."2.6.1" do
+        describe "and passed NaN" do
+          it "swallows an error" do
+            Integer(nan_value, exception: false).should == nil
+          end
         end
-      end
 
-      describe "and passed Infinity" do
-        it "raises a TypeError" do
-          lambda { Integer(infinity_value, exception: false) }.should raise_error(FloatDomainError)
+        describe "and passed Infinity" do
+          it "swallows an error" do
+            Integer(infinity_value, exception: false).should == nil
+          end
         end
       end
 

@@ -175,11 +175,13 @@ describe "Kernel.Complex()" do
         end
       end
 
-      describe "and nil arguments" do
-        it "still throws a TypeError" do
-          lambda { Complex(nil, exception: false) }.should raise_error(TypeError, "can't convert nil into Complex")
-          lambda { Complex(0, nil, exception: false) }.should raise_error(TypeError, "can't convert nil into Complex")
-          lambda { Complex(nil, 0, exception: false) }.should raise_error(TypeError, "can't convert nil into Complex")
+      ruby_bug "#15525", "2.6"..."2.6.1" do
+        describe "and nil arguments" do
+          it "swallows an error" do
+            Complex(nil, exception: false).should == nil
+            Complex(0, nil, exception: false).should == nil
+            Complex(nil, 0, exception: false).should == nil
+          end
         end
       end
     end
