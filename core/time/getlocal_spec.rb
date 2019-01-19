@@ -1,6 +1,9 @@
 require_relative '../../spec_helper'
+require_relative 'shared/tz'
 
 describe "Time#getlocal" do
+  it_behaves_like :time_tz, :getlocal, -> { Time.utc(2007, 1, 9, 12, 0, 0).getlocal }
+
   it "returns a new time which is the local representation of time" do
     # Testing with America/Regina here because it doesn't have DST.
     with_timezone("CST", -6) do

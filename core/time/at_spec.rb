@@ -1,6 +1,9 @@
 require_relative '../../spec_helper'
+require_relative 'shared/tz'
 
 describe "Time.at" do
+  it_behaves_like :time_tz, :at, -> { Time.at(1184027924) }
+
   describe "passed Numeric" do
     it "returns a Time object representing the given number of Integer seconds since 1970-01-01 00:00:00 UTC" do
       Time.at(1184027924).getgm.asctime.should == "Tue Jul 10 00:38:44 2007"

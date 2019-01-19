@@ -2,6 +2,7 @@ require_relative '../../spec_helper'
 require_relative 'shared/now'
 require_relative 'shared/local'
 require_relative 'shared/time_params'
+require_relative 'shared/tz'
 
 describe "Time.new" do
   it_behaves_like :time_now, :new
@@ -10,6 +11,7 @@ end
 describe "Time.new" do
   it_behaves_like :time_local, :new
   it_behaves_like :time_params, :new
+  it_behaves_like :time_tz, :new, -> { Time.new }
 end
 
 describe "Time.new with a utc_offset argument" do
