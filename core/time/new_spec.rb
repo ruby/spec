@@ -77,40 +77,46 @@ describe "Time.new with a utc_offset argument" do
   it "disallows a value for minutes greater than 59" do
     lambda {
       Time.new(2000, 1, 1, 0, 0, 0, "+01:60")
-    }.should raise_error(ArgumentError)
+    }.should raise_error(ArgumentError, '"+HH:MM" or "-HH:MM" expected for utc_offset')
     lambda {
       Time.new(2000, 1, 1, 0, 0, 0, "+01:99")
-    }.should raise_error(ArgumentError)
+    }.should raise_error(ArgumentError, '"+HH:MM" or "-HH:MM" expected for utc_offset')
   end
 
   it "raises ArgumentError if the String argument is not of the form (+|-)HH:MM" do
-    lambda { Time.new(2000, 1, 1, 0, 0, 0, "3600") }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, 0, "3600") }.should raise_error(ArgumentError, '"+HH:MM" or "-HH:MM" expected for utc_offset')
+  end
+
+  it "raises ArgumentError if the String argument is a UTC offset specified as Z" do
+    lambda {
+      Time.new(2000, 1, 1, 0, 0, 0, "Z")
+    }.should raise_error(ArgumentError, '"+HH:MM" or "-HH:MM" expected for utc_offset')
   end
 
   it "raises ArgumentError if the hour value is greater than 23" do
-    lambda { Time.new(2000, 1, 1, 0, 0, 0, "+24:00") }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, 0, "+24:00") }.should raise_error(ArgumentError, /utc_offset out of range/)
   end
 
   it "raises ArgumentError if the String argument is not in an ASCII-compatible encoding" do
-    lambda { Time.new(2000, 1, 1, 0, 0, 0, "-04:10".encode("UTF-16LE")) }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, 0, "-04:10".encode("UTF-16LE")) }.should raise_error(ArgumentError, '"+HH:MM" or "-HH:MM" expected for utc_offset')
   end
 
   it "raises ArgumentError if the argument represents a value less than or equal to -86400 seconds" do
     Time.new(2000, 1, 1, 0, 0, 0, -86400 + 1).utc_offset.should == (-86400 + 1)
-    lambda { Time.new(2000, 1, 1, 0, 0, 0, -86400) }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, 0, -86400) }.should raise_error(ArgumentError, /utc_offset out of range/)
   end
 
   it "raises ArgumentError if the argument represents a value greater than or equal to 86400 seconds" do
     Time.new(2000, 1, 1, 0, 0, 0, 86400 - 1).utc_offset.should == (86400 - 1)
-    lambda { Time.new(2000, 1, 1, 0, 0, 0, 86400) }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, 0, 86400) }.should raise_error(ArgumentError, /utc_offset out of range/)
   end
 
   it "raises ArgumentError if the seconds argument is negative" do
-    lambda { Time.new(2000, 1, 1, 0, 0, -1) }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, -1) }.should raise_error(ArgumentError, /argument out of range/)
   end
 
   it "raises ArgumentError if the utc_offset argument is greater than or equal to 10e9" do
-    lambda { Time.new(2000, 1, 1, 0, 0, 0, 1000000000) }.should raise_error(ArgumentError)
+    lambda { Time.new(2000, 1, 1, 0, 0, 0, 1000000000) }.should raise_error(ArgumentError, /utc_offset out of range/)
   end
 end
 
