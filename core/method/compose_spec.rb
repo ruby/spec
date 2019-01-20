@@ -1,5 +1,6 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
+require_relative '../proc/shared/compose'
 
 ruby_version_is "2.6" do
   describe "Method#<<" do
@@ -30,26 +31,7 @@ ruby_version_is "2.6" do
       (inc << double).call(3).should == 7
     end
 
-    it "raises NoMethodError exception if passed not callable object" do
-      inc = MethodSpecs::Composition.new.method(:inc)
-      not_callable = Object.new
-
-      -> {
-        (inc << not_callable).call(1)
-      }.should raise_error(NoMethodError, /undefined method `call' for/)
-
-    end
-
-    it "does not try to coerce argument with #to_proc" do
-      upcase = MethodSpecs::Composition.new.method(:upcase)
-
-      succ = Object.new
-      def succ.to_proc(s); s.succ; end
-
-      -> {
-        (upcase << succ).call('a')
-      }.should raise_error(NoMethodError, /undefined method `call' for/)
-    end
+    it_behaves_like :proc_compose, :<<, -> { MethodSpecs::Composition.new.method(:upcase) }
 
     describe "composition" do
       it "is a lambda" do
@@ -97,27 +79,7 @@ ruby_version_is "2.6" do
       (inc >> double).call(3).should == 8
     end
 
-    it "raises NoMethodError exception if passed not callable object" do
-      inc = MethodSpecs::Composition.new.method(:inc)
-      not_callable = Object.new
-
-      -> {
-        (inc >> not_callable).call(1)
-      }.should raise_error(NoMethodError, /undefined method `call' for/)
-
-    end
-
-    it "does not try to coerce argument with #to_proc" do
-      upcase = proc { |s| s.upcase }
-      upcase = MethodSpecs::Composition.new.method(:upcase)
-
-      succ = Object.new
-      def succ.to_proc(s); s.succ; end
-
-      -> {
-        (upcase >> succ).call('a')
-      }.should raise_error(NoMethodError, /undefined method `call' for/)
-    end
+    it_behaves_like :proc_compose, :>>, -> { MethodSpecs::Composition.new.method(:upcase) }
 
     describe "composition" do
       it "is a lambda" do
