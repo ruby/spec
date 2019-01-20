@@ -21,14 +21,19 @@ VALUE util_spec_rb_scan_args(VALUE self, VALUE argv, VALUE fmt, VALUE expected, 
   switch(NUM2INT(expected)) {
   case 6:
     rb_ary_unshift(acc, a6);
+    /* FALLTHROUGH */
   case 5:
     rb_ary_unshift(acc, a5);
+    /* FALLTHROUGH */
   case 4:
     rb_ary_unshift(acc, a4);
+    /* FALLTHROUGH */
   case 3:
     rb_ary_unshift(acc, a3);
+    /* FALLTHROUGH */
   case 2:
     rb_ary_unshift(acc, a2);
+    /* FALLTHROUGH */
   case 1:
     rb_ary_unshift(acc, a1);
     break;
