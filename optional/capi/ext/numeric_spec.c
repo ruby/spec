@@ -111,16 +111,10 @@ void Init_numeric_spec(void) {
   rb_define_method(cls, "rb_ull2inum_14", numeric_spec_rb_ull2inum_14, 0);
   rb_define_method(cls, "rb_ull2inum_n14", numeric_spec_rb_ull2inum_n14, 0);
   rb_define_method(cls, "NUM2DBL", numeric_spec_NUM2DBL, 1);
-#if SIZEOF_INT < SIZEOF_LONG
   rb_define_method(cls, "NUM2INT", numeric_spec_NUM2INT, 1);
-#endif
-
   rb_define_method(cls, "NUM2LONG", numeric_spec_NUM2LONG, 1);
   rb_define_method(cls, "INT2NUM", numeric_spec_INT2NUM, 1);
-#if SIZEOF_INT < SIZEOF_LONG
   rb_define_method(cls, "NUM2UINT", numeric_spec_NUM2UINT, 1);
-#endif
-
   rb_define_method(cls, "NUM2ULONG", numeric_spec_NUM2ULONG, 1);
   rb_define_method(cls, "rb_num_zerodiv", numeric_spec_rb_num_zerodiv, 0);
   rb_define_method(cls, "rb_cmpint", numeric_spec_rb_cmpint, 2);

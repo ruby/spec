@@ -7,89 +7,85 @@ describe "CApiNumericSpecs" do
     @s = CApiNumericSpecs.new
   end
 
-  platform_is wordsize: 64 do
-    describe "NUM2INT" do
-      it "raises a TypeError if passed nil" do
-        lambda { @s.NUM2INT(nil) }.should raise_error(TypeError)
-      end
+  describe "NUM2INT" do
+    it "raises a TypeError if passed nil" do
+      lambda { @s.NUM2INT(nil) }.should raise_error(TypeError)
+    end
 
-      it "converts a Float" do
-        @s.NUM2INT(4.2).should == 4
-      end
+    it "converts a Float" do
+      @s.NUM2INT(4.2).should == 4
+    end
 
-      it "converts a Bignum" do
-        @s.NUM2INT(0x7fff_ffff).should == 0x7fff_ffff
-      end
+    it "converts a Bignum" do
+      @s.NUM2INT(0x7fff_ffff).should == 0x7fff_ffff
+    end
 
-      it "converts a Fixnum" do
-        @s.NUM2INT(5).should == 5
-      end
+    it "converts a Fixnum" do
+      @s.NUM2INT(5).should == 5
+    end
 
-      it "converts -1 to an signed number" do
-        @s.NUM2INT(-1).should == -1
-      end
+    it "converts -1 to an signed number" do
+      @s.NUM2INT(-1).should == -1
+    end
 
-      it "converts a negative Bignum into an signed number" do
-        @s.NUM2INT(-2147442171).should == -2147442171
-      end
+    it "converts a negative Bignum into an signed number" do
+      @s.NUM2INT(-2147442171).should == -2147442171
+    end
 
-      it "raises a RangeError if the value is more than 32bits" do
-        lambda { @s.NUM2INT(0xffff_ffff+1) }.should raise_error(RangeError)
-      end
+    it "raises a RangeError if the value is more than 32bits" do
+      lambda { @s.NUM2INT(0xffff_ffff+1) }.should raise_error(RangeError)
+    end
 
-      it "calls #to_int to coerce the value" do
-        obj = mock("number")
-        obj.should_receive(:to_int).and_return(2)
-        @s.NUM2INT(obj).should == 2
-      end
+    it "calls #to_int to coerce the value" do
+      obj = mock("number")
+      obj.should_receive(:to_int).and_return(2)
+      @s.NUM2INT(obj).should == 2
     end
   end
 
-  platform_is wordsize: 64 do
-    describe "NUM2UINT" do
-      it "raises a TypeError if passed nil" do
-        lambda { @s.NUM2UINT(nil) }.should raise_error(TypeError)
-      end
+  describe "NUM2UINT" do
+    it "raises a TypeError if passed nil" do
+      lambda { @s.NUM2UINT(nil) }.should raise_error(TypeError)
+    end
 
-      it "converts a Float" do
-        @s.NUM2UINT(4.2).should == 4
-      end
+    it "converts a Float" do
+      @s.NUM2UINT(4.2).should == 4
+    end
 
-      it "converts a Bignum" do
-        @s.NUM2UINT(0xffff_ffff).should == 0xffff_ffff
-      end
+    it "converts a Bignum" do
+      @s.NUM2UINT(0xffff_ffff).should == 0xffff_ffff
+    end
 
-      it "converts a Fixnum" do
-        @s.NUM2UINT(5).should == 5
-      end
+    it "converts a Fixnum" do
+      @s.NUM2UINT(5).should == 5
+    end
 
-      it "converts a negative number to the complement" do
-        @s.NUM2UINT(-1).should == 4294967295
-      end
+    it "converts a negative number to the complement" do
+      @s.NUM2UINT(-1).should == 4294967295
+    end
 
-      it "converts a signed int value to the complement" do
-        @s.NUM2UINT(-0x8000_0000).should == 2147483648
-      end
+    it "converts a signed int value to the complement" do
+      @s.NUM2UINT(-0x8000_0000).should == 2147483648
+    end
 
-      it "raises a RangeError if the value is more than 32bits" do
-        lambda { @s.NUM2UINT(0xffff_ffff+1) }.should raise_error(RangeError)
-      end
+    it "raises a RangeError if the value is more than 32bits" do
+      lambda { @s.NUM2UINT(0xffff_ffff+1) }.should raise_error(RangeError)
+    end
 
-      it "raises a RangeError if the value is less than 32bits negative" do
-        lambda { @s.NUM2UINT(-0x8000_0000-1) }.should raise_error(RangeError)
-      end
+    it "raises a RangeError if the value is less than 32bits negative" do
+      lambda { @s.NUM2UINT(-0x8000_0000-1) }.should raise_error(RangeError)
+    end
 
-      it "raises a RangeError if the value is more than 64bits" do
-        lambda do
-          @s.NUM2UINT(0xffff_ffff_ffff_ffff+1)
-        end.should raise_error(RangeError)
-      end
+    it "raises a RangeError if the value is more than 64bits" do
+      lambda do
+        @s.NUM2UINT(0xffff_ffff_ffff_ffff+1)
+      end.should raise_error(RangeError)
+    end
 
-      it "calls #to_int to coerce the value" do
-        obj = mock("number")
-        obj.should_receive(:to_int).and_return(2)
-        @s.NUM2UINT(obj).should == 2
-      end
+    it "calls #to_int to coerce the value" do
+      obj = mock("number")
+      obj.should_receive(:to_int).and_return(2)
+      @s.NUM2UINT(obj).should == 2
     end
   end
 
