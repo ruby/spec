@@ -640,24 +640,28 @@ describe "File.open" do
 
   ruby_version_is "2.6" do
     context "'x' flag" do
-      before do
-        @file = tmp("x-flag")
-        rm_r @file
+      before :each do
+        @xfile = tmp("x-flag")
+        rm_r @xfile
+      end
+
+      after :each do
+        rm_r @xfile
       end
 
       it "does nothing if the file doesn't exist" do
-        File.open(@file, "wx") { |f| f.write("content") }
-        File.read(@file).should == "content"
+        File.open(@xfile, "wx") { |f| f.write("content") }
+        File.read(@xfile).should == "content"
       end
 
       it "throws a Errno::EEXIST error if the file exists" do
-        touch @file
-        lambda { File.open(@file, "wx") }.should raise_error(Errno::EEXIST)
+        touch @xfile
+        lambda { File.open(@xfile, "wx") }.should raise_error(Errno::EEXIST)
       end
 
       it "can't be used with 'r' and 'a' flags" do
-        lambda { File.open(@file, "rx") }.should raise_error(ArgumentError, 'invalid access mode rx')
-        lambda { File.open(@file, "ax") }.should raise_error(ArgumentError, 'invalid access mode ax')
+        lambda { File.open(@xfile, "rx") }.should raise_error(ArgumentError, 'invalid access mode rx')
+        lambda { File.open(@xfile, "ax") }.should raise_error(ArgumentError, 'invalid access mode ax')
       end
     end
   end
