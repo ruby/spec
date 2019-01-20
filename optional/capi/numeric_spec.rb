@@ -40,7 +40,7 @@ describe "CApiNumericSpecs" do
       it "calls #to_int to coerce the value" do
         obj = mock("number")
         obj.should_receive(:to_int).and_return(2)
-        @s.rb_num2long(obj).should == 2
+        @s.rb_num2int(obj).should == 2
       end
     end
   end
