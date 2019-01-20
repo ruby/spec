@@ -45,32 +45,32 @@ static VALUE numeric_spec_rb_ull2inum_n14(VALUE self) {
   return rb_ull2inum(-14);
 }
 
-static VALUE numeric_spec_rb_num2dbl(VALUE self, VALUE num) {
-  return rb_float_new(rb_num2dbl(num));
+static VALUE numeric_spec_NUM2DBL(VALUE self, VALUE num) {
+  return rb_float_new(NUM2DBL(num));
 }
 
 #if SIZEOF_INT < SIZEOF_LONG
-static VALUE numeric_spec_rb_num2int(VALUE self, VALUE num) {
-  return LONG2NUM(rb_num2int(num));
+static VALUE numeric_spec_NUM2INT(VALUE self, VALUE num) {
+  return LONG2NUM(NUM2INT(num));
 }
 #endif
 
-static VALUE numeric_spec_rb_int2num(VALUE self, VALUE num) {
-  return INT2NUM(rb_num2long(num));
+static VALUE numeric_spec_INT2NUM(VALUE self, VALUE num) {
+  return INT2NUM(NUM2LONG(num));
 }
 
-static VALUE numeric_spec_rb_num2long(VALUE self, VALUE num) {
-  return LONG2NUM(rb_num2long(num));
+static VALUE numeric_spec_NUM2LONG(VALUE self, VALUE num) {
+  return LONG2NUM(NUM2LONG(num));
 }
 
 #if SIZEOF_INT < SIZEOF_LONG
-static VALUE numeric_spec_rb_num2uint(VALUE self, VALUE num) {
-  return ULONG2NUM(rb_num2uint(num));
+static VALUE numeric_spec_NUM2UINT(VALUE self, VALUE num) {
+  return ULONG2NUM(NUM2UINT(num));
 }
 #endif
 
-static VALUE numeric_spec_rb_num2ulong(VALUE self, VALUE num) {
-  return ULONG2NUM(rb_num2ulong(num));
+static VALUE numeric_spec_NUM2ULONG(VALUE self, VALUE num) {
+  return ULONG2NUM(NUM2ULONG(num));
 }
 
 static VALUE numeric_spec_rb_num_zerodiv(VALUE self) {
@@ -110,18 +110,18 @@ void Init_numeric_spec(void) {
   rb_define_method(cls, "rb_ll2inum_14", numeric_spec_rb_ll2inum_14, 0);
   rb_define_method(cls, "rb_ull2inum_14", numeric_spec_rb_ull2inum_14, 0);
   rb_define_method(cls, "rb_ull2inum_n14", numeric_spec_rb_ull2inum_n14, 0);
-  rb_define_method(cls, "rb_num2dbl", numeric_spec_rb_num2dbl, 1);
+  rb_define_method(cls, "NUM2DBL", numeric_spec_NUM2DBL, 1);
 #if SIZEOF_INT < SIZEOF_LONG
-  rb_define_method(cls, "rb_num2int", numeric_spec_rb_num2int, 1);
+  rb_define_method(cls, "NUM2INT", numeric_spec_NUM2INT, 1);
 #endif
 
-  rb_define_method(cls, "rb_num2long", numeric_spec_rb_num2long, 1);
-  rb_define_method(cls, "rb_int2num", numeric_spec_rb_int2num, 1);
+  rb_define_method(cls, "NUM2LONG", numeric_spec_NUM2LONG, 1);
+  rb_define_method(cls, "INT2NUM", numeric_spec_INT2NUM, 1);
 #if SIZEOF_INT < SIZEOF_LONG
-  rb_define_method(cls, "rb_num2uint", numeric_spec_rb_num2uint, 1);
+  rb_define_method(cls, "NUM2UINT", numeric_spec_NUM2UINT, 1);
 #endif
 
-  rb_define_method(cls, "rb_num2ulong", numeric_spec_rb_num2ulong, 1);
+  rb_define_method(cls, "NUM2ULONG", numeric_spec_NUM2ULONG, 1);
   rb_define_method(cls, "rb_num_zerodiv", numeric_spec_rb_num_zerodiv, 0);
   rb_define_method(cls, "rb_cmpint", numeric_spec_rb_cmpint, 2);
   rb_define_method(cls, "rb_num_coerce_bin", numeric_spec_rb_num_coerce_bin, 3);
