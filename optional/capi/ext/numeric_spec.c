@@ -49,11 +49,9 @@ static VALUE numeric_spec_NUM2DBL(VALUE self, VALUE num) {
   return rb_float_new(NUM2DBL(num));
 }
 
-#if SIZEOF_INT < SIZEOF_LONG
 static VALUE numeric_spec_NUM2INT(VALUE self, VALUE num) {
   return LONG2NUM(NUM2INT(num));
 }
-#endif
 
 static VALUE numeric_spec_INT2NUM(VALUE self, VALUE num) {
   return INT2NUM(NUM2LONG(num));
@@ -63,11 +61,9 @@ static VALUE numeric_spec_NUM2LONG(VALUE self, VALUE num) {
   return LONG2NUM(NUM2LONG(num));
 }
 
-#if SIZEOF_INT < SIZEOF_LONG
 static VALUE numeric_spec_NUM2UINT(VALUE self, VALUE num) {
   return ULONG2NUM(NUM2UINT(num));
 }
-#endif
 
 static VALUE numeric_spec_NUM2ULONG(VALUE self, VALUE num) {
   return ULONG2NUM(NUM2ULONG(num));
