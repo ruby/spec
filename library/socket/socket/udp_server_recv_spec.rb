@@ -20,7 +20,7 @@ describe 'Socket.udp_server_recv' do
 
     @client.write('hello')
 
-    # FreeBSD sockets are not instanteous over loopback and
+    # FreeBSD sockets are not instantaneous over loopback and
     # will EAGAIN on recv.
     platform_is :darwin, :freebsd do
       IO.select([@server])
