@@ -378,5 +378,107 @@ describe 'TracePoint#enable' do
         end
       end
     end
+
+    describe 'target_line: option' do
+      before :each do
+        ScratchPad.record []
+      end
+
+      it "traces :line events only on specified line of code" do
+        trace = TracePoint.new(:line) do |tp|
+          ScratchPad << tp.lineno
+        end
+
+        target = -> {
+          x = 1
+          y = 2      # <= this line is target
+          z = x + y
+        }
+        _, lineno = target.source_location
+        target_line = lineno + 2
+
+        trace.enable(target_line: target_line, target: target) do
+          target.call
+        end
+
+        ScratchPad.recorded.should == [target_line]
+      end
+
+      it "raises ArgumentError if :target option isn't specified" do
+        trace = TracePoint.new(:line) do |tp|
+        end
+
+        lambda {
+          trace.enable(target_line: 67) do
+          end
+        }.should raise_error(ArgumentError, /only target_line is specified/)
+      end
+
+      it "raises ArgumentError if :line event isn't registered" do
+        trace = TracePoint.new(:call) do |tp|
+        end
+
+        target = -> {
+          x = 1
+          y = 2     # <= this line is target
+          z = x + y
+        }
+        _, lineno = target.source_location
+        target_line = lineno + 2
+
+        lambda {
+          trace.enable(target_line: target_line, target: target) do
+          end
+        }.should raise_error(ArgumentError, /target_line is specified, but line event is not specified/)
+      end
+
+      it "raises ArgumentError if :target_line value is out of target code lines range" do
+        trace = TracePoint.new(:line) do |tp|
+        end
+
+        lambda {
+          trace.enable(target_line: 1, target: -> { }) do
+          end
+        }.should raise_error(ArgumentError, /can not enable any hooks/)
+      end
+
+      it "raises TypeError if :target_line value couldn't be coerced to Integer" do
+        trace = TracePoint.new(:line) do |tp|
+        end
+
+        lambda {
+          trace.enable(target_line: Object.new, target: -> { }) do
+          end
+        }.should raise_error(TypeError, /no implicit conversion of \w+? into Integer/)
+      end
+
+      it "raises ArgumentError if :target_line value is negative" do
+        trace = TracePoint.new(:line) do |tp|
+        end
+
+        lambda {
+          trace.enable(target_line: -2, target: -> { }) do
+          end
+        }.should raise_error(ArgumentError, /can not enable any hooks/)
+      end
+
+      it "excepts value that could be coerced to Integer" do
+        trace = TracePoint.new(:line) do |tp|
+          ScratchPad << tp.lineno
+        end
+
+        target = -> {
+          x = 1         #  <= this line is target
+        }
+        _, lineno = target.source_location
+        target_line = lineno + 1
+
+        trace.enable(target_line: target_line.to_r, target: target) do
+          target.call
+        end
+
+        ScratchPad.recorded.should == [target_line]
+      end
+    end
   end
 end
