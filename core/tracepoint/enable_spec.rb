@@ -164,6 +164,36 @@ describe 'TracePoint#enable' do
         ScratchPad.recorded.should == [:foo]
       end
 
+      it "traces some events in nested blocks" do
+        klass = Class.new do
+          def foo
+            1.times do
+              1.times do
+                bar do
+                end
+              end
+            end
+          end
+
+          def bar(&blk)
+            blk.call
+          end
+        end
+
+        trace = TracePoint.new(:b_call) do |tp|
+          ScratchPad << tp.lineno
+        end
+
+        obj = klass.new
+        _, lineno = obj.method(:foo).source_location
+
+        trace.enable(target: obj.method(:foo)) do
+          obj.foo
+        end
+
+        ScratchPad.recorded.should == (lineno+1..lineno+3).to_a
+      end
+
       describe 'option value' do
         it 'excepts Method' do
           trace = TracePoint.new(:call) do |tp|
