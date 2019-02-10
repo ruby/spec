@@ -6,6 +6,7 @@ AnonWithConstant
 ArbitraryException
 ArraySub
 ArraySubPush
+AryChild
 Base64
 BaseClass
 BasicSocket
@@ -16,6 +17,9 @@ BitwiseAndTest
 Boring
 BreakTest
 BreakTest2
+CAPI_SIZEOF_LONG
+CApiModuleSpecsAutoload
+CApiModuleSpecsModuleA
 CGI
 CMath
 CODE_LOADING_DIR
@@ -27,9 +31,12 @@ CSV
 ChainedNextTest
 Channel
 ChildClass
+ClassIdUnderAutoload
+ClassSpecDefineClass
 ClassSpecsKeywordWithSemicolon
 ClassSpecsKeywordWithoutSemicolon
 ClassSpecsNumber
+ClassUnderAutoload
 CodingUS_ASCII
 CodingUTF_8
 ComparisonTest
@@ -50,6 +57,8 @@ DefSpecsLambdaVisibility
 DefineMethodByProcClass
 DefineMethodSpecClass
 DefineSingletonMethodSpecClass
+DescArray
+DescObjectTest
 Digest
 DigitDog
 Dog
@@ -84,6 +93,7 @@ IncludeSpecsClass
 IncludeSpecsMiddle
 IncludeSpecsTop
 IncludesMath
+InvalidTostrTest
 KSAutoloadA
 KSAutoloadB
 KSAutoloadBB
@@ -95,6 +105,7 @@ MD5Constants
 MY_INPUT4_FOR_ERB
 Matrix
 MatrixSub
+MethodArity
 Meths
 MethsMore
 Mixin
@@ -116,11 +127,13 @@ NamespaceTest
 Net
 NoDog
 NoVariables
+OBJDIR
 OBJECT_SPACE_TOP_LEVEL_CONSTANT
 OFor
 ObjectSpaceFixtures
 ObjectSpecDup
 ObjectSpecDupInitCopy
+ObjectTest
 Observable
 Open3
 OpenSSL
@@ -164,6 +177,7 @@ SomeClass
 SortedSet
 SpecificExampleException
 Specs
+StrChild
 StrangeEach
 StringRefinement
 StringScanner
@@ -199,6 +213,7 @@ UserObject
 UserPreviouslyDefinedWithInitializedIvar
 UserRegexp
 UserString
+ValidTostrTest
 Vector
 WEBrick
 WeakRef
