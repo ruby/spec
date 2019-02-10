@@ -94,6 +94,7 @@ IncludeSpecsMiddle
 IncludeSpecsTop
 IncludesMath
 InvalidTostrTest
+JSON
 KSAutoloadA
 KSAutoloadB
 KSAutoloadBB
