@@ -184,7 +184,6 @@ StringRefinement
 StringScanner
 StringSubclass
 StructClasses
-Sub
 Super
 Syslog
 TCPServer
