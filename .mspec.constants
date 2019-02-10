@@ -81,8 +81,6 @@ HMACConstants
 HashStringsASCII8BIT
 HashStringsUSASCII
 HashStringsUTF8
-IN6MASK128
-IN6MASK32
 IPAddr
 IPSocket
 IncludeSpecsClass
