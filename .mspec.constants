@@ -89,6 +89,8 @@ HashStringsUTF8
 Howdy
 IN6MASK128
 IN6MASK32
+IPAddr
+IPSocket
 IncludeSpecsClass
 IncludeSpecsMiddle
 IncludeSpecsTop
@@ -197,6 +199,7 @@ UDPSocket
 UNIXServer
 UNIXSocket
 UnaryMinusTest
+UnicodeNormalize
 UnloadableDumpableDir
 UserArray
 UserCustomConstructorString
