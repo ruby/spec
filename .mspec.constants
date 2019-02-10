@@ -83,6 +83,7 @@ HashStringsUSASCII
 HashStringsUTF8
 IPAddr
 IPSocket
+Importer
 IncludeSpecsClass
 IncludeSpecsMiddle
 IncludeSpecsTop
@@ -144,6 +145,7 @@ ProcFromMethod
 Psych
 REXML
 RUBY_SIGNALS
+RbReadline
 Readline
 ReceiverClass
 RegexpSpecsSubclass
@@ -206,6 +208,19 @@ UserString
 ValidTostrTest
 Vector
 WEBrick
+WIN32OLE
+WIN32OLEQueryInterfaceError
+WIN32OLERuntimeError
+WIN32OLE_EVENT
+WIN32OLE_METHOD
+WIN32OLE_PARAM
+WIN32OLE_RECORD
+WIN32OLE_RUBYSPEC
+WIN32OLE_TYPE
+WIN32OLE_TYPELIB
+WIN32OLE_VARIABLE
+WIN32OLE_VARIANT
 WeakRef
+Win32
 YAML
 Zlib
