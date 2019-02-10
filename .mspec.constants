@@ -76,7 +76,6 @@ Fcntl
 FileStat
 FileUtils
 Find
-FooBar
 Forwardable
 GetoptLong
 HMACConstants
