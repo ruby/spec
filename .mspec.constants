@@ -60,9 +60,6 @@ DefineSingletonMethodSpecClass
 DescArray
 DescObjectTest
 Digest
-DigitDog
-Dog
-DogAt
 DumpableDir
 ERB
 EnsureInClassExample
@@ -128,8 +125,6 @@ MyModule2ForErb
 MyString
 NamespaceTest
 Net
-NoDog
-NoVariables
 OBJDIR
 OBJECT_SPACE_TOP_LEVEL_CONSTANT
 OFor
