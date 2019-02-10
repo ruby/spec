@@ -14,7 +14,6 @@ BeCloseToMatrixMatcher
 BigDecimal
 BigMath
 BitwiseAndTest
-Boring
 BreakTest
 BreakTest2
 CAPI_SIZEOF_LONG
@@ -98,7 +97,6 @@ KSAutoloadB
 KSAutoloadBB
 KSAutoloadCallsRequire
 KSAutoloadD
-LittleBunnyFooFoo
 Logger
 MD5Constants
 MY_INPUT4_FOR_ERB
