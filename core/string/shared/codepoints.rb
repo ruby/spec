@@ -1,5 +1,11 @@
 # -*- encoding: binary -*-
 describe :string_codepoints, shared: true do
+  it "returns self" do
+    s = "foo"
+    result = s.send(@method) {}
+    result.should equal s
+  end
+
   it "raises an ArgumentError when self has an invalid encoding and a method is called on the returned Enumerator" do
     s = "\xDF".force_encoding(Encoding::UTF_8)
     s.valid_encoding?.should be_false
