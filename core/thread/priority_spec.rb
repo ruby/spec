@@ -49,11 +49,11 @@ describe "Thread#priority=" do
       value.should == 3
     end
 
-    it "clamps the priority to -3..3" do
-      @thread.priority = 42
-      @thread.priority.should == 3
-      @thread.priority = -42
-      @thread.priority.should == -3
+    it "clamps priority to the acceptable underlying range" do
+      @thread.priority = 255
+      @thread.priority.should < 255
+      @thread.priority = -255
+      @thread.priority.should > -255
     end
   end
 
