@@ -176,6 +176,7 @@ StringRefinement
 StringScanner
 StringSubclass
 StructClasses
+Syck
 Syslog
 TCPServer
 TCPSocket
