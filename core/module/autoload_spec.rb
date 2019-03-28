@@ -55,6 +55,7 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.autoload?(:Overridden).should == path
 
     ModuleSpecs::Autoload::Overridden.should == :overridden
+    ModuleSpecs::Autoload.send(:remove_const, :Overridden)
   end
 
   it "loads the registered constant when it is accessed" do
