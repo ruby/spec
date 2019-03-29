@@ -41,7 +41,7 @@ class MSpecScript
                         [%r(command_line/), 'tags/1.9/command_line/'],
                         [%r(library/),      'tags/1.9/library/'],
                         [%r(security/),     'tags/1.9/security/'],
-                        [/_spec.rb$/,       '_tags.txt']
+                        [/_spec\.rb$/,      '_tags.txt']
                       ]
 
   set :toplevel_constants_excludes, [
