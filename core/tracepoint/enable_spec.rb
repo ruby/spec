@@ -193,7 +193,7 @@ describe 'TracePoint#enable' do
       end
 
       describe 'option value' do
-        it 'excepts Method' do
+        it 'accepts Method' do
           trace = TracePoint.new(:call) do |tp|
             ScratchPad << tp.method_id
           end
@@ -208,7 +208,7 @@ describe 'TracePoint#enable' do
           ScratchPad.recorded.should == [:foo]
         end
 
-        it 'excepts UnboundMethod' do
+        it 'accepts UnboundMethod' do
           trace = TracePoint.new(:call) do |tp|
             ScratchPad << tp.method_id
           end
@@ -225,7 +225,7 @@ describe 'TracePoint#enable' do
           ScratchPad.recorded.should == [:foo]
         end
 
-        it 'excepts Proc' do
+        it 'accepts Proc' do
           trace = TracePoint.new(:b_call) do |tp|
             ScratchPad << tp.lineno
           end
@@ -241,7 +241,7 @@ describe 'TracePoint#enable' do
           lineno.should be_kind_of(Integer)
         end
 
-        it 'excepts RubyVM::InstructionSequence' do
+        it 'accepts RubyVM::InstructionSequence' do
           trace = TracePoint.new(:call) do |tp|
             ScratchPad << tp.method_id
           end
@@ -490,7 +490,7 @@ describe 'TracePoint#enable' do
         }.should raise_error(ArgumentError, /can not enable any hooks/)
       end
 
-      it "excepts value that could be coerced to Integer" do
+      it "accepts value that could be coerced to Integer" do
         trace = TracePoint.new(:line) do |tp|
           ScratchPad << tp.lineno
         end
