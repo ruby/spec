@@ -25,10 +25,8 @@ describe "Complex#finite?" do
     value.finite?.should == false
   end
 
-  ruby_bug "#14014", "2.4"..."2.5" do
-    it "returns false for NaN" do
-      value = Complex(Float::NAN, Float::NAN)
-      value.finite?.should == false
-    end
+  it "returns false for NaN" do
+    value = Complex(Float::NAN, Float::NAN)
+    value.finite?.should == false
   end
 end

@@ -89,30 +89,28 @@ describe "Thread#report_on_exception=" do
     end
   end
 
-  ruby_bug "#13163", "2.4"..."2.5" do
-    describe "when used in conjunction with Thread#abort_on_exception" do
-      it "first reports then send the exception back to the main Thread" do
-        t = nil
-        mutex = Mutex.new
-        mutex.lock
-        -> {
-          t = Thread.new {
-            Thread.current.abort_on_exception = true
-            Thread.current.report_on_exception = true
-            mutex.lock
-            mutex.unlock
-            raise RuntimeError, "Thread#report_on_exception specs"
-          }
-
-          -> {
-            mutex.sleep(5)
-          }.should raise_error(RuntimeError, "Thread#report_on_exception specs")
-        }.should output("", /Thread.+terminated with exception.+Thread#report_on_exception specs/m)
+  describe "when used in conjunction with Thread#abort_on_exception" do
+    it "first reports then send the exception back to the main Thread" do
+      t = nil
+      mutex = Mutex.new
+      mutex.lock
+      -> {
+        t = Thread.new {
+          Thread.current.abort_on_exception = true
+          Thread.current.report_on_exception = true
+          mutex.lock
+          mutex.unlock
+          raise RuntimeError, "Thread#report_on_exception specs"
+        }
 
         -> {
-          t.join
+          mutex.sleep(5)
         }.should raise_error(RuntimeError, "Thread#report_on_exception specs")
-      end
+      }.should output("", /Thread.+terminated with exception.+Thread#report_on_exception specs/m)
+
+      -> {
+        t.join
+      }.should raise_error(RuntimeError, "Thread#report_on_exception specs")
     end
   end
 end
