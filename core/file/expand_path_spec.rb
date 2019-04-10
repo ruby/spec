@@ -222,18 +222,6 @@ platform_is_not :windows do
       ENV["HOME"] = @home
     end
 
-    ruby_version_is ''...'2.4' do
-      it "raises an ArgumentError when passed '~' if HOME is nil" do
-        ENV.delete "HOME"
-        lambda { File.expand_path("~") }.should raise_error(ArgumentError)
-      end
-
-      it "raises an ArgumentError when passed '~/' if HOME is nil" do
-        ENV.delete "HOME"
-        lambda { File.expand_path("~/") }.should raise_error(ArgumentError)
-      end
-    end
-
     it "raises an ArgumentError when passed '~' if HOME == ''" do
       ENV["HOME"] = ""
       lambda { File.expand_path("~") }.should raise_error(ArgumentError)

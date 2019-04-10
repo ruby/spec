@@ -144,11 +144,11 @@ end
 
 
 # Combining guards
-guard -> { platform_is :windows and ruby_version_is ""..."2.3" } do
-  # Windows and RUBY_VERSION < 2.3
+guard -> { platform_is :windows and ruby_version_is ""..."2.5" } do
+  # Windows and RUBY_VERSION < 2.5
 end
 
-guard_not -> { platform_is :windows and ruby_version_is ""..."2.3" } do
+guard_not -> { platform_is :windows and ruby_version_is ""..."2.5" } do
   # The opposite
 end
 
