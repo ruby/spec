@@ -12,11 +12,9 @@ describe 'Enumerator::Lazy#uniq' do
       @lazy.force.should == [0, 1]
     end
 
-    ruby_bug "#14495", "2.4"..."2.5.2" do
-      it 'return same value after rewind' do
-        @lazy.force.should == [0, 1]
-        @lazy.force.should == [0, 1]
-      end
+    it 'return same value after rewind' do
+      @lazy.force.should == [0, 1]
+      @lazy.force.should == [0, 1]
     end
 
     it 'sets the size to nil' do
@@ -34,11 +32,9 @@ describe 'Enumerator::Lazy#uniq' do
       @lazy.force.should == [0, 1]
     end
 
-    ruby_bug "#14495", "2.4"..."2.5.2" do
-      it 'return same value after rewind' do
-        @lazy.force.should == [0, 1]
-        @lazy.force.should == [0, 1]
-      end
+    it 'return same value after rewind' do
+      @lazy.force.should == [0, 1]
+      @lazy.force.should == [0, 1]
     end
 
     it 'sets the size to nil' do
@@ -59,12 +55,10 @@ describe 'Enumerator::Lazy#uniq' do
       @lazy = enum.lazy
     end
 
-    ruby_bug "#14495", "2.4"..."2.5.2" do
-      it 'return same value after rewind' do
-        enum = @lazy.uniq { |_, label| label.downcase }
-        enum.force.should == [[0, 'foo'], [2, 'bar']]
-        enum.force.should == [[0, 'foo'], [2, 'bar']]
-      end
+    it 'return same value after rewind' do
+      enum = @lazy.uniq { |_, label| label.downcase }
+      enum.force.should == [[0, 'foo'], [2, 'bar']]
+      enum.force.should == [[0, 'foo'], [2, 'bar']]
     end
 
     it 'returns all yield arguments as an array' do
