@@ -83,10 +83,8 @@ describe 'Enumerable#uniq' do
       end
     end
 
-    ruby_bug '#13669', ''...'2.5' do
-      it 'returns all yield arguments as an array' do
-        @enum.uniq { |_, label| label.downcase }.should == [[0, 'foo'], [2, 'bar']]
-      end
+    it 'returns all yield arguments as an array' do
+      @enum.uniq { |_, label| label.downcase }.should == [[0, 'foo'], [2, 'bar']]
     end
   end
 end

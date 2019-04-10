@@ -58,16 +58,14 @@ describe 'TracePoint#enable' do
       end.enable { event_name.should equal(:line) }
     end
 
-    ruby_bug "#14057", ""..."2.5" do
-      it 'can accept arguments within a block but it should not yield arguments' do
-        event_name = nil
-        trace = TracePoint.new(:line) { |tp| event_name = tp.event }
-        trace.enable do |*args|
-          event_name.should equal(:line)
-          args.should == []
-        end
-        trace.enabled?.should == false
+    it 'can accept arguments within a block but it should not yield arguments' do
+      event_name = nil
+      trace = TracePoint.new(:line) { |tp| event_name = tp.event }
+      trace.enable do |*args|
+        event_name.should equal(:line)
+        args.should == []
       end
+      trace.enabled?.should == false
     end
 
     it 'enables trace object on calling with a block if it was already enabled' do
