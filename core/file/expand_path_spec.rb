@@ -222,6 +222,16 @@ platform_is_not :windows do
       ENV["HOME"] = @home
     end
 
+    it "uses the user database when passed '~' if HOME is nil" do
+      ENV.delete "HOME"
+      File.directory?(File.expand_path("~")).should == true
+    end
+
+    it "uses the user database when passed '~/' if HOME is nil" do
+      ENV.delete "HOME"
+      File.directory?(File.expand_path("~/")).should == true
+    end
+
     it "raises an ArgumentError when passed '~' if HOME == ''" do
       ENV["HOME"] = ""
       lambda { File.expand_path("~") }.should raise_error(ArgumentError)
