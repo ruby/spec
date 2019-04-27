@@ -20,11 +20,11 @@ describe "BasicObject" do
   end
 
   it "is included in Object's list of constants" do
-    Object.constants.should include(:BasicObject)
+    Object.constants(false).should include(:BasicObject)
   end
 
   it "includes itself in its list of constants" do
-    BasicObject.constants.should include(:BasicObject)
+    BasicObject.constants(false).should include(:BasicObject)
   end
 end
 
