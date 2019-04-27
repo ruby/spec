@@ -19,7 +19,7 @@ describe "BasicObject" do
     BasicObjectSpecs::BOSubclass.kernel_defined?.should be_nil
   end
 
-  it "is included in Object's lists of constants" do
+  it "is included in Object's list of constants" do
     Object.constants.should include(:BasicObject)
   end
 
