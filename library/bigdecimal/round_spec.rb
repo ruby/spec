@@ -176,7 +176,7 @@ describe "BigDecimal#round" do
     describe mode do
       it "rounds values towards -infinity" do
         mode = eval(mode)
-        
+
         @p1_50.round(0, mode).should == @one
         @p1_51.round(0, mode).should == @one
         @p1_49.round(0, mode).should == @one
