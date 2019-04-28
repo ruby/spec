@@ -50,7 +50,6 @@ class MSpecScript
   ]
 
   # Enable features
-  MSpec.enable_feature :fiber
   MSpec.enable_feature :fork if respond_to?(:fork, true)
   MSpec.enable_feature :encoding
   MSpec.enable_feature :mjit if defined?(RubyVM::MJIT) && RubyVM::MJIT.enabled?
