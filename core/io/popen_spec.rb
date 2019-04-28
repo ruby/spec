@@ -136,7 +136,7 @@ describe "IO.popen" do
     end
   end
 
-  with_feature :fork do
+  platform_is_not :windows do
     it "starts returns a forked process if the command is -" do
       io = IO.popen("-")
 

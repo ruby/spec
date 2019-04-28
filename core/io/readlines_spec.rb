@@ -112,7 +112,7 @@ describe "IO#readlines" do
       lines.should == ["hello\n", "line2\n"]
     end
 
-    with_feature :fork do
+    platform_is_not :windows do
       it "gets data from a fork when passed -" do
         lines = IO.readlines("|-")
 

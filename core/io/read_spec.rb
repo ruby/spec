@@ -117,7 +117,7 @@ describe "IO.read from a pipe" do
     IO.read(cmd).should == "hello\n"
   end
 
-  with_feature :fork do
+  platform_is_not :windows do
     it "opens a pipe to a fork if the rest is -" do
       str = IO.read("|-")
       if str # parent
