@@ -656,7 +656,7 @@ describe "File.open when passed a file descriptor" do
   before do
     @content = "File#open when passed a file descriptor"
     @name = tmp("file_open_with_fd.txt")
-    @fd = new_fd @name, fmode("w:utf-8")
+    @fd = new_fd @name, "w:utf-8"
     @file = nil
   end
 
