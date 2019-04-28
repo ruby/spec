@@ -3,8 +3,6 @@ require_relative 'fixtures/classes'
 
 # NOTE: A call to define_finalizer does not guarantee that the
 # passed proc or callable will be called at any particular time.
-# It is highly questionable whether these aspects of ObjectSpace
-# should be spec'd at all.
 describe "ObjectSpace.define_finalizer" do
   it "raises an ArgumentError if the action does not respond to call" do
     lambda {
