@@ -5,7 +5,7 @@ describe "Process.setsid" do
     it "establishes this process as a new session and process group leader" do
       read, write = IO.pipe
       read2, write2 = IO.pipe
-      pid = Process.fork {
+      pid = Process.fork do
         begin
           read.close
           write2.close
@@ -17,7 +17,7 @@ describe "Process.setsid" do
           write << e << e.backtrace
         end
         Process.exit!
-      }
+      end
       write.close
       read2.close
       pgid_child = Integer(read.gets)
