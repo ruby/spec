@@ -46,7 +46,4 @@ class MSpecScript
     /\wSpecs?$/,
     /^CS_CONST/,
   ]
-
-  # Enable features
-  MSpec.enable_feature :mjit if defined?(RubyVM::MJIT) && RubyVM::MJIT.enabled?
 end
