@@ -29,8 +29,6 @@ class MSpecScript
   set :ci_files, get(:files)
 
   # The default implementation to run the specs.
-  # TODO: this needs to be more sophisticated since the
-  # executable is not consistently named.
   set :target, 'ruby'
 
   set :backtrace_filter, /mspec\//
