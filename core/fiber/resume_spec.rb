@@ -17,41 +17,32 @@ describe "Fiber#resume" do
     fiber2.resume.should == :fiber2
   end
 
-  with_feature :fork do
-    # Redmine #595
-    it "executes the ensure clause" do
-      rd, wr = IO.pipe
-
-      pid = Kernel::fork do
-        rd.close
-        f = Fiber.new do
-          begin
-            Fiber.yield
-          ensure
-            wr.write "executed"
-          end
+  # Redmine #595
+  it "executes the ensure clause" do
+    code = <<-RUBY
+      f = Fiber.new do
+        begin
+          Fiber.yield
+        ensure
+          puts "ensure executed"
         end
-
-        # The apparent issue is that when Fiber.yield executes, control
-        # "leaves" the "ensure block" and so the ensure clause should run. But
-        # control really does NOT leave the ensure block when Fiber.yield
-        # executes. It merely pauses there. To require ensure to run when a
-        # Fiber is suspended then makes ensure-in-a-Fiber-context different
-        # than ensure-in-a-Thread-context and this would be very confusing.
-        f.resume
-
-        # When we execute the second #resume call, the ensure block DOES exit,
-        # the ensure clause runs.
-        f.resume
-
-        exit 0
       end
 
-      wr.close
-      Process.waitpid pid
+      # The apparent issue is that when Fiber.yield executes, control
+      # "leaves" the "ensure block" and so the ensure clause should run. But
+      # control really does NOT leave the ensure block when Fiber.yield
+      # executes. It merely pauses there. To require ensure to run when a
+      # Fiber is suspended then makes ensure-in-a-Fiber-context different
+      # than ensure-in-a-Thread-context and this would be very confusing.
+      f.resume
 
-      rd.read.should == "executed"
-      rd.close
-    end
+      # When we execute the second #resume call, the ensure block DOES exit,
+      # the ensure clause runs.
+      f.resume
+
+      exit 0
+    RUBY
+
+    ruby_exe(code).should == "ensure executed\n"
   end
 end
