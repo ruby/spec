@@ -50,6 +50,5 @@ class MSpecScript
   ]
 
   # Enable features
-  MSpec.enable_feature :encoding
   MSpec.enable_feature :mjit if defined?(RubyVM::MJIT) && RubyVM::MJIT.enabled?
 end
