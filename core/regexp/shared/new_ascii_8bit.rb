@@ -242,34 +242,6 @@ describe :regexp_new_string_ascii_8bit, shared: true do
       Regexp.send(@method, "\C-\e").should == /#{"\x1b"}/
     end
 
-    it "accepts '\\c\\n'" do
-      Regexp.send(@method, "\C-\n").should == /#{"\x0a"}/
-    end
-
-    it "accepts '\\c\\t'" do
-      Regexp.send(@method, "\C-\t").should == /#{"\x09"}/
-    end
-
-    it "accepts '\\c\\r'" do
-      Regexp.send(@method, "\C-\r").should == /#{"\x0d"}/
-    end
-
-    it "accepts '\\c\\f'" do
-      Regexp.send(@method, "\C-\f").should == /#{"\x0c"}/
-    end
-
-    it "accepts '\\c\\v'" do
-      Regexp.send(@method, "\C-\v").should == /#{"\x0b"}/
-    end
-
-    it "accepts '\\c\\a'" do
-      Regexp.send(@method, "\C-\a").should == /#{"\x07"}/
-    end
-
-    it "accepts '\\c\\e'" do
-      Regexp.send(@method, "\C-\e").should == /#{"\x1b"}/
-    end
-
     it "accepts '\\M-\\n'" do
       Regexp.send(@method, "\M-\n").should == /#{"\x8a"}/
     end
@@ -323,34 +295,6 @@ describe :regexp_new_string_ascii_8bit, shared: true do
     end
 
     it "accepts '\\M-\\C-\\e'" do
-      Regexp.send(@method, "\M-\e").should == /#{"\x9b"}/
-    end
-
-    it "accepts '\\M-\\c\\n'" do
-      Regexp.send(@method, "\M-\n").should == /#{"\x8a"}/
-    end
-
-    it "accepts '\\M-\\c\\t'" do
-      Regexp.send(@method, "\M-\t").should == /#{"\x89"}/
-    end
-
-    it "accepts '\\M-\\c\\r'" do
-      Regexp.send(@method, "\M-\r").should == /#{"\x8d"}/
-    end
-
-    it "accepts '\\M-\\c\\f'" do
-      Regexp.send(@method, "\M-\f").should == /#{"\x8c"}/
-    end
-
-    it "accepts '\\M-\\c\\v'" do
-      Regexp.send(@method, "\M-\v").should == /#{"\x8b"}/
-    end
-
-    it "accepts '\\M-\\c\\a'" do
-      Regexp.send(@method, "\M-\a").should == /#{"\x87"}/
-    end
-
-    it "accepts '\\M-\\c\\e'" do
       Regexp.send(@method, "\M-\e").should == /#{"\x9b"}/
     end
 

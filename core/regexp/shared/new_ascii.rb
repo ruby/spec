@@ -237,34 +237,6 @@ describe :regexp_new_string_ascii, shared: true do
       Regexp.send(@method, "\C-\e").should == /#{"\x1b"}/
     end
 
-    it "accepts '\\c\\n'" do
-      Regexp.send(@method, "\C-\n").should == /#{"\x0a"}/
-    end
-
-    it "accepts '\\c\\t'" do
-      Regexp.send(@method, "\C-\t").should == /#{"\x09"}/
-    end
-
-    it "accepts '\\c\\r'" do
-      Regexp.send(@method, "\C-\r").should == /#{"\x0d"}/
-    end
-
-    it "accepts '\\c\\f'" do
-      Regexp.send(@method, "\C-\f").should == /#{"\x0c"}/
-    end
-
-    it "accepts '\\c\\v'" do
-      Regexp.send(@method, "\C-\v").should == /#{"\x0b"}/
-    end
-
-    it "accepts '\\c\\a'" do
-      Regexp.send(@method, "\C-\a").should == /#{"\x07"}/
-    end
-
-    it "accepts '\\c\\e'" do
-      Regexp.send(@method, "\C-\e").should == /#{"\x1b"}/
-    end
-
     it "accepts multiple consecutive '\\' characters" do
       Regexp.send(@method, "\\\\\\N").should == /#{"\\\\\\"+"N"}/
     end
