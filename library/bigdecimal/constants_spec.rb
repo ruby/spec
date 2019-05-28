@@ -9,11 +9,11 @@ describe "BigDecimal constants" do
   end
 
   it "has a BASE value" do
-    platform_is wordsize: 64 do
+    guard -> { platform_is wordsize: 64 or platform_is :"x64-mingw32" } do
       BigDecimal::BASE.should == 1000000000
     end
 
-    platform_is wordsize: 32 do
+    guard_not -> { platform_is wordsize: 64 or platform_is :"x64-mingw32" } do
       BigDecimal::BASE.should == 10000
     end
   end
