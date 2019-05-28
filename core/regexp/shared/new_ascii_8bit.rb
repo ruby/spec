@@ -271,31 +271,31 @@ describe :regexp_new_string_ascii_8bit, shared: true do
     end
 
     it "accepts '\\M-\\C-\\n'" do
-      Regexp.send(@method, "\M-\n").should == /#{"\x8a"}/
+      Regexp.send(@method, "\M-\C-\n").should == /#{"\x8a"}/
     end
 
     it "accepts '\\M-\\C-\\t'" do
-      Regexp.send(@method, "\M-\t").should == /#{"\x89"}/
+      Regexp.send(@method, "\M-\C-\t").should == /#{"\x89"}/
     end
 
     it "accepts '\\M-\\C-\\r'" do
-      Regexp.send(@method, "\M-\r").should == /#{"\x8d"}/
+      Regexp.send(@method, "\M-\C-\r").should == /#{"\x8d"}/
     end
 
     it "accepts '\\M-\\C-\\f'" do
-      Regexp.send(@method, "\M-\f").should == /#{"\x8c"}/
+      Regexp.send(@method, "\M-\C-\f").should == /#{"\x8c"}/
     end
 
     it "accepts '\\M-\\C-\\v'" do
-      Regexp.send(@method, "\M-\v").should == /#{"\x8b"}/
+      Regexp.send(@method, "\M-\C-\v").should == /#{"\x8b"}/
     end
 
     it "accepts '\\M-\\C-\\a'" do
-      Regexp.send(@method, "\M-\a").should == /#{"\x87"}/
+      Regexp.send(@method, "\M-\C-\a").should == /#{"\x87"}/
     end
 
     it "accepts '\\M-\\C-\\e'" do
-      Regexp.send(@method, "\M-\e").should == /#{"\x9b"}/
+      Regexp.send(@method, "\M-\C-\e").should == /#{"\x9b"}/
     end
 
     it "accepts multiple consecutive '\\' characters" do
