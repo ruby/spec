@@ -7,6 +7,7 @@ end
 
 describe "Regexp.compile given a String" do
   it_behaves_like :regexp_new_string, :compile
+  it_behaves_like :regexp_new_string_binary, :compile
 end
 
 describe "Regexp.compile given a Regexp" do

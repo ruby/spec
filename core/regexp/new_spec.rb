@@ -11,6 +11,7 @@ end
 
 describe "Regexp.new given a Regexp" do
   it_behaves_like :regexp_new_regexp, :new
+  it_behaves_like :regexp_new_string_binary, :compile
 end
 
 describe "Regexp.new given a Fixnum" do
