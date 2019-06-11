@@ -28,9 +28,7 @@ describe "Enumerator#each_with_index" do
   it "returns the iterator's return value" do
     [1,2,3].select.with_index { |a,b| false }.should == []
   end
-end
 
-describe "Enumerator#each_with_index" do
   it "returns the correct value if chained with itself" do
     [:a].each_with_index.each_with_index.to_a.should == [[[:a,0],0]]
     [:a].each.with_index.with_index.to_a.should == [[[:a,0],0]]
