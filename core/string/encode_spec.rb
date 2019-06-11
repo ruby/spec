@@ -60,6 +60,12 @@ describe "String#encode" do
 
       "\rfoo".encode(universal_newline: true).should == "\nfoo"
     end
+
+    it "replaces invalid encoding" do
+      encoded = "ち\xE3\x81\xFF".encode("UTF-16LE", invalid: :replace, replace: "?")
+      encoded.should == "\u3061??".encode("UTF-16LE")
+      encoded.encode("UTF-8").should == "ち??"
+    end
   end
 
   describe "when passed to, from" do
