@@ -10,9 +10,9 @@ describe :enum_with_index, shared: true do
   end
 
   it "passes each element and its index to block" do
-    @a = []
-    @enum.send(@method) { |o, i| @a << [o, i] }
-    @a.should == [[1, 0], [2, 1], [3, 2], [4, 3]]
+    a = []
+    @enum.send(@method) { |o, i| a << [o, i] }
+    a.should == [[1, 0], [2, 1], [3, 2], [4, 3]]
   end
 
   it "returns the object being enumerated when given a block" do
