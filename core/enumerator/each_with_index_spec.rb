@@ -10,7 +10,7 @@ describe "Enumerator#each_with_index" do
     enum1 = [1,2,3].select
     enum2 = enum1.each_with_index
     enum2.should be_an_instance_of(Enumerator)
-    enum1.should_not === enum2
+    enum1.should_not == enum2
   end
 
   it "raises an ArgumentError if passed extra arguments" do
