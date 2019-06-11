@@ -5,7 +5,8 @@ describe :enum_with_index, shared: true do
   require_relative '../../fixtures/enumerator/classes'
 
   before :each do
-    @enum = [1, 2, 3, 4].to_enum
+    @origin = [1, 2, 3, 4]
+    @enum = @origin.to_enum
   end
 
   it "passes each element and its index to block" do
@@ -15,7 +16,7 @@ describe :enum_with_index, shared: true do
   end
 
   it "returns the object being enumerated when given a block" do
-    [1, 2, 3, 4].should == @enum.send(@method) { |o, i| :glark }
+    @enum.send(@method) { |o, i| :glark }.should equal(@origin)
   end
 
   it "binds splat arguments properly" do
