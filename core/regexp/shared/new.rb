@@ -1,4 +1,4 @@
-# -*- encoding: ascii-8bit -*-
+# -*- encoding: binary -*-
 
 describe :regexp_new, shared: true do
   it "requires one argument and creates a new regular expression object" do

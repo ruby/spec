@@ -1,4 +1,4 @@
-# encoding: ascii-8bit
+# encoding: binary
 
 module HashStringsASCII8BIT
   def self.literal_hash
