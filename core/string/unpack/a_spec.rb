@@ -32,7 +32,7 @@ describe "String#unpack with format 'A'" do
 
   it "decodes into raw (ascii) string values" do
     str = "str".force_encoding('UTF-8').unpack("A*")[0]
-    str.encoding.name.should == 'ASCII-8BIT'
+    str.encoding.should == Encoding::BINARY
   end
 
 end
@@ -60,7 +60,7 @@ describe "String#unpack with format 'a'" do
 
   it "decodes into raw (ascii) string values" do
     str = "".unpack("a*")[0]
-    str.encoding.name.should == 'ASCII-8BIT'
+    str.encoding.should == Encoding::BINARY
   end
 
 end

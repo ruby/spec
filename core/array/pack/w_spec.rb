@@ -36,7 +36,7 @@ describe "Array#pack with format 'w'" do
     lambda { [-1].pack("w") }.should raise_error(ArgumentError)
   end
 
-  it "returns an ASCII-8BIT string" do
-    [1].pack('w').encoding.should == Encoding::ASCII_8BIT
+  it "returns an BINARY string" do
+    [1].pack('w').encoding.should == Encoding::BINARY
   end
 end
