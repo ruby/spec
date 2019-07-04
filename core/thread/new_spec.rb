@@ -3,10 +3,10 @@ require_relative 'fixtures/classes'
 
 describe "Thread.new" do
   it "creates a thread executing the given block" do
-    c = Channel.new
-    Thread.new { c << true }.join
-    c << false
-    c.receive.should == true
+    q = Queue.new
+    Thread.new { q << true }.join
+    q << false
+    q.pop.should == true
   end
 
   it "can pass arguments to the thread block" do
