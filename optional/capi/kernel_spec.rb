@@ -466,7 +466,7 @@ describe "C-API Kernel function" do
 
   describe "rb_block_proc" do
     it "converts the implicit block into a proc" do
-      proc = @s.rb_block_proc() { 1+1 }
+      proc = @s.rb_block_proc { 1+1 }
       proc.should be_kind_of(Proc)
       proc.call.should == 2
       proc.lambda?.should == false
