@@ -328,7 +328,7 @@ module KernelSpecs
     def inner
       b = mp { return :good }
 
-      pr = lambda { |x| x.call }
+      pr = -> x { x.call }
 
       pr.call(b)
 
