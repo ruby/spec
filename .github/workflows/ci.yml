@@ -16,4 +16,6 @@ jobs:
     - name: Clone MSpec
       run: git clone https://github.com/ruby/mspec.git ../mspec
     - name: Run specs
-      run: CHECK_LEAKS=true ../mspec/bin/mspec
+      env:
+        CHECK_LEAKS: true
+      run: ../mspec/bin/mspec
