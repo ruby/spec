@@ -1,0 +1,19 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ 'ubuntu', 'macos' ]
+        ruby: [ '2.4.x', '2.5.x', '2.6.x' ]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Clone MSpec
+      run: git clone https://github.com/ruby/mspec.git ../mspec
+    - name: Run specs
+      run: CHECK_LEAKS=true ../mspec/bin/mspec
