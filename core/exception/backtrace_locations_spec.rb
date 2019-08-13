@@ -45,4 +45,12 @@ describe "Exception#backtrace_locations" do
     second_level_location.label.should == 'block (2 levels) in backtrace_locations_inside_nested_blocks'
     third_level_location.label.should == 'block (3 levels) in backtrace_locations_inside_nested_blocks'
   end
+
+  it "sets the backtrace label for a top-level block differently depending on it being in the main file or a required file" do
+    path = fixture(__FILE__, "backtrace_locations_in_main.rb")
+    main_label, required_label = ruby_exe(path).lines
+
+    main_label.strip.should == 'block in <main>'
+    required_label.strip.should == 'block in <top (required)>'
+  end
 end
