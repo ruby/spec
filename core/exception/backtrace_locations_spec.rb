@@ -36,4 +36,13 @@ describe "Exception#backtrace_locations" do
       e.backtrace_locations[0].should == "backtrace first"
     end
   end
+
+  it "includes the nesting level of a block as part of the backtrace label" do
+    first_level_location, second_level_location, third_level_location =
+      ExceptionSpecs::Backtrace.backtrace_locations_inside_nested_blocks
+
+    first_level_location.label.should == 'block in backtrace_locations_inside_nested_blocks'
+    second_level_location.label.should == 'block (2 levels) in backtrace_locations_inside_nested_blocks'
+    third_level_location.label.should == 'block (3 levels) in backtrace_locations_inside_nested_blocks'
+  end
 end
