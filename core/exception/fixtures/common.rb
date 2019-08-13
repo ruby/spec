@@ -17,6 +17,24 @@ module ExceptionSpecs
         e.backtrace_locations
       end
     end
+
+    def self.backtrace_locations_inside_nested_blocks
+      first_level_location = nil
+      second_level_location = nil
+      third_level_location = nil
+
+      [:test].each do
+        first_level_location = backtrace_locations[1]
+        [:test].each do
+          second_level_location = backtrace_locations[1]
+          [:test].each do
+            third_level_location = backtrace_locations[1]
+          end
+        end
+      end
+
+      [first_level_location, second_level_location, third_level_location]
+    end
   end
 
   class UnExceptional < Exception
