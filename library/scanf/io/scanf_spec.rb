@@ -4,8 +4,8 @@ require 'scanf'
 
 describe "IO#scanf" do
   before :each do
-    @hw = File.open(File.dirname(__FILE__) + '/fixtures/helloworld.txt', 'r')
-    @data = File.open(File.dirname(__FILE__) + '/fixtures/date.txt', 'r')
+    @hw = File.open(fixture(__FILE__, 'helloworld.txt'), 'r')
+    @data = File.open(fixture(__FILE__, 'date.txt'), 'r')
   end
 
   after :each do
