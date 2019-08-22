@@ -31,7 +31,7 @@ describe 'Thread::Backtrace::Location#label' do
     path = fixture(__FILE__, "locations_in_main.rb")
     main_label, required_label = ruby_exe(path).lines
 
-    main_label.strip.should == 'block in <main>'
-    required_label.strip.should == 'block in <top (required)>'
+    main_label.should == "block in <main>\n"
+    required_label.should == "block in <top (required)>\n"
   end
 end
