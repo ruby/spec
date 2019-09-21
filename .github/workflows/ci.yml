@@ -18,4 +18,4 @@ jobs:
     - name: Run specs
       env:
         CHECK_LEAKS: true
-      run: ../mspec/bin/mspec --timeout 10
+      run: ../mspec/bin/mspec --timeout 15
