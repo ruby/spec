@@ -265,6 +265,7 @@ describe "Invoking a private getter method" do
       -> { receiver.call_self_foo_or_equals(6) }.should raise_error(NoMethodError)
     end
   end
+
   ruby_version_is "2.7" do
     it "permits self as a receiver" do
       receiver = LangSendSpecs::PrivateGetter.new
