@@ -16,4 +16,3 @@ ruby_version_is ''...'2.7' do
     it_behaves_like :complex_math_asinh, :_, CMath
   end
 end
-
