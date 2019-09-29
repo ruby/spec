@@ -886,7 +886,7 @@ describe "A method" do
       end
     end
 
-    ruby_version_is "0"..."2.7" do
+    ruby_version_is ""..."2.7" do
       evaluate <<-ruby do
           def m(a=1, **) a end
         ruby
@@ -1015,7 +1015,7 @@ describe "A method" do
       -> { m(h) }.should raise_error(error)
     end
 
-    ruby_version_is "0"..."2.7" do
+    ruby_version_is ""..."2.7" do
       evaluate <<-ruby do
           def m(*a, **) a end
         ruby
@@ -1234,7 +1234,7 @@ describe "A method" do
       end
     end
 
-    ruby_version_is '0'...'2.7' do
+    ruby_version_is ''...'2.7' do
       evaluate <<-ruby do
           def m(a:, **) a end
         ruby

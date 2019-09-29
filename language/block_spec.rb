@@ -76,7 +76,7 @@ describe "A block yielded a single" do
       end
     end
 
-    ruby_version_is "0"..."2.7" do
+    ruby_version_is ""..."2.7" do
       it "calls #to_hash on the argument and uses resulting hash as first argument when optional argument and keyword argument accepted" do
         obj = mock("coerce block keyword arguments")
         obj.should_receive(:to_hash).and_return({"a" => 1, "b" => 2})
