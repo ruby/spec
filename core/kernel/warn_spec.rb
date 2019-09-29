@@ -147,9 +147,9 @@ describe "Kernel#warn" do
     end
 
     it "treats empty hash as no keyword argument" do
-      $VERBOSE = true
-      -> { warn Hash.new }.should output("", "")
-      -> { warn('foo', {}) }.should output(nil, "foo\n")
+      h = {}
+      -> { warn(**h) }.should_not complain(verbose: true)
+      -> { warn('foo', **h) }.should complain("foo\n")
     end
   end
 end
