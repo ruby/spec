@@ -1,15 +1,18 @@
 require_relative '../../../spec_helper'
-require 'complex'
-require_relative 'shared/sinh'
 
-describe "Math#sinh" do
-  it_behaves_like :complex_math_sinh, :_, IncludesMath.new
+ruby_version_is ''...'2.7' do
+  require 'complex'
+  require_relative 'shared/sinh'
 
-  it "is a private instance method" do
-    IncludesMath.should have_private_instance_method(:sinh)
+  describe "Math#sinh" do
+    it_behaves_like :complex_math_sinh, :_, IncludesMath.new
+
+    it "is a private instance method" do
+      IncludesMath.should have_private_instance_method(:sinh)
+    end
   end
-end
 
-describe "Math.sinh" do
-  it_behaves_like :complex_math_sinh, :_, CMath
+  describe "Math.sinh" do
+    it_behaves_like :complex_math_sinh, :_, CMath
+  end
 end

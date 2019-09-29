@@ -1,15 +1,18 @@
 require_relative '../../../spec_helper'
-require 'complex'
-require_relative 'shared/tan'
 
-describe "Math#tan" do
-  it_behaves_like :complex_math_tan, :_, IncludesMath.new
+ruby_version_is ''...'2.7' do
+  require 'complex'
+  require_relative 'shared/tan'
 
-  it "is a private instance method" do
-    IncludesMath.should have_private_instance_method(:tan)
+  describe "Math#tan" do
+    it_behaves_like :complex_math_tan, :_, IncludesMath.new
+
+    it "is a private instance method" do
+      IncludesMath.should have_private_instance_method(:tan)
+    end
   end
-end
 
-describe "Math.tan" do
-  it_behaves_like :complex_math_tan, :_, CMath
+  describe "Math.tan" do
+    it_behaves_like :complex_math_tan, :_, CMath
+  end
 end
