@@ -2,6 +2,15 @@ require_relative '../../../spec_helper'
 require 'rubygems'
 
 describe "Gem.bin_path" do
+  before :each do
+    @bundle_gemfile = ENV['BUNDLE_GEMFILE']
+    ENV['BUNDLE_GEMFILE'] = tmp("no-gemfile")
+  end
+
+  after :each do
+    ENV['BUNDLE_GEMFILE'] = @bundle_gemfile
+  end
+
   it "finds executables of default gems, which are the only files shipped for default gems" do
     # For instance, Gem.bin_path("bundler", "bundle") is used by rails new
     Gem::Specification.each_spec([Gem::Specification.default_specifications_dir]) do |spec|
