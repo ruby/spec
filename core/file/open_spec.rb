@@ -523,10 +523,10 @@ describe "File.open" do
             io.read.should == "ruby"
             Dir["#{dir}/*"].should == []
           end
-        rescue Errno::EOPNOTSUPP, Errno::EINVAL, Errno::EISDIR
-          # EOPNOTSUPP: no support from the filesystem
-          # EINVAL: presumably bug in glibc
-          1.should == 1
+        rescue Errno::EOPNOTSUPP
+          skip "no support from the filesystem"
+        rescue Errno::EINVAL, Errno::EISDIR
+          skip "presumably bug in glibc"
         ensure
           rm_r dir
         end
