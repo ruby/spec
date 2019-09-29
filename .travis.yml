@@ -7,14 +7,14 @@ script:
 matrix:
   include:
     - name: Running each spec twice
-      rvm: 2.5.5
+      rvm: 2.5.6
       script:
         - CHECK_LEAKS=true ../mspec/bin/mspec -R2 -ff
-    - rvm: 2.4.6
-    - rvm: 2.5.5
-    - rvm: 2.6.3
+    - rvm: 2.4.7
+    - rvm: 2.5.6
+    - rvm: 2.6.4
     - name: RuboCop Lint Checks
-      rvm: 2.4.6
+      rvm: 2.4.7
       script:
         - gem install rubocop:0.61.0
         - rubocop
