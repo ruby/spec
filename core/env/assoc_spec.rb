@@ -4,6 +4,7 @@ describe "ENV.assoc" do
   before :each do
     @foo = ENV["foo"]
   end
+
   after :each do
     ENV["foo"] = @foo
   end
