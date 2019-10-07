@@ -19,7 +19,6 @@ describe "ENV.delete_if" do
   it "returns ENV when block given" do
     ENV.update("foo" => "0", "bar" => "1")
     ENV.delete_if { |k, v| ["foo", "bar"].include?(k) }.should equal(ENV)
-
   end
 
   it "returns ENV even if nothing deleted" do
