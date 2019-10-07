@@ -3,7 +3,10 @@ require_relative '../enumerable/shared/enumeratorized'
 
 describe "ENV.delete_if" do
   before :each do
-    @saved_envvars = ENV.slice("foo", "bar")
+    @saved_envvars = {
+        "foo" => ENV["foo"],
+        "bar" => ENV["bar"],
+    }
   end
 
   after :each do
@@ -13,7 +16,8 @@ describe "ENV.delete_if" do
   it "deletes pairs if the block returns true" do
     ENV.update("foo" => "0", "bar" => "1")
     ENV.delete_if { |k, v| ["foo", "bar"].include?(k) }
-    ENV.slice("foo", "bar").should be_empty
+    ENV["foo"].should == nil
+    ENV["bar"].should == nil
   end
 
   it "returns ENV when block given" do
@@ -33,7 +37,8 @@ describe "ENV.delete_if" do
     ENV.update("foo" => "0", "bar" => "1")
     enum = ENV.delete_if
     enum.each { |k, v| ["foo", "bar"].include?(k) }
-    ENV.slice("foo", "bar").should be_empty
+    ENV["foo"].should == nil
+    ENV["bar"].should == nil
   end
 
   it "returns ENV from enumerator" do
