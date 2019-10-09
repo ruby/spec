@@ -3,25 +3,25 @@ require_relative '../enumerable/shared/enumeratorized'
 
 describe "ENV.delete_if" do
   before :each do
-    @saved_envvars = {
-        "foo" => ENV["foo"],
-        "bar" => ENV["bar"],
-    }
+    @foo = ENV["foo"]
+    @bar = ENV["bar"]
+
+    ENV["foo"] = "0"
+    ENV["bar"] = "1"
   end
 
   after :each do
-    ENV.update(@saved_envvars)
+    ENV["foo"] = @foo
+    ENV["bar"] = @bar
   end
 
   it "deletes pairs if the block returns true" do
-    ENV.update("foo" => "0", "bar" => "1")
     ENV.delete_if { |k, v| ["foo", "bar"].include?(k) }
     ENV["foo"].should == nil
     ENV["bar"].should == nil
   end
 
   it "returns ENV when block given" do
-    ENV.update("foo" => "0", "bar" => "1")
     ENV.delete_if { |k, v| ["foo", "bar"].include?(k) }.should equal(ENV)
   end
 
@@ -34,7 +34,6 @@ describe "ENV.delete_if" do
   end
 
   it "deletes pairs through enumerator" do
-    ENV.update("foo" => "0", "bar" => "1")
     enum = ENV.delete_if
     enum.each { |k, v| ["foo", "bar"].include?(k) }
     ENV["foo"].should == nil
@@ -42,7 +41,6 @@ describe "ENV.delete_if" do
   end
 
   it "returns ENV from enumerator" do
-    ENV.update("foo" => "0", "bar" => "1")
     enum = ENV.delete_if
     enum.each { |k, v| ["foo", "bar"].include?(k) }.should equal(ENV)
   end
