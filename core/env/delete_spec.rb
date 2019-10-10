@@ -1,8 +1,11 @@
 require_relative '../../spec_helper'
 
 describe "ENV.delete" do
+  before :each do
+    @saved = ENV["foo"]
+  end
   after :each do
-    ENV.delete("foo")
+    ENV["foo"] = @saved
   end
 
   it "removes the variable from the environment" do
@@ -20,5 +23,10 @@ describe "ENV.delete" do
     ENV.delete("foo")
     ENV.delete("foo") { |name| ScratchPad.record name }
     ScratchPad.recorded.should == "foo"
+  end
+
+  it "ignores the given block if the named environment variable exists" do
+    ENV["foo"] = "bar"
+    ENV.delete("foo") { |name| fail name }.should == "bar"
   end
 end

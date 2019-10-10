@@ -18,8 +18,13 @@ describe "ENV.each_value" do
     end
   end
 
-  it "returns an Enumerator if called without a block" do
-    ENV.each_value.should be_an_instance_of(Enumerator)
+  it "returns an Enumerator of the values if called without a block" do
+    enum = ENV.each_value
+    enum.should be_an_instance_of(Enumerator)
+    env_values = ENV.values
+    enum_values = []
+    enum.each { |v| enum_values << v }
+    enum_values.should == env_values
   end
 
   it "uses the locale encoding" do

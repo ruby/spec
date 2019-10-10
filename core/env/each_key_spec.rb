@@ -18,8 +18,12 @@ describe "ENV.each_key" do
     end
   end
 
-  it "returns an Enumerator if called without a block" do
-    ENV.each_key.should be_an_instance_of(Enumerator)
+  it "returns an Enumerator of the keys if called without a block" do
+    enum = ENV.each_key
+    enum.should be_an_instance_of(Enumerator)
+    enum.each do |key|
+      ENV.should include(key)
+    end
   end
 
   it "returns keys in the locale encoding" do
