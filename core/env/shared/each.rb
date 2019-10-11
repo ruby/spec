@@ -16,8 +16,13 @@ describe :env_each, shared: true do
     end
   end
 
-  it "returns an Enumerator if called without a block" do
-    ENV.send(@method).should be_an_instance_of(Enumerator)
+  it "returns an Enumerator of name/value pairs if called without a block" do
+    enum = ENV.send(@method)
+    enum.should be_an_instance_of(Enumerator)
+    enum.each do |pair|
+      name, value = *pair
+      ENV[name].should == value
+    end
   end
 
   before :all do
