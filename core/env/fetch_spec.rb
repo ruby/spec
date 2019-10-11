@@ -26,13 +26,21 @@ describe "ENV.fetch" do
     ENV.fetch("should_never_be_set", "default").should == "default"
   end
 
+  it "allows the default parameter to be a non-string" do
+    ENV.fetch("should_never_be_set", :not_a_string).should == :not_a_string
+  end
+
   it "provides a default value from a block" do
     ENV.fetch("should_never_be_set") { |k| "wanted #{k}" }.should == "wanted should_never_be_set"
+  end
+  
+  it "allows the block value to be a non-string" do
+    ENV.fetch("should_never_be_set") { |k| :not_a_string }.should == :not_a_string
   end
 
   it "warns on block and default parameter given" do
     -> do
-       ENV.fetch("should_never_be_set", "default") { 1 }.should == 1
+      ENV.fetch("should_never_be_set", "default") { 1 }.should == 1
     end.should complain(/block supersedes default value argument/)
   end
 
