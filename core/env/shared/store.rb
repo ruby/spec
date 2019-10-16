@@ -2,7 +2,7 @@ describe :env_store, shared: true do
   before :each do
     @saved_foo = ENV["foo"]
   end
-  
+
   after :each do
     ENV["foo"] = @saved_foo
   end
@@ -46,7 +46,7 @@ describe :env_store, shared: true do
   end
 
   it "raises Errno::EINVAL when the key contains the '=' character" do
-    -> { ENV.send(@method, "foo=", "bar") }.should raise_error(Errno::EINVAL, "Invalid argument - ruby_setenv(foo=)")
+    -> { ENV.send(@method, "foo=", "bar") }.should raise_error(Errno::EINVAL)
   end
 
   it "raises Errno::EINVAL when the key is an empty string" do
