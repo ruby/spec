@@ -2,6 +2,7 @@ describe :env_store, shared: true do
   before :each do
     @saved_foo = ENV["foo"]
   end
+  
   after :each do
     ENV["foo"] = @saved_foo
   end
