@@ -1,6 +1,9 @@
 describe :env_store, shared: true do
+  before :each do
+    @saved_foo = ENV["foo"]
+  end
   after :each do
-    ENV.delete("foo")
+    ENV["foo"] = @saved_foo
   end
 
   it "sets the environment variable to the given value" do
@@ -34,15 +37,15 @@ describe :env_store, shared: true do
   end
 
   it "raises TypeError when the key is not coercible to String" do
-    -> { ENV.send(@method, Object.new, "bar") }.should raise_error(TypeError)
+    -> { ENV.send(@method, Object.new, "bar") }.should raise_error(TypeError, "no implicit conversion of Object into String")
   end
 
   it "raises TypeError when the value is not coercible to String" do
-    -> { ENV.send(@method, "foo", Object.new) }.should raise_error(TypeError)
+    -> { ENV.send(@method, "foo", Object.new) }.should raise_error(TypeError, "no implicit conversion of Object into String")
   end
 
   it "raises Errno::EINVAL when the key contains the '=' character" do
-    -> { ENV.send(@method, "foo=", "bar") }.should raise_error(Errno::EINVAL)
+    -> { ENV.send(@method, "foo=", "bar") }.should raise_error(Errno::EINVAL, "Invalid argument - ruby_setenv(foo=)")
   end
 
   it "raises Errno::EINVAL when the key is an empty string" do
