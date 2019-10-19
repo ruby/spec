@@ -1,16 +1,27 @@
 describe :env_select, shared: true do
   it "returns a Hash of names and values for which block return true" do
+    @saved_foo = ENV["foo"]
     ENV["foo"] = "bar"
     (ENV.send(@method) { |k, v| k == "foo" }).should == { "foo" => "bar" }
-    ENV.delete "foo"
+    ENV["foo"] = @saved_foo
   end
 
   it "returns an Enumerator when no block is given" do
-    ENV.send(@method).should be_an_instance_of(Enumerator)
+    enum = ENV.send(@method)
+    enum.should be_an_instance_of(Enumerator)
+    enum.to_h.should == ENV.to_h
   end
 end
 
 describe :env_select!, shared: true do
+  before :each do
+    @saved_foo = "bar"
+  end
+
+  after :each do
+    ENV["foo"] = @saved_foo
+  end
+
   it "removes environment variables for which the block returns true" do
     ENV["foo"] = "bar"
     ENV.send(@method) { |k, v| k != "foo" }
@@ -19,7 +30,7 @@ describe :env_select!, shared: true do
 
   it "returns self if any changes were made" do
     ENV["foo"] = "bar"
-    (ENV.send(@method) { |k, v| k != "foo" }).should == ENV
+    (ENV.send(@method) { |k, v| k != "foo" }).should equal(ENV)
   end
 
   it "returns nil if no changes were made" do
@@ -27,6 +38,8 @@ describe :env_select!, shared: true do
   end
 
   it "returns an Enumerator if called without a block" do
-    ENV.send(@method).should be_an_instance_of(Enumerator)
+    enum = ENV.send(@method)
+    enum.should be_an_instance_of(Enumerator)
+    enum.to_h.should == ENV.to_h
   end
 end
