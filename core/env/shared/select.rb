@@ -15,7 +15,7 @@ end
 
 describe :env_select!, shared: true do
   before :each do
-    @saved_foo = "bar"
+    @saved_foo = ENV["foo"]
   end
 
   after :each do
