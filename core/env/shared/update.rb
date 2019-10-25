@@ -9,8 +9,8 @@ describe :env_update, shared: true do
     ENV["bar"] = @saved_bar
   end
 
-  it "adds the parameter hash to ENV" do
-    ENV.send @method, {"foo" => "0", "bar" => "1"}
+  it "adds the parameter hash to ENV, returning ENV" do
+    ENV.send(@method, "foo" => "0", "bar" => "1").should equal(ENV)
     ENV["foo"].should == "0"
     ENV["bar"].should == "1"
   end
