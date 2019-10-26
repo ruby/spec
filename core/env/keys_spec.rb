@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "ENV.keys" do
 
-  it "returns an array the keys" do
+  it "returns an array of the keys" do
     ENV.keys.should == ENV.to_hash.keys
   end
 
