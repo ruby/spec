@@ -24,6 +24,7 @@ describe :env_to_hash, shared: true do
 
   it "duplicates the ENV when converting to a Hash" do
     h = ENV.send(@method)
+    h.should_not equal ENV
     h.size.should == ENV.size
     h.each_pair do |k, v|
       ENV[k].should == v
