@@ -1,17 +1,44 @@
 require_relative '../../spec_helper'
 
 describe "ENV.replace" do
-  it "replaces ENV with a Hash" do
-    orig = ENV.to_hash
-    begin
-      ENV.replace("foo" => "0", "bar" => "1").should equal(ENV)
-      ENV.size.should == 2
-      ENV["foo"].should == "0"
-      ENV["bar"].should == "1"
-    ensure
-      ENV.replace(orig)
-      ENV.size.should == orig.size
-    end
+  before :each do
+    @orig = ENV.to_hash
+    ENV.delete("foo")
   end
 
+  after :each do
+    ENV.replace(@orig)
+  end
+
+  it "replaces ENV with a Hash" do
+    ENV.replace("foo" => "0", "bar" => "1").should equal(ENV)
+    ENV.size.should == 2
+    ENV["foo"].should == "0"
+    ENV["bar"].should == "1"
+  end
+
+  it "raises TypeError if the argument is not a Hash" do
+    -> { ENV.replace("foo" => "0", "bar" => "1").should raise_error(TypeError, "no implicit conversion of Object into Hash") }
+    ENV.to_hash.should == @orig
+  end
+
+  it "raises TypeError if a key is not a String" do
+    -> { ENV.replace(Object.new => "0").should raise_error(TypeError, "no implicit conversion of Object into String") }
+    ENV.to_hash.should == @orig
+  end
+
+  it "raises TypeError if a value is not a String" do
+    -> { ENV.replace("foo" => Object.new).should raise_error(TypeError, "no implicit conversion of Object into String") }
+    ENV.to_hash.should == @orig
+  end
+
+  it "does not accept good data preceding an error" do
+    -> { ENV.replace("foo" => "1", Object.new => Object.new).should raise_error(TypeError, "no implicit conversion of Object into String") }
+    ENV.to_hash.should == @orig
+  end
+
+  it "does not accept good data following an error" do
+    -> { ENV.replace(Object.new => Object.new, "foo" => "0").should raise_error(TypeError, "no implicit conversion of Object into String") }
+    ENV.to_hash.should == @orig
+  end
 end
