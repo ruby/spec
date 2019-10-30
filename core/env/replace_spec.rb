@@ -32,6 +32,14 @@ describe "ENV.replace" do
     ENV.to_hash.should == @orig
   end
 
+  it "raises Errno::EINVAL when the key contains the '=' character" do
+    -> { ENV.replace("foo=" =>"bar") }.should raise_error(Errno::EINVAL)
+  end
+
+  it "raises Errno::EINVAL when the key is an empty string" do
+    -> { ENV.replace("" => "bar") }.should raise_error(Errno::EINVAL)
+  end
+
   it "does not accept good data preceding an error" do
     -> { ENV.replace("foo" => "1", Object.new => Object.new).should raise_error(TypeError, "no implicit conversion of Object into String") }
     ENV.to_hash.should == @orig
