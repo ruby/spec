@@ -18,12 +18,12 @@ describe "ENV.replace" do
   end
 
   it "raises TypeError if the argument is not a Hash" do
-    -> { ENV.replace("foo" => "0", "bar" => "1").should raise_error(TypeError, "no implicit conversion of Object into Hash") }
+    -> { ENV.replace(Object.new) }.should raise_error(TypeError, "no implicit conversion of Object into Hash")
     ENV.to_hash.should == @orig
   end
 
   it "raises TypeError if a key is not a String" do
-    -> { ENV.replace(Object.new => "0").should raise_error(TypeError, "no implicit conversion of Object into String") }
+    -> { ENV.replace(Object.new => "0") }.should raise_error(TypeError, "no implicit conversion of Object into String")
     ENV.to_hash.should == @orig
   end
 
