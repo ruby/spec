@@ -39,21 +39,23 @@ describe :env_update, shared: true do
     ENV["bar"].should == "5"
   end
 
-  # BUG: This fails because the block is evaluated.
-  # it "does not evaluate the block for a new name" do
-  #   ENV.delete("bar")
-  #   ENV.send @method, {"foo" => "0"}
-  #   ENV.send(@method, "bar" => "1") { |key, old, new| fail "Should not get here" }
-  # end
+  ruby_version_is "2.7" do
+    # BUG: https://bugs.ruby-lang.org/issues/16192
+    it "does not evaluate the block when the name is new" do
+      ENV.delete("bar")
+      ENV.send @method, {"foo" => "0"}
+      ENV.send(@method, "bar" => "1") { |key, old, new| fail "Should not get here" }
+    end
 
-  # BUG: This fails because the block's return value becomes the new name.
-  # it "does not use the block's return value as the value for a new name" do
-  #   ENV.delete("bar")
-  #   ENV.send @method, {"foo" => "0"}
-  #   ENV.send(@method, "bar" => "1") { |key, old, new| "Should not use this value" }
-  #   ENV["foo"].should == "0"
-  #   ENV["bar"].should == "1"
-  # end
+    # BUG: https://bugs.ruby-lang.org/issues/16192
+    it "does not use the block's return value as the value when the name is new" do
+      ENV.delete("bar")
+      ENV.send @method, {"foo" => "0"}
+      ENV.send(@method, "bar" => "1") { |key, old, new| "Should not use this value" }
+      ENV["foo"].should == "0"
+      ENV["bar"].should == "1"
+    end
+  end
 
   it "returns ENV when block given" do
     ENV.send(@method, {"foo" => "0", "bar" => "1"}){}.should equal(ENV)
