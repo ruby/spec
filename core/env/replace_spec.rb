@@ -28,7 +28,7 @@ describe "ENV.replace" do
   end
 
   it "raises TypeError if a value is not a String" do
-    -> { ENV.replace("foo" => Object.new).should raise_error(TypeError, "no implicit conversion of Object into String") }
+    -> { ENV.replace("foo" => Object.new) }.should raise_error(TypeError, "no implicit conversion of Object into String")
     ENV.to_hash.should == @orig
   end
 
@@ -41,12 +41,11 @@ describe "ENV.replace" do
   end
 
   it "does not accept good data preceding an error" do
-    -> { ENV.replace("foo" => "1", Object.new => Object.new).should raise_error(TypeError, "no implicit conversion of Object into String") }
-    ENV.to_hash.should == @orig
+    -> { ENV.replace("foo" => "1", Object.new => Object.new) }.should raise_error(TypeError, "no implicit conversion of Object into String")
   end
 
   it "does not accept good data following an error" do
-    -> { ENV.replace(Object.new => Object.new, "foo" => "0").should raise_error(TypeError, "no implicit conversion of Object into String") }
+    -> { ENV.replace(Object.new => Object.new, "foo" => "0") }.should raise_error(TypeError, "no implicit conversion of Object into String")
     ENV.to_hash.should == @orig
   end
 end
