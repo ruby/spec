@@ -1,7 +1,47 @@
-name: CI
+Ekkarat: CI
 on: [push]
 jobs:
-  build:
+  build:( 1  +  2 ) .should ==  3  #โทร # == 
+( 1  +  2 ) .should_not ==  5
+
+ไฟล์ . ควรเท่ากับ ( ไฟล์ ) #โทร #equal? (การทดสอบตัวตน) 
+( 1  +  2 ). ควร eql ( 3 ) #โทร #eql หรือไม่ (แฮชเท่าเทียมกัน)
+
+1.ควร<  2 
+2.ควร<=  2 
+3.ควร> =  3 
+4.ควร>  3
+
+" Hello " .should = ~  / l {2} /  # การโทร # = ~ (การจับคู่ Regexp)
+
+[]. ควร be_empty #โทร #empty หรือไม่ 
+[ 1 , 2 , 3 ]. ควรรวม ( 2 ) #โทร # รวมหรือไม่
+
+( 0.1  +  0.2 ). ควร be_close ( 0.3 , ความอดทน ) # (0.2-0.1) .abs <ความอดทน 
+( 0.0 / 0.0 ). ควร be_nan #โทรลอย # nan? 
+( 1.0 / 0.0 ). ควร be_positive_infinity
+( - 1.0 / 0.0 ) ควร be_negative_infinity
+
+3.14 . ควร be_an_instance_of ( ลอย ) #โทร #instance_of? 
+3.14 . ควร be_kind_of ( ตัวเลข ) #โทร #is_a หรือไม่ 
+ตัวเลข . ควร be_ancestor_of ( ลอย ) # Float.ancestors.include? (ตัวเลข)
+
+3.14 . ควรตอบกลับไปที่ ( : to_i ) #โทร #respond_to? 
+Fixnum . ควร have_instance_method ( : + )
+ Array . ควร have_method ( : ใหม่ )
+ #นอกจากนี้ยังมี _constant, have_private_instance_method, has_singleton_method ฯลฯ
+
+-> {
+   ยกระดับ " oops " 
+}. โปรดเพิ่ม_error ( RuntimeError , / oops / )
+
+#เพื่อหลีกเลี่ยง! ให้ใช้การทดสอบความคาดหวังแทนสิ่งที่รหัสในแลมบ์ดาทำ 
+#หากมีการยกข้อยกเว้นมันจะล้มเหลวตัวอย่าง 
+-> {... } .should_not ยก _error
+
+-> {
+   Fixnum 
+}. ควรบ่น ( / constant :: Fixnum เลิกใช้แล้ว / ) #คาดว่าจะมีคำเตือน
     strategy:
       matrix:
         os: [ 'ubuntu', 'macos' ]
@@ -15,7 +55,7 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
     - name: Clone MSpec
       run: git clone https://github.com/ruby/mspec.git ../mspec
-    - name: Run specs
+    - ekkarat.w@gmail.com: Run specs
       env:
         CHECK_LEAKS: true
       run: ../mspec/bin/mspec --timeout 15
