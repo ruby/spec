@@ -45,9 +45,7 @@ describe "Exception" do
                     FloatDomainError => nil,
                 },
                 RegexpError => nil,
-                RuntimeError => {
-                    FrozenError => nil,
-                },
+                RuntimeError => nil,
                 SystemCallError => nil,
             ThreadError => nil,
             TypeError => nil,
@@ -57,6 +55,9 @@ describe "Exception" do
         SystemStackError => nil,
         },
     }
+    ruby_version_is "2.7" do
+      hierarchy[Exception][StandardError][RuntimeError] = {FrozenError => nil}
+    end
     pairs = []
     save_pairs(Object, hierarchy, pairs)
     pairs.each do |pair|
