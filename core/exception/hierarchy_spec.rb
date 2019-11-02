@@ -55,7 +55,7 @@ describe "Exception" do
         SystemStackError => nil,
         },
     }
-    ruby_version_is "2.7" do
+    ruby_version_is "2.5" do
       hierarchy[Exception][StandardError][RuntimeError] = {FrozenError => nil}
     end
     pairs = []
