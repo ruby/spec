@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative 'spec_helper'
 require_relative 'fixtures/common'
 require_relative 'shared/new'
 
@@ -7,8 +8,8 @@ describe "Exception.exception" do
 end
 
 describe "Exception" do
-  it "is a Class" do
-    Exception.should be_kind_of(Class)
+  it "has superclass Object" do
+    ClassChecker.check_classes(Exception, Object)
   end
 
   it "is a superclass of NoMemoryError" do
