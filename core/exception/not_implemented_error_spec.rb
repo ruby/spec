@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
 
-describe "ScriptError" do
+describe "NotImplementedError" do
   # Nothing to do here.
 end
