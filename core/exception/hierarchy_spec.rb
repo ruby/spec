@@ -50,7 +50,7 @@ describe "Exception" do
     ruby_version_is "2.5" do
       hierarchy[Exception][StandardError][RuntimeError] = {FrozenError => nil}
     end
-    traverse = ->(parent_class, parent_subclass_hash) {
+    traverse = -> parent_class, parent_subclass_hash {
       parent_subclass_hash.each do |child_class, child_subclass_hash|
         child_class.class.should == Class
         child_class.superclass.should == parent_class
