@@ -32,7 +32,7 @@ ruby_version_is "2.5" do
         end
       end
 
-      platform_is_not :linux do
+      platform_is_not :linux, :windows do
         it 'sets the IO in nonblock mode' do
           require 'io/nonblock'
           @w.nonblock?.should == false
