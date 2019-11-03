@@ -50,20 +50,15 @@ describe "Exception" do
     ruby_version_is "2.5" do
       hierarchy[Exception][StandardError][RuntimeError] = {FrozenError => nil}
     end
-    pairs = []
-    def save_pairs(parent, hash, pairs)
-      hash.each do |key, value|
-        pairs.push [parent, key]
-        if value.is_a?(Hash)
-          save_pairs(key, value, pairs)
+    traverse = ->(parent_class, parent_subclass_hash) {
+      parent_subclass_hash.each do |child_class, child_subclass_hash|
+        child_class.class.should == Class
+        child_class.superclass.should == parent_class
+        unless child_subclass_hash.nil?
+          traverse.call(child_class, child_subclass_hash)
         end
       end
-    end
-    save_pairs(Object, hierarchy, pairs)
-    pairs.each do |pair|
-      this_class, sub_class = *pair
-      sub_class.class.should == Class
-      sub_class.superclass.should == this_class
-    end
+    }
+    traverse.call(Object, hierarchy)
   end
 end
