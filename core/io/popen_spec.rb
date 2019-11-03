@@ -3,6 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "IO.popen" do
   before :each do
+    @fname = tmp("IO_popen_spec")
     @io = nil
     @var = "$FOO"
     platform_is :windows do
@@ -11,7 +12,8 @@ describe "IO.popen" do
   end
 
   after :each do
-    @io.close if @io
+    @io.close if @io and !@io.closed?
+    rm_r @fname
   end
 
   it "returns an open IO" do
@@ -28,18 +30,6 @@ describe "IO.popen" do
     @io = IO.popen('echo foo', "r")
     -> { @io.write('bar') }.should raise_error(IOError)
     @io.read.should == "foo\n"
-  end
-end
-
-describe "IO.popen" do
-  before :each do
-    @fname = tmp("IO_popen_spec")
-    @io = nil
-  end
-
-  after :each do
-    @io.close if @io and !@io.closed?
-    rm_r @fname
   end
 
   it "sees an infinitely looping subprocess exit when read pipe is closed" do
@@ -100,16 +90,6 @@ describe "IO.popen" do
     mode = mock("mode")
     mode.should_receive(:to_str).and_return("r")
     @io = IO.popen(ruby_cmd('exit 0'), mode)
-  end
-end
-
-describe "IO.popen" do
-  before :each do
-    @io = nil
-  end
-
-  after :each do
-    @io.close if @io
   end
 
   describe "with a block" do
