@@ -1,0 +1,33 @@
+name: windows
+on: [push]
+jobs:
+  build:
+    name: >-
+      build (windows, ${{ matrix.ruby }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [ '2.4.x', '2.5.x', '2.6.x' ]
+    steps:
+      - name: git config
+        run: git config --global core.autocrlf false
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 10
+      - name: Load ruby, update MSYS2/MinGW
+        uses: MSP-Greg/actions-ruby@master
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          base: update
+      - name: Clone MSpec
+        run:  git clone https://github.com/ruby/mspec.git ../mspec
+      - name: Run specs
+        env:
+          CHECK_LEAKS: true
+        run: |
+          # Actions uses UTF8, causes test failures, similar to normal OS setup
+          [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("IBM437")
+          [Console]::InputEncoding  = [System.Text.Encoding]::GetEncoding("IBM437")
+          ../mspec/bin/mspec -j
