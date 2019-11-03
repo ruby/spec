@@ -1,7 +1,10 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
+require_relative '../process/fixtures/common'
 
 describe "IO.popen" do
+  ProcessSpecs.use_system_ruby(self)
+
   before :each do
     @fname = tmp("IO_popen_spec")
     @io = nil
