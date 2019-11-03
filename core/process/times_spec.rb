@@ -12,4 +12,14 @@ describe "Process.times" do
     1 until Process.times.utime > user
     Process.times.utime.should > user
   end
+
+  ruby_version_is "2.5" do
+    platform_is_not :windows do
+      it "uses getrusage when available to improve precision beyond milliseconds" do
+        times = 100.times.map { Process.times }
+        times.count { |t| ((t.utime * 1e6).to_i % 1000) > 0 }.should > 0
+        times.count { |t| ((t.stime * 1e6).to_i % 1000) > 0 }.should > 0
+      end
+    end
+  end
 end
