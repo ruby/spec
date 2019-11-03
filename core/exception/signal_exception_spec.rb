@@ -30,6 +30,10 @@ describe "SignalException.new" do
     -> { SignalException.new("NONEXISTENT") }.should raise_error(ArgumentError)
   end
 
+  it "raises an exception with an invalid first argument type" do
+    -> { SignalException.new(Object.new) }.should raise_error(ArgumentError)
+  end
+
   it "takes a signal symbol without SIG prefix as the first argument" do
     exc = SignalException.new(:INT)
     exc.signo.should == Signal.list["INT"]
