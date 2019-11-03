@@ -47,14 +47,14 @@ describe "Exception#backtrace" do
     end
   end
 
-  it "produces a backtrace for an exception captured using $!" do
-    exception = begin
+  it "captures the backtrace for an exception into $@" do
+    backtrace = begin
       raise
     rescue RuntimeError
-      $!
+      $@
     end
 
-    exception.backtrace.first.should =~ /backtrace_spec/
+    backtrace.first.should =~ /backtrace_spec/
   end
 
   it "returns an Array that can be updated" do
