@@ -54,9 +54,7 @@ describe "Exception" do
       parent_subclass_hash.each do |child_class, child_subclass_hash|
         child_class.class.should == Class
         child_class.superclass.should == parent_class
-        unless child_subclass_hash.nil?
-          traverse.call(child_class, child_subclass_hash)
-        end
+        traverse.call(child_class, child_subclass_hash) if child_subclass_hash
       end
     }
     traverse.call(Object, hierarchy)
