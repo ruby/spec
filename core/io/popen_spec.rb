@@ -11,7 +11,7 @@ describe "IO.popen" do
   end
 
   it "returns an open IO" do
-    @io = IO.popen(ruby_cmd('exit'), "r")
+    @io = IO.popen('exit 0', "r")
     @io.closed?.should be_false
   end
 
@@ -88,14 +88,14 @@ describe "IO.popen" do
   end
 
   it "returns an instance of a subclass when called on a subclass" do
-    @io = IOSpecs::SubIO.popen(ruby_cmd('exit'), "r")
+    @io = IOSpecs::SubIO.popen('exit 0', "r")
     @io.should be_an_instance_of(IOSpecs::SubIO)
   end
 
   it "coerces mode argument with #to_str" do
     mode = mock("mode")
     mode.should_receive(:to_str).and_return("r")
-    @io = IO.popen(ruby_cmd('exit 0'), mode)
+    @io = IO.popen('exit 0', mode)
   end
 end
 
@@ -110,29 +110,29 @@ describe "IO.popen" do
 
   describe "with a block" do
     it "yields an open IO to the block" do
-      IO.popen(ruby_cmd('exit'), "r") do |io|
+      IO.popen('exit 0', "r") do |io|
         io.closed?.should be_false
       end
     end
 
     it "yields an instance of a subclass when called on a subclass" do
-      IOSpecs::SubIO.popen(ruby_cmd('exit'), "r") do |io|
+      IOSpecs::SubIO.popen('exit 0', "r") do |io|
         io.should be_an_instance_of(IOSpecs::SubIO)
       end
     end
 
     it "closes the IO after yielding" do
-      io = IO.popen(ruby_cmd('exit'), "r") { |_io| _io }
+      io = IO.popen('exit 0', "r") { |_io| _io }
       io.closed?.should be_true
     end
 
     it "allows the IO to be closed inside the block" do
-      io = IO.popen(ruby_cmd('exit'), 'r') { |_io| _io.close; _io }
+      io = IO.popen('exit 0', 'r') { |_io| _io.close; _io }
       io.closed?.should be_true
     end
 
     it "returns the value of the block" do
-      IO.popen(ruby_cmd('exit'), "r") { :hello }.should == :hello
+      IO.popen('exit 0', "r") { :hello }.should == :hello
     end
   end
 
@@ -154,17 +154,17 @@ describe "IO.popen" do
   end
 
   it "has the given external encoding" do
-    @io = IO.popen(ruby_cmd('exit'), external_encoding: Encoding::EUC_JP)
+    @io = IO.popen('exit 0', external_encoding: Encoding::EUC_JP)
     @io.external_encoding.should == Encoding::EUC_JP
   end
 
   it "has the given internal encoding" do
-    @io = IO.popen(ruby_cmd('exit'), internal_encoding: Encoding::EUC_JP)
+    @io = IO.popen('exit 0', internal_encoding: Encoding::EUC_JP)
     @io.internal_encoding.should == Encoding::EUC_JP
   end
 
   it "sets the internal encoding to nil if it's the same as the external encoding" do
-    @io = IO.popen(ruby_cmd('exit'), external_encoding: Encoding::EUC_JP,
+    @io = IO.popen('exit 0', external_encoding: Encoding::EUC_JP,
                           internal_encoding: Encoding::EUC_JP)
     @io.internal_encoding.should be_nil
   end
