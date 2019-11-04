@@ -8,6 +8,9 @@ jobs:
         ruby: [ '2.4.x', '2.5.x', '2.6.x' ]
     runs-on: ${{ matrix.os }}-latest
     steps:
+    - name: git config autocrlf
+      if: startsWith(matrix.os, 'windows')
+      run: git config --global core.autocrlf false
     - uses: actions/checkout@master
     - name: Install Ruby
       uses: actions/setup-ruby@v1
