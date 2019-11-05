@@ -1,5 +1,6 @@
 # The Ruby Spec Suite
 
+[![Actions Build Status](https://github.com/ruby/spec/workflows/CI/badge.svg?branch=master)](https://github.com/ruby/spec/actions)
 [![Build Status](https://travis-ci.org/ruby/spec.svg)](https://travis-ci.org/ruby/spec)
 [![Build Status](https://ci.appveyor.com/api/projects/status/1gs6f399320o44b1?svg=true)](https://ci.appveyor.com/project/eregon/spec-x948i)
 [![Gitter](https://badges.gitter.im/ruby/spec.svg)](https://gitter.im/ruby/spec)
