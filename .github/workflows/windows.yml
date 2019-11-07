@@ -4,6 +4,7 @@ jobs:
   build:
     name: build (windows, ${{ matrix.ruby }})
     strategy:
+      fail-fast: false
       matrix:
         ruby: [ '2.4.x', '2.5.x', '2.6.x' ]
     runs-on: windows-latest
