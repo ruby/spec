@@ -47,6 +47,16 @@ describe "Exception#backtrace" do
     end
   end
 
+  it "captures the backtrace for an exception into $!" do
+    exception = begin
+      raise
+    rescue RuntimeError
+      $!
+    end
+
+    exception.backtrace.first.should =~ /backtrace_spec/
+  end
+
   it "captures the backtrace for an exception into $@" do
     backtrace = begin
       raise
