@@ -18,12 +18,14 @@ describe "Exception#backtrace_locations" do
     @backtrace.each {|l| l.should be_an_instance_of(Thread::Backtrace::Location)}
   end
 
-  it "returns correct backtrace location" do
-    begin
+  it "produces a backtrace for an exception captured using $!" do
+    exception = begin
       raise
-    rescue RuntimeError => exception
-      exception.backtrace_locations.first.path.should =~ /backtrace_locations_spec/
+    rescue RuntimeError
+      $!
     end
+
+    exception.backtrace_locations.first.path.should =~ /backtrace_locations_spec/
   end
 
   it "returns an Array that can be updated" do
