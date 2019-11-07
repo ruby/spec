@@ -53,13 +53,15 @@ describe :env_each, shared: true do
       end
     end
 
-    it "transcodes from the locale encoding to Encoding.default_internal if set" do
-      Encoding.default_internal = internal = Encoding::IBM437
+    platform_is_not :windows do
+      it "transcodes from the locale encoding to Encoding.default_internal if set" do
+        Encoding.default_internal = internal = Encoding::IBM437
 
-      ENV.send(@method) do |key, value|
-        key.encoding.should equal(internal)
-        if value.ascii_only?
-          value.encoding.should equal(internal)
+        ENV.send(@method) do |key, value|
+          key.encoding.should equal(internal)
+          if value.ascii_only?
+            value.encoding.should equal(internal)
+          end
         end
       end
     end

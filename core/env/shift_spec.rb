@@ -47,11 +47,13 @@ describe "ENV.shift" do
     pair.last.encoding.should equal(Encoding.find("locale"))
   end
 
-  it "transcodes from the locale encoding to Encoding.default_internal if set" do
-    Encoding.default_internal = Encoding::IBM437
+  platform_is_not :windows do
+    it "transcodes from the locale encoding to Encoding.default_internal if set" do
+      Encoding.default_internal = Encoding::IBM437
 
-    pair = ENV.shift
-    pair.first.encoding.should equal(Encoding::IBM437)
-    pair.last.encoding.should equal(Encoding::IBM437)
+      pair = ENV.shift
+      pair.first.encoding.should equal(Encoding::IBM437)
+      pair.last.encoding.should equal(Encoding::IBM437)
+    end
   end
 end

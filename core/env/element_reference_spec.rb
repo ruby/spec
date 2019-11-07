@@ -64,12 +64,14 @@ describe "ENV.[]" do
     ENV[@variable].encoding.should == locale
   end
 
-  it "transcodes from the locale encoding to Encoding.default_internal if set" do
-    # We cannot reliably know the locale encoding, so we merely check that
-    # the result string has the expected encoding.
-    ENV[@variable] = ""
-    Encoding.default_internal = Encoding::IBM437
+  platform_is_not :windows do
+    it "transcodes from the locale encoding to Encoding.default_internal if set" do
+      # We cannot reliably know the locale encoding, so we merely check that
+      # the result string has the expected encoding.
+      ENV[@variable] = ""
+      Encoding.default_internal = Encoding::IBM437
 
-    ENV[@variable].encoding.should equal(Encoding::IBM437)
+      ENV[@variable].encoding.should equal(Encoding::IBM437)
+    end
   end
 end
