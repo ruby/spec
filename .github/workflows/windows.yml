@@ -1,28 +1,23 @@
-name: windows
+name: Windows
 on: [push, pull_request]
 jobs:
   build:
-    name: >-
-      build (windows, ${{ matrix.ruby }})
-    runs-on: windows-latest
+    name: build (windows, ${{ matrix.ruby }})
     strategy:
-      fail-fast: false
       matrix:
         ruby: [ '2.4.x', '2.5.x', '2.6.x' ]
+    runs-on: windows-latest
     steps:
-      - name: git config
+      - name: git config autocrlf
         run: git config --global core.autocrlf false
-      - name: Checkout
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 10
+      - uses: actions/checkout@master
       - name: Load ruby, update MSYS2/MinGW
         uses: MSP-Greg/actions-ruby@master
         with:
           ruby-version: ${{ matrix.ruby }}
           base: update
       - name: Clone MSpec
-        run:  git clone https://github.com/ruby/mspec.git ../mspec
+        run: git clone https://github.com/ruby/mspec.git ../mspec
       - name: Run specs
         env:
           CHECK_LEAKS: true
