@@ -21,8 +21,4 @@ jobs:
       - name: Run specs
         env:
           CHECK_LEAKS: true
-        run: |
-          # Actions uses UTF8, causes test failures, similar to normal OS setup
-          [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("IBM437")
-          [Console]::InputEncoding  = [System.Text.Encoding]::GetEncoding("IBM437")
-          ../mspec/bin/mspec -j
+        run: ../mspec/bin/mspec -j
