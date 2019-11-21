@@ -36,4 +36,29 @@ describe "SystemCallError.===" do
     e1 = SystemCallError.new('foo', 1)
     e1.===(e0).should == false
   end
+
+  it "returns a generic error if errno is negative" do
+    SystemCallError.new('foo', -1).should be_an_instance_of(SystemCallError)
+  end
+
+  it "converts to Integer if errno is a Float" do
+    SystemCallError.new('foo', 2.0).should == SystemCallError.new('foo', 2)
+    SystemCallError.new('foo', 2.9).should == SystemCallError.new('foo', 2)
+  end
+
+  it "converts to Integer if errno is a Complex convertible to Integer" do
+    SystemCallError.new('foo', Complex(2.9, 0)).should == SystemCallError.new('foo', 2)
+  end
+
+  it "raises TypeError if message is not a String" do
+    -> { SystemCallError.new(:foo, 1) }.should raise_error(TypeError)
+  end
+
+  it "raises TypeError if errno is not an Integer" do
+    -> { SystemCallError.new('foo', '1') }.should raise_error(TypeError)
+  end
+
+  it "raises RangeError if errno is a Complex not convertible to Integer" do
+    -> { SystemCallError.new('foo', Complex(2.9, 1)) }.should raise_error(RangeError)
+  end
 end
