@@ -21,10 +21,9 @@ end
 
 describe "SystemCallError.new" do
   before :all do
-    # Avoid assuming that a particular class Errno::whatever exists.
-    @example_errno = 0
-    @example_errno_symbol = Errno.constants[@example_errno]
-    @example_errno_class = Object.const_get("Errno::#{@example_errno_symbol}")
+    # EINVAL/22 should be consistent across platforms.
+    @example_errno = 22
+    @example_errno_class = Object.const_get("Errno::EINVAL")
     @last_known_errno = Errno.constants.size - 1
     @unknown_errno = Errno.constants.size
   end
