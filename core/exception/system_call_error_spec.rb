@@ -21,8 +21,7 @@ end
 
 describe "SystemCallError.new" do
   before :all do
-    # EINVAL/22 should be consistent across platforms.
-    @example_errno = 22
+    @example_errno = Errno::EINVAL::Errno
     @example_errno_class = Object.const_get("Errno::EINVAL")
     @last_known_errno = Errno.constants.size - 1
     @unknown_errno = Errno.constants.size
@@ -47,6 +46,7 @@ describe "SystemCallError.new" do
     SystemCallError.new(@unknown_errno).should be_an_instance_of(SystemCallError)
     SystemCallError.new(2**24).should be_an_instance_of(SystemCallError)
   end
+
   it "constructs the appropriate Errno class" do
     e = SystemCallError.new(@example_errno)
     e.should be_kind_of(SystemCallError)
@@ -57,14 +57,14 @@ describe "SystemCallError.new" do
     exc = SystemCallError.new("custom message", @example_errno)
     exc.should be_an_instance_of(@example_errno_class)
     exc.errno.should == @example_errno
-    exc.message.should =~ / - custom message/
+    exc.message.should == 'Invalid argument - custom message'
   end
 
   it "accepts an optional third argument specifying the location" do
     exc = SystemCallError.new("custom message", @example_errno, "location")
     exc.should be_an_instance_of(@example_errno_class)
     exc.errno.should == @example_errno
-    exc.message.should =~ /@ location - custom message/
+    exc.message.should == 'Invalid argument @ location - custom message'
   end
 
   it "coerces location if it is not a String" do
