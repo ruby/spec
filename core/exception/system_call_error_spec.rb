@@ -22,7 +22,7 @@ end
 describe "SystemCallError.new" do
   before :all do
     @example_errno = Errno::EINVAL::Errno
-    @example_errno_class = Object.const_get("Errno::EINVAL")
+    @example_errno_class = Errno::EINVAL
     @last_known_errno = Errno.constants.size - 1
     @unknown_errno = Errno.constants.size
   end
