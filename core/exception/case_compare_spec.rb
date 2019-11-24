@@ -6,7 +6,7 @@ describe "SystemCallError.===" do
     @example_errno = @example_errno_class::Errno
   end
 
-  it "???" do
+  it "returns true for an instance of the same class" do
     Errno::EINVAL.should === Errno::EINVAL.new
   end
 
