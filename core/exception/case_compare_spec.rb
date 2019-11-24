@@ -2,8 +2,12 @@ require_relative '../../spec_helper'
 
 describe "SystemCallError.===" do
   before :all do
-    @example_errno = 22
     @example_errno_class = Errno::EINVAL
+    @example_errno = @example_errno_class::Errno
+  end
+
+  it "???" do
+    Errno::EINVAL.should === Errno::EINVAL.new
   end
 
   it "returns true if errnos same" do
