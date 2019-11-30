@@ -45,6 +45,7 @@ describe :env_update, shared: true do
       ENV.delete("bar")
       ENV.send @method, {"foo" => "0"}
       ENV.send(@method, "bar" => "1") { |key, old, new| fail "Should not get here" }
+      ENV["bar"].should == "1"
     end
 
     # BUG: https://bugs.ruby-lang.org/issues/16192
