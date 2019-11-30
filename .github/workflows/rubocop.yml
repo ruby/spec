@@ -4,11 +4,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: RuboCop Linter
-      uses: andrewmcodes/rubocop-linter-action@v2.0.0
+    - uses: actions/checkout@master
+    - uses: actions/setup-ruby@v1
       with:
-        version: '0.61.0'
-        additional_gems: ''
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ruby-version: 2.6.x
+    - run: gem install rubocop:0.61.0
+    - run: rubocop --parallel
