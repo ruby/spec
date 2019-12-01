@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 
-class BeLocaleEnvEncodingString
+locale_env_matcher = Class.new do
   def initialize(name = 'locale')
     encoding = Encoding.find(name)
     @encodings = (encoding = Encoding::US_ASCII) ?
@@ -21,8 +21,6 @@ class BeLocaleEnvEncodingString
   end
 end
 
-class String
-  def be_locale_env(expected = 'locale')
-    BeLocaleEnvEncodingString.new(expected)
-  end
+String.__send__(:define_method, :be_locale_env) do |expected = 'locale'|
+  locale_env_matcher.new(expected)
 end
