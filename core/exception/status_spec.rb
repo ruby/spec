@@ -1,5 +1,9 @@
 require_relative '../../spec_helper'
 
 describe "SystemExit#status" do
-  it "needs to be reviewed for spec completeness"
+  it "returns the exit status" do
+    -> { exit }.should raise_error(SystemExit) { |e|
+      e.status.should == 0
+    }
+  end
 end
