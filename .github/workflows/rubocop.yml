@@ -8,5 +8,5 @@ jobs:
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - run: gem install rubocop:0.61.0
+    - run: gem install rubocop:0.77.0
     - run: rubocop --parallel
