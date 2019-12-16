@@ -8,7 +8,7 @@ describe "SystemExit#success?" do
   end
 
   it "returns false if the process exited unsuccessfully" do
-    -> { exit -1 }.should raise_error(SystemExit) { |e|
+    -> { exit(-1) }.should raise_error(SystemExit) { |e|
       e.success?.should == false
     }
   end
