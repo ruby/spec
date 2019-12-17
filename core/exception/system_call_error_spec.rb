@@ -135,3 +135,9 @@ describe "SystemCallError#dup" do
     dup_sce.errno.should == 42
   end
 end
+
+describe "SystemCallError#backtrace" do
+  it "is nil if not raised" do
+    SystemCallError.new("message", 42).backtrace.should == nil
+  end
+end
