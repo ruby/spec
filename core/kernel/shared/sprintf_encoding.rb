@@ -1,4 +1,16 @@
 describe :kernel_sprintf_encoding, shared: true do
+  it "can produce a string with valid encoding" do
+    string = @method.call("good day %{valid}", valid: "e")
+    string.encoding.should == Encoding::UTF_8
+    string.valid_encoding?.should be_true
+  end
+
+  it "can produce a string with invalid encoding" do
+    string = @method.call("good day %{invalid}", invalid: "\x80")
+    string.encoding.should == Encoding::UTF_8
+    string.valid_encoding?.should be_false
+  end
+
   it "returns a String in the same encoding as the format String if compatible" do
     string = "%s".force_encoding(Encoding::KOI8_U)
     result = @method.call(string, "dogs")

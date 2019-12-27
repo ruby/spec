@@ -859,20 +859,6 @@ describe :kernel_sprintf, shared: true do
     end
   end
 
-  describe "encoding" do
-    it "can produce a string with valid encoding" do
-      string = @method.call("good day %{valid}", valid: "e")
-      string.encoding.should == Encoding::UTF_8
-      string.valid_encoding?.should be_true
-    end
-
-    it "can produce a string with invalid encoding" do
-      string = @method.call("good day %{invalid}", invalid: "\x80")
-      string.encoding.should == Encoding::UTF_8
-      string.valid_encoding?.should be_false
-    end
-  end
-
   describe "faulty key" do
     before :each do
       @object = { foooo: 1 }
