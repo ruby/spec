@@ -206,8 +206,12 @@ VALUE io_spec_rb_io_set_nonblock(VALUE self, VALUE io) {
   int flags;
   GetOpenFile(io, fp);
   rb_io_set_nonblock(fp);
+#ifdef F_GETFL
   flags = fcntl(fp->fd, F_GETFL, 0);
   return flags & O_NONBLOCK ? Qtrue : Qfalse;
+#else
+  return Qfalse;
+#endif
 }
 
 /*

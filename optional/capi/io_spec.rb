@@ -152,8 +152,12 @@ describe "C-API IO function" do
   end
 
   describe "rb_io_set_nonblock" do
-    it "returns true when nonblock flag is set" do
-      @o.rb_io_set_nonblock(@io).should be_true
+    platform_is_not :windows do
+      it "returns true when nonblock flag is set" do
+        require 'io/nonblock'
+        @o.rb_io_set_nonblock(@io)
+        @io.nonblock?.should be_true
+      end
     end
   end
 
