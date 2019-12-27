@@ -1,5 +1,3 @@
-require_relative '../../../shared/hash/key_error'
-
 describe :kernel_sprintf, shared: true do
   describe "integer formats" do
     it "converts argument into Integer with to_int" do
@@ -876,12 +874,32 @@ describe :kernel_sprintf, shared: true do
   end
 
   describe "faulty key" do
-    before :all do
-      @base_method = @method
+    before :each do
+      @object = { foooo: 1 }
     end
 
-    it_behaves_like :key_error, -> obj, key {
-      @base_method.call("%<#{key}>s", obj)
-    }, { foooo: 1 }
+    it "raises a KeyError" do
+      -> {
+        @method.call("%<foo>s", @object)
+      }.should raise_error(KeyError)
+    end
+
+    ruby_version_is "2.5" do
+      it "sets the Hash as the receiver of KeyError" do
+        -> {
+          @method.call("%<foo>s", @object)
+        }.should raise_error(KeyError) { |err|
+          err.receiver.should equal(@object)
+        }
+      end
+
+      it "sets the unmatched key as the key of KeyError" do
+        -> {
+          @method.call("%<foo>s", @object)
+        }.should raise_error(KeyError) { |err|
+          err.key.to_s.should == 'foo'
+        }
+      end
+    end
   end
 end
