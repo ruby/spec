@@ -662,6 +662,18 @@ describe "Predefined global $." do
   end
 end
 
+describe "Predefined global $;" do
+  after :each do
+    $; = nil
+  end
+
+  ruby_version_is "2.7" do
+    it "warns if assigned non-nil" do
+      -> { $; = "_" }.should complain(/warning: `\$;' is deprecated/)
+    end
+  end
+end
+
 describe "Predefined global $_" do
   it "is set to the last line read by e.g. StringIO#gets" do
     stdin = StringIO.new("foo\nbar\n", "r")
