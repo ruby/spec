@@ -6,12 +6,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu', 'macos' ]
-        ruby: [ '2.4.x', '2.5.x', '2.6.x' ]
+        ruby: [ '2.4.9', '2.5.7', '2.6.5', '2.7.0' ]
     runs-on: ${{ matrix.os }}-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Install Ruby
-      uses: actions/setup-ruby@v1
+      uses: eregon/use-ruby-action@master
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: Clone MSpec
