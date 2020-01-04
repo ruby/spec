@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require 'stringio'
 
 describe "Enumerator.new" do
   it "creates a new custom enumerator with the given object, iterator and arguments" do
