@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'stringio'
 
 ruby_version_is "2.7" do
   describe "Enumerator.produce" do
@@ -27,8 +26,8 @@ ruby_version_is "2.7" do
       end
 
       it "starts enumerable from result of first block call" do
-        io = StringIO.new("a\nb\nc\nd")
-        lines = Enumerator.produce { io.gets }.take_while { |s| s }
+        array = "a\nb\nc\nd".lines
+        lines = Enumerator.produce { array.shift }.take_while { |s| s }
 
         lines.should == ["a\n", "b\n", "c\n", "d"]
       end

@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'stringio'
 
 describe "Enumerator.new" do
   it "creates a new custom enumerator with the given object, iterator and arguments" do
@@ -70,8 +69,7 @@ describe "Enumerator.new" do
     ruby_version_is "2.7" do
       it "defines iteration with block, yielder argument and treating it as a proc" do
         enum = Enumerator.new do |yielder|
-          io = StringIO.new("a\nb\nc")
-          io.each_line(&yielder)
+          "a\nb\nc".each_line(&yielder)
         end
 
         enum.to_a.should == ["a\n", "b\n", "c"]
