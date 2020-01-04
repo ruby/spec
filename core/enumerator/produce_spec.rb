@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require 'stringio'
 
 ruby_version_is "2.7" do
   describe "Enumerator.produce" do
