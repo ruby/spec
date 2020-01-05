@@ -12,11 +12,10 @@ jobs:
       - name: git config autocrlf
         run: git config --global core.autocrlf false
       - uses: actions/checkout@master
-      - name: Load ruby, update MSYS2/MinGW
+      - name: Install Ruby
         uses: MSP-Greg/actions-ruby@master
         with:
           ruby-version: ${{ matrix.ruby }}
-          base: update
       - name: Clone MSpec
         run: git clone https://github.com/ruby/mspec.git ../mspec
       - name: Run specs
