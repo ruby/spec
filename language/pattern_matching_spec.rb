@@ -109,6 +109,17 @@ ruby_version_is "2.7" do
       }.should raise_error(NoMatchingPatternError, /\[0, 1\]/)
     end
 
+    it "does not allow calculation or method calls in a pattern" do
+      -> {
+        eval <<~RUBY
+          case 0
+            in 1 + 1
+              true
+          end
+        RUBY
+      }.should raise_error(SyntaxError, /unexpected/)
+    end
+
     describe "guards" do
       it "supports if guard" do
         eval(<<~RUBY).should == false
@@ -273,6 +284,18 @@ ruby_version_is "2.7" do
         RUBY
       end
 
+      it "create local variables even if a pattern doesn't match" do
+        eval(<<~RUBY).should == [0, nil, nil]
+          case 0
+            in a
+            in b
+            in c
+          end
+
+          [a, b, c]
+        RUBY
+      end
+
       it "allow using _ name to drop values" do
         eval(<<~RUBY).should == 0
           case [0, 1]
@@ -344,6 +367,19 @@ ruby_version_is "2.7" do
             false
           end
         RUBY
+      end
+
+      it "requires bound variable to be specified in a pattern before ^ operator when it relies on a bound variable" do
+        -> {
+          eval <<~RUBY
+            case [1, 2]
+              in [^n, n]
+                true
+            else
+              false
+            end
+          RUBY
+        }.should raise_error(SyntaxError, /n: no such local variable/)
       end
     end
 
@@ -569,6 +605,15 @@ ruby_version_is "2.7" do
           end
         RUBY
       end
+
+      it "matches anything with *" do
+        eval(<<~RUBY).should == true
+          case [0, 1]
+            in *;
+              true
+          end
+        RUBY
+      end
     end
 
     describe "Hash pattern" do
@@ -663,7 +708,16 @@ ruby_version_is "2.7" do
         RUBY
       end
 
-      it 'supports "str": key literal' do
+      it "can mix key (a:) and key-value (a: b) declarations" do
+        eval(<<~RUBY).should == [0, 1]
+          case {a: 0, b: 1}
+            in Hash(a:, b: x)
+              [a, x]
+          end
+        RUBY
+      end
+
+      it "supports 'string': key literal" do
         eval(<<~RUBY).should == true
           case {a: 0}
             in {"a": 0}
@@ -894,6 +948,15 @@ ruby_version_is "2.7" do
         eval(<<~RUBY).should == true
           case {}
             in {}
+              true
+          end
+        RUBY
+      end
+
+      it "matches anything with **" do
+        eval(<<~RUBY).should == true
+          case {a: 1}
+            in **;
               true
           end
         RUBY
