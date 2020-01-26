@@ -10,8 +10,11 @@ ruby_version_is "2.7" do
     end
 
     it "requires one argument" do
+      struct = Struct.new(:x)
+      obj = struct.new(1)
+
       -> {
-        Struct.new(:x).new(1).deconstruct_keys
+        obj.deconstruct_keys
       }.should raise_error(ArgumentError, /wrong number of arguments \(given 0, expected 1\)/)
     end
 
@@ -45,6 +48,23 @@ ruby_version_is "2.7" do
       s = struct.new(1, 2)
 
       s.deconstruct_keys([:a, :b, :c]).should == {}
+    end
+
+    it "accepts nil argument and return all the attributes" do
+      struct = Struct.new(:x, :y)
+      obj = struct.new(1, 2)
+
+      obj.deconstruct_keys(nil).should == {x: 1, y: 2}
+    end
+
+    it "raise TypeError if passed anything accept nil or array" do
+      struct = Struct.new(:x, :y)
+      s = struct.new(1, 2)
+
+      -> { s.deconstruct_keys('x') }.should raise_error(TypeError, /expected Array or nil/)
+      -> { s.deconstruct_keys(1)   }.should raise_error(TypeError, /expected Array or nil/)
+      -> { s.deconstruct_keys(:x)  }.should raise_error(TypeError, /expected Array or nil/)
+      -> { s.deconstruct_keys({})  }.should raise_error(TypeError, /expected Array or nil/)
     end
   end
 end
