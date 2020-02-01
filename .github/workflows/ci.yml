@@ -1,22 +1,48 @@
 name: CI
 on: [push, pull_request]
 jobs:
-  test:
+  specs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu', 'macos' ]
-        ruby: [ '2.4.9', '2.5.7', '2.6.5', '2.7.0' ]
+        os: [ ubuntu, macos, windows ]
+        ruby: [ 2.4.9, 2.5.7, 2.6.5, 2.7.0 ]
     runs-on: ${{ matrix.os }}-latest
     steps:
+    - name: git config autocrlf
+      run: git config --global core.autocrlf false
+      if: matrix.os == 'windows'
+
     - uses: actions/checkout@v2
-    - name: Install Ruby
-      uses: eregon/use-ruby-action@v1
+    - uses: eregon/use-ruby-action@v1
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: Clone MSpec
       run: git clone https://github.com/ruby/mspec.git ../mspec
+
     - name: Run specs
+      if: matrix.os != 'windows'
       env:
         CHECK_LEAKS: true
       run: ../mspec/bin/mspec --timeout 30
+
+    - name: Run specs (Windows)
+      if: matrix.os == 'windows'
+      env:
+        CHECK_LEAKS: true
+      run: |
+        # Actions uses UTF8, causes test failures, similar to normal OS setup
+        [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("IBM437")
+        [Console]::InputEncoding  = [System.Text.Encoding]::GetEncoding("IBM437")
+        ../mspec/bin/mspec -j
+
+  rubocop:
+    name: RuboCop
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: eregon/use-ruby-action@v1
+      with:
+        ruby-version: 2.6
+    - run: gem install rubocop:0.77.0
+    - run: rubocop --parallel
