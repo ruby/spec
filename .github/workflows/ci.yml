@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Ruby
-      uses: eregon/use-ruby-action@master
+      uses: eregon/use-ruby-action@v1
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: Clone MSpec
