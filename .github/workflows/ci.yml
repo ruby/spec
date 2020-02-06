@@ -14,7 +14,7 @@ jobs:
       if: matrix.os == 'windows'
 
     - uses: actions/checkout@v2
-    - uses: eregon/use-ruby-action@v1
+    - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: Clone MSpec
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: eregon/use-ruby-action@v1
+    - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6
     - run: gem install rubocop:0.77.0
