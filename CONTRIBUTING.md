@@ -108,6 +108,8 @@ Also `have_constant`, `have_private_instance_method`, `have_singleton_method`, e
 }
 ```
 
+##### should_not raise_error
+
 **To avoid!** Instead, use an expectation testing what the code in the lambda does.
 If an exception is raised, it will fail the example anyway.
 
@@ -168,9 +170,9 @@ end
 
 #### Guard for bug
 
-In case there is a bug in MRI but the expected behavior is obvious
-First file a bug at https://bugs.ruby-lang.org/
-It is better to use a `ruby_version_is` guard if there was a release with the fix
+In case there is a bug in MRI but the expected behavior is obvious.
+First, file a bug at https://bugs.ruby-lang.org/.
+It is better to use a `ruby_version_is` guard if there was a release with the fix.
 
 ```ruby
 ruby_bug '#13669', ''...'2.5' do
