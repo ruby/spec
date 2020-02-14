@@ -962,5 +962,79 @@ ruby_version_is "2.7" do
         RUBY
       end
     end
+
+    describe "refinements" do
+      it "are used for #deconstruct" do
+        refinery = Module.new do
+          refine Array do
+            def deconstruct
+              [0]
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinery
+
+          result = eval(<<~RUBY)
+            case []
+              in [0]
+                true
+            end
+          RUBY
+        end
+
+        result.should == true
+      end
+
+      it "are used for #deconstruct_keys" do
+        refinery = Module.new do
+          refine Hash do
+            def deconstruct_keys(_)
+              {a: 0}
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinery
+
+          result = eval(<<~RUBY)
+            case {}
+              in a: 0
+                true
+            end
+          RUBY
+        end
+
+        result.should == true
+      end
+
+      it "are used for #=== in constant pattern" do
+        refinery = Module.new do
+          refine Array.singleton_class do
+            def ===(obj)
+              obj.is_a?(Hash)
+            end
+          end
+        end
+
+        result = nil
+        Module.new do
+          using refinery
+
+          result = eval(<<~RUBY)
+            case {}
+              in Array
+                true
+            end
+          RUBY
+        end
+
+        result.should == true
+      end
+    end
   end
 end
