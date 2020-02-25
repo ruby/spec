@@ -86,7 +86,8 @@ static const rb_data_type_t sample_typed_wrapped_struct_other_data_type = {
 
 
 VALUE sdaf_alloc_typed_func(VALUE klass) {
-    struct sample_typed_wrapped_struct* bar = (struct sample_typed_wrapped_struct *)malloc(sizeof(struct sample_typed_wrapped_struct));
+    struct sample_typed_wrapped_struct* bar;
+    bar = (struct sample_typed_wrapped_struct *) malloc(sizeof(struct sample_typed_wrapped_struct));
     bar->foo = 42;
     return TypedData_Wrap_Struct(klass, &sample_typed_wrapped_struct_data_type, bar);
 }
@@ -99,7 +100,8 @@ VALUE sdaf_typed_get_struct(VALUE self) {
 }
 
 VALUE sws_typed_wrap_struct(VALUE self, VALUE val) {
-    struct sample_typed_wrapped_struct* bar = (struct sample_typed_wrapped_struct *)malloc(sizeof(struct sample_typed_wrapped_struct));
+    struct sample_typed_wrapped_struct* bar;
+    bar = (struct sample_typed_wrapped_struct *) malloc(sizeof(struct sample_typed_wrapped_struct));
     bar->foo = FIX2INT(val);
     return TypedData_Wrap_Struct(rb_cObject, &sample_typed_wrapped_struct_data_type, bar);
 }
@@ -138,11 +140,10 @@ VALUE sws_typed_get_struct_data_ptr(VALUE self, VALUE obj) {
 }
 
 VALUE sws_typed_change_struct(VALUE self, VALUE obj, VALUE new_val) {
-  struct sample_typed_wrapped_struct *old_struct, *new_struct;
-  new_struct = (struct sample_typed_wrapped_struct *)malloc(sizeof(struct sample_typed_wrapped_struct));
+  struct sample_typed_wrapped_struct *new_struct;
+  new_struct = (struct sample_typed_wrapped_struct *) malloc(sizeof(struct sample_typed_wrapped_struct));
   new_struct->foo = FIX2INT(new_val);
-  old_struct = RTYPEDDATA(obj)->data;
-  free(old_struct);
+  free(RTYPEDDATA(obj)->data);
   RTYPEDDATA(obj)->data = new_struct;
   return Qnil;
 }
