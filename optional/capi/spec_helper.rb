@@ -14,6 +14,7 @@ end
 
 def compile_extension(name)
   debug = false
+  force_cxx = false
   run_mkmf_in_process = RUBY_ENGINE == 'truffleruby'
 
   core_ext_dir = File.expand_path("../ext", __FILE__)
@@ -54,7 +55,11 @@ def compile_extension(name)
   Dir.mkdir(tmpdir)
   begin
     ["#{core_ext_dir}/rubyspec.h", "#{spec_ext_dir}/#{ext}.c"].each do |file|
-      cp file, "#{tmpdir}/#{File.basename(file)}"
+      if force_cxx and file.end_with?('.c')
+        cp file, "#{tmpdir}/#{File.basename(file, '.c')}.cpp"
+      else
+        cp file, "#{tmpdir}/#{File.basename(file)}"
+      end
     end
 
     Dir.chdir(tmpdir) do
