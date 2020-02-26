@@ -402,6 +402,17 @@ ruby_version_is "2.7" do
           RUBY
         }.should raise_error(SyntaxError, /illegal variable in alternative pattern/)
       end
+
+      it "support undescore prefixed variables in alternation" do
+        eval(<<~RUBY).should == true
+          case [0, 1]
+            in [1, _]
+              false
+            in [0, 0] | [0, _a]
+              true
+          end
+        RUBY
+      end
     end
 
     describe "AS pattern" do
