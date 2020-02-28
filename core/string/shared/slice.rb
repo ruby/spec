@@ -307,10 +307,10 @@ describe :string_slice_range, shared: true do
 
   ruby_version_is "2.6" do
     it "works with endless ranges" do
-      "hello there".send(@method, eval("2..")).should == "llo there"
-      "hello there".send(@method, eval("2...")).should == "llo there"
-      "hello there".send(@method, eval("-4..")).should == "here"
-      "hello there".send(@method, eval("-4...")).should == "here"
+      "hello there".send(@method, eval("(2..)")).should == "llo there"
+      "hello there".send(@method, eval("(2...)")).should == "llo there"
+      "hello there".send(@method, eval("(-4..)")).should == "here"
+      "hello there".send(@method, eval("(-4...)")).should == "here"
     end
   end
 end
