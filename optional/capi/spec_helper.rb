@@ -8,8 +8,12 @@ require 'rbconfig'
 OBJDIR ||= File.expand_path("../../../ext/#{RUBY_ENGINE}/#{RUBY_VERSION}", __FILE__)
 
 def object_path
-  mkdir_p(OBJDIR)
-  OBJDIR
+  path = OBJDIR
+  if ENV['SPEC_CAPI_CXX'] == 'true'
+    path = "#{path}/cxx"
+  end
+  mkdir_p(path)
+  path
 end
 
 def compile_extension(name)
