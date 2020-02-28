@@ -122,7 +122,7 @@ describe :string_slice_index_length, shared: true do
     "x".send(@method, -2,0).should == nil
     "x".send(@method, -2,1).should == nil
 
-    "x".send(@method, bignum_value - 1, 1).should == nil
+    "x".send(@method, fixnum_max, 1).should == nil
   end
 
   it "returns nil if the length is negative" do
