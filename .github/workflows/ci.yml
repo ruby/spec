@@ -25,6 +25,11 @@ jobs:
       env:
         CHECK_LEAKS: true
       run: ../mspec/bin/mspec --timeout 30
+    - name: Run C-API specs as C++
+      if: matrix.os != 'windows'
+      env:
+        SPEC_CAPI_CXX: true
+      run: ../mspec/bin/mspec :capi
 
     - name: Run specs (Windows)
       if: matrix.os == 'windows'
