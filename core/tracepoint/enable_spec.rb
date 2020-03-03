@@ -96,6 +96,55 @@ describe 'TracePoint#enable' do
     end
   end
 
+  describe 'no options' do
+    before :each do
+      ScratchPad.record []
+    end
+
+    it 'traces method call' do
+      klass = Class.new do
+        def foo
+          bar
+        end
+        def bar; end
+      end
+
+      trace = TracePoint.new(:call) do |tp|
+        ScratchPad << tp.method_id
+      end
+
+      obj = klass.new
+
+      trace.enable do
+        obj.foo
+      end
+
+      ScratchPad.recorded.should == [:foo, :bar]
+    end
+
+    ruby_bug '#16383', '2.4'...'3.0' do
+      it 'traces attribute reader/accessor method call' do
+        klass = Class.new do
+          attr_reader :foo
+          attr_accessor :bar
+        end
+
+        trace = TracePoint.new(:call) do |tp|
+          ScratchPad << tp.method_id
+        end
+
+        obj = klass.new
+
+        trace.enable do
+          obj.foo
+          obj.bar
+        end
+
+        ScratchPad.recorded.should == [:foo, :bar]
+      end
+    end
+  end
+
   ruby_version_is "2.6" do
     describe 'target: option' do
       before :each do
