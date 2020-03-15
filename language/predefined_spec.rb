@@ -404,7 +404,6 @@ describe "Predefined global $!" do
           raise StandardError.new('err')
         rescue => e
           $!.should == e
-          return
         end
       end
 
