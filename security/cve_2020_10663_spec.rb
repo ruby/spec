@@ -22,7 +22,7 @@ guard -> {
   ruby_version_is "2.5.8"..."2.6.0" or
   ruby_version_is "2.6.6" or
   JSON.const_defined?(:Pure) or
-  SpecVersion.new(JSON::VERSION) >= SpecVersion.new('2.3.0')
+  version_is(JSON::VERSION, '2.3.0')
 } do
   describe "CVE-2020-10663 is resisted by" do
     it "only creating custom objects if passed create_additions: true or using JSON.load" do
