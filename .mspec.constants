@@ -129,6 +129,7 @@ ObjectTest
 Observable
 Open3
 OpenSSL
+OpenSSLVersionGuard
 OpenStruct
 OperatorImplementor
 OptParse
