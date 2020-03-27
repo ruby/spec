@@ -96,11 +96,6 @@ describe "C-API constant" do
     end
   end
 
-  specify "rb_mProcess references the Process module" do
-    @s.rb_mProcess.should == Process
-  end
-
-
   specify "rb_cMatch references the MatchData class" do
     @s.rb_cMatch.should == MatchData
   end
@@ -127,6 +122,10 @@ describe "C-API constant" do
 
   specify "rb_cProc references the Proc class" do
     @s.rb_cProc.should == Proc
+  end
+
+  specify "rb_mProcess references the Process module" do
+    @s.rb_mProcess.should == Process
   end
 
   specify "rb_cRandom references the Random class" do

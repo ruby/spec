@@ -29,7 +29,6 @@ defconstfunc(rb_cInteger)
 defconstfunc(rb_cIO)
 defconstfunc(rb_mKernel)
 defconstfunc(rb_mMath)
-defconstfunc(rb_mProcess)
 defconstfunc(rb_cMatch)
 defconstfunc(rb_cMethod)
 defconstfunc(rb_cModule)
@@ -37,6 +36,7 @@ defconstfunc(rb_cNilClass)
 defconstfunc(rb_cNumeric)
 defconstfunc(rb_cObject)
 defconstfunc(rb_cProc)
+defconstfunc(rb_mProcess)
 defconstfunc(rb_cRandom)
 defconstfunc(rb_cRange)
 defconstfunc(rb_cRational)
@@ -112,7 +112,6 @@ void Init_constants_spec(void) {
   rb_define_method(cls, "rb_cIO", constants_spec_rb_cIO, 0);
   rb_define_method(cls, "rb_mKernel", constants_spec_rb_mKernel, 0);
   rb_define_method(cls, "rb_mMath", constants_spec_rb_mMath, 0);
-  rb_define_method(cls, "rb_mProcess", constants_spec_rb_mProcess, 0);
   rb_define_method(cls, "rb_cMatch", constants_spec_rb_cMatch, 0);
   rb_define_method(cls, "rb_cMethod", constants_spec_rb_cMethod, 0);
   rb_define_method(cls, "rb_cModule", constants_spec_rb_cModule, 0);
@@ -120,6 +119,7 @@ void Init_constants_spec(void) {
   rb_define_method(cls, "rb_cNumeric", constants_spec_rb_cNumeric, 0);
   rb_define_method(cls, "rb_cObject", constants_spec_rb_cObject, 0);
   rb_define_method(cls, "rb_cProc", constants_spec_rb_cProc, 0);
+  rb_define_method(cls, "rb_mProcess", constants_spec_rb_mProcess, 0);
   rb_define_method(cls, "rb_cRandom", constants_spec_rb_cRandom, 0);
   rb_define_method(cls, "rb_cRange", constants_spec_rb_cRange, 0);
   rb_define_method(cls, "rb_cRational", constants_spec_rb_cRational, 0);
