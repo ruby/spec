@@ -179,7 +179,7 @@ static rb_encoding** native_rb_encoding_pointer;
 
 static VALUE encoding_spec_rb_to_encoding_native_store(VALUE self, VALUE obj) {
   rb_encoding* enc = rb_to_encoding(obj);
-  VALUE address = LONG2NUM((long) native_rb_encoding_pointer);
+  VALUE address = SIZET2NUM((size_t) native_rb_encoding_pointer);
   *native_rb_encoding_pointer = enc;
   return address;
 }
