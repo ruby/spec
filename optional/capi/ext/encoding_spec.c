@@ -221,7 +221,7 @@ static VALUE encoding_spec_rb_enc_str_asciionly_p(VALUE self, VALUE str) {
 
 void Init_encoding_spec(void) {
   VALUE cls;
-  native_rb_encoding_pointer = malloc(sizeof(rb_encoding*));
+  native_rb_encoding_pointer = (rb_encoding**) malloc(sizeof(rb_encoding*));
 
   cls = rb_define_class("CApiEncodingSpecs", rb_cObject);
   rb_define_method(cls, "ENC_CODERANGE_ASCIIONLY",
