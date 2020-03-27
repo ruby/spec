@@ -185,7 +185,7 @@ static VALUE encoding_spec_rb_to_encoding_native_store(VALUE self, VALUE obj) {
 }
 
 static VALUE encoding_spec_rb_to_encoding_native_name(VALUE self, VALUE address) {
-  rb_encoding** ptr = (rb_encoding**) NUM2LONG(address);
+  rb_encoding** ptr = (rb_encoding**) NUM2SIZET(address);
   rb_encoding* enc = *ptr;
   return rb_str_new2(enc->name);
 }
