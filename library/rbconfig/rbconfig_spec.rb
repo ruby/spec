@@ -50,6 +50,20 @@ describe 'RbConfig::CONFIG' do
         File.should_not.exist?(libruby_so)
       end
     end
+
+    it "['AR'] exists and can be executed" do
+      ar = RbConfig::CONFIG.fetch('AR')
+      out = `#{ar} --version`
+      $?.should.success?
+      out.should_not be_empty
+    end
+
+    it "['STRIP'] exists and can be executed" do
+      strip = RbConfig::CONFIG.fetch('STRIP')
+      out = `#{strip} --version`
+      $?.should.success?
+      out.should_not be_empty
+    end
   end
 end
 
