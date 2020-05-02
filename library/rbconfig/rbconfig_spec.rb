@@ -50,7 +50,9 @@ describe 'RbConfig::CONFIG' do
         File.should_not.exist?(libruby_so)
       end
     end
+  end
 
+  platform_is :linux do
     it "['AR'] exists and can be executed" do
       ar = RbConfig::CONFIG.fetch('AR')
       out = `#{ar} --version`
