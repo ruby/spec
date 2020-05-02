@@ -20,13 +20,15 @@ describe :weakmap_include?, shared: true do
     map.send(@method, key2).should == false
   end
 
-  ruby_bug "#16826", "2.7.0"..."2.8.1" do
-    it "reports true if the pair exists and the value is nil" do
-      map = ObjectSpace::WeakMap.new
-      key = Object.new
-      map[key] = nil
-      map.size.should == 1
-      map.send(@method, key).should == true
+  ruby_version_is "2.7" do
+    ruby_bug "#16826", "2.7.0"..."2.8.1" do
+      it "reports true if the pair exists and the value is nil" do
+        map = ObjectSpace::WeakMap.new
+        key = Object.new
+        map[key] = nil
+        map.size.should == 1
+        map.send(@method, key).should == true
+      end
     end
   end
 end
