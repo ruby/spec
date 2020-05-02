@@ -14,7 +14,7 @@ describe :weakmap_include?, shared: true do
 
   it "matches using identity semantics" do
     map = ObjectSpace::WeakMap.new
-    key1, key2 = %w[a a].map &:upcase
+    key1, key2 = %w[a a].map(&:upcase)
     ref = "x"
     map[key1] = ref
     map.send(@method, key2).should == false

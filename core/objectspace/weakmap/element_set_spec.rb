@@ -9,7 +9,7 @@ describe "ObjectSpace::WeakMap#[]=" do
 
   it "is correct" do
     map = ObjectSpace::WeakMap.new
-    key1, key2 = %w[a b].map &:upcase
+    key1, key2 = %w[a b].map(&:upcase)
     ref1, ref2 = %w[x y]
     should_accept(map, key1, ref1)
     should_accept(map, key1, ref1)
