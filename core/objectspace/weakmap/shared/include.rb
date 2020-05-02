@@ -32,4 +32,3 @@ describe :weakmap_include?, shared: true do
     end
   end
 end
-
