@@ -75,5 +75,33 @@ describe "Enumerator.new" do
         enum.to_a.should == ["a\n", "b\n", "c"]
       end
     end
+
+    it 'handles +yield+ arguments properly' do
+      Enumerator.new { |y| y.yield(1) }.to_a.should == [1]
+      Enumerator.new { |y| y.yield(1) }.first.should == 1
+
+      Enumerator.new { |y| y.yield([1]) }.to_a.should == [[1]]
+      Enumerator.new { |y| y.yield([1]) }.first.should == [1]
+
+      Enumerator.new { |y| y.yield(1, 2) }.to_a.should == [[1, 2]]
+      Enumerator.new { |y| y.yield(1, 2) }.first.should == [1, 2]
+
+      Enumerator.new { |y| y.yield([1, 2]) }.to_a.should == [[1, 2]]
+      Enumerator.new { |y| y.yield([1, 2]) }.first.should == [1, 2]
+    end
+
+    it 'handles +yield+ arguments properly' do
+      Enumerator.new { |y| y.<<(1) }.to_a.should == [1]
+      Enumerator.new { |y| y.<<(1) }.first.should == 1
+
+      Enumerator.new { |y| y.<<([1]) }.to_a.should == [[1]]
+      Enumerator.new { |y| y.<<([1]) }.first.should == [1]
+
+      Enumerator.new { |y| y.<<(1, 2) }.to_a.should == [[1, 2]]
+      Enumerator.new { |y| y.<<(1, 2) }.first.should == [1, 2]
+
+      Enumerator.new { |y| y.<<([1, 2]) }.to_a.should == [[1, 2]]
+      Enumerator.new { |y| y.<<([1, 2]) }.first.should == [1, 2]
+    end
   end
 end
