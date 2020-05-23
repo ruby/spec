@@ -76,32 +76,35 @@ describe "Enumerator.new" do
       end
     end
 
-    it 'handles +yield+ arguments properly' do
-      Enumerator.new { |y| y.yield(1) }.to_a.should == [1]
-      Enumerator.new { |y| y.yield(1) }.first.should == 1
+    describe 'yielded values' do
+      it 'handles yield arguments properly' do
+        Enumerator.new { |y| y.yield(1) }.to_a.should == [1]
+        Enumerator.new { |y| y.yield(1) }.first.should == 1
 
-      Enumerator.new { |y| y.yield([1]) }.to_a.should == [[1]]
-      Enumerator.new { |y| y.yield([1]) }.first.should == [1]
+        Enumerator.new { |y| y.yield([1]) }.to_a.should == [[1]]
+        Enumerator.new { |y| y.yield([1]) }.first.should == [1]
 
-      Enumerator.new { |y| y.yield(1, 2) }.to_a.should == [[1, 2]]
-      Enumerator.new { |y| y.yield(1, 2) }.first.should == [1, 2]
+        Enumerator.new { |y| y.yield(1, 2) }.to_a.should == [[1, 2]]
+        Enumerator.new { |y| y.yield(1, 2) }.first.should == [1, 2]
 
-      Enumerator.new { |y| y.yield([1, 2]) }.to_a.should == [[1, 2]]
-      Enumerator.new { |y| y.yield([1, 2]) }.first.should == [1, 2]
-    end
+        Enumerator.new { |y| y.yield([1, 2]) }.to_a.should == [[1, 2]]
+        Enumerator.new { |y| y.yield([1, 2]) }.first.should == [1, 2]
+      end
 
-    it 'handles +yield+ arguments properly' do
-      Enumerator.new { |y| y.<<(1) }.to_a.should == [1]
-      Enumerator.new { |y| y.<<(1) }.first.should == 1
+      it 'handles << arguments properly' do
+        Enumerator.new { |y| y.<<(1) }.to_a.should == [1]
+        Enumerator.new { |y| y.<<(1) }.first.should == 1
 
-      Enumerator.new { |y| y.<<([1]) }.to_a.should == [[1]]
-      Enumerator.new { |y| y.<<([1]) }.first.should == [1]
+        Enumerator.new { |y| y.<<([1]) }.to_a.should == [[1]]
+        Enumerator.new { |y| y.<<([1]) }.first.should == [1]
 
-      Enumerator.new { |y| y.<<(1, 2) }.to_a.should == [[1, 2]]
-      Enumerator.new { |y| y.<<(1, 2) }.first.should == [1, 2]
+        # << doesn't accept multiple arguments
+        # Enumerator.new { |y| y.<<(1, 2) }.to_a.should == [[1, 2]]
+        # Enumerator.new { |y| y.<<(1, 2) }.first.should == [1, 2]
 
-      Enumerator.new { |y| y.<<([1, 2]) }.to_a.should == [[1, 2]]
-      Enumerator.new { |y| y.<<([1, 2]) }.first.should == [1, 2]
+        Enumerator.new { |y| y.<<([1, 2]) }.to_a.should == [[1, 2]]
+        Enumerator.new { |y| y.<<([1, 2]) }.first.should == [1, 2]
+      end
     end
   end
 end
