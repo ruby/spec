@@ -34,7 +34,7 @@ describe "Enumerator::Yielder#<<" do
     end
 
     ruby_version_is '2.6' do
-      it "yields the arguments list to the block" do
+      it "raises an ArgumentError" do
         ary = []
         y = Enumerator::Yielder.new { |*x| ary << x }
 
