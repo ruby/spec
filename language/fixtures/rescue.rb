@@ -1,4 +1,108 @@
 module RescueSpecs
+  class ClassVariableCaptor
+    def capture(msg)
+      raise msg
+    rescue => @@captured_error
+      :caught
+    end
+
+    def captured_error
+      self.class.remove_class_variable(:@@captured_error)
+    end
+  end
+
+  class ConstantCaptor
+    # Using lambda gets around the dynamic constant assignment warning
+    CAPTURE = -> msg {
+      begin
+        raise msg
+      rescue => CapturedError
+        :caught
+      end
+    }
+
+    def capture(msg)
+      CAPTURE.call(msg)
+    end
+
+    def captured_error
+      self.class.send(:remove_const, :CapturedError)
+    end
+  end
+
+  class GlobalVariableCaptor
+    def capture(msg)
+      raise msg
+    rescue => $captured_error
+      :caught
+    end
+
+    def captured_error
+      $captured_error.tap do
+        $captured_error = nil # Can't remove globals, only nil them out
+      end
+    end
+  end
+
+  class InstanceVariableCaptor
+    attr_reader :captured_error
+
+    def capture(msg)
+      raise msg
+    rescue => @captured_error
+      :caught
+    end
+  end
+
+  class LocalVariableCaptor
+    attr_reader :captured_error
+
+    def capture(msg)
+      raise msg
+    rescue => captured_error
+      @captured_error = captured_error
+      :caught
+    end
+  end
+
+  class SafeNavigationSetterCaptor
+    attr_accessor :captured_error
+
+    def capture(msg)
+      raise msg
+    rescue => self&.captured_error
+      :caught
+    end
+  end
+
+  class SetterCaptor
+    attr_accessor :captured_error
+
+    def capture(msg)
+      raise msg
+    rescue => self.captured_error
+      :caught
+    end
+  end
+
+  class SquareBracketsCaptor
+    def capture(msg)
+      @hash = {}
+
+      raise msg
+    rescue => self[:error]
+      :caught
+    end
+
+    def []=(key, value)
+      @hash[key] = value
+    end
+
+    def captured_error
+      @hash[:error]
+    end
+  end
+
   def self.begin_else(raise_exception)
     begin
       ScratchPad << :one
