@@ -23,11 +23,22 @@ describe "The rescue keyword" do
     end.should == :caught
   end
 
-  it "can capture the raised exception in a local variable" do
-    begin
-      raise SpecificExampleException, "some text"
-    rescue SpecificExampleException => e
-      e.message.should == "some text"
+  {
+    # Standard use case
+    'can capture the raised exception in a local variable'                    => RescueSpecs::LocalVariableCaptor,
+    # Exotic use cases
+    'can capture the raised exception in a class variable'                    => RescueSpecs::ClassVariableCaptor,
+    'can capture the raised exception in a constant'                          => RescueSpecs::ConstantCaptor,
+    'can capture the raised exception in a global variable'                   => RescueSpecs::GlobalVariableCaptor,
+    'can capture the raised exception in an instance variable'                => RescueSpecs::InstanceVariableCaptor,
+    'can capture the raised exception using a safely navigated setter method' => RescueSpecs::SafeNavigationSetterCaptor,
+    'can capture the raised exception using a setter method'                  => RescueSpecs::SetterCaptor,
+    'can capture the raised exception using a square brackets setter'         => RescueSpecs::SquareBracketsCaptor,
+  }.each do |description, klass|
+    it description do
+      captor = klass.new
+      captor.capture('some text').should == :caught # Ensure rescue body still runs
+      captor.captured_error.message.should == 'some text'
     end
   end
 
