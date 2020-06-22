@@ -110,7 +110,7 @@ describe "The super keyword" do
     end
     c2 = Class.new(c1) do
       def m(v)
-        block = ->w { yield(w + 'b') }
+        block = -> w { yield(w + 'b') }
         super(v, &block)
       end
     end

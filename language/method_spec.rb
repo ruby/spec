@@ -169,7 +169,7 @@ describe "A method send" do
     end
 
     it "that refers to a proc passes the proc as the block" do
-      m('a', &->y { y + 'c'}).should == [true, 'abc']
+      m('a', &-> y { y + 'c'}).should == [true, 'abc']
     end
 
     it "that is nil passes no block" do
