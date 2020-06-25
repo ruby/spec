@@ -23,22 +23,37 @@ describe "The rescue keyword" do
     end.should == :caught
   end
 
-  {
-    # Standard use case
-    'can capture the raised exception in a local variable'                    => RescueSpecs::LocalVariableCaptor,
-    # Exotic use cases
-    'can capture the raised exception in a class variable'                    => RescueSpecs::ClassVariableCaptor,
-    'can capture the raised exception in a constant'                          => RescueSpecs::ConstantCaptor,
-    'can capture the raised exception in a global variable'                   => RescueSpecs::GlobalVariableCaptor,
-    'can capture the raised exception in an instance variable'                => RescueSpecs::InstanceVariableCaptor,
-    'can capture the raised exception using a safely navigated setter method' => RescueSpecs::SafeNavigationSetterCaptor,
-    'can capture the raised exception using a setter method'                  => RescueSpecs::SetterCaptor,
-    'can capture the raised exception using a square brackets setter'         => RescueSpecs::SquareBracketsCaptor,
-  }.each do |description, klass|
-    it description do
-      captor = klass.new
-      captor.capture('some text').should == :caught # Ensure rescue body still runs
-      captor.captured_error.message.should == 'some text'
+  describe 'can capture the raised exception' do
+    it 'in a local variable' do
+      RescueSpecs::LocalVariableCaptor.should_capture_exception
+    end
+
+    it 'in a class variable' do
+      RescueSpecs::ClassVariableCaptor.should_capture_exception
+    end
+
+    it 'in a constant' do
+      RescueSpecs::ConstantCaptor.should_capture_exception
+    end
+
+    it 'in a global variable' do
+      RescueSpecs::GlobalVariableCaptor.should_capture_exception
+    end
+
+    it 'in an instance variable' do
+      RescueSpecs::InstanceVariableCaptor.should_capture_exception
+    end
+
+    it 'using a safely navigated setter method' do
+      RescueSpecs::SafeNavigationSetterCaptor.should_capture_exception
+    end
+
+    it 'using a setter method' do
+      RescueSpecs::SetterCaptor.should_capture_exception
+    end
+
+    it 'using a square brackets setter' do
+      RescueSpecs::SquareBracketsCaptor.should_capture_exception
     end
   end
 

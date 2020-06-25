@@ -1,5 +1,15 @@
 module RescueSpecs
-  class ClassVariableCaptor
+  class Captor
+    attr_accessor :captured_error
+
+    def self.should_capture_exception
+      captor = new
+      captor.capture('some text').should == :caught # Ensure rescue body still runs
+      captor.captured_error.message.should == 'some text'
+    end
+  end
+
+  class ClassVariableCaptor < Captor
     def capture(msg)
       raise msg
     rescue => @@captured_error
@@ -11,7 +21,7 @@ module RescueSpecs
     end
   end
 
-  class ConstantCaptor
+  class ConstantCaptor < Captor
     # Using lambda gets around the dynamic constant assignment warning
     CAPTURE = -> msg {
       begin
@@ -30,7 +40,7 @@ module RescueSpecs
     end
   end
 
-  class GlobalVariableCaptor
+  class GlobalVariableCaptor < Captor
     def capture(msg)
       raise msg
     rescue => $captured_error
@@ -44,9 +54,7 @@ module RescueSpecs
     end
   end
 
-  class InstanceVariableCaptor
-    attr_reader :captured_error
-
+  class InstanceVariableCaptor < Captor
     def capture(msg)
       raise msg
     rescue => @captured_error
@@ -54,9 +62,7 @@ module RescueSpecs
     end
   end
 
-  class LocalVariableCaptor
-    attr_reader :captured_error
-
+  class LocalVariableCaptor < Captor
     def capture(msg)
       raise msg
     rescue => captured_error
@@ -65,9 +71,7 @@ module RescueSpecs
     end
   end
 
-  class SafeNavigationSetterCaptor
-    attr_accessor :captured_error
-
+  class SafeNavigationSetterCaptor < Captor
     def capture(msg)
       raise msg
     rescue => self&.captured_error
@@ -75,9 +79,7 @@ module RescueSpecs
     end
   end
 
-  class SetterCaptor
-    attr_accessor :captured_error
-
+  class SetterCaptor < Captor
     def capture(msg)
       raise msg
     rescue => self.captured_error
@@ -85,7 +87,7 @@ module RescueSpecs
     end
   end
 
-  class SquareBracketsCaptor
+  class SquareBracketsCaptor < Captor
     def capture(msg)
       @hash = {}
 
