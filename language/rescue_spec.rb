@@ -24,6 +24,10 @@ describe "The rescue keyword" do
   end
 
   describe 'can capture the raised exception' do
+    before :all do
+      require_relative 'fixtures/rescue_captures'
+    end
+
     it 'in a local variable' do
       RescueSpecs::LocalVariableCaptor.should_capture_exception
     end
