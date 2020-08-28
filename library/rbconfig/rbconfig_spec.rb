@@ -66,9 +66,10 @@ describe 'RbConfig::CONFIG' do
         File.open('/bin/sh', 'rb') do |src|
           IO.copy_stream(src, dst)
           dst.flush
-          out =`#{strip} #{dst.to_path}`
+          out = `#{strip} #{dst.to_path}`
           $?.should.success?
         end
+        dst.close!
       end
     end
   end
