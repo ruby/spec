@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
 describe "Time#succ" do
-  ruby_version_is ""..."2.6" do
+  ruby_version_is ""..."3.0" do
     it "returns a new time one second later than time" do
       suppress_warning {
         @result = Time.at(100).succ
@@ -28,7 +28,7 @@ describe "Time#succ" do
     end
   end
 
-  ruby_version_is "2.6"..."3" do
+  ruby_version_is "2.6"..."3.0" do
     context "zone is a timezone object" do
       it "preserves time zone" do
         zone = TimeSpecs::Timezone.new(offset: (5*3600+30*60))
