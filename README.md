@@ -38,9 +38,9 @@ The specs are synchronized both ways around once a month by @eregon between ruby
 Each of these repositories has a full copy of the specs under `spec/ruby` to ease editing specs.
 Any of these repositories can be used to add or edit specs, use what is most convenient for you.
 
-For *testing* a Ruby implementation, one should always test against the implementation's copy of the specs under `spec/ruby`, as that's what the Ruby implementation tests against in their CI.
+For *testing* the development version of a Ruby implementation, one should always test against that implementation's copy of the specs under `spec/ruby`, as that's what the Ruby implementation tests against in their CI.
 Also, this repository doesn't always contain the latest spec changes from MRI (it's synchronized monthly), and does not contain tags (specs marked as failing on that Ruby implementation).
-Running specs in a Ruby implementation can be done with:
+Running specs on a Ruby implementation can be done with:
 
 ```
 $ cd ruby_implementation/spec/ruby
