@@ -653,12 +653,6 @@ describe "Predefined global $," do
   it "raises TypeError if assigned a non-String" do
     -> { $, = Object.new }.should raise_error(TypeError)
   end
-
-  ruby_version_is "2.7"..."3.0" do
-    it "warns if assigned non-nil" do
-      -> { $, = "_" }.should complain(/warning: `\$,' is deprecated/)
-    end
-  end
 end
 
 describe "Predefined global $." do
@@ -685,18 +679,6 @@ describe "Predefined global $." do
     obj.should_receive(:to_int).and_return('abc')
 
     -> { $. = obj }.should raise_error(TypeError)
-  end
-end
-
-describe "Predefined global $;" do
-  after :each do
-    $; = nil
-  end
-
-  ruby_version_is "2.7"..."3.0" do
-    it "warns if assigned non-nil" do
-      -> { $; = "_" }.should complain(/warning: `\$;' is deprecated/)
-    end
   end
 end
 

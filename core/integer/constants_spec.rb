@@ -1,6 +1,6 @@
 require_relative '../../spec_helper'
 
-ruby_version_is ""..."3.0" do
+ruby_version_is ""..."2.7" do
   describe "Fixnum" do
     it "is unified into Integer" do
       suppress_warning do

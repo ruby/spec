@@ -40,19 +40,11 @@ describe "Kernel#proc" do
     proc
   end
 
-  ruby_version_is ""..."2.7" do
+  ruby_version_is ""..."3.0" do
     it "uses the implicit block from an enclosing method" do
       prc = some_method { "hello" }
 
       prc.call.should == "hello"
-    end
-  end
-
-  ruby_version_is "2.7"..."3.0" do
-    it "can be created when called with no block" do
-      -> {
-        some_method { "hello" }
-      }.should complain(/Capturing the given block using Kernel#proc is deprecated/)
     end
   end
 

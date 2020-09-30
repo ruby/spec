@@ -180,7 +180,7 @@ describe "Proc.new without a block" do
     -> { ProcSpecs.new_proc_subclass_in_method }.should raise_error(ArgumentError)
   end
 
-  ruby_version_is ""..."2.7" do
+  ruby_version_is ""..."3.0" do
     it "uses the implicit block from an enclosing method" do
       def some_method
         Proc.new
@@ -200,27 +200,6 @@ describe "Proc.new without a block" do
       prc = some_method { "hello" }
 
       prc.call.should == "hello"
-    end
-  end
-
-  ruby_version_is "2.7"..."3.0" do
-    it "can be created if invoked from within a method with a block" do
-      -> { ProcSpecs.new_proc_in_method { "hello" } }.should complain(/Capturing the given block using Proc.new is deprecated/)
-    end
-
-    it "can be created if invoked on a subclass from within a method with a block" do
-      -> { ProcSpecs.new_proc_subclass_in_method { "hello" } }.should complain(/Capturing the given block using Proc.new is deprecated/)
-    end
-
-
-    it "can be create when called with no block" do
-      def some_method
-        Proc.new
-      end
-
-      -> {
-        some_method { "hello" }
-      }.should complain(/Capturing the given block using Proc.new is deprecated/)
     end
   end
 
