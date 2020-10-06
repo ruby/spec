@@ -37,9 +37,15 @@ describe "YAML.dump" do
   it "dumps an OpenStruct" do
     require "ostruct"
     os = OpenStruct.new("age" => 20, "name" => "John")
-    os2 = YAML.load(YAML.dump(os))
-    os2.age.should == 20
-    os2.name.should == "John"
+    yaml_dump = YAML.dump(os)
+
+    if OpenStruct::VERSION.split('.').map(&:to_i).<=>([0,3,0]) >= 0
+      expected = "--- !ruby/object:OpenStruct\nage: 20\nname: John\n"
+    else
+      expected = "--- !ruby/object:OpenStruct\ntable:\n  :age: 20\n  :name: John\n"
+    end
+
+    yaml_dump.should match_yaml(expected)
   end
 
   it "dumps a File without any state" do
