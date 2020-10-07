@@ -24,6 +24,13 @@ describe :method_to_s, shared: true do
     @string.should =~ /\#bar/
   end
 
+  ruby_version_is "2.7" do
+    it "returns a String containing method arguments" do
+      m = MethodSpecs::Methods.new.method :two_req
+      m.send(@method).should =~ /\#two_req\(a, b\)/
+    end
+  end
+
   it "returns a String containing the Module the method is defined in" do
     @string.should =~ /MethodSpecs::MyMod/
   end
