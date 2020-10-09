@@ -60,17 +60,17 @@ HERE
   end
 
   ruby_version_is "2.7" do
-    it 'raises SyntaxError if identifier is ending not on same line' do
+    it 'raises SyntaxError if quoted HEREDOC identifier is ending not on same line' do
       -> {
-        eval %{<<"HERE\n"\nHERE}
+        eval %{<<"HERE\n"raises syntax error\nHERE}
       }.should raise_error(SyntaxError)
     end
   end
 
   ruby_version_is ""..."2.7" do
-    it 'prints a warning if identifier is ending not on same line' do
+    it 'prints a warning if quoted HEREDOC identifier is ending not on same line' do
       -> {
-        eval %{<<"HERE\n"\nHERE}
+        eval %{<<"HERE\n"it warns\nHERE}
       }.should complain(/here document identifier ends with a newline/)
     end
   end
