@@ -1626,6 +1626,20 @@ describe "A method" do
       result.should == [1, 1, [], 2, 3, 2, 4, { h: 5, i: 6 }, l]
     end
 
+    ruby_version_is "2.7" do
+      evaluate <<-ruby do
+        def m(a, **nil); a end;
+        ruby
+
+        m({a: 1}).should == {a: 1}
+        m({"a" => 1}).should == {"a" => 1}
+
+        -> { m(a: 1) }.should raise_error(ArgumentError)
+        -> { m(**{a: 1}) }.should raise_error(ArgumentError)
+        -> { m("a" => 1) }.should raise_error(ArgumentError)
+      end
+    end
+
     ruby_version_is ''...'3.0' do
       evaluate <<-ruby do
           def m(a, b = nil, c = nil, d, e: nil, **f)
