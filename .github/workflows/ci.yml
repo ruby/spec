@@ -23,16 +23,18 @@ jobs:
     - name: Clone MSpec
       run: git clone https://github.com/ruby/mspec.git ../mspec
 
-    - name: Run specs
-      if: matrix.os != 'windows'
+    - name: Run specs (Linux)
+      if: matrix.os == 'ubuntu'
       env:
         CHECK_LEAKS: true
       run: ../mspec/bin/mspec --timeout 30
-    - name: Run C-API specs as C++
-      if: matrix.os != 'windows'
+
+    - name: Run specs (macOS)
+      if: matrix.os == 'macos'
       env:
-        SPEC_CAPI_CXX: true
-      run: ../mspec/bin/mspec :capi
+        CHECK_LEAKS: true
+      # Use a larger timeout on macOS since it seems to have less reliable performance
+      run: ../mspec/bin/mspec --timeout 60
 
     - name: Run specs (Windows)
       if: matrix.os == 'windows'
@@ -43,6 +45,12 @@ jobs:
         [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("IBM437")
         [Console]::InputEncoding  = [System.Text.Encoding]::GetEncoding("IBM437")
         ../mspec/bin/mspec -j
+
+    - name: Run C-API specs as C++
+      if: matrix.os != 'windows'
+      env:
+        SPEC_CAPI_CXX: true
+      run: ../mspec/bin/mspec :capi
 
   rubocop:
     name: RuboCop
