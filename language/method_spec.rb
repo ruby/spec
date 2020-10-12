@@ -600,6 +600,15 @@ describe "A method" do
       -> { m(2) }.should raise_error(ArgumentError)
     end
 
+    ruby_version_is "2.7" do
+      evaluate <<-ruby do
+        def m(**k); k end;
+        ruby
+
+        m("a" => 1).should == { "a" => 1 }
+      end
+    end
+
     evaluate <<-ruby do
         def m(&b) b end
       ruby
