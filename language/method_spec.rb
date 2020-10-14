@@ -1688,6 +1688,22 @@ describe "A method" do
     end
   end
 
+  ruby_version_is '2.7'...'3.0' do
+    context 'when passing an empty keyword splat to a method that does not accept keywords' do
+      evaluate <<-ruby do
+          def m(a); a; end
+        ruby
+        h = {}
+
+        -> do
+          suppress_warning do
+            m(**h).should == {}
+          end
+        end.should_not raise_error
+      end
+    end
+  end
+
   ruby_version_is ''...'3.0' do
     context "assigns keyword arguments from a passed Hash without modifying it" do
       evaluate <<-ruby do
@@ -1706,6 +1722,18 @@ describe "A method" do
   end
 
   ruby_version_is '3.0' do
+    context 'when passing an empty keyword splat to a method that does not accept keywords' do
+      evaluate <<-ruby do
+          def m(a); a; end
+        ruby
+        h = {}
+
+        -> do
+          m(**h).should == {}
+        end.should raise_error(ArgumentError)
+      end
+    end
+
     context "raises ArgumentError if passing hash as keyword arguments" do
       evaluate <<-ruby do
           def m(a: nil); a; end
