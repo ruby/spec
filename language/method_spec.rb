@@ -1688,6 +1688,18 @@ describe "A method" do
     end
   end
 
+  ruby_version_is '2.7' do
+    context 'when passing an empty keyword splat to a method that does not accept keywords' do
+      evaluate <<-ruby do
+          def m(*a); a; end
+        ruby
+
+        h = {}
+        m(**h).should == []
+      end
+    end
+  end
+
   ruby_version_is '2.7'...'3.0' do
     context 'when passing an empty keyword splat to a method that does not accept keywords' do
       evaluate <<-ruby do
@@ -1696,10 +1708,8 @@ describe "A method" do
         h = {}
 
         -> do
-          suppress_warning do
-            m(**h).should == {}
-          end
-        end.should_not raise_error
+          m(**h).should == {}
+        end.should complain(/warning: Passing the keyword argument as the last hash parameter is deprecated/)
       end
     end
   end
