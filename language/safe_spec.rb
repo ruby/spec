@@ -136,7 +136,7 @@ describe "The $SAFE variable" do
     end
   end
 
-  ruby_version_is "2.7" do
+  ruby_version_is "2.7"..."3.0" do
     it "warn when access" do
       -> {
         $SAFE
