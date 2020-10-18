@@ -169,7 +169,7 @@ describe "Defining yield in singleton class" do
           m { :ok }
         RUBY
 
-      ruby_exe(code, args: "2>&1").should =~ /warning: `yield' in class syntax will not be supported from Ruby 3.0/
+      -> { eval(code) }.should complain(/warning: `yield' in class syntax will not be supported from Ruby 3.0/)
     end
   end
 end
