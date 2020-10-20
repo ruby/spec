@@ -24,4 +24,20 @@ describe "Kernel#untaint" do
       o.untaint.should equal(o)
     end
   end
+
+  ruby_version_is "2.7"..."3.0" do
+    it "is a no-op" do
+      o = Object.new.taint
+      o.untaint
+      o.should_not.tainted?
+    end
+
+    it "warns in verbose mode" do
+      -> {
+        $VERBOSE = true
+        o = Object.new.taint
+        o.untaint
+      }.should complain(/Object#untaint is deprecated and will be removed in Ruby 3.2/)
+    end
+  end
 end
