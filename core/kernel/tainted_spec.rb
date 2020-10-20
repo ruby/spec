@@ -23,10 +23,9 @@ describe "Kernel#tainted?" do
 
     it "warns in verbose mode" do
       -> {
-        $VERBOSE = true
         o = mock('o')
         o.tainted?
-      }.should complain(/Object#tainted\? is deprecated and will be removed in Ruby 3.2/)
+      }.should complain(/Object#tainted\? is deprecated and will be removed in Ruby 3.2/, verbose: true)
     end
   end
 end
