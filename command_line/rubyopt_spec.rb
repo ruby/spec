@@ -71,6 +71,12 @@ describe "Processing RUBYOPT" do
       result = ruby_exe('0 in a', args: '2>&1')
       result.should == ""
     end
+
+    it "suppresses deprecation and experimental warnings for '-W:no-deprecated -W:no-experimental'" do
+      ENV["RUBYOPT"] = '-W:no-deprecated -W:no-experimental'
+      result = ruby_exe('($; = "") in a', args: '2>&1')
+      result.should == ""
+    end
   end
 
   it "requires the file for '-r'" do
