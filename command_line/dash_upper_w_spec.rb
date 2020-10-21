@@ -18,3 +18,15 @@ end
 describe "The -W command line option with 2" do
   it_behaves_like :command_line_verbose, "-W2"
 end
+
+ruby_version_is "2.7" do
+  describe "The -W command line option with :no-deprecated" do
+    it "suppresses deprecation warnings" do
+      result = ruby_exe('$; = ""', args: '2>&1')
+      result.should =~ /is deprecated/
+
+      result = ruby_exe('$; = ""', options: '-W:no-deprecated', args: '2>&1')
+      result.should == ""
+    end
+  end
+end
