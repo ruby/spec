@@ -59,6 +59,14 @@ describe "Processing RUBYOPT" do
     ruby_exe("p $VERBOSE", escape: true).chomp.should == "true"
   end
 
+  ruby_version_is "2.7" do
+    it "suppresses deprecation warnings for '-W:no-deprecated'" do
+      ENV["RUBYOPT"] = '-W:no-deprecated'
+      result = ruby_exe('$; = ""', args: '2>&1')
+      result.should == ""
+    end
+  end
+
   it "requires the file for '-r'" do
     f = fixture __FILE__, "rubyopt"
     ENV["RUBYOPT"] = "-r#{f}"
