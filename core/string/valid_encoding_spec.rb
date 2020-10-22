@@ -98,9 +98,6 @@ describe "String#valid_encoding?" do
     str.force_encoding('MacJapanese').valid_encoding?.should be_false
     str.force_encoding('UTF-7').valid_encoding?.should be_true
     str.force_encoding('UTF8-MAC').valid_encoding?.should be_true
-    ruby_version_is "2.7" do
-      str.force_encoding('CESU-8').valid_encoding?.should be_true
-    end
   end
 
   it "returns false if self is valid in one encoding, but invalid in the one it's tagged with" do

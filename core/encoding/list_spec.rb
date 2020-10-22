@@ -36,6 +36,16 @@ describe "Encoding.list" do
     Encoding.list.select {|e| e.dummy?}.should_not == []
   end
 
+  it 'includes UTF-8 encoding' do
+    Encoding.list.include?(Encoding::UTF_8).should be_true
+  end
+
+  ruby_version_is "2.7" do
+    it 'includes CESU-8 encoding' do
+      Encoding.list.include?(Encoding::CESU_8).should be_true
+    end
+  end
+
   # TODO: Find example that illustrates this
   it "updates the list when #find is used to load a new encoding"
 end
