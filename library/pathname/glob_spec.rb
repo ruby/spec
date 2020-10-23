@@ -1,0 +1,61 @@
+require_relative '../../spec_helper'
+require 'pathname'
+
+describe 'Pathname#glob' do
+  before :all  do
+    @dir = tmp ''
+    @file_1 = @dir + 'lib/ipaddr.rb'
+    @file_2 = @dir + 'lib/irb.rb'
+    @file_3 = @dir + 'lib/.hidden.rb'
+
+    touch @file_1
+    touch @file_2
+    touch @file_3
+  end
+
+  after :all do
+    rm_r @dir
+  end
+
+  it 'returns [] for no match' do
+    Pathname.glob(@dir + 'lib/*.js').should == []
+  end
+
+  it 'returns matching file paths' do
+    Pathname.glob(@dir + 'lib/*i*.rb').should == [Pathname.new(@file_1), Pathname.new(@file_2)]
+  end
+
+  it 'returns matching file paths when a flag is provided' do
+    Pathname.glob(@dir + 'lib/*i*.rb', File::FNM_DOTMATCH).should == [Pathname.new(@file_1), Pathname.new(@file_2), Pathname.new(@file_3)]
+  end
+
+  it 'returns matching file paths when supplied :base keyword argument' do
+    Pathname.glob('*i*.rb', base: @dir + 'lib').should == [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb')]
+  end
+
+  ruby_version_is ''...'2.7' do
+    it 'raises an ArgumentError when supplied a flag and :base keyword argument' do
+      -> {
+        Pathname.glob(@dir + 'lib/*i*.rb', File::FNM_DOTMATCH, base: 'lib')
+      }.should raise_error(ArgumentError, 'wrong number of arguments (given 3, expected 1..2)')
+    end
+
+    it "raises an ArgumentError when supplied a keyword argument other than :base" do
+      -> {
+        Pathname.glob('*i*.rb', foo: @dir + 'lib')
+      }.should raise_error(ArgumentError, 'unknown keyword: foo')
+    end
+  end
+
+  ruby_version_is "2.7"..."3.0" do
+    it "does not raise an ArgumentError when supplied a flag and :base keyword argument" do
+      Pathname.glob('*i*.rb', File::FNM_DOTMATCH, base: @dir + 'lib').should == [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb'), Pathname.new('.hidden.rb')]
+    end
+
+    it "raises an ArgumentError when supplied a keyword argument other than :base" do
+      -> {
+        Pathname.glob('*i*.rb', foo: @dir + 'lib')
+      }.should raise_error(ArgumentError, 'unknown keyword: :foo')
+    end
+  end
+end
