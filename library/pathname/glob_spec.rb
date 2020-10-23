@@ -22,15 +22,16 @@ describe 'Pathname#glob' do
   end
 
   it 'returns matching file paths' do
-    Pathname.glob(@dir + 'lib/*i*.rb').should == [Pathname.new(@file_1), Pathname.new(@file_2)]
+    Pathname.glob(@dir + 'lib/*i*.rb').sort.should == [Pathname.new(@file_1), Pathname.new(@file_2)].sort
   end
 
   it 'returns matching file paths when a flag is provided' do
-    Pathname.glob(@dir + 'lib/*i*.rb', File::FNM_DOTMATCH).should == [Pathname.new(@file_1), Pathname.new(@file_2), Pathname.new(@file_3)]
+    expected = [Pathname.new(@file_1), Pathname.new(@file_2), Pathname.new(@file_3)].sort
+    Pathname.glob(@dir + 'lib/*i*.rb', File::FNM_DOTMATCH).sort.should == expected
   end
 
   it 'returns matching file paths when supplied :base keyword argument' do
-    Pathname.glob('*i*.rb', base: @dir + 'lib').should == [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb')]
+    Pathname.glob('*i*.rb', base: @dir + 'lib').sort.should == [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb')].sort
   end
 
   ruby_version_is ''...'2.7' do
@@ -49,7 +50,8 @@ describe 'Pathname#glob' do
 
   ruby_version_is "2.7"..."3.0" do
     it "does not raise an ArgumentError when supplied a flag and :base keyword argument" do
-      Pathname.glob('*i*.rb', File::FNM_DOTMATCH, base: @dir + 'lib').should == [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb'), Pathname.new('.hidden.rb')]
+      expected = [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb'), Pathname.new('.hidden.rb')].sort
+      Pathname.glob('*i*.rb', File::FNM_DOTMATCH, base: @dir + 'lib').sort.should == expected
     end
 
     it "raises an ArgumentError when supplied a keyword argument other than :base" do
