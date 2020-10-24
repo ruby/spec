@@ -48,7 +48,7 @@ describe 'Pathname#glob' do
     end
   end
 
-  ruby_version_is "2.7"..."3.0" do
+  ruby_version_is "2.7" do
     it "does not raise an ArgumentError when supplied a flag and :base keyword argument" do
       expected = [Pathname.new('ipaddr.rb'), Pathname.new('irb.rb'), Pathname.new('.hidden.rb')].sort
       Pathname.glob('*i*.rb', File::FNM_DOTMATCH, base: @dir + 'lib').sort.should == expected
