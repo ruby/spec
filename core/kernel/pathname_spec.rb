@@ -11,7 +11,7 @@ describe "Kernel#Pathname" do
       path = Pathname('foo')
       new_path = Pathname(path)
 
-      (path.object_id == new_path.object_id).should be_false
+      path.should_not.equal?(new_path)
     end
   end
 
@@ -20,7 +20,7 @@ describe "Kernel#Pathname" do
       path = Pathname('foo')
       new_path = Pathname(path)
 
-      (path.object_id == new_path.object_id).should be_true
+      path.should.equal?(new_path)
     end
   end
 end
