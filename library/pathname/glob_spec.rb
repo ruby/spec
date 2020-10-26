@@ -3,7 +3,7 @@ require 'pathname'
 
 describe 'Pathname.glob' do
   before :all  do
-    @dir = tmp 'pathname_glob'
+    @dir = tmp('pathname_glob') + '/'
     @file_1 = @dir + 'lib/ipaddr.rb'
     @file_2 = @dir + 'lib/irb.rb'
     @file_3 = @dir + 'lib/.hidden.rb'
@@ -14,7 +14,7 @@ describe 'Pathname.glob' do
   end
 
   after :all do
-    rm_r @dir
+    rm_r @dir[0...-1]
   end
 
   it 'returns [] for no match' do
