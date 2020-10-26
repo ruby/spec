@@ -3,7 +3,7 @@ require 'pathname'
 
 describe 'Pathname#glob' do
   before :all  do
-    @dir = tmp ''
+    @dir = tmp 'pathname_glob'
     @file_1 = @dir + 'lib/ipaddr.rb'
     @file_2 = @dir + 'lib/irb.rb'
     @file_3 = @dir + 'lib/.hidden.rb'
