@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 require 'pathname'
 
-describe 'Pathname#glob' do
+describe 'Pathname.glob' do
   before :all  do
     @dir = tmp 'pathname_glob'
     @file_1 = @dir + 'lib/ipaddr.rb'
