@@ -66,16 +66,26 @@ describe "Processing RUBYOPT" do
       result.should == ""
     end
 
-    it "suppresses experimental warnings for '-W:no-experimental'" do
-      ENV["RUBYOPT"] = '-W:no-experimental'
-      result = ruby_exe('0 in a', args: '2>&1')
-      result.should == ""
-    end
+    describe "experimental" do
+      ruby_version_is ""..."3.0" do
+        @operator = "in"
+      end
 
-    it "suppresses deprecation and experimental warnings for '-W:no-deprecated -W:no-experimental'" do
-      ENV["RUBYOPT"] = '-W:no-deprecated -W:no-experimental'
-      result = ruby_exe('($; = "") in a', args: '2>&1')
-      result.should == ""
+      ruby_version_is "3.0" do
+        @operator = "=>"
+      end
+
+      it "suppresses experimental warnings for '-W:no-experimental'" do
+        ENV["RUBYOPT"] = '-W:no-experimental'
+        result = ruby_exe("0 #{@operator} a", args: '2>&1')
+        result.should == ""
+      end
+
+      it "suppresses deprecation and experimental warnings for '-W:no-deprecated -W:no-experimental'" do
+        ENV["RUBYOPT"] = '-W:no-deprecated -W:no-experimental'
+        result = ruby_exe("($; = '') #{@operator} a", args: '2>&1')
+        result.should == ""
+      end
     end
   end
 

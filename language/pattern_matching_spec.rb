@@ -9,11 +9,15 @@ ruby_version_is "2.7" do
       ScratchPad.record []
     end
 
-    it "can be standalone in operator that deconstructs value" do
-      eval(<<-RUBY).should == [0, 1]
-        [0, 1] in [a, b]
-        [a, b]
-      RUBY
+    ruby_version_is "3.0" do
+      it "can be standalone assoc operator that deconstructs value" do
+        suppress_warning do
+          eval(<<-RUBY).should == [0, 1]
+            [0, 1] => [a, b]
+            [a, b]
+          RUBY
+        end
+      end
     end
 
     it "extends case expression with case/in construction" do
@@ -36,14 +40,20 @@ ruby_version_is "2.7" do
       RUBY
     end
 
-    it "warns about pattern matching is experimental feature" do
-      -> {
-        eval <<~RUBY
-          case 0
-            in 0
-          end
-        RUBY
-      }.should complain(/warning: Pattern matching is experimental, and the behavior may change in future versions of Ruby!/)
+    describe "warning" do
+      before do
+        ruby_version_is ""..."3.0" do
+          @src = 'case 0; in a; end'
+        end
+
+        ruby_version_is "3.0" do
+          @src = '1 => a'
+        end
+      end
+
+      it "warns about pattern matching is experimental feature" do
+        -> { eval @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
+      end
     end
 
     it "binds variables" do
