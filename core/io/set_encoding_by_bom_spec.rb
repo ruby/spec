@@ -14,10 +14,24 @@ describe "IO#set_encoding_by_bom" do
 
   ruby_version_is "2.7" do
     it "returns the result encoding if found BOM UTF-8 sequence" do
-      File.write(@name, "\u{FEFF}abc")
+      File.binwrite(@name, "\u{FEFF}abc")
 
       @io.set_encoding_by_bom.should == Encoding::UTF_8
       @io.external_encoding.should == Encoding::UTF_8
+    end
+
+    it "returns the result encoding if found BOM UTF_16LE sequence" do
+      File.binwrite(@name, "\xFF\xFEabc")
+
+      @io.set_encoding_by_bom.should == Encoding::UTF_16LE
+      @io.external_encoding.should == Encoding::UTF_16LE
+    end
+
+    it "returns the result encoding if found BOM UTF_16BE sequence" do
+      File.binwrite(@name, "\xFE\xFFabc")
+
+      @io.set_encoding_by_bom.should == Encoding::UTF_16BE
+      @io.external_encoding.should == Encoding::UTF_16BE
     end
 
     it "returns nil if found BOM sequence not provided" do
@@ -30,6 +44,7 @@ describe "IO#set_encoding_by_bom" do
       not_binary_io = new_io(@name, 'r')
 
       -> { not_binary_io.set_encoding_by_bom }.should raise_error(ArgumentError, 'ASCII incompatible encoding needs binmode')
+    ensure
       not_binary_io.close
     end
 
