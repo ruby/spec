@@ -1268,7 +1268,7 @@ ruby_version_is "2.7" do
 
       extension, path = $LOAD_PATH.resolve_feature_path('etc')
       extension.should == :so
-      path.should.end_with?("etc.#{RbConfig::CONFIG['DLEXT']}")
+      path.should.end_with?("/etc.#{RbConfig::CONFIG['DLEXT']}")
     end
 
     it "raises LoadError if feature cannot be found" do
