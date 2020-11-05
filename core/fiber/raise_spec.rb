@@ -4,7 +4,10 @@ require_relative '../../shared/kernel/raise'
 
 ruby_version_is "2.7" do
   describe "Fiber#raise" do
+    it_behaves_like :kernel_raise, :raise, FiberSpecs::NewFiberToRaise
+  end
 
+  describe "Fiber#raise" do
     it 'raises RuntimeError by default' do
       -> { FiberSpecs::NewFiberToRaise.raise }.should raise_error(RuntimeError)
     end
@@ -69,7 +72,5 @@ ruby_version_is "2.7" do
       -> { fiber.raise }.should raise_error
       -> { fiber.resume }.should raise_error(FiberError, "dead fiber called")
     end
-
-    it_behaves_like :kernel_raise, :raise, FiberSpecs::NewFiberToRaise
   end
 end
