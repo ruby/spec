@@ -9,61 +9,61 @@ describe "Module#const_source_location" do
   ruby_version_is "2.7" do
     describe "with dynamically assigned constants" do
       it "searches a path in the immediate class or module first" do
-        ConstantSpecs::ClassA::CS_CONST301 = :const301_1
-        ConstantSpecs::ClassA.const_source_location(:CS_CONST301).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ClassA::CSL_CONST301 = :const301_1
+        ConstantSpecs::ClassA.const_source_location(:CSL_CONST301).should == [__FILE__, __LINE__ - 1]
 
-        ConstantSpecs::ModuleA::CS_CONST301 = :const301_2
-        ConstantSpecs::ModuleA.const_source_location(:CS_CONST301).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ModuleA::CSL_CONST301 = :const301_2
+        ConstantSpecs::ModuleA.const_source_location(:CSL_CONST301).should == [__FILE__, __LINE__ - 1]
 
-        ConstantSpecs::ParentA::CS_CONST301 = :const301_3
-        ConstantSpecs::ParentA.const_source_location(:CS_CONST301).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ParentA::CSL_CONST301 = :const301_3
+        ConstantSpecs::ParentA.const_source_location(:CSL_CONST301).should == [__FILE__, __LINE__ - 1]
 
-        ConstantSpecs::ContainerA::ChildA::CS_CONST301 = :const301_5
-        ConstantSpecs::ContainerA::ChildA.const_source_location(:CS_CONST301).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ContainerA::ChildA::CSL_CONST301 = :const301_5
+        ConstantSpecs::ContainerA::ChildA.const_source_location(:CSL_CONST301).should == [__FILE__, __LINE__ - 1]
       end
 
       it "searches a path in a module included in the immediate class before the superclass" do
-        ConstantSpecs::ParentB::CS_CONST302 = :const302_1
-        ConstantSpecs::ModuleF::CS_CONST302 = :const302_2
-        ConstantSpecs::ContainerB::ChildB.const_source_location(:CS_CONST302).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ParentB::CSL_CONST302 = :const302_1
+        ConstantSpecs::ModuleF::CSL_CONST302 = :const302_2
+        ConstantSpecs::ContainerB::ChildB.const_source_location(:CSL_CONST302).should == [__FILE__, __LINE__ - 1]
       end
 
       it "searches a path in the superclass before a module included in the superclass" do
-        ConstantSpecs::ModuleE::CS_CONST303 = :const303_1
-        ConstantSpecs::ParentB::CS_CONST303 = :const303_2
-        ConstantSpecs::ContainerB::ChildB.const_source_location(:CS_CONST303).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ModuleE::CSL_CONST303 = :const303_1
+        ConstantSpecs::ParentB::CSL_CONST303 = :const303_2
+        ConstantSpecs::ContainerB::ChildB.const_source_location(:CSL_CONST303).should == [__FILE__, __LINE__ - 1]
       end
 
       it "searches a path in a module included in the superclass" do
-        ConstantSpecs::ModuleA::CS_CONST304 = :const304_1
-        ConstantSpecs::ModuleE::CS_CONST304 = :const304_2
-        ConstantSpecs::ContainerB::ChildB.const_source_location(:CS_CONST304).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ModuleA::CSL_CONST304 = :const304_1
+        ConstantSpecs::ModuleE::CSL_CONST304 = :const304_2
+        ConstantSpecs::ContainerB::ChildB.const_source_location(:CSL_CONST304).should == [__FILE__, __LINE__ - 1]
       end
 
       it "searches a path in the superclass chain" do
-        ConstantSpecs::ModuleA::CS_CONST305 = :const305
-        ConstantSpecs::ContainerB::ChildB.const_source_location(:CS_CONST305).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ModuleA::CSL_CONST305 = :const305
+        ConstantSpecs::ContainerB::ChildB.const_source_location(:CSL_CONST305).should == [__FILE__, __LINE__ - 1]
       end
 
       it "returns path to a toplevel constant when the receiver is a Class" do
-        Object::CS_CONST306 = :const306
-        ConstantSpecs::ContainerB::ChildB.const_source_location(:CS_CONST306).should == [__FILE__, __LINE__ - 1]
+        Object::CSL_CONST306 = :const306
+        ConstantSpecs::ContainerB::ChildB.const_source_location(:CSL_CONST306).should == [__FILE__, __LINE__ - 1]
       end
 
       it "returns path to a toplevel constant when the receiver is a Module" do
-        Object::CS_CONST308 = :const308
-        ConstantSpecs.const_source_location(:CS_CONST308).should == [__FILE__, __LINE__ - 1]
-        ConstantSpecs::ModuleA.const_source_location(:CS_CONST308).should == [__FILE__, __LINE__ - 2]
+        Object::CSL_CONST308 = :const308
+        ConstantSpecs.const_source_location(:CSL_CONST308).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ModuleA.const_source_location(:CSL_CONST308).should == [__FILE__, __LINE__ - 2]
       end
 
       it "returns path to the updated value of a constant" do
-        ConstantSpecs::ClassB::CS_CONST309 = :const309_1
-        ConstantSpecs::ClassB.const_source_location(:CS_CONST309).should == [__FILE__, __LINE__ - 1]
+        ConstantSpecs::ClassB::CSL_CONST309 = :const309_1
+        ConstantSpecs::ClassB.const_source_location(:CSL_CONST309).should == [__FILE__, __LINE__ - 1]
 
         -> {
-          ConstantSpecs::ClassB::CS_CONST309 = :const309_2
+          ConstantSpecs::ClassB::CSL_CONST309 = :const309_2
         }.should complain(/already initialized constant/)
-        ConstantSpecs::ClassB.const_source_location(:CS_CONST309).should == [__FILE__, __LINE__ - 2]
+        ConstantSpecs::ClassB.const_source_location(:CSL_CONST309).should == [__FILE__, __LINE__ - 2]
       end
     end
 
