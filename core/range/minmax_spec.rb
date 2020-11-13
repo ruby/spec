@@ -33,8 +33,18 @@ describe 'Range#minmax' do
 
         -> { range.minmax }.should raise_error(RangeError, 'cannot get the maximum of endless range')
       end
+    end
 
-      # Beginless ranges introduced in 2.7
+    ruby_version_is '2.7'...'3.0' do
+      it 'raises ArgumentError on a beginless range' do
+        # Beginless range literal would cause SyntaxError prior to 2.7
+        range = Range.new(nil, @x)
+
+        -> { range.minmax }.should raise_error(ArgumentError)
+      end
+    end
+
+    ruby_version_is '3.0' do
       it 'should raise RangeError on a beginless range' do
         # Beginless range literal would cause SyntaxError prior to 2.7
         range = Range.new(nil, @x)
@@ -120,7 +130,8 @@ describe 'Range#minmax' do
         # Beginless range literal would cause SyntaxError prior to 2.7
         range = Range.new(nil, @x, true)
 
-        -> { range.minmax }.should raise_error(RangeError, 'cannot get the minimum of beginless range')
+        -> { range.minmax }.should raise_error(RangeError,
+          /cannot get the maximum of beginless range with custom comparison method|cannot get the minimum of beginless range/)
       end
     end
 
