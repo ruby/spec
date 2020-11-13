@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative '../../fixtures/constants'
-require_relative 'fixtures/constants_autoload'
 
 describe "Module#const_source_location" do
   before do
@@ -201,24 +200,20 @@ describe "Module#const_source_location" do
     end
 
     context 'autoload' do
-      before do
-        @constants_autoload_path = File.expand_path('fixtures/constants_autoload', __dir__)
+      before :all do
+        ConstantSpecs.autoload :CSL_CONST1, "#{__dir__}/notexisting.rb"
+        @line = __LINE__ - 1
       end
 
-      it 'does search path in autoload declaration' do
-        Object.const_source_location('CSAutoloadA').should == [@constants_autoload_path + '_a.rb', 1]
+      it 'returns the autoload location while not resolved' do
+        ConstantSpecs.const_source_location('CSL_CONST1').should == [__FILE__, @line]
       end
 
-      it 'does search path in autoload declaration a constant with a toplevel scope qualifier' do
-        Object.const_source_location('::CSAutoloadB').should == [@constants_autoload_path + '_b.rb', 1]
-      end
-
-      it 'does search path in autoload declaration a module and resolve a constant within' do
-        Object.const_source_location('CSAutoloadC::CONST').should == [@constants_autoload_path + '_c.rb', 2]
-      end
-
-      it 'does autoload a non-toplevel module' do
-        Object.const_source_location('CSAutoloadD::InnerModule').should == [@constants_autoload_path + '_d.rb', 2]
+      it 'returns where the constant was resolved when resolved' do
+        file = fixture(__FILE__, 'autoload_location.rb')
+        ConstantSpecs.autoload :CONST_LOCATION, file
+        line = ConstantSpecs::CONST_LOCATION
+        ConstantSpecs.const_source_location('CONST_LOCATION').should == [file, line]
       end
     end
   end
