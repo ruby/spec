@@ -1,5 +1,6 @@
 require_relative '../../spec_helper'
 
+# These specs use Range.new instead of the literal notation so they parse fine on Ruby < 2.6
 describe 'Range#minmax' do
   before(:each) do
     @x = mock('x')
@@ -13,11 +14,8 @@ describe 'Range#minmax' do
 
   describe 'on an inclusive range' do
     ruby_version_is '2.6'...'2.7' do
-      # Endless ranges introduced in 2.6
       it 'should try to iterate endlessly on an endless range' do
         @x.should_receive(:succ).once.and_return(@y)
-
-        # Endless range literal would cause SyntaxError prior to 2.6
         range = Range.new(@x, nil)
 
         -> { range.minmax }.should raise_error(NoMethodError, /^undefined method `succ' for/)
@@ -28,7 +26,6 @@ describe 'Range#minmax' do
       it 'should raise RangeError on an endless range without iterating the range' do
         @x.should_not_receive(:succ)
 
-        # Endless range literal would cause SyntaxError prior to 2.6
         range = Range.new(@x, nil)
 
         -> { range.minmax }.should raise_error(RangeError, 'cannot get the maximum of endless range')
@@ -37,7 +34,6 @@ describe 'Range#minmax' do
 
     ruby_version_is '2.7'...'3.0' do
       it 'raises ArgumentError on a beginless range' do
-        # Beginless range literal would cause SyntaxError prior to 2.7
         range = Range.new(nil, @x)
 
         -> { range.minmax }.should raise_error(ArgumentError)
@@ -46,7 +42,6 @@ describe 'Range#minmax' do
 
     ruby_version_is '3.0' do
       it 'should raise RangeError on a beginless range' do
-        # Beginless range literal would cause SyntaxError prior to 2.7
         range = Range.new(nil, @x)
 
         -> { range.minmax }.should raise_error(RangeError, 'cannot get the minimum of beginless range')
@@ -107,8 +102,6 @@ describe 'Range#minmax' do
       # Endless ranges introduced in 2.6
       it 'should try to iterate endlessly on an endless range' do
         @x.should_receive(:succ).once.and_return(@y)
-
-        # Endless range literal would cause SyntaxError prior to 2.6
         range = Range.new(@x, nil, true)
 
         -> { range.minmax }.should raise_error(NoMethodError, /^undefined method `succ' for/)
@@ -118,16 +111,12 @@ describe 'Range#minmax' do
     ruby_version_is '2.7' do
       it 'should raise RangeError on an endless range' do
         @x.should_not_receive(:succ)
-
-        # Endless range literal would cause SyntaxError prior to 2.6
         range = Range.new(@x, nil, true)
 
         -> { range.minmax }.should raise_error(RangeError, 'cannot get the maximum of endless range')
       end
 
-      # Beginless ranges introduced in 2.7
       it 'should raise RangeError on a beginless range' do
-        # Beginless range literal would cause SyntaxError prior to 2.7
         range = Range.new(nil, @x, true)
 
         -> { range.minmax }.should raise_error(RangeError,
@@ -163,10 +152,14 @@ describe 'Range#minmax' do
       it 'should return the minimum and maximum values for a numeric range without iterating the range' do
         # We cannot set expectations on integers,
         # so we "prevent" iteration by picking a value that would iterate until the spec times out.
-        # Since we cannot exclude a non Integer end value, we use a HUGE Integer.
-        range_end = 123_456_789_012_345_678_901_234_567_890
+        range_end = bignum_value
 
         (1...range_end).minmax.should == [1, range_end - 1]
+      end
+
+      it 'raises TypeError if the end value is not an integer' do
+        range = (0...Float::INFINITY)
+        -> { range.minmax }.should raise_error(TypeError, 'cannot exclude non Integer end value')
       end
     end
 
