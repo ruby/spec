@@ -20,7 +20,7 @@ ruby_version_is "2.7" do
     it "raises FiberError if Fiber is dead" do
       fiber = Fiber.new { true }
       fiber.resume
-      -> { fiber.raise }.should raise_error(FiberError, "dead fiber called")
+      -> { fiber.raise }.should raise_error(FiberError, /dead fiber called|attempt to resume a terminated fiber/)
     end
 
     it 'accepts error class' do
@@ -70,7 +70,7 @@ ruby_version_is "2.7" do
       fiber = Fiber.new { Fiber.yield :first; :second }
       fiber.resume
       -> { fiber.raise }.should raise_error
-      -> { fiber.resume }.should raise_error(FiberError, "dead fiber called")
+      -> { fiber.resume }.should raise_error(FiberError, /dead fiber called|attempt to resume a terminated fiber/)
     end
   end
 end
