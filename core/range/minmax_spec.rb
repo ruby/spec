@@ -30,21 +30,19 @@ describe 'Range#minmax' do
 
         -> { range.minmax }.should raise_error(RangeError, 'cannot get the maximum of endless range')
       end
-    end
 
-    ruby_version_is '2.7'...'3.0' do
-      it 'raises ArgumentError on a beginless range' do
+      it 'raises RangeError or ArgumentError on a beginless range' do
         range = Range.new(nil, @x)
 
-        -> { range.minmax }.should raise_error(ArgumentError)
-      end
-    end
-
-    ruby_version_is '3.0' do
-      it 'should raise RangeError on a beginless range' do
-        range = Range.new(nil, @x)
-
-        -> { range.minmax }.should raise_error(RangeError, 'cannot get the minimum of beginless range')
+        -> { range.minmax }.should raise_error(StandardError) { |e|
+          if RangeError === e
+            # error from #min
+            -> { raise e }.should raise_error(RangeError, 'cannot get the minimum of beginless range')
+          else
+            # error from #max
+            -> { raise e }.should raise_error(ArgumentError, 'comparison of NilClass with MockObject failed')
+          end
+        }
       end
     end
 
