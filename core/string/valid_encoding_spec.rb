@@ -102,7 +102,7 @@ describe "String#valid_encoding?" do
 
   ruby_version_is '3.0' do
     it "returns true for IBM720 encoding self is valid in" do
-      str = "\u{6754}"
+      str = "\xE6\x9D\x94"
       str.force_encoding('IBM720').valid_encoding?.should be_true
       str.force_encoding('CP720').valid_encoding?.should be_true
     end
