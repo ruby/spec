@@ -2,8 +2,12 @@ require_relative '../../spec_helper'
 require 'pathname'
 
 describe "Kernel#Pathname" do
-  it "is a public method" do
-    Kernel.public_methods.should include(:Pathname)
+  it "is a private instance method" do
+    Kernel.should have_private_instance_method(:Pathname)
+  end
+
+  it "is also a public method" do
+    Kernel.should have_method(:Pathname)
   end
 
   ruby_version_is ''...'2.7' do
