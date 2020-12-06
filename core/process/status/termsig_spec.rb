@@ -13,7 +13,7 @@ describe "Process::Status#termsig" do
 
   describe "for a child that raised SignalException" do
     before :each do
-      ruby_exe("raise SignalException, 'SIGTERM'")
+      ruby_exe("raise SignalException, 'SIGTERM'", exception: false)
     end
 
     platform_is_not :windows do
@@ -25,7 +25,7 @@ describe "Process::Status#termsig" do
 
   describe "for a child that was sent a signal" do
     before :each do
-      ruby_exe("Process.kill(:KILL, $$); exit(42)")
+      ruby_exe("Process.kill(:KILL, $$); exit(42)", exception: false)
     end
 
     platform_is_not :windows do

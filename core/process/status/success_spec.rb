@@ -16,7 +16,7 @@ describe "Process::Status#success?" do
   describe "for a child that exited with a non zero status" do
 
     before :each do
-      ruby_exe("exit(42)")
+      ruby_exe("exit(42)", exception: false)
     end
 
     it "returns false" do
@@ -27,7 +27,7 @@ describe "Process::Status#success?" do
   describe "for a child that was terminated" do
 
     before :each do
-      ruby_exe("Process.kill(:KILL, $$); exit(42)")
+      ruby_exe("Process.kill(:KILL, $$); exit(42)", exception: false)
     end
 
     platform_is_not :windows do

@@ -254,7 +254,7 @@ describe "Signal.trap" do
         r.close
         loop { w.write("a"*1024) }
       RUBY
-      out = ruby_exe(code)
+      out = ruby_exe(code, exception: false)
       status = $?
       out.should == "nil\n"
       status.should.signaled?
