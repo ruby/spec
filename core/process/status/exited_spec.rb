@@ -17,7 +17,7 @@ describe "Process::Status#exited?" do
   describe "for a terminated child" do
 
     before :each do
-      ruby_exe("Process.kill(:KILL, $$); exit(42)")
+      ruby_exe("Process.kill(:KILL, $$); exit(42)", exception: false)
     end
 
     platform_is_not :windows do

@@ -2,7 +2,7 @@ require_relative '../../../spec_helper'
 
 describe "Process::Status#exitstatus" do
   before :each do
-    ruby_exe("exit(42)")
+    ruby_exe("exit(42)", exception: false)
   end
 
   it "returns the process exit code" do
@@ -11,7 +11,7 @@ describe "Process::Status#exitstatus" do
 
   describe "for a child that raised SignalException" do
     before :each do
-      ruby_exe("Process.kill(:KILL, $$); exit(42)")
+      ruby_exe("Process.kill(:KILL, $$); exit(42)", exception: false)
     end
 
     platform_is_not :windows do
