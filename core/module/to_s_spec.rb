@@ -52,4 +52,17 @@ describe "Module#to_s" do
     ModuleSpecs::RefinementInspect::R.name.should == 'ModuleSpecs::RefinementInspect::R'
     ModuleSpecs::RefinementInspect::R.to_s.should == '#<refinement:String@ModuleSpecs::RefinementInspect>'
   end
+
+  it 'does not call #inspect or #to_s for singleton classes' do
+    klass = Class.new
+    obj = klass.new
+    def obj.to_s
+      "to_s"
+    end
+    def obj.inspect
+      "inspect"
+    end
+    sclass = obj.singleton_class
+    sclass.to_s.should =~ /\A#<Class:#<#{Regexp.escape klass.to_s}:0x\h+>>\z/
+  end
 end
