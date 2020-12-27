@@ -6,9 +6,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu, macos, windows ]
-        ruby: [ 2.5.8, 2.6.6, 2.7.2 ]
+        ruby: [ 2.5.8, 2.6.6, 2.7.2, 3.0.0 ]
         exclude:
         - { os: windows, ruby: 2.5.8 }
+        - { os: windows, ruby: 3.0.0 }
     runs-on: ${{ matrix.os }}-latest
     steps:
     - name: git config autocrlf
@@ -22,6 +23,10 @@ jobs:
         bundler: none
     - name: Clone MSpec
       run: git clone https://github.com/ruby/mspec.git ../mspec
+
+    - name: Install webrick for Ruby 3+
+      run: gem install webrick
+      if: startsWith(matrix.ruby, '3.')
 
     - name: Run specs (Linux)
       if: matrix.os == 'ubuntu'
