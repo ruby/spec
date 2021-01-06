@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
 ruby_version_is "2.7" do
-  describe "Module.ruby2_keywords" do
+  describe "Module#ruby2_keywords" do
     it "marks the final hash argument as keyword hash" do
       obj = Object.new
 
@@ -16,7 +16,7 @@ ruby_version_is "2.7" do
     end
 
     ruby_version_is "2.7" ... "3.0" do
-      it "suppresses deprecation warning" do
+      it "fixes delegation warnings when calling a method accepting keywords" do
         obj = Object.new
 
         obj.singleton_class.class_exec do
@@ -54,7 +54,7 @@ ruby_version_is "2.7" do
       }.should raise_error(NameError, /undefined method `not_existing'/)
     end
 
-    it "excepts String as well" do
+    it "acceps String as well" do
       obj = Object.new
 
       obj.singleton_class.class_exec do
