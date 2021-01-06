@@ -11,7 +11,7 @@ ruby_version_is "2.7" do
     end
 
     ruby_version_is "2.7" ... "3.0" do
-      it "suppresses deprecation warning when calls a method" do
+      it "fixes delegation warnings when calling a method accepting keywords" do
         obj = Object.new
         def obj.foo(*a, **b) end
 
@@ -22,7 +22,7 @@ ruby_version_is "2.7" do
         -> { f.call(1, 2, {a: "a"}) }.should_not complain
       end
 
-      it "suppresses deprecation warning when calls another proc" do
+      it "fixes delegation warnings when calling a proc accepting keywords" do
         g = -> *a, **b { }
         f = -> *a { g.call(*a) }
 
