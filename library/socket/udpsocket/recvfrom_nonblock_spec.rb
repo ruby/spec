@@ -55,7 +55,7 @@ describe 'UDPSocket#recvfrom_nonblock' do
             buffer = "".b
             IO.select([@server])
             @server.recvfrom_nonblock(1, 0, buffer)
-            buffer.should eql('h')
+            buffer.should == 'h'
           end
 
           describe 'the returned Array' do
