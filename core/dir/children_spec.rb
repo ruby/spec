@@ -101,14 +101,16 @@ ruby_version_is "2.6" do
     end
 
     it "accepts an encoding keyword for the encoding of the entries" do
-      dirs = Dir.new("#{DirSpecs.mock_dir}/deeply/nested", encoding: "utf-8").to_a.sort
-      dirs.each {|dir| dir.encoding.should == Encoding::UTF_8}
+      @dir = Dir.new("#{DirSpecs.mock_dir}/deeply/nested", encoding: "utf-8")
+      dirs = @dir.to_a.sort
+      dirs.each { |d| d.encoding.should == Encoding::UTF_8 }
     end
 
     ruby_version_is ""..."2.7" do
       it "accepts nil options" do
-        dirs = Dir.new("#{DirSpecs.mock_dir}/deeply/nested", nil).to_a.sort
-        dirs.each {|dir| dir.encoding.should == Encoding.find("filesystem")}
+        @dir = Dir.new("#{DirSpecs.mock_dir}/deeply/nested", nil)
+        dirs = @dir.to_a.sort
+        dirs.each { |d| d.encoding.should == Encoding.find("filesystem") }
       end
     end
 
