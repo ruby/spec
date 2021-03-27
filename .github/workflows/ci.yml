@@ -9,7 +9,6 @@ jobs:
         ruby: [ 2.5.8, 2.6.6, 2.7.2, 3.0.0 ]
         exclude:
         - { os: windows, ruby: 2.5.8 }
-        - { os: windows, ruby: 3.0.0 }
     runs-on: ${{ matrix.os }}-latest
     steps:
     - name: git config autocrlf
