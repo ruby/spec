@@ -32,6 +32,6 @@ describe "ruby -E" do
     ruby_exe("p 1",
              options: '-Eascii:ascii -U',
              args: '2>&1',
-             exception: false).should =~ /RuntimeError/
+             exit_status: 1).should =~ /RuntimeError/
   end
 end

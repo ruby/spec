@@ -28,7 +28,7 @@ describe "The --encoding command line option" do
     options = {
       options: "--disable-gems --encoding big5:#{@enc2}:utf-32le",
       args: "2>&1",
-      exception: false
+      exit_status: 1
     }
 
     ruby_exe(@test_string, options).should =~ /extra argument for --encoding: utf-32le/

@@ -16,7 +16,7 @@ describe "Process::Status#signaled?" do
   describe "for a terminated child" do
 
     before :each do
-      ruby_exe("Process.kill(:KILL, $$); exit(42)", exception: false)
+      ruby_exe("Process.kill(:KILL, $$); exit(42)", exit_status: nil)
     end
 
     platform_is_not :windows do
