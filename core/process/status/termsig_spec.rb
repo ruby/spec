@@ -25,7 +25,7 @@ describe "Process::Status#termsig" do
 
   describe "for a child that was sent a signal" do
     before :each do
-      ruby_exe("Process.kill(:KILL, $$); exit(42)", exit_status: nil)
+      ruby_exe("Process.kill(:KILL, $$); exit(42)", exit_status: platform_is(:windows) ? 0 : nil)
     end
 
     platform_is_not :windows do
