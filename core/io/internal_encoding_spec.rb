@@ -112,6 +112,10 @@ describe "IO#internal_encoding" do
     Encoding.default_internal = @internal
   end
 
+  it "raises an IOError on closed stream" do
+    -> { IOSpecs.closed_io.internal_encoding }.should raise_error(IOError)
+  end
+
   describe "with 'r' mode" do
     it_behaves_like :io_internal_encoding, nil, "r"
   end
