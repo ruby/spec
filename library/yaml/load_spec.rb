@@ -1,6 +1,7 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/common'
 require_relative 'fixtures/strings'
+require_relative 'shared/unsafe_load'
 
 describe "YAML.load" do
   after :each do
@@ -91,47 +92,13 @@ describe "YAML.load" do
     YAML.load(block_seq).should == [[["one", "two", "three"]]]
   end
 
-  it "works on complex keys" do
-    require 'date'
-    expected = {
-      [ 'Detroit Tigers', 'Chicago Cubs' ] => [ Date.new( 2001, 7, 23 ) ],
-      [ 'New York Yankees', 'Atlanta Braves' ] => [ Date.new( 2001, 7, 2 ),
-                                                    Date.new( 2001, 8, 12 ),
-                                                    Date.new( 2001, 8, 14 ) ]
-    }
-    YAML.load($complex_key_1).should == expected
-  end
-
   it "loads a symbol key that contains spaces" do
     string = ":user name: This is the user name."
     expected = { :"user name" => "This is the user name."}
     YAML.load(string).should == expected
   end
 
-  describe "with iso8601 timestamp" do
-    it "computes the microseconds" do
-      [ [YAML.load("2011-03-22t23:32:11.2233+01:00"),   223300],
-        [YAML.load("2011-03-22t23:32:11.0099+01:00"),   9900],
-        [YAML.load("2011-03-22t23:32:11.000076+01:00"), 76]
-      ].should be_computed_by(:usec)
-    end
-
-    it "rounds values smaller than 1 usec to 0 " do
-      YAML.load("2011-03-22t23:32:11.000000342222+01:00").usec.should == 0
-    end
-  end
-
-  it "loads an OpenStruct" do
-    require "ostruct"
-    os = OpenStruct.new("age" => 20, "name" => "John")
-    loaded = YAML.load("--- !ruby/object:OpenStruct\ntable:\n  :age: 20\n  :name: John\n")
-    loaded.should == os
-  end
-
-  it "loads a File but raise an error when used as it is uninitialized" do
-    loaded = YAML.load("--- !ruby/object:File {}\n")
-    -> {
-      loaded.read(1)
-    }.should raise_error(IOError)
+  guard -> { Psych::VERSION < '4.0.0' } do
+    it_behaves_like :yaml_unsafe_load, :load
   end
 end
