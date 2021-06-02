@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative 'fixtures/classes'
 
 describe :io_internal_encoding, shared: true do
   describe "when Encoding.default_internal is not set" do
