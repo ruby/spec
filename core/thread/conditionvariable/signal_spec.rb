@@ -3,8 +3,8 @@ require 'thread'
 
 describe "ConditionVariable#signal" do
   it "releases the first thread waiting in line for this resource" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     threads = []
     r1 = []
     r2 = []
@@ -41,8 +41,8 @@ describe "ConditionVariable#signal" do
   end
 
   it "allows control to be passed between a pair of threads" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     repeats = 100
     in_synchronize = false
 

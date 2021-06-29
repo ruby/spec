@@ -3,7 +3,7 @@ require 'thread'
 
 describe "ConditionVariable#marshal_dump" do
   it "raises a TypeError" do
-    cv = ConditionVariable.new
+    cv = Thread::ConditionVariable.new
     -> { cv.marshal_dump }.should raise_error(TypeError, /can't dump/)
   end
 end

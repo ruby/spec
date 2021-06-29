@@ -2,13 +2,13 @@ require_relative '../../../spec_helper'
 
 describe "Mutex#unlock" do
   it "raises ThreadError unless Mutex is locked" do
-    mutex = Mutex.new
+    mutex = Thread::Mutex.new
     -> { mutex.unlock }.should raise_error(ThreadError)
   end
 
   it "raises ThreadError unless thread owns Mutex" do
-    mutex = Mutex.new
-    wait = Mutex.new
+    mutex = Thread::Mutex.new
+    wait = Thread::Mutex.new
     wait.lock
     th = Thread.new do
       mutex.lock
@@ -26,7 +26,7 @@ describe "Mutex#unlock" do
   end
 
   it "raises ThreadError if previously locking thread is gone" do
-    mutex = Mutex.new
+    mutex = Thread::Mutex.new
     th = Thread.new do
       mutex.lock
     end

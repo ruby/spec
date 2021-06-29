@@ -355,7 +355,7 @@ describe "Module#autoload" do
 
     def check_before_during_thread_after(&check)
       before = check.call
-      to_autoload_thread, from_autoload_thread = Queue.new, Queue.new
+      to_autoload_thread, from_autoload_thread = Thread::Queue.new, Thread::Queue.new
       ScratchPad.record -> {
         from_autoload_thread.push check.call
         to_autoload_thread.pop

@@ -601,7 +601,7 @@ describe "Marshal.dump" do
   end
 
   it "raises a TypeError if dumping a Mutex instance" do
-    m = Mutex.new
+    m = Thread::Mutex.new
     -> { Marshal.dump(m) }.should raise_error(TypeError)
   end
 

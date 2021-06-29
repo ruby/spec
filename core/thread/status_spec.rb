@@ -43,7 +43,7 @@ describe "Thread#status" do
   end
 
   it "reports aborting on an externally killed thread that sleeps" do
-    q = Queue.new
+    q = Thread::Queue.new
     t = Thread.new do
       begin
         q.push nil

@@ -95,7 +95,7 @@ module ThreadSpecs
   end
 
   def self.status_of_blocked_thread
-    m = Mutex.new
+    m = Thread::Mutex.new
     m.lock
     t = Thread.new { m.lock }
     Thread.pass while t.status and t.status != 'sleep'

@@ -25,7 +25,7 @@ describe "Thread.list" do
   end
 
   it "includes waiting threads" do
-    q = Queue.new
+    q = Thread::Queue.new
     t = Thread.new { q.pop }
     begin
       Thread.pass while t.status and t.status != 'sleep'

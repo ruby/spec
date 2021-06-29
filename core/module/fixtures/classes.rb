@@ -465,8 +465,8 @@ module ModuleSpecs
     def initialize(count = 1)
       @count = count
       @state = 0
-      @mutex = Mutex.new
-      @cond  = ConditionVariable.new
+      @mutex = Thread::Mutex.new
+      @cond  = Thread::ConditionVariable.new
     end
 
     def await
@@ -498,7 +498,7 @@ module ModuleSpecs
   class ThreadSafeCounter
     def initialize(value = 0)
       @value = 0
-      @mutex = Mutex.new
+      @mutex = Thread::Mutex.new
     end
 
     def get

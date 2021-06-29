@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "ThreadGroup#enclose" do
   before :each do
-    @q1, @q2 = Queue.new, Queue.new
+    @q1, @q2 = Thread::Queue.new, Thread::Queue.new
     @thread = Thread.new { @q1 << :go; @q2.pop }
     @q1.pop
   end

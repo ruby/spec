@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "ThreadGroup#list" do
   it "returns the list of threads in the group" do
-    q = Queue.new
+    q = Thread::Queue.new
     th1 = Thread.new { q << :go; sleep }
     q.pop.should == :go
     tg = ThreadGroup.new

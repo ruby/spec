@@ -3,9 +3,9 @@ require_relative '../../../shared/queue/enque'
 require_relative '../../../shared/sizedqueue/enque'
 
 describe "SizedQueue#enq" do
-  it_behaves_like :queue_enq, :enq, -> { SizedQueue.new(10) }
+  it_behaves_like :queue_enq, :enq, -> { Thread::SizedQueue.new(10) }
 end
 
 describe "SizedQueue#enq" do
-  it_behaves_like :sizedqueue_enq, :enq, -> n { SizedQueue.new(n) }
+  it_behaves_like :sizedqueue_enq, :enq, -> n { Thread::SizedQueue.new(n) }
 end

@@ -21,9 +21,9 @@ ruby_version_is ''...'3.0' do
     end
 
     it "blocks the caller if another thread is also in an exclusive block" do
-      m = Mutex.new
-      q1 = Queue.new
-      q2 = Queue.new
+      m = Thread::Mutex.new
+      q1 = Thread::Queue.new
+      q2 = Thread::Queue.new
 
       t = Thread.new {
         Thread.exclusive {

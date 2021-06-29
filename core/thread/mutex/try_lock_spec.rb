@@ -3,12 +3,12 @@ require_relative '../../../spec_helper'
 describe "Mutex#try_lock" do
   describe "when unlocked" do
     it "returns true" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.try_lock.should be_true
     end
 
     it "locks the mutex" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.try_lock
       m.locked?.should be_true
     end
@@ -16,7 +16,7 @@ describe "Mutex#try_lock" do
 
   describe "when locked by the current thread" do
     it "returns false" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.lock
       m.try_lock.should be_false
     end
@@ -24,7 +24,7 @@ describe "Mutex#try_lock" do
 
   describe "when locked by another thread" do
     it "returns false" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.lock
       Thread.new { m.try_lock }.value.should be_false
     end

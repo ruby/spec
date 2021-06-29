@@ -29,7 +29,7 @@ describe "Thread#join" do
   end
 
   it "returns nil if it is not finished when given a timeout" do
-    q = Queue.new
+    q = Thread::Queue.new
     t = Thread.new { q.pop }
     begin
       t.join(0).should == nil
@@ -40,7 +40,7 @@ describe "Thread#join" do
   end
 
   it "accepts a floating point timeout length" do
-    q = Queue.new
+    q = Thread::Queue.new
     t = Thread.new { q.pop }
     begin
       t.join(0.01).should == nil

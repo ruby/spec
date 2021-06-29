@@ -5,12 +5,12 @@ load_extension("mutex")
 describe "C-API Mutex functions" do
   before :each do
     @s = CApiMutexSpecs.new
-    @m = Mutex.new
+    @m = Thread::Mutex.new
   end
 
   describe "rb_mutex_new" do
     it "creates a new mutex" do
-      @s.rb_mutex_new.should be_an_instance_of(Mutex)
+      @s.rb_mutex_new.should be_an_instance_of(Thread::Mutex)
     end
   end
 

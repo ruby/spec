@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Thread.new" do
   it "creates a thread executing the given block" do
-    q = Queue.new
+    q = Thread::Queue.new
     Thread.new { q << true }.join
     q << false
     q.pop.should == true
@@ -54,8 +54,8 @@ describe "Thread.new" do
   end
 
   it "releases Mutexes held by the Thread when the Thread finishes" do
-    m1 = Mutex.new
-    m2 = Mutex.new
+    m1 = Thread::Mutex.new
+    m2 = Thread::Mutex.new
     t = Thread.new {
       m1.lock
       m1.should.locked?
@@ -68,7 +68,7 @@ describe "Thread.new" do
   end
 
   it "releases Mutexes held by the Thread when the Thread finishes, also with Mutex#synchronize" do
-    m = Mutex.new
+    m = Thread::Mutex.new
     t = Thread.new {
       m.synchronize {
         m.unlock

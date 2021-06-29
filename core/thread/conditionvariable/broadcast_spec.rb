@@ -3,8 +3,8 @@ require 'thread'
 
 describe "ConditionVariable#broadcast" do
   it "releases all threads waiting in line for this resource" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     threads = []
     r1 = []
     r2 = []

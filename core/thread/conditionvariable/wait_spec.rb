@@ -6,14 +6,14 @@ describe "ConditionVariable#wait" do
     o = Object.new
     o.should_receive(:sleep).with(1234)
 
-    cv = ConditionVariable.new
+    cv = Thread::ConditionVariable.new
 
     cv.wait(o, 1234)
   end
 
   it "can be woken up by ConditionVariable#signal" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     in_synchronize = false
 
     th = Thread.new do
@@ -34,8 +34,8 @@ describe "ConditionVariable#wait" do
   end
 
   it "can be interrupted by Thread#run" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     in_synchronize = false
 
     th = Thread.new do
@@ -56,8 +56,8 @@ describe "ConditionVariable#wait" do
   end
 
   it "can be interrupted by Thread#wakeup" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     in_synchronize = false
 
     th = Thread.new do
@@ -78,8 +78,8 @@ describe "ConditionVariable#wait" do
   end
 
   it "reacquires the lock even if the thread is killed" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     in_synchronize = false
     owned = nil
 
@@ -107,8 +107,8 @@ describe "ConditionVariable#wait" do
   end
 
   it "reacquires the lock even if the thread is killed after being signaled" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     in_synchronize = false
     owned = nil
 
@@ -142,8 +142,8 @@ describe "ConditionVariable#wait" do
   end
 
   it "supports multiple Threads waiting on the same ConditionVariable and Mutex" do
-    m = Mutex.new
-    cv = ConditionVariable.new
+    m = Thread::Mutex.new
+    cv = Thread::ConditionVariable.new
     n_threads = 4
     events = []
 

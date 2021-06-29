@@ -3,14 +3,14 @@ require_relative '../../../spec_helper'
 describe "Mutex#owned?" do
   describe "when unlocked" do
     it "returns false" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.owned?.should be_false
     end
   end
 
   describe "when locked by the current thread" do
     it "returns true" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.lock
       m.owned?.should be_true
     end
@@ -27,7 +27,7 @@ describe "Mutex#owned?" do
     end
 
     it "returns false" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       locked = false
 
       @th = Thread.new do
@@ -43,7 +43,7 @@ describe "Mutex#owned?" do
 
   ruby_version_is "3.0" do
     it "is held per Fiber" do
-      m = Mutex.new
+      m = Thread::Mutex.new
       m.lock
 
       Fiber.new do

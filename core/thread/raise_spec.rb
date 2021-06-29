@@ -138,7 +138,7 @@ describe "Thread#raise on a running thread" do
   end
 
   it "can go unhandled" do
-    q = Queue.new
+    q = Thread::Queue.new
     t = Thread.new do
       Thread.current.report_on_exception = false
       q << true

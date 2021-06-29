@@ -20,7 +20,7 @@ describe "Thread#value" do
   end
 
   it "returns when the thread finished" do
-    q = Queue.new
+    q = Thread::Queue.new
     t = Thread.new {
       q.pop
     }

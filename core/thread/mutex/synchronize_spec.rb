@@ -2,8 +2,8 @@ require_relative '../../../spec_helper'
 
 describe "Mutex#synchronize" do
   it "wraps the lock/unlock pair in an ensure" do
-    m1 = Mutex.new
-    m2 = Mutex.new
+    m1 = Thread::Mutex.new
+    m2 = Thread::Mutex.new
     m2.lock
     synchronized = false
 
@@ -26,20 +26,20 @@ describe "Mutex#synchronize" do
   end
 
   it "blocks the caller if already locked" do
-    m = Mutex.new
+    m = Thread::Mutex.new
     m.lock
     -> { m.synchronize { } }.should block_caller
   end
 
   it "does not block the caller if not locked" do
-    m = Mutex.new
+    m = Thread::Mutex.new
     -> { m.synchronize { } }.should_not block_caller
   end
 
   it "blocks the caller if another thread is also in the synchronize block" do
-    m = Mutex.new
-    q1 = Queue.new
-    q2 = Queue.new
+    m = Thread::Mutex.new
+    q1 = Thread::Queue.new
+    q2 = Thread::Queue.new
 
     t = Thread.new {
       m.synchronize {
@@ -57,7 +57,7 @@ describe "Mutex#synchronize" do
   end
 
   it "is not recursive" do
-    m = Mutex.new
+    m = Thread::Mutex.new
 
     m.synchronize do
       -> { m.synchronize { } }.should raise_error(ThreadError)

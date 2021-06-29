@@ -40,7 +40,7 @@ describe "ObjectSpace.reachable_objects_from" do
   it "finds an object stored in a Queue" do
     require 'thread'
     o = Object.new
-    q = Queue.new
+    q = Thread::Queue.new
     q << o
 
     reachable = ObjectSpace.reachable_objects_from(q)
@@ -51,7 +51,7 @@ describe "ObjectSpace.reachable_objects_from" do
   it "finds an object stored in a SizedQueue" do
     require 'thread'
     o = Object.new
-    q = SizedQueue.new(3)
+    q = Thread::SizedQueue.new(3)
     q << o
 
     reachable = ObjectSpace.reachable_objects_from(q)

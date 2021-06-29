@@ -82,7 +82,7 @@ describe "Thread#report_on_exception=" do
   describe "when used in conjunction with Thread#abort_on_exception" do
     it "first reports then send the exception back to the main Thread" do
       t = nil
-      mutex = Mutex.new
+      mutex = Thread::Mutex.new
       mutex.lock
       -> {
         t = Thread.new {

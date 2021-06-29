@@ -6,8 +6,8 @@ describe "Thread.handle_interrupt" do
 
     ScratchPad.record []
 
-    in_handle_interrupt = Queue.new
-    can_continue = Queue.new
+    in_handle_interrupt = Thread::Queue.new
+    can_continue = Thread::Queue.new
 
     thread = Thread.new do
       begin

@@ -8,7 +8,7 @@ scenario = ARGV.shift
 # instead, which will likely abort the specs process.
 Process.setsid if scenario
 
-mutex = Mutex.new
+mutex = Thread::Mutex.new
 
 Signal.trap(:TERM) do
   if mutex.try_lock
