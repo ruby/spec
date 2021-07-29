@@ -11,8 +11,8 @@ describe "Literal Ranges" do
   end
 
   it "creates endless ranges" do
-    eval("(1..)").should == Range.new(1, nil)
-    eval("(1...)").should == Range.new(1, nil, true)
+    (1..).should == Range.new(1, nil)
+    (1...).should == Range.new(1, nil, true)
   end
 
   ruby_version_is "2.7" do
