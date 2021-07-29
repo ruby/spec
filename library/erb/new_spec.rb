@@ -36,12 +36,10 @@ END
     end
   end
 
-  ruby_version_is "2.6" do
-    it "warns invalid trim_mode" do
-      -> do
-        ERBSpecs.new_erb(@eruby_str, trim_mode: '')
-      end.should complain(/Invalid ERB trim mode/)
-    end
+  it "warns invalid trim_mode" do
+    -> do
+      ERBSpecs.new_erb(@eruby_str, trim_mode: '')
+    end.should complain(/Invalid ERB trim mode/)
   end
 
   it "removes '\n' when trim_mode is 1 or '>'" do
