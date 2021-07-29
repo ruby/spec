@@ -36,7 +36,7 @@ describe "Numeric#step" do
 
       describe "returned #{step_enum_class}" do
         describe "size" do
-          ruby_version_is "2.6"..."3.0" do
+          ruby_version_is ""..."3.0" do
             it "is infinity when step is 0" do
               enum = 1.step(5, 0)
               enum.size.should == Float::INFINITY

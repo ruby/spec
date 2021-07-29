@@ -13,7 +13,7 @@ describe 'Range#minmax' do
   end
 
   describe 'on an inclusive range' do
-    ruby_version_is '2.6'...'2.7' do
+    ruby_version_is ''...'2.7' do
       it 'should try to iterate endlessly on an endless range' do
         @x.should_receive(:succ).once.and_return(@y)
         range = Range.new(@x, nil)
@@ -96,7 +96,7 @@ describe 'Range#minmax' do
   end
 
   describe 'on an exclusive range' do
-    ruby_version_is '2.6'...'2.7' do
+    ruby_version_is ''...'2.7' do
       # Endless ranges introduced in 2.6
       it 'should try to iterate endlessly on an endless range' do
         @x.should_receive(:succ).once.and_return(@y)

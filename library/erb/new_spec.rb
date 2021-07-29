@@ -118,13 +118,8 @@ END
 
   it "changes '_erbout' variable name in the produced source" do
     input = @eruby_str
-    if RUBY_VERSION >= '2.6'
-      match_erbout = ERB.new(input, trim_mode: nil).src
-      match_buf = ERB.new(input, trim_mode: nil, eoutvar: 'buf').src
-    else
-      match_erbout = ERB.new(input, nil, nil).src
-      match_buf = ERB.new(input, nil, nil, 'buf').src
-    end
+    match_erbout = ERB.new(input, trim_mode: nil).src
+    match_buf = ERB.new(input, trim_mode: nil, eoutvar: 'buf').src
     match_erbout.gsub("_erbout", "buf").should == match_buf
   end
 

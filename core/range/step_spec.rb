@@ -414,7 +414,7 @@ describe "Range#step" do
           end
         end
 
-        ruby_version_is "2.6"..."3.0" do
+        ruby_version_is ""..."3.0" do
           it "returns Float::INFINITY for zero step" do
             (-1..1).step(0).size.should == Float::INFINITY
             (-1..1).step(0.0).size.should == Float::INFINITY

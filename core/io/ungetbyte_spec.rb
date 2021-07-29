@@ -36,7 +36,7 @@ describe "IO#ungetbyte" do
     @io.getbyte.should == 97
   end
 
-  ruby_version_is '2.6'...'2.6.1' do
+  ruby_version_is ''...'2.6.1' do
     it "is an RangeError if the integer is not in 8bit" do
       for i in [4095, 0x4f7574206f6620636861722072616e6765] do
         -> { @io.ungetbyte(i) }.should raise_error(RangeError)
