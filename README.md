@@ -59,12 +59,6 @@ For older specs try these commits:
 * Ruby 2.4.10 - [Suite](https://github.com/ruby/spec/commit/bce4f2b81d6c31db67cf4d023a0625ceadde59bd) using [MSpec](https://github.com/ruby/mspec/commit/e7eb8aa4c26495b7b461e687d950b96eb08b3ff2)
 * Ruby 2.5.9 - [Suite](https://github.com/ruby/spec/commit/c503335d3d9f6ec6ef24de60a0716c34af69b64f) using [MSpec](https://github.com/ruby/mspec/commit/0091e8a62e954717cd54641f935eaf1403692041)
 
-### Dependencies
-
-The specs in this repository rely on having `webrick` available.
-For Ruby <= 2.7, webrick is part of the standard library and there is nothing to do.
-For Ruby >= 3 you need `gem install webrick` to run the specs depending on it.
-
 ### Running the specs
 
 First, clone this repository:

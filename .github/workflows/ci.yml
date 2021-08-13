@@ -21,10 +21,6 @@ jobs:
     - name: Clone MSpec
       run: git clone https://github.com/ruby/mspec.git ../mspec
 
-    - name: Install webrick for Ruby 3+
-      run: gem install webrick
-      if: startsWith(matrix.ruby, '3.')
-
     - name: Run specs (Linux)
       if: matrix.os == 'ubuntu'
       env:
