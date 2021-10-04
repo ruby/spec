@@ -18,7 +18,7 @@ describe :string_partition, shared: true do
     end
   end
 
-  ruby_version_is ''...'3.0.0' do
+  ruby_version_is ''...'3.0' do
     it "returns subclass instances when called on a subclass" do
       StringSpecs::MyString.new("hello").send(@method, StringSpecs::MyString.new("l")).each do |item|
         item.should be_an_instance_of(StringSpecs::MyString)
