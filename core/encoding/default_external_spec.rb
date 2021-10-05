@@ -20,7 +20,7 @@ describe "Encoding.default_external" do
 
   ruby_version_is "3.0" do
     platform_is :windows do
-      it 'returns default external encoding for Windows' do
+      it 'is UTF-8 by default on Windows' do
         Encoding.default_external.should == Encoding::UTF_8
       end
     end
