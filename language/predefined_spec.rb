@@ -1099,8 +1099,8 @@ The following constants are defined by the Ruby interpreter.
 DATA                 IO          If the main program file contains the directive __END__, then
                                  the constant DATA will be initialized so that reading from it will
                                  return lines following __END__ from the source file.
-FALSE                FalseClass  Synonym for false (deprecated in Ruby 3).
-NIL                  NilClass    Synonym for nil (deprecated in Ruby 3).
+FALSE                FalseClass  Synonym for false (deprecated, removed in Ruby 3).
+NIL                  NilClass    Synonym for nil (deprecated, removed in Ruby 3).
 RUBY_PLATFORM        String      The identifier of the platform running this program. This string
                                  is in the same form as the platform identifier used by the GNU
                                  configure utility (which is not a coincidence).
@@ -1118,7 +1118,7 @@ SCRIPT_LINES__       Hash        If a constant SCRIPT_LINES__ is defined and ref
                                  the value.
 TOPLEVEL_BINDING     Binding     A Binding object representing the binding at Ruby’s top level—
                                  the level where programs are initially executed.
-TRUE                 TrueClass   Synonym for true (deprecated in Ruby 3).
+TRUE                 TrueClass   Synonym for true (deprecated, removed in Ruby 3).
 =end
 
 describe "The predefined global constants" do
