@@ -1129,7 +1129,7 @@ describe "The predefined global constants" do
       end
     end
 
-    ruby_version_is "2.7"..."3.0" do
+    ruby_version_is ""..."3.0" do
       it "includes TRUE" do
         Object.const_defined?(:TRUE).should == true
         -> { TRUE }.should complain(/constant ::TRUE is deprecated/)
@@ -1144,7 +1144,7 @@ describe "The predefined global constants" do
       end
     end
 
-    ruby_version_is "2.7"..."3.0" do
+    ruby_version_is ""..."3.0" do
       it "includes FALSE" do
         Object.const_defined?(:FALSE).should == true
         -> { FALSE }.should complain(/constant ::FALSE is deprecated/)
@@ -1159,7 +1159,7 @@ describe "The predefined global constants" do
       end
     end
 
-    ruby_version_is "2.7"..."3.0" do
+    ruby_version_is ""..."3.0" do
       it "includes NIL" do
         Object.const_defined?(:NIL).should == true
         -> { NIL }.should complain(/constant ::NIL is deprecated/)
