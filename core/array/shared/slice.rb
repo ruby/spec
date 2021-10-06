@@ -533,6 +533,25 @@ describe :array_slice, shared: true do
     a.send(@method, eval("(-9...)")).should == nil
   end
 
+  ruby_version_is "3.0" do
+    it "can be sliced with Enumerator::ArithmeticSequence" do
+      a = [0, 1, 2, 3, 4, 5]
+      a.send(@method, eval("(0..).step(2)")).should == [0, 2, 4]
+      a.send(@method, eval("(0..).step(3)")).should == [0, 3]
+      a.send(@method, eval("(0..).step(10)")).should == [0]
+      a.send(@method, eval("(0..1).step(2)")).should == [0]
+      a.send(@method, eval("(..0).step(1)")).should == [0]
+      a.send(@method, eval("(...0).step(1)")).should == []
+      a.send(@method, eval("(2..).step(2)")).should == [2, 4]
+      a.send(@method, eval("(2..-2).step(2)")).should == [2, 4]
+      a.send(@method, eval("(2...-2).step(2)")).should == [2]
+      a.send(@method, eval("(2..).step(-2)")).should == [2, 0]
+      a.send(@method, eval("(2..).step(-3)")).should == [2]
+      a.send(@method, eval("(..-2).step(2)")).should == [0, 2, 4]
+      a.send(@method, eval("(...-2).step(2)")).should == [0, 2]
+    end
+  end
+
   ruby_version_is "2.7" do
     it "can accept beginless ranges" do
       a = [0, 1, 2, 3, 4, 5]
