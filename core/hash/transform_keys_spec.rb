@@ -42,6 +42,12 @@ describe "Hash#transform_keys" do
     r.keys.should == [:xfoo]
     r.class.should == Hash
   end
+
+  ruby_version_is "3.0" do
+    it "allows a hash argument" do
+      @hash.transform_keys({ a: :A, b: :B, c: :C }).should == { A: 1, B: 2, C: 3 }
+    end
+  end
 end
 
 describe "Hash#transform_keys!" do
@@ -98,6 +104,13 @@ describe "Hash#transform_keys!" do
     end
   end
 
+  ruby_version_is "3.0" do
+    it "allows a hash argument" do
+      @hash.transform_keys!({ a: :A, b: :B, c: :C, d: :D })
+      @hash.should == { A: 1, B: 2, C: 3, D: 4 }
+    end
+  end
+
   describe "on frozen instance" do
     before :each do
       @hash.freeze
@@ -110,6 +123,12 @@ describe "Hash#transform_keys!" do
     it "keeps pairs and raises a FrozenError" do
       ->{ @hash.transform_keys!(&:upcase) }.should raise_error(FrozenError)
       @hash.should == @initial_pairs
+    end
+
+    ruby_version_is "3.0" do
+      it "raises a FrozenError on hash argument" do
+       ->{ @hash.transform_keys!({ a: :A, b: :B, c: :C }) }.should raise_error(FrozenError)
+      end
     end
 
     context "when no block is given" do
