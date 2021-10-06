@@ -42,7 +42,7 @@ ruby_version_is "2.7" do
           RUBY
         end
 
-        it "captures both predecing and following elements to the pattern" do
+        it "captures both preceding and following elements to the pattern" do
           eval(<<~RUBY).should == [[0, 1], [3, 4]]
             case [0, 1, 2, 3, 4]
             in [*pre, 2, *post]
