@@ -10,12 +10,49 @@ ruby_version_is "2.7" do
     end
 
     ruby_version_is "3.0" do
-      it "can be standalone assoc operator that deconstructs value" do
-        suppress_warning do
-          eval(<<-RUBY).should == [0, 1]
-            [0, 1] => [a, b]
-            [a, b]
-          RUBY
+      describe "Rightward assignment (`=>`)" do
+        it "can be standalone assoc operator that deconstructs value" do
+          suppress_warning do
+            eval(<<~RUBY).should == [0, 1]
+              [0, 1] => [a, b]
+              [a, b]
+            RUBY
+          end
+        end
+
+        it "can work with keywords" do
+          suppress_warning do
+            eval(<<~RUBY).should == [0, 1]
+              { a: 0, b: 1 } => { a:, b: }
+              [a, b]
+            RUBY
+          end
+        end
+      end
+
+      describe "One-line pattern matching" do
+        it "can be used to check if a pattern matches for Array-like entities" do
+          suppress_warning do
+            eval(<<~RUBY).should == true
+              [0, 1] in [a, b]
+            RUBY
+
+            eval(<<~RUBY).should == false
+              [0, 1] in [a, b, c]
+            RUBY
+          end
+        end
+
+        it "can be used to check if a pattern matches for Hash-like entities" do
+          suppress_warning do
+            eval(<<~RUBY).should == true
+              { a: 0, b: 1 } in { a:, b: }
+            RUBY
+
+            eval(<<~RUBY).should == false
+              { a: 0, b: 1 } in { a:, b:, c: }
+            RUBY
+          end
         end
       end
     end
@@ -1133,6 +1170,16 @@ ruby_version_is "2.7" do
         end
 
         result.should == true
+      end
+    end
+
+    ruby_version_is ""..."2.7" do
+      it "raises NoMatchingPatternError if no pattern matches for one-line patterns" do
+        -> {
+          eval <<~RUBY
+            0 in 1
+          RUBY
+        }.should raise_error(NoMatchingPatternError, /\[0, 1\]/)
       end
     end
 
