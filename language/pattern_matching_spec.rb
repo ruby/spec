@@ -18,6 +18,63 @@ ruby_version_is "2.7" do
           RUBY
         end
       end
+
+      describe "find pattern" do
+        it "captures preceding elements to the pattern" do
+          eval(<<~RUBY).should == [0, 1]
+            case [0, 1, 2, 3]
+            in [*pre, 2, 3]
+              pre
+            else
+              false
+            end
+          RUBY
+        end
+
+        it "captures following elements to the pattern" do
+          eval(<<~RUBY).should == [2, 3]
+            case [0, 1, 2, 3]
+            in [0, 1, *post]
+              post
+            else
+              false
+            end
+          RUBY
+        end
+
+        it "captures both predecing and following elements to the pattern" do
+          eval(<<~RUBY).should == [[0, 1], [3, 4]]
+            case [0, 1, 2, 3, 4]
+            in [*pre, 2, *post]
+              [pre, post]
+            else
+              false
+            end
+          RUBY
+        end
+
+        it "can capture the entirety of the pattern" do
+          eval(<<~RUBY).should == [0, 1, 2, 3, 4]
+            case [0, 1, 2, 3, 4]
+            in [*everything]
+              everything
+            else
+              false
+            end
+          RUBY
+        end
+
+        it "will match an empty Array-like structure" do
+          eval(<<~RUBY).should == []
+            case []
+            in [*everything]
+              everything
+            else
+              false
+            end
+          RUBY
+        end
+      end
     end
 
     it "extends case expression with case/in construction" do
