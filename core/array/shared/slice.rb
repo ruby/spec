@@ -536,6 +536,7 @@ describe :array_slice, shared: true do
   ruby_version_is "3.0" do
     it "can be sliced with Enumerator::ArithmeticSequence" do
       a = [0, 1, 2, 3, 4, 5]
+      a.send(@method, eval("(0..).step(1)")).should == [0, 1, 2, 3, 4, 5]
       a.send(@method, eval("(0..).step(2)")).should == [0, 2, 4]
       a.send(@method, eval("(0..).step(3)")).should == [0, 3]
       a.send(@method, eval("(0..).step(10)")).should == [0]
