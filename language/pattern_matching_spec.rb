@@ -98,25 +98,49 @@ ruby_version_is "2.7" do
     end
 
     describe "warning" do
-      ruby_version_is ""..."3.1" do
-        before :each do
-          ruby_version_is ""..."3.0" do
-            @src = 'case [0, 1]; in [a, b]; end'
-          end
+      before :each do
+        @experimental, Warning[:experimental] = Warning[:experimental], true
+      end
 
-          ruby_version_is "3.0" do
+      after :each do
+        Warning[:experimental] = @experimental
+      end
+
+      context 'when regular form' do
+        before :each do
+          @src = 'case [0, 1]; in [a, b]; end'
+        end
+
+        ruby_version_is ""..."3.0" do
+          it "warns about pattern matching is experimental feature" do
+            -> { eval @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
+          end
+        end
+
+        ruby_version_is "3.0" do
+          it "does not warn about pattern matching is experimental feature" do
+            -> { eval @src }.should_not complain
+          end
+        end
+      end
+
+      context 'when one-line form' do
+        ruby_version_is '3.0' do
+          before :each do
             @src = '[0, 1] => [a, b]'
           end
 
-          @experimental, Warning[:experimental] = Warning[:experimental], true
-        end
+          ruby_version_is ""..."3.1" do
+            it "warns about pattern matching is experimental feature" do
+              -> { eval @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
+            end
+          end
 
-        after :each do
-          Warning[:experimental] = @experimental
-        end
-
-        it "warns about pattern matching is experimental feature" do
-          -> { eval @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
+          ruby_version_is "3.1" do
+            it "does not warn about pattern matching is experimental feature" do
+              -> { eval @src }.should_not complain
+            end
+          end
         end
       end
     end
