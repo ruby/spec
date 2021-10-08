@@ -1873,3 +1873,44 @@ ruby_version_is '3.0' do
     end
   end
 end
+
+ruby_version_is "3.1" do
+  describe "kwarg with omitted value in a method call" do
+    context "accepts short notation 'kwarg' in method call" do
+      evaluate <<-ruby do
+          def call(*args, **kwargs) = [args, kwargs]
+        ruby
+
+        a, b, c = 1, 2, 3
+        arr, h = eval('call a:')
+        h.should == {a: 1}
+        arr.should == []
+
+        arr, h = eval('call(a:, b:, c:)')
+        h.should == {a: 1, b: 2, c: 3}
+        arr.should == []
+
+        arr, h = eval('call(a:, b: 10, c:)')
+        h.should == {a: 1, b: 10, c: 3}
+        arr.should == []
+      end
+    end
+
+    context "with methods and local variables" do
+      evaluate <<-ruby do
+          def call(*args, **kwargs) = [args, kwargs]
+
+          def bar
+            "baz"
+          end
+
+          def foo(val)
+            call bar:, val:
+          end
+        ruby
+
+        foo(1).should == [[], {bar: "baz", val: 1}]
+      end
+    end
+  end
+end
