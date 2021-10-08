@@ -18,12 +18,12 @@ ruby_version_is "3.0" do
       (Set[1, 2, 3] <=> Set[1, 2]).should == +1
     end
 
-    it "returns nil if set has unique elements" do
+    it "returns nil if the set has unique elements" do
       (Set[1, 2, 3] <=> Set[:a, :b, :c]).should be_nil
     end
 
     it "returns nil when the argument is not set-like" do
-      (Set[1, 2, 3] <=> false).should be_nil
+      (Set[] <=> false).should be_nil
     end
   end
 end
