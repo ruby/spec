@@ -525,6 +525,28 @@ ruby_version_is "2.7" do
           end
         RUBY
       end
+
+      it "can be used as a nested pattern" do
+        eval(<<~RUBY).should == true
+          case [[1], ["2"]]
+            in [[0] | nil, _]
+              false
+            in [[1], [1]]
+              false
+            in [[1], [2 | "2"]]
+              true
+          end
+        RUBY
+
+        eval(<<~RUBY).should == true
+          case [1, 2]
+            in [0, _] | {a: 0}
+              false
+            in {a: 1, b: 2} | [1, 2]
+              true
+          end
+        RUBY
+      end
     end
 
     describe "AS pattern" do
@@ -783,6 +805,28 @@ ruby_version_is "2.7" do
           case [0, 1]
           in *;
             true
+          end
+        RUBY
+      end
+
+      it "can be used as a nested pattern" do
+        eval(<<~RUBY).should == true
+          case [[1], ["2"]]
+            in [[0] | nil, _]
+              false
+            in [[1], [1]]
+              false
+            in [[1], [2 | "2"]]
+              true
+          end
+        RUBY
+
+        eval(<<~RUBY).should == true
+          case [1, 2]
+            in [0, _] | {a: 0}
+              false
+            in {a: 1, b: 2} | [1, 2]
+              true
           end
         RUBY
       end
@@ -1138,6 +1182,30 @@ ruby_version_is "2.7" do
           case {a: 1}
           in **;
             true
+          end
+        RUBY
+      end
+
+      it "can be used as a nested pattern" do
+        eval(<<~RUBY).should == true
+          case {a: {a: 1, b: 1}, b: {a: 1, b: 2}}
+            in {a: {a: 0}}
+              false
+            in {a: {a: 1}, b: {b: 1}}
+              false
+            in {a: {a: 1}, b: {b: 2}}
+              true
+          end
+        RUBY
+
+        eval(<<~RUBY).should == true
+          case [{a: 1, b: [1]}, {a: 1, c: ["2"]}]
+            in [{a:, c:},]
+              false
+            in [{a: 1, b:}, {a: 1, c: [Integer]}]
+              false
+            in [_, {a: 1, c: [String]}]
+              true
           end
         RUBY
       end
