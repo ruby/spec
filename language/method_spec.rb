@@ -1861,15 +1861,51 @@ describe "An array-dereference method ([])" do
   end
 end
 
-ruby_version_is '3.0' do
+ruby_version_is "3.0" do
   describe "An endless method definition" do
-    evaluate <<-ruby do
-      def m(a) = a
-    ruby
+    context "without arguments" do
+      evaluate <<-ruby do
+          def m() = 42
+        ruby
 
-      a = b = m 1
-      a.should == 1
-      b.should == 1
+        m.should == 42
+      end
+    end
+
+    context "with arguments" do
+      evaluate <<-ruby do
+          def m(a, b) = a + b
+        ruby
+
+        m(1, 4).should == 5
+      end
+    end
+
+    context "with multiline body" do
+      evaluate <<-ruby do
+          def m(n) =
+            if n > 2
+              m(n - 2) + m(n - 1)
+            else
+              1
+            end
+        ruby
+
+        m(6).should == 8
+      end
+    end
+
+    context "with args forwarding" do
+      evaluate <<-ruby do
+          def mm(word, num:)
+            word * num
+          end
+
+          def m(...) = mm(...) + mm(...)
+        ruby
+
+        m("meow", num: 2).should == "meow" * 4
+      end
     end
   end
 end
