@@ -32,7 +32,7 @@ jobs:
       env:
         CHECK_LEAKS: true
       # Use a larger timeout on macOS since it seems to have less reliable performance
-      run: ../mspec/bin/mspec --timeout 60
+      run: ../mspec/bin/mspec --timeout 90
 
     - name: Run specs (Windows)
       if: matrix.os == 'windows'
