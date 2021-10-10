@@ -172,6 +172,21 @@ describe "Defining yield in singleton class" do
       -> { eval(code) }.should complain(/warning: `yield' in class syntax will not be supported from Ruby 3.0/)
     end
   end
+
+  ruby_version_is "3.0" do
+    it 'raises a SyntaxError' do
+      code = <<~RUBY
+          def m
+            class << Object.new
+              yield
+            end
+          end
+          m { :ok }
+        RUBY
+
+      -> { eval(code) }.should raise_error(SyntaxError, /Invalid yield/)
+    end
+  end
 end
 
 describe "Defining instance methods on a singleton class" do
