@@ -47,6 +47,14 @@ describe "Hash#transform_keys" do
     it "allows a hash argument" do
       @hash.transform_keys({ a: :A, b: :B, c: :C }).should == { A: 1, B: 2, C: 3 }
     end
+
+    it "allows a partial transformation of keys when using a hash argument" do
+      @hash.transform_keys({ a: :A, c: :C }).should == { A: 1, b: 2, C: 3 }
+    end
+
+    it "allows a combination of hash and block argument" do
+      @hash.transform_keys({ a: :A }, &:to_s).should == { A: 1, 'b' => 2, 'c' => 3 }
+    end
   end
 end
 
