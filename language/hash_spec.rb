@@ -244,7 +244,7 @@ describe "The ** operator" do
 
       it "accepts mixed syntax" do
         a, e = 1, 5
-        h = eval('{a:, :b => 2, "c" => 3, :d => 4, e:}')
+        h = eval('{a:, b: 2, "c" => 3, :d => 4, e:}')
         eval('{a: 1, :b => 2, "c" => 3, "d": 4, e: 5}').should == h
       end
 
