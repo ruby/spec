@@ -75,5 +75,12 @@ describe :tcpsocket_new, shared: true do
       @socket.addr[1].should be_kind_of(Integer)
       @socket.addr[2].should =~ /^#{@hostname}/
     end
+
+    ruby_version_is "3.0" do
+      it "connects to a server when passed connect_timeout argument" do
+        @socket = TCPSocket.send(@method, @hostname, @server.port, connect_timeout: 1)
+        @socket.should be_an_instance_of(TCPSocket)
+      end
+    end
   end
 end
