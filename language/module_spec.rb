@@ -128,8 +128,8 @@ ruby_version_is "3.0" do
   end
 
   describe "Prepend" do
-    context "when the include in the module is done after the include in the class" do
-      it "includes the M1 and M2 module" do
+    context "when the prepend in the module is done after the prepend in the class" do
+      it "prepends the M1 and M2 module" do
         class G; end
         module H1; end
         module I2; end
@@ -140,8 +140,8 @@ ruby_version_is "3.0" do
       end
     end
 
-    context "when the include in the module is done before the include in the class" do
-      it "includes the M1 and M2 module" do
+    context "when the prepend in the module is done before the prepend in the class" do
+      it "prepends the M1 and M2 module" do
         class J; end
         module K1; end
         module L2; end
