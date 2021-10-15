@@ -1908,6 +1908,58 @@ ruby_version_is "3.0" do
       end
     end
   end
+
+  describe "Keyword arguments are now separated from positional arguments" do
+    context "with a keyword argument defined in args" do
+      context "when it's not used explicity" do
+        evaluate <<-ruby do
+            def foo(a, b, c, hsh)
+              hsh[:key]
+            end
+          ruby
+
+          foo(1, 2, 3, { key: 42 }).should raise_error(ArgumentError)
+        end
+      end
+
+      context "when it's used explicity" do
+        evaluate <<-ruby do
+            def foo(a, b, c, **hsh)
+              hsh[:key]
+            end
+          ruby
+
+          foo(1, 2, 3, { key: 42 }).should == 42
+        end
+      end
+    end
+
+    context "with a keyword argument in method call" do
+      context "when it's not used explicity" do
+        evaluate <<-ruby do
+            def foo(a, b, c, key: 1)
+              hsh[:key]
+            end
+          ruby
+
+          h = { key: 42 }
+          foo(1, 2, 3, h).should raise_error(ArgumentError)
+        end
+      end
+
+      context "when it's used explicity" do
+        evaluate <<-ruby do
+            def foo(a, b, c, key: 1)
+              hsh[:key]
+            end
+          ruby
+
+          h = { key: 42 }
+          foo(1, 2, 3, **h).should == 42
+        end
+      end
+    end
+  end
 end
 
 ruby_version_is "3.1" do
