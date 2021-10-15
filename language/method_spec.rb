@@ -1910,32 +1910,30 @@ ruby_version_is "3.0" do
   end
 
   describe "Keyword arguments are now separated from positional arguments" do
-    context "with a keyword argument defined in args" do
-      context "when it's not used explicity" do
-        evaluate <<-ruby do
-            def foo(a, b, c, hsh)
-              hsh[:key]
-            end
-          ruby
+    context "when the method has only positional parameters" do
+      evaluate <<-ruby do
+          def foo(a, b, c, hsh)
+            hsh[:key]
+          end
+        ruby
 
-          foo(1, 2, 3, { key: 42 }).should raise_error(ArgumentError)
-        end
-      end
-
-      context "when it's used explicity" do
-        evaluate <<-ruby do
-            def foo(a, b, c, **hsh)
-              hsh[:key]
-            end
-          ruby
-
-          foo(1, 2, 3, { key: 42 }).should == 42
-        end
+        foo(1, 2, 3, key: 42).should raise_error(ArgumentError)
       end
     end
 
-    context "with a keyword argument in method call" do
-      context "when it's not used explicity" do
+    context "when the method takes a ** paramater" do
+      evaluate <<-ruby do
+          def foo(a, b, c, **hsh)
+            hsh[:key]
+          end
+        ruby
+
+        foo(1, 2, 3, key: 42).should == 42
+      end
+    end
+
+    context "when the method takes a key: paramater" do
+      context "when it's called with no **" do
         evaluate <<-ruby do
             def foo(a, b, c, key: 1)
               hsh[:key]
@@ -1947,7 +1945,7 @@ ruby_version_is "3.0" do
         end
       end
 
-      context "when it's used explicity" do
+      context "when it's called with **" do
         evaluate <<-ruby do
             def foo(a, b, c, key: 1)
               hsh[:key]
