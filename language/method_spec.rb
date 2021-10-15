@@ -1911,46 +1911,62 @@ ruby_version_is "3.0" do
 
   describe "Keyword arguments are now separated from positional arguments" do
     context "when the method has only positional parameters" do
-      evaluate <<-ruby do
-          def foo(a, b, c, hsh)
-            hsh[:key]
-          end
-        ruby
-
-        foo(1, 2, 3, key: 42).should raise_error(ArgumentError)
-      end
-    end
-
-    context "when the method takes a ** paramater" do
-      evaluate <<-ruby do
-          def foo(a, b, c, **hsh)
-            hsh[:key]
-          end
-        ruby
+      it "treats incoming keyword arguments as positional for compatibility" do
+        def foo(a, b, c, hsh)
+          hsh[:key]
+        end
 
         foo(1, 2, 3, key: 42).should == 42
       end
     end
 
-    context "when the method takes a key: paramater" do
-      context "when it's called with no **" do
-        evaluate <<-ruby do
-            def foo(a, b, c, key: 1)
-              hsh[:key]
-            end
-          ruby
+    context "when the method takes a ** parameter" do
+      it "captures the passed literal keyword arguments" do
+        def foo(a, b, c, **hsh)
+          hsh[:key]
+        end
 
-          h = { key: 42 }
-          foo(1, 2, 3, h).should raise_error(ArgumentError)
+        foo(1, 2, 3, key: 42).should == 42
+      end
+
+      it "captures the passed ** keyword arguments" do
+        def foo(a, b, c, **hsh)
+          hsh[:key]
+        end
+
+        h = { key: 42 }
+        foo(1, 2, 3, **h).should == 42
+      end
+
+      it "does not convert a positional Hash to keyword arguments" do
+        def foo(a, b, c, **hsh)
+          hsh[:key]
+        end
+
+        -> {
+          foo(1, 2, 3, { key: 42 })
+        }.should raise_error(ArgumentError, 'wrong number of arguments (given 4, expected 3)')
+      end
+    end
+
+    context "when the method takes a key: parameter" do
+      context "when it's called with a positional Hash and no **" do
+        it "raises ArgumentError" do
+          def foo(a, b, c, key: 1)
+            key
+          end
+
+          -> {
+            foo(1, 2, 3, { key: 42 })
+          }.should raise_error(ArgumentError, 'wrong number of arguments (given 4, expected 3)')
         end
       end
 
       context "when it's called with **" do
-        evaluate <<-ruby do
-            def foo(a, b, c, key: 1)
-              hsh[:key]
-            end
-          ruby
+        it "captures the passed keyword arguments" do
+          def foo(a, b, c, key: 1)
+            key
+          end
 
           h = { key: 42 }
           foo(1, 2, 3, **h).should == 42
