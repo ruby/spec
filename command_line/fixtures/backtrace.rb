@@ -10,8 +10,26 @@ def c
   b
 end
 
-def e
+def d
   c
 end
 
-e
+arg = ARGV.first
+$stderr.puts arg
+
+case arg
+when 'full_message'
+  begin
+    d
+  rescue => exc
+    puts exc.full_message
+  end
+when 'backtrace'
+  begin
+    d
+  rescue => exc
+    puts exc.backtrace
+  end
+else
+  d
+end
