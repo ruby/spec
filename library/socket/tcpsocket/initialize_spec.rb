@@ -7,6 +7,12 @@ describe 'TCPSocket#initialize' do
       it 'raises Errno::ECONNREFUSED' do
         -> { TCPSocket.new(ip_address, 666) }.should raise_error(Errno::ECONNREFUSED)
       end
+
+      it 'raises Errno::ETIMEDOUT with :connect_timeout' do
+        -> {
+          TCPSocket.new("192.0.2.1", 80, connect_timeout: 0)
+        }.should raise_error(Errno::ETIMEDOUT)
+      end
     end
 
     describe 'when a server is listening on the given address' do
@@ -56,14 +62,6 @@ describe 'TCPSocket#initialize' do
           @client.local_address.ip_port.should_not == @port
         end
       end
-
-    describe 'when server connection is timeout' do
-      ruby_version_is "3.0" do
-        it 'raises Errno::ETIMEDOUT' do
-          -> { TCPSocket.new(ip_address, @port, connect_timeout: 0) }.should raise_error(Errno::ETIMEDOUT)
-        end
-      end
-    end
     end
   end
 end
