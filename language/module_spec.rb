@@ -99,3 +99,57 @@ describe "Assigning an anonymous module to a constant" do
     d.name.should == "ModuleSpecs_CS2::D"
   end
 end
+
+ruby_version_is "3.0" do
+  describe "Include" do
+    context "when the include in the module is done after the include in the class" do
+      it "includes the M1 and M2 module" do
+        class A; end
+        module B1; end
+        module C2; end
+
+        A.include B1
+        B1.include C2
+        A.ancestors.should == [A, B1, C2, Object, ModuleSpecs::IncludedInObject, PP::ObjectMixin, Kernel, BasicObject]
+      end
+    end
+
+    context "when the include in the module is done before the include in the class" do
+      it "includes the M1 and M2 module" do
+        class D; end
+        module E1; end
+        module F2; end
+
+        E1.include F2
+        D.include E1
+        D.ancestors.should == [D, E1, F2, Object, ModuleSpecs::IncludedInObject, PP::ObjectMixin, Kernel, BasicObject]
+      end
+    end
+  end
+
+  describe "Prepend" do
+    context "when the include in the module is done after the include in the class" do
+      it "includes the M1 and M2 module" do
+        class G; end
+        module H1; end
+        module I2; end
+
+        G.prepend H1
+        H1.prepend I2
+        G.ancestors.should == [I2, H1, G, Object, ModuleSpecs::IncludedInObject, PP::ObjectMixin, Kernel, BasicObject]
+      end
+    end
+
+    context "when the include in the module is done before the include in the class" do
+      it "includes the M1 and M2 module" do
+        class J; end
+        module K1; end
+        module L2; end
+
+        K1.prepend L2
+        J.prepend K1
+        J.ancestors.should == [L2, K1, J, Object, ModuleSpecs::IncludedInObject, PP::ObjectMixin, Kernel, BasicObject]
+      end
+    end
+  end
+end
