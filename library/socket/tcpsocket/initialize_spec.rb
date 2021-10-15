@@ -1,17 +1,16 @@
 require_relative '../spec_helper'
 require_relative '../fixtures/classes'
+require_relative 'shared/new'
+
+describe 'TCPSocket#initialize' do
+  it_behaves_like :tcpsocket_new, :new
+end
 
 describe 'TCPSocket#initialize' do
   SocketSpecs.each_ip_protocol do |family, ip_address|
     describe 'when no server is listening on the given address' do
       it 'raises Errno::ECONNREFUSED' do
         -> { TCPSocket.new(ip_address, 666) }.should raise_error(Errno::ECONNREFUSED)
-      end
-
-      it 'raises Errno::ETIMEDOUT with :connect_timeout' do
-        -> {
-          TCPSocket.new("192.0.2.1", 80, connect_timeout: 0)
-        }.should raise_error(Errno::ETIMEDOUT)
       end
     end
 
