@@ -10,23 +10,6 @@ describe "Exception#backtrace" do
     Exception.new.backtrace.should be_nil
   end
 
-
-  ruby_version_is "3.0" do
-    it "returns limited lines when using `backtrace-limit` command line option" do
-      file = fixture(__FILE__ , "backtrace.rb")
-      lines = ruby_exe("core/kernel/fixtures/backtrace.rb", options: "--backtrace-limit=2", args: "2>&1", exit_status: 1).lines
-
-      expected_output = <<-MSG
-core/kernel/fixtures/backtrace.rb:2:in `a': unhandled exception
- \tfrom core/kernel/fixtures/backtrace.rb:6:in `b'
- \tfrom core/kernel/fixtures/backtrace.rb:11:in `c'
- \t ... 2 levels...
-MSG
-
-      lines.join(" ").should == expected_output
-    end
-  end
-
   it "returns an Array" do
     @backtrace.should be_an_instance_of(Array)
   end
