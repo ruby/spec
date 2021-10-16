@@ -182,6 +182,16 @@ describe "Kernel#eval" do
     end
   end
 
+  ruby_version_is "3.0" do
+    context 'with two arguments ' do
+      platform_is_not :windows do
+        it 'will use (eval) for __FILE__ and 1 for __LINE__' do
+          eval("p [__FILE__, __LINE__]", binding).should == ["(eval)", 1]
+        end
+      end
+    end
+  end
+
   # Found via Rubinius bug github:#149
   it "does not alter the value of __FILE__ in the binding" do
     first_time =  EvalSpecs.call_eval
