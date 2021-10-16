@@ -1,9 +1,9 @@
 require_relative '../../spec_helper'
 require 'set'
 
-describe "Set#clone" do
+describe "Set#initialize_clone" do
   ruby_version_is "3.0" do
-    it "does not freeze the new Set" do
+    it "does not freeze the new Set when called from clone(freeze: false)" do
       set1 = Set[1, 2]
       set1.freeze
       set2 = set1.clone(freeze: false)
