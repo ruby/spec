@@ -14,10 +14,12 @@ describe :tcpsocket_new, shared: true do
     }
   end
 
-  it 'raises Errno::ETIMEDOUT with :connect_timeout when no server is listening on the given address' do
-    -> {
-      TCPSocket.send(@method, "192.0.2.1", 80, connect_timeout: 0)
-    }.should raise_error(Errno::ETIMEDOUT)
+  ruby_version_is "3.0" do
+    it 'raises Errno::ETIMEDOUT with :connect_timeout when no server is listening on the given address' do
+      -> {
+        TCPSocket.send(@method, "192.0.2.1", 80, connect_timeout: 0)
+      }.should raise_error(Errno::ETIMEDOUT)
+    end
   end
 
   describe "with a running server" do
