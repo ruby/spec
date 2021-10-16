@@ -3,6 +3,7 @@ require 'set'
 
 describe "Set#initialize_clone" do
   ruby_version_is "3.0" do
+    # See https://bugs.ruby-lang.org/issues/14266
     it "does not freeze the new Set when called from clone(freeze: false)" do
       set1 = Set[1, 2]
       set1.freeze
