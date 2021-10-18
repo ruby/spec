@@ -2,30 +2,6 @@ require_relative '../../spec_helper'
 require_relative 'fixtures/common'
 
 describe "ENV.shift" do
-  it "returns a pair and deletes it" do
-    ENV.should_not.empty?
-    orig = ENV.to_hash
-    begin
-      pair = ENV.shift
-      ENV.has_key?(pair.first).should == false
-    ensure
-      ENV.replace orig
-    end
-    ENV.has_key?(pair.first).should == true
-  end
-
-  it "returns nil if ENV.empty?" do
-    orig = ENV.to_hash
-    begin
-      ENV.clear
-      ENV.shift.should == nil
-    ensure
-      ENV.replace orig
-    end
-  end
-end
-
-describe "ENV.shift" do
   before :each do
     @orig = ENV.to_hash
     @external = Encoding.default_external
@@ -39,6 +15,18 @@ describe "ENV.shift" do
     Encoding.default_external = @external
     Encoding.default_internal = @internal
     ENV.replace @orig
+  end
+
+  it "returns a pair and deletes it" do
+    ENV.should.has_key?("FOO")
+    pair = ENV.shift
+    pair.should == ["FOO", "BAR"]
+    ENV.should_not.has_key?("FOO")
+  end
+
+  it "returns nil if ENV.empty?" do
+    ENV.clear
+    ENV.shift.should == nil
   end
 
   it "uses the locale encoding if Encoding.default_internal is nil" do
