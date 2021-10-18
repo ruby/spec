@@ -32,6 +32,7 @@ describe "ENV.shift" do
     @internal = Encoding.default_internal
 
     Encoding.default_external = Encoding::BINARY
+    ENV.replace({"FOO"=>"BAR"})
   end
 
   after :each do
