@@ -8,4 +8,10 @@ describe "Hash#each" do
   it_behaves_like :hash_each, :each
   it_behaves_like :hash_iteration_no_block, :each
   it_behaves_like :enumeratorized_with_origin_size, :each, { 1 => 2, 3 => 4, 5 => 6 }
+
+  ruby_version_is "3.0" do
+    it 'consistently yields a 2-element array' do
+      -> { { a: 1 }.each(&->(k, v) { }) }.should raise_error(ArgumentError)
+    end
+  end
 end
