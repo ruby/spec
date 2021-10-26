@@ -82,3 +82,13 @@ describe 'A class variable definition' do
     c.class_variable_get(:@@cv).should == :next
   end
 end
+
+describe 'Class variable overtaking' do
+  it "raises Runtime error when a defined class variable is overtaken" do
+    -> do
+      eval <<-CODE
+        @@cvar_a = :new_val
+      CODE
+    end.should raise_error(RuntimeError, /class variable access from toplevel/)
+  end
+end
