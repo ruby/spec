@@ -83,12 +83,14 @@ describe 'A class variable definition' do
   end
 end
 
-describe 'Class variable overtaking' do
-  it "raises Runtime error when a defined class variable is overtaken" do
-    -> do
-      eval <<-CODE
-        @@cvar_a = :new_val
-      CODE
-    end.should raise_error(RuntimeError, /class variable access from toplevel/)
+ruby_version_is "3.0" do
+  describe 'Class variable overtaking' do
+    it "raises Runtime error when a defined class variable is overtaken" do
+      -> do
+        eval <<-CODE
+          @@cvar_a = :new_val
+        CODE
+      end.should raise_error(RuntimeError, /class variable access from toplevel/)
+    end
   end
 end
