@@ -92,5 +92,14 @@ ruby_version_is "3.0" do
         CODE
       end.should raise_error(RuntimeError, /class variable access from toplevel/)
     end
+
+    it "raises Runtime error when a child class variable is overtaken" do
+      a = Class.new()
+      b = Class.new(a)
+      b.class_variable_set(:@@cvar, :value)
+      a.class_variable_set(:@@cvar, :new_value)
+
+      -> { b.class_variable_get(:@@cvar) }.should raise_error(RuntimeError)
+    end
   end
 end
