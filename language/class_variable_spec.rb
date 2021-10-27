@@ -85,7 +85,7 @@ end
 
 ruby_version_is "3.0" do
   describe 'Class variable overtaking' do
-    it "raises Runtime error when a defined class variable is overtaken" do
+    it "accessing a class variable from the toplevel scope raises a RuntimeError" do
       -> do
         eval <<-CODE
           @@cvar_a = :new_val
@@ -93,7 +93,7 @@ ruby_version_is "3.0" do
       end.should raise_error(RuntimeError, /class variable access from toplevel/)
     end
 
-    it "raises Runtime error when a child class variable is overtaken" do
+    it "raises a RuntimeError when a class variable is overtaken by the same definition in an ancestor class" do
       a = Class.new()
       b = Class.new(a)
       b.class_variable_set(:@@cvar, :value)
