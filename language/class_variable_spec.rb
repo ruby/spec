@@ -84,22 +84,27 @@ describe 'A class variable definition' do
 end
 
 ruby_version_is "3.0" do
-  describe 'Class variable overtaking' do
-    it "accessing a class variable from the toplevel scope raises a RuntimeError" do
-      -> do
-        eval <<-CODE
-          @@cvar_a = :new_val
-        CODE
-      end.should raise_error(RuntimeError, /class variable access from toplevel/)
+  describe 'Accessing a class variable' do
+    it "raises a RuntimeError when accessed from the toplevel scope (not in some module or class)" do
+      -> {
+        eval "@@cvar_toplevel1"
+      }.should raise_error(RuntimeError, 'class variable access from toplevel')
+      -> {
+        eval "@@cvar_toplevel2 = 2"
+      }.should raise_error(RuntimeError, 'class variable access from toplevel')
     end
 
-    it "raises a RuntimeError when a class variable is overtaken by the same definition in an ancestor class" do
-      a = Class.new()
-      b = Class.new(a)
-      b.class_variable_set(:@@cvar, :value)
-      a.class_variable_set(:@@cvar, :new_value)
+    it "raises a RuntimeError when a class variable is overtaken in an ancestor class" do
+      parent = Class.new()
+      subclass = Class.new(parent)
+      subclass.class_variable_set(:@@cvar_overtaken, :subclass)
+      parent.class_variable_set(:@@cvar_overtaken, :parent)
 
-      -> { b.class_variable_get(:@@cvar) }.should raise_error(RuntimeError)
+      -> {
+        subclass.class_variable_get(:@@cvar_overtaken)
+      }.should raise_error(RuntimeError, /class variable @@cvar_overtaken of .+ is overtaken by .+/)
+
+      parent.class_variable_get(:@@cvar_overtaken).should == :parent
     end
   end
 end
