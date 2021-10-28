@@ -29,7 +29,7 @@ describe :non_blocking_fiber, shared: true do
 
     it "returns false for blocking: false" do
       thread = Thread.new do
-        fiber = Fiber.new(blocking: false) { Fiber.blocking? }
+        fiber = Fiber.new(blocking: false) { @method.call }
         blocking = fiber.resume
 
         blocking.should == false
