@@ -6,4 +6,4 @@ H = {a: "a"}
 Ractor.new do
   A
   H
-end.take
+en.take
