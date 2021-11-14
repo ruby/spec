@@ -51,7 +51,6 @@ describe "Warning.warn" do
     end
   end
 
-
   ruby_version_is '3.0' do
     it "is called by Kernel.warn with nil category keyword" do
       Warning.should_receive(:warn).with("Chunky bacon!\n", category: nil)
@@ -69,10 +68,22 @@ describe "Warning.warn" do
       verbose = $VERBOSE
       $VERBOSE = false
       begin
-        Kernel.warn("Chunky bacon!", category: 'deprecated')
+        Kernel.warn("Chunky bacon!", category: "deprecated")
       ensure
         $VERBOSE = verbose
       end
+    end
+
+    it "is rising a TypeError if given category is not a Symbol or NilClass" do
+      -> { Warning.warn("Oops", category: 42) }.should raise_error(TypeError)
+      -> { Warning.warn("Oops", category: false) }.should raise_error(TypeError)
+      -> { Warning.warn("Oops", category: "deprecated") }.should raise_error(TypeError)
+    end
+
+    it "is rising an ArgumentError if given category is not from pre-defined list" do
+      -> { Warning.warn("Oops", category: :something) }.should raise_error(ArgumentError) { |e|
+        e.message.should include("unknown category: something")
+      }
     end
   end
 
