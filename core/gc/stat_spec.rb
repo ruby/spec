@@ -7,6 +7,16 @@ describe "GC.stat" do
     stat.keys.should.include?(:count)
   end
 
+  it "updates the given hash values" do
+    hash = { count: "hello", __other__: "world" }
+    stat = GC.stat(hash)
+
+    stat.should be_kind_of(Hash)
+    stat.should equal hash
+    stat[:count].should be_kind_of(Integer)
+    stat[:__other__].should == "world"
+  end
+
   it "the values are all Integer since rb_gc_stat() returns size_t" do
     GC.stat.values.each { |value| value.should be_kind_of(Integer) }
   end
