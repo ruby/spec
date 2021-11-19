@@ -51,4 +51,12 @@ describe "GC.stat" do
     GC.stat(:total_allocated_objects).should be_kind_of(Integer)
     GC.stat[:total_allocated_objects].should be_kind_of(Integer)
   end
+
+  it "raises an error if argument is not nil, a symbol, or a hash" do
+    -> { GC.stat(7) }.should raise_error(TypeError, "non-hash or symbol given")
+  end
+
+  it "raises an error if an unknown key is given" do
+    -> { GC.stat(:foo) }.should raise_error(ArgumentError, "unknown key: foo")
+  end
 end
