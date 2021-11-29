@@ -70,9 +70,9 @@ describe :dir_glob, shared: true do
 
   ruby_version_is "3.1" do
     it "raises an ArgumentError if sort: is not true or false" do
-      -> { Dir.send(@method, '*', sort: 0) }.should raise_error ArgumentError, /true or false is expected/
-      -> { Dir.send(@method, '*', sort: nil) }.should raise_error ArgumentError, /true or false is expected/
-      -> { Dir.send(@method, '*', sort: 'false') }.should raise_error ArgumentError, /true or false is expected/
+      -> { Dir.send(@method, '*', sort: 0) }.should raise_error ArgumentError, /expected true or false/
+      -> { Dir.send(@method, '*', sort: nil) }.should raise_error ArgumentError, /expected true or false/
+      -> { Dir.send(@method, '*', sort: 'false') }.should raise_error ArgumentError, /expected true or false/
     end
   end
 
