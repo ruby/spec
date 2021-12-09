@@ -810,6 +810,16 @@ describe 'Allowed characters' do
 
     result.should == 1
   end
+
+  it 'parses a non-ASCII upcased character as a constant identifier' do
+    -> do
+      eval <<-CODE
+        def test
+          ἍBB = 1
+        end
+      CODE
+    end.should raise_error(SyntaxError, /dynamic constant assignment/)
+  end
 end
 
 describe "Instance variables" do
