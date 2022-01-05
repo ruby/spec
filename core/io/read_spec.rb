@@ -262,6 +262,13 @@ describe "IO#read" do
     @io.read(nil, buf).should equal buf
   end
 
+  it "returns the given buffer when there is nothing to read" do
+    buf = ""
+
+    @io.read
+    @io.read(nil, buf).should equal buf
+  end
+
   it "coerces the second argument to string and uses it as a buffer" do
     buf = "ABCDE"
     obj = mock("buff")
