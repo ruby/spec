@@ -37,7 +37,7 @@ describe "Hash#to_a" do
     end
   end
 
-  ruby_version_is '2.7' do
+  ruby_version_is '2.7'...'3.0' do
     it "returns a not tainted array if self is tainted" do
       {}.taint.to_a.tainted?.should be_false
     end
