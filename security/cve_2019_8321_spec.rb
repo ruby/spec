@@ -1,9 +1,9 @@
 require_relative '../spec_helper'
 
-require 'rubygems'
-require 'rubygems/user_interaction'
-
 platform_is_not :darwin do # frequent timeout/hang on macOS
+  require 'rubygems'
+  require 'rubygems/user_interaction'
+
   describe "CVE-2019-8321 is resisted by" do
     it "sanitising verbose messages" do
       ui = Class.new {
