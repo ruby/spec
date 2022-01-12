@@ -12,6 +12,12 @@ describe "Integer#^" do
       (-1 ^ 2**64).should == -18446744073709551617
     end
 
+    it "coerces the rhs and calls #coerce" do
+      obj = mock("fixnum bit and")
+      obj.should_receive(:coerce).with(6).and_return([3, 6])
+      (6 ^ obj).should == 5
+    end
+
     it "raises a TypeError when passed a Float" do
       -> { (3 ^ 3.4) }.should raise_error(TypeError)
     end
