@@ -197,9 +197,9 @@ describe "Integer#<< (with n << m)" do
         coerce_long.stub!(:to_int).and_return(2**40)
         coerce_bignum = mock("bignum")
         coerce_bignum.stub!(:to_int).and_return(bignum_value)
-        exp = [2**40, bignum_value, coerce_long, coerce_bignum]
+        exps = [2**40, bignum_value, coerce_long, coerce_bignum]
 
-        exp.each { |exp|
+        exps.each { |exp|
           -> { (1 << exp) }.should raise_error(NoMemoryError)
           -> { (-1 << exp) }.should raise_error(NoMemoryError)
           -> { (bignum_value << exp) }.should raise_error(NoMemoryError)
