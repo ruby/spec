@@ -70,6 +70,10 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(1).should == "1"
   end
 
+  it "raises ArgumentError when length is less than 0" do
+    -> { @read.read_nonblock(-1) }.should raise_error(ArgumentError)
+  end
+
   it "reads into the passed buffer" do
     buffer = ""
     @write.write("1")
