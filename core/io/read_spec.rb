@@ -311,6 +311,9 @@ describe "IO#read" do
     -> { IOSpecs.closed_io.read }.should raise_error(IOError)
   end
 
+  it "raises ArgumentError when length is less than 0" do
+    -> { @io.read(-1) }.should raise_error(ArgumentError)
+  end
 
   platform_is_not :windows do
     it "raises IOError when stream is closed by another thread" do
