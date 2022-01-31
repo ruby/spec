@@ -59,7 +59,7 @@ describe "IO#readpartial" do
   end
 
   it "discards the existing buffer content upon successful read" do
-    buffer = "existing"
+    buffer = "existing content"
     @wr.write("hello world")
     @wr.close
     @rd.readpartial(11, buffer)
