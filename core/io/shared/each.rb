@@ -113,6 +113,13 @@ describe :io_each, shared: true do
       @io.send(@method, "") { |s| ScratchPad << s }
       ScratchPad.recorded.should == IOSpecs.paragraphs
     end
+
+    it "discards leading newlines" do
+      @io.readline
+      @io.readline
+      @io.send(@method, "") { |s| ScratchPad << s }
+      ScratchPad.recorded.should == IOSpecs.paragraphs[1..-1]
+    end
   end
 
   describe "with both separator and limit" do
@@ -151,6 +158,13 @@ describe :io_each, shared: true do
         it "yields each paragraph" do
           @io.send(@method, "", 1024) { |s| ScratchPad << s }
           ScratchPad.recorded.should == IOSpecs.paragraphs
+        end
+
+        it "discards leading newlines" do
+          @io.readline
+          @io.readline
+          @io.send(@method, "", 1024) { |s| ScratchPad << s }
+          ScratchPad.recorded.should == IOSpecs.paragraphs[1..-1]
         end
       end
     end
