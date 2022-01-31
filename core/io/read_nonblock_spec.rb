@@ -55,6 +55,14 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(4).should == "hell"
   end
 
+  it "reads after ungetc with data in the buffer" do
+    @write.write("foobar")
+    c = @read.getc
+    @read.ungetc(c)
+    @read.read_nonblock(3).should == "foo"
+    @read.read_nonblock(3).should == "bar"
+  end
+
   it "returns less data if that is all that is available" do
     @write << "hello"
     @read.read_nonblock(10).should == "hello"
