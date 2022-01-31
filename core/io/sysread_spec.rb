@@ -6,7 +6,7 @@ describe "IO#sysread on a file" do
     @file_name = tmp("IO_sysread_file") + $$.to_s
     File.open(@file_name, "w") do |f|
       # write some stuff
-      f.write("012345678901234567890123456789")
+      f.write("012345678901234567890123456789\nabcdef")
     end
     @file = File.open(@file_name, "r+")
   end
@@ -84,6 +84,22 @@ describe "IO#sysread on a file" do
   it "raises IOError on closed stream" do
     -> { IOSpecs.closed_io.sysread(5) }.should raise_error(IOError)
   end
+
+  it "immediately returns an empty string if the length argument is 0" do
+    @file.sysread(0).should == ""
+  end
+
+  it "immediately returns the given buffer if the length argument is 0" do
+    buffer = "existing content"
+    @file.sysread(0, buffer).should == buffer
+    buffer.should == "existing content"
+  end
+
+  it "discards the existing buffer content upon successful read" do
+    buffer = "existing content"
+    @file.sysread(11, buffer)
+    buffer.should == "01234567890"
+  end
 end
 
 describe "IO#sysread" do
@@ -99,5 +115,9 @@ describe "IO#sysread" do
   it "returns a smaller string if less than size bytes are available" do
     @write.syswrite "ab"
     @read.sysread(3).should == "ab"
+  end
+
+  it "raises ArgumentError when length is less than 0" do
+    -> { @read.sysread(-1) }.should raise_error(ArgumentError)
   end
 end
