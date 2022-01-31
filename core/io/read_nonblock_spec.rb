@@ -100,4 +100,13 @@ describe "IO#read_nonblock" do
 
     -> { @read.read_nonblock(5) }.should raise_error(EOFError)
   end
+
+  it "preserves the encoding of the given buffer" do
+    buffer = ''.encode(Encoding::ISO_8859_1)
+    @write.write("abc")
+    @write.close
+    @read.read_nonblock(10, buffer)
+
+    buffer.encoding.should == Encoding::ISO_8859_1
+  end
 end
