@@ -93,4 +93,11 @@ describe "IO#readpartial" do
     @rd.readpartial(0).should == ""
   end
 
+  it "preserves the encoding of the given buffer" do
+    buffer = ''.encode(Encoding::ISO_8859_1)
+    @wr.write("abc")
+    @wr.close
+    @rd.readpartial(10, buffer)
+    buffer.encoding.should == Encoding::ISO_8859_1
+  end
 end
