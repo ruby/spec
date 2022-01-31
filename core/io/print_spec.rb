@@ -13,6 +13,10 @@ describe "IO#print" do
     rm_r @name
   end
 
+  it "returns nil" do
+    touch(@name) { |f| f.print.should be_nil }
+  end
+
   it "writes $_.to_s followed by $\\ (if any) to the stream if no arguments given" do
     o = mock('o')
     o.should_receive(:to_s).and_return("mockmockmock")
