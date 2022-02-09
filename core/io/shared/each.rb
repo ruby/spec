@@ -224,6 +224,14 @@ describe :io_each, shared: true do
       ]
     end
   end
+
+  describe "when passed too many arguments" do
+    it "raises ArgumentError" do
+      -> {
+        @io.send(@method, "", 1, "excess argument", chomp: true) {}
+      }.should raise_error(ArgumentError)
+    end
+  end
 end
 
 describe :io_each_default_separator, shared: true do
