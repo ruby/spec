@@ -96,6 +96,21 @@ describe "IO#read_nonblock" do
     output.should equal(buffer)
   end
 
+  it "discards the existing buffer content upon successful read" do
+    buffer = "existing content"
+    @write.write("hello world")
+    @write.close
+    @read.read_nonblock(11, buffer)
+    buffer.should == "hello world"
+  end
+
+  it "discards the existing buffer content upon error" do
+    buffer = "existing content"
+    @write.close
+    -> { @read.read_nonblock(1, buffer) }.should raise_error(EOFError)
+    buffer.should be_empty
+  end
+
   it "raises IOError on closed stream" do
     -> { IOSpecs.closed_io.read_nonblock(5) }.should raise_error(IOError)
   end
