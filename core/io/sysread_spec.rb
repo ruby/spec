@@ -100,6 +100,13 @@ describe "IO#sysread on a file" do
     @file.sysread(11, buffer)
     buffer.should == "01234567890"
   end
+
+  it "discards the existing buffer content upon error" do
+    buffer = "existing content"
+    @file.seek(0, :END)
+    -> { @file.sysread(1, buffer) }.should raise_error(EOFError)
+    buffer.should be_empty
+  end
 end
 
 describe "IO#sysread" do
