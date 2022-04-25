@@ -34,6 +34,6 @@ describe "Range#to_a" do
   end
 
   it "throws an exception for beginless ranges" do
-    -> { eval("(..1)").to_a }.should raise_error(TypeError)
+    -> { (..1).to_a }.should raise_error(TypeError)
   end
 end

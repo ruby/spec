@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 
-# These specs use Range.new instead of the literal notation for beginless Ranges so they parse fine on Ruby < 2.7
 describe 'Range#minmax' do
   before(:each) do
     @x = mock('x')
@@ -22,7 +21,7 @@ describe 'Range#minmax' do
     end
 
     it 'raises RangeError or ArgumentError on a beginless range' do
-      range = Range.new(nil, @x)
+      range = (..@x)
 
       -> { range.minmax }.should raise_error(StandardError) { |e|
         if RangeError === e
@@ -81,7 +80,7 @@ describe 'Range#minmax' do
     end
 
     it 'should raise RangeError on a beginless range' do
-      range = Range.new(nil, @x, true)
+      range = (...@x)
 
       -> { range.minmax }.should raise_error(RangeError,
         /cannot get the maximum of beginless range with custom comparison method|cannot get the minimum of beginless range/)

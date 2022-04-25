@@ -13,6 +13,6 @@ describe "Range#==" do
   end
 
   it "returns true if the endpoints are == for beginless ranges" do
-    eval("(...10)").should == eval("(...10)")
+    (...10).should == (...10)
   end
 end

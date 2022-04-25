@@ -45,7 +45,7 @@ describe "Range#min" do
   end
 
   it "raises RangeError when called on an beginless range" do
-    -> { eval("(..1)").min }.should raise_error(RangeError)
+    -> { (..1).min }.should raise_error(RangeError)
   end
 end
 

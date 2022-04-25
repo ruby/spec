@@ -310,11 +310,11 @@ describe :string_slice_range, shared: true do
   end
 
   it "works with beginless ranges" do
-    "hello there".send(@method, eval("(..5)")).should == "hello "
-    "hello there".send(@method, eval("(...5)")).should == "hello"
-    "hello there".send(@method, eval("(..-4)")).should == "hello th"
-    "hello there".send(@method, eval("(...-4)")).should == "hello t"
-    "hello there".send(@method, eval("(...nil)")).should == "hello there"
+    "hello there".send(@method, (..5)).should == "hello "
+    "hello there".send(@method, (...5)).should == "hello"
+    "hello there".send(@method, (..-4)).should == "hello th"
+    "hello there".send(@method, (...-4)).should == "hello t"
+    "hello there".send(@method, (...nil)).should == "hello there"
   end
 end
 

@@ -67,7 +67,7 @@ describe "Array#values_at" do
   end
 
   it "works when given beginless ranges" do
-    [1, 2, 3, 4].values_at(eval("(..2)")).should == [1, 2, 3]
-    [1, 2, 3, 4].values_at(eval("(...2)")).should == [1, 2]
+    [1, 2, 3, 4].values_at((..2)).should == [1, 2, 3]
+    [1, 2, 3, 4].values_at((...2)).should == [1, 2]
   end
 end

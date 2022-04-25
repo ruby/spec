@@ -483,7 +483,7 @@ describe "Range#step" do
 
         context "when begin is not defined and end is numeric" do
           it "returns an instance of Enumerator::ArithmeticSequence" do
-            eval("(..10)").step.class.should == Enumerator::ArithmeticSequence
+            (..10).step.class.should == Enumerator::ArithmeticSequence
           end
         end
 

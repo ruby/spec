@@ -16,7 +16,7 @@ describe "Literal Ranges" do
   end
 
   it "creates beginless ranges" do
-    eval("(..1)").should == Range.new(nil, 1)
-    eval("(...1)").should == Range.new(nil, 1, true)
+    (..1).should == Range.new(nil, 1)
+    (...1).should == Range.new(nil, 1, true)
   end
 end
