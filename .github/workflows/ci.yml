@@ -58,5 +58,5 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
-    - run: gem install rubocop:0.77.0
+    - run: gem install rubocop:1.28.2
     - run: rubocop --parallel
