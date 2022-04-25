@@ -93,7 +93,7 @@ ruby_version_is "2.7" do
           end
 
           def proc_call(*args)
-            -> *args { args.last }.call(*args)
+            -> *a { a.last }.call(*args)
           end
         end
 
@@ -152,7 +152,7 @@ ruby_version_is "2.7" do
           end
 
           def proc_call(*args)
-            -> *args { args.last }.call(*args)
+            -> *a { a.last }.call(*args)
           end
         end
 
