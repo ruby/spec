@@ -1,8 +1,8 @@
 require_relative '../spec_helper'
 
 describe "Pattern matching" do
-  # TODO: Remove excessive eval calls when support of previous version
-  #       Ruby 2.6 will be dropped
+  # TODO: Remove excessive eval calls when Ruby 3 is the minimum version.
+  # It is best to keep the eval's longer if other Ruby impls cannot parse pattern matching yet.
 
   before :each do
     ScratchPad.record []
