@@ -97,9 +97,7 @@ describe "Range#max given a block" do
     (5...5).max {|x,y| x <=> y}.should be_nil
   end
 
-  ruby_version_is "2.7" do
-    it "raises RangeError when called with custom comparison method on an beginless range" do
-      -> { eval("(..1)").max {|a, b| a} }.should raise_error(RangeError)
-    end
+  it "raises RangeError when called with custom comparison method on an beginless range" do
+    -> { eval("(..1)").max {|a, b| a} }.should raise_error(RangeError)
   end
 end

@@ -770,26 +770,24 @@ describe :array_slice, shared: true do
     end
   end
 
-  ruby_version_is "2.7" do
-    it "can accept beginless ranges" do
-      a = [0, 1, 2, 3, 4, 5]
-      a.send(@method, eval("(..3)")).should == [0, 1, 2, 3]
-      a.send(@method, eval("(...3)")).should == [0, 1, 2]
-      a.send(@method, eval("(..-3)")).should == [0, 1, 2, 3]
-      a.send(@method, eval("(...-3)")).should == [0, 1, 2]
-      a.send(@method, eval("(..0)")).should == [0]
-      a.send(@method, eval("(...0)")).should == []
-      a.send(@method, eval("(..9)")).should == [0, 1, 2, 3, 4, 5]
-      a.send(@method, eval("(...9)")).should == [0, 1, 2, 3, 4, 5]
-      a.send(@method, eval("(..-9)")).should == []
-      a.send(@method, eval("(...-9)")).should == []
-    end
+  it "can accept beginless ranges" do
+    a = [0, 1, 2, 3, 4, 5]
+    a.send(@method, eval("(..3)")).should == [0, 1, 2, 3]
+    a.send(@method, eval("(...3)")).should == [0, 1, 2]
+    a.send(@method, eval("(..-3)")).should == [0, 1, 2, 3]
+    a.send(@method, eval("(...-3)")).should == [0, 1, 2]
+    a.send(@method, eval("(..0)")).should == [0]
+    a.send(@method, eval("(...0)")).should == []
+    a.send(@method, eval("(..9)")).should == [0, 1, 2, 3, 4, 5]
+    a.send(@method, eval("(...9)")).should == [0, 1, 2, 3, 4, 5]
+    a.send(@method, eval("(..-9)")).should == []
+    a.send(@method, eval("(...-9)")).should == []
+  end
 
-    it "can accept nil...nil ranges" do
-      a = [0, 1, 2, 3, 4, 5]
-      a.send(@method, eval("(nil...nil)")).should == a
-      a.send(@method, eval("(...nil)")).should == a
-      a.send(@method, eval("(nil..)")).should == a
-    end
+  it "can accept nil...nil ranges" do
+    a = [0, 1, 2, 3, 4, 5]
+    a.send(@method, eval("(nil...nil)")).should == a
+    a.send(@method, eval("(...nil)")).should == a
+    a.send(@method, eval("(nil..)")).should == a
   end
 end

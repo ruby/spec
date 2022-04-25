@@ -91,37 +91,35 @@ describe 'TracePoint#inspect' do
     inspect.should == "#<TracePoint:class#{@path_prefix}#{__FILE__}:#{line}>"
   end
 
-  ruby_version_is "2.7" do
-    it 'returns a String showing the event and thread for :thread_begin event' do
-      inspect = nil
-      thread = nil
-      thread_inspection = nil
-      TracePoint.new(:thread_begin) { |tp|
-        next unless Thread.current == thread
-        inspect ||= tp.inspect
-      }.enable(target_thread: nil) do
-        thread = Thread.new {}
-        thread_inspection = thread.inspect
-        thread.join
-      end
-
-      inspect.should == "#<TracePoint:thread_begin #{thread_inspection}>"
+  it 'returns a String showing the event and thread for :thread_begin event' do
+    inspect = nil
+    thread = nil
+    thread_inspection = nil
+    TracePoint.new(:thread_begin) { |tp|
+      next unless Thread.current == thread
+      inspect ||= tp.inspect
+    }.enable(target_thread: nil) do
+      thread = Thread.new {}
+      thread_inspection = thread.inspect
+      thread.join
     end
 
-    it 'returns a String showing the event and thread for :thread_end event' do
-      inspect = nil
-      thread = nil
-      thread_inspection = nil
-      TracePoint.new(:thread_end) { |tp|
-        next unless Thread.current == thread
-        inspect ||= tp.inspect
-      }.enable(target_thread: nil) do
-        thread = Thread.new {}
-        thread_inspection = thread.inspect
-        thread.join
-      end
+    inspect.should == "#<TracePoint:thread_begin #{thread_inspection}>"
+  end
 
-      inspect.should == "#<TracePoint:thread_end #{thread_inspection}>"
+  it 'returns a String showing the event and thread for :thread_end event' do
+    inspect = nil
+    thread = nil
+    thread_inspection = nil
+    TracePoint.new(:thread_end) { |tp|
+      next unless Thread.current == thread
+      inspect ||= tp.inspect
+    }.enable(target_thread: nil) do
+      thread = Thread.new {}
+      thread_inspection = thread.inspect
+      thread.join
     end
+
+    inspect.should == "#<TracePoint:thread_end #{thread_inspection}>"
   end
 end

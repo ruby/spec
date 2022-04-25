@@ -61,6 +61,7 @@ For older specs try these commits:
 * Ruby 2.3.8 - [Suite](https://github.com/ruby/spec/commit/dc733114d8ae66a3368ba3a98422c50147a76ba5) using [MSpec](https://github.com/ruby/mspec/commit/4599bc195fb109f2a482a01c32a7d659518369ea)
 * Ruby 2.4.10 - [Suite](https://github.com/ruby/spec/commit/bce4f2b81d6c31db67cf4d023a0625ceadde59bd) using [MSpec](https://github.com/ruby/mspec/commit/e7eb8aa4c26495b7b461e687d950b96eb08b3ff2)
 * Ruby 2.5.9 - [Suite](https://github.com/ruby/spec/commit/c503335d3d9f6ec6ef24de60a0716c34af69b64f) using [MSpec](https://github.com/ruby/mspec/commit/0091e8a62e954717cd54641f935eaf1403692041)
+* Ruby 2.6.10 - [Suite](https://github.com/ruby/spec/commit/aaf998fb8c92c4e63ad423a2e7ca6e6921818c6e) using [MSpec](https://github.com/ruby/mspec/commit/5e36c684e9e2b92b1187589bba1df22c640a8661)
 
 ### Running the specs
 
