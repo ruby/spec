@@ -55,12 +55,14 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(4).should == "hell"
   end
 
-  it "reads after ungetc with data in the buffer" do
-    @write.write("foobar")
-    c = @read.getc
-    @read.ungetc(c)
-    @read.read_nonblock(3).should == "foo"
-    @read.read_nonblock(3).should == "bar"
+  platform_is_not :windows do # https://bugs.ruby-lang.org/issues/18881
+    it "reads after ungetc with data in the buffer" do
+      @write.write("foobar")
+      c = @read.getc
+      @read.ungetc(c)
+      @read.read_nonblock(3).should == "foo"
+      @read.read_nonblock(3).should == "bar"
+    end
   end
 
   it "returns less data if that is all that is available" do
