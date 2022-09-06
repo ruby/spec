@@ -50,5 +50,12 @@ describe "Method#super_method" do
 
       MethodSpecs::ChangedVisibility::C.new.derp.should == 500
     end
+
+    it "returns the expected super_method" do
+      MethodSpecs::ChangedVisibility::C.send :public, :derp
+
+      method = MethodSpecs::ChangedVisibility::C.new.method(:derp)
+      method.super_method.owner.should == MethodSpecs::ChangedVisibility::A
+    end
   end
 end
