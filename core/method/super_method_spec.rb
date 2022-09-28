@@ -46,7 +46,7 @@ describe "Method#super_method" do
   # https://github.com/jruby/jruby/issues/7240
   context "after changing an inherited methods visibility" do
     it "calls the proper super method" do
-      MethodSpecs::InheritedMethods::C.new.derp.should == 500
+      MethodSpecs::InheritedMethods::C.new.derp.should == 'BA'
     end
 
     ruby_version_is ""..."3.2" do

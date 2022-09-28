@@ -218,14 +218,14 @@ module MethodSpecs
     module A
       private
       def derp(message)
-        500
+        'A'
       end
     end
 
     module B
       private
       def derp
-        super('superclass')
+        'B' + super('superclass')
       end
     end
 
