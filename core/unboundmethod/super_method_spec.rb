@@ -27,20 +27,25 @@ describe "UnboundMethod#super_method" do
     method.super_method.should == nil
   end
 
-  # jruby:7240
-  context "after changing an inherited methods visiblity" do
-    it "returns the expected super_method" do
-      MethodSpecs::InheritedMethods::C.send :public, :derp
+  # https://github.com/jruby/jruby/issues/7240
+  context "after changing an inherited methods visibility" do
+    ruby_version_is ""..."3.2" do
+      it "returns the expected super_method" do
+        method = MethodSpecs::InheritedMethods::C.instance_method(:derp)
+        method.super_method.owner.should == MethodSpecs::InheritedMethods::A
+      end
+    end
 
-      method = MethodSpecs::InheritedMethods::C.instance_method(:derp)
-      method.super_method.owner.should == MethodSpecs::InheritedMethods::A
+    ruby_version_is "3.2" do
+      it "returns the expected super_method" do
+        method = MethodSpecs::InheritedMethods::C.instance_method(:derp)
+        method.super_method.owner.should == MethodSpecs::InheritedMethods::B
+      end
     end
   end
 
   context "after aliasing an inherited method" do
     it "returns the expected super_method" do
-      MethodSpecs::InheritedMethods::C.alias_method :meow, :derp
-
       method = MethodSpecs::InheritedMethods::C.instance_method(:meow)
       method.super_method.owner.should == MethodSpecs::InheritedMethods::A
     end

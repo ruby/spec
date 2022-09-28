@@ -232,6 +232,9 @@ module MethodSpecs
     class C
       include A
       include B
+
+      public :derp
+      alias_method :meow, :derp
     end
   end
 end
