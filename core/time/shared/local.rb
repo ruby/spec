@@ -6,10 +6,12 @@ describe :time_local, shared: true do
     end
   end
 
-  it "uses the 'CET' timezone with TZ=Europe/Amsterdam in 1970" do
-    with_timezone("Europe/Amsterdam") do
-      Time.send(@method, 1970, 5, 16).to_a.should ==
-        [0, 0, 0, 16, 5, 1970, 6, 136, false, "CET"]
+  platform_is_not :windows do
+    it "uses the 'CET' timezone with TZ=Europe/Amsterdam in 1970" do
+      with_timezone("Europe/Amsterdam") do
+        Time.send(@method, 1970, 5, 16).to_a.should ==
+          [0, 0, 0, 16, 5, 1970, 6, 136, false, "CET"]
+      end
     end
   end
 end
@@ -37,5 +39,4 @@ describe :time_local_10_arg, shared: true do
       end
     end
   end
-
 end
