@@ -2,10 +2,13 @@ require_relative '../../spec_helper'
 
 ruby_version_is "3.2" do
   describe "Regexp.timeout" do
+    after :each do
+      Regexp.timeout = nil
+    end
+
     it "returns global timeout" do
       Regexp.timeout = 3
       Regexp.timeout.should == 3
-      Regexp.timeout = nil
     end
 
     it "raises Regexp::TimeoutError after global timeout elapsed" do
@@ -19,8 +22,6 @@ ruby_version_is "3.2" do
       }.should raise_error(Regexp::TimeoutError, "regexp match timeout")
       t = Time.now - t
       t.should be_close(0.001, 0.010)
-
-      Regexp.timeout = nil
     end
 
     it "raises Regexp::TimeoutError after timeout keyword value elapsed" do
@@ -36,8 +37,6 @@ ruby_version_is "3.2" do
       t = Time.now - t
 
       t.should be_close(0.001, 0.010)
-
-      Regexp.timeout = nil
     end
   end
 end
