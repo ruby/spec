@@ -8,8 +8,8 @@ ruby_version_is "3.2" do
     end
 
     it "raises Regexp::TimeoutError after global timeout elapsed" do
-      Regexp.timeout = 0.2
-      Regexp.timeout.should == 0.2
+      Regexp.timeout = 0.001
+      Regexp.timeout.should == 0.001
 
       t = Time.now
       -> {
@@ -17,14 +17,14 @@ ruby_version_is "3.2" do
         /^(a*)*$/ =~ "a" * 1000000 + "x"
       }.should raise_error(Regexp::TimeoutError, "regexp match timeout")
       t = Time.now - t
-      t.should be_close(0.2, 0.1)
+      t.should be_close(0.001, 0.010)
     end
 
     it "raises Regexp::TimeoutError after timeout keyword value elapsed" do
       Regexp.timeout = 3 # This should be ignored
       Regexp.timeout.should == 3
 
-      re = Regexp.new("^a*b?a*$", timeout: 0.2)
+      re = Regexp.new("^a*b?a*$", timeout: 0.001)
 
       t = Time.now
       -> {
@@ -32,7 +32,7 @@ ruby_version_is "3.2" do
       }.should raise_error(Regexp::TimeoutError, "regexp match timeout")
       t = Time.now - t
 
-      t.should be_close(0.2, 0.1)
+      t.should be_close(0.001, 0.010)
     end
   end
 end
