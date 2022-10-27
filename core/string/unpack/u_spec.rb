@@ -51,6 +51,21 @@ describe "String#unpack with format 'u'" do
     ].should be_computed_by(:unpack)
   end
 
+  it "returns an empty string if the encoded length is too low" do
+    " 86)C".unpack("u").should == [""]
+    "\x1F86)C".unpack("u").should == [""]
+    "\x0186)C".unpack("u").should == [""]
+    "\x0086)C".unpack("u").should == [""]
+  end
+
+  it "returns a max line of 45 bytes if the encoded length is too high" do
+    encoded_line = '86)C' * 15 # 60 bytes maximum
+    decoded_line = 'abc' * 15 # 45 bytes maximum
+    ("N" + encoded_line).unpack("u").should == [decoded_line]
+    ("Z" + encoded_line).unpack("u").should == [decoded_line]
+    ("_" + encoded_line).unpack("u").should == [decoded_line]
+  end
+
   it "decodes all ascii characters" do
     [ ["'``$\"`P0%!@``\n",          ["\x00\x01\x02\x03\x04\x05\x06"]],
       ["'!P@)\"@L,#0``\n",          ["\a\b\t\n\v\f\r"]],
