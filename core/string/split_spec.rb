@@ -246,6 +246,13 @@ describe "String#split with String" do
   it "doesn't split on non-ascii whitespace" do
     "a\u{2008}b".split(" ").should == ["a\u{2008}b"]
   end
+
+  it "returns Strings in the same encoding as self" do
+    strings = "hello world".encode("US-ASCII").split(" ")
+
+    strings[0].encoding.should == Encoding::US_ASCII
+    strings[1].encoding.should == Encoding::US_ASCII
+  end
 end
 
 describe "String#split with Regexp" do
@@ -443,7 +450,7 @@ describe "String#split with Regexp" do
     end
   end
 
-  it "retains the encoding of the source string" do
+  it "returns Strings in the same encoding as self" do
     ary = "а б в".split
     encodings = ary.map { |s| s.encoding }
     encodings.should == [Encoding::UTF_8, Encoding::UTF_8, Encoding::UTF_8]
@@ -597,5 +604,12 @@ describe "String#split with Regexp" do
     -> { "hello".split(:ll) }.should raise_error(TypeError)
     -> { "hello".split(false) }.should raise_error(TypeError)
     -> { "hello".split(Object.new) }.should raise_error(TypeError)
+  end
+
+  it "returns Strings in the same encoding as self" do
+    strings = "hello world".encode("US-ASCII").split(/ /)
+
+    strings[0].encoding.should == Encoding::US_ASCII
+    strings[1].encoding.should == Encoding::US_ASCII
   end
 end

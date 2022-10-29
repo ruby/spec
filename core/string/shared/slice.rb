@@ -80,7 +80,7 @@ describe :string_slice_index_length, shared: true do
     "hello there".send(@method, -3,2).should == "er"
   end
 
-  it "returns a string with the same encoding" do
+  it "returns a string with the same encoding as self" do
     s = "hello there"
     s.send(@method, 1, 9).encoding.should == s.encoding
 
@@ -204,6 +204,10 @@ describe :string_slice_range, shared: true do
 
     "x".send(@method, 1..1).should == ""
     "x".send(@method, 1..-1).should == ""
+  end
+
+  it "returns a String in the same encoding as self" do
+    "hello there".encode("US-ASCII").send(@method, 1..1).encoding.should == Encoding::US_ASCII
   end
 
   it "returns nil if the beginning of the range falls outside of self" do
@@ -331,6 +335,10 @@ describe :string_slice_regexp, shared: true do
   not_supported_on :opal do
   end
 
+  it "returns a String in the same encoding as self" do
+    "hello there".encode("US-ASCII").send(@method, /[aeiou](.)\1/).encoding.should == Encoding::US_ASCII
+  end
+
   ruby_version_is ''...'3.0' do
     it "returns subclass instances" do
       s = StringSpecs::MyString.new("hello")
@@ -389,6 +397,10 @@ describe :string_slice_regexp_index, shared: true do
     "test".send(@method, /te(z)?/, 1).should == nil
     $~[0].should == "te"
     $~[1].should == nil
+  end
+
+  it "returns a String in the same encoding as self" do
+    "hello there".encode("US-ASCII").send(@method, /[aeiou](.)\1/, 0).encoding.should == Encoding::US_ASCII
   end
 
   it "calls to_int on the given index" do
