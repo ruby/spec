@@ -69,16 +69,6 @@ describe :io_write, shared: true do
     -> { IOSpecs.closed_io.send(@method, "hello") }.should raise_error(IOError)
   end
 
-  it "does not modify the passed argument" do
-    File.open(@filename, "w") do |f|
-      f.set_encoding(Encoding::IBM437)
-      # A character whose codepoint differs between UTF-8 and IBM437
-      f.write "ƒ".freeze
-    end
-
-    File.binread(@filename).bytes.should == [159]
-  end
-
   describe "on a pipe" do
     before :each do
       @r, @w = IO.pipe
@@ -99,7 +89,7 @@ describe :io_write, shared: true do
     # For instance, MJIT creates a worker before @r.close with fork(), @r.close happens,
     # and the MJIT worker keeps the pipe open until the worker execve().
     # TODO: consider acquiring GVL from MJIT worker.
-    guard_not -> { defined?(RubyVM::JIT) && RubyVM::JIT.enabled? } do
+    guard_not -> { defined?(RubyVM::MJIT) && RubyVM::MJIT.enabled? } do
       it "raises Errno::EPIPE if the read end is closed and does not die from SIGPIPE" do
         @r.close
         -> { @w.send(@method, "foo") }.should raise_error(Errno::EPIPE, /Broken pipe/)

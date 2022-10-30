@@ -97,6 +97,32 @@ describe "C-API String function" do
     end
   end
 
+  describe "rb_str_set_len on a UTF-16 String" do
+    before :each do
+      @str = "abcdefghij".force_encoding(Encoding::UTF_16BE)
+      # Make sure to unshare the string
+      @s.rb_str_modify(@str)
+    end
+
+    it "inserts two NULL bytes at the length" do
+      @s.rb_str_set_len(@str, 4).b.should == "abcd".b
+      @s.rb_str_set_len(@str, 8).b.should == "abcd\x00\x00gh".b
+    end
+  end
+
+  describe "rb_str_set_len on a UTF-32 String" do
+    before :each do
+      @str = "abcdefghijkl".force_encoding(Encoding::UTF_32BE)
+      # Make sure to unshare the string
+      @s.rb_str_modify(@str)
+    end
+
+    it "inserts four NULL bytes at the length" do
+      @s.rb_str_set_len(@str, 4).b.should == "abcd".b
+      @s.rb_str_set_len(@str, 12).b.should == "abcd\x00\x00\x00\x00ijkl".b
+    end
+  end
+
   describe "rb_str_buf_new" do
     it "returns the equivalent of an empty string" do
       buf = @s.rb_str_buf_new(10, nil)
@@ -179,12 +205,6 @@ describe "C-API String function" do
 
     it "returns a new string object from a char buffer of len characters" do
       @s.rb_str_new("hello", 3).should == "hel"
-    end
-
-    ruby_version_is ''...'2.7' do
-      it "returns a non-tainted string" do
-        @s.rb_str_new("hello", 5).should_not.tainted?
-      end
     end
 
     it "returns an empty string if len is 0" do
@@ -335,24 +355,6 @@ describe "C-API String function" do
     end
   end
 
-  ruby_version_is ''...'2.7' do
-    describe "rb_tainted_str_new" do
-      it "creates a new tainted String" do
-        newstring = @s.rb_tainted_str_new("test", 4)
-        newstring.should == "test"
-        newstring.tainted?.should be_true
-      end
-    end
-
-    describe "rb_tainted_str_new2" do
-      it "creates a new tainted String" do
-        newstring = @s.rb_tainted_str_new2("test")
-        newstring.should == "test"
-        newstring.tainted?.should be_true
-      end
-    end
-  end
-
   describe "rb_str_append" do
     it "appends a string to another string" do
       @s.rb_str_append("Hello", " Goodbye").should == "Hello Goodbye"
@@ -376,6 +378,14 @@ describe "C-API String function" do
 
   describe "rb_str_times" do
     it_behaves_like :string_times, :rb_str_times, -> str, times { @s.rb_str_times(str, times) }
+  end
+
+  describe "rb_str_buf_append" do
+    it "concatenates a string to another string" do
+      str = "Your house "
+      @s.rb_str_buf_append(str, "is on fire?").should.equal?(str)
+      str.should == "Your house is on fire?"
+    end
   end
 
   describe "rb_str_buf_cat" do
@@ -603,8 +613,16 @@ describe "C-API String function" do
       filename = fixture(__FILE__, "read.txt")
       str = ""
       capacities = @s.RSTRING_PTR_read(str, filename)
-      capacities.should == [30, 53]
+      capacities[0].should >= 30
+      capacities[1].should >= 53
+      capacities[0].should < capacities[1]
       str.should == "fixture file contents to test read() with RSTRING_PTR"
+    end
+
+    it "terminates the string with at least (encoding min length) \\0 bytes" do
+      @s.RSTRING_PTR_null_terminate("abc", 1).should == "\x00"
+      @s.RSTRING_PTR_null_terminate("abc".encode("UTF-16BE"), 2).should == "\x00\x00"
+      @s.RSTRING_PTR_null_terminate("abc".encode("UTF-32BE"), 4).should == "\x00\x00\x00\x00"
     end
   end
 
@@ -655,22 +673,6 @@ describe "C-API String function" do
   end
 
   describe "SafeStringValue" do
-    ruby_version_is ''...'2.7' do
-      it "raises for tained string when $SAFE is 1" do
-        begin
-          Thread.new {
-            $SAFE = 1
-            -> {
-              @s.SafeStringValue("str".taint)
-            }.should raise_error(SecurityError)
-          }.join
-        ensure
-          $SAFE = 0
-        end
-      end
-
-      it_behaves_like :string_value_macro, :SafeStringValue
-    end
   end
 
   describe "rb_str_modify" do
@@ -800,12 +802,6 @@ describe :rb_external_str_new, shared: true do
     x80 = [0x80].pack('C')
     @s.send(@method, "#{x80}abc").encoding.should == Encoding::BINARY
   end
-
-  ruby_version_is ''...'2.7' do
-    it "returns a tainted String" do
-      @s.send(@method, "abc").tainted?.should be_true
-    end
-  end
 end
 
 describe "C-API String function" do
@@ -884,13 +880,6 @@ describe "C-API String function" do
       x = [0xA4, 0xA2, 0xA4, 0xEC].pack('C4').force_encoding('euc-jp')
       s.should == x
       s.encoding.should equal(Encoding::EUC_JP)
-    end
-
-    ruby_version_is ''...'2.7' do
-      it "returns a tainted String" do
-        s = @s.rb_external_str_new_with_enc("abc", 3, Encoding::US_ASCII)
-        s.tainted?.should be_true
-      end
     end
   end
 
@@ -1207,6 +1196,33 @@ end
       str = "test "
       @s.rb_str_catf(str)
       str.should == "test fmt 41 6 number"
+    end
+  end
+
+  describe "rb_str_locktmp" do
+    it "raises an error when trying to lock an already locked string" do
+      str = "test"
+      @s.rb_str_locktmp(str).should == str
+      -> { @s.rb_str_locktmp(str) }.should raise_error(RuntimeError, 'temporal locking already locked string')
+    end
+
+    it "locks a string so that modifications would raise an error" do
+      str = "test"
+      @s.rb_str_locktmp(str).should == str
+      -> { str.upcase! }.should raise_error(RuntimeError, 'can\'t modify string; temporarily locked')
+    end
+  end
+
+  describe "rb_str_unlocktmp" do
+    it "unlocks a locked string" do
+      str = "test"
+      @s.rb_str_locktmp(str)
+      @s.rb_str_unlocktmp(str).should == str
+      str.upcase!.should == "TEST"
+    end
+
+    it "raises an error when trying to unlock an already unlocked string" do
+      -> { @s.rb_str_unlocktmp("test") }.should raise_error(RuntimeError, 'temporal unlocking already unlocked string')
     end
   end
 end

@@ -73,14 +73,13 @@ describe "Hash#transform_keys!" do
     @hash.should == { 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4 }
   end
 
-  # https://bugs.ruby-lang.org/issues/14380
   it "prevents conflicts between new keys and old ones" do
     @hash.transform_keys!(&:succ)
     @hash.should == { b: 1, c: 2, d: 3, e: 4 }
   end
 
   ruby_version_is ""..."3.0.2" do # https://bugs.ruby-lang.org/issues/17735
-    it "returns the processed keys if we broke from the block" do
+    it "returns the processed keys if we break from the block" do
       @hash.transform_keys! do |v|
         break if v == :c
         v.succ
@@ -90,7 +89,7 @@ describe "Hash#transform_keys!" do
   end
 
   ruby_version_is "3.0.2" do
-    it "returns the processed keys and non evaluated keys if we broke from the block" do
+    it "returns the processed keys and non evaluated keys if we break from the block" do
       @hash.transform_keys! do |v|
         break if v == :c
         v.succ

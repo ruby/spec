@@ -87,6 +87,10 @@ VALUE string_spec_rb_str_tmp_new_klass(VALUE self, VALUE len) {
   return RBASIC_CLASS(rb_str_tmp_new(NUM2LONG(len)));
 }
 
+VALUE string_spec_rb_str_buf_append(VALUE self, VALUE str, VALUE two) {
+  return rb_str_buf_append(str, two);
+}
+
 VALUE string_spec_rb_str_buf_cat(VALUE self, VALUE str) {
   const char *question_mark = "?";
   rb_str_buf_cat(str, question_mark, strlen(question_mark));
@@ -261,6 +265,7 @@ VALUE string_spec_rb_str_new5(VALUE self, VALUE str, VALUE ptr, VALUE len) {
 # endif
 #endif
 
+#ifndef RUBY_VERSION_IS_3_2
 VALUE string_spec_rb_tainted_str_new(VALUE self, VALUE str, VALUE len) {
   return rb_tainted_str_new(RSTRING_PTR(str), FIX2INT(len));
 }
@@ -268,6 +273,7 @@ VALUE string_spec_rb_tainted_str_new(VALUE self, VALUE str, VALUE len) {
 VALUE string_spec_rb_tainted_str_new2(VALUE self, VALUE str) {
   return rb_tainted_str_new2(RSTRING_PTR(str));
 }
+#endif
 
 #if defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
 # pragma GCC diagnostic pop
@@ -431,6 +437,12 @@ VALUE string_spec_RSTRING_PTR_read(VALUE self, VALUE str, VALUE path) {
   return capacities;
 }
 
+VALUE string_spec_RSTRING_PTR_null_terminate(VALUE self, VALUE str, VALUE min_length) {
+  char* ptr = RSTRING_PTR(str);
+  char* end = ptr + RSTRING_LEN(str);
+  return rb_str_new(end, FIX2LONG(min_length));
+}
+
 VALUE string_spec_StringValue(VALUE self, VALUE str) {
   return StringValue(str);
 }
@@ -577,6 +589,14 @@ static VALUE string_spec_rb_str_catf(VALUE self, VALUE mesg) {
   return rb_str_catf(mesg, "fmt %d %d number", 41, 6);
 }
 
+static VALUE string_spec_rb_str_locktmp(VALUE self, VALUE str) {
+  return rb_str_locktmp(str);
+}
+
+static VALUE string_spec_rb_str_unlocktmp(VALUE self, VALUE str) {
+  return rb_str_unlocktmp(str);
+}
+
 void Init_string_spec(void) {
   VALUE cls = rb_define_class("CApiStringSpecs", rb_cObject);
   rb_define_method(cls, "rb_cstr2inum", string_spec_rb_cstr2inum, 2);
@@ -589,6 +609,7 @@ void Init_string_spec(void) {
   rb_define_method(cls, "rb_str_buf_new2", string_spec_rb_str_buf_new2, 0);
   rb_define_method(cls, "rb_str_tmp_new", string_spec_rb_str_tmp_new, 1);
   rb_define_method(cls, "rb_str_tmp_new_klass", string_spec_rb_str_tmp_new_klass, 1);
+  rb_define_method(cls, "rb_str_buf_append", string_spec_rb_str_buf_append, 2);
   rb_define_method(cls, "rb_str_buf_cat", string_spec_rb_str_buf_cat, 1);
   rb_define_method(cls, "rb_enc_str_buf_cat", string_spec_rb_enc_str_buf_cat, 3);
   rb_define_method(cls, "rb_str_cat", string_spec_rb_str_cat, 1);
@@ -621,8 +642,10 @@ void Init_string_spec(void) {
   rb_define_method(cls, "rb_str_new3", string_spec_rb_str_new3, 1);
   rb_define_method(cls, "rb_str_new4", string_spec_rb_str_new4, 1);
   rb_define_method(cls, "rb_str_new5", string_spec_rb_str_new5, 3);
+#ifndef RUBY_VERSION_IS_3_2
   rb_define_method(cls, "rb_tainted_str_new", string_spec_rb_tainted_str_new, 2);
   rb_define_method(cls, "rb_tainted_str_new2", string_spec_rb_tainted_str_new2, 1);
+#endif
   rb_define_method(cls, "rb_str_plus", string_spec_rb_str_plus, 2);
   rb_define_method(cls, "rb_str_times", string_spec_rb_str_times, 2);
   rb_define_method(cls, "rb_str_modify_expand", string_spec_rb_str_modify_expand, 2);
@@ -645,6 +668,7 @@ void Init_string_spec(void) {
   rb_define_method(cls, "RSTRING_PTR_after_funcall", string_spec_RSTRING_PTR_after_funcall, 2);
   rb_define_method(cls, "RSTRING_PTR_after_yield", string_spec_RSTRING_PTR_after_yield, 1);
   rb_define_method(cls, "RSTRING_PTR_read", string_spec_RSTRING_PTR_read, 2);
+  rb_define_method(cls, "RSTRING_PTR_null_terminate", string_spec_RSTRING_PTR_null_terminate, 2);
   rb_define_method(cls, "StringValue", string_spec_StringValue, 1);
   rb_define_method(cls, "SafeStringValue", string_spec_SafeStringValue, 1);
   rb_define_method(cls, "rb_str_hash", string_spec_rb_str_hash, 1);
@@ -672,6 +696,8 @@ void Init_string_spec(void) {
   rb_define_method(cls, "rb_utf8_str_new_cstr", string_spec_rb_utf8_str_new_cstr, 0);
   rb_define_method(cls, "rb_str_vcatf", string_spec_rb_str_vcatf, 1);
   rb_define_method(cls, "rb_str_catf", string_spec_rb_str_catf, 1);
+  rb_define_method(cls, "rb_str_locktmp", string_spec_rb_str_locktmp, 1);
+  rb_define_method(cls, "rb_str_unlocktmp", string_spec_rb_str_unlocktmp, 1);
 }
 
 #ifdef __cplusplus
