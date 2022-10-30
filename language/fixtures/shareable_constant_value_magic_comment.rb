@@ -1,9 +1,9 @@
 # shareable_constant_value: literal
 
-A = [1, 2]
-H = {a: "a"}
+A = "rac"
+H = "tor"
 
 Ractor.new do
-  A
-  H
-en.take
+  print A
+  print H
+end.take
