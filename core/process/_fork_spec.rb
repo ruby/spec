@@ -1,13 +1,7 @@
 require_relative '../../spec_helper'
 
-describe "Process._fork" do
-  ruby_version_is ""..."3.1" do
-    it "raises NoMethodError" do
-      -> { Process._fork }.should raise_error(NoMethodError)
-    end
-  end
-
-  ruby_version_is "3.1" do
+ruby_version_is "3.1" do
+  describe "Process._fork" do
     it "for #respond_to? returns the same as Process.respond_to?(:fork)" do
       Process.respond_to?(:_fork).should == Process.respond_to?(:fork)
     end
