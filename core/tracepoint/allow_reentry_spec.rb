@@ -23,7 +23,7 @@ ruby_version_is "3.1" do
       event_lines.should == [l1, l3, l4, l2, l3, l4]
     end
 
-    it 'raises RuntimeError' do
+    it 'raises RuntimeError when not called inside a TracePoint' do
       -> {
         TracePoint.allow_reentry{}
       }.should raise_error(RuntimeError)
