@@ -1,31 +1,15 @@
 require_relative '../../spec_helper'
 
-ruby_version_is ''...'3.1' do
-  describe "Thread#native_thread_id" do
-    it "raises NoMethodError" do
-      th = Thread.new {}
-      -> { th.native_thread_id }.should raise_error(NoMethodError)
-      th.join
-    end
-  end
-end
-
 ruby_version_is "3.1" do
   describe "Thread#native_thread_id" do
-    platform_is_not :linux do
-      it "returns an integer" do
-        th = Thread.new {}
-        th.native_thread_id.should be_kind_of(Integer)
-        th.join
-      end
+    it "returns an integer when the thread is alive" do
+      Thread.current.native_thread_id.should be_kind_of(Integer)
     end
 
-    platform_is :linux do
-      it "returns nil" do
-        th = Thread.new {}
-        th.native_thread_id.should be_nil
-        th.join
-      end
+    it "returns nil when the thread is not running" do
+      t = Thread.new {}
+      t.join
+      t.native_thread_id.should == nil
     end
   end
 end
