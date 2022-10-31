@@ -1845,13 +1845,12 @@ ruby_version_is "3.1" do
   end
 
   describe "Inside 'endless' method definitions" do
-    context "allows method calls without parenthesis" do
-      evaluate <<-ruby do
-          def greet(person) = "Hi, ".concat person
-        ruby
+    it "allows method calls without parenthesis" do
+      eval <<-ruby
+        def greet(person) = "Hi, ".concat person
+      ruby
 
-        greet("Homer").should == "Hi, Homer"
-      end
+      greet("Homer").should == "Hi, Homer"
     end
   end
 end
