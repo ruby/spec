@@ -8,21 +8,17 @@ describe "Process._fork" do
   end
 
   ruby_version_is "3.1" do
-    platform_is :windows do
-      it "returns false from #respond_to?" do
-        Process.respond_to?(:_fork).should be_false
-      end
+    it "for #respond_to? returns the same as Process.respond_to?(:fork)" do
+      Process.respond_to?(:_fork).should == Process.respond_to?(:fork)
+    end
 
+    guard_not -> { Process.respond_to?(:fork) } do
       it "raises a NotImplementedError when called" do
         -> { Process._fork }.should raise_error(NotImplementedError)
       end
     end
 
-    platform_is_not :windows do
-      it "returns true from #respond_to?" do
-        Process.respond_to?(:_fork).should be_true
-      end
-
+    guard -> { Process.respond_to?(:fork) } do
       it "is called by Process#fork" do
         Process.should_receive(:_fork).once.and_return(42)
 
