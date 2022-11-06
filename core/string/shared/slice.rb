@@ -332,9 +332,6 @@ describe :string_slice_regexp, shared: true do
     "hello there".send(@method, /xyz/).should == nil
   end
 
-  not_supported_on :opal do
-  end
-
   it "returns a String in the same encoding as self" do
     "hello there".encode("US-ASCII").send(@method, /[aeiou](.)\1/).encoding.should == Encoding::US_ASCII
   end
