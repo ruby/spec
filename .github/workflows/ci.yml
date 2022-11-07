@@ -16,7 +16,7 @@ jobs:
       run: git config --global core.autocrlf false
       if: matrix.os == 'windows'
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
@@ -57,7 +57,7 @@ jobs:
     name: RuboCop
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
