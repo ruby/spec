@@ -33,7 +33,7 @@ describe "Dir.home" do
     end
 
     platform_is :windows do
-      ruby_version_is "3.0" do
+      ruby_version_is "3.2" do
         it "returns the home directory with forward slashs and as UTF-8" do
           ENV['HOME'] = "C:\\rubyspäc\\home"
           home = Dir.home
