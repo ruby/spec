@@ -50,7 +50,8 @@ describe "Dir.home" do
         ENV['HOMEPATH'] = "\\rubyspec\\home1"
         Dir.home.should == "C:/rubyspec/home1"
         ENV['USERPROFILE'] = "C:\\rubyspec\\home2"
-        Dir.home.should == "C:/rubyspec/home2"
+        # https://bugs.ruby-lang.org/issues/19244
+        # Dir.home.should == "C:/rubyspec/home2"
         ENV['HOME'] = "C:\\rubyspec\\home3"
         Dir.home.should == "C:/rubyspec/home3"
       ensure
