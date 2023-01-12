@@ -22,5 +22,15 @@ ruby_version_is "3.2" do
       movie = Data.define("title", :year, "genre")
       movie.members.should == [:title, :year, :genre]
     end
+
+    it "accepts a block" do
+      movie = Data.define(:title, :year) do
+        def title_with_year
+          "#{title} (#{year})"
+        end
+      end
+      movie.members.should == [:title, :year]
+      movie.new("Matrix", 1999).title_with_year.should == "Matrix (1999)"
+    end
   end
 end
