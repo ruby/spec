@@ -63,3 +63,4 @@ jobs:
         ruby-version: 2.7
     - run: gem install rubocop:1.28.2
     - run: rubocop --parallel
+    - run: ../mspec/tool/check_require_spec_helper.rb
