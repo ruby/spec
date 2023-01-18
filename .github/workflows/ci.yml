@@ -53,6 +53,10 @@ jobs:
         SPEC_CAPI_CXX: true
       run: ../mspec/bin/mspec :capi
 
+    - name: Run require_relative checker
+      if: matrix.os == 'ubuntu'
+      run: ../mspec/tool/check_require_spec_helper.rb
+
   rubocop:
     name: RuboCop
     runs-on: ubuntu-latest
@@ -63,4 +67,3 @@ jobs:
         ruby-version: 2.7
     - run: gem install rubocop:1.28.2
     - run: rubocop --parallel
-    - run: ../mspec/tool/check_require_spec_helper.rb
