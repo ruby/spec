@@ -64,7 +64,7 @@ describe :rational_truncate, shared: true do
 
     it "does not call to_int on the argument" do
       object = Object.new
-      object.define_singleton_method(:to_int) { 0 }
+      object.should_not_receive(:to_int)
       -> { @rational.truncate(object) }.should raise_error(TypeError, "not an integer")
     end
   end
