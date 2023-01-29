@@ -7,6 +7,10 @@ describe "set_inspect", shared: true do
     Set[:a, "b", Set[?c]].send(@method).should be_kind_of(String)
   end
 
+  it "does include the elements of the set" do
+    Set["1"].send(@method).should == '#<Set: {"1"}>'
+  end
+
   it "correctly handles self-references" do
     (set = Set[]) << set
     set.send(@method).should be_kind_of(String)
