@@ -28,7 +28,7 @@ describe "Integer#^" do
     end
 
     it "coerces the rhs and calls #coerce" do
-      obj = mock("fixnum bit and")
+      obj = mock("fixnum bit xor")
       obj.should_receive(:coerce).with(6).and_return([6, 3])
       (6 ^ obj).should == 5
     end
