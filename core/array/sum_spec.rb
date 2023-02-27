@@ -72,6 +72,6 @@ describe "Array#sum" do
 end
 
 describe "Array#sum" do
-  @value_to_return = -> (_) { 1 }
+  @value_to_return = -> _ { 1 }
   it_behaves_like :array_iterable_and_tolerating_size_increasing, :sum
 end
