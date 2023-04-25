@@ -461,7 +461,10 @@ describe "Marshal.dump" do
 
     it "dumps without marshaling any attached finalizer" do
       obj = Object.new
-      ObjectSpace.define_finalizer(obj, &:itself)
+      finalizer = Object.new
+      def finalizer.noop(_)
+      end
+      ObjectSpace.define_finalizer(obj, finalizer.method(:noop))
       Marshal.load(Marshal.dump(obj)).class.should == Object
     end
   end
