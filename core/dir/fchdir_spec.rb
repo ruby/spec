@@ -6,10 +6,8 @@ ruby_version_is '3.3' do
     dir = Dir.new('.')
     Dir.fchdir(dir.fileno)
     true
-  rescue NotImplementedError
+  rescue NotImplementedError, NoMethodError
     false
-  rescue Exception # rubocop:disable Lint/RescueException
-    true
   ensure
     dir.close
   end
