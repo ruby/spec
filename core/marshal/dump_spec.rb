@@ -739,7 +739,7 @@ describe "Marshal.dump" do
       rescue => e
       end
 
-      Marshal.dump(e).should.include? "undefined method `foo' for \"\":String"
+      Marshal.dump(e).should =~ /undefined method `foo' for ("":String|an instance of String)/
     end
 
     it "raises TypeError if an Object is an instance of an anonymous class" do
