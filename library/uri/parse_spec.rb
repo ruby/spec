@@ -200,4 +200,10 @@ describe "URI.parse" do
     URI.parse('http://a_b:80/').host.should == "a_b"
     URI.parse('http://a_b/').host.should == "a_b"
   end
+
+  ruby_version_is "3.2" do
+    it "returns empty string in host if is not valid" do
+      URI.parse('http:////sth.com/path').host.should == ''
+    end
+  end
 end
