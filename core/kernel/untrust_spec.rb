@@ -16,4 +16,12 @@ describe "Kernel#untrust" do
       }.should complain(/Object#untrust is deprecated and will be removed in Ruby 3.2/, verbose: true)
     end
   end
+
+  ruby_version_is "3.2" do
+    it "has been removed" do
+      -> {
+        Object.new.untrust
+    }.should raise_error(NoMethodError, /undefined method `untrust' for/)
+    end
+  end
 end

@@ -17,4 +17,12 @@ describe "Kernel#trust" do
       }.should complain(/Object#trust is deprecated and will be removed in Ruby 3.2/, verbose: true)
     end
   end
+
+  ruby_version_is "3.2" do
+    it "has been removed" do
+      -> {
+        Object.new.trust
+    }.should raise_error(NoMethodError, /undefined method `trust' for/)
+    end
+  end
 end
