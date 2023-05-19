@@ -60,5 +60,29 @@ ruby_version_is "3.2" do
       enum = Enumerator.product(object, ["A", "B"])
       enum.to_a.should == [[1, "A"], [1, "B"], [2, "A"], [2, "B"]]
     end
+
+    it "raises NoMethodError when argument doesn't respond to #each_entry" do
+      -> {
+        Enumerator.product(Object.new).to_a
+      }.should raise_error(NoMethodError, /undefined method `each_entry' for/)
+    end
+
+    it "calls #each_entry lazily" do
+      Enumerator.product(Object.new).should be_kind_of(Enumerator)
+    end
+
+    it "iterates through consuming enumerator elements only once" do
+      a = [1, 2, 3]
+      i = 0
+
+      enum = Enumerator.new do |y|
+        while i < a.size
+          y << a[i]
+          i += 1
+        end
+      end
+
+      Enumerator.product(['a', 'b'], enum).to_a.should == [["a", 1], ["a", 2], ["a", 3]]
+    end
   end
 end
