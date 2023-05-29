@@ -497,8 +497,8 @@ describe "Time.new with a timezone argument" do
       end
 
       it "returns Time in local timezone if not provided in the String argument" do
-        Time.new("2021-12-25 00:00:00").zone.should == Time.now.zone
-        Time.new("2021-12-25 00:00:00").utc_offset.should == Time.now.utc_offset
+        Time.new("2021-12-25 00:00:00").zone.should == Time.new(2021, 12, 25).zone
+        Time.new("2021-12-25 00:00:00").utc_offset.should == Time.new(2021, 12, 25).utc_offset
       end
 
       it "returns Time in timezone specified in the String argument" do
