@@ -1,6 +1,6 @@
-require File.expand_path('../../../../spec_helper', __FILE__)
-require 'stringio'
+require_relative '../../../spec_helper'
 require 'zlib'
+require 'stringio'
 
 describe "Zlib::GzipReader#mtime" do
   it "returns the timestamp from the Gzip header" do
