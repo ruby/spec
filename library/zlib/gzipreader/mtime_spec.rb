@@ -9,4 +9,3 @@ describe "Zlib::GzipReader#mtime" do
     gz.mtime.to_i.should == 0x11223344
   end
 end
-
