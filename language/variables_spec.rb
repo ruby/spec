@@ -937,3 +937,58 @@ describe "Instance variables" do
     end
   end
 end
+
+describe "Module instance variables within Ractors" do
+  context "when the instance variable is shareable" do
+    ruby_version_is ""..."3.1" do
+      it "raises Isolation error if read from a non-main Ractor" do
+        result = VariablesSpecs::RactorAccess.run("VariablesSpecs::RactorAccess.read_in_ractor")
+        result.should == "Ractor::IsolationError"
+      end
+    end
+
+    ruby_version_is "3.1" do
+      it "can be read from a non-main Ractor" do
+        result = VariablesSpecs::RactorAccess.run("VariablesSpecs::RactorAccess.read_in_ractor")
+        result.should == "3"
+      end
+    end
+
+    it "raises Isolation error if written to in a non-main Ractor" do
+      result = VariablesSpecs::RactorAccess.run("VariablesSpecs::RactorAccess.write_in_ractor")
+      result.should == "Ractor::IsolationError"
+    end
+
+    it "raises no error if read/written in the main Ractor" do
+      code = <<~RUBY
+        VariablesSpecs::RactorAccess.ivar = 5
+        VariablesSpecs::RactorAccess.ivar
+      RUBY
+
+      result = VariablesSpecs::RactorAccess.run(code)
+      result.should == "5"
+    end
+  end
+
+  context "when the instance variable is not shareable" do
+    it "raises Isolation error if read from a non-main Ractor" do
+        result = VariablesSpecs::RactorAccess.run("VariablesSpecs::RactorAccess.read_in_ractor(false)")
+        result.should == "Ractor::IsolationError"
+    end
+
+    it "raises Isolation error if written to in a non-main Ractor" do
+      result = VariablesSpecs::RactorAccess.run("VariablesSpecs::RactorAccess.write_in_ractor(false)")
+      result.should == "Ractor::IsolationError"
+    end
+
+    it "raises no error if read/written in the main Ractor" do
+      code = <<~RUBY
+        VariablesSpecs::RactorAccess.ivar = 5
+        VariablesSpecs::RactorAccess.ivar
+      RUBY
+
+      result = VariablesSpecs::RactorAccess.run(code)
+      result.should == "5"
+    end
+  end
+end

@@ -154,4 +154,46 @@ module VariablesSpecs
       attr_accessor :left, :right
     end
   end
+
+  module RactorAccess
+    singleton_class.attr_accessor :ivar
+
+    class << self
+      def run(code_str)
+        require_path = File.expand_path(__FILE__)
+
+        code = <<~RUBY
+          require_relative "#{require_path}"
+
+          puts #{code_str}
+        RUBY
+
+        ruby_exe(code).chomp
+      end
+
+      def read_in_ractor(shareable = true)
+        run_in_ractor(shareable, :read)
+      end
+
+      def write_in_ractor(shareable = true)
+        run_in_ractor(shareable, :write)
+      end
+
+      def run_in_ractor(shareable, type)
+        @ivar = shareable ? 3 : "3"
+
+        r = Ractor.new(type) do |type|
+          if type == :read
+            RactorAccess.ivar
+          else
+            RactorAccess.ivar = 4
+          end
+        rescue => e
+          e.class.name
+        end
+
+        r.take
+      end
+    end
+  end
 end
