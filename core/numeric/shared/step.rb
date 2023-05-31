@@ -5,7 +5,7 @@ require_relative '../fixtures/classes'
 # To be able to do it, the @step ivar must contain a Proc that transforms
 # the step call arguments passed as positional arguments to the style of
 # arguments pretended to test.
-describe :numeric_step, :shared => true do
+describe :numeric_step, shared: true do
   before :each do
     ScratchPad.record []
     @prc = -> x { ScratchPad << x }
