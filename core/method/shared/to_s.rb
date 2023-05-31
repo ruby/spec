@@ -75,9 +75,7 @@ describe :method_to_s, shared: true do
     @string.should.start_with? "#<Method: #<MethodSpecs::MySub:0xXXXXXX>.bar"
   end
 
-  ruby_bug '#17428', ''...'3.0' do
-    it "shows the metaclass and the owner for a Module instance method retrieved from a class" do
-      String.method(:include).inspect.should.start_with?("#<Method: #<Class:String>(Module)#include")
-    end
+  it "shows the metaclass and the owner for a Module instance method retrieved from a class" do
+    String.method(:include).inspect.should.start_with?("#<Method: #<Class:String>(Module)#include")
   end
 end

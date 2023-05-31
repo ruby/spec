@@ -58,7 +58,7 @@ describe "Time.new with a utc_offset argument" do
     Time.new(2000, 1, 1, 0, 0, 0, "-04:10:43").utc_offset.should == -15043
   end
 
-  ruby_bug '#13669', '3.0'...'3.1' do
+  ruby_bug '#13669', ''...'3.1' do
     it "returns a Time with a UTC offset specified as +HH" do
       Time.new(2000, 1, 1, 0, 0, 0, "+05").utc_offset.should == 3600 * 5
     end

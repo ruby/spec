@@ -42,7 +42,7 @@ describe :dir_glob, shared: true do
     result.sort.should == Dir.send(@method, '*').sort
   end
 
-  ruby_version_is "3.0"..."3.1" do
+  ruby_version_is ""..."3.1" do
     it "result is sorted with any non false value of sort:" do
       result = Dir.send(@method, '*', sort: 0)
       result.should == result.sort

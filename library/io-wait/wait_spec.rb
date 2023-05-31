@@ -25,7 +25,7 @@ describe "IO#wait" do
   end
 
   context "[events, timeout] passed" do
-    ruby_version_is "3.0"..."3.2" do
+    ruby_version_is ""..."3.2" do
       it "returns self when the READABLE event is ready during the timeout" do
         @w.write('data to read')
         @r.wait(IO::READABLE, 2).should.equal?(@r)
