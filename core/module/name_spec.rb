@@ -32,6 +32,19 @@ describe "Module#name" do
     m::N.name.should == "ModuleSpecs::Anonymous::WasAnnon"
   end
 
+  it "may be the repeated in different module objects" do
+    m = Module.new
+    n = Module.new
+
+    verbose, $VERBOSE = $VERBOSE, nil
+    ModuleSpecs::Anonymous::SameName = m
+    ModuleSpecs::Anonymous::SameName = n
+    $VERBOSE = verbose
+
+    m.name.should == "ModuleSpecs::Anonymous::SameName"
+    n.name.should == "ModuleSpecs::Anonymous::SameName"
+  end
+
   it "is set after it is removed from a constant" do
     module ModuleSpecs
       module ModuleToRemove
@@ -59,10 +72,16 @@ describe "Module#name" do
     ModuleSpecs::Anonymous.name.should == "ModuleSpecs::Anonymous"
   end
 
-  it "is set when assigning to a constant" do
+  it "is set when assigning to a constant (constant path matches outer module name)" do
     m = Module.new
     ModuleSpecs::Anonymous::A = m
     m.name.should == "ModuleSpecs::Anonymous::A"
+  end
+
+  it "is set when assigning to a constant (constant path does not match outer module name)" do
+    m = Module.new
+    ModuleSpecs::Anonymous::SameChild::A = m
+    m.name.should == "ModuleSpecs::Anonymous::Child::A"
   end
 
   it "is not modified when assigning to a new constant after it has been accessed" do
@@ -101,11 +120,23 @@ describe "Module#name" do
     ModuleSpecs::NameEncoding.new.name.encoding.should == Encoding::UTF_8
   end
 
-  it "is set when the anonymous outer module name is set" do
+  it "is set when the anonymous outer module name is set (module in one single constant)" do
     m = Module.new
     m::N = Module.new
     ModuleSpecs::Anonymous::E = m
     m::N.name.should == "ModuleSpecs::Anonymous::E::N"
+  end
+
+  it "is set when the anonymous outer module name is set (module in several constants)" do
+    m = Module.new
+    m::N = Module.new
+    m::O = m::N
+    ModuleSpecs::Anonymous::StoredInMultiplePlaces = m
+    valid_names = [
+      "ModuleSpecs::Anonymous::StoredInMultiplePlaces::N",
+      "ModuleSpecs::Anonymous::StoredInMultiplePlaces::O"
+    ]
+    valid_names.should include(m::N.name) # You get one of the two, but you don't know which one.
   end
 
   it "returns a frozen String" do
