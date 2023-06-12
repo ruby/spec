@@ -36,10 +36,10 @@ describe "Module#name" do
     m = Module.new
     n = Module.new
 
-    verbose, $VERBOSE = $VERBOSE, nil
-    ModuleSpecs::Anonymous::SameName = m
-    ModuleSpecs::Anonymous::SameName = n
-    $VERBOSE = verbose
+    suppress_warning do
+      ModuleSpecs::Anonymous::SameName = m
+      ModuleSpecs::Anonymous::SameName = n
+    end
 
     m.name.should == "ModuleSpecs::Anonymous::SameName"
     n.name.should == "ModuleSpecs::Anonymous::SameName"
