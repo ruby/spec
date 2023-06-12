@@ -127,6 +127,7 @@ describe "Module#name" do
     m::N.name.should == "ModuleSpecs::Anonymous::E::N"
   end
 
+  # https://bugs.ruby-lang.org/issues/19681
   it "is set when the anonymous outer module name is set (module in several constants)" do
     m = Module.new
     m::N = Module.new
