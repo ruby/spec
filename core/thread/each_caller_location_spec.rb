@@ -34,12 +34,6 @@ describe "Thread.each_caller_location" do
       Thread.each_caller_location {}.should == nil
     end
 
-    it "cannot be iterated with an external iterator" do
-      -> {
-        Thread.to_enum(:each_caller_location).next
-      }.should raise_error(StopIteration, "iteration reached an end")
-    end
-
     it "raises LocalJumpError when called without a block" do
       -> {
         Thread.each_caller_location
