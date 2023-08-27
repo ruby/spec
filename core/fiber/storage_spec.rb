@@ -92,6 +92,17 @@ describe "Fiber.[]" do
     it "returns nil if the current fiber has no storage" do
       Fiber.new { Fiber[:life] }.resume.should be_nil
     end
+
+    it "can access the storage of the parent fiber" do
+      f = Fiber.new(storage: {life: 42}) do
+        Fiber.new { Fiber[:life] }.resume
+      end
+      f.resume.should == 42
+    end
+
+    it "can't access the storage of the fiber with non-symbol keys" do
+      -> { Fiber[Object.new] }.should raise_error(TypeError)
+    end
   end
 end
 
