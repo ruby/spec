@@ -22,6 +22,14 @@ describe "Fiber.new(storage:)" do
     it "cannot create a fiber with non-hash storage" do
       -> { Fiber.new(storage: 42) {} }.should raise_error(TypeError)
     end
+
+    it "cannot create a fiber with a frozen hash as storage" do
+      -> { Fiber.new(storage: {life: 43}.freeze) {} }.should raise_error(FrozenError)
+    end
+
+    it "cannot create a fiber with a storage hash with non-symbol keys" do
+      -> { Fiber.new(storage: {life: 43, Object.new => 44}) {} }.should raise_error(TypeError)
+    end
   end
 end
 
