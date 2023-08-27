@@ -119,6 +119,19 @@ describe "Fiber.[]=" do
     it "sets the value of the given key in the storage of the current fiber" do
       Fiber.new { Fiber[:life] = 43; Fiber[:life] }.resume.should == 43
     end
+
+    it "does not overwrite the storage of the parent fiber" do
+      f = Fiber.new(storage: {life: 42}) do
+        Fiber.yield Fiber.new { Fiber[:life] = 43; Fiber[:life] }.resume
+        Fiber[:life]
+      end
+      f.resume.should == 43 # Value of the inner fiber
+      f.resume.should == 42 # Value of the outer fiber
+    end
+
+    it "can't access the storage of the fiber with non-symbol keys" do
+      -> { Fiber[Object.new] = 44 }.should raise_error(TypeError)
+    end
   end
 
   ruby_version_is "3.3" do
