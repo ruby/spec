@@ -35,6 +35,17 @@ describe "Fiber.new(storage:)" do
   end
 end
 
+describe "Fiber#storage" do
+  ruby_version_is "3.2" do
+    it "cannot be accessed from a different fiber" do
+      f = Fiber.new(storage: {life: 42}) { nil }
+      -> {
+        f.storage
+      }.should raise_error(ArgumentError, /Fiber storage can only be accessed from the Fiber it belongs to/)
+    end
+  end
+end
+
 describe "Fiber#storage=" do
   ruby_version_is "3.2" do
     it "can clear the storage of the fiber" do
