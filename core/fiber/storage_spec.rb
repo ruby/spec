@@ -1,7 +1,5 @@
 require_relative '../../spec_helper'
 
-require 'fiber'
-
 describe "Fiber.new(storage:)" do
   ruby_version_is "3.2" do
     it "creates a Fiber with the given storage" do
