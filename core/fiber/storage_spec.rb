@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 
-describe "Fiber.new(storage:)" do
-  ruby_version_is "3.2" do
+ruby_version_is "3.2" do
+  describe "Fiber.new(storage:)" do
     it "creates a Fiber with the given storage" do
       storage = {life: 42}
       fiber = Fiber.new(storage: storage) { Fiber.current.storage }
@@ -31,10 +31,8 @@ describe "Fiber.new(storage:)" do
       -> { Fiber.new(storage: {life: 43, Object.new => 44}) {} }.should raise_error(TypeError)
     end
   end
-end
 
-describe "Fiber#storage" do
-  ruby_version_is "3.2" do
+  describe "Fiber#storage" do
     it "cannot be accessed from a different fiber" do
       f = Fiber.new(storage: {life: 42}) { nil }
       -> {
@@ -42,10 +40,8 @@ describe "Fiber#storage" do
       }.should raise_error(ArgumentError, /Fiber storage can only be accessed from the Fiber it belongs to/)
     end
   end
-end
 
-describe "Fiber#storage=" do
-  ruby_version_is "3.2" do
+  describe "Fiber#storage=" do
     it "can clear the storage of the fiber" do
       fiber = Fiber.new(storage: {life: 42}) do
         Fiber.current.storage = nil
@@ -75,10 +71,8 @@ describe "Fiber#storage=" do
       -> { Fiber.current.storage = {life: 43, Object.new => 44} }.should raise_error(TypeError)
     end
   end
-end
 
-describe "Fiber.[]" do
-  ruby_version_is "3.2" do
+  describe "Fiber.[]" do
     it "returns the value of the given key in the storage of the current fiber" do
       Fiber.new(storage: {life: 42}) { Fiber[:life] }.resume.should == 42
     end
@@ -102,10 +96,8 @@ describe "Fiber.[]" do
       -> { Fiber[Object.new] }.should raise_error(TypeError)
     end
   end
-end
 
-describe "Fiber.[]=" do
-  ruby_version_is "3.2" do
+  describe "Fiber.[]=" do
     it "sets the value of the given key in the storage of the current fiber" do
       Fiber.new(storage: {life: 42}) { Fiber[:life] = 43; Fiber[:life] }.resume.should == 43
     end
@@ -137,10 +129,8 @@ describe "Fiber.[]=" do
       Fiber.new(storage: {life: 42}) { Fiber[:life] = nil; Fiber.current.storage }.resume.should == {}
     end
   end
-end
 
-describe "Thread.new" do
-  ruby_version_is "3.2" do
+  describe "Thread.new" do
     it "creates a thread with the storage of the current fiber" do
       fiber = Fiber.new(storage: {life: 42}) do
         Thread.new { Fiber.current.storage }.value
