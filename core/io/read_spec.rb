@@ -113,6 +113,10 @@ describe "IO.read" do
     IO.read(@fname, 1, 10).should == nil
   end
 
+  it "returns an empty string when reading zero bytes" do
+    IO.read(@fname, 0).should == ''
+  end
+
   it "raises an Errno::ENOENT when the requested file does not exist" do
     rm_r @fname
     -> { IO.read @fname }.should raise_error(Errno::ENOENT)
