@@ -250,6 +250,14 @@ describe "IO#read" do
     @io.read(4).should == '7890'
   end
 
+  it "treats first nil argument as no length limit" do
+    @io.read(nil).should == @contents
+  end
+
+  it "raises an ArgumentError when not passed a valid length" do
+    -> { @io.read(-1) }.should raise_error(ArgumentError)
+  end
+
   it "clears the output buffer if there is nothing to read" do
     @io.pos = 10
 
