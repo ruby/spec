@@ -1209,10 +1209,10 @@ describe "A method call with a space between method name and parentheses" do
       args.should == [true]
     end
 
-    it "raises a syntax error if there are multiple statements" do
-      -> {
-        eval("m (1; 2)")
-      }.should raise_error(SyntaxError)
+    ruby_version_is "3.3" do
+      it "supports multiple statements" do
+        eval("m (1; 2)").should == [2]
+      end
     end
   end
 
