@@ -136,14 +136,14 @@ ruby_version_is "3.2" do
     it "can't access the storage of the fiber with non-symbol keys" do
       -> { Fiber[Object.new] = 44 }.should raise_error(TypeError)
     end
-  end
 
-  ruby_version_is "3.3" do
-    it "deletes the fiber storage key when assigning nil" do
-      Fiber.new(storage: {life: 42}) {
-        Fiber[:life] = nil
-        Fiber.current.storage
-      }.resume.should == {}
+    ruby_version_is "3.3" do
+      it "deletes the fiber storage key when assigning nil" do
+        Fiber.new(storage: {life: 42}) {
+          Fiber[:life] = nil
+          Fiber.current.storage
+        }.resume.should == {}
+      end
     end
   end
 
