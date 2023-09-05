@@ -117,6 +117,11 @@ describe "IO.read" do
     IO.read(@fname, 0).should == ''
   end
 
+  it "returns a String in BINARY when passed a size" do
+    IO.read(@fname, 1).encoding.should == Encoding::BINARY
+    IO.read(@fname, 0).encoding.should == Encoding::BINARY
+  end
+
   it "raises an Errno::ENOENT when the requested file does not exist" do
     rm_r @fname
     -> { IO.read @fname }.should raise_error(Errno::ENOENT)
@@ -553,6 +558,7 @@ describe :io_read_size_internal_encoding, shared: true do
 
   it "returns a String in BINARY when passed a size" do
     @io.read(4).encoding.should equal(Encoding::BINARY)
+    @io.read(0).encoding.should equal(Encoding::BINARY)
   end
 
   it "does not change the buffer's encoding when passed a limit" do
