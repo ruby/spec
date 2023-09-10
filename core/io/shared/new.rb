@@ -325,6 +325,9 @@ describe :io_new_errors, shared: true do
       @io = IO.send(@method, @fd, 'w:ISO-8859-1', external_encoding: 'ISO-8859-1')
     }.should raise_error(ArgumentError)
     -> {
+      @io = IO.send(@method, @fd, 'w:ISO-8859-1', internal_encoding: 'ISO-8859-1')
+    }.should raise_error(ArgumentError)
+    -> {
       @io = IO.send(@method, @fd, 'w:ISO-8859-1:UTF-8', internal_encoding: 'ISO-8859-1')
     }.should raise_error(ArgumentError)
   end
