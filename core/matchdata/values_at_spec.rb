@@ -34,7 +34,7 @@ describe "Struct#values_at" do
     end
 
     it "supports beginningless Range" do
-      /(.)(.)(\d+)(\d)/.match("THX1138: The Movie").values_at(0..2).should == ["HX1138", "H", "X"]
+      /(.)(.)(\d+)(\d)/.match("THX1138: The Movie").values_at(..2).should == ["HX1138", "H", "X"]
     end
 
     it "returns an empty Array when Range is empty" do
