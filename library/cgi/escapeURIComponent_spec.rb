@@ -13,7 +13,7 @@ describe "CGI.escapeURIComponent" do
       CGI.escapeURIComponent(str).should == "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
     end
 
-    it "with invalid bytesequence" do
+    it "supports String with invalid encoding" do
       str = "\xC0\<\<".force_encoding("UTF-8")
       CGI.escapeURIComponent(str).should == "%C0%3C%3C"
     end
