@@ -18,8 +18,13 @@ ruby_version_is "3.2" do
       CGI.escapeURIComponent(str).should == "%C0%3C%3C"
     end
 
-    it "nil raises a TypeError" do
-      -> { CGI.escapeURIComponent(nil) }.should raise_error(TypeError)
+    it "raises a TypeError with nil" do
+      -> {
+        CGI.escapeURIComponent(nil)
+      }.should raise_error(TypeError) { |e|
+        e.message.should.include?("no implicit conversion of nil into String")
+        e.cause.should == nil
+      }
     end
 
     it "encodes empty string" do
