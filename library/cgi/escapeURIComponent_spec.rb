@@ -1,8 +1,8 @@
 require_relative '../../spec_helper'
 require 'cgi'
 
-describe "CGI.escapeURIComponent" do
-  ruby_version_is "3.2" do
+ruby_version_is "3.2" do
+  describe "CGI.escapeURIComponent" do
     it "escapes whitespace" do
       str = "&<>\" \xE3\x82\x86\xE3\x82\x93\xE3\x82\x86\xE3\x82\x93"
       CGI.escapeURIComponent(str).should == '%26%3C%3E%22%20%E3%82%86%E3%82%93%E3%82%86%E3%82%93'
