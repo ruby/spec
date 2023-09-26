@@ -42,5 +42,15 @@ ruby_version_is "3.2" do
     it "preserves encoding" do
       CGI.escapeURIComponent("whatever".force_encoding("ASCII-8BIT")).encoding.should == Encoding::ASCII_8BIT
     end
+
+    it "uses implicit type conversion" do
+      c = Class.new do
+        def to_str
+          "a b"
+        end
+      end
+      o = c.new
+      CGI.escapeURIComponent(o).should == "a%20b"
+    end
   end
 end
