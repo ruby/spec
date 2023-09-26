@@ -22,15 +22,15 @@ describe "CGI.escapeURIComponent" do
       -> { CGI.escapeURIComponent(nil) }.should raise_error(TypeError)
     end
 
-    it "empty string" do
+    it "encodes empty string" do
       CGI.escapeURIComponent("").should == ""
     end
 
-    it "single whitespace" do
+    it "encodes single whitespace" do
       CGI.escapeURIComponent(" ").should == "%20"
     end
 
-    it "double whitespace" do
+    it "encodes double whitespace" do
       CGI.escapeURIComponent("  ").should == "%20%20"
     end
 
