@@ -1,0 +1,10 @@
+language: ruby
+arch: s390x
+dist: jammy
+before_install:
+  # Print the used zlib deb package version.
+  - |
+    dpkg -s "$(dpkg -S /usr/include/zlib.h | cut -d ":" -f 1)"
+  - git clone https://github.com/ruby/mspec.git ../mspec
+script:
+  - CHECK_LEAKS=true ../mspec/bin/mspec -j --timeout 30
