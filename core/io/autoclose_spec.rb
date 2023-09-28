@@ -11,19 +11,36 @@ describe "IO#autoclose" do
     @io.close unless @io.closed?
   end
 
+  it "is set to true by default" do
+    @io.should.autoclose?
+  end
+
   it "can be set to true" do
+    @io.autoclose = false
     @io.autoclose = true
     @io.should.autoclose?
   end
 
   it "can be set to false" do
+    @io.autoclose = true
     @io.autoclose = false
     @io.should_not.autoclose?
   end
 
   it "can be set to any truthy value" do
+    @io.autoclose = false
     @io.autoclose = 42
     @io.should.autoclose?
+
+    @io.autoclose = false
+    @io.autoclose = Object.new
+    @io.should.autoclose?
+  end
+
+  it "can be set to any falsy value" do
+    @io.autoclose = true
+    @io.autoclose = nil
+    @io.should_not.autoclose?
   end
 
   it "can be set multple times" do
