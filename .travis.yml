@@ -1,0 +1,7 @@
+language: ruby
+arch: s390x
+dist: jammy
+before_install:
+  # Print the used zlib deb package version.
+  - |
+    dpkg -s "$(dpkg -S /usr/include/zlib.h | cut -d ":" -f 1)"
