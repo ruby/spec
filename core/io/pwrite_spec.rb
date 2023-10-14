@@ -44,14 +44,14 @@ guard -> { platform_is_not :windows or ruby_version_is "3.3" } do
 
     it "raises IOError when file is not open in write mode" do
       File.open(@fname, "r") do |file|
-        -> { file.pwrite("foo", 1) }.should raise_error(IOError)
+        -> { file.pwrite("foo", 1) }.should raise_error(IOError, "not opened for writing")
       end
     end
 
     it "raises IOError when file is closed" do
       file = File.open(@fname, "w+")
       file.close
-      -> { file.pwrite("foo", 1) }.should raise_error(IOError)
+      -> { file.pwrite("foo", 1) }.should raise_error(IOError, "closed stream")
     end
 
     it "raises a NoMethodError if object does not respond to #to_s" do
