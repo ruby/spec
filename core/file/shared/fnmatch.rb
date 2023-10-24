@@ -173,6 +173,14 @@ describe :file_fnmatch, shared: true do
     File.send(@method, ".*file", "nondotfile", File::FNM_PATHNAME).should == false
   end
 
+  it "does not match directories with leading periods by default with FNM_PATHNAME" do
+    File.send(@method, '.*', '.directory/nondotfile', File::FNM_PATHNAME).should == false
+    File.send(@method, '.*', '.directory/.profile', File::FNM_PATHNAME).should == false
+    File.send(@method, '.*', 'foo/.directory/nondotfile', File::FNM_PATHNAME).should == false
+    File.send(@method, '.*', 'foo/.directory/.profile', File::FNM_PATHNAME).should == false
+    File.send(@method, '**/.dotfile', '.dotsubdir/.dotfile', File::FNM_PATHNAME).should == false
+  end
+
   it "matches leading periods in filenames when flags includes FNM_DOTMATCH" do
     File.send(@method, '*', '.profile', File::FNM_DOTMATCH).should == true
     File.send(@method, '*', 'home/.profile', File::FNM_DOTMATCH).should == true
