@@ -102,6 +102,7 @@ describe :file_fnmatch, shared: true do
 
   it "matches ranges of characters using exclusive bracket expression (e.g. [^t] or [!t])" do
     File.send(@method, 'ca[^t]', 'cat').should == false
+    File.send(@method, 'ca[^t]', 'cas').should == true
     File.send(@method, 'ca[!t]', 'cat').should == false
   end
 
