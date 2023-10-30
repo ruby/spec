@@ -4,27 +4,28 @@ require 'cgi'
 ruby_version_is "3.2" do
   describe "CGI.escapeURIComponent" do
     it "escapes whitespace" do
-      str = "&<>\" \xE3\x82\x86\xE3\x82\x93\xE3\x82\x86\xE3\x82\x93"
-      CGI.escapeURIComponent(str).should == '%26%3C%3E%22%20%E3%82%86%E3%82%93%E3%82%86%E3%82%93'
+      string = "&<>\" \xE3\x82\x86\xE3\x82\x93\xE3\x82\x86\xE3\x82\x93"
+      CGI.escapeURIComponent(string).should == '%26%3C%3E%22%20%E3%82%86%E3%82%93%E3%82%86%E3%82%93'
     end
 
     it "does not escape with unreserved characters" do
-      str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
-      CGI.escapeURIComponent(str).should == "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+      string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+      CGI.escapeURIComponent(string).should == "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
     end
 
     it "supports String with invalid encoding" do
-      str = "\xC0\<\<".force_encoding("UTF-8")
-      CGI.escapeURIComponent(str).should == "%C0%3C%3C"
+      string = "\xC0\<\<".force_encoding("UTF-8")
+      CGI.escapeURIComponent(string).should == "%C0%3C%3C"
+    end
+
+    it "processes String bytes one by one, not characters" do
+      CGI.escapeURIComponent("β").should == "%CE%B2" # "β" bytes representation is CE B2
     end
 
     it "raises a TypeError with nil" do
       -> {
         CGI.escapeURIComponent(nil)
-      }.should raise_error(TypeError) { |e|
-        e.message.should.include?("no implicit conversion of nil into String")
-        e.cause.should == nil
-      }
+      }.should raise_error(TypeError, 'no implicit conversion of nil into String')
     end
 
     it "encodes empty string" do
@@ -40,17 +41,17 @@ ruby_version_is "3.2" do
     end
 
     it "preserves encoding" do
-      CGI.escapeURIComponent("whatever".force_encoding("ASCII-8BIT")).encoding.should == Encoding::ASCII_8BIT
+      string = "whatever".encode("ASCII-8BIT")
+      CGI.escapeURIComponent(string).encoding.should == Encoding::ASCII_8BIT
     end
 
-    it "uses implicit type conversion" do
-      c = Class.new do
-        def to_str
-          "a b"
-        end
+    it "uses implicit type conversion to String" do
+      object = Object.new
+      def object.to_str
+        "a b"
       end
-      o = c.new
-      CGI.escapeURIComponent(o).should == "a%20b"
+
+      CGI.escapeURIComponent(object).should == "a%20b"
     end
   end
 end
