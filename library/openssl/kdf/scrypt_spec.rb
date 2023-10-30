@@ -1,7 +1,7 @@
 require_relative '../../../spec_helper'
 require 'openssl'
 
-guard -> { OpenSSL::OPENSSL_VERSION_NUMBER >= 0x30000000 } do
+guard -> { OpenSSL::OPENSSL_VERSION_NUMBER >= 0x10100000 } do
   describe "OpenSSL::KDF.scrypt" do
     before :each do
       @defaults = {
