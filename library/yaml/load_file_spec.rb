@@ -1,5 +1,6 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/common'
+
+require 'yaml'
 
 describe "YAML.load_file" do
   before :each do

@@ -1,5 +1,6 @@
-require_relative '../fixtures/common'
 require_relative '../fixtures/strings'
+
+require 'yaml'
 
 describe :yaml_load_safe, shared: true do
   it "returns a document from current io stream when io provided" do

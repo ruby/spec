@@ -1,5 +1,6 @@
 require_relative '../../spec_helper'
-require_relative 'fixtures/common'
+
+require 'yaml'
 
 describe "YAML.parse with an empty string" do
   it "returns false" do
