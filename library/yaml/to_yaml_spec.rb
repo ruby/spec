@@ -19,7 +19,7 @@ describe "Object#to_yaml" do
 
   it "returns the YAML representation of a Date object" do
     require 'date'
-    Date.parse('1997/12/30').to_yaml.should match_yaml("--- 1997-12-30\n")
+    Date.new(1997, 12, 30).to_yaml.should match_yaml("--- 1997-12-30\n")
   end
 
   it "returns the YAML representation of a FalseClass" do
