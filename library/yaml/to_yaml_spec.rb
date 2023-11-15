@@ -59,6 +59,11 @@ describe "Object#to_yaml" do
     Person.new("Jane", "female").to_yaml.should match_yaml("--- !ruby/struct:Person\nname: Jane\ngender: female\n")
   end
 
+  it "returns the YAML representation of an unnamed Struct object" do
+    person = Struct.new(:name, :gender)
+    person.new("Jane", "female").to_yaml.should match_yaml("--- !ruby/struct\nname: Jane\ngender: female\n")
+  end
+
   it "returns the YAML representation of a Symbol object" do
     :symbol.to_yaml.should match_yaml("--- :symbol\n")
   end
