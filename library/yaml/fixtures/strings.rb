@@ -11,18 +11,6 @@ $complex_key_1 = <<EOY
        2001-08-14 ]
 EOY
 
-$to_yaml_hash =
-<<EOY
--
-  avg: 0.278
-  hr: 65
-  name: Mark McGwire
--
-  avg: 0.288
-  hr: 63
-  name: Sammy Sosa
-EOY
-
 $multidocument = <<EOY
 ---
 - Mark McGwire
