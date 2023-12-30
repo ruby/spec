@@ -43,9 +43,6 @@ Lint/InterpolationCheck:
 Lint/LiteralAsCondition:
   Enabled: false
 
-Lint/RedundantRequireStatement:
-  Enabled: false
-
 Lint/RedundantSplatExpansion:
   Enabled: false
 
