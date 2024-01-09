@@ -16,7 +16,7 @@ describe "Thread#thread_variables" do
     @t.thread_variables.sort.should == [:a, :b, :c]
   end
 
-  it "sets a value private to self" do
+  it "returns the keys private to self" do
     @t.thread_variable_set(:a, 82)
     @t.thread_variable_set(:b, 82)
     Thread.current.thread_variables.should_not include(:a, :b)
