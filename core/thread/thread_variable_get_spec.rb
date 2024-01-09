@@ -14,12 +14,12 @@ describe "Thread#thread_variable_get" do
   end
 
   it "returns the value previously set by #thread_variable_set" do
-    @t.thread_variable_set :a, 49
+    @t.thread_variable_set(:a, 49)
     @t.thread_variable_get(:a).should == 49
   end
 
   it "returns a value private to self" do
-    @t.thread_variable_set :thread_variable_get_spec, 82
+    @t.thread_variable_set(:thread_variable_get_spec, 82)
     Thread.current.thread_variable_get(:thread_variable_get_spec).should be_nil
   end
 end
