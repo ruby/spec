@@ -26,4 +26,12 @@ describe "Thread#thread_variables" do
     Thread.current.thread_variables.should == []
     @t.thread_variables.should == []
   end
+
+  it "converts keys into Symbols" do
+    key = mock('key')
+    key.should_receive(:to_str).and_return('a')
+    @t.thread_variable_set(key, 49)
+    @t.thread_variable_set('b', 50)
+    @t.thread_variables.sort.should == [:a, :b]
+  end
 end
