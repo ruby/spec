@@ -18,4 +18,31 @@ describe "Thread#thread_variable?" do
     @t.thread_variable_set(:a, 2)
     @t.thread_variable?(:a).should be_true
   end
+
+  it "converts a String key into a Symbol" do
+    @t.thread_variable_set(:a, 49)
+    @t.thread_variable?('a').should be_true
+  end
+
+  it "converts a key that is neither String nor Symbol with #to_str" do
+    key = mock('key')
+    key.should_receive(:to_str).and_return('a')
+    @t.thread_variable_set(:a, 49)
+    @t.thread_variable?(key).should be_true
+  end
+
+  it "does not raise FrozenError if the thread is frozen" do
+    @t.freeze
+    @t.thread_variable?(:a).should be_false
+  end
+
+  it "does not raise a TypeError if the key is neither Symbol nor String, nor responds to #to_str" do
+    @t.thread_variable?(123).should be_false
+  end
+
+  it "does not try to convert the key with #to_sym" do
+    key = mock('key')
+    key.should_not_receive(:to_sym)
+    @t.thread_variable?(key).should be_false
+  end
 end
