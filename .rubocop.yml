@@ -103,6 +103,9 @@ Lint/OutOfRangeRegexpRef:
 Lint/InheritException:
   Enabled: false
 
+Lint/SafeNavigationChain:
+  Enabled: false
+
 Lint/ElseLayout:
   Exclude:
     - 'language/if_spec.rb'
