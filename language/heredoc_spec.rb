@@ -109,7 +109,7 @@ HERE
 
   it "reports line numbers inside HEREDOC with method call" do
     -> {
-      eval %{<<HERE.chomp\na\nb\#{c}\nHERE}
-    }.should raise_error(NameError) { |e| e.backtrace[0].should.start_with?("(eval):3") }
+      eval %{<<HERE.chomp\na\nb\#{c}\nHERE}, nil, "example"
+    }.should raise_error(NameError) { |e| e.backtrace[0].should.start_with?("example:3") }
   end
 end
