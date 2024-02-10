@@ -106,4 +106,10 @@ HERE
     SquigglyHeredocSpecs.least_indented_on_the_first_line_single.should == "a\n  b\n    c\n"
     SquigglyHeredocSpecs.least_indented_on_the_last_line_single.should == "    a\n  b\nc\n"
   end
+
+  it "reports line numbers inside HEREDOC with method call" do
+    -> {
+      eval %{<<HERE.chomp\na\nb\#{c}\nHERE}
+    }.should raise_error(NameError) { |e| e.backtrace[0].should.start_with?("(eval):3") }
+  end
 end
