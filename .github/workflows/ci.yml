@@ -10,6 +10,12 @@ jobs:
       matrix:
         os: [ ubuntu, macos, windows ]
         ruby: [ 3.0.6, 3.1.4, 3.2.2, 3.3.0 ]
+        rubyopt: [""]
+        include:
+          - os: ubuntu
+            ruby: 3.3.0
+            rubyopt: "--enable-frozen-string-literal"
+
     runs-on: ${{ matrix.os }}-latest
     steps:
     - name: git config autocrlf
@@ -28,6 +34,7 @@ jobs:
       if: matrix.os == 'ubuntu'
       env:
         CHECK_LEAKS: true
+        RUBYOPT: "${{ matrix.rubyopt }}"
       run: ../mspec/bin/mspec -j --timeout 30
 
     - name: Run specs (macOS)
