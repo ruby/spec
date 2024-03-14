@@ -40,7 +40,7 @@ describe "Encoding::Converter#putback" do
     dst = +""
     ec.primitive_convert(src, dst).should == :invalid_byte_sequence
     ec.primitive_errinfo.should == [:invalid_byte_sequence, "UTF-16LE", "UTF-8", "\x00\xD8", "a\x00"]
-    ec.putback.should == "a\x00".dup.force_encoding("utf-16le")
+    ec.putback.should == "a\x00".force_encoding("utf-16le")
     ec.putback.should == ""
   end
 
@@ -50,7 +50,7 @@ describe "Encoding::Converter#putback" do
     dst = +""
     ec.primitive_convert(src, dst).should == :invalid_byte_sequence
     ec.primitive_errinfo.should == [:invalid_byte_sequence, "UTF-16LE", "UTF-8", "\x00\xD8", "a\x00"]
-    ec.putback(2).should == "a\x00".dup.force_encoding("utf-16le")
+    ec.putback(2).should == "a\x00".force_encoding("utf-16le")
     ec.putback.should == ""
   end
 end

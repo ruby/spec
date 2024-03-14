@@ -252,12 +252,12 @@ describe "Ruby String interpolation" do
 
   it "returns a string with the source encoding by default" do
     "a#{"b"}c".encoding.should == Encoding::BINARY
-    eval('"a#{"b"}c"'.dup.force_encoding("us-ascii")).encoding.should == Encoding::US_ASCII
+    eval('"a#{"b"}c"'.force_encoding("us-ascii")).encoding.should == Encoding::US_ASCII
     eval("# coding: US-ASCII \n 'a#{"b"}c'").encoding.should == Encoding::US_ASCII
   end
 
   it "returns a string with the source encoding, even if the components have another encoding" do
-    a = "abc".dup.force_encoding("euc-jp")
+    a = "abc".force_encoding("euc-jp")
     "#{a}".encoding.should == Encoding::BINARY
 
     b = "abc".encode("utf-8")
@@ -266,7 +266,7 @@ describe "Ruby String interpolation" do
 
   it "raises an Encoding::CompatibilityError if the Encodings are not compatible" do
     a = "\u3042"
-    b = "\xff".dup.force_encoding "binary"
+    b = "\xff".force_encoding "binary"
 
     -> { "#{a} #{b}" }.should raise_error(Encoding::CompatibilityError)
   end

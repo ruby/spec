@@ -295,13 +295,13 @@ describe "StringIO#initialize sets" do
   end
 
   it "the encoding to the encoding of the String when passed a String" do
-    s = ''.dup.force_encoding(Encoding::EUC_JP)
+    s = ''.force_encoding(Encoding::EUC_JP)
     io = StringIO.new(s)
     io.string.encoding.should == Encoding::EUC_JP
   end
 
   it "the #external_encoding to the encoding of the String when passed a String" do
-    s = ''.dup.force_encoding(Encoding::EUC_JP)
+    s = ''.force_encoding(Encoding::EUC_JP)
     io = StringIO.new(s)
     io.external_encoding.should == Encoding::EUC_JP
   end

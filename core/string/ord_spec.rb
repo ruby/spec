@@ -27,7 +27,7 @@ describe "String#ord" do
   end
 
   it "raises ArgumentError if the character is broken" do
-    s = "©".dup.force_encoding("US-ASCII")
+    s = "©".force_encoding("US-ASCII")
     -> { s.ord }.should raise_error(ArgumentError, "invalid byte sequence in US-ASCII")
   end
 end

@@ -34,8 +34,8 @@ describe "String#encode" do
 
     it "encodes an ascii substring of a binary string to UTF-8" do
       x82 = [0x82].pack('C')
-      str =  "#{x82}foo".dup.force_encoding("binary")[1..-1].encode("utf-8")
-      str.should == "foo".dup.force_encoding("utf-8")
+      str =  "#{x82}foo".force_encoding("binary")[1..-1].encode("utf-8")
+      str.should == "foo".force_encoding("utf-8")
       str.encoding.should equal(Encoding::UTF_8)
     end
   end
@@ -49,7 +49,7 @@ describe "String#encode" do
     end
 
     it "round trips a String" do
-      str = "abc def".dup.force_encoding Encoding::US_ASCII
+      str = "abc def".force_encoding Encoding::US_ASCII
       str.encode("utf-32be").encode("ascii").should == "abc def"
     end
   end
@@ -122,7 +122,7 @@ describe "String#encode" do
 
   describe "when passed to, from" do
     it "returns a copy in the destination encoding when both encodings are the same" do
-      str = "あ".dup.force_encoding("binary")
+      str = "あ".force_encoding("binary")
       encoded = str.encode("utf-8", "utf-8")
 
       encoded.should_not equal(str)
@@ -154,7 +154,7 @@ describe "String#encode" do
     end
 
     it "returns a copy in the destination encoding when both encodings are the same" do
-      str = "あ".dup.force_encoding("binary")
+      str = "あ".force_encoding("binary")
       encoded = str.encode("utf-8", "utf-8", invalid: :replace)
 
       encoded.should_not equal(str)

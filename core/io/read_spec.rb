@@ -594,7 +594,7 @@ describe :io_read_internal_encoding, shared: true do
     end
 
     it "sets the buffer's encoding to the internal encoding" do
-      buf = "".dup.force_encoding Encoding::ISO_8859_1
+      buf = "".force_encoding Encoding::ISO_8859_1
       @io.read(nil, buf)
       buf.encoding.should equal(Encoding::UTF_8)
     end
@@ -612,14 +612,14 @@ describe :io_read_size_internal_encoding, shared: true do
   end
 
   it "does not change the buffer's encoding when passed a limit" do
-    buf = "".dup.force_encoding Encoding::ISO_8859_1
+    buf = "".force_encoding Encoding::ISO_8859_1
     @io.read(4, buf)
     buf.should == [164, 162, 164, 234].pack('C*').force_encoding(Encoding::ISO_8859_1)
     buf.encoding.should equal(Encoding::ISO_8859_1)
   end
 
   it "truncates the buffer but does not change the buffer's encoding when no data remains" do
-    buf = "abc".dup.force_encoding Encoding::ISO_8859_1
+    buf = "abc".force_encoding Encoding::ISO_8859_1
     @io.read
 
     @io.read(1, buf).should be_nil

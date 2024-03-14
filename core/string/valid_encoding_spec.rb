@@ -43,10 +43,10 @@ describe "String#valid_encoding?" do
     str.force_encoding('KOI8-R').valid_encoding?.should be_true
     str.force_encoding('KOI8-U').valid_encoding?.should be_true
     str.force_encoding('Shift_JIS').valid_encoding?.should be_false
-    "\xD8\x00".dup.force_encoding('UTF-16BE').valid_encoding?.should be_false
-    "\x00\xD8".dup.force_encoding('UTF-16LE').valid_encoding?.should be_false
-    "\x04\x03\x02\x01".dup.force_encoding('UTF-32BE').valid_encoding?.should be_false
-    "\x01\x02\x03\x04".dup.force_encoding('UTF-32LE').valid_encoding?.should be_false
+    "\xD8\x00".force_encoding('UTF-16BE').valid_encoding?.should be_false
+    "\x00\xD8".force_encoding('UTF-16LE').valid_encoding?.should be_false
+    "\x04\x03\x02\x01".force_encoding('UTF-32BE').valid_encoding?.should be_false
+    "\x01\x02\x03\x04".force_encoding('UTF-32LE').valid_encoding?.should be_false
     str.force_encoding('Windows-1251').valid_encoding?.should be_true
     str.force_encoding('IBM437').valid_encoding?.should be_true
     str.force_encoding('IBM737').valid_encoding?.should be_true
@@ -114,7 +114,7 @@ describe "String#valid_encoding?" do
   end
 
   it "returns false if self contains a character invalid in the associated encoding" do
-    "abc#{[0x80].pack('C')}".dup.force_encoding('ascii').valid_encoding?.should be_false
+    "abc#{[0x80].pack('C')}".force_encoding('ascii').valid_encoding?.should be_false
   end
 
   it "returns false if a valid String had an invalid character appended to it" do

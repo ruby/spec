@@ -14,7 +14,7 @@ describe "String#encoding" do
   end
 
   it "returns the given encoding if #force_encoding has been called" do
-    "a".dup.force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
+    "a".force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
   end
 
   it "returns the given encoding if #encode!has been called" do
@@ -108,8 +108,8 @@ describe "String#encoding for Strings with \\u escapes" do
   end
 
   it "returns the given encoding if #force_encoding has been called" do
-    "\u{20}".dup.force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
-    "\u{2020}".dup.force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
+    "\u{20}".force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
+    "\u{2020}".force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
   end
 
   it "returns the given encoding if #encode!has been called" do
@@ -173,7 +173,7 @@ describe "String#encoding for Strings with \\x escapes" do
   end
 
   it "returns the given encoding if #force_encoding has been called" do
-    "\x50".dup.force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
+    "\x50".force_encoding(Encoding::SHIFT_JIS).encoding.should == Encoding::SHIFT_JIS
     [212].pack('C').force_encoding(Encoding::ISO_8859_9).encoding.should == Encoding::ISO_8859_9
   end
 
