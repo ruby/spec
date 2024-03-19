@@ -231,9 +231,18 @@ describe "Ruby String literals" do
       ruby_exe(fixture(__FILE__, "freeze_magic_comment_across_files.rb")).chomp.should == "true"
     end
 
-    it "produce different objects for literals with the same content in different files if the other file doesn't have the comment" do
-      frozen_literals_by_default = eval("'test'").frozen?
-      ruby_exe(fixture(__FILE__, "freeze_magic_comment_across_files_no_comment.rb")).chomp.should == (!frozen_literals_by_default).to_s
+    guard -> { !eval("'test'").frozen? } do
+      it "produces different objects for literals with the same content in different files if the other file doesn't have the comment and String literals aren't frozen by default" do
+        frozen_literals_by_default = eval("'test'").frozen?
+        ruby_exe(fixture(__FILE__, "freeze_magic_comment_across_files_no_comment.rb")).chomp.should == "true"
+      end
+    end
+
+    guard -> { eval("'test'").frozen? } do
+      it "produces the same objects for literals with the same content in different files if the other file doesn't have the comment and String literals are frozen by default" do
+        frozen_literals_by_default = eval("'test'").frozen?
+        ruby_exe(fixture(__FILE__, "freeze_magic_comment_across_files_no_comment.rb")).chomp.should == "false"
+      end
     end
 
     it "produce different objects for literals with the same content in different files if they have different encodings" do
