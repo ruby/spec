@@ -60,11 +60,11 @@ module ArraySpecs
 
   def self.measure_sample_fairness(size, samples, iters)
     ary = Array.new(size) { |x| x }
+    expected = iters.fdiv size
     (samples).times do |i|
       chi_results = []
       3.times do
         counts = Array.new(size) { 0 }
-        expected = iters.fdiv size
         iters.times do
           x = ary.sample(samples)[i]
           counts[x] += 1
