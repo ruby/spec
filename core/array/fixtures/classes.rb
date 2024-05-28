@@ -56,7 +56,7 @@ module ArraySpecs
     101.621, 102.816, 104.010, 105.202, 106.393, 107.583, 108.771, 109.958, 111.144, 112.329,
     113.512, 114.695, 115.876, 117.057, 118.236, 119.414, 120.591, 121.767, 122.942, 124.116,
     125.289, 126.462, 127.633, 128.803, 129.973, 131.141, 132.309, 133.476, 134.642, 135.807,
-      ]
+  ]
 
   def self.measure_sample_fairness(size, samples, iters)
     ary = Array.new(size) { |x| x }
@@ -64,14 +64,14 @@ module ArraySpecs
       chi_results = []
       3.times do
         counts = Array.new(size) { 0 }
-        expected = iters / size
+        expected = iters.fdiv size
         iters.times do
           x = ary.sample(samples)[i]
           counts[x] += 1
         end
         chi_squared = 0.0
         counts.each do |count|
-          chi_squared += (((count - expected) ** 2) * 1.0 / expected)
+          chi_squared += ((count - expected) ** 2 / expected)
         end
         chi_results << chi_squared
         break if chi_squared <= CHI_SQUARED_CRITICAL_VALUES[size]
@@ -84,7 +84,7 @@ module ArraySpecs
   def self.measure_sample_fairness_large_sample_size(size, samples, iters)
     ary = Array.new(size) { |x| x }
     counts = Array.new(size) { 0 }
-    expected = iters * samples / size
+    expected = (iters * samples).fdiv size
     iters.times do
       ary.sample(samples).each do |sample|
         counts[sample] += 1
@@ -92,7 +92,7 @@ module ArraySpecs
     end
     chi_squared = 0.0
     counts.each do |count|
-      chi_squared += (((count - expected) ** 2) * 1.0 / expected)
+      chi_squared += ((count - expected) ** 2 / expected)
     end
 
     # Chi squared critical values for tests with 4 degrees of freedom
