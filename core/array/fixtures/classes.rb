@@ -69,10 +69,7 @@ module ArraySpecs
           x = ary.sample(samples)[i]
           counts[x] += 1
         end
-        chi_squared = 0.0
-        counts.each do |count|
-          chi_squared += ((count - expected) ** 2 / expected)
-        end
+        chi_squared = counts.sum {|count| (count - expected) ** 2} / expected
         chi_results << chi_squared
         break if chi_squared <= CHI_SQUARED_CRITICAL_VALUES[size]
       end
@@ -90,10 +87,7 @@ module ArraySpecs
         counts[sample] += 1
       end
     end
-    chi_squared = 0.0
-    counts.each do |count|
-      chi_squared += ((count - expected) ** 2 / expected)
-    end
+    chi_squared = counts.sum {|count| (count - expected) ** 2} / expected
 
     # Chi squared critical values for tests with 4 degrees of freedom
     # Values obtained from NIST Engineering Statistic Handbook at
