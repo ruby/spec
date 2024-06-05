@@ -1,5 +1,15 @@
 require_relative '../spec_helper'
 
+def eval_as_method(string)
+  eval <<-RUBY
+      o = Object.new
+      def o.evaled
+        #{string}
+      end
+      o.evaled
+    RUBY
+end
+
 describe "Pattern matching" do
   # TODO: Remove excessive eval calls when Ruby 3 is the minimum version.
   # It is best to keep the eval's longer if other Ruby impls cannot parse pattern matching yet.
@@ -11,7 +21,7 @@ describe "Pattern matching" do
   describe "can be standalone assoc operator that" do
     it "deconstructs value" do
       suppress_warning do
-        eval(<<-RUBY).should == [0, 1]
+        eval_as_method(<<-RUBY).should == [0, 1]
           [0, 1] => [a, b]
           [a, b]
         RUBY
@@ -33,7 +43,7 @@ describe "Pattern matching" do
 
   describe "find pattern" do
     it "captures preceding elements to the pattern" do
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case [0, 1, 2, 3]
         in [*pre, 2, 3]
           pre
@@ -44,7 +54,7 @@ describe "Pattern matching" do
     end
 
     it "captures following elements to the pattern" do
-      eval(<<~RUBY).should == [2, 3]
+      eval_as_method(<<~RUBY).should == [2, 3]
         case [0, 1, 2, 3]
         in [0, 1, *post]
           post
@@ -55,7 +65,7 @@ describe "Pattern matching" do
     end
 
     it "captures both preceding and following elements to the pattern" do
-      eval(<<~RUBY).should == [[0, 1], [3, 4]]
+      eval_as_method(<<~RUBY).should == [[0, 1], [3, 4]]
         case [0, 1, 2, 3, 4]
         in [*pre, 2, *post]
           [pre, post]
@@ -66,7 +76,7 @@ describe "Pattern matching" do
     end
 
     it "can capture the entirety of the pattern" do
-      eval(<<~RUBY).should == [0, 1, 2, 3, 4]
+      eval_as_method(<<~RUBY).should == [0, 1, 2, 3, 4]
         case [0, 1, 2, 3, 4]
         in [*everything]
           everything
@@ -77,7 +87,7 @@ describe "Pattern matching" do
     end
 
     it "will match an empty Array-like structure" do
-      eval(<<~RUBY).should == []
+      eval_as_method(<<~RUBY).should == []
         case []
         in [*everything]
           everything
@@ -88,7 +98,7 @@ describe "Pattern matching" do
     end
 
     it "can be nested" do
-      eval(<<~RUBY).should == [[0, [2, 4, 6]], [[4, 16, 64]], 27]
+      eval_as_method(<<~RUBY).should == [[0, [2, 4, 6]], [[4, 16, 64]], 27]
         case [0, [2, 4, 6], [3, 9, 27], [4, 16, 64]]
         in [*pre, [*, 9, a], *post]
           [pre, post, a]
@@ -99,7 +109,7 @@ describe "Pattern matching" do
     end
 
     it "can be nested with an array pattern" do
-      eval(<<~RUBY).should == [[4, 16, 64]]
+      eval_as_method(<<~RUBY).should == [[4, 16, 64]]
         case [0, [2, 4, 6], [3, 9, 27], [4, 16, 64]]
         in [_, _, [*, 9, *], *post]
           post
@@ -110,7 +120,7 @@ describe "Pattern matching" do
     end
 
     it "can be nested within a hash pattern" do
-      eval(<<~RUBY).should == [27]
+      eval_as_method(<<~RUBY).should == [27]
         case {a: [3, 9, 27]}
         in {a: [*, 9, *post]}
           post
@@ -121,7 +131,7 @@ describe "Pattern matching" do
     end
 
     it "can nest hash and array patterns" do
-      eval(<<~RUBY).should == [42, 2]
+      eval_as_method(<<~RUBY).should == [42, 2]
         case [0, {a: 42, b: [0, 1]}, {a: 42, b: [1, 2]}]
         in [*, {a:, b: [1, c]}, *]
           [a, c]
@@ -133,7 +143,7 @@ describe "Pattern matching" do
   end
 
   it "extends case expression with case/in construction" do
-    eval(<<~RUBY).should == :bar
+    eval_as_method(<<~RUBY).should == :bar
       case [0, 1]
       in [0]
         :foo
@@ -144,7 +154,7 @@ describe "Pattern matching" do
   end
 
   it "allows using then operator" do
-    eval(<<~RUBY).should == :bar
+    eval_as_method(<<~RUBY).should == :bar
       case [0, 1]
       in [0]    then :foo
       in [0, 1] then :bar
@@ -167,7 +177,7 @@ describe "Pattern matching" do
       end
 
       it "does not warn about pattern matching is experimental feature" do
-        -> { eval @src }.should_not complain
+        -> { eval_as_method @src }.should_not complain
       end
     end
 
@@ -178,20 +188,20 @@ describe "Pattern matching" do
 
       ruby_version_is ""..."3.1" do
         it "warns about pattern matching is experimental feature" do
-          -> { eval @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
+          -> { eval_as_method @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
         end
       end
 
       ruby_version_is "3.1" do
         it "does not warn about pattern matching is experimental feature" do
-          -> { eval @src }.should_not complain
+          -> { eval_as_method @src }.should_not complain
         end
       end
     end
   end
 
   it "binds variables" do
-    eval(<<~RUBY).should == 1
+    eval_as_method(<<~RUBY).should == 1
       case [0, 1]
       in [0, a]
         a
@@ -201,7 +211,7 @@ describe "Pattern matching" do
 
   it "cannot mix in and when operators" do
     -> {
-      eval <<~RUBY
+      eval_as_method <<~RUBY
         case []
         when 1 == 1
         in []
@@ -210,7 +220,7 @@ describe "Pattern matching" do
     }.should raise_error(SyntaxError, /syntax error, unexpected `in'|\(eval\):3: syntax error, unexpected keyword_in|unexpected 'in'/)
 
     -> {
-      eval <<~RUBY
+      eval_as_method <<~RUBY
         case []
         in []
         when 1 == 1
@@ -220,7 +230,7 @@ describe "Pattern matching" do
   end
 
   it "checks patterns until the first matching" do
-    eval(<<~RUBY).should == :bar
+    eval_as_method(<<~RUBY).should == :bar
       case [0, 1]
       in [0]
         :foo
@@ -233,7 +243,7 @@ describe "Pattern matching" do
   end
 
   it "executes else clause if no pattern matches" do
-    eval(<<~RUBY).should == false
+    eval_as_method(<<~RUBY).should == false
       case [0, 1]
       in [0]
         true
@@ -245,7 +255,7 @@ describe "Pattern matching" do
 
   it "raises NoMatchingPatternError if no pattern matches and no else clause" do
     -> {
-      eval <<~RUBY
+      eval_as_method <<~RUBY
         case [0, 1]
         in [0]
         end
@@ -267,7 +277,7 @@ describe "Pattern matching" do
 
   it "does not allow calculation or method calls in a pattern" do
     -> {
-      eval <<~RUBY
+      eval_as_method <<~RUBY
         case 0
         in 1 + 1
           true
@@ -277,7 +287,7 @@ describe "Pattern matching" do
   end
 
   it "evaluates the case expression once for multiple patterns, caching the result" do
-    eval(<<~RUBY).should == true
+    eval_as_method(<<~RUBY).should == true
       case (ScratchPad << :foo; 1)
       in 0
         false
@@ -291,7 +301,7 @@ describe "Pattern matching" do
 
   describe "guards" do
     it "supports if guard" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case 0
         in 0 if false
           true
@@ -300,7 +310,7 @@ describe "Pattern matching" do
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case 0
         in 0 if true
           true
@@ -311,7 +321,7 @@ describe "Pattern matching" do
     end
 
     it "supports unless guard" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case 0
         in 0 unless true
           true
@@ -320,7 +330,7 @@ describe "Pattern matching" do
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case 0
         in 0 unless false
           true
@@ -331,7 +341,7 @@ describe "Pattern matching" do
     end
 
     it "makes bound variables visible in guard" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1]
         in [a, 1] if a >= 0
           true
@@ -340,7 +350,7 @@ describe "Pattern matching" do
     end
 
     it "does not evaluate guard if pattern does not match" do
-      eval <<~RUBY
+      eval_as_method <<~RUBY
         case 0
         in 1 if (ScratchPad << :foo) || true
         else
@@ -351,7 +361,7 @@ describe "Pattern matching" do
     end
 
     it "takes guards into account when there are several matching patterns" do
-      eval(<<~RUBY).should == :bar
+      eval_as_method(<<~RUBY).should == :bar
         case 0
         in 0 if false
           :foo
@@ -362,7 +372,7 @@ describe "Pattern matching" do
     end
 
     it "executes else clause if no guarded pattern matches" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case 0
         in 0 if false
           true
@@ -374,7 +384,7 @@ describe "Pattern matching" do
 
     it "raises NoMatchingPatternError if no guarded pattern matches and no else clause" do
       -> {
-        eval <<~RUBY
+        eval_as_method <<~RUBY
           case [0, 1]
           in [0, 1] if false
           end
@@ -385,35 +395,35 @@ describe "Pattern matching" do
 
   describe "value pattern" do
     it "matches an object such that pattern === object" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case 0
         in 0
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case 0
         in (-1..1)
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case 0
         in Integer
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case "0"
         in /0/
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case "0"
         in ->(s) { s == "0" }
           true
@@ -424,7 +434,7 @@ describe "Pattern matching" do
     it "allows string literal with interpolation" do
       x = "x"
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case "x"
         in "#{x + ""}"
           true
@@ -435,7 +445,7 @@ describe "Pattern matching" do
 
   describe "variable pattern" do
     it "matches a value and binds variable name to this value" do
-      eval(<<~RUBY).should == 0
+      eval_as_method(<<~RUBY).should == 0
         case 0
         in a
           a
@@ -444,7 +454,7 @@ describe "Pattern matching" do
     end
 
     it "makes bounded variable visible outside a case statement scope" do
-      eval(<<~RUBY).should == 0
+      eval_as_method(<<~RUBY).should == 0
         case 0
         in a
         end
@@ -454,7 +464,7 @@ describe "Pattern matching" do
     end
 
     it "create local variables even if a pattern doesn't match" do
-      eval(<<~RUBY).should == [0, nil, nil]
+      eval_as_method(<<~RUBY).should == [0, nil, nil]
         case 0
         in a
         in b
@@ -466,7 +476,7 @@ describe "Pattern matching" do
     end
 
     it "allow using _ name to drop values" do
-      eval(<<~RUBY).should == 0
+      eval_as_method(<<~RUBY).should == 0
         case [0, 1]
         in [a, _]
           a
@@ -475,7 +485,7 @@ describe "Pattern matching" do
     end
 
     it "supports using _ in a pattern several times" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2]
         in [0, _, _]
           true
@@ -484,14 +494,14 @@ describe "Pattern matching" do
     end
 
     it "supports using any name with _ at the beginning in a pattern several times" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2]
         in [0, _x, _x]
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 0, b: 1, c: 2}
         in {a: 0, b: _x, c: _x}
           true
@@ -501,7 +511,7 @@ describe "Pattern matching" do
 
     it "does not support using variable name (except _) several times" do
       -> {
-        eval <<~RUBY
+        eval_as_method <<~RUBY
           case [0]
           in [a, a]
           end
@@ -521,14 +531,14 @@ describe "Pattern matching" do
     end
 
     it "allows applying ^ operator to bound variables" do
-      eval(<<~RUBY).should == 1
+      eval_as_method(<<~RUBY).should == 1
         case [1, 1]
         in [n, ^n]
           n
         end
       RUBY
 
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case [1, 2]
         in [n, ^n]
           true
@@ -540,7 +550,7 @@ describe "Pattern matching" do
 
     it "requires bound variable to be specified in a pattern before ^ operator when it relies on a bound variable" do
       -> {
-        eval <<~RUBY
+        eval_as_method <<~RUBY
           case [1, 2]
           in [^n, n]
             true
@@ -554,7 +564,7 @@ describe "Pattern matching" do
 
   describe "alternative pattern" do
     it "matches if any of patterns matches" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case 0
         in 0 | 1 | 2
           true
@@ -564,7 +574,7 @@ describe "Pattern matching" do
 
     it "does not support variable binding" do
       -> {
-        eval <<~RUBY
+        eval_as_method <<~RUBY
           case [0, 1]
           in [0, 0] | [0, a]
           end
@@ -573,7 +583,7 @@ describe "Pattern matching" do
     end
 
     it "support underscore prefixed variables in alternation" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1]
         in [1, _]
           false
@@ -584,7 +594,7 @@ describe "Pattern matching" do
     end
 
     it "can be used as a nested pattern" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [[1], ["2"]]
           in [[0] | nil, _]
             false
@@ -595,7 +605,7 @@ describe "Pattern matching" do
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [1, 2]
           in [0, _] | {a: 0}
             false
@@ -608,7 +618,7 @@ describe "Pattern matching" do
 
   describe "AS pattern" do
     it "binds a variable to a value if pattern matches" do
-      eval(<<~RUBY).should == 0
+      eval_as_method(<<~RUBY).should == 0
         case 0
         in Integer => n
           n
@@ -617,7 +627,7 @@ describe "Pattern matching" do
     end
 
     it "can be used as a nested pattern" do
-      eval(<<~RUBY).should == [2, 3]
+      eval_as_method(<<~RUBY).should == [2, 3]
         case [1, [2, 3]]
         in [1, Array => ary]
           ary
@@ -628,7 +638,7 @@ describe "Pattern matching" do
 
   describe "Array pattern" do
     it "supports form Constant(pat, pat, ...)" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2]
         in Array(0, 1, 2)
           true
@@ -637,7 +647,7 @@ describe "Pattern matching" do
     end
 
     it "supports form Constant[pat, pat, ...]" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2]
         in Array[0, 1, 2]
           true
@@ -646,7 +656,7 @@ describe "Pattern matching" do
     end
 
     it "supports form [pat, pat, ...]" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2]
         in [0, 1, 2]
           true
@@ -655,21 +665,21 @@ describe "Pattern matching" do
     end
 
     it "supports form pat, pat, ..." do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2]
         in 0, 1, 2
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == 1
+      eval_as_method(<<~RUBY).should == 1
         case [0, 1, 2]
         in 0, a, 2
           a
         end
       RUBY
 
-      eval(<<~RUBY).should == [1, 2]
+      eval_as_method(<<~RUBY).should == [1, 2]
         case [0, 1, 2]
         in 0, *rest
           rest
@@ -729,7 +739,7 @@ describe "Pattern matching" do
     end
 
     it "does not match object if Constant === object returns false" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case [0, 1, 2]
         in String[0, 1, 2]
           true
@@ -812,7 +822,7 @@ describe "Pattern matching" do
     end
 
     it "binds variables" do
-      eval(<<~RUBY).should == [0, 1, 2]
+      eval_as_method(<<~RUBY).should == [0, 1, 2]
         case [0, 1, 2]
         in [a, b, c]
           [a, b, c]
@@ -821,7 +831,7 @@ describe "Pattern matching" do
     end
 
     it "supports splat operator *rest" do
-      eval(<<~RUBY).should == [1, 2]
+      eval_as_method(<<~RUBY).should == [1, 2]
         case [0, 1, 2]
         in [0, *rest]
           rest
@@ -830,7 +840,7 @@ describe "Pattern matching" do
     end
 
     it "does not match partially by default" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case [0, 1, 2, 3]
         in [1, 2]
           true
@@ -841,14 +851,14 @@ describe "Pattern matching" do
     end
 
     it "does match partially from the array beginning if list + , syntax used" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2, 3]
         in [0, 1,]
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1, 2, 3]
         in 0, 1,;
           true
@@ -857,7 +867,7 @@ describe "Pattern matching" do
     end
 
     it "matches [] with []" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case []
         in []
           true
@@ -866,7 +876,7 @@ describe "Pattern matching" do
     end
 
     it "matches anything with *" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [0, 1]
         in *;
           true
@@ -875,7 +885,7 @@ describe "Pattern matching" do
     end
 
     it "can be used as a nested pattern" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [[1], ["2"]]
           in [[0] | nil, _]
             false
@@ -886,7 +896,7 @@ describe "Pattern matching" do
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [1, 2]
           in [0, _] | {a: 0}
             false
@@ -899,7 +909,7 @@ describe "Pattern matching" do
 
   describe "Hash pattern" do
     it "supports form Constant(id: pat, id: pat, ...)" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 0, b: 1}
         in Hash(a: 0, b: 1)
           true
@@ -908,7 +918,7 @@ describe "Pattern matching" do
     end
 
     it "supports form Constant[id: pat, id: pat, ...]" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 0, b: 1}
         in Hash[a: 0, b: 1]
           true
@@ -917,7 +927,7 @@ describe "Pattern matching" do
     end
 
     it "supports form {id: pat, id: pat, ...}" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 0, b: 1}
         in {a: 0, b: 1}
           true
@@ -926,21 +936,21 @@ describe "Pattern matching" do
     end
 
     it "supports form id: pat, id: pat, ..." do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 0, b: 1}
         in a: 0, b: 1
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case {a: 0, b: 1}
         in a: a, b: b
           [a, b]
         end
       RUBY
 
-      eval(<<~RUBY).should == { b: 1, c: 2 }
+      eval_as_method(<<~RUBY).should == { b: 1, c: 2 }
         case {a: 0, b: 1, c: 2}
         in a: 0, **rest
           rest
@@ -949,7 +959,7 @@ describe "Pattern matching" do
     end
 
     it "supports a: which means a: a" do
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case {a: 0, b: 1}
         in Hash(a:, b:)
           [a, b]
@@ -957,7 +967,7 @@ describe "Pattern matching" do
       RUBY
 
       a = b = nil
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case {a: 0, b: 1}
         in Hash[a:, b:]
           [a, b]
@@ -965,7 +975,7 @@ describe "Pattern matching" do
       RUBY
 
       a = b = nil
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case {a: 0, b: 1}
         in {a:, b:}
           [a, b]
@@ -973,7 +983,7 @@ describe "Pattern matching" do
       RUBY
 
       a = nil
-      eval(<<~RUBY).should == [0, {b: 1, c: 2}]
+      eval_as_method(<<~RUBY).should == [0, { b: 1, c: 2}]
         case {a: 0, b: 1, c: 2}
         in {a:, **rest}
           [a, rest]
@@ -981,7 +991,7 @@ describe "Pattern matching" do
       RUBY
 
       a = b = nil
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case {a: 0, b: 1}
         in a:, b:
           [a, b]
@@ -990,7 +1000,7 @@ describe "Pattern matching" do
     end
 
     it "can mix key (a:) and key-value (a: b) declarations" do
-      eval(<<~RUBY).should == [0, 1]
+      eval_as_method(<<~RUBY).should == [0, 1]
         case {a: 0, b: 1}
         in Hash(a:, b: x)
           [a, x]
@@ -999,7 +1009,7 @@ describe "Pattern matching" do
     end
 
     it "supports 'string': key literal" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 0}
         in {"a": 0}
           true
@@ -1009,7 +1019,7 @@ describe "Pattern matching" do
 
     it "does not support non-symbol keys" do
       -> {
-        eval <<~RUBY
+        eval_as_method <<~RUBY
           case {a: 1}
           in {"a" => 1}
           end
@@ -1021,7 +1031,7 @@ describe "Pattern matching" do
       x = "a"
 
       -> {
-        eval <<~'RUBY'
+        eval_as_method <<~'RUBY'
           case {a: 1}
           in {"#{x}": 1}
           end
@@ -1031,7 +1041,7 @@ describe "Pattern matching" do
 
     it "raise SyntaxError when keys duplicate in pattern" do
       -> {
-        eval <<~RUBY
+        eval_as_method <<~RUBY
           case {a: 1}
           in {a: 1, b: 2, a: 3}
           end
@@ -1072,7 +1082,7 @@ describe "Pattern matching" do
     end
 
     it "does not match object if Constant === object returns false" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case {a: 1}
         in String[a: 1]
           true
@@ -1203,7 +1213,7 @@ describe "Pattern matching" do
     end
 
     it "binds variables" do
-      eval(<<~RUBY).should == [0, 1, 2]
+      eval_as_method(<<~RUBY).should == [0, 1, 2]
         case {a: 0, b: 1, c: 2}
         in {a: x, b: y, c: z}
           [x, y, z]
@@ -1212,7 +1222,7 @@ describe "Pattern matching" do
     end
 
     it "supports double splat operator **rest" do
-      eval(<<~RUBY).should == {b: 1, c: 2}
+      eval_as_method(<<~RUBY).should == { b: 1, c: 2}
         case {a: 0, b: 1, c: 2}
         in {a: 0, **rest}
           rest
@@ -1221,14 +1231,14 @@ describe "Pattern matching" do
     end
 
     it "treats **nil like there should not be any other keys in a matched Hash" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 1, b: 2}
         in {a: 1, b: 2, **nil}
           true
         end
       RUBY
 
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case {a: 1, b: 2}
         in {a: 1, **nil}
           true
@@ -1239,7 +1249,7 @@ describe "Pattern matching" do
     end
 
     it "can match partially" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 1, b: 2}
         in {a: 1}
           true
@@ -1248,7 +1258,7 @@ describe "Pattern matching" do
     end
 
     it "matches {} with {}" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {}
         in {}
           true
@@ -1257,7 +1267,7 @@ describe "Pattern matching" do
     end
 
     it "in {} only matches empty hashes" do
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case {a: 1}
         in {}
           true
@@ -1268,7 +1278,7 @@ describe "Pattern matching" do
     end
 
     it "in {**nil} only matches empty hashes" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {}
         in {**nil}
           true
@@ -1277,7 +1287,7 @@ describe "Pattern matching" do
         end
       RUBY
 
-      eval(<<~RUBY).should == false
+      eval_as_method(<<~RUBY).should == false
         case {a: 1}
         in {**nil}
           true
@@ -1288,7 +1298,7 @@ describe "Pattern matching" do
     end
 
     it "matches anything with **" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: 1}
         in **;
           true
@@ -1297,7 +1307,7 @@ describe "Pattern matching" do
     end
 
     it "can be used as a nested pattern" do
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case {a: {a: 1, b: 1}, b: {a: 1, b: 2}}
           in {a: {a: 0}}
             false
@@ -1308,7 +1318,7 @@ describe "Pattern matching" do
         end
       RUBY
 
-      eval(<<~RUBY).should == true
+      eval_as_method(<<~RUBY).should == true
         case [{a: 1, b: [1]}, {a: 1, c: ["2"]}]
           in [{a:, c:},]
             false
@@ -1398,19 +1408,19 @@ describe "Pattern matching" do
   describe "Ruby 3.1 improvements" do
     ruby_version_is "3.1" do
       it "can omit parentheses in one line pattern matching" do
-        eval(<<~RUBY).should == [1, 2]
+        eval_as_method(<<~RUBY).should == [1, 2]
           [1, 2] => a, b
           [a, b]
         RUBY
 
-        eval(<<~RUBY).should == 1
+        eval_as_method(<<~RUBY).should == 1
           {a: 1} => a:
           a
         RUBY
       end
 
       it "supports pinning instance variables" do
-        eval(<<~RUBY).should == true
+        eval_as_method(<<~RUBY).should == true
           @a = /a/
           case 'abc'
           in ^@a
@@ -1436,7 +1446,7 @@ describe "Pattern matching" do
       end
 
       it "supports pinning global variables" do
-        eval(<<~RUBY).should == true
+        eval_as_method(<<~RUBY).should == true
           $a = /a/
           case 'abc'
           in ^$a
@@ -1446,14 +1456,14 @@ describe "Pattern matching" do
       end
 
       it "supports pinning expressions" do
-        eval(<<~RUBY).should == true
+        eval_as_method(<<~RUBY).should == true
           case 'abc'
             in ^(/a/)
             true
           end
         RUBY
 
-        eval(<<~RUBY).should == true
+        eval_as_method(<<~RUBY).should == true
           case 0
           in ^(0+0)
             true
@@ -1462,7 +1472,7 @@ describe "Pattern matching" do
       end
 
       it "supports pinning expressions in array pattern" do
-        eval(<<~RUBY).should == true
+        eval_as_method(<<~RUBY).should == true
           case [3]
           in [^(1+2)]
             true
@@ -1471,7 +1481,7 @@ describe "Pattern matching" do
       end
 
       it "supports pinning expressions in hash pattern" do
-        eval(<<~RUBY).should == true
+        eval_as_method(<<~RUBY).should == true
           case {name: '2.6', released_at: Time.new(2018, 12, 25)}
             in {released_at: ^(Time.new(2010)..Time.new(2020))}
             true
@@ -1483,9 +1493,9 @@ describe "Pattern matching" do
 
   describe "value in pattern" do
     it "returns true if the pattern matches" do
-      eval("1 in 1").should == true
+      eval_as_method("1 in 1").should == true
 
-      eval("1 in Integer").should == true
+      eval_as_method("1 in Integer").should == true
 
       e = nil
       eval("[1, 2] in [1, e]").should == true
@@ -1497,13 +1507,13 @@ describe "Pattern matching" do
     end
 
     it "returns false if the pattern does not match" do
-      eval("1 in 2").should == false
+      eval_as_method("1 in 2").should == false
 
-      eval("1 in Float").should == false
+      eval_as_method("1 in Float").should == false
 
-      eval("[1, 2] in [2, e]").should == false
+      eval_as_method("[1, 2] in [2, e]").should == false
 
-      eval("{k: 1} in {k: 2}").should == false
+      eval_as_method("{k: 1} in {k: 2}").should == false
     end
   end
 end
