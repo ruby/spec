@@ -214,6 +214,12 @@ describe "Pattern matching" do
       in [0]
       end
     }.should raise_error(NoMatchingPatternError, /\[0, 1\]/)
+
+    -> {
+      case {a: 0, b: 1}
+      in a: 1, b: 1
+      end
+    }.should raise_error(NoMatchingPatternError, /\{:a=>0, :b=>1\}/)
   end
 
   it "raises NoMatchingPatternError if no pattern matches and evaluates the expression only once" do
