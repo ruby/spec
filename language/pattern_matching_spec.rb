@@ -348,7 +348,7 @@ describe "Pattern matching" do
       end.should == true
 
       case "0"
-      in ->(s) { s == "0" }
+      in -> s { s == "0" }
         true
       end.should == true
     end
