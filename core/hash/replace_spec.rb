@@ -23,6 +23,22 @@ describe "Hash#replace" do
     h.should == { 1 => 2 }
   end
 
+  it "transfers the compare_by_identity flag" do
+    hash_a = { a: 1 }
+    hash_b = { b: 2 }
+    hash_b.compare_by_identity
+    hash_a.should_not.compare_by_identity?
+    hash_a.replace(hash_b)
+    hash_a.should.compare_by_identity?
+
+    hash_a = { a: 1 }
+    hash_b = { b: 2 }
+    hash_a.compare_by_identity
+    hash_a.should.compare_by_identity?
+    hash_a.replace(hash_b)
+    hash_a.should_not.compare_by_identity?
+  end
+
   it "does not transfer default values" do
     hash_a = {}
     hash_b = Hash.new(5)
