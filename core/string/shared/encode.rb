@@ -201,6 +201,21 @@ describe :string_encode, shared: true do
         encoded.should == "Bbar"
       end
 
+      it "calls to_str on the returned value" do
+        obj = Object.new
+        obj.should_receive(:to_str).and_return("bar")
+        encoded = "B\ufffd".encode(Encoding::US_ASCII, fallback: { "\ufffd" => obj })
+        encoded.should == "Bbar"
+      end
+
+      it "does not call to_s on the returned value" do
+        obj = Object.new
+        obj.should_not_receive(:to_s)
+        -> {
+          "B\ufffd".encode(Encoding::US_ASCII, fallback: { "\ufffd" => obj })
+        }.should raise_error(TypeError, "no implicit conversion of Object into String")
+      end
+
       it "raises an error if the key is not present in the hash" do
         -> {
           "B\ufffd".encode(Encoding::US_ASCII, fallback: { "foo" => "bar" })
@@ -273,6 +288,21 @@ describe :string_encode, shared: true do
         encoded.should == "B[239, 191, 189]"
       end
 
+      it "calls to_str on the returned value" do
+        obj = Object.new
+        obj.should_receive(:to_str).and_return("bar")
+        encoded = "B\ufffd".encode(Encoding::US_ASCII, fallback: proc { |c| obj })
+        encoded.should == "Bbar"
+      end
+
+      it "does not call to_s on the returned value" do
+        obj = Object.new
+        obj.should_not_receive(:to_s)
+        -> {
+          "B\ufffd".encode(Encoding::US_ASCII, fallback: proc { |c| obj })
+        }.should raise_error(TypeError, "no implicit conversion of Object into String")
+      end
+
       it "raises an error if the returned value is itself invalid" do
         -> {
           "B\ufffd".encode(Encoding::US_ASCII, fallback: -> c { "\uffee" })
@@ -286,6 +316,21 @@ describe :string_encode, shared: true do
         encoded.should == "B[239, 191, 189]"
       end
 
+      it "calls to_str on the returned value" do
+        obj = Object.new
+        obj.should_receive(:to_str).and_return("bar")
+        encoded = "B\ufffd".encode(Encoding::US_ASCII, fallback: -> c { obj })
+        encoded.should == "Bbar"
+      end
+
+      it "does not call to_s on the returned value" do
+        obj = Object.new
+        obj.should_not_receive(:to_s)
+        -> {
+          "B\ufffd".encode(Encoding::US_ASCII, fallback: -> c { obj })
+        }.should raise_error(TypeError, "no implicit conversion of Object into String")
+      end
+
       it "raises an error if the returned value is itself invalid" do
         -> {
           "B\ufffd".encode(Encoding::US_ASCII, fallback: -> c { "\uffee" })
@@ -297,9 +342,32 @@ describe :string_encode, shared: true do
       def replace(c) = c.bytes.inspect
       def replace_bad(c) = "\uffee"
 
+      def replace_to_str(c)
+        obj = Object.new
+        obj.should_receive(:to_str).and_return("bar")
+        obj
+      end
+
+      def replace_to_s(c)
+        obj = Object.new
+        obj.should_not_receive(:to_s)
+        obj
+      end
+
       it "calls the method to get the replacement value, passing in the invalid character" do
         encoded = "B\ufffd".encode(Encoding::US_ASCII, fallback: method(:replace))
         encoded.should == "B[239, 191, 189]"
+      end
+
+      it "calls to_str on the returned value" do
+        encoded = "B\ufffd".encode(Encoding::US_ASCII, fallback: method(:replace_to_str))
+        encoded.should == "Bbar"
+      end
+
+      it "does not call to_s on the returned value" do
+        -> {
+          "B\ufffd".encode(Encoding::US_ASCII, fallback: method(:replace_to_s))
+        }.should raise_error(TypeError, "no implicit conversion of Object into String")
       end
 
       it "raises an error if the returned value is itself invalid" do
