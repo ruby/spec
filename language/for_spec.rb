@@ -114,6 +114,53 @@ describe "The for expression" do
     $var = old_global_var
   end
 
+  it "allows an attribute as an iterator name" do
+    class OFor
+      attr_accessor :target
+    end
+
+    ofor = OFor.new
+    m = [1,2,3]
+    n = 0
+    for ofor.target in m
+      n += 1
+    end
+    ofor.target.should == 3
+    n.should == 3
+  end
+
+  ruby_version_is "3.4" do
+    it "allows an attribute with safe navigation as an iterator name" do
+      class OFor
+        attr_accessor :target
+      end
+
+      ofor = OFor.new
+      m = [1,2,3]
+      n = 0
+      eval <<~RUBY
+        for ofor&.target in m
+          n += 1
+        end
+      RUBY
+      ofor.target.should == 3
+      n.should == 3
+    end
+
+    it "allows an attribute with safe navigation on a nil base as an iterator name" do
+      ofor = nil
+      m = [1,2,3]
+      n = 0
+      eval <<~RUBY
+        for ofor&.target in m
+          n += 1
+        end
+      RUBY
+      ofor.should be_nil
+      n.should == 3
+    end
+  end
+
   # 1.9 behaviour verified by nobu in
   # http://redmine.ruby-lang.org/issues/show/2053
   it "yields only as many values as there are arguments" do
