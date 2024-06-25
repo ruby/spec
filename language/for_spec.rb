@@ -130,7 +130,7 @@ describe "The for expression" do
   end
 
   # Segfault in MRI 3.3 and lower: https://bugs.ruby-lang.org/issues/20468
-  ruby_version_is "3.4" do
+  ruby_bug "#20468", ""..."3.4" do
     it "allows an attribute with safe navigation as an iterator name" do
       class OFor
         attr_accessor :target
