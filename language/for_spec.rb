@@ -129,6 +129,7 @@ describe "The for expression" do
     n.should == 3
   end
 
+  # Segfault in MRI 3.3 and lower: https://bugs.ruby-lang.org/issues/20468
   ruby_version_is "3.4" do
     it "allows an attribute with safe navigation as an iterator name" do
       class OFor
