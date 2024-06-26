@@ -23,9 +23,10 @@ describe "Thread#thread_variable_get" do
     Thread.current.thread_variable_get(:thread_variable_get_spec).should be_nil
   end
 
-  it "converts a String key into a Symbol" do
-    @t.thread_variable_set(:a, 49)
-    @t.thread_variable_get('a').should == 49
+  it "accepts String and Symbol keys interchangeably" do
+    @t.thread_variable_set("a", 49)
+    @t.thread_variable_get("a").should == 49
+    @t.thread_variable_get(:a).should == 49
   end
 
   it "converts a key that is neither String nor Symbol with #to_str" do

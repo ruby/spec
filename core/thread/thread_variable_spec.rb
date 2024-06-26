@@ -19,9 +19,14 @@ describe "Thread#thread_variable?" do
     @t.thread_variable?(:a).should be_true
   end
 
-  it "converts a String key into a Symbol" do
+  it "accepts String and Symbol keys interchangeably" do
+    @t.thread_variable?('a').should be_false
+    @t.thread_variable?(:a).should be_false
+
     @t.thread_variable_set(:a, 49)
+
     @t.thread_variable?('a').should be_true
+    @t.thread_variable?(:a).should be_true
   end
 
   it "converts a key that is neither String nor Symbol with #to_str" do
