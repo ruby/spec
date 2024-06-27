@@ -31,8 +31,9 @@ describe "Exception#detailed_message" do
       RuntimeError.new("").detailed_message.should == "unhandled exception"
     end
 
-    it "returns just class name for an instance of RuntimeError subclass with empty message" do
+    it "returns just class name for an instance other than RuntimeError with empty message" do
       DetailedMessageSpec::C.new("").detailed_message.should == "DetailedMessageSpec::C"
+      StandardError.new("").detailed_message.should == "StandardError"
     end
 
     it "returns a generated class name for an instance of RuntimeError anonymous subclass with empty message" do
