@@ -10,4 +10,9 @@ describe :time_yday, shared: true do
       end
     end
   end
+
+  it 'supports leap years' do
+    @method.call(2016, 2, 29).should == 31 + 29
+    @method.call(2016, 3, 1).should == 31 + 29 + 1
+  end
 end
