@@ -8,6 +8,9 @@ AllCops:
   DisabledByDefault: true
   NewCops: disable
 
+Layout/IndentationConsistency:
+  Enabled: true
+
 Layout/TrailingWhitespace:
   Enabled: true
 
