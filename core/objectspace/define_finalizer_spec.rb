@@ -168,6 +168,17 @@ describe "ObjectSpace.define_finalizer" do
     ruby_exe(code).lines.sort.should == ["finalized1\n", "finalized2\n"]
   end
 
+  it "defines same finalizer only once" do
+    code = <<~RUBY
+      obj = Object.new
+      p = proc { |id| print "ok" }
+      ObjectSpace.define_finalizer(obj, p.dup)
+      ObjectSpace.define_finalizer(obj, p.dup)
+    RUBY
+
+    ruby_exe(code).should == "ok"
+  end
+
   ruby_version_is "3.1" do
     describe "when $VERBOSE is not nil" do
       it "warns if an exception is raised in finalizer" do
