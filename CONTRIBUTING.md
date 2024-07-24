@@ -181,7 +181,7 @@ First, file a bug at https://bugs.ruby-lang.org/.
 The problem is `ruby_bug` would make non-MRI implementations fail this spec while MRI itself does not pass it, so it should only be used if the bug is/will be fixed and backported.
 Otherwise, non-MRI implementations would have to choose between being incompatible with the latest release of MRI (which has the bug) to pass the spec, or behave the same as the latest release of MRI (which has the bug) and fail the spec, both which make no sense.
 
-IOW, `ruby_bug '#NN', ''...'X.Y' do` is equivalent to `guard_not { RUBY_ENGINE == "ruby" && ruby_version_is ''...'X.Y' } do`.
+IOW, `ruby_bug '#NN', ''...'X.Y' do` is equivalent to `guard_not { RUBY_ENGINE == "ruby" && ruby_version_is ''...'X.Y' } do`. So it skips tests on MRI on specified versions (where a bug is present) and runs tests on alternative implementations only.
 
 ```ruby
 ruby_bug '#13669', ''...'3.2' do
