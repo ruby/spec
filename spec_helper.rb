@@ -40,3 +40,13 @@ end
 def expect_syntax_error(ruby_src)
   -> { eval(ruby_src) }.should raise_error(SyntaxError)
 end
+
+# Evaluates the given Ruby source in a temporary Module, to prevent
+# the surrounding context from being polluted with the new methods.
+def sandboxed_eval(ruby_src)
+  Module.new do
+    # Allows instance methods defined by `ruby_src` to be called directly.
+    extend self
+  end
+  .class_eval(ruby_src)
+end
