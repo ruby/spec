@@ -240,14 +240,12 @@ end
 
 describe "An ensure block inside {} block" do
   it "is not allowed" do
-    -> {
-      eval <<-ruby
-        lambda {
-          raise
-        ensure
-        }
-      ruby
-    }.should raise_error(SyntaxError)
+    expect_syntax_error <<-ruby
+      lambda {
+        raise
+      ensure
+      }
+    ruby
   end
 end
 

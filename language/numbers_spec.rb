@@ -20,8 +20,8 @@ describe "A number literal" do
 
   it "must have a digit before the decimal point" do
     0.75.should == 0.75
-    -> { eval(".75")  }.should raise_error(SyntaxError)
-    -> { eval("-.75") }.should raise_error(SyntaxError)
+    expect_syntax_error(".75")
+    expect_syntax_error("-.75")
   end
 
   it "can have an exponent" do

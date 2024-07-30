@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe "Safe navigator" do
   it "requires a method name to be provided" do
-    -> { eval("obj&. {}") }.should raise_error(SyntaxError)
+    expect_syntax_error("obj&. {}")
   end
 
   context "when context is nil" do

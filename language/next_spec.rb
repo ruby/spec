@@ -109,9 +109,7 @@ end
 describe "The next statement" do
   describe "in a method" do
     it "is invalid and raises a SyntaxError" do
-      -> {
-        eval("def m; next; end")
-      }.should raise_error(SyntaxError)
+      expect_syntax_error("def m; next; end")
     end
   end
 end

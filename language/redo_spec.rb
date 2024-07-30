@@ -58,9 +58,7 @@ describe "The redo statement" do
 
   describe "in a method" do
     it "is invalid and raises a SyntaxError" do
-      -> {
-        eval("def m; redo; end")
-      }.should raise_error(SyntaxError)
+      expect_syntax_error("def m; redo; end")
     end
   end
 end

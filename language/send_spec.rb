@@ -107,9 +107,7 @@ describe "Invoking a method" do
   end
 
   it "raises a SyntaxError with both a literal block and an object as block" do
-    -> {
-      eval "specs.oneb(10, &l){ 42 }"
-    }.should raise_error(SyntaxError)
+    expect_syntax_error "specs.oneb(10, &l){ 42 }"
   end
 
   it "with same names as existing variables is ok" do

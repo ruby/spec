@@ -83,7 +83,7 @@ describe "Hash literal" do
   end
 
   it "with '==>' in the middle raises SyntaxError" do
-    -> { eval("{:a ==> 1}") }.should raise_error(SyntaxError)
+    expect_syntax_error("{:a ==> 1}")
   end
 
   it "recognizes '!' at the end of the key" do
@@ -95,7 +95,7 @@ describe "Hash literal" do
   end
 
   it "raises a SyntaxError if there is no space between `!` and `=>`" do
-    -> { eval("{:a!=> 1}") }.should raise_error(SyntaxError)
+    expect_syntax_error("{:a!=> 1}")
   end
 
   it "recognizes '?' at the end of the key" do
@@ -107,7 +107,7 @@ describe "Hash literal" do
   end
 
   it "raises a SyntaxError if there is no space between `?` and `=>`" do
-    -> { eval("{:a?=> 1}") }.should raise_error(SyntaxError)
+    expect_syntax_error("{:a?=> 1}")
   end
 
   it "constructs a new hash with the given elements" do

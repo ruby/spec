@@ -4,7 +4,7 @@ require_relative 'shared/__LINE__'
 
 describe "The __LINE__ pseudo-variable" do
   it "raises a SyntaxError if assigned to" do
-    -> { eval("__LINE__ = 1") }.should raise_error(SyntaxError)
+    expect_syntax_error("__LINE__ = 1")
   end
 
   before :each do
