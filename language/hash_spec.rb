@@ -4,12 +4,12 @@ require_relative 'fixtures/hash_strings_utf8'
 require_relative 'fixtures/hash_strings_usascii'
 
 describe "Hash literal" do
-  it "{} should return an empty hash" do
+  it "{} should return an empty Hash" do
     {}.size.should == 0
     {}.should == {}
   end
 
-  it "{} should return a new hash populated with the given elements" do
+  it "{} should return a new Hash populated with the given elements" do
     h = {a: 'a', 'b' => 3, 44 => 2.3}
     h.size.should == 3
     h.should == {a: "a", "b" => 3, 44 => 2.3}
@@ -110,7 +110,7 @@ describe "Hash literal" do
     -> { eval("{:a?=> 1}") }.should raise_error(SyntaxError)
   end
 
-  it "constructs a new hash with the given elements" do
+  it "constructs a new Hash with the given elements" do
     {foo: 123}.should == {foo: 123}
     h = {rbx: :cool, specs: 'fail_sometimes'}
     {rbx: :cool, specs: 'fail_sometimes'}.should == h
@@ -232,6 +232,184 @@ describe "Hash literal" do
       ScratchPad.recorded.should == []
     end
   end
+
+  describe "with omitted values" do # a.k.a. "Hash punning" or "Shorthand Hash syntax"
+    it "accepts short notation 'key' for 'key: value' syntax" do
+      a, b, c = 1, 2, 3
+      h = eval('{a:}')
+      {a: 1}.should == h
+      h = eval('{a:, b:, c:}')
+      {a: 1, b: 2, c: 3}.should == h
+    end
+
+    it "ignores hanging comma on short notation" do
+      a, b, c = 1, 2, 3
+      h = eval('{a:, b:, c:,}')
+      {a: 1, b: 2, c: 3}.should == h
+    end
+
+    it "accepts mixed syntax" do
+      a, e = 1, 5
+      h = eval('{a:, b: 2, "c" => 3, :d => 4, e:}')
+      eval('{a: 1, :b => 2, "c" => 3, "d": 4, e: 5}').should == h
+    end
+
+    # Copied from Prism::Translation::Ripper
+    keywords = [
+      "alias",
+      "and",
+      "begin",
+      "BEGIN",
+      "break",
+      "case",
+      "class",
+      "def",
+      "defined?",
+      "do",
+      "else",
+      "elsif",
+      "end",
+      "END",
+      "ensure",
+      "false",
+      "for",
+      "if",
+      "in",
+      "module",
+      "next",
+      "nil",
+      "not",
+      "or",
+      "redo",
+      "rescue",
+      "retry",
+      "return",
+      "self",
+      "super",
+      "then",
+      "true",
+      "undef",
+      "unless",
+      "until",
+      "when",
+      "while",
+      "yield",
+      "__ENCODING__",
+      "__FILE__",
+      "__LINE__"
+    ]
+
+    invalid_kw_param_names = [
+      "BEGIN",
+      "END",
+      "defined?",
+    ]
+
+    invalid_method_names = [
+      "BEGIN",
+      "END",
+      "defined?",
+    ]
+
+    it "can resolve local variables" do
+      a = 1
+      b = 2
+
+      eval('{ a:, b: }.should == { a: 1, b: 2 }')
+    end
+
+    it "cannot find dynamically defined local variables" do
+      b = binding
+      b.local_variable_set(:abc, "a dynamically defined local var")
+
+      eval <<~RUBY
+        # The local variable definitely exists:
+        b.local_variable_get(:abc).should == "a dynamically defined local var"
+        # but we can't get it via value omission:
+        -> { { abc: } }.should raise_error(NameError)
+      RUBY
+    end
+
+    it "can call methods" do
+      result = sandboxed_eval <<~RUBY
+        def m = "a statically defined method"
+
+        { m: }
+      RUBY
+
+      result.should == { m: "a statically defined method" }
+    end
+
+    it "can call dynamically defined methods" do
+      result = sandboxed_eval <<~RUBY
+        define_method(:m) { "a dynamically defined method" }
+
+        { m: }
+      RUBY
+
+      result.should == { m: "a dynamically defined method" }
+    end
+
+    it "prefers local variables over methods" do
+      result = sandboxed_eval <<~RUBY
+        x = "from a local var"
+        def x; "from a method"; end
+        { x: }
+      RUBY
+
+      result.should == { x: "from a local var" }
+    end
+
+    describe "handling keywords" do
+      keywords.each do |kw|
+        describe "keyword '#{kw}'" do
+          # None of these keywords can be used as local variables,
+          # so it's not possible to resolve them via shorthand Hash syntax.
+          # See `reserved_keywords.rb`
+
+          unless invalid_kw_param_names.include?(kw)
+            it "can resolve to a parameter whose name is a keyword" do
+              result = sandboxed_eval <<~RUBY
+                def m(#{kw}:) = { #{kw}: }
+
+                m(#{kw}: "an argument to '#{kw}'")
+              RUBY
+
+              result.should == { kw.to_sym => "an argument to '#{kw}'" }
+            end
+          end
+
+          unless invalid_method_names.include?(kw)
+            it "can resolve to a method whose name is a keyword" do
+              result = sandboxed_eval <<~RUBY
+                def #{kw} = "a method named '#{kw}'"
+
+                { #{kw}: }
+              RUBY
+
+              result.should == { kw.to_sym => "a method named '#{kw}'" }
+            end
+          end
+        end
+      end
+
+      describe "keyword 'self:'" do
+        it "does not refer to actual 'self'" do
+          eval <<~RUBY
+            -> { { self: } }.should raise_error(NameError)
+          RUBY
+        end
+      end
+    end
+
+    it "raises a SyntaxError when the Hash key ends with `!`" do
+      -> { eval("{a!:}") }.should raise_error(SyntaxError, /identifier a! is not valid to get/)
+    end
+
+    it "raises a SyntaxError when the Hash key ends with `?`" do
+      -> { eval("{a?:}") }.should raise_error(SyntaxError, /identifier a\? is not valid to get/)
+    end
+  end
 end
 
 describe "The ** operator" do
@@ -256,53 +434,6 @@ describe "The ** operator" do
       m(**h).should == { two: 2 }
       m(**h).should_not.equal?(h)
       h.should == { one: 1, two: 2 }
-    end
-  end
-
-  ruby_version_is "3.1" do
-    describe "hash with omitted value" do
-      it "accepts short notation 'key' for 'key: value' syntax" do
-        a, b, c = 1, 2, 3
-        h = eval('{a:}')
-        {a: 1}.should == h
-        h = eval('{a:, b:, c:}')
-        {a: 1, b: 2, c: 3}.should == h
-      end
-
-      it "ignores hanging comma on short notation" do
-        a, b, c = 1, 2, 3
-        h = eval('{a:, b:, c:,}')
-        {a: 1, b: 2, c: 3}.should == h
-      end
-
-      it "accepts mixed syntax" do
-        a, e = 1, 5
-        h = eval('{a:, b: 2, "c" => 3, :d => 4, e:}')
-        eval('{a: 1, :b => 2, "c" => 3, "d": 4, e: 5}').should == h
-      end
-
-      it "works with methods and local vars" do
-        a = Class.new
-        a.class_eval(<<-RUBY)
-          def bar
-            "baz"
-          end
-
-          def foo(val)
-            {bar:, val:}
-          end
-        RUBY
-
-        a.new.foo(1).should == {bar: "baz", val: 1}
-      end
-
-      it "raises a SyntaxError when the hash key ends with `!`" do
-        -> { eval("{a!:}") }.should raise_error(SyntaxError, /identifier a! is not valid to get/)
-      end
-
-      it "raises a SyntaxError when the hash key ends with `?`" do
-        -> { eval("{a?:}") }.should raise_error(SyntaxError, /identifier a\? is not valid to get/)
-      end
     end
   end
 end
