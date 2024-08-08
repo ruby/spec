@@ -4,7 +4,7 @@ require_relative 'shared/__FILE__'
 
 describe "The __FILE__ pseudo-variable" do
   it "raises a SyntaxError if assigned to" do
-    -> { eval("__FILE__ = 1") }.should raise_error(SyntaxError)
+    expect_syntax_error("__FILE__ = 1")
   end
 
   ruby_version_is ""..."3.3" do
