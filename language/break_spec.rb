@@ -254,21 +254,17 @@ end
 
 describe "The break statement in a method" do
   it "is invalid and raises a SyntaxError" do
-    -> {
-      eval("def m; break; end")
-    }.should raise_error(SyntaxError)
+    expect_syntax_error("def m; break; end")
   end
 end
 
 describe "The break statement in a module literal" do
   it "is invalid and raises a SyntaxError" do
-    code = <<~RUBY
+    expect_syntax_error <<~RUBY
       module BreakSpecs:ModuleWithBreak
         break
       end
     RUBY
-
-    -> { eval(code) }.should raise_error(SyntaxError)
   end
 end
 

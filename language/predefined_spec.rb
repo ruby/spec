@@ -1100,7 +1100,7 @@ describe "The predefined standard object nil" do
   end
 
   it "raises a SyntaxError if assigned to" do
-    -> { eval("nil = true") }.should raise_error(SyntaxError)
+    expect_syntax_error("nil = true")
   end
 end
 
@@ -1110,7 +1110,7 @@ describe "The predefined standard object true" do
   end
 
   it "raises a SyntaxError if assigned to" do
-    -> { eval("true = false") }.should raise_error(SyntaxError)
+    expect_syntax_error("true = false")
   end
 end
 
@@ -1120,13 +1120,13 @@ describe "The predefined standard object false" do
   end
 
   it "raises a SyntaxError if assigned to" do
-    -> { eval("false = nil") }.should raise_error(SyntaxError)
+    expect_syntax_error("false = nil")
   end
 end
 
 describe "The self pseudo-variable" do
   it "raises a SyntaxError if assigned to" do
-    -> { eval("self = 1") }.should raise_error(SyntaxError)
+    expect_syntax_error("self = 1")
   end
 end
 

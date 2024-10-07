@@ -89,7 +89,7 @@ describe "Regexp with character classes" do
     /[^[:lower:]A-C]+/.match("abcABCDEF123def").to_a.should == ["DEF123"] # negated character class
     /[:alnum:]+/.match("a:l:n:u:m").to_a.should == ["a:l:n:u:m"] # should behave like regular character class composed of the individual letters
     /[\[:alnum:]+/.match("[:a:l:n:u:m").to_a.should == ["[:a:l:n:u:m"] # should behave like regular character class composed of the individual letters
-    -> { eval('/[[:alpha:]-[:digit:]]/') }.should raise_error(SyntaxError) # can't use character class as a start value of range
+    expect_syntax_error('/[[:alpha:]-[:digit:]]/')
   end
 
   it "matches ASCII characters with [[:ascii:]]" do
