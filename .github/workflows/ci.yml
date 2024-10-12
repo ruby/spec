@@ -72,5 +72,5 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0'
-    - run: gem install rubocop:1.28.2
-    - run: rubocop --parallel
+    - run: bundle install
+    - run: bundle exec rubocop --parallel
