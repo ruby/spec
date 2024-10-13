@@ -72,5 +72,4 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0'
-    - run: bundle install
-    - run: bundle exec rubocop --parallel
+    - run: bin/rubocop
