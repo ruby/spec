@@ -78,10 +78,10 @@ describe "IPAddr#new" do
   end
 
   ipaddr_version = if defined?(IPAddr::VERSION) #ruby_version_is ""..."3.1" do
-    IPAddr::VERSION
-  else
-    "1.2.2"
-  end
+                     IPAddr::VERSION
+                   else
+                     "1.2.2"
+                   end
 
   version_is ipaddr_version, ""..."1.2.3" do #ruby_version_is ""..."3.1" do
     it "raises on incorrect IPAddr strings" do

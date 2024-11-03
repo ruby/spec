@@ -6,13 +6,12 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
+# Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Width, AllowedPatterns.
 Layout/IndentationWidth:
   Exclude:
     - 'core/method/to_proc_spec.rb'
-    - 'library/ipaddr/new_spec.rb'
     - 'library/socket/socket/bind_spec.rb'
     - 'optional/capi/string_spec.rb'
 
