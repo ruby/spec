@@ -207,7 +207,7 @@ describe "Module#const_source_location" do
   end
 
   it "does search private constants path" do
-     ConstantSpecs.const_source_location(:CS_PRIVATE).should == [@constants_fixture_path, ConstantSpecs::CS_PRIVATE_LINE]
+    ConstantSpecs.const_source_location(:CS_PRIVATE).should == [@constants_fixture_path, ConstantSpecs::CS_PRIVATE_LINE]
   end
 
   it "works for eval with a given line" do

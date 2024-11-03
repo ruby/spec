@@ -650,9 +650,9 @@ describe 'Optional constant assignment' do
 
     it 'correctly overwrites nil constants' do
       suppress_warning do # already initialized constant
-      ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT1 = nil
-      ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT1 ||= :assigned
-      ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT1.should == :assigned
+        ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT1 = nil
+        ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT1 ||= :assigned
+        ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT1.should == :assigned
       end
     end
 
@@ -665,11 +665,11 @@ describe 'Optional constant assignment' do
 
     it 'causes side-effects of the module part to be applied only once (for nil constant)' do
       suppress_warning do # already initialized constant
-      ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT2 = nil
-      x = 0
-      (x += 1; ConstantSpecs::ClassA)::NIL_OR_ASSIGNED_CONSTANT2 ||= :assigned
-      x.should == 1
-      ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT2.should == :assigned
+        ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT2 = nil
+        x = 0
+        (x += 1; ConstantSpecs::ClassA)::NIL_OR_ASSIGNED_CONSTANT2 ||= :assigned
+        x.should == 1
+        ConstantSpecs::ClassA::NIL_OR_ASSIGNED_CONSTANT2.should == :assigned
       end
     end
 

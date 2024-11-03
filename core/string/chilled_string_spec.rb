@@ -62,7 +62,7 @@ describe "chilled String" do
         input.freeze
         -> {
           -> {
-          input << "mutated"
+            input << "mutated"
           }.should raise_error(FrozenError)
         }.should_not complain(/literal string will be frozen in the future/)
       end

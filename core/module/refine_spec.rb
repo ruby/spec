@@ -272,7 +272,7 @@ describe "Module#refine" do
     it "looks in later included modules of the refined module first" do
       a = Module.new do
         def foo
-         "foo from A"
+          "foo from A"
         end
       end
 
