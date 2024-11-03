@@ -12,6 +12,9 @@ AllCops:
 Layout/IndentationConsistency:
   Enabled: true
 
+Layout/IndentationWidth:
+  Enabled: true
+
 Layout/TrailingWhitespace:
   Enabled: true
 
