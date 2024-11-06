@@ -60,8 +60,8 @@ describe "Kernel#sleep" do
       end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
       actual_duration = end_time - start_time
-      (actual_duration > 0.01).should == true # 100 * 0.0001 => 0.01
-      (actual_duration < 0.03).should == true
+      actual_duration.should > 0.01 # 100 * 0.0001 => 0.01
+      actual_duration.should < 0.03
     end
   end
 
