@@ -531,7 +531,7 @@ describe "Encoding.compatible? String, String" do
 
     matrix.each do |encoding1, value1, encoding2, value2, compatible_encoding|
       it "returns #{compatible_encoding} for #{value1.inspect} in #{encoding1} and #{value2.inspect} in #{encoding2}" do
-        actual_encoding = Encoding.compatible?(value1.force_encoding(encoding1), value2.force_encoding(encoding2))
+        actual_encoding = Encoding.compatible?(value1.dup.force_encoding(encoding1), value2.dup.force_encoding(encoding2))
         actual_encoding&.name.should == compatible_encoding
       end
     end
