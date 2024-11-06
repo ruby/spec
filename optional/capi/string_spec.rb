@@ -449,6 +449,20 @@ describe "C-API String function" do
     end
   end
 
+  describe "rb_str_strlen" do
+    it 'returns 0 as the length of an empty string' do
+      @s.rb_str_strlen('').should == 0
+    end
+
+    it 'returns the number of characters in a string' do
+      @s.rb_str_strlen('hello').should == 5
+    end
+
+    it 'returns the number of characters in a string with multi-byte characters' do
+      @s.rb_str_strlen('こんにちは').should == 5
+    end
+  end
+
   describe "rb_str_split" do
     it "splits strings over a splitter" do
       @s.rb_str_split("Hello,Goodbye").should == ["Hello", "Goodbye"]
@@ -1100,7 +1114,7 @@ end
     end
 
     it "tries to convert the passed argument to a string by calling #to_s" do
-      @s.rb_String({"bar" => "foo"}).should == '{"bar"=>"foo"}'
+      @s.rb_String({"bar" => "foo"}).should == {"bar" => "foo"}.to_s
     end
   end
 
