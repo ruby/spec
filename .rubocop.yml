@@ -61,6 +61,9 @@ Lint/RedundantSafeNavigation:
 Lint/RedundantSplatExpansion:
   Enabled: false
 
+Lint/RescueException:
+  Enabled: false
+
 Lint/UnifiedInteger:
   Enabled: false
 
