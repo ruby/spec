@@ -530,15 +530,13 @@ describe "The rescue keyword" do
   end
 
   it "does not allow rescue in {} block" do
-    -> {
-      eval <<-ruby
-        lambda {
-          raise SpecificExampleException
-        rescue SpecificExampleException
-          :caught
-        }
-      ruby
-    }.should raise_error(SyntaxError)
+    expect_syntax_error <<-ruby
+      lambda {
+        raise SpecificExampleException
+      rescue SpecificExampleException
+        :caught
+      }
+    ruby
   end
 
   it "allows rescue in 'do end' block" do
@@ -559,7 +557,7 @@ describe "The rescue keyword" do
   end
 
   it "requires the 'rescue' in method arguments to be wrapped in parens" do
-    -> { eval '1.+(1 rescue 1)' }.should raise_error(SyntaxError)
+    expect_syntax_error '1.+(1 rescue 1)'
     eval('1.+((1 rescue 1))').should == 2
   end
 
@@ -587,11 +585,9 @@ describe "The rescue keyword" do
     end
 
     it "doesn't except rescue expression" do
-      -> {
-        eval <<-ruby
-          a = 1 rescue RuntimeError 2
-        ruby
-      }.should raise_error(SyntaxError)
+      expect_syntax_error <<-ruby
+        a = 1 rescue RuntimeError 2
+      ruby
     end
 
     it "rescues only StandardError and its subclasses" do

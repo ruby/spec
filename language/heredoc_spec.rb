@@ -60,9 +60,7 @@ HERE
   end
 
   it 'raises SyntaxError if quoted HEREDOC identifier is ending not on same line' do
-    -> {
-      eval %{<<"HERE\n"\nraises syntax error\nHERE}
-    }.should raise_error(SyntaxError)
+    expect_syntax_error %{<<"HERE\n"\nraises syntax error\nHERE}
   end
 
   it "allows HEREDOC with <<~'identifier', allowing to indent identifier and content" do

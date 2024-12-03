@@ -133,7 +133,7 @@ describe "An instance method definition with a splat" do
   end
 
   it "allows only a single * argument" do
-    -> { eval 'def foo(a, *b, *c); end' }.should raise_error(SyntaxError)
+    expect_syntax_error('def foo(a, *b, *c); end')
   end
 
   it "requires the presence of any arguments that precede the *" do
@@ -199,11 +199,11 @@ describe "An instance method with a default argument" do
 
   ruby_version_is ""..."3.4" do
     it "raises a SyntaxError if using the argument in its default value" do
-      -> {
-        eval "def foo(bar = bar)
+      expect_syntax_error <<~RUBY
+        def foo(bar = bar)
           bar
-        end"
-      }.should raise_error(SyntaxError)
+        end
+      RUBY
     end
   end
 

@@ -266,9 +266,7 @@ describe "A lambda literal -> () { }" do
       ruby_version_is ""..."3.4" do
         it "raises a SyntaxError if using the argument in its default value" do
           a = 1
-          -> {
-            eval "-> (a=a) { a }"
-          }.should raise_error(SyntaxError)
+          expect_syntax_error("-> (a=a) { a }")
         end
       end
 

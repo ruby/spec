@@ -251,12 +251,12 @@ describe "Operators" do
   end
 
   it "<=> == === != =~ !~ are non-associative" do
-    -> { eval("1 <=> 2 <=> 3")  }.should raise_error(SyntaxError)
-    -> { eval("1 == 2 == 3")  }.should raise_error(SyntaxError)
-    -> { eval("1 === 2 === 3")  }.should raise_error(SyntaxError)
-    -> { eval("1 != 2 != 3")  }.should raise_error(SyntaxError)
-    -> { eval("1 =~ 2 =~ 3")  }.should raise_error(SyntaxError)
-    -> { eval("1 !~ 2 !~ 3")  }.should raise_error(SyntaxError)
+    expect_syntax_error("1 <=> 2 <=> 3")
+    expect_syntax_error("1 == 2 == 3")
+    expect_syntax_error("1 === 2 === 3")
+    expect_syntax_error("1 != 2 != 3")
+    expect_syntax_error("1 =~ 2 =~ 3")
+    expect_syntax_error("1 !~ 2 !~ 3")
   end
 
   it "<=> == === != =~ !~ have higher precedence than &&" do
@@ -290,8 +290,8 @@ describe "Operators" do
   end
 
   it ".. ... are non-associative" do
-    -> { eval("1..2..3")  }.should raise_error(SyntaxError)
-    -> { eval("1...2...3")  }.should raise_error(SyntaxError)
+    expect_syntax_error("1..2..3")
+    expect_syntax_error("1...2...3")
   end
 
   it ".. ... have higher precedence than ? :" do

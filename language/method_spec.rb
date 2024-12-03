@@ -1230,13 +1230,8 @@ describe "A method call with a space between method name and parentheses" do
 
   context "when the argument looks like an argument list" do
     it "raises a syntax error" do
-      -> {
-        eval("m (1, 2)")
-      }.should raise_error(SyntaxError)
-
-      -> {
-        eval("m (1, 2, 3)")
-      }.should raise_error(SyntaxError)
+      expect_syntax_error("m (1, 2)")
+      expect_syntax_error("m (1, 2, 3)")
     end
   end
 
