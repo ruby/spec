@@ -88,8 +88,10 @@ ruby_version_is "3.3" do
           (1..3).reverse_each.size.should == 3
         end
 
-        it "returns Infinity when Range size is infinite" do
-          (..3).reverse_each.size.should == Float::INFINITY
+        ruby_bug "#20936", "3.4"..."3.5" do
+          it "returns Infinity when Range size is infinite" do
+            (..3).reverse_each.size.should == Float::INFINITY
+          end
         end
 
         it "returns nil when Range size is unknown" do
