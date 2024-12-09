@@ -32,10 +32,10 @@ describe "The retry statement" do
   end
 
   it "raises a SyntaxError when used outside of a rescue statement" do
-    -> { eval 'retry' }.should raise_error(SyntaxError)
-    -> { eval 'begin; retry; end' }.should raise_error(SyntaxError)
-    -> { eval 'def m; retry; end' }.should raise_error(SyntaxError)
-    -> { eval 'module RetrySpecs; retry; end' }.should raise_error(SyntaxError)
+    expect_syntax_error('retry')
+    expect_syntax_error('begin; retry; end')
+    expect_syntax_error('def m; retry; end')
+    expect_syntax_error('module RetrySpecs; retry; end')
   end
 end
 

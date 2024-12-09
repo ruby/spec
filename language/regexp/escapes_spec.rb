@@ -120,7 +120,7 @@ describe "Regexps with escape characters" do
     /\x0AA/.match("\nA").to_a.should == ["\nA"]
     /\xAG/.match("\nG").to_a.should == ["\nG"]
     # Non-matches
-    -> { eval('/\xG/') }.should raise_error(SyntaxError)
+    expect_syntax_error('/\xG/')
 
     # \x{7HHHHHHH} wide hexadecimal char (character code point value)
   end
@@ -141,9 +141,9 @@ describe "Regexps with escape characters" do
     # Parsing precedence
     /\cJ+/.match("\n\n").to_a.should == ["\n\n"] # Quantifiers apply to entire escape sequence
     /\\cJ/.match("\\cJ").to_a.should == ["\\cJ"]
-    -> { eval('/[abc\x]/') }.should raise_error(SyntaxError) # \x is treated as a escape sequence even inside a character class
+    expect_syntax_error('/[abc\x]/') # \x is treated as a escape sequence even inside a character class
     # Syntax error
-    -> { eval('/\c/') }.should raise_error(SyntaxError)
+    expect_syntax_error('/\c/')
 
     # \cx          control char          (character code point value)
     # \C-x         control char          (character code point value)
