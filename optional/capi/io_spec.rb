@@ -579,11 +579,15 @@ describe "C-API IO function" do
       end
 
       it "does not apply the specified encoding flags" do
-        File.write("a.txt", "123\r\n456\n89")
-        file = File.open("a.txt", "r")
+        name = tmp("rb_io_open_descriptor_specs")
+        File.write(name, "123\r\n456\n89")
+        file = File.open(name, "r")
 
         io = @o.rb_io_open_descriptor(File, file.fileno, CApiIOSpecs::FMODE_READABLE, "a.txt", 60, "US-ASCII", "UTF-8", CApiIOSpecs::ECONV_UNIVERSAL_NEWLINE_DECORATOR, {})
         io.read_nonblock(20).should == "123\r\n456\n89"
+      ensure
+        file.close
+        rm_r name
       end
 
       it "ignores the IO open options" do
@@ -623,7 +627,13 @@ describe "C-API IO function" do
         io = @o.rb_io_open_descriptor(File, @w_io.fileno, CApiIOSpecs::FMODE_READABLE, "a.txt", 60, "US-ASCII", "UTF-8", 0, {})
         io.should.is_a?(File)
 
-        -> { io.read_nonblock(1) }.should raise_error(Errno::EBADF)
+        platform_is_not :windows do
+          -> { io.read_nonblock(1) }.should raise_error(Errno::EBADF)
+        end
+
+        platform_is :windows do
+          -> { io.read_nonblock(1) }.should raise_error(IO::EWOULDBLOCKWaitReadable)
+        end
       end
 
       it "tolerates NULL as rb_io_encoding *encoding parameter" do
