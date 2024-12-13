@@ -1,4 +1,5 @@
 require_relative '../../../spec_helper'
+require_relative 'shared/interface'
 
 ruby_version_is "3.1" do
   require 'random/formatter'
@@ -58,4 +59,6 @@ describe "Random::Formatter#alphanumeric" do
       @object.alphanumeric(1, chars: [to_s, to_s]).should == "[mock to_s]"
     end
   end
+
+  it_behaves_like :random_formatter_interface, :alphanumeric
 end
