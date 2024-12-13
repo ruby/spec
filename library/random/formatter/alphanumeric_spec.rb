@@ -11,7 +11,7 @@ describe "Random::Formatter#alphanumeric" do
   before :each do
     @object = Object.new
     @object.extend(Random::Formatter)
-    @object.define_singleton_method(:bytes) do |n|
+    def @object.bytes(n)
       "\x00".b * n
     end
   end
