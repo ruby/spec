@@ -150,7 +150,7 @@ describe :rational_exponent, shared: true do
       end
 
       ruby_version_is "3.4" do
-        it "returns positive Infinity when self < -1" do
+        it "raises an ArgumentError when self < -1" do
           -> {
             (Rational(-2) ** bignum_value)
           }.should raise_error(ArgumentError)
@@ -159,7 +159,7 @@ describe :rational_exponent, shared: true do
           }.should raise_error(ArgumentError)
         end
 
-        it "returns 0.0 when self is < -1 and the exponent is negative" do
+        it "raises an ArgumentError when self is < -1 and the exponent is negative" do
           -> {
             (Rational(-2) ** -bignum_value)
           }.should raise_error(ArgumentError)
