@@ -122,6 +122,24 @@ describe :rational_exponent, shared: true do
           (Rational(fixnum_max) ** -bignum_value)
         }.should raise_error(ArgumentError)
       end
+
+      it "raises an ArgumentError when self is < -1" do
+        -> {
+          (Rational(-2) ** bignum_value)
+        }.should raise_error(ArgumentError)
+        -> {
+          (Rational(fixnum_min) ** bignum_value)
+        }.should raise_error(ArgumentError)
+      end
+
+      it "raises an ArgumentError when self is < -1 and the exponent is negative" do
+        -> {
+          (Rational(-2) ** -bignum_value)
+        }.should raise_error(ArgumentError)
+        -> {
+          (Rational(fixnum_min) ** -bignum_value)
+        }.should raise_error(ArgumentError)
+      end
     end
 
     # Fails on linux due to pow() bugs in glibc: http://sources.redhat.com/bugzilla/show_bug.cgi?id=3866
@@ -146,26 +164,6 @@ describe :rational_exponent, shared: true do
           -> {
             (Rational(fixnum_min) ** -bignum_value).should eql(0.0)
           }.should complain(/warning: in a\*\*b, b may be too big/)
-        end
-      end
-
-      ruby_version_is "3.4" do
-        it "raises an ArgumentError when self < -1" do
-          -> {
-            (Rational(-2) ** bignum_value)
-          }.should raise_error(ArgumentError)
-          -> {
-            (Rational(fixnum_min) ** bignum_value)
-          }.should raise_error(ArgumentError)
-        end
-
-        it "raises an ArgumentError when self is < -1 and the exponent is negative" do
-          -> {
-            (Rational(-2) ** -bignum_value)
-          }.should raise_error(ArgumentError)
-          -> {
-            (Rational(fixnum_min) ** -bignum_value)
-          }.should raise_error(ArgumentError)
         end
       end
     end
