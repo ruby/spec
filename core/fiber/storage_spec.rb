@@ -96,8 +96,7 @@ ruby_version_is "3.2" do
       it "can use keys as strings" do
         key = Object.new
         def key.to_str; "Foo"; end
-        Fiber[key] = 42
-        Fiber["Foo"].should == 42
+        Fiber.new { Fiber[key] = 42; Fiber["Foo"] }.resume.should == 42
       end
     end
 
