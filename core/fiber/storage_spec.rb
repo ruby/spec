@@ -92,12 +92,11 @@ ruby_version_is "3.2" do
       end
     end
 
-    ruby_bug "#20978", "3.2.3"..."3.4" do
+    ruby_bug "#20978", ""..."3.4" do
       it "can use keys as strings" do
         key = Object.new
         def key.to_str; "Foo"; end
-        Fiber[key] = 42
-        Fiber["Foo"].should == 42
+        Fiber.new { Fiber[key] = 42; Fiber["Foo"] }.resume.should == 42
       end
     end
 
