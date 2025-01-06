@@ -11,10 +11,12 @@ describe "Dir#close" do
 
   it "does not raise an IOError even if the Dir instance is closed" do
     dir = Dir.open DirSpecs.mock_dir
-    dir.close
-    dir.close
+    dir.close.should == nil
+    dir.close.should == nil
 
-    -> { dir.fileno }.should raise_error(IOError, /closed directory/)
+    guard -> { dir.respond_to? :fileno } do
+      -> { dir.fileno }.should raise_error(IOError, /closed directory/)
+    end
   end
 
   it "returns nil" do
