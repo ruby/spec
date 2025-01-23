@@ -36,3 +36,7 @@ unless ENV['MSPEC_RUNNER'] # Running directly with ruby some_spec.rb
   ARGV.unshift $0
   MSpecRun.main
 end
+
+def expect_syntax_error(ruby_src)
+  -> { eval(ruby_src) }.should raise_error(SyntaxError)
+end

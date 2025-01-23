@@ -731,9 +731,9 @@ describe "A block" do
 
   describe "taking identically-named arguments" do
     it "raises a SyntaxError for standard arguments" do
-      -> { eval "lambda { |x,x| }" }.should raise_error(SyntaxError)
-      -> { eval "->(x,x) {}" }.should raise_error(SyntaxError)
-      -> { eval "Proc.new { |x,x| }" }.should raise_error(SyntaxError)
+      expect_syntax_error("lambda { |x,x| }")
+      expect_syntax_error("->(x,x) {}")
+      expect_syntax_error("Proc.new { |x,x| }")
     end
 
     it "accepts unnamed arguments" do
@@ -790,29 +790,23 @@ describe "Block-local variables" do
   end
 
   it "can not have the same name as one of the standard parameters" do
-    -> { eval "[1].each {|foo; foo| }" }.should raise_error(SyntaxError)
-    -> { eval "[1].each {|foo, bar; glark, bar| }" }.should raise_error(SyntaxError)
+    expect_syntax_error("[1].each {|foo; foo| }")
+    expect_syntax_error("[1].each {|foo, bar; glark, bar| }")
   end
 
   it "can not be prefixed with an asterisk" do
-    -> { eval "[1].each {|foo; *bar| }" }.should raise_error(SyntaxError)
-    -> do
-      eval "[1].each {|foo, bar; glark, *fnord| }"
-    end.should raise_error(SyntaxError)
+    expect_syntax_error("[1].each {|foo; *bar| }")
+    expect_syntax_error("[1].each {|foo, bar; glark, *fnord| }")
   end
 
   it "can not be prefixed with an ampersand" do
-    -> { eval "[1].each {|foo; &bar| }" }.should raise_error(SyntaxError)
-    -> do
-      eval "[1].each {|foo, bar; glark, &fnord| }"
-    end.should raise_error(SyntaxError)
+    expect_syntax_error("[1].each {|foo; &bar| }")
+    expect_syntax_error("[1].each {|foo, bar; glark, &fnord| }")
   end
 
   it "can not be assigned default values" do
-    -> { eval "[1].each {|foo; bar=1| }" }.should raise_error(SyntaxError)
-    -> do
-      eval "[1].each {|foo, bar; glark, fnord=:fnord| }"
-    end.should raise_error(SyntaxError)
+    expect_syntax_error("[1].each {|foo; bar=1| }")
+    expect_syntax_error("[1].each {|foo, bar; glark, fnord=:fnord| }")
   end
 
   it "need not be preceded by standard parameters" do
@@ -821,8 +815,8 @@ describe "Block-local variables" do
   end
 
   it "only allow a single semi-colon in the parameter list" do
-    -> { eval "[1].each {|foo; bar; glark| }" }.should raise_error(SyntaxError)
-    -> { eval "[1].each {|; bar; glark| }" }.should raise_error(SyntaxError)
+    expect_syntax_error("[1].each {|foo; bar; glark| }")
+    expect_syntax_error("[1].each {|; bar; glark| }")
   end
 
   it "override shadowed variables from the outer scope" do
@@ -963,9 +957,7 @@ describe "Post-args" do
       ruby_version_is ""..."3.4" do
         it "raises a SyntaxError if using the argument in its default value" do
           a = 1
-          -> {
-            eval "proc { |a=a| a }"
-          }.should raise_error(SyntaxError)
+          expect_syntax_error "proc { |a=a| a }"
         end
       end
 
@@ -1012,7 +1004,7 @@ describe "Anonymous block forwarding" do
     end
 
     it "requires the anonymous block parameter to be declared if directly passing a block" do
-      -> { eval "def a; b(&); end; def b; end" }.should raise_error(SyntaxError)
+      expect_syntax_error("def a; b(&); end; def b; end")
     end
 
     it "works when it's the only declared parameter" do
