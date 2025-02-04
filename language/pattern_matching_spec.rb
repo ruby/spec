@@ -1281,4 +1281,30 @@ describe "Pattern matching" do
       end.should == true
     end
   end
+
+  describe "value in pattern" do
+    it "returns true if the pattern matches" do
+      (1 in 1).should == true
+
+      (1 in Integer).should == true
+
+      e = nil
+      ([1, 2] in [1, e]).should == true
+      e.should == 2
+
+      k = nil
+      ({k: 1} in {k:}).should == true
+      k.should == 1
+    end
+
+    it "returns false if the pattern does not match" do
+      (1 in 2).should == false
+
+      (1 in Float).should == false
+
+      ([1, 2] in [2, e]).should == false
+
+      ({k: 1} in {k: 2}).should == false
+    end
+  end
 end
