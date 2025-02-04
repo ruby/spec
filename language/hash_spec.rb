@@ -60,14 +60,12 @@ describe "Hash literal" do
     @h.should == {1000 => :foo}
   end
 
-  ruby_version_is "3.1" do
-    it "checks duplicated float keys on initialization" do
-      -> {
-        @h = eval "{1.0 => :bar, 1.0 => :foo}"
-      }.should complain(/key 1.0 is duplicated|duplicated key/)
-      @h.keys.size.should == 1
-      @h.should == {1.0 => :foo}
-    end
+  it "checks duplicated float keys on initialization" do
+    -> {
+      @h = eval "{1.0 => :bar, 1.0 => :foo}"
+    }.should complain(/key 1.0 is duplicated|duplicated key/)
+    @h.keys.size.should == 1
+    @h.should == {1.0 => :foo}
   end
 
   it "accepts a hanging comma" do
@@ -259,50 +257,48 @@ describe "The ** operator" do
     end
   end
 
-  ruby_version_is "3.1" do
-    describe "hash with omitted value" do
-      it "accepts short notation 'key' for 'key: value' syntax" do
-        a, b, c = 1, 2, 3
-        h = eval('{a:}')
-        {a: 1}.should == h
-        h = eval('{a:, b:, c:}')
-        {a: 1, b: 2, c: 3}.should == h
-      end
+  describe "hash with omitted value" do
+    it "accepts short notation 'key' for 'key: value' syntax" do
+      a, b, c = 1, 2, 3
+      h = eval('{a:}')
+      {a: 1}.should == h
+      h = eval('{a:, b:, c:}')
+      {a: 1, b: 2, c: 3}.should == h
+    end
 
-      it "ignores hanging comma on short notation" do
-        a, b, c = 1, 2, 3
-        h = eval('{a:, b:, c:,}')
-        {a: 1, b: 2, c: 3}.should == h
-      end
+    it "ignores hanging comma on short notation" do
+      a, b, c = 1, 2, 3
+      h = eval('{a:, b:, c:,}')
+      {a: 1, b: 2, c: 3}.should == h
+    end
 
-      it "accepts mixed syntax" do
-        a, e = 1, 5
-        h = eval('{a:, b: 2, "c" => 3, :d => 4, e:}')
-        eval('{a: 1, :b => 2, "c" => 3, "d": 4, e: 5}').should == h
-      end
+    it "accepts mixed syntax" do
+      a, e = 1, 5
+      h = eval('{a:, b: 2, "c" => 3, :d => 4, e:}')
+      eval('{a: 1, :b => 2, "c" => 3, "d": 4, e: 5}').should == h
+    end
 
-      it "works with methods and local vars" do
-        a = Class.new
-        a.class_eval(<<-RUBY)
-          def bar
-            "baz"
-          end
+    it "works with methods and local vars" do
+      a = Class.new
+      a.class_eval(<<-RUBY)
+        def bar
+          "baz"
+        end
 
-          def foo(val)
-            {bar:, val:}
-          end
-        RUBY
+        def foo(val)
+          {bar:, val:}
+        end
+      RUBY
 
-        a.new.foo(1).should == {bar: "baz", val: 1}
-      end
+      a.new.foo(1).should == {bar: "baz", val: 1}
+    end
 
-      it "raises a SyntaxError when the hash key ends with `!`" do
-        -> { eval("{a!:}") }.should raise_error(SyntaxError, /identifier a! is not valid to get/)
-      end
+    it "raises a SyntaxError when the hash key ends with `!`" do
+      -> { eval("{a!:}") }.should raise_error(SyntaxError, /identifier a! is not valid to get/)
+    end
 
-      it "raises a SyntaxError when the hash key ends with `?`" do
-        -> { eval("{a?:}") }.should raise_error(SyntaxError, /identifier a\? is not valid to get/)
-      end
+    it "raises a SyntaxError when the hash key ends with `?`" do
+      -> { eval("{a?:}") }.should raise_error(SyntaxError, /identifier a\? is not valid to get/)
     end
   end
 end

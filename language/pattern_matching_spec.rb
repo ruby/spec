@@ -164,16 +164,8 @@ describe "Pattern matching" do
         @src = '[0, 1] => [a, b]'
       end
 
-      ruby_version_is ""..."3.1" do
-        it "warns about pattern matching is experimental feature" do
-          -> { eval @src }.should complain(/pattern matching is experimental, and the behavior may change in future versions of Ruby!/i)
-        end
-      end
-
-      ruby_version_is "3.1" do
-        it "does not warn about pattern matching is experimental feature" do
-          -> { eval @src }.should_not complain
-        end
+      it "does not warn about pattern matching is experimental feature" do
+        -> { eval @src }.should_not complain
       end
     end
   end
@@ -1222,6 +1214,4 @@ describe "Pattern matching" do
   end
 end
 
-ruby_version_is "3.1" do
-  require_relative 'pattern_matching/3.1'
-end
+require_relative 'pattern_matching/3.1'

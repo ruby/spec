@@ -130,10 +130,8 @@ describe "Proc#parameters" do
     end
   end
 
-  ruby_version_is '3.1' do
-    it "adds block arg with name & for anonymous block argument" do
-      eval('-> & {}.parameters').should == [[:block, :&]]
-    end
+  it "adds block arg with name & for anonymous block argument" do
+    eval('-> & {}.parameters').should == [[:block, :&]]
   end
 
   it "does not add locals as block options with a block and splat" do
