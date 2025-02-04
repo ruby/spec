@@ -1423,15 +1423,15 @@ describe "kwarg with omitted value in a method call" do
       ruby
 
       a, b, c = 1, 2, 3
-      arr, h = eval('call a:')
+      arr, h = call(a:)
       h.should == {a: 1}
       arr.should == []
 
-      arr, h = eval('call(a:, b:, c:)')
+      arr, h = call(a:, b:, c:)
       h.should == {a: 1, b: 2, c: 3}
       arr.should == []
 
-      arr, h = eval('call(a:, b: 10, c:)')
+      arr, h = call(a:, b: 10, c:)
       h.should == {a: 1, b: 10, c: 3}
       arr.should == []
     end
@@ -1457,9 +1457,7 @@ end
 
 describe "Inside 'endless' method definitions" do
   it "allows method calls without parenthesis" do
-    eval <<-ruby
-      def greet(person) = "Hi, ".dup.concat person
-    ruby
+    def greet(person) = "Hi, ".dup.concat person
 
     greet("Homer").should == "Hi, Homer"
   end

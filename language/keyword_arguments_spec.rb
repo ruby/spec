@@ -332,7 +332,7 @@ describe "Keyword arguments" do
         a = 1
         b = 2
 
-        eval('m(a:, b:).should == [1, 2]')
+        m(a:, b:).should == [1, 2]
       end
     end
 

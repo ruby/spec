@@ -46,6 +46,6 @@ describe "Hash#hash" do
     a = 1
     b = 2
 
-    eval('{a:, b:}.should == { a: 1, b: 2 }')
+    {a:, b:}.should == { a: 1, b: 2 }
   end
 end

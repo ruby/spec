@@ -40,21 +40,21 @@ describe "Range#each" do
 
   it "works with endless ranges" do
     a = []
-    eval("(-2..)").each { |x| break if x > 2; a << x }
+    (-2..).each { |x| break if x > 2; a << x }
     a.should == [-2, -1, 0, 1, 2]
 
     a = []
-    eval("(-2...)").each { |x| break if x > 2; a << x }
+    (-2...).each { |x| break if x > 2; a << x }
     a.should == [-2, -1, 0, 1, 2]
   end
 
   it "works with String endless ranges" do
     a = []
-    eval("('A'..)").each { |x| break if x > "D"; a << x }
+    ('A'..).each { |x| break if x > "D"; a << x }
     a.should == ["A", "B", "C", "D"]
 
     a = []
-    eval("('A'...)").each { |x| break if x > "D"; a << x }
+    ('A'...).each { |x| break if x > "D"; a << x }
     a.should == ["A", "B", "C", "D"]
   end
 

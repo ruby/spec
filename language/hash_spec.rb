@@ -75,9 +75,9 @@ describe "Hash literal" do
   end
 
   it "recognizes '=' at the end of the key" do
-    eval("{:a==>1}").should == {:"a=" => 1}
-    eval("{:a= =>1}").should == {:"a=" => 1}
-    eval("{:a= => 1}").should == {:"a=" => 1}
+    {:a==>1}.should == {:"a=" => 1}
+    {:a= =>1}.should == {:"a=" => 1}
+    {:a= => 1}.should == {:"a=" => 1}
   end
 
   it "with '==>' in the middle raises SyntaxError" do
@@ -85,11 +85,11 @@ describe "Hash literal" do
   end
 
   it "recognizes '!' at the end of the key" do
-    eval("{:a! =>1}").should == {:"a!" => 1}
-    eval("{:a! => 1}").should == {:"a!" => 1}
+    {:a! =>1}.should == {:"a!" => 1}
+    {:a! => 1}.should == {:"a!" => 1}
 
-    eval("{a!:1}").should == {:"a!" => 1}
-    eval("{a!: 1}").should == {:"a!" => 1}
+    {a!:1}.should == {:"a!" => 1}
+    {a!: 1}.should == {:"a!" => 1}
   end
 
   it "raises a SyntaxError if there is no space between `!` and `=>`" do
@@ -97,11 +97,11 @@ describe "Hash literal" do
   end
 
   it "recognizes '?' at the end of the key" do
-    eval("{:a? =>1}").should == {:"a?" => 1}
-    eval("{:a? => 1}").should == {:"a?" => 1}
+    {:a? =>1}.should == {:"a?" => 1}
+    {:a? => 1}.should == {:"a?" => 1}
 
-    eval("{a?:1}").should == {:"a?" => 1}
-    eval("{a?: 1}").should == {:"a?" => 1}
+    {a?:1}.should == {:"a?" => 1}
+    {a?: 1}.should == {:"a?" => 1}
   end
 
   it "raises a SyntaxError if there is no space between `?` and `=>`" do
@@ -127,7 +127,7 @@ describe "Hash literal" do
 
   it "accepts mixed 'key: value', 'key => value' and '\"key\"': value' syntax" do
     h = {:a => 1, :b => 2, "c" => 3, :d => 4}
-    eval('{a: 1, :b => 2, "c" => 3, "d": 4}').should == h
+    {a: 1, :b => 2, "c" => 3, "d": 4}.should == h
   end
 
   it "expands an '**{}' element into the containing Hash literal initialization" do
@@ -260,22 +260,22 @@ describe "The ** operator" do
   describe "hash with omitted value" do
     it "accepts short notation 'key' for 'key: value' syntax" do
       a, b, c = 1, 2, 3
-      h = eval('{a:}')
+      h = {a:}
       {a: 1}.should == h
-      h = eval('{a:, b:, c:}')
+      h = {a:, b:, c:}
       {a: 1, b: 2, c: 3}.should == h
     end
 
     it "ignores hanging comma on short notation" do
       a, b, c = 1, 2, 3
-      h = eval('{a:, b:, c:,}')
+      h = {a:, b:, c:,}
       {a: 1, b: 2, c: 3}.should == h
     end
 
     it "accepts mixed syntax" do
       a, e = 1, 5
-      h = eval('{a:, b: 2, "c" => 3, :d => 4, e:}')
-      eval('{a: 1, :b => 2, "c" => 3, "d": 4, e: 5}').should == h
+      h = {a:, b: 2, "c" => 3, :d => 4, e:}
+      {a: 1, :b => 2, "c" => 3, "d": 4, e: 5}.should == h
     end
 
     it "works with methods and local vars" do

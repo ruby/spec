@@ -71,7 +71,7 @@ describe "Predefined global $~" do
     match2.should_not == nil
     $~.should == match2
 
-    eval 'match3 = /baz/.match("baz")'
+    match3 = /baz/.match("baz")
 
     match3.should_not == nil
     $~.should == match3
@@ -768,7 +768,7 @@ describe "Predefined global $_" do
     match.should == "bar\n"
     $_.should == match
 
-    eval 'match = stdin.gets'
+    match = stdin.gets
 
     match.should == "baz\n"
     $_.should == match
