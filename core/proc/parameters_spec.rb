@@ -64,7 +64,7 @@ describe "Proc#parameters" do
   end
 
   it "regards keyword parameters in lambdas as required" do
-    lambda {|x:| }.parameters.first.first.should == :keyreq
+    -> x: { }.parameters.first.first.should == :keyreq
   end
 
   it "sets the first element of each sub-Array to :rest for parameters prefixed with asterisks" do
