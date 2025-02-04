@@ -259,12 +259,10 @@ describe "Method#parameters" do
 
   it "adds block arg with name & for anonymous block argument" do
     object = Object.new
+    def object.foo(&)
+    end
 
-    eval(<<~RUBY).should == [[:block, :&]]
-      def object.foo(&)
-      end
-      object.method(:foo).parameters
-    RUBY
+    object.method(:foo).parameters.should == [[:block, :&]]
   end
 
   it "returns [:rest, :*], [:keyrest, :**], [:block, :&] for forward parameters operator" do

@@ -294,7 +294,7 @@ describe "A block" do
     end
 
     it "may include a rescue clause" do
-      eval("@y.z do raise ArgumentError; rescue ArgumentError; 7; end").should == 7
+      @y.z do raise ArgumentError; rescue ArgumentError; 7; end.should == 7
     end
   end
 
@@ -308,7 +308,7 @@ describe "A block" do
     end
 
     it "may include a rescue clause" do
-      eval('@y.z do || raise ArgumentError; rescue ArgumentError; 7; end').should == 7
+      @y.z do || raise ArgumentError; rescue ArgumentError; 7; end.should == 7
     end
   end
 
@@ -337,7 +337,7 @@ describe "A block" do
     end
 
     it "may include a rescue clause" do
-      eval('@y.s(1) do |x| raise ArgumentError; rescue ArgumentError; 7; end').should == 7
+      @y.s(1) do |x| raise ArgumentError; rescue ArgumentError; 7; end.should == 7
     end
   end
 
@@ -737,9 +737,9 @@ describe "A block" do
     end
 
     it "accepts unnamed arguments" do
-      eval("lambda { |_,_| }").should be_an_instance_of(Proc)
-      eval("->(_,_) {}").should be_an_instance_of(Proc)
-      eval("Proc.new { |_,_| }").should be_an_instance_of(Proc)
+      lambda { |_,_| }.should be_an_instance_of(Proc)
+      ->(_,_) {}.should be_an_instance_of(Proc)
+      Proc.new { |_,_| }.should be_an_instance_of(Proc)
     end
   end
 
@@ -1002,10 +1002,8 @@ end
 # tested more thoroughly in language/delegation_spec.rb
 describe "Anonymous block forwarding" do
   it "forwards blocks to other method that formally declares anonymous block" do
-    eval <<-EOF
-        def b(&); c(&) end
-        def c(&); yield :non_null end
-    EOF
+    def b(&); c(&) end
+    def c(&); yield :non_null end
 
     b { |c| c }.should == :non_null
   end
@@ -1015,37 +1013,29 @@ describe "Anonymous block forwarding" do
   end
 
   it "works when it's the only declared parameter" do
-    eval <<-EOF
-        def inner; yield end
-        def block_only(&); inner(&) end
-    EOF
+    def inner; yield end
+    def block_only(&); inner(&) end
 
     block_only { 1 }.should == 1
   end
 
   it "works alongside positional parameters" do
-    eval <<-EOF
-        def inner; yield end
-        def pos(arg1, &); inner(&) end
-    EOF
+    def inner; yield end
+    def pos(arg1, &); inner(&) end
 
     pos(:a) { 1 }.should == 1
   end
 
   it "works alongside positional arguments and splatted keyword arguments" do
-    eval <<-EOF
-        def inner; yield end
-        def pos_kwrest(arg1, **kw, &); inner(&) end
-    EOF
+    def inner; yield end
+    def pos_kwrest(arg1, **kw, &); inner(&) end
 
     pos_kwrest(:a, arg: 3) { 1 }.should == 1
   end
 
   it "works alongside positional arguments and disallowed keyword arguments" do
-    eval <<-EOF
-        def inner; yield end
-        def no_kw(arg1, **nil, &); inner(&) end
-    EOF
+    def inner; yield end
+    def no_kw(arg1, **nil, &); inner(&) end
 
     no_kw(:a) { 1 }.should == 1
   end
