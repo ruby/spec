@@ -1001,55 +1001,53 @@ end
 
 # tested more thoroughly in language/delegation_spec.rb
 describe "Anonymous block forwarding" do
-  ruby_version_is "3.1" do
-    it "forwards blocks to other method that formally declares anonymous block" do
-      eval <<-EOF
-          def b(&); c(&) end
-          def c(&); yield :non_null end
-      EOF
+  it "forwards blocks to other method that formally declares anonymous block" do
+    eval <<-EOF
+        def b(&); c(&) end
+        def c(&); yield :non_null end
+    EOF
 
-      b { |c| c }.should == :non_null
-    end
+    b { |c| c }.should == :non_null
+  end
 
-    it "requires the anonymous block parameter to be declared if directly passing a block" do
-      -> { eval "def a; b(&); end; def b; end" }.should raise_error(SyntaxError)
-    end
+  it "requires the anonymous block parameter to be declared if directly passing a block" do
+    -> { eval "def a; b(&); end; def b; end" }.should raise_error(SyntaxError)
+  end
 
-    it "works when it's the only declared parameter" do
-      eval <<-EOF
-          def inner; yield end
-          def block_only(&); inner(&) end
-      EOF
+  it "works when it's the only declared parameter" do
+    eval <<-EOF
+        def inner; yield end
+        def block_only(&); inner(&) end
+    EOF
 
-      block_only { 1 }.should == 1
-    end
+    block_only { 1 }.should == 1
+  end
 
-    it "works alongside positional parameters" do
-      eval <<-EOF
-          def inner; yield end
-          def pos(arg1, &); inner(&) end
-      EOF
+  it "works alongside positional parameters" do
+    eval <<-EOF
+        def inner; yield end
+        def pos(arg1, &); inner(&) end
+    EOF
 
-      pos(:a) { 1 }.should == 1
-    end
+    pos(:a) { 1 }.should == 1
+  end
 
-    it "works alongside positional arguments and splatted keyword arguments" do
-      eval <<-EOF
-          def inner; yield end
-          def pos_kwrest(arg1, **kw, &); inner(&) end
-      EOF
+  it "works alongside positional arguments and splatted keyword arguments" do
+    eval <<-EOF
+        def inner; yield end
+        def pos_kwrest(arg1, **kw, &); inner(&) end
+    EOF
 
-      pos_kwrest(:a, arg: 3) { 1 }.should == 1
-    end
+    pos_kwrest(:a, arg: 3) { 1 }.should == 1
+  end
 
-    it "works alongside positional arguments and disallowed keyword arguments" do
-      eval <<-EOF
-          def inner; yield end
-          def no_kw(arg1, **nil, &); inner(&) end
-      EOF
+  it "works alongside positional arguments and disallowed keyword arguments" do
+    eval <<-EOF
+        def inner; yield end
+        def no_kw(arg1, **nil, &); inner(&) end
+    EOF
 
-      no_kw(:a) { 1 }.should == 1
-    end
+    no_kw(:a) { 1 }.should == 1
   end
 
   ruby_version_is "3.2" do

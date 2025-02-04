@@ -322,13 +322,11 @@ describe "Range#step" do
         ScratchPad.recorded.should eql([1.0, 2.8, 4.6])
       end
 
-      ruby_version_is '3.1' do
-        it "correctly handles values near the upper limit" do # https://bugs.ruby-lang.org/issues/16612
-          (1.0...55.6).step(18.2) { |x| ScratchPad << x }
-          ScratchPad.recorded.should eql([1.0, 19.2, 37.4, 55.599999999999994])
+      it "correctly handles values near the upper limit" do # https://bugs.ruby-lang.org/issues/16612
+        (1.0...55.6).step(18.2) { |x| ScratchPad << x }
+        ScratchPad.recorded.should eql([1.0, 19.2, 37.4, 55.599999999999994])
 
-          (1.0...55.6).step(18.2).size.should == 4
-        end
+        (1.0...55.6).step(18.2).size.should == 4
       end
 
       it "handles infinite values at either end" do
