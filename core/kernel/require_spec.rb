@@ -16,8 +16,7 @@ describe "Kernel#require" do
     Kernel.should have_private_instance_method(:require)
   end
 
-  provided = %w[complex enumerator rational thread ruby2_keywords]
-  provided << "fiber"
+  provided = %w[complex enumerator fiber rational thread ruby2_keywords]
 
   it "#{provided.join(', ')} are already required" do
     out = ruby_exe("puts $LOADED_FEATURES", options: '--disable-gems --disable-did-you-mean')
