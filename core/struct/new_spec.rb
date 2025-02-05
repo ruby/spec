@@ -6,6 +6,8 @@ describe "Struct.new" do
     struct = Struct.new('Animal', :name, :legs, :eyeballs)
     struct.should == Struct::Animal
     struct.name.should == "Struct::Animal"
+  ensure
+    Struct.send(:remove_const, :Animal)
   end
 
   it "overwrites previously defined constants with string as first argument" do
@@ -19,6 +21,8 @@ describe "Struct.new" do
     second.should == Struct::Person
 
     first.members.should_not == second.members
+  ensure
+    Struct.send(:remove_const, :Person)
   end
 
   it "calls to_str on its first argument (constant name)" do
@@ -27,6 +31,8 @@ describe "Struct.new" do
     struct = Struct.new(obj)
     struct.should == Struct::Foo
     struct.name.should == "Struct::Foo"
+  ensure
+    Struct.send(:remove_const, :Foo)
   end
 
   it "creates a new anonymous class with nil first argument" do
@@ -138,6 +144,8 @@ describe "Struct.new" do
     it "creates a constant in subclass' namespace" do
       struct = StructClasses::Apple.new('Computer', :size)
       struct.should == StructClasses::Apple::Computer
+    ensure
+      StructClasses::Apple.send(:remove_const, :Computer)
     end
 
     it "creates an instance" do
