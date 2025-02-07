@@ -1,7 +1,5 @@
 require_relative '../../spec_helper'
 
-require 'fiber'
-
 describe "Fiber.current" do
   it "is available without an extra require" do
     ruby_exe("print Fiber.current.class", options: '--disable-gems --disable-did-you-mean').should == "Fiber"
