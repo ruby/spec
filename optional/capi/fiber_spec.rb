@@ -1,5 +1,4 @@
 require_relative 'spec_helper'
-require 'fiber'
 
 load_extension('fiber')
 
