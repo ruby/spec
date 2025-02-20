@@ -8,7 +8,6 @@ describe "String#to_f" do
    "123.45e1".to_f.should == 1234.5
    "45.67 degrees".to_f.should == 45.67
    "0".to_f.should == 0.0
-   "123.45e1".to_f.should == 1234.5
 
    ".5".to_f.should == 0.5
    ".5e1".to_f.should == 5.0
