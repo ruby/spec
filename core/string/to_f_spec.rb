@@ -50,12 +50,13 @@ describe "String#to_f" do
     "0x10".to_f.should == 0
   end
 
-  it "returns 0 for strings with any non-digit in them" do
+  it "treats any non-numeric character other than '.', 'e' and '_' as terminals" do
     "blah".to_f.should == 0
-    "0b5".to_f.should == 0
-    "0d5".to_f.should == 0
-    "0o5".to_f.should == 0
-    "0xx5".to_f.should == 0
+    "1b5".to_f.should == 1
+    "1d5".to_f.should == 1
+    "1o5".to_f.should == 1
+    "1xx5".to_f.should == 1
+    "x5".to_f.should == 0
   end
 
   it "returns 0 for strings with leading underscores" do
