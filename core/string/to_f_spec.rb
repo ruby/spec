@@ -87,4 +87,15 @@ describe "String#to_f" do
     "bad".to_f.should == 0.0
     "thx1138".to_f.should == 0.0
   end
+
+  it "ignores leading and trailing whitespace" do
+    "  1.2".to_f.should == 1.2
+    "1.2  ".to_f.should == 1.2
+    " 1.2 ".to_f.should == 1.2
+    "\t1.2".to_f.should == 1.2
+    "\n1.2".to_f.should == 1.2
+    "\v1.2".to_f.should == 1.2
+    "\f1.2".to_f.should == 1.2
+    "\r1.2".to_f.should == 1.2
+  end
 end
