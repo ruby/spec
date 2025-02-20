@@ -98,4 +98,13 @@ describe "String#to_f" do
     "\f1.2".to_f.should == 1.2
     "\r1.2".to_f.should == 1.2
   end
+
+  it "treats non-printable ASCII characters as terminals" do
+    "\0001.2".to_f.should == 0
+    "\0011.2".to_f.should == 0
+    "\0371.2".to_f.should == 0
+    "\1771.2".to_f.should == 0
+    "\2001.2".b.to_f.should == 0
+    "\3771.2".b.to_f.should == 0
+  end
 end
