@@ -42,6 +42,10 @@ describe "String#to_f" do
     "1_234_567.890_1".to_f.should == 1_234_567.890_1
   end
 
+  it "returns 0 for strings with leading underscores" do
+    "_9".to_f.should == 0
+  end
+
   it "does not allow prefixes to autodetect the base" do
     "0b10".to_f.should == 0
     "010".to_f.should == 10
@@ -57,10 +61,6 @@ describe "String#to_f" do
     "1o5".to_f.should == 1
     "1xx5".to_f.should == 1
     "x5".to_f.should == 0
-  end
-
-  it "returns 0 for strings with leading underscores" do
-    "_9".to_f.should == 0
   end
 
   it "takes an optional sign" do
