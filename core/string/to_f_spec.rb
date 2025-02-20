@@ -42,6 +42,14 @@ describe "String#to_f" do
     "1_234_567.890_1".to_f.should == 1_234_567.890_1
   end
 
+  it "does not allow prefixes to autodetect the base" do
+    "0b10".to_f.should == 0
+    "010".to_f.should == 10
+    "0o10".to_f.should == 0
+    "0d10".to_f.should == 0
+    "0x10".to_f.should == 0
+  end
+
   it "returns 0 for strings with any non-digit in them" do
     "blah".to_f.should == 0
     "0b5".to_f.should == 0
