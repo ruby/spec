@@ -13,7 +13,7 @@ jobs:
         rubyopt: [""]
         include:
           - os: ubuntu
-            ruby: 3.3.0
+            ruby: 3.4.2
             rubyopt: "--enable-frozen-string-literal"
 
     runs-on: ${{ matrix.os }}-latest
