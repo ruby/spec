@@ -83,6 +83,18 @@ describe "String#to_f" do
     (1.0 / "-0".to_f).to_s.should == "-Infinity"
   end
 
+  it "treats a second 'e' as terminal" do
+    "1.234e1e2".to_f.should == 1.234e1
+  end
+
+  it "treats a second '.' as terminal" do
+    "1.2.3".to_f.should == 1.2
+  end
+
+  it "treats a '.' after an 'e' as terminal" do
+    "1.234e1.9".to_f.should == 1.234e1
+  end
+
   it "returns 0.0 if the conversion fails" do
     "bad".to_f.should == 0.0
     "thx1138".to_f.should == 0.0
