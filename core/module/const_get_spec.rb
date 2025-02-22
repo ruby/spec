@@ -131,7 +131,7 @@ describe "Module#const_get" do
   end
 
   it "does read private constants" do
-     ConstantSpecs.const_get(:CS_PRIVATE).should == :cs_private
+    ConstantSpecs.const_get(:CS_PRIVATE).should == :cs_private
   end
 
   it 'does autoload a constant' do
