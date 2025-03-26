@@ -146,14 +146,14 @@ describe "Time.now" do
         it "could have any #zone and #utc_offset because they are ignored" do
           zone = Object.new
           def zone.utc_to_local(t)
-            Struct.new(:year, :mon, :mday, :hour, :min, :sec, :isdst, :to_i, :zone, :utc_offset)
+            Struct.new(:year, :mon, :mday, :hour, :min, :sec, :isdst, :to_i, :zone, :utc_offset) # rubocop:disable Lint/StructNewOverride
                   .new(t.year, t.mon, t.mday, t.hour, t.min, t.sec, t.isdst, t.to_i, 'America/New_York', -5*60*60)
           end
           Time.now(in: zone).utc_offset.should == 0
 
           zone = Object.new
           def zone.utc_to_local(t)
-            Struct.new(:year, :mon, :mday, :hour, :min, :sec, :isdst, :to_i, :zone, :utc_offset)
+            Struct.new(:year, :mon, :mday, :hour, :min, :sec, :isdst, :to_i, :zone, :utc_offset) # rubocop:disable Lint/StructNewOverride
                   .new(t.year, t.mon, t.mday, t.hour, t.min, t.sec, t.isdst, t.to_i, 'Asia/Tokyo', 9*60*60)
           end
           Time.now(in: zone).utc_offset.should == 0
