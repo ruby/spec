@@ -122,6 +122,8 @@ describe :string_slice_index_length, shared: true do
   platform_is pointer_size: 64 do
     it "returns nil if the length is negative big value" do
       "hello there".send(@method, 4, -(1 << 31)).should == nil
+      "hello there".send(@method, 4, -(1 << 61)).should == nil
+      "hello there".send(@method, 4, -(1 << 62)).should == nil
       "hello there".send(@method, 4, -(1 << 63)).should == nil
     end
   end
