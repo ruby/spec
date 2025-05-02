@@ -139,7 +139,7 @@ describe :marshal_load, shared: true do
       end
     end
 
-    ruby_bug "#19427", "3.1"..."3.3" do
+    ruby_bug "#19427", ""..."3.3" do
       it "returns frozen object having #_dump method" do
         object = Marshal.send(@method, Marshal.dump(UserDefined.new), freeze: true)
         object.should.frozen?
