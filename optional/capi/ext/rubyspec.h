@@ -43,8 +43,4 @@
 #define RUBY_VERSION_IS_3_3
 #endif
 
-#if RUBY_VERSION_SINCE(3, 2)
-#define RUBY_VERSION_IS_3_2
-#endif
-
 #endif
