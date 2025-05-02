@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu, macos, windows ]
-        ruby: [ 3.1.6, 3.2.7, 3.3.7, 3.4.2 ]
+        ruby: [ 3.2.7, 3.3.7, 3.4.2 ]
         rubyopt: [""]
         include:
           - os: ubuntu
