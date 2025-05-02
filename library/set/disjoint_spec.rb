@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/set_like'
-require 'set'
 
 describe "Set#disjoint?" do
   it "returns false when two Sets have at least one element in common" do

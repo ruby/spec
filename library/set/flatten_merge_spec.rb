@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#flatten_merge" do
   it "is protected" do

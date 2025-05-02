@@ -1,5 +1,4 @@
 require_relative '../../../spec_helper'
-require 'set'
 
 describe :set_select_bang, shared: true do
   before :each do

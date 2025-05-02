@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#subtract" do
   before :each do

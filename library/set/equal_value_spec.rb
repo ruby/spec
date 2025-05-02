@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/set_like'
-require 'set'
 
 describe "Set#==" do
   it "returns true when the passed Object is a Set and self and the Object contain the same elements" do

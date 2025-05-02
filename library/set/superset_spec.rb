@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/set_like'
-require 'set'
 
 describe "Set#superset?" do
   before :each do

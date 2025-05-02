@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#reject!" do
   before :each do

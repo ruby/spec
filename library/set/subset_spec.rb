@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/set_like'
-require 'set'
 set_version = defined?(Set::VERSION) ? Set::VERSION : '1.0.0'
 
 describe "Set#subset?" do

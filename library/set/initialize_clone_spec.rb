@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#initialize_clone" do
   # See https://bugs.ruby-lang.org/issues/14266
