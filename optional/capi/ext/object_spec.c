@@ -133,12 +133,6 @@ static VALUE object_specs_rb_obj_method(VALUE self, VALUE obj, VALUE method) {
   return rb_obj_method(obj, method);
 }
 
-#ifndef RUBY_VERSION_IS_3_2
-static VALUE object_spec_rb_obj_taint(VALUE self, VALUE obj) {
-  return rb_obj_taint(obj);
-}
-#endif
-
 static VALUE so_require(VALUE self) {
   rb_require("fixtures/foo");
   return Qnil;
@@ -417,15 +411,11 @@ void Init_object_spec(void) {
   rb_define_method(cls, "rb_obj_is_kind_of", so_kind_of, 2);
   rb_define_method(cls, "rb_obj_method_arity", object_specs_rb_obj_method_arity, 2);
   rb_define_method(cls, "rb_obj_method", object_specs_rb_obj_method, 2);
-#ifndef RUBY_VERSION_IS_3_2
-  rb_define_method(cls, "rb_obj_taint", object_spec_rb_obj_taint, 1);
-#endif
   rb_define_method(cls, "rb_require", so_require, 0);
   rb_define_method(cls, "rb_respond_to", so_respond_to, 2);
   rb_define_method(cls, "rb_method_boundp", object_spec_rb_method_boundp, 3);
   rb_define_method(cls, "rb_obj_respond_to", so_obj_respond_to, 3);
   rb_define_method(cls, "rb_special_const_p", object_spec_rb_special_const_p, 1);
-
   rb_define_method(cls, "rb_to_id", so_to_id, 1);
   rb_define_method(cls, "RTEST", object_spec_RTEST, 1);
   rb_define_method(cls, "rb_check_type", so_check_type, 2);

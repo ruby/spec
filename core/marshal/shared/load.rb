@@ -739,31 +739,29 @@ describe :marshal_load, shared: true do
     end
   end
 
-  ruby_version_is "3.2" do
-    describe "for a Data" do
-      it "loads a Data" do
-        obj = MarshalSpec::DataSpec::Measure.new(100, 'km')
-        dumped = "\x04\bS:#MarshalSpec::DataSpec::Measure\a:\vamountii:\tunit\"\akm"
-        Marshal.dump(obj).should == dumped
+  describe "for a Data" do
+    it "loads a Data" do
+      obj = MarshalSpec::DataSpec::Measure.new(100, 'km')
+      dumped = "\x04\bS:#MarshalSpec::DataSpec::Measure\a:\vamountii:\tunit\"\akm"
+      Marshal.dump(obj).should == dumped
 
-        Marshal.send(@method, dumped).should == obj
-      end
+      Marshal.send(@method, dumped).should == obj
+    end
 
-      it "loads an extended Data" do
-        obj = MarshalSpec::DataSpec::MeasureExtended.new(100, "km")
-        dumped = "\x04\bS:+MarshalSpec::DataSpec::MeasureExtended\a:\vamountii:\tunit\"\akm"
-        Marshal.dump(obj).should == dumped
+    it "loads an extended Data" do
+      obj = MarshalSpec::DataSpec::MeasureExtended.new(100, "km")
+      dumped = "\x04\bS:+MarshalSpec::DataSpec::MeasureExtended\a:\vamountii:\tunit\"\akm"
+      Marshal.dump(obj).should == dumped
 
-        Marshal.send(@method, dumped).should == obj
-      end
+      Marshal.send(@method, dumped).should == obj
+    end
 
-      it "returns a frozen object" do
-        obj = MarshalSpec::DataSpec::Measure.new(100, 'km')
-        dumped = "\x04\bS:#MarshalSpec::DataSpec::Measure\a:\vamountii:\tunit\"\akm"
-        Marshal.dump(obj).should == dumped
+    it "returns a frozen object" do
+      obj = MarshalSpec::DataSpec::Measure.new(100, 'km')
+      dumped = "\x04\bS:#MarshalSpec::DataSpec::Measure\a:\vamountii:\tunit\"\akm"
+      Marshal.dump(obj).should == dumped
 
-        Marshal.send(@method, dumped).should.frozen?
-      end
+      Marshal.send(@method, dumped).should.frozen?
     end
   end
 
