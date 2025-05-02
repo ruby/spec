@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#<=>" do
   it "returns 0 if the sets are equal" do

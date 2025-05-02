@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/set_like'
-require 'set'
 
 describe "Set#intersect?" do
   it "returns true when two Sets have at least one element in common" do

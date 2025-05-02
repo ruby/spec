@@ -1,6 +1,5 @@
 require_relative "../../spec_helper"
 require_relative 'shared/inspect'
-require 'set'
 
 describe "Set#to_s" do
   it_behaves_like :set_inspect, :to_s

@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#join" do
   it "returns an empty string if the Set is empty" do

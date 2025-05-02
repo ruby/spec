@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set[]" do
   it "returns a new Set populated with the passed Objects" do

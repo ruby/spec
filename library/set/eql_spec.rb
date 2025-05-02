@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#eql?" do
   it "returns true when the passed argument is a Set and contains the same elements" do

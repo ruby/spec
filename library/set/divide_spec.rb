@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#divide" do
   it "divides self into a set of subsets based on the blocks return values" do

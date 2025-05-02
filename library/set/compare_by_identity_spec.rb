@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#compare_by_identity" do
   it "compares its members by identity" do

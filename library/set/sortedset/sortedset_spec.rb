@@ -1,5 +1,4 @@
 require_relative '../../../spec_helper'
-require 'set'
 
 describe "SortedSet" do
   it "raises error including message that it has been extracted from the set stdlib" do

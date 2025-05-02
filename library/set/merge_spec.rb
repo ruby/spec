@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'set'
 
 describe "Set#merge" do
   it "adds the elements of the passed Enumerable to self" do

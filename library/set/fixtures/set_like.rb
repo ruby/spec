@@ -1,4 +1,3 @@
-require 'set'
 
 module SetSpecs
   # This class is used to test the interaction of "Set-like" objects with real Sets

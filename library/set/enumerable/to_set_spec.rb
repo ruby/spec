@@ -1,5 +1,4 @@
 require_relative '../../../spec_helper'
-require 'set'
 
 describe "Enumerable#to_set" do
   it "returns a new Set created from self" do
