@@ -1070,10 +1070,9 @@ describe "`it` calls without arguments in a block with no ordinary parameters" d
   end
 end
 
-describe "`it` is a captured variable in a block if `it` is outside" do
-  ruby_version_is "3.3"..."3.4" do
-    proc { it }.call(0).should eq(0)
+describe "if `it` is defined outside of a block" do
+  it "treats `it` as a captured variable" do
     it = 5
-    proc { it }.call(0).should eq(5)
+    proc { it }.call(0).should == 5
   end
 end
