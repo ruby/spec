@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative '../core/exception/shared/set_backtrace'
 require 'stringio'
 
 # The following tables are excerpted from Programming Ruby: The Pragmatic Programmer's Guide'
@@ -620,6 +621,17 @@ describe "Predefined global $@" do
       $@.should == []
     end
   end
+
+  it_behaves_like :exception_set_backtrace, -> backtrace {
+    exception = nil
+    begin
+      raise
+    rescue
+      $@ = backtrace
+      exception = $!
+    end
+    exception
+  }
 
   it "cannot be assigned when there is no a rescued exception" do
     -> {
