@@ -621,6 +621,30 @@ describe "Predefined global $@" do
     end
   end
 
+  ruby_version_is ""..."3.4" do
+    it "can only be assigned an array of String" do
+      begin
+        raise
+      rescue
+        -> {
+          $@ = 123
+        }.should raise_error(TypeError, "backtrace must be Array of String")
+      end
+    end
+  end
+
+  ruby_version_is "3.4" do
+    it "can only be assigned an array of String or an Array of Thread::Backtrace::Location" do
+      begin
+        raise
+      rescue
+        -> {
+          $@ = 123
+        }.should raise_error(TypeError, "backtrace must be an Array of String or an Array of Thread::Backtrace::Location")
+      end
+    end
+  end
+
   it "cannot be assigned when there is no a rescued exception" do
     -> {
       $@ = []
