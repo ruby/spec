@@ -37,10 +37,6 @@ unless ENV['MSPEC_RUNNER'] # Running directly with ruby some_spec.rb
   MSpecRun.main
 end
 
-def expect_syntax_error(ruby_src)
-  -> { eval(ruby_src) }.should raise_error(SyntaxError)
-end
-
 # Evaluates the given Ruby source in a temporary Module, to prevent
 # the surrounding context from being polluted with the new methods.
 def sandboxed_eval(ruby_src)

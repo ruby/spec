@@ -2,54 +2,54 @@ require_relative '../spec_helper'
 
 describe "Ruby's reserved keywords" do
   # Copied from Prism::Translation::Ripper
-  keywords = [
-    "alias",
-    "and",
-    "begin",
-    "BEGIN",
-    "break",
-    "case",
-    "class",
-    "def",
-    "defined?",
-    "do",
-    "else",
-    "elsif",
-    "end",
-    "END",
-    "ensure",
-    "false",
-    "for",
-    "if",
-    "in",
-    "module",
-    "next",
-    "nil",
-    "not",
-    "or",
-    "redo",
-    "rescue",
-    "retry",
-    "return",
-    "self",
-    "super",
-    "then",
-    "true",
-    "undef",
-    "unless",
-    "until",
-    "when",
-    "while",
-    "yield",
-    "__ENCODING__",
-    "__FILE__",
-    "__LINE__"
+  keywords = %w[
+    alias
+    and
+    begin
+    BEGIN
+    break
+    case
+    class
+    def
+    defined?
+    do
+    else
+    elsif
+    end
+    END
+    ensure
+    false
+    for
+    if
+    in
+    module
+    next
+    nil
+    not
+    or
+    redo
+    rescue
+    retry
+    return
+    self
+    super
+    then
+    true
+    undef
+    unless
+    until
+    when
+    while
+    yield
+    __ENCODING__
+    __FILE__
+    __LINE__
   ]
 
   keywords.each do |kw|
     describe "keyword '#{kw}'" do
       it "can't be used as local variable name" do
-        expect_syntax_error <<~RUBY
+        -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             #{kw} = "a local variable named '#{kw}'"
         RUBY
       end
@@ -58,7 +58,7 @@ describe "Ruby's reserved keywords" do
 
       if invalid_ivar_names.include?(kw)
         it "can't be used as an instance variable name" do
-          expect_syntax_error <<~RUBY
+          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             @#{kw} = "an instance variable named '#{kw}'"
           RUBY
         end
@@ -77,7 +77,7 @@ describe "Ruby's reserved keywords" do
 
       if invalid_class_var_names.include?(kw)
         it "can't be used as a class variable name" do
-          expect_syntax_error <<~RUBY
+          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             @@#{kw} = "a class variable named '#{kw}'"
           RUBY
         end
@@ -96,7 +96,7 @@ describe "Ruby's reserved keywords" do
 
       if invalid_global_var_names.include?(kw)
         it "can't be used as a global variable name" do
-          expect_syntax_error <<~RUBY
+          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             $#{kw} = "a global variable named '#{kw}'"
           RUBY
         end
@@ -112,7 +112,7 @@ describe "Ruby's reserved keywords" do
       end
 
       it "can't be used as a positional parameter name" do
-        expect_syntax_error <<~RUBY
+        -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
           def x(#{kw}); end
         RUBY
       end
@@ -121,7 +121,7 @@ describe "Ruby's reserved keywords" do
 
       if invalid_kw_param_names.include?(kw)
         it "can't be used a keyword parameter name" do
-          expect_syntax_error <<~RUBY
+          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             def m(#{kw}:); end
           RUBY
         end
