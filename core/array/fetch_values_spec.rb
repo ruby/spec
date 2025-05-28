@@ -42,6 +42,12 @@ describe "Array#fetch_values" do
       @array.fetch_values(obj).should == [:c]
     end
 
+    it "does not support a Range object as argument" do
+      -> {
+        @array.fetch_values(1..2)
+      }.should raise_error(TypeError, "no implicit conversion of Range into Integer")
+    end
+
     it "raises a TypeError when the passed argument can't be coerced to Integer" do
       -> { [].fetch_values("cat") }.should raise_error(TypeError, "no implicit conversion of String into Integer")
     end
