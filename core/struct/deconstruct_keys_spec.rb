@@ -43,6 +43,13 @@ describe "Struct#deconstruct_keys" do
     s.deconstruct_keys([-1]     ).should == {-1 => 30}
   end
 
+  it "ignores incorrect position numbers" do
+    struct = Struct.new(:x, :y, :z)
+    s = struct.new(10, 20, 30)
+
+    s.deconstruct_keys([0, 3]).should == {0 => 10}
+  end
+
   it "support mixing attribute names and argument position numbers" do
     struct = Struct.new(:x, :y)
     s = struct.new(1, 2)
