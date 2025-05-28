@@ -1,10 +1,11 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
-describe "Data#deconstruct" do
+describe "Data#deconstruct_keys" do
   it "returns a hash of attributes" do
     klass = Data.define(:x, :y)
     d = klass.new(1, 2)
+
     d.deconstruct_keys([:x, :y]).should == {x: 1, y: 2}
   end
 
@@ -29,6 +30,7 @@ describe "Data#deconstruct" do
   it "accepts string attribute names" do
     klass = Data.define(:x, :y)
     d = klass.new(1, 2)
+
     d.deconstruct_keys(['x', 'y']).should == {'x' => 1, 'y' => 2}
   end
 
@@ -58,6 +60,7 @@ describe "Data#deconstruct" do
   it "returns an empty hash when there are more keys than attributes" do
     klass = Data.define(:x, :y)
     d = klass.new(1, 2)
+
     d.deconstruct_keys([:x, :y, :x]).should == {}
   end
 
