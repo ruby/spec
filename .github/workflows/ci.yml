@@ -15,6 +15,9 @@ jobs:
           - os: ubuntu
             ruby: 3.4.2
             rubyopt: "--enable-frozen-string-literal"
+          - os: ubuntu
+            ruby: 3.4.2
+            rubyopt: "--parser=parse.y"
 
     runs-on: ${{ matrix.os }}-latest
     steps:
