@@ -9,14 +9,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu, macos, windows ]
-        ruby: [ 3.2.7, 3.3.7, 3.4.2 ]
+        ruby: [ 3.2.8, 3.3.8, 3.4.4 ]
         rubyopt: [""]
         include:
           - os: ubuntu
-            ruby: 3.4.2
+            ruby: 3.4.4
             rubyopt: "--enable-frozen-string-literal"
           - os: ubuntu
-            ruby: 3.4.2
+            ruby: 3.4.4
             rubyopt: "--parser=parse.y"
 
     runs-on: ${{ matrix.os }}-latest
@@ -74,5 +74,5 @@ jobs:
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.3'
+        ruby-version: '3.4'
     - run: bin/rubocop
