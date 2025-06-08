@@ -54,12 +54,24 @@ describe "Ruby's reserved keywords" do
         RUBY
       end
 
-      invalid_ivar_names = ["defined?"]
-
-      if invalid_ivar_names.include?(kw)
+      if kw == "defined?"
         it "can't be used as an instance variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             @#{kw} = "an instance variable named '#{kw}'"
+          RUBY
+        end
+
+        it "can't be used as a class variable name" do
+          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
+            class C
+              @@#{kw} = "a class variable named '#{kw}'"
+            end
+          RUBY
+        end
+
+        it "can't be used as a global variable name" do
+          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
+            $#{kw} = "a global variable named '#{kw}'"
           RUBY
         end
       else
@@ -71,19 +83,7 @@ describe "Ruby's reserved keywords" do
 
           result.should == "an instance variable named '#{kw}'"
         end
-      end
 
-      invalid_class_var_names = ["defined?"]
-
-      if invalid_class_var_names.include?(kw)
-        it "can't be used as a class variable name" do
-          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            class C
-              @@#{kw} = "a class variable named '#{kw}'"
-            end
-          RUBY
-        end
-      else
         it "can be used as a class variable name" do
           result = eval <<~RUBY
             class C
@@ -94,17 +94,7 @@ describe "Ruby's reserved keywords" do
 
           result.should == "a class variable named '#{kw}'"
         end
-      end
 
-      invalid_global_var_names = ["defined?"]
-
-      if invalid_global_var_names.include?(kw)
-        it "can't be used as a global variable name" do
-          -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            $#{kw} = "a global variable named '#{kw}'"
-          RUBY
-        end
-      else
         it "can be used as a global variable name" do
           result = eval <<~RUBY
             $#{kw} = "a global variable named '#{kw}'"
