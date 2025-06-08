@@ -126,13 +126,13 @@ describe "Ruby's reserved keywords" do
       if invalid_kw_param_names.include?(kw)
         it "can't be used a keyword parameter name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            def self.m(#{kw}:); end
+            def m(#{kw}:); end
           RUBY
         end
       else
         it "can be used a keyword parameter name" do
-          result = eval <<~RUBY
-            def self.m(#{kw}:)
+          result = instance_eval <<~RUBY
+            def m(#{kw}:)
               binding.local_variable_get(:#{kw})
             end
 
@@ -144,8 +144,8 @@ describe "Ruby's reserved keywords" do
       end
 
       it "can be used as a method name" do
-        result = eval <<~RUBY
-          def self.#{kw}
+        result = instance_eval <<~RUBY
+          def #{kw}
             "a method named '#{kw}'"
           end
 
