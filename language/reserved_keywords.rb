@@ -50,58 +50,58 @@ describe "Ruby's reserved keywords" do
     describe "keyword '#{kw}'" do
       it "can't be used as local variable name" do
         -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            #{kw} = "a local variable named '#{kw}'"
+            #{kw} = :local_variable
         RUBY
       end
 
       if kw == "defined?"
         it "can't be used as an instance variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            @#{kw} = "an instance variable named '#{kw}'"
+            @#{kw} = :instance_variable
           RUBY
         end
 
         it "can't be used as a class variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             class C
-              @@#{kw} = "a class variable named '#{kw}'"
+              @@#{kw} = :class_variable
             end
           RUBY
         end
 
         it "can't be used as a global variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            $#{kw} = "a global variable named '#{kw}'"
+            $#{kw} = :global_variable
           RUBY
         end
       else
         it "can be used as an instance variable name" do
           result = eval <<~RUBY
-            @#{kw} = "an instance variable named '#{kw}'"
+            @#{kw} = :instance_variable
             @#{kw}
           RUBY
 
-          result.should == "an instance variable named '#{kw}'"
+          result.should == :instance_variable
         end
 
         it "can be used as a class variable name" do
           result = eval <<~RUBY
             class C
-              @@#{kw} = "a class variable named '#{kw}'"
+              @@#{kw} = :class_variable
               @@#{kw}
             end
           RUBY
 
-          result.should == "a class variable named '#{kw}'"
+          result.should == :class_variable
         end
 
         it "can be used as a global variable name" do
           result = eval <<~RUBY
-            $#{kw} = "a global variable named '#{kw}'"
+            $#{kw} = :global_variable
             $#{kw}
           RUBY
 
-          result.should == "a global variable named '#{kw}'"
+          result.should == :global_variable
         end
       end
 
@@ -126,23 +126,23 @@ describe "Ruby's reserved keywords" do
               binding.local_variable_get(:#{kw})
             end
 
-            m(#{kw}: "an argument to '#{kw}'")
+            m(#{kw}: :argument)
           RUBY
 
-          result.should == "an argument to '#{kw}'"
+          result.should == :argument
         end
       end
 
       it "can be used as a method name" do
         result = instance_eval <<~RUBY
           def #{kw}
-            "a method named '#{kw}'"
+            :method_return_value
           end
 
           send(:#{kw})
         RUBY
 
-        result.should == "a method named '#{kw}'"
+        result.should == :method_return_value
       end
     end
   end
