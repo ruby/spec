@@ -46,39 +46,39 @@ describe "Ruby's reserved keywords" do
     __LINE__
   ]
 
-  keywords.each do |kw|
-    describe "keyword '#{kw}'" do
+  keywords.each do |name|
+    describe "keyword '#{name}'" do
       it "can't be used as local variable name" do
         -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            #{kw} = :local_variable
+            #{name} = :local_variable
         RUBY
       end
 
-      if kw == "defined?"
+      if name == "defined?"
         it "can't be used as an instance variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            @#{kw} = :instance_variable
+            @#{name} = :instance_variable
           RUBY
         end
 
         it "can't be used as a class variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
             class C
-              @@#{kw} = :class_variable
+              @@#{name} = :class_variable
             end
           RUBY
         end
 
         it "can't be used as a global variable name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            $#{kw} = :global_variable
+            $#{name} = :global_variable
           RUBY
         end
       else
         it "can be used as an instance variable name" do
           result = eval <<~RUBY
-            @#{kw} = :instance_variable
-            @#{kw}
+            @#{name} = :instance_variable
+            @#{name}
           RUBY
 
           result.should == :instance_variable
@@ -87,8 +87,8 @@ describe "Ruby's reserved keywords" do
         it "can be used as a class variable name" do
           result = eval <<~RUBY
             class C
-              @@#{kw} = :class_variable
-              @@#{kw}
+              @@#{name} = :class_variable
+              @@#{name}
             end
           RUBY
 
@@ -97,8 +97,8 @@ describe "Ruby's reserved keywords" do
 
         it "can be used as a global variable name" do
           result = eval <<~RUBY
-            $#{kw} = :global_variable
-            $#{kw}
+            $#{name} = :global_variable
+            $#{name}
           RUBY
 
           result.should == :global_variable
@@ -107,26 +107,26 @@ describe "Ruby's reserved keywords" do
 
       it "can't be used as a positional parameter name" do
         -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-          def x(#{kw}); end
+          def x(#{name}); end
         RUBY
       end
 
       invalid_kw_param_names = ["BEGIN","END","defined?"]
 
-      if invalid_kw_param_names.include?(kw)
+      if invalid_kw_param_names.include?(name)
         it "can't be used a keyword parameter name" do
           -> { eval(<<~RUBY) }.should raise_error(SyntaxError)
-            def m(#{kw}:); end
+            def m(#{name}:); end
           RUBY
         end
       else
         it "can be used a keyword parameter name" do
           result = instance_eval <<~RUBY
-            def m(#{kw}:)
-              binding.local_variable_get(:#{kw})
+            def m(#{name}:)
+              binding.local_variable_get(:#{name})
             end
 
-            m(#{kw}: :argument)
+            m(#{name}: :argument)
           RUBY
 
           result.should == :argument
@@ -135,11 +135,11 @@ describe "Ruby's reserved keywords" do
 
       it "can be used as a method name" do
         result = instance_eval <<~RUBY
-          def #{kw}
+          def #{name}
             :method_return_value
           end
 
-          send(:#{kw})
+          send(:#{name})
         RUBY
 
         result.should == :method_return_value
