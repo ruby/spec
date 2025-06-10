@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 describe "Ruby's reserved keywords" do
-  # Copied from Prism::Translation::Ripper
+  # Copied from https://github.com/ruby/ruby/blob/master/defs/keywords
   keywords = %w[
     alias
     and
