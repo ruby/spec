@@ -36,13 +36,3 @@ unless ENV['MSPEC_RUNNER'] # Running directly with ruby some_spec.rb
   ARGV.unshift $0
   MSpecRun.main
 end
-
-# Evaluates the given Ruby source in a temporary Module, to prevent
-# the surrounding context from being polluted with the new methods.
-def sandboxed_eval(ruby_src)
-  Module.new do
-    # Allows instance methods defined by `ruby_src` to be called directly.
-    extend self
-  end
-  .class_eval(ruby_src)
-end
