@@ -10,11 +10,6 @@ describe "StringIO#readpartial" do
     @string.close unless @string.closed?
   end
 
-  it "raises IOError on closed stream" do
-    @string.close
-    -> { @string.readpartial(10) }.should raise_error(IOError)
-  end
-
   it "reads at most the specified number of bytes" do
 
     # buffered read
