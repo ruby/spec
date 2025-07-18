@@ -11,7 +11,6 @@ describe "StringIO#readpartial" do
   end
 
   it "reads at most the specified number of bytes" do
-
     # buffered read
     @string.read(1).should == 'S'
     # return only specified number, not the whole buffer
