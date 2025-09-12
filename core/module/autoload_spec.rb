@@ -730,7 +730,7 @@ describe "Module#autoload" do
       ScratchPad.recorded.should == :loaded
     end
 
-    -> { ModuleSpecs::Autoload::DynClass }.should raise_error(NameError)
+    -> { ModuleSpecs::Autoload::DynClass }.should raise_error(NameError, /private constant/)
   end
 
   # [ruby-core:19127] [ruby-core:29941]
