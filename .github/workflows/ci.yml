@@ -11,13 +11,12 @@ jobs:
         os: [ ubuntu, macos, windows ]
         ruby: [ 3.2.9, 3.3.9, 3.4.7 ]
         rubyopt: [""]
+        exclude:
+          - { os: windows, ruby: 3.2.9 } # 3.2.9 has some issue with file time microseconds
         include:
-          - os: ubuntu
-            ruby: 3.4.7
-            rubyopt: "--enable-frozen-string-literal"
-          - os: ubuntu
-            ruby: 3.4.7
-            rubyopt: "--parser=parse.y"
+          - { os: windows, ruby: 3.2.8 } # 3.2.9 has some issue with file time microseconds
+          - { os: ubuntu, ruby: 3.4.7, rubyopt: "--enable-frozen-string-literal" }
+          - { os: ubuntu, ruby: 3.4.7, rubyopt: "--parser=parse.y" }
 
     runs-on: ${{ matrix.os }}-latest
     steps:
