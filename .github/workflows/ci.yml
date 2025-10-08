@@ -9,14 +9,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu, macos, windows ]
-        ruby: [ 3.2.8, 3.3.8, 3.4.4 ]
+        ruby: [ 3.2.9, 3.3.9, 3.4.7 ]
         rubyopt: [""]
         include:
           - os: ubuntu
-            ruby: 3.4.4
+            ruby: 3.4.7
             rubyopt: "--enable-frozen-string-literal"
           - os: ubuntu
-            ruby: 3.4.4
+            ruby: 3.4.7
             rubyopt: "--parser=parse.y"
 
     runs-on: ${{ matrix.os }}-latest
