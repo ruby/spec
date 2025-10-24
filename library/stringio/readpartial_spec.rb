@@ -1,3 +1,4 @@
+# encoding: binary
 require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
@@ -22,6 +23,14 @@ describe "StringIO#readpartial" do
     @string.ungetc(c)
     @string.readpartial(4).should == "Stop"
     @string.readpartial(3).should == ", l"
+  end
+
+  it "reads after ungetc with multibyte characters in the buffer" do
+    @string = StringIO.new(+"∂φ/∂x = gaîté")
+    c = @string.getc
+    @string.ungetc(c)
+    @string.readpartial(3).should == "\xE2\x88\x82"
+    @string.readpartial(3).should == "\xCF\x86/"
   end
 
   it "reads after ungetc without data in the buffer" do
