@@ -136,6 +136,36 @@ describe "Tempfile.create" do
     end
   end
 
+  ruby_version_is "3.4" do
+    context "when called with anonymous: true" do
+      it "returns an already unlinked File without a proper path" do
+        @tempfile = Tempfile.create(anonymous: true)
+        @tempfile.should_not.closed?
+        @tempfile.path.should == "#{Dir.tmpdir}/"
+        File.file?(@tempfile.path).should be_false
+      end
+
+      it "unlinks file before calling the block" do
+        Tempfile.create(anonymous: true) do |tempfile|
+          @tempfile = tempfile
+          @tempfile.should_not.closed?
+          @tempfile.path.should == "#{Dir.tmpdir}/"
+          File.file?(@tempfile.path).should be_false
+        end
+        @tempfile.should.closed?
+      end
+    end
+
+    context "when called with anonymous: false" do
+      it "returns a usual File with a path" do
+        @tempfile = Tempfile.create(anonymous: false)
+        @tempfile.should_not.closed?
+        @tempfile.path.should.start_with?(Dir.tmpdir)
+        File.file?(@tempfile.path).should be_true
+      end
+    end
+  end
+
   context "when called with other options" do
     it "passes them along to File.open" do
       @tempfile = Tempfile.create(encoding: "IBM037:IBM037", binmode: true)
