@@ -69,7 +69,7 @@ describe "IO::Buffer#valid?" do
 
       platform_is_not :linux do
         # This test does not cause a copy-resize on Linux.
-        # It MAY cause the buffer to move, but there is no guarantee.
+        # `#resize` MAY cause the buffer to move, but there is no guarantee.
         it "is false when buffer is copied on resize" do
           @buffer = IO::Buffer.new(4, IO::Buffer::MAPPED)
           slice = @buffer.slice(0, 2)

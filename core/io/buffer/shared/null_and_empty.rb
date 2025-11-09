@@ -50,4 +50,10 @@ describe :io_buffer_null_and_empty, shared: true do
     @buffer.resize(0)
     @buffer.send(@method).should be_true
   end
+
+  it "is true for a buffer whose memory was transferred" do
+    buffer = IO::Buffer.new(1)
+    @buffer = buffer.transfer
+    buffer.send(@method).should be_true
+  end
 end
