@@ -4,8 +4,17 @@ require_relative '../fixtures/classes'
 with_feature :unix_socket do
   describe 'UNIXSocket#initialize' do
     describe 'using a non existing path' do
-      it 'raises Errno::ENOENT' do
-        -> { UNIXSocket.new(SocketSpecs.socket_path) }.should raise_error(Errno::ENOENT)
+      platform_is_not :windows do
+        it 'raises Errno::ENOENT' do
+          -> { UNIXSocket.new(SocketSpecs.socket_path) }.should raise_error(Errno::ENOENT)
+        end
+      end
+
+      platform_is :windows do
+        # Why, Windows, why?
+        it 'raises Errno::ECONNREFUSED' do
+          -> { UNIXSocket.new(SocketSpecs.socket_path) }.should raise_error(Errno::ECONNREFUSED)
+        end
       end
     end
 
@@ -34,15 +43,16 @@ with_feature :unix_socket do
         @socket.binmode?.should be_true
       end
 
-      it 'sets the socket to nonblock' do
-        require 'io/nonblock'
-        @socket.should.nonblock?
+      platform_is_not :windows do
+        it 'sets the socket to nonblock' do
+          require 'io/nonblock'
+          @socket.should.nonblock?
+        end
       end
 
       it 'sets the socket to close on exec' do
         @socket.should.close_on_exec?
       end
-
     end
   end
 end
