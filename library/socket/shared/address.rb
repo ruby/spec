@@ -164,11 +164,23 @@ describe :socket_local_remote_address, shared: true do
         end
       end
 
-      it 'equals address of peer socket' do
-        if @method == :local_address
-          @addr.to_s.should == @b.remote_address.to_s
-        else
-          @addr.to_s.should == @b.local_address.to_s
+      platform_is_not :windows do
+        it 'equals address of peer socket' do
+          if @method == :local_address
+            @addr.to_s.should == @b.remote_address.to_s
+          else
+            @addr.to_s.should == @b.local_address.to_s
+          end
+        end
+      end
+
+      guard -> { platform_is :windows and ruby_bug "#21702", ""..."4.0" } do
+        it 'equals address of peer socket' do
+          if @method == :local_address
+            @addr.to_s.should == @b.remote_address.to_s
+          else
+            @addr.to_s.should == @b.local_address.to_s
+          end
         end
       end
 

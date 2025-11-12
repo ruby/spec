@@ -15,20 +15,66 @@ with_feature :unix_socket do
       SocketSpecs.rm_socket @path
     end
 
-    it "receives len bytes from sock" do
+    it "receives len bytes from sock, returning an array containing sent data as first element" do
       @client.send("foobar", 0)
       sock = @server.accept
       sock.recvfrom(6).first.should == "foobar"
       sock.close
     end
 
-    it "returns an array with data and information on the sender" do
-      @client.send("foobar", 0)
-      sock = @server.accept
-      data = sock.recvfrom(6)
-      data.first.should == "foobar"
-      data.last.should == ["AF_UNIX", ""]
-      sock.close
+    context "when called on a server's socket" do
+      platform_is_not :windows do
+        it "returns an array containing basic information on the client as second element" do
+          @client.send("foobar", 0)
+          sock = @server.accept
+          data = sock.recvfrom(6)
+          data.last.should == ["AF_UNIX", ""]
+          sock.close
+        end
+      end
+
+      guard -> { platform_is :windows and ruby_bug "#21702", ""..."4.0" } do
+        it "returns an array containing basic information on the client as second element" do
+          @client.send("foobar", 0)
+          sock = @server.accept
+          data = sock.recvfrom(6)
+          data.last.should == ["AF_UNIX", ""]
+          sock.close
+        end
+      end
+    end
+
+    context "when called on a client's socket" do
+      platform_is_not :windows, :darwin do
+        it "returns an array containing server's address as second element" do
+          @client.send("", 0)
+          sock = @server.accept
+          sock.send("barfoo", 0)
+          @client.recvfrom(6).last.should == ["AF_UNIX", @server.local_address.unix_path]
+          sock.close
+        end
+      end
+
+      guard -> { platform_is :windows and ruby_bug "#21702", ""..."4.0" } do
+        it "returns an array containing server's address as second element" do
+          @client.send("", 0)
+          sock = @server.accept
+          sock.send("barfoo", 0)
+          # This may not be correct, depends on what underlying recvfrom actually returns.
+          @client.recvfrom(6).last.should == ["AF_UNIX", @server.local_address.unix_path]
+          sock.close
+        end
+      end
+
+      platform_is :darwin do
+        it "returns an array containing basic information on the server as second element" do
+          @client.send("", 0)
+          sock = @server.accept
+          sock.send("barfoo", 0)
+          @client.recvfrom(6).last.should == ["AF_UNIX", ""]
+          sock.close
+        end
+      end
     end
 
     it "allows an output buffer as third argument" do
@@ -54,15 +100,17 @@ with_feature :unix_socket do
       buffer.encoding.should == Encoding::ISO_8859_1
     end
 
-    it "uses different message options" do
-      @client.send("foobar", Socket::MSG_PEEK)
-      sock = @server.accept
-      peek_data = sock.recvfrom(6, Socket::MSG_PEEK) # Does not retrieve the message
-      real_data = sock.recvfrom(6)
+    platform_is_not :windows do
+      it "uses different message options" do
+        @client.send("foobar", Socket::MSG_PEEK)
+        sock = @server.accept
+        peek_data = sock.recvfrom(6, Socket::MSG_PEEK) # Does not retrieve the message
+        real_data = sock.recvfrom(6)
 
-      real_data.should == peek_data
-      peek_data.should == ["foobar", ["AF_UNIX", ""]]
-      sock.close
+        real_data.should == peek_data
+        peek_data.should == ["foobar", ["AF_UNIX", ""]]
+        sock.close
+      end
     end
   end
 
@@ -78,40 +126,50 @@ with_feature :unix_socket do
         @server.close
       end
 
-      it 'returns an Array containing the data and address information' do
-        @server.recvfrom(5).should == ['hello', ['AF_UNIX', '']]
+      platform_is_not :windows do
+        it 'returns an Array containing the data and address information' do
+          @server.recvfrom(5).should == ['hello', ['AF_UNIX', '']]
+        end
+      end
+
+      guard -> { platform_is :windows and ruby_bug "#21702", ""..."4.0" } do
+        it 'returns an Array containing the data and address information' do
+          @server.recvfrom(5).should == ['hello', ['AF_UNIX', '']]
+        end
       end
     end
 
-    # These specs are taken from the rdoc examples on UNIXSocket#recvfrom.
-    describe 'using a UNIX socket constructed using UNIXSocket.for_fd' do
-      before do
-        @path1 = SocketSpecs.socket_path
-        @path2 = SocketSpecs.socket_path.chop + '2'
-        rm_r(@path2)
+    platform_is_not :windows do
+      # These specs are taken from the rdoc examples on UNIXSocket#recvfrom.
+      describe 'using a UNIX socket constructed using UNIXSocket.for_fd' do
+        before do
+          @path1 = SocketSpecs.socket_path
+          @path2 = SocketSpecs.socket_path.chop + '2'
+          rm_r(@path2)
 
-        @client_raw = Socket.new(:UNIX, :DGRAM)
-        @client_raw.bind(Socket.sockaddr_un(@path1))
+          @client_raw = Socket.new(:UNIX, :DGRAM)
+          @client_raw.bind(Socket.sockaddr_un(@path1))
 
-        @server_raw = Socket.new(:UNIX, :DGRAM)
-        @server_raw.bind(Socket.sockaddr_un(@path2))
+          @server_raw = Socket.new(:UNIX, :DGRAM)
+          @server_raw.bind(Socket.sockaddr_un(@path2))
 
-        @socket = UNIXSocket.for_fd(@server_raw.fileno)
-        @socket.autoclose = false
-      end
+          @socket = UNIXSocket.for_fd(@server_raw.fileno)
+          @socket.autoclose = false
+        end
 
-      after do
-        @client_raw.close
-        @server_raw.close # also closes @socket
+        after do
+          @client_raw.close
+          @server_raw.close # also closes @socket
 
-        rm_r @path1
-        rm_r @path2
-      end
+          rm_r @path1
+          rm_r @path2
+        end
 
-      it 'returns an Array containing the data and address information' do
-        @client_raw.send('hello', 0, Socket.sockaddr_un(@path2))
+        it 'returns an Array containing the data and address information' do
+          @client_raw.send('hello', 0, Socket.sockaddr_un(@path2))
 
-        @socket.recvfrom(5).should == ['hello', ['AF_UNIX', @path1]]
+          @socket.recvfrom(5).should == ['hello', ['AF_UNIX', @path1]]
+        end
       end
     end
   end

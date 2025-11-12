@@ -111,10 +111,12 @@ with_feature :unix_socket do
             @socket.recv(5).should == 'hello'
           end
 
-          it "is set to nonblocking" do
-            require 'io/nonblock'
-            @socket = @server.accept
-            @socket.should.nonblock?
+          platform_is_not :windows do
+            it "is set to nonblocking" do
+              require 'io/nonblock'
+              @socket = @server.accept
+              @socket.should.nonblock?
+            end
           end
 
           it "is set to close on exec" do
