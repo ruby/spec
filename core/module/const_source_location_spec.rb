@@ -277,6 +277,7 @@ describe "Module#const_source_location" do
         ConstantSpecs::ConstSource::LOCATION.should == ConstantSpecs.const_source_location(:ConstSource)
         ConstantSpecs::BEFORE_DEFINE_LOCATION.should == autoload_location
         ConstantSpecs.send :remove_const, :ConstSource
+        ConstantSpecs.send :remove_const, :BEFORE_DEFINE_LOCATION
       end
     end
   end
