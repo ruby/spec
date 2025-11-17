@@ -10,11 +10,13 @@ jobs:
       matrix:
         os: [ ubuntu, macos, windows ]
         ruby: [ 3.2.9, 3.3.9, 3.4.7 ]
+        mspecopt: [""]
         rubyopt: [""]
         exclude:
           - { os: windows, ruby: 3.2.9 } # 3.2.9 has some issue with file time microseconds
         include:
           - { os: windows, ruby: 3.2.8 } # 3.2.9 has some issue with file time microseconds
+          - { os: ubuntu, ruby: 3.4.7, mspecopt: "--repeat 2" }
           - { os: ubuntu, ruby: 3.4.7, rubyopt: "--enable-frozen-string-literal" }
           - { os: ubuntu, ruby: 3.4.7, rubyopt: "--parser=parse.y" }
 
@@ -37,14 +39,14 @@ jobs:
       env:
         CHECK_LEAKS: true
         RUBYOPT: "${{ matrix.rubyopt }}"
-      run: ../mspec/bin/mspec -j --timeout 30
+      run: ../mspec/bin/mspec -j --timeout 30 ${{ matrix.mspecopt }}
 
     - name: Run specs (macOS)
       if: matrix.os == 'macos'
       env:
         CHECK_LEAKS: true
       # Use a larger timeout on macOS since it seems to have less reliable performance
-      run: ../mspec/bin/mspec -j --timeout 90
+      run: ../mspec/bin/mspec -j --timeout 90 ${{ matrix.mspecopt }}
 
     - name: Run specs (Windows)
       if: matrix.os == 'windows'
@@ -54,13 +56,13 @@ jobs:
         # Actions uses UTF8, causes test failures, similar to normal OS setup
         [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("IBM437")
         [Console]::InputEncoding  = [System.Text.Encoding]::GetEncoding("IBM437")
-        ../mspec/bin/mspec -j
+        ../mspec/bin/mspec -j ${{ matrix.mspecopt }}
 
     - name: Run C-API specs as C++
       if: matrix.os != 'windows'
       env:
         SPEC_CAPI_CXX: true
-      run: ../mspec/bin/mspec :capi
+      run: ../mspec/bin/mspec :capi ${{ matrix.mspecopt }}
 
     - name: Run require_relative checker
       if: matrix.os == 'ubuntu'
