@@ -255,6 +255,17 @@ describe "Module#const_source_location" do
       line = ConstantSpecs::CONST_LOCATION
       ConstantSpecs.const_source_location('CONST_LOCATION').should == [file, line]
     end
+  end
+
+
+  context 'autoload' do
+    before :each do
+      @loaded_features = $".dup
+    end
+
+    after :each do
+      $".replace @loaded_features
+    end
 
     ruby_bug("#20188", ""..."3.4") do
       it 'returns the real constant location as soon as it is defined' do
@@ -265,6 +276,7 @@ describe "Module#const_source_location" do
         ConstantSpecs.const_source_location(:ConstSource).should == autoload_location
         ConstantSpecs::ConstSource::LOCATION.should == ConstantSpecs.const_source_location(:ConstSource)
         ConstantSpecs::BEFORE_DEFINE_LOCATION.should == autoload_location
+        ConstantSpecs.send :remove_const, :ConstSource
       end
     end
   end
