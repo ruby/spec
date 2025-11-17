@@ -245,6 +245,14 @@ describe "Module#const_source_location" do
       @line = __LINE__ - 1
     end
 
+    before :each do
+      @loaded_features = $".dup
+    end
+
+    after :each do
+      $".replace @loaded_features
+    end
+
     it 'returns the autoload location while not resolved' do
       ConstantSpecs.const_source_location('CSL_CONST1').should == [__FILE__, @line]
     end
@@ -254,17 +262,6 @@ describe "Module#const_source_location" do
       ConstantSpecs.autoload :CONST_LOCATION, file
       line = ConstantSpecs::CONST_LOCATION
       ConstantSpecs.const_source_location('CONST_LOCATION').should == [file, line]
-    end
-  end
-
-
-  context 'autoload' do
-    before :each do
-      @loaded_features = $".dup
-    end
-
-    after :each do
-      $".replace @loaded_features
     end
 
     ruby_bug("#20188", ""..."3.4") do
