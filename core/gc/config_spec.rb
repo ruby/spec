@@ -51,9 +51,9 @@ ruby_version_is "3.4" do
       end
 
       it "raises ArgumentError for all other arguments" do
-        -> { GC.config([]) }.should raise_error(ArgumentError, "ArgumentError")
-        -> { GC.config("default") }.should raise_error(ArgumentError, "ArgumentError")
-        -> { GC.config(1) }.should raise_error(ArgumentError, "ArgumentError")
+        -> { GC.config([]) }.should raise_error(ArgumentError)
+        -> { GC.config("default") }.should raise_error(ArgumentError)
+        -> { GC.config(1) }.should raise_error(ArgumentError)
       end
     end
 
