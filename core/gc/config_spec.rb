@@ -14,12 +14,8 @@ ruby_version_is "3.4" do
     end
 
     context "with a hash of options" do
-      it "allows to set GC implementation's options" do
-        # Remove global keys which are read-only.
+      it "allows to set GC implementation's options, returning the new config" do
         config = GC.config({})
-        # Can't set anything if there are no options.
-        skip if config.empty?
-
         # Try to find a boolean setting to reliably test changing it.
         key, _value = config.find { |_k, v| v == true }
         skip unless key
@@ -29,15 +25,19 @@ ruby_version_is "3.4" do
         GC.config(key => true).should == config
         GC.config[key].should == true
       ensure
-        GC.config(config)
+        GC.config(config.except(:implementation))
       end
 
       it "does not change settings that aren't present in the hash" do
-        GC.config({}).should == GC.config.except(:implementation)
+        previous = GC.config
+        GC.config({})
+        GC.config.should == previous
       end
 
       it "ignores unknown keys" do
-        GC.config(foo: "bar").should == GC.config.except(:implementation)
+        previous = GC.config
+        GC.config(foo: "bar")
+        GC.config.should == previous
       end
 
       it "raises an ArgumentError if options include global keys" do
@@ -64,7 +64,7 @@ ruby_version_is "3.4" do
         end
 
         after do
-          GC.config(@default_config)
+          GC.config(@default_config.except(:implementation))
         end
 
         it "includes :rgengc_allow_full_mark option, true by default" do
@@ -75,7 +75,7 @@ ruby_version_is "3.4" do
         it "allows to set :rgengc_allow_full_mark" do
           # This key maps truthy and falsey values to true and false.
           GC.config(rgengc_allow_full_mark: nil).should == @default_config.merge(rgengc_allow_full_mark: false)
-          GC.config(rgengc_allow_full_mark: 1.23).should == @default_config
+          GC.config(rgengc_allow_full_mark: 1.23).should == @default_config.merge(rgengc_allow_full_mark: true)
         end
       end
     end
