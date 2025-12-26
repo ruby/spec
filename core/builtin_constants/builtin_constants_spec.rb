@@ -46,6 +46,16 @@ describe "RUBY_ENGINE" do
   end
 end
 
+describe "RUBY_ENGINE_VERSION" do
+  it "is a String" do
+    RUBY_ENGINE_VERSION.should be_kind_of(String)
+  end
+
+  it "is frozen" do
+    RUBY_ENGINE_VERSION.should.frozen?
+  end
+end
+
 describe "RUBY_PLATFORM" do
   it "is a String" do
     RUBY_PLATFORM.should be_kind_of(String)
