@@ -85,3 +85,61 @@ describe "RUBY_REVISION" do
     RUBY_REVISION.should.frozen?
   end
 end
+
+ruby_version_is "4.0" do
+  context "The RUBY toplevel constant" do
+    describe "Ruby::VERSION" do
+      it "is equal to RUBY_VERSION" do
+        Ruby::VERSION.should equal(RUBY_VERSION)
+      end
+    end
+
+    describe "RUBY::PATCHLEVEL" do
+      it "is equal to RUBY_PATCHLEVEL" do
+        Ruby::PATCHLEVEL.should equal(RUBY_PATCHLEVEL)
+      end
+    end
+
+    describe "Ruby::COPYRIGHT" do
+      it "is equal to RUBY_COPYRIGHT" do
+        Ruby::COPYRIGHT.should equal(RUBY_COPYRIGHT)
+      end
+    end
+
+    describe "Ruby::DESCRIPTION" do
+      it "is equal to RUBY_DESCRIPTION" do
+        Ruby::DESCRIPTION.should equal(RUBY_DESCRIPTION)
+      end
+    end
+
+    describe "Ruby::ENGINE" do
+      it "is equal to RUBY_ENGINE" do
+        Ruby::ENGINE.should equal(RUBY_ENGINE)
+      end
+    end
+
+    describe "Ruby::ENGINE_VERSION" do
+      it "is equal to RUBY_ENGINE_VERSION" do
+        Ruby::ENGINE_VERSION.should equal(RUBY_ENGINE_VERSION)
+      end
+    end
+
+    describe "Ruby::PLATFORM" do
+      it "is equal to RUBY_PLATFORM" do
+        Ruby::PLATFORM.should equal(RUBY_PLATFORM)
+      end
+    end
+
+    describe "Ruby::RELEASE_DATE" do
+      it "is equal to RUBY_RELEASE_DATE" do
+        Ruby::RELEASE_DATE.should equal(RUBY_RELEASE_DATE)
+      end
+    end
+
+    describe "Ruby::REVISION" do
+      it "is equal to RUBY_REVISION" do
+        Ruby::REVISION.should equal(RUBY_REVISION)
+      end
+    end
+  end
+end
