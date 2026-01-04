@@ -159,9 +159,16 @@ describe "Proc#parameters" do
     proc { |**nil| }.parameters.should == [[:nokey]]
   end
 
-  ruby_version_is "3.4" do
-    it "handles the usage of `it` as a paramater" do
+  ruby_version_is "3.4"..."4.0" do
+    it "handles the usage of `it` as a parameter" do
       eval("proc { it }").parameters.should == [[:opt, nil]]
+      eval("lambda { it }").parameters.should == [[:req]]
+    end
+  end
+
+  ruby_version_is "4.0" do
+    it "handles the usage of `it` as a parameter" do
+      eval("proc { it }").parameters.should == [[:opt]]
       eval("lambda { it }").parameters.should == [[:req]]
     end
   end
