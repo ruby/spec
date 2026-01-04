@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 require_relative '../fiber/fixtures/scheduler'
-require 'fiber'
 
 describe "Kernel#sleep" do
   it "is a private method" do
