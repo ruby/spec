@@ -12,13 +12,6 @@ describe "Enumerable#to_set" do
   end
 
   ruby_version_is "4.0" do
-    it "instantiates an object of provided as the first argument set class" do
-      set = nil
-      proc{set = (1..3).to_set(EnumerableSpecs::SetSubclass)}.should complain(/Enumerable#to_set/)
-      set.should be_kind_of(EnumerableSpecs::SetSubclass)
-      set.to_a.sort.should == [1, 2, 3]
-    end
-
     it "raises a RangeError if the range is infinite" do
       -> { (1..).to_set }.should raise_error(RangeError, "cannot convert endless range to a set")
       -> { (1...).to_set }.should raise_error(RangeError, "cannot convert endless range to a set")
@@ -30,6 +23,25 @@ describe "Enumerable#to_set" do
       set = (1..3).to_set(EnumerableSpecs::SetSubclass)
       set.should be_kind_of(EnumerableSpecs::SetSubclass)
       set.to_a.sort.should == [1, 2, 3]
+    end
+  end
+
+  ruby_version_is "4.0"..."4.1" do
+    it "instantiates an object of provided as the first argument set class and warns" do
+      set = nil
+      proc {
+        set = (1..3).to_set(EnumerableSpecs::SetSubclass)
+      }.should complain(/Enumerable#to_set/)
+      set.should be_kind_of(EnumerableSpecs::SetSubclass)
+      set.to_a.sort.should == [1, 2, 3]
+    end
+  end
+
+  ruby_version_is "4.1" do
+    it "does not accept any positional argument" do
+      -> {
+        (1..3).to_set(EnumerableSpecs::SetSubclass)
+      }.should raise_error(ArgumentError, 'wrong number of arguments (given 1, expected 0)')
     end
   end
 
