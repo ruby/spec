@@ -87,7 +87,7 @@ describe "RUBY_REVISION" do
 end
 
 ruby_version_is "4.0" do
-  context "The RUBY toplevel constant" do
+  context "The constant" do
     describe "Ruby::VERSION" do
       it "is equal to RUBY_VERSION" do
         Ruby::VERSION.should equal(RUBY_VERSION)
