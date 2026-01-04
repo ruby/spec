@@ -208,7 +208,7 @@ describe :io_new, shared: true do
     @io.internal_encoding.to_s.should == 'IBM866'
   end
 
-  it "does not use binmode argument when mode encoding is specified" do
+  it "does not use binary encoding when mode encoding is specified along with binmode: true option" do
     @io = IO.send(@method, @fd, 'w:iso-8859-1', binmode: true)
     @io.external_encoding.to_s.should == 'ISO-8859-1'
   end
