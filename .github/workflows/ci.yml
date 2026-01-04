@@ -56,7 +56,8 @@ jobs:
       env:
         CHECK_LEAKS: true
       run: |
-        # Actions uses UTF8, causes test failures, similar to normal OS setup
+        # Actions uses UTF8 but most Windows systems don't.
+        # Use non-UTF8 to make sure specs pass with non-UTF8 too.
         [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("IBM437")
         [Console]::InputEncoding  = [System.Text.Encoding]::GetEncoding("IBM437")
         ../mspec/bin/mspec -j ${{ matrix.mspecopt }}
