@@ -88,6 +88,12 @@ end
 
 ruby_version_is "4.0" do
   context "The constant" do
+    describe "Ruby" do
+      it "is a Module" do
+        Ruby.should.instance_of?(Module)
+      end
+    end
+
     describe "Ruby::VERSION" do
       it "is equal to RUBY_VERSION" do
         Ruby::VERSION.should equal(RUBY_VERSION)
