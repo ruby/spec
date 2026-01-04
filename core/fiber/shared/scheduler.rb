@@ -6,7 +6,9 @@ describe :scheduler, shared: true do
       required_methods.difference([missing_method]).each do |method|
         scheduler.define_singleton_method(method) {}
       end
-      -> { Fiber.set_scheduler(scheduler) }.should raise_error(ArgumentError, /Scheduler must implement ##{missing_method}/)
+      -> {
+        suppress_warning { Fiber.set_scheduler(scheduler) }
+      }.should raise_error(ArgumentError, /Scheduler must implement ##{missing_method}/)
     end
   end
 
@@ -16,7 +18,7 @@ describe :scheduler, shared: true do
     required_methods.each do |method|
       scheduler.define_singleton_method(method) {}
     end
-    Fiber.set_scheduler(scheduler)
+    suppress_warning { Fiber.set_scheduler(scheduler) }
     Fiber.scheduler.should == scheduler
   end
 
@@ -26,7 +28,7 @@ describe :scheduler, shared: true do
     required_methods.each do |method|
       scheduler.define_singleton_method(method) {}
     end
-    result = Fiber.set_scheduler(scheduler)
+    result = suppress_warning { Fiber.set_scheduler(scheduler) }
     result.should == scheduler
   end
 
@@ -36,7 +38,7 @@ describe :scheduler, shared: true do
     required_methods.each do |method|
       scheduler.define_singleton_method(method) {}
     end
-    Fiber.set_scheduler(scheduler)
+    suppress_warning { Fiber.set_scheduler(scheduler) }
     Fiber.set_scheduler(nil)
     Fiber.scheduler.should be_nil
   end

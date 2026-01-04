@@ -25,6 +25,11 @@ module FiberSpecs
       @events << { event: :unblock, fiber: Fiber.current, args: args }
       Fiber.yield
     end
+
+    def fiber_interrupt(*args)
+      @events << { event: :fiber_interrupt, fiber: Fiber.current, args: args }
+      Fiber.yield
+    end
   end
 
 end
