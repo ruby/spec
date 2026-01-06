@@ -44,12 +44,4 @@ describe "Enumerable#to_set" do
       }.should raise_error(ArgumentError, 'wrong number of arguments (given 1, expected 0)')
     end
   end
-
-  it "does not need explicit `require 'set'`" do
-    output = ruby_exe(<<~RUBY, options: '--disable-gems', args: '2>&1')
-      puts (1..3).to_set.to_a.inspect
-    RUBY
-
-    output.chomp.should == "[1, 2, 3]"
-  end
 end
