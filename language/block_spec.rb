@@ -1106,12 +1106,18 @@ describe "`it` calls without arguments in a block with no ordinary parameters" d
       eval("proc { it * 2 }").call(5).should == 10
     end
 
+    it "acts as the first argument if multiple arguments given" do
+      eval("proc { it * 2 }").call(5, 1, 2, 3).should == 10
+    end
+
     it "can be reassigned to act as a local variable" do
       eval("proc { tmp = it; it = tmp * 2; it }").call(21).should == 42
     end
 
     it "can be used in nested calls" do
-      eval("proc { it.map { it * 2 } }").call([1, 2, 3]).should == [2, 4, 6]
+      it_values = []
+      eval("proc { it.each { it_values << it } }").call([1, 2, 3])
+      it_values.should == [1, 2, 3]
     end
 
     it "cannot be mixed with numbered parameters" do
@@ -1122,6 +1128,21 @@ describe "`it` calls without arguments in a block with no ordinary parameters" d
       -> {
         eval "proc { _1 + it }"
       }.should raise_error(SyntaxError, /numbered parameter is already used in|'it' is not allowed when a numbered parameter is already used/)
+    end
+
+    it "is available before re-assigning" do
+      a = nil
+      proc { a = it; it = 42 }.call(0)
+      a.should == 0
+    end
+
+    it "does not call the method `it` if defined" do
+      o = Object.new
+      def o.it
+        21
+      end
+
+      o.instance_eval("proc { it * 2 }").call(1).should == 2
     end
   end
 end
