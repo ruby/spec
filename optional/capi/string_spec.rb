@@ -1373,4 +1373,106 @@ describe "C-API String function" do
       @s.rb_str_to_interned_str("hello").should.equal?(-"hello")
     end
   end
+
+  describe "rb_interned_str" do
+    it "returns a frozen string" do
+      str = "hello"
+      result = @s.rb_interned_str(str, str.bytesize)
+      result.should.is_a?(String)
+      result.should.frozen?
+      result.encoding.should == Encoding::US_ASCII
+    end
+
+    it "returns the same frozen string" do
+      str = "hello"
+      result1 = @s.rb_interned_str(str, str.bytesize)
+      result2 = @s.rb_interned_str(str, str.bytesize)
+      result1.should.equal?(result2)
+    end
+
+    it "supports strings with embedded null bytes" do
+      str = "foo\x00bar\x00baz".b
+      result = @s.rb_interned_str(str, str.bytesize)
+      result.should == str
+    end
+
+    it "support binary strings that are invalid in ASCII encoding" do
+      str = "foo\x81bar\x82baz".b
+      result = @s.rb_interned_str(str, str.bytesize)
+      result.encoding.should == Encoding::US_ASCII
+      result.should == str.dup.force_encoding(Encoding::US_ASCII)
+      result.should_not.valid_encoding?
+    end
+
+    it "returns the same frozen strings for different encodings" do
+      str1 = "hello".dup.force_encoding(Encoding::US_ASCII)
+      str2 = "hello".dup.force_encoding(Encoding::UTF_8)
+      result1 = @s.rb_interned_str(str1, str1.bytesize)
+      result2 = @s.rb_interned_str(str2, str2.bytesize)
+      result1.should.equal?(result2)
+    end
+
+    it 'returns the same string when using non-ascii characters' do
+      str = 'こんにちは'
+      result1 = @s.rb_interned_str(str, str.bytesize)
+      result2 = @s.rb_interned_str(str, str.bytesize)
+      result1.should.equal?(result2)
+    end
+
+    it "returns the same string as String#-@" do
+      str = "hello".dup.force_encoding(Encoding::US_ASCII)
+      @s.rb_interned_str(str, str.bytesize).should.equal?(-str)
+    end
+  end
+
+  describe "rb_interned_str_cstr" do
+    it "returns a frozen string" do
+      str = "hello"
+      result = @s.rb_interned_str_cstr(str)
+      result.should.is_a?(String)
+      result.should.frozen?
+      result.encoding.should == Encoding::US_ASCII
+    end
+
+    it "returns the same frozen string" do
+      str = "hello"
+      result1 = @s.rb_interned_str_cstr(str)
+      result2 = @s.rb_interned_str_cstr(str)
+      result1.should.equal?(result2)
+    end
+
+    it "does not support strings with embedded null bytes" do
+      str = "foo\x00bar\x00baz".b
+      result = @s.rb_interned_str_cstr(str)
+      result.should == "foo"
+    end
+
+    it "support binary strings that are invalid in ASCII encoding" do
+      str = "foo\x81bar\x82baz".b
+      result = @s.rb_interned_str_cstr(str)
+      result.encoding.should == Encoding::US_ASCII
+      result.should == str.dup.force_encoding(Encoding::US_ASCII)
+      result.should_not.valid_encoding?
+    end
+
+    it "returns the same frozen strings for different encodings" do
+      str1 = "hello".dup.force_encoding(Encoding::US_ASCII)
+      str2 = "hello".dup.force_encoding(Encoding::UTF_8)
+      result1 = @s.rb_interned_str_cstr(str1)
+      result2 = @s.rb_interned_str_cstr(str2)
+      result1.should.equal?(result2)
+    end
+
+    it 'returns the same string when using non-ascii characters' do
+      str = 'こんにちは'
+      result1 = @s.rb_interned_str_cstr(str)
+      result2 = @s.rb_interned_str_cstr(str)
+      result1.should.equal?(result2)
+    end
+
+    it "returns the same string as String#-@" do
+      str = "hello".dup.force_encoding(Encoding::US_ASCII)
+      @s.rb_interned_str_cstr(str).should.equal?(-str)
+    end
+  end
 end
