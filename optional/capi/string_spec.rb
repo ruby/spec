@@ -1380,9 +1380,7 @@ describe "C-API String function" do
       result = @s.rb_interned_str(str, str.bytesize)
       result.should.is_a?(String)
       result.should.frozen?
-      ruby_bug "21842", ""..."4.1" do
-        result.encoding.should == Encoding::BINARY
-      end
+      result.encoding.should == Encoding::US_ASCII
     end
 
     it "returns the same frozen string" do
@@ -1399,12 +1397,11 @@ describe "C-API String function" do
     end
 
     ruby_bug "21842", ""..."4.1" do
-      it "support binary strings that are invalid in ASCII encoding" do
+      it "uses BINARY encoding for strings that are not valid US-ASCII" do
         str = "foo\x81bar\x82baz".b
         result = @s.rb_interned_str(str, str.bytesize)
         result.encoding.should == Encoding::BINARY
         result.should == str
-        result.should.valid_encoding?
       end
     end
 
@@ -1425,7 +1422,7 @@ describe "C-API String function" do
 
     ruby_bug "21842", ""..."4.1" do
       it "returns the same string as String#-@" do
-        str = "hello".b
+        str = "hello".dup.force_encoding(Encoding::US_ASCII)
         @s.rb_interned_str(str, str.bytesize).should.equal?(-str)
       end
     end
@@ -1437,9 +1434,7 @@ describe "C-API String function" do
       result = @s.rb_interned_str_cstr(str)
       result.should.is_a?(String)
       result.should.frozen?
-      ruby_bug "21842", ""..."4.1" do
-        result.encoding.should == Encoding::BINARY
-      end
+      result.encoding.should == Encoding::US_ASCII
     end
 
     it "returns the same frozen string" do
@@ -1456,7 +1451,7 @@ describe "C-API String function" do
     end
 
     ruby_bug "21842", ""..."4.1" do
-      it "support binary strings that are invalid in ASCII encoding" do
+      it "uses BINARY encoding for strings that are not valid US-ASCII" do
         str = "foo\x81bar\x82baz".b
         result = @s.rb_interned_str_cstr(str)
         result.encoding.should == Encoding::BINARY
@@ -1482,7 +1477,7 @@ describe "C-API String function" do
 
     ruby_bug "21842", ""..."4.1" do
       it "returns the same string as String#-@" do
-        str = "hello".b
+        str = "hello".dup.force_encoding(Encoding::US_ASCII)
         @s.rb_interned_str_cstr(str).should.equal?(-str)
       end
     end
