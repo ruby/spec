@@ -1380,7 +1380,9 @@ describe "C-API String function" do
       result = @s.rb_interned_str(str, str.bytesize)
       result.should.is_a?(String)
       result.should.frozen?
-      result.encoding.should == Encoding::US_ASCII
+      ruby_bug "21842", ""..."4.1" do
+        result.encoding.should == Encoding::BINARY
+      end
     end
 
     it "returns the same frozen string" do
@@ -1396,12 +1398,14 @@ describe "C-API String function" do
       result.should == str
     end
 
-    it "support binary strings that are invalid in ASCII encoding" do
-      str = "foo\x81bar\x82baz".b
-      result = @s.rb_interned_str(str, str.bytesize)
-      result.encoding.should == Encoding::US_ASCII
-      result.should == str.dup.force_encoding(Encoding::US_ASCII)
-      result.should_not.valid_encoding?
+    ruby_bug "21842", ""..."4.1" do
+      it "support binary strings that are invalid in ASCII encoding" do
+        str = "foo\x81bar\x82baz".b
+        result = @s.rb_interned_str(str, str.bytesize)
+        result.encoding.should == Encoding::BINARY
+        result.should == str
+        result.should.valid_encoding?
+      end
     end
 
     it "returns the same frozen strings for different encodings" do
@@ -1419,9 +1423,11 @@ describe "C-API String function" do
       result1.should.equal?(result2)
     end
 
-    it "returns the same string as String#-@" do
-      str = "hello".dup.force_encoding(Encoding::US_ASCII)
-      @s.rb_interned_str(str, str.bytesize).should.equal?(-str)
+    ruby_bug "21842", ""..."4.1" do
+      it "returns the same string as String#-@" do
+        str = "hello".b
+        @s.rb_interned_str(str, str.bytesize).should.equal?(-str)
+      end
     end
   end
 
@@ -1431,7 +1437,9 @@ describe "C-API String function" do
       result = @s.rb_interned_str_cstr(str)
       result.should.is_a?(String)
       result.should.frozen?
-      result.encoding.should == Encoding::US_ASCII
+      ruby_bug "21842", ""..."4.1" do
+        result.encoding.should == Encoding::BINARY
+      end
     end
 
     it "returns the same frozen string" do
@@ -1447,12 +1455,14 @@ describe "C-API String function" do
       result.should == "foo"
     end
 
-    it "support binary strings that are invalid in ASCII encoding" do
-      str = "foo\x81bar\x82baz".b
-      result = @s.rb_interned_str_cstr(str)
-      result.encoding.should == Encoding::US_ASCII
-      result.should == str.dup.force_encoding(Encoding::US_ASCII)
-      result.should_not.valid_encoding?
+    ruby_bug "21842", ""..."4.1" do
+      it "support binary strings that are invalid in ASCII encoding" do
+        str = "foo\x81bar\x82baz".b
+        result = @s.rb_interned_str_cstr(str)
+        result.encoding.should == Encoding::BINARY
+        result.should == str
+        result.should.valid_encoding?
+      end
     end
 
     it "returns the same frozen strings for different encodings" do
@@ -1470,9 +1480,11 @@ describe "C-API String function" do
       result1.should.equal?(result2)
     end
 
-    it "returns the same string as String#-@" do
-      str = "hello".dup.force_encoding(Encoding::US_ASCII)
-      @s.rb_interned_str_cstr(str).should.equal?(-str)
+    ruby_bug "21842", ""..."4.1" do
+      it "returns the same string as String#-@" do
+        str = "hello".b
+        @s.rb_interned_str_cstr(str).should.equal?(-str)
+      end
     end
   end
 end
