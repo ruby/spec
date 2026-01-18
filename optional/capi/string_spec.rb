@@ -1369,6 +1369,13 @@ describe "C-API String function" do
       result1.should_not.equal?(result2)
     end
 
+    it "preserves the encoding of the original string" do
+      result1 = @s.rb_str_to_interned_str("hello".dup.force_encoding(Encoding::US_ASCII))
+      result2 = @s.rb_str_to_interned_str("hello".dup.force_encoding(Encoding::UTF_8))
+      result1.encoding.should == Encoding::US_ASCII
+      result2.encoding.should == Encoding::UTF_8
+    end
+
     it "returns the same string as String#-@" do
       @s.rb_str_to_interned_str("hello").should.equal?(-"hello")
     end
