@@ -149,25 +149,11 @@ describe "IO.select" do
   end
 end
 
-describe "IO.select when passed nil for timeout" do
-  it "sleeps forever and sets the thread status to 'sleep'" do
-    t = Thread.new do
-      IO.select(nil, nil, nil, nil)
-    end
-
-    Thread.pass while t.status && t.status != "sleep"
-    t.join unless t.status
-    t.status.should == "sleep"
-    t.kill
-    t.join
-  end
-end
-
-ruby_version_is "4.0" do
-  describe "IO.select when passed Float::INFINITY for timeout" do
+describe "IO.select with infinite timeout" do
+  describe :io_select_infinite_timeout, shared: true do
     it "sleeps forever and sets the thread status to 'sleep'" do
       t = Thread.new do
-        IO.select(nil, nil, nil, Float::INFINITY)
+        IO.select(nil, nil, nil, @method)
       end
 
       Thread.pass while t.status && t.status != "sleep"
@@ -175,6 +161,16 @@ ruby_version_is "4.0" do
       t.status.should == "sleep"
       t.kill
       t.join
+    end
+  end
+
+  describe "IO.select when passed nil for timeout" do
+    it_behaves_like :io_select_infinite_timeout, nil
+  end
+
+  ruby_version_is "4.0" do
+    describe "IO.select when passed Float::INFINITY for timeout" do
+      it_behaves_like :io_select_infinite_timeout, Float::INFINITY
     end
   end
 end
