@@ -45,20 +45,22 @@ describe "Hash.[]" do
   it "raises for elements that are not arrays" do
     -> {
       Hash[[:a]]
-    }.should raise_error(ArgumentError)
+    }.should raise_error(ArgumentError, "wrong element type Symbol at 0 (expected array)")
     -> {
       Hash[[nil]]
-    }.should raise_error(ArgumentError)
+    }.should raise_error(ArgumentError, "wrong element type nil at 0 (expected array)")
   end
 
   it "raises an ArgumentError for arrays of more than 2 elements" do
-    ->{ Hash[[[:a, :b, :c]]] }.should raise_error(ArgumentError)
+    ->{
+      Hash[[[:a, :b, :c]]]
+    }.should raise_error(ArgumentError, "invalid number of elements (3 for 1..2)")
   end
 
   it "raises an ArgumentError when passed a list of value-invalid-pairs in an array" do
     -> {
       Hash[[[:a, 1], [:b], 42, [:d, 2], [:e, 2, 3], []]]
-    }.should raise_error(ArgumentError)
+    }.should raise_error(ArgumentError, "wrong element type Integer at 2 (expected array)")
   end
 
   describe "passed a single argument which responds to #to_hash" do
