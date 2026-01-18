@@ -162,3 +162,19 @@ describe "IO.select when passed nil for timeout" do
     t.join
   end
 end
+
+ruby_version_is "4.0" do
+  describe "IO.select when passed Float::INFINITY for timeout" do
+    it "sleeps forever and sets the thread status to 'sleep'" do
+      t = Thread.new do
+        IO.select(nil, nil, nil, Float::INFINITY)
+      end
+
+      Thread.pass while t.status && t.status != "sleep"
+      t.join unless t.status
+      t.status.should == "sleep"
+      t.kill
+      t.join
+    end
+  end
+end
