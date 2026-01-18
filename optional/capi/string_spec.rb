@@ -1396,21 +1396,26 @@ describe "C-API String function" do
       result.should == str
     end
 
-    ruby_bug "21842", ""..."4.1" do
-      it "uses BINARY encoding for strings that are not valid US-ASCII" do
-        str = "foo\x81bar\x82baz".b
-        result = @s.rb_interned_str(str, str.bytesize)
-        result.encoding.should == Encoding::BINARY
-        result.should == str
+    it "return US_ASCII encoding for an empty string" do
+      result = @s.rb_interned_str("", 0)
+      result.should == ""
+      result.encoding.should == Encoding::US_ASCII
+    end
+
+    it "returns US_ASCII encoding for strings of only 7 bit ASCII" do
+      0x00.upto(0x7f).each do |char|
+        result = @s.rb_interned_str(char.chr, 1)
+        result.encoding.should == Encoding::US_ASCII
       end
     end
 
-    it "returns the same frozen strings for different encodings" do
-      str1 = "hello".dup.force_encoding(Encoding::US_ASCII)
-      str2 = "hello".dup.force_encoding(Encoding::UTF_8)
-      result1 = @s.rb_interned_str(str1, str1.bytesize)
-      result2 = @s.rb_interned_str(str2, str2.bytesize)
-      result1.should.equal?(result2)
+    ruby_bug "21842", ""..."4.1" do
+      it "returns BINARY encoding for strings that use the 8th bit" do
+        0x80.upto(0xff) do |char|
+        result = @s.rb_interned_str(char.chr, 1)
+        result.encoding.should == Encoding::BINARY
+        end
+      end
     end
 
     it 'returns the same string when using non-ascii characters' do
@@ -1450,22 +1455,26 @@ describe "C-API String function" do
       result.should == "foo"
     end
 
-    ruby_bug "21842", ""..."4.1" do
-      it "uses BINARY encoding for strings that are not valid US-ASCII" do
-        str = "foo\x81bar\x82baz".b
-        result = @s.rb_interned_str_cstr(str)
-        result.encoding.should == Encoding::BINARY
-        result.should == str
-        result.should.valid_encoding?
+    it "return US_ASCII encoding for an empty string" do
+      result = @s.rb_interned_str_cstr("")
+      result.should == ""
+      result.encoding.should == Encoding::US_ASCII
+    end
+
+    it "returns US_ASCII encoding for strings of only 7 bit ASCII" do
+      0x01.upto(0x7f).each do |char|
+        result = @s.rb_interned_str_cstr(char.chr)
+        result.encoding.should == Encoding::US_ASCII
       end
     end
 
-    it "returns the same frozen strings for different encodings" do
-      str1 = "hello".dup.force_encoding(Encoding::US_ASCII)
-      str2 = "hello".dup.force_encoding(Encoding::UTF_8)
-      result1 = @s.rb_interned_str_cstr(str1)
-      result2 = @s.rb_interned_str_cstr(str2)
-      result1.should.equal?(result2)
+    ruby_bug "21842", ""..."4.1" do
+      it "returns BINARY encoding for strings that use the 8th bit" do
+        0x80.upto(0xff) do |char|
+        result = @s.rb_interned_str_cstr(char.chr)
+        result.encoding.should == Encoding::BINARY
+        end
+      end
     end
 
     it 'returns the same string when using non-ascii characters' do
