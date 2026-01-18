@@ -1419,8 +1419,8 @@ describe "C-API String function" do
     ruby_bug "21842", ""..."4.1" do
       it "returns BINARY encoding for strings that use the 8th bit" do
         0x80.upto(0xff) do |char|
-        result = @s.rb_interned_str(char.chr, 1)
-        result.encoding.should == Encoding::BINARY
+          result = @s.rb_interned_str(char.chr, 1)
+          result.encoding.should == Encoding::BINARY
         end
       end
     end
@@ -1478,8 +1478,8 @@ describe "C-API String function" do
     ruby_bug "21842", ""..."4.1" do
       it "returns BINARY encoding for strings that use the 8th bit" do
         0x80.upto(0xff) do |char|
-        result = @s.rb_interned_str_cstr(char.chr)
-        result.encoding.should == Encoding::BINARY
+          result = @s.rb_interned_str_cstr(char.chr)
+          result.encoding.should == Encoding::BINARY
         end
       end
     end
