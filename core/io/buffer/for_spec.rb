@@ -23,43 +23,22 @@ describe "IO::Buffer.for" do
       -> { @buffer.set_string("d") }.should raise_error(IO::Buffer::AccessError, "Buffer is not writable!")
     end
 
-    ruby_version_is ""..."3.3" do
-      it "creates an external, read-only buffer" do
-        @buffer = IO::Buffer.for(@string)
+    it "creates an external, read-only buffer" do
+      @buffer = IO::Buffer.for(@string)
 
-        @buffer.should_not.internal?
-        @buffer.should_not.mapped?
-        @buffer.should.external?
+      @buffer.should_not.internal?
+      @buffer.should_not.mapped?
+      @buffer.should.external?
 
-        @buffer.should_not.empty?
-        @buffer.should_not.null?
+      @buffer.should_not.empty?
+      @buffer.should_not.null?
 
-        @buffer.should_not.shared?
-        @buffer.should.readonly?
+      @buffer.should_not.shared?
+      @buffer.should_not.private?
+      @buffer.should.readonly?
 
-        @buffer.should_not.locked?
-        @buffer.should.valid?
-      end
-    end
-
-    ruby_version_is "3.3" do
-      it "creates an external, read-only buffer" do
-        @buffer = IO::Buffer.for(@string)
-
-        @buffer.should_not.internal?
-        @buffer.should_not.mapped?
-        @buffer.should.external?
-
-        @buffer.should_not.empty?
-        @buffer.should_not.null?
-
-        @buffer.should_not.shared?
-        @buffer.should_not.private?
-        @buffer.should.readonly?
-
-        @buffer.should_not.locked?
-        @buffer.should.valid?
-      end
+      @buffer.should_not.locked?
+      @buffer.should.valid?
     end
   end
 
