@@ -42,45 +42,23 @@ describe "IO::Buffer.map" do
     @buffer.get_string.should == "abcâdef\n".b
   end
 
-  ruby_version_is ""..."3.3" do
-    it "creates a mapped, external, shared buffer" do
-      @file = open_fixture
-      @buffer = IO::Buffer.map(@file)
+  it "creates a mapped, external, shared buffer" do
+    @file = open_fixture
+    @buffer = IO::Buffer.map(@file)
 
-      @buffer.should_not.internal?
-      @buffer.should.mapped?
-      @buffer.should.external?
+    @buffer.should_not.internal?
+    @buffer.should.mapped?
+    @buffer.should.external?
 
-      @buffer.should_not.empty?
-      @buffer.should_not.null?
+    @buffer.should_not.empty?
+    @buffer.should_not.null?
 
-      @buffer.should.shared?
-      @buffer.should_not.readonly?
+    @buffer.should.shared?
+    @buffer.should_not.private?
+    @buffer.should_not.readonly?
 
-      @buffer.should_not.locked?
-      @buffer.should.valid?
-    end
-  end
-
-  ruby_version_is "3.3" do
-    it "creates a mapped, external, shared buffer" do
-      @file = open_fixture
-      @buffer = IO::Buffer.map(@file)
-
-      @buffer.should_not.internal?
-      @buffer.should.mapped?
-      @buffer.should.external?
-
-      @buffer.should_not.empty?
-      @buffer.should_not.null?
-
-      @buffer.should.shared?
-      @buffer.should_not.private?
-      @buffer.should_not.readonly?
-
-      @buffer.should_not.locked?
-      @buffer.should.valid?
-    end
+    @buffer.should_not.locked?
+    @buffer.should.valid?
   end
 
   platform_is_not :windows do
@@ -317,63 +295,61 @@ describe "IO::Buffer.map" do
       end
     end
 
-    ruby_version_is "3.3" do
-      context "when PRIVATE is specified" do
-        it "sets private flag on the buffer, making it freely modifiable" do
-          @file = open_fixture
+    context "when PRIVATE is specified" do
+      it "sets private flag on the buffer, making it freely modifiable" do
+        @file = open_fixture
+        @buffer = IO::Buffer.map(@file, nil, 0, IO::Buffer::PRIVATE)
+
+        @buffer.should.private?
+        @buffer.should_not.shared?
+        @buffer.should_not.external?
+
+        @buffer.get_string.should == "abc\xC3\xA2def\n".b
+        @buffer.set_string("test12345")
+        @buffer.get_string.should == "test12345".b
+
+        @file.read.should == "abcâdef\n"
+      end
+
+      it "allows mapping read-only files and modifying the buffer" do
+        @file = File.open("#{__dir__}/../fixtures/read_text.txt", "r")
+        @buffer = IO::Buffer.map(@file, nil, 0, IO::Buffer::PRIVATE)
+
+        @buffer.should.private?
+        @buffer.should_not.shared?
+        @buffer.should_not.external?
+
+        @buffer.get_string.should == "abc\xC3\xA2def\n".b
+        @buffer.set_string("test12345")
+        @buffer.get_string.should == "test12345".b
+
+        @file.read.should == "abcâdef\n"
+      end
+
+      platform_is_not :windows do
+        it "is not shared across processes" do
+          file_name = tmp("shared_buffer")
+          @file = File.open(file_name, "w+")
+          @file << "I'm private"
+          @file.rewind
           @buffer = IO::Buffer.map(@file, nil, 0, IO::Buffer::PRIVATE)
 
-          @buffer.should.private?
-          @buffer.should_not.shared?
-          @buffer.should_not.external?
+          IO.popen("-") do |child_pipe|
+            if child_pipe
+              # Synchronize on child's output.
+              child_pipe.readlines.first.chomp.should == @buffer.to_s
+              @buffer.get_string.should == "I'm private"
 
-          @buffer.get_string.should == "abc\xC3\xA2def\n".b
-          @buffer.set_string("test12345")
-          @buffer.get_string.should == "test12345".b
-
-          @file.read.should == "abcâdef\n"
-        end
-
-        it "allows mapping read-only files and modifying the buffer" do
-          @file = File.open("#{__dir__}/../fixtures/read_text.txt", "r")
-          @buffer = IO::Buffer.map(@file, nil, 0, IO::Buffer::PRIVATE)
-
-          @buffer.should.private?
-          @buffer.should_not.shared?
-          @buffer.should_not.external?
-
-          @buffer.get_string.should == "abc\xC3\xA2def\n".b
-          @buffer.set_string("test12345")
-          @buffer.get_string.should == "test12345".b
-
-          @file.read.should == "abcâdef\n"
-        end
-
-        platform_is_not :windows do
-          it "is not shared across processes" do
-            file_name = tmp("shared_buffer")
-            @file = File.open(file_name, "w+")
-            @file << "I'm private"
-            @file.rewind
-            @buffer = IO::Buffer.map(@file, nil, 0, IO::Buffer::PRIVATE)
-
-            IO.popen("-") do |child_pipe|
-              if child_pipe
-                # Synchronize on child's output.
-                child_pipe.readlines.first.chomp.should == @buffer.to_s
-                @buffer.get_string.should == "I'm private"
-
-                @file.read.should == "I'm private"
-              else
-                @buffer.set_string("I'm shared!")
-                puts @buffer
-              end
-            ensure
-              child_pipe&.close
+              @file.read.should == "I'm private"
+            else
+              @buffer.set_string("I'm shared!")
+              puts @buffer
             end
           ensure
-            File.unlink(file_name)
+            child_pipe&.close
           end
+        ensure
+          File.unlink(file_name)
         end
       end
     end

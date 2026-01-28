@@ -12,37 +12,20 @@ describe "IO::Buffer#initialize" do
     @buffer.each(:U8).should.all? { |_offset, value| value.eql?(0) }
   end
 
-  ruby_version_is ""..."3.3" do
-    it "creates a buffer with default state" do
-      @buffer = IO::Buffer.new
+  it "creates a buffer with default state" do
+    @buffer = IO::Buffer.new
 
-      @buffer.should_not.shared?
-      @buffer.should_not.readonly?
+    @buffer.should_not.external?
 
-      @buffer.should_not.empty?
-      @buffer.should_not.null?
+    @buffer.should_not.shared?
+    @buffer.should_not.private?
+    @buffer.should_not.readonly?
 
-      @buffer.should_not.locked?
-      @buffer.should.valid?
-    end
-  end
+    @buffer.should_not.empty?
+    @buffer.should_not.null?
 
-  ruby_version_is "3.3" do
-    it "creates a buffer with default state" do
-      @buffer = IO::Buffer.new
-
-      @buffer.should_not.external?
-
-      @buffer.should_not.shared?
-      @buffer.should_not.private?
-      @buffer.should_not.readonly?
-
-      @buffer.should_not.empty?
-      @buffer.should_not.null?
-
-      @buffer.should_not.locked?
-      @buffer.should.valid?
-    end
+    @buffer.should_not.locked?
+    @buffer.should.valid?
   end
 
   context "with size argument" do
@@ -125,22 +108,12 @@ describe "IO::Buffer#initialize" do
       -> { IO::Buffer.new(10, 0) }.should raise_error(IO::Buffer::AllocationError, "Could not allocate buffer!")
     end
 
-    ruby_version_is "3.3" do
-      it "raises ArgumentError if flags is negative" do
-        -> { IO::Buffer.new(10, -1) }.should raise_error(ArgumentError, "Flags can't be negative!")
-      end
+    it "raises ArgumentError if flags is negative" do
+      -> { IO::Buffer.new(10, -1) }.should raise_error(ArgumentError, "Flags can't be negative!")
     end
 
-    ruby_version_is ""..."3.3" do
-      it "raises IO::Buffer::AllocationError with non-Integer flags" do
-        -> { IO::Buffer.new(10, 0.0) }.should raise_error(IO::Buffer::AllocationError, "Could not allocate buffer!")
-      end
-    end
-
-    ruby_version_is "3.3" do
-      it "raises TypeError with non-Integer flags" do
-        -> { IO::Buffer.new(10, 0.0) }.should raise_error(TypeError, "not an Integer")
-      end
+    it "raises TypeError with non-Integer flags" do
+      -> { IO::Buffer.new(10, 0.0) }.should raise_error(TypeError, "not an Integer")
     end
   end
 end
