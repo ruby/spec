@@ -37,6 +37,16 @@ describe "delegation with def(...)" do
     a.new.delegate(1, b: 2, &block).should == [[1], {b: 2}, block]
   end
 
+  it "delegates with additional arguments" do
+    a = Class.new(DelegationSpecs::Target)
+    a.class_eval(<<-RUBY)
+      def delegate(...)
+        target(:first, :second, ...)
+      end
+    RUBY
+    a.new.delegate(1, b: 2).should == [[:first, :second, 1], {b: 2}, nil]
+  end
+
   it "parses as open endless Range when brackets are omitted" do
     a = Class.new(DelegationSpecs::Target)
     suppress_warning do
