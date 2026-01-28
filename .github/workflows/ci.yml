@@ -12,16 +12,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu, macos, windows ]
-        ruby: [ 3.2.9, 3.3.10, 3.4.8, 4.0.0 ]
+        ruby: [ 3.2.9, 3.3.10, 3.4.8, 4.0.1 ]
         mspecopt: [""]
         rubyopt: [""]
         exclude:
           - { os: windows, ruby: 3.2.9 } # 3.2.9 has some issue with file time microseconds
         include:
           - { os: windows, ruby: 3.2.8 } # 3.2.9 has some issue with file time microseconds
-          - { os: ubuntu, ruby: 4.0.0, mspecopt: "--repeat 2" }
-          - { os: ubuntu, ruby: 4.0.0, rubyopt: "--enable-frozen-string-literal" }
-          - { os: ubuntu, ruby: 4.0.0, rubyopt: "--parser=parse.y" }
+          - { os: ubuntu, ruby: 4.0.1, mspecopt: "--repeat 2" }
+          - { os: ubuntu, ruby: 4.0.1, rubyopt: "--enable-frozen-string-literal" }
+          - { os: ubuntu, ruby: 4.0.1, rubyopt: "--parser=parse.y" }
 
     runs-on: ${{ matrix.os }}-latest
     steps:
