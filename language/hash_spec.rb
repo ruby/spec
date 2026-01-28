@@ -170,7 +170,7 @@ describe "Hash literal" do
 
     it "expands nil using ** into {} and provides a copy to the callable" do
       ScratchPad.record []
-      insert = ->(key, **kw) do
+      insert = -> key, **kw do
         kw[key] = 1
         ScratchPad << kw
       end
