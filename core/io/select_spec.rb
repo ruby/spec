@@ -121,6 +121,10 @@ describe "IO.select" do
     end
   end
 
+  it "raises an RangeError when passed NaN as timeout" do
+    -> { IO.select(nil, nil, nil, Float::NAN)}.should raise_error(RangeError, "NaN out of Time range")
+  end
+
   describe "returns the available descriptors when the file descriptor" do
     it "is in both read and error arrays" do
       @wr.write("foobar")
