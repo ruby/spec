@@ -91,7 +91,7 @@ describe "Range#reverse_each" do
         (1...3.3).reverse_each.size.should == 3
       end
 
-      ruby_version_is "3.3"..."3.4" do
+      ruby_version_is ""..."3.4" do
         it "returns a size when it is not iterable" do
           (1.1..3).reverse_each.size.should == 2
           (1.1..3.3).reverse_each.size.should == 3

@@ -1058,7 +1058,7 @@ describe "Anonymous block forwarding" do
 end
 
 describe "`it` calls without arguments in a block" do
-  ruby_version_is "3.3"..."3.4" do
+  ruby_version_is ""..."3.4" do
     it "emits a deprecation warning" do
       -> {
         eval "proc { it }"
