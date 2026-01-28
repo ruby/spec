@@ -78,12 +78,14 @@ describe "File.dirname" do
     File.dirname("foo/../").should == "foo"
   end
 
-  it "rejects strings encoded with non ASCII-compatible encodings" do
-    Encoding.list.reject(&:ascii_compatible?).reject(&:dummy?).each do |enc|
-      path = "/foo/bar".encode(enc)
-      -> {
-        File.dirname(path)
-      }.should raise_error(Encoding::CompatibilityError)
+  ruby_version_is "3.3" do # Ruby 3.2 has Encoding#replicate which can break this
+    it "rejects strings encoded with non ASCII-compatible encodings" do
+      Encoding.list.reject(&:ascii_compatible?).reject(&:dummy?).each do |enc|
+        path = "/foo/bar".encode(enc)
+        -> {
+          File.dirname(path)
+        }.should raise_error(Encoding::CompatibilityError)
+      end
     end
   end
 
