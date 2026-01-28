@@ -1,6 +1,7 @@
 require_relative '../spec_helper'
 
 ruby_version_is "3.4" do
+  eval <<-RUBY # use eval to avoid warnings on Ruby 3.3
   describe "The `it` parameter" do
     it "provides it in a block" do
       -> { it }.call("a").should == "a"
@@ -103,4 +104,5 @@ ruby_version_is "3.4" do
       end
     end
   end
+  RUBY
 end
