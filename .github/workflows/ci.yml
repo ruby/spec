@@ -15,7 +15,9 @@ jobs:
         ruby: [ 3.3.10, 3.4.8, 4.0.1 ]
         mspecopt: [""]
         rubyopt: [""]
+        locale: [""]
         include:
+          - { os: ubuntu, ruby: 4.0.1, locale: "LC_ALL=C" }
           - { os: ubuntu, ruby: 4.0.1, mspecopt: "--repeat 2" }
           - { os: ubuntu, ruby: 4.0.1, rubyopt: "--enable-frozen-string-literal" }
           - { os: ubuntu, ruby: 4.0.1, rubyopt: "--parser=parse.y" }
@@ -39,7 +41,7 @@ jobs:
       env:
         CHECK_LEAKS: true
         RUBYOPT: "${{ matrix.rubyopt }}"
-      run: ../mspec/bin/mspec -j --timeout 30 ${{ matrix.mspecopt }}
+      run: ${{ matrix.locale }} ../mspec/bin/mspec -j --timeout 30 ${{ matrix.mspecopt }}
 
     - name: Run specs (macOS)
       if: matrix.os == 'macos'
