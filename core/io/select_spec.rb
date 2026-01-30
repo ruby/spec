@@ -115,6 +115,16 @@ describe "IO.select" do
     -> { IO.select(nil, nil, nil, -5)}.should raise_error(ArgumentError)
   end
 
+  ruby_version_is "4.0" do
+    it "raises an ArgumentError when passed negative infinity as timeout" do
+      -> { IO.select(nil, nil, nil, -Float::INFINITY)}.should raise_error(ArgumentError)
+    end
+  end
+
+  it "raises an RangeError when passed NaN as timeout" do
+    -> { IO.select(nil, nil, nil, Float::NAN)}.should raise_error(RangeError)
+  end
+
   describe "returns the available descriptors when the file descriptor" do
     it "is in both read and error arrays" do
       @wr.write("foobar")
