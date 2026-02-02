@@ -112,7 +112,7 @@ describe "IO.select" do
   end
 
   it "raises an ArgumentError when passed a negative timeout" do
-    -> { IO.select(nil, nil, nil, -5)}.should raise_error(ArgumentError)
+    -> { IO.select(nil, nil, nil, -5)}.should raise_error(ArgumentError, "time interval must not be negative")
   end
 
   describe "returns the available descriptors when the file descriptor" do
