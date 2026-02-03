@@ -25,7 +25,27 @@ describe "Regexp.linear_time?" do
     }.should complain(/warning: flags ignored/)
   end
 
-  it "returns true for positive lookarounds" do
-    Regexp.linear_time?(/(?:(?=a*)a)*/).should == true
+  it "returns true for positive lookahead" do
+    Regexp.linear_time?(/a*(?:(?=a*)a)*b/).should == true
+  end
+
+  it "returns true for positive lookbehind" do
+    Regexp.linear_time?(/a*(?:(?<=a)a*)*b/).should == true
+  end
+
+  it "returns true for negative lookahead" do
+    Regexp.linear_time?(/a*(?:(?!a*)a*)*b/).should == true
+  end
+
+  it "returns true for negative lookbehind" do
+    Regexp.linear_time?(/a*(?:(?<!a)a*)*b/).should == true
+  end
+
+  it "returns true for atomic groups" do
+    Regexp.linear_time?(/a*(?:(?>a)a*)*b/).should == true
+  end
+
+  it "returns true for possessive quantifiers" do
+    Regexp.linear_time?(/a*(?:(?:a)?+a*)*b/).should == true
   end
 end
