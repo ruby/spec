@@ -32,8 +32,8 @@ describe "File.link" do
     end
 
     it "raises a TypeError if not passed String types" do
-      -> { File.link(@file, nil) }.should raise_error(TypeError)
-      -> { File.link(@file, 1)   }.should raise_error(TypeError)
+      -> { File.link(@file, nil) }.should raise_error(TypeError, "no implicit conversion of nil into String")
+      -> { File.link(@file, 1)   }.should raise_error(TypeError, "no implicit conversion of Integer into String")
     end
   end
 end
