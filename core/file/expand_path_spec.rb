@@ -117,9 +117,9 @@ describe "File.expand_path" do
   end
 
   it "raises a TypeError if not passed a String type" do
-    -> { File.expand_path(1)    }.should raise_error(TypeError)
-    -> { File.expand_path(nil)  }.should raise_error(TypeError)
-    -> { File.expand_path(true) }.should raise_error(TypeError)
+    -> { File.expand_path(1)    }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.expand_path(nil)  }.should raise_error(TypeError, "no implicit conversion of nil into String")
+    -> { File.expand_path(true) }.should raise_error(TypeError, "no implicit conversion of true into String")
   end
 
   platform_is_not :windows do

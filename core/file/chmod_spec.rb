@@ -106,7 +106,8 @@ describe "File.chmod" do
   end
 
   it "throws a TypeError if the given path is not coercible into a string" do
-    -> { File.chmod(0, []) }.should raise_error(TypeError)
+    -> { File.chmod(0, [])    }.should raise_error(TypeError, "no implicit conversion of Array into String")
+    -> { File.chmod(0, false) }.should raise_error(TypeError, "no implicit conversion of false into String")
   end
 
   it "raises an error for a non existent path" do

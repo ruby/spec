@@ -41,11 +41,11 @@ describe "File.path" do
   it "raises TypeError when #to_path result is not a string" do
     path = mock("path")
     path.should_receive(:to_path).and_return(nil)
-    -> { File.path(path) }.should raise_error TypeError
+    -> { File.path(path) }.should raise_error(TypeError, "no implicit conversion of nil into String")
 
     path = mock("path")
     path.should_receive(:to_path).and_return(42)
-    -> { File.path(path) }.should raise_error TypeError
+    -> { File.path(path) }.should raise_error(TypeError, "no implicit conversion of Integer into String")
   end
 
   it "raises ArgumentError for string argument contains NUL character" do

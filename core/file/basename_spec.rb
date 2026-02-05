@@ -105,10 +105,10 @@ describe "File.basename" do
   end
 
   it "raises a TypeError if the arguments are not String types" do
-    -> { File.basename(nil)          }.should raise_error(TypeError)
-    -> { File.basename(1)            }.should raise_error(TypeError)
-    -> { File.basename("bar.txt", 1) }.should raise_error(TypeError)
-    -> { File.basename(true)         }.should raise_error(TypeError)
+    -> { File.basename(nil)          }.should raise_error(TypeError, "no implicit conversion of nil into String")
+    -> { File.basename(1)            }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.basename("bar.txt", 1) }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.basename(true)         }.should raise_error(TypeError, "no implicit conversion of true into String")
   end
 
   it "accepts an object that has a #to_path method" do

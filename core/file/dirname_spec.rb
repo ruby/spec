@@ -134,10 +134,10 @@ describe "File.dirname" do
   end
 
   it "raises a TypeError if not passed a String type" do
-    -> { File.dirname(nil)   }.should raise_error(TypeError)
-    -> { File.dirname(0)     }.should raise_error(TypeError)
-    -> { File.dirname(true)  }.should raise_error(TypeError)
-    -> { File.dirname(false) }.should raise_error(TypeError)
+    -> { File.dirname(nil)   }.should raise_error(TypeError, "no implicit conversion of nil into String")
+    -> { File.dirname(0)     }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.dirname(true)  }.should raise_error(TypeError, "no implicit conversion of true into String")
+    -> { File.dirname(false) }.should raise_error(TypeError, "no implicit conversion of false into String")
   end
 
   # Windows specific tests
