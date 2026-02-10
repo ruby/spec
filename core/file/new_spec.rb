@@ -195,12 +195,13 @@ describe "File.new" do
   end
 
   it "raises a TypeError if the first parameter can't be coerced to a string" do
-    -> { File.new(true) }.should raise_error(TypeError)
-    -> { File.new(false) }.should raise_error(TypeError)
+    -> { File.new(true) }.should raise_error(TypeError, "no implicit conversion of true into String")
+    -> { File.new(false) }.should raise_error(TypeError, "no implicit conversion of false into String")
+    -> { File.new([]) }.should raise_error(TypeError, "no implicit conversion of Array into String")
   end
 
   it "raises a TypeError if the first parameter is nil" do
-    -> { File.new(nil) }.should raise_error(TypeError)
+    -> { File.new(nil) }.should raise_error(TypeError, "no implicit conversion of nil into String")
   end
 
   it "raises an Errno::EBADF if the first parameter is an invalid file descriptor" do

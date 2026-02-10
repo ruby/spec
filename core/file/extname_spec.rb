@@ -57,10 +57,10 @@ describe "File.extname" do
   end
 
   it "raises a TypeError if not passed a String type" do
-    -> { File.extname(nil)   }.should raise_error(TypeError)
-    -> { File.extname(0)     }.should raise_error(TypeError)
-    -> { File.extname(true)  }.should raise_error(TypeError)
-    -> { File.extname(false) }.should raise_error(TypeError)
+    -> { File.extname(nil)   }.should raise_error(TypeError, "no implicit conversion of nil into String")
+    -> { File.extname(0)     }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.extname(true)  }.should raise_error(TypeError, "no implicit conversion of true into String")
+    -> { File.extname(false) }.should raise_error(TypeError, "no implicit conversion of false into String")
   end
 
   it "raises an ArgumentError if not passed one argument" do
