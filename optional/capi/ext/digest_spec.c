@@ -135,7 +135,7 @@ VALUE digest_spec_context_size(VALUE self, VALUE meta) {
     return SIZET2NUM(algo->ctx_size);
 }
 
-#ifndef PTR2NUM
+#ifndef RUBY_VERSION_IS_4_0
 #define PTR2NUM(x) (rb_int2inum((intptr_t)(void *)(x)))
 #endif
 
