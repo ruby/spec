@@ -48,4 +48,42 @@ describe "Mutex#lock" do
     f1.resume
     -> { f2.resume }.should raise_error(ThreadError, /deadlock/)
   end
+
+  it "does not raise deadlock if a fiber's attempt to lock was interrupted" do
+    lock = Mutex.new
+    main = Thread.current
+
+    t2 = nil
+    t1 = Thread.new do
+      loop do
+        # interrupt fiber below looping on synchronize
+        sleep 0.01
+        t2.raise if t2
+      end
+    end
+
+    # loop ten times to try to handle the interrupt during synchronize
+    t2 = Thread.new do
+      10.times do
+        Fiber.new do
+          begin
+            loop { lock.synchronize {} }
+          rescue RuntimeError
+          end
+        end.resume
+
+        Fiber.new do
+          ->() do
+            lock.synchronize {}
+          end.should_not raise_error(ThreadError)
+        end.resume
+      rescue RuntimeError
+        retry
+      end
+    end
+    t2.join
+  ensure
+    t1.kill rescue nil
+    t2.kill rescue nil
+  end
 end
