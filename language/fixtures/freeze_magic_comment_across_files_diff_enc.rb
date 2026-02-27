@@ -2,4 +2,5 @@
 
 require_relative 'freeze_magic_comment_required_diff_enc'
 
-p "abc".object_id != $second_literal_id
+p "abc".object_id != $second_literal.object_id
+$second_literal = nil
