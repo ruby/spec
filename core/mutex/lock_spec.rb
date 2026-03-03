@@ -85,5 +85,8 @@ describe "Mutex#lock" do
   ensure
     t1.kill rescue nil
     t2.kill rescue nil
+
+    t1.join
+    t2.join
   end
 end
