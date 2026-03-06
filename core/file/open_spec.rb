@@ -543,9 +543,10 @@ describe "File.open" do
   end
 
   it "raises a TypeError if passed a filename that is not a String or Integer type" do
-    -> { File.open(true)  }.should raise_error(TypeError)
-    -> { File.open(false) }.should raise_error(TypeError)
-    -> { File.open(nil)   }.should raise_error(TypeError)
+    -> { File.open(true)  }.should raise_error(TypeError, "no implicit conversion of true into String")
+    -> { File.open(false) }.should raise_error(TypeError, "no implicit conversion of false into String")
+    -> { File.open(nil)   }.should raise_error(TypeError, "no implicit conversion of nil into String")
+    -> { File.open([])    }.should raise_error(TypeError, "no implicit conversion of Array into String")
   end
 
   it "raises a SystemCallError if passed an invalid Integer type" do

@@ -72,11 +72,13 @@ describe "File.truncate" do
   end
 
   it "raises a TypeError if not passed a String type for the first argument" do
-    -> { File.truncate(1, 1) }.should raise_error(TypeError)
+    -> { File.truncate(1, 1) }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.truncate(false, 1) }.should raise_error(TypeError, "no implicit conversion of false into String")
   end
 
   it "raises a TypeError if not passed an Integer type for the second argument" do
-    -> { File.truncate(@name, nil) }.should raise_error(TypeError)
+    -> { File.truncate(@name, nil) }.should raise_error(TypeError, /no implicit conversion from nil( to integer)?/)
+    -> { File.truncate(@name, "") }.should raise_error(TypeError, /no implicit conversion (of String into Integer|from string)/)
   end
 
   it "accepts an object that has a #to_path method" do
@@ -172,6 +174,7 @@ describe "File#truncate" do
   end
 
   it "raises a TypeError if not passed an Integer type for the for the argument" do
-    -> { @file.truncate(nil) }.should raise_error(TypeError)
+    -> { @file.truncate(nil) }.should raise_error(TypeError, /no implicit conversion from nil( to integer)?/)
+    -> { @file.truncate([]) }.should raise_error(TypeError, "no implicit conversion of Array into Integer")
   end
 end
