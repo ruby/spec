@@ -94,7 +94,7 @@ describe "Enumerable#none?" do
   end
 
   describe 'when given a pattern argument' do
-    it "calls `===` on the pattern the return value " do
+    it "calls `===` on the pattern the return value" do
       pattern = EnumerableSpecs::Pattern.new { |x| x == 3 }
       @enum1.none?(pattern).should == true
       pattern.yielded.should == [[0], [1], [2], [-1]]

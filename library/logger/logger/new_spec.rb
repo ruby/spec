@@ -94,7 +94,7 @@ describe "Logger#new" do
     logger.formatter.should == formatter
   end
 
-  it "receives shift_period_suffix " do
+  it "receives shift_period_suffix" do
     shift_period_suffix = "%Y-%m-%d"
     path                = tmp("shift_period_suffix_test.log")
     now                 = Time.now

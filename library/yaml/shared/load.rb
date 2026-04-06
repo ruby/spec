@@ -117,7 +117,7 @@ describe :yaml_load_unsafe, shared: true do
       ].should be_computed_by(:usec)
     end
 
-    it "rounds values smaller than 1 usec to 0 " do
+    it "rounds values smaller than 1 usec to 0" do
       YAML.send(@method, "2011-03-22t23:32:11.000000342222+01:00").usec.should == 0
     end
   end

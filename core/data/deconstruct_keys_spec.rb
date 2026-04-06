@@ -88,7 +88,7 @@ describe "Data#deconstruct_keys" do
       }.should raise_consistent_error(TypeError, /can't convert MockObject into String/)
     end
 
-    it "raises TypeError if index is not a Symbol and not convertible to String " do
+    it "raises TypeError if index is not a Symbol and not convertible to String" do
       klass = Data.define(:x, :y)
       d = klass.new(1, 2)
 

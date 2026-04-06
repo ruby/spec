@@ -139,7 +139,7 @@ describe "Enumerable#any?" do
   end
 
   describe 'when given a pattern argument' do
-    it "calls `===` on the pattern the return value " do
+    it "calls `===` on the pattern the return value" do
       pattern = EnumerableSpecs::Pattern.new { |x| x == 2 }
       @enum1.any?(pattern).should == true
       pattern.yielded.should == [[0], [1], [2]]
