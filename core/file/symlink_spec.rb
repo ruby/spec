@@ -41,9 +41,9 @@ describe "File.symlink" do
     end
 
     it "raises a TypeError if not called with String types" do
-      -> { File.symlink(@file, nil) }.should raise_error(TypeError)
-      -> { File.symlink(@file, 1)   }.should raise_error(TypeError)
-      -> { File.symlink(1, 1)       }.should raise_error(TypeError)
+      -> { File.symlink(@file, nil) }.should raise_error(TypeError, "no implicit conversion of nil into String")
+      -> { File.symlink(@file, 1)   }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+      -> { File.symlink(1, 1)       }.should raise_error(TypeError, "no implicit conversion of Integer into String")
     end
   end
 end

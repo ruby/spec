@@ -19,7 +19,8 @@ describe "File.mkfifo" do
 
     context "when path passed is not a String value" do
       it "raises a TypeError" do
-        -> { File.mkfifo(:"/tmp/fifo") }.should raise_error(TypeError)
+        -> { File.mkfifo(:"/tmp/fifo") }.should raise_error(TypeError, "no implicit conversion of Symbol into String")
+        -> { File.mkfifo(false)        }.should raise_error(TypeError, "no implicit conversion of false into String")
       end
     end
 

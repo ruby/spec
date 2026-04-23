@@ -31,7 +31,8 @@ describe :file_unlink, shared: true do
   end
 
   it "raises a TypeError if not passed a String type" do
-    -> { File.send(@method, 1) }.should raise_error(TypeError)
+    -> { File.send(@method, 1) }.should raise_error(TypeError, "no implicit conversion of Integer into String")
+    -> { File.send(@method, nil) }.should raise_error(TypeError, "no implicit conversion of nil into String")
   end
 
   it "raises an Errno::ENOENT when the given file doesn't exist" do

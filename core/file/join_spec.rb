@@ -108,11 +108,11 @@ describe "File.join" do
   end
 
   it "raises a TypeError exception when args are nil" do
-    -> { File.join nil }.should raise_error(TypeError)
+    -> { File.join nil }.should raise_error(TypeError, "no implicit conversion of nil into String")
   end
 
   it "calls #to_str" do
-    -> { File.join(mock('x')) }.should raise_error(TypeError)
+    -> { File.join(mock('x')) }.should raise_error(TypeError, "no implicit conversion of MockObject into String")
 
     bin = mock("bin")
     bin.should_receive(:to_str).exactly(:twice).and_return("bin")
@@ -129,7 +129,7 @@ describe "File.join" do
   end
 
   it "calls #to_path" do
-    -> { File.join(mock('x')) }.should raise_error(TypeError)
+    -> { File.join(mock('x')) }.should raise_error(TypeError, "no implicit conversion of MockObject into String")
 
     bin = mock("bin")
     bin.should_receive(:to_path).exactly(:twice).and_return("bin")
