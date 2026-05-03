@@ -1136,3 +1136,13 @@ describe "if `it` is defined as a variable" do
     proc { it = 5; it }.call(0).should == 5
   end
 end
+
+describe "Block-parameter destructuring" do
+  it "does not warn about unused inner names in verbose mode" do
+    -> {
+      eval <<~RUBY, binding, __FILE__, __LINE__ + 1
+        proc { |key, (val1, val2)| [key, val2] }
+      RUBY
+    }.should_not complain(verbose: true)
+  end
+end
