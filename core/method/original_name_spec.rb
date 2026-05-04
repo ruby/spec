@@ -20,6 +20,12 @@ describe "Method#original_name" do
     obj.method(:baz).unbind.bind(obj).original_name.should == :foo
   end
 
+  it "returns the original name even when aliased thrice" do
+    obj = MethodSpecs::Methods.new
+    obj.method(:qux).original_name.should == :foo
+    obj.method(:qux).unbind.bind(obj).original_name.should == :foo
+  end
+
   it "returns the source UnboundMethod's name (not the name given to define_method)" do
     klass = Class.new { define_method(:my_inspect, ::Kernel.instance_method(:inspect)) }
     klass.new.method(:my_inspect).original_name.should == :inspect
