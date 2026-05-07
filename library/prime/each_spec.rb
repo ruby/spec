@@ -49,19 +49,19 @@ describe :prime_each, shared: true do
     end
 
     it "returns an object that responds to #with_index" do
-      @prime_enum.should respond_to(:with_index)
+      @prime_enum.should.respond_to?(:with_index)
     end
 
     it "returns an object that responds to #with_object" do
-      @prime_enum.should respond_to(:with_object)
+      @prime_enum.should.respond_to?(:with_object)
     end
 
     it "returns an object that responds to #next" do
-      @prime_enum.should respond_to(:next)
+      @prime_enum.should.respond_to?(:next)
     end
 
     it "returns an object that responds to #rewind" do
-      @prime_enum.should respond_to(:rewind)
+      @prime_enum.should.respond_to?(:rewind)
     end
 
     it "yields primes starting at 2 independent of prior enumerators" do

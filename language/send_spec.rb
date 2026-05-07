@@ -376,7 +376,7 @@ describe "Invoking a method" do
 
   it "with splat operator * and non-Array value uses value unchanged if it does not respond_to?(:to_ary)" do
     obj = Object.new
-    obj.should_not respond_to(:to_a)
+    obj.should_not.respond_to?(:to_a)
 
     specs.fooM0R(*obj).should == [obj]
     specs.fooM1R(1,*obj).should == [1, [obj]]

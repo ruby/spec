@@ -135,7 +135,7 @@ describe "The unpacking splat operator (*)" do
 
   it "when applied to a non-Array value uses it unchanged if it does not respond_to?(:to_a)" do
     obj = Object.new
-    obj.should_not respond_to(:to_a)
+    obj.should_not.respond_to?(:to_a)
     [1, *obj].should == [1, obj]
   end
 

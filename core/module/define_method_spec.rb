@@ -443,7 +443,7 @@ describe "Module#define_method" do
     klass = Class.new {
       define_method :bar, ModuleSpecs::UnboundMethodTest.instance_method(:foo)
     }
-    klass.new.should respond_to(:bar)
+    klass.new.should.respond_to?(:bar)
   end
 
   it "allows an UnboundMethod from a parent class to be defined on a child class" do
@@ -451,7 +451,7 @@ describe "Module#define_method" do
     child = Class.new(parent) {
       define_method :baz, parent.instance_method(:foo)
     }
-    child.new.should respond_to(:baz)
+    child.new.should.respond_to?(:baz)
   end
 
   it "allows an UnboundMethod from a module to be defined on another unrelated module" do
@@ -459,7 +459,7 @@ describe "Module#define_method" do
       define_method :bar, ModuleSpecs::UnboundMethodTest.instance_method(:foo)
     }
     klass = Class.new { include mod }
-    klass.new.should respond_to(:bar)
+    klass.new.should.respond_to?(:bar)
   end
 
 

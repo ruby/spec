@@ -7,8 +7,8 @@ describe "Prime.instance" do
   end
 
   it "returns a object with no obsolete features" do
-    Prime.instance.should_not respond_to(:succ)
-    Prime.instance.should_not respond_to(:next)
+    Prime.instance.should_not.respond_to?(:succ)
+    Prime.instance.should_not.respond_to?(:next)
   end
 
   it "does not complain anything" do
