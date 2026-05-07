@@ -473,7 +473,7 @@ describe "A nested method definition" do
     other = DefSpecNested.new
     other.an_instance_method.should == other
 
-    DefSpecNested.should have_instance_method(:an_instance_method)
+    DefSpecNested.should.method_defined?(:an_instance_method, false)
   end
 
   it "creates a class method when evaluated in a class method" do
@@ -522,7 +522,7 @@ describe "A nested method definition" do
     end
 
     DefSpecNested::TARGET.defs_method
-    DefSpecNested.should have_instance_method :inherited_method
+    DefSpecNested.should.method_defined?(:inherited_method, false)
     DefSpecNested::TARGET.should_not have_method :inherited_method
 
     obj = DefSpecNested.new
@@ -548,8 +548,8 @@ describe "A nested method definition" do
     obj.should have_method :arg_method
     obj.should have_method :body_method
 
-    DefSpecNested.should_not have_instance_method :arg_method
-    DefSpecNested.should_not have_instance_method :body_method
+    DefSpecNested.should_not.method_defined? :arg_method
+    DefSpecNested.should_not.method_defined? :body_method
   ensure
     DefSpecNested.send(:remove_const, :OBJ)
   end

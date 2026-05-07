@@ -181,46 +181,46 @@ describe "Instance methods of a singleton class" do
   end
 
   it "include ones of the object's class" do
-    @k_sc.should have_instance_method(:example_instance_method)
+    @k_sc.should.method_defined?(:example_instance_method, true)
   end
 
   it "does not include class methods of the object's class" do
-    @k_sc.should_not have_instance_method(:example_class_method)
+    @k_sc.should_not.method_defined?(:example_class_method)
   end
 
   it "include instance methods of Object" do
-    @a_sc.should have_instance_method(:example_instance_method_of_object)
+    @a_sc.should.method_defined?(:example_instance_method_of_object, true)
   end
 
   it "does not include class methods of Object" do
-    @a_sc.should_not have_instance_method(:example_class_method_of_object)
+    @a_sc.should_not.method_defined?(:example_class_method_of_object)
   end
 
   describe "for a class" do
     it "include instance methods of Class" do
-      @a_c_sc.should have_instance_method(:example_instance_method_of_class)
+      @a_c_sc.should.method_defined?(:example_instance_method_of_class, true)
     end
 
     it "does not include class methods of Class" do
-      @a_c_sc.should_not have_instance_method(:example_class_method_of_class)
+      @a_c_sc.should_not.method_defined?(:example_class_method_of_class)
     end
 
     it "does not include instance methods of the singleton class of Class" do
-      @a_c_sc.should_not have_instance_method(:example_instance_method_of_singleton_class)
+      @a_c_sc.should_not.method_defined?(:example_instance_method_of_singleton_class)
     end
 
     it "does not include class methods of the singleton class of Class" do
-      @a_c_sc.should_not have_instance_method(:example_class_method_of_singleton_class)
+      @a_c_sc.should_not.method_defined?(:example_class_method_of_singleton_class)
     end
   end
 
   describe "for a singleton class" do
     it "includes instance methods of the singleton class of Class" do
-      @a_c_sc.singleton_class.should have_instance_method(:example_instance_method_of_singleton_class)
+      @a_c_sc.singleton_class.should.method_defined?(:example_instance_method_of_singleton_class, true)
     end
 
     it "does not include class methods of the singleton class of Class" do
-      @a_c_sc.singleton_class.should_not have_instance_method(:example_class_method_of_singleton_class)
+      @a_c_sc.singleton_class.should_not.method_defined?(:example_class_method_of_singleton_class)
     end
   end
 end

@@ -246,7 +246,7 @@ describe "CApiModule" do
     it "defines a method on a class" do
       cls = Class.new
       @m.rb_define_method(cls, "test_method")
-      cls.should have_instance_method(:test_method)
+      cls.should.method_defined?(:test_method, false)
       cls.new.test_method.should == :test_method
     end
 
@@ -285,7 +285,7 @@ describe "CApiModule" do
     it "defines a method on a module" do
       mod = Module.new
       @m.rb_define_method(mod, "test_method")
-      mod.should have_instance_method(:test_method)
+      mod.should.method_defined?(:test_method, false)
     end
 
     it "returns the correct arity of the method in module" do
@@ -376,7 +376,7 @@ describe "CApiModule" do
     it "undef'ines a method on a class" do
       @class.new.ruby_test_method.should == :ruby_test_method
       @m.rb_undef_method @class, "ruby_test_method"
-      @class.should_not have_instance_method(:ruby_test_method)
+      @class.should_not.method_defined?(:ruby_test_method)
     end
 
     it "undefines private methods also" do
@@ -413,7 +413,7 @@ describe "CApiModule" do
 
       cls.new.ruby_test_method.should == :ruby_test_method
       @m.rb_undef cls, :ruby_test_method
-      cls.should_not have_instance_method(:ruby_test_method)
+      cls.should_not.method_defined?(:ruby_test_method)
     end
   end
 

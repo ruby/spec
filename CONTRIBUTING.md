@@ -90,7 +90,7 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 3.14.should.is_a?(Numeric) # Calls #is_a?
 
 3.14.should.respond_to?(:to_i)
-Integer.should have_instance_method(:+)
+Integer.should.method_defined?(:+, false)
 Array.should have_method(:new)
 ```
 

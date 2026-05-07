@@ -308,7 +308,7 @@ describe "Kernel#eval" do
   it "has the correct default definee when called through Method#call" do
     class EvalSpecs
       method(:eval).call("def eval_spec_method_call; end")
-      EvalSpecs.should have_instance_method(:eval_spec_method_call)
+      EvalSpecs.should.method_defined?(:eval_spec_method_call, false)
     end
   end
 
