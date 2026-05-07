@@ -34,7 +34,7 @@ describe "A singleton class" do
   end
 
   it "inherits from Class for classes" do
-    Class.should be_ancestor_of(Object.singleton_class)
+    Object.singleton_class.ancestors.should.include?(Class)
   end
 
   it "is a subclass of Class's singleton class" do

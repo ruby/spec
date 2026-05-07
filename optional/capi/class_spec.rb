@@ -338,7 +338,7 @@ describe "C-API Class function" do
                                      "ClassUnder1",
                                      CApiClassSpecs::Super)
       cls.should be_kind_of(Class)
-      CApiClassSpecs::Super.should be_ancestor_of(CApiClassSpecs::ClassUnder1)
+      CApiClassSpecs::ClassUnder1.ancestors.should.include?(CApiClassSpecs::Super)
     end
 
     it "sets the class name" do
@@ -391,7 +391,7 @@ describe "C-API Class function" do
     it "creates a subclass of the superclass contained in a module" do
       cls = @s.rb_define_class_id_under(CApiClassSpecs, :ClassIdUnder1, CApiClassSpecs::Super)
       cls.should be_kind_of(Class)
-      CApiClassSpecs::Super.should be_ancestor_of(CApiClassSpecs::ClassIdUnder1)
+      CApiClassSpecs::ClassIdUnder1.ancestors.should.include?(CApiClassSpecs::Super)
     end
 
     it "sets the class name" do
@@ -448,7 +448,7 @@ describe "C-API Class function" do
   describe "rb_class_new" do
     it "returns a new subclass of the superclass" do
       subclass = @s.rb_class_new(CApiClassSpecs::NewClass)
-      CApiClassSpecs::NewClass.should be_ancestor_of(subclass)
+      subclass.ancestors.should.include?(CApiClassSpecs::NewClass)
     end
 
     it "raises a TypeError if passed Class as the superclass" do

@@ -88,7 +88,6 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 
 3.14.should.instance_of?(Float) # Calls #instance_of?
 3.14.should be_kind_of(Numeric) # Calls #is_a?
-Numeric.should be_ancestor_of(Float) # Float.ancestors.include?(Numeric)
 
 3.14.should.respond_to?(:to_i)
 Integer.should have_instance_method(:+)
