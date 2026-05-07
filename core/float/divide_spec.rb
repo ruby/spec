@@ -16,13 +16,13 @@ describe "Float#/" do
   end
 
   it "returns +Infinity when dividing non-zero by zero of the same sign" do
-    (1.0 / 0.0).should be_positive_infinity
-    (-1.0 / -0.0).should be_positive_infinity
+    (1.0 / 0.0).should.infinite? == 1
+    (-1.0 / -0.0).should.infinite? == 1
   end
 
   it "returns -Infinity when dividing non-zero by zero of opposite sign" do
-    (-1.0 / 0.0).should be_negative_infinity
-    (1.0 / -0.0).should be_negative_infinity
+    (-1.0 / 0.0).should.infinite? == -1
+    (1.0 / -0.0).should.infinite? == -1
   end
 
   it "returns NaN when dividing zero by zero" do

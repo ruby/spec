@@ -83,8 +83,6 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 
 (0.1 + 0.2).should be_close(0.3, TOLERANCE) # (0.2-0.1).abs < TOLERANCE
 (0.0/0.0).should.nan?
-(1.0/0.0).should be_positive_infinity
-(-1.0/0.0).should be_negative_infinity
 
 3.14.should.instance_of?(Float) # Calls #instance_of?
 3.14.should.is_a?(Numeric) # Calls #is_a?
