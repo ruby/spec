@@ -42,7 +42,7 @@ describe "File.basename" do
   end
 
   it "returns an string" do
-    File.basename("foo").should be_kind_of(String)
+    File.basename("foo").should.is_a?(String)
   end
 
   it "returns the basename for unix format" do

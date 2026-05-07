@@ -11,7 +11,7 @@ describe "File::Stat#dev_minor" do
 
   platform_is_not :windows do
     it "returns the minor part of File::Stat#dev" do
-      File.stat(@name).dev_minor.should be_kind_of(Integer)
+      File.stat(@name).dev_minor.should.is_a?(Integer)
     end
   end
 

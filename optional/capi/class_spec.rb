@@ -200,7 +200,7 @@ describe "C-API Class function" do
     end
 
     it "returns a string for an anonymous class" do
-      @s.rb_class2name(Class.new).should be_kind_of(String)
+      @s.rb_class2name(Class.new).should.is_a?(String)
     end
 
     it "returns a string beginning with # for an anonymous class" do
@@ -224,7 +224,7 @@ describe "C-API Class function" do
     end
 
     it "returns a string for an anonymous class" do
-      @s.rb_class_name(Class.new).should be_kind_of(String)
+      @s.rb_class_name(Class.new).should.is_a?(String)
     end
   end
 
@@ -289,7 +289,7 @@ describe "C-API Class function" do
     end
 
     it "creates a subclass of the superclass" do
-      @cls.should be_kind_of(Class)
+      @cls.should.is_a?(Class)
       ClassSpecDefineClass.should equal(@cls)
       @cls.superclass.should == CApiClassSpecs::Super
     end
@@ -337,7 +337,7 @@ describe "C-API Class function" do
       cls = @s.rb_define_class_under(CApiClassSpecs,
                                      "ClassUnder1",
                                      CApiClassSpecs::Super)
-      cls.should be_kind_of(Class)
+      cls.should.is_a?(Class)
       CApiClassSpecs::ClassUnder1.ancestors.should.include?(CApiClassSpecs::Super)
     end
 
@@ -390,7 +390,7 @@ describe "C-API Class function" do
   describe "rb_define_class_id_under" do
     it "creates a subclass of the superclass contained in a module" do
       cls = @s.rb_define_class_id_under(CApiClassSpecs, :ClassIdUnder1, CApiClassSpecs::Super)
-      cls.should be_kind_of(Class)
+      cls.should.is_a?(Class)
       CApiClassSpecs::ClassIdUnder1.ancestors.should.include?(CApiClassSpecs::Super)
     end
 

@@ -15,7 +15,7 @@ describe "StringIO.open when passed [Object, mode]" do
   it "yields self to the passed block" do
     io = nil
     StringIO.open(+"example", "r") { |strio| io = strio }
-    io.should be_kind_of(StringIO)
+    io.should.is_a?(StringIO)
   end
 
   it "closes self after yielding" do

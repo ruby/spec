@@ -22,7 +22,7 @@ end
 describe "Symbol#match" do
   it "returns the MatchData" do
     result = :abc.match(/b/)
-    result.should be_kind_of(MatchData)
+    result.should.is_a?(MatchData)
     result[0].should == 'b'
   end
 
@@ -38,7 +38,7 @@ describe "Symbol#match" do
   describe "when passed a block" do
     it "yields the MatchData" do
       :abc.match(/./) {|m| ScratchPad.record m }
-      ScratchPad.recorded.should be_kind_of(MatchData)
+      ScratchPad.recorded.should.is_a?(MatchData)
     end
 
     it "returns the block result" do

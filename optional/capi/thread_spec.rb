@@ -72,7 +72,7 @@ describe "C-API Thread function" do
       obj = Object.new
       proc = -> x { ScratchPad.record x }
       thr = @t.rb_thread_create(proc, obj)
-      thr.should be_kind_of(Thread)
+      thr.should.is_a?(Thread)
       thr.join
       ScratchPad.recorded.should == obj
     end
@@ -83,7 +83,7 @@ describe "C-API Thread function" do
         raise "my error"
       }
       thr = @t.rb_thread_create(prc, nil)
-      thr.should be_kind_of(Thread)
+      thr.should.is_a?(Thread)
 
       -> {
         thr.join

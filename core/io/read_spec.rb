@@ -444,7 +444,7 @@ describe "IO#read" do
       Thread.pass until t.stop?
       r.close
       t.join
-      t.value.should be_kind_of(IOError)
+      t.value.should.is_a?(IOError)
       w.close
     end
   end

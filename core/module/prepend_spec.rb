@@ -542,13 +542,13 @@ describe "Module#prepend" do
   it "sees an instance of a prepended class as kind of the prepended module" do
     m = Module.new
     c = Class.new { prepend(m) }
-    c.new.should be_kind_of(m)
+    c.new.should.is_a?(m)
   end
 
   it "keeps the module in the chain when dupping the class" do
     m = Module.new
     c = Class.new { prepend(m) }
-    c.dup.new.should be_kind_of(m)
+    c.dup.new.should.is_a?(m)
   end
 
   it "uses only new module when dupping the module" do
@@ -559,9 +559,9 @@ describe "Module#prepend" do
     m2dup.ancestors.should == [m1,m2dup]
     c2 = Class.new { prepend(m2dup) }
     c1.ancestors[0,3].should == [m1,m2,c1]
-    c1.new.should be_kind_of(m1)
+    c1.new.should.is_a?(m1)
     c2.ancestors[0,3].should == [m1,m2dup,c2]
-    c2.new.should be_kind_of(m1)
+    c2.new.should.is_a?(m1)
   end
 
   it "depends on prepend_features to add the module" do

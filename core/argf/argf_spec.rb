@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "ARGF" do
   it "is extended by the Enumerable module" do
-    ARGF.should be_kind_of(Enumerable)
+    ARGF.should.is_a?(Enumerable)
   end
 
   it "is an instance of ARGF.class" do

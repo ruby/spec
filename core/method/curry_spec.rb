@@ -7,7 +7,7 @@ describe "Method#curry" do
     def x.foo(a,b,c); [a,b,c]; end
 
     c = x.method(:foo).curry
-    c.should be_kind_of(Proc)
+    c.should.is_a?(Proc)
     c.call(1).call(2, 3).should == [1,2,3]
   end
 
@@ -17,9 +17,9 @@ describe "Method#curry" do
     end
 
     it "returns a curried proc when given correct arity" do
-      @obj.method(:one_req).curry(1).should be_kind_of(Proc)
-      @obj.method(:zero_with_splat).curry(100).should be_kind_of(Proc)
-      @obj.method(:two_req_with_splat).curry(2).should be_kind_of(Proc)
+      @obj.method(:one_req).curry(1).should.is_a?(Proc)
+      @obj.method(:zero_with_splat).curry(100).should.is_a?(Proc)
+      @obj.method(:two_req_with_splat).curry(2).should.is_a?(Proc)
     end
 
     it "raises ArgumentError when the method requires less arguments than the given arity" do

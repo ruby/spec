@@ -7,23 +7,23 @@ describe "Kernel#rand" do
   end
 
   it "returns a float if no argument is passed" do
-    rand.should be_kind_of(Float)
+    rand.should.is_a?(Float)
   end
 
   it "returns an integer for an integer argument" do
-    rand(77).should be_kind_of(Integer)
+    rand(77).should.is_a?(Integer)
   end
 
   it "returns an integer for a float argument greater than 1" do
-    rand(1.3).should be_kind_of(Integer)
+    rand(1.3).should.is_a?(Integer)
   end
 
   it "returns a float for an argument between -1 and 1" do
-    rand(-0.999).should be_kind_of(Float)
-    rand(-0.01).should be_kind_of(Float)
-    rand(0).should be_kind_of(Float)
-    rand(0.01).should be_kind_of(Float)
-    rand(0.999).should be_kind_of(Float)
+    rand(-0.999).should.is_a?(Float)
+    rand(-0.01).should.is_a?(Float)
+    rand(0).should.is_a?(Float)
+    rand(0.01).should.is_a?(Float)
+    rand(0.999).should.is_a?(Float)
   end
 
   it "ignores the sign of the argument" do
@@ -53,7 +53,7 @@ describe "Kernel#rand" do
     it "returns an Integer between the two Integers" do
       1000.times do
         x = rand(4...6)
-        x.should be_kind_of(Integer)
+        x.should.is_a?(Integer)
         (4...6).should include(x)
       end
     end
@@ -61,7 +61,7 @@ describe "Kernel#rand" do
     it "returns a Float between the given Integer and Float" do
       1000.times do
         x = rand(4...6.5)
-        x.should be_kind_of(Float)
+        x.should.is_a?(Float)
         (4...6.5).should include(x)
       end
     end
@@ -69,7 +69,7 @@ describe "Kernel#rand" do
     it "returns a Float between the given Float and Integer" do
       1000.times do
         x = rand(3.5...6)
-        x.should be_kind_of(Float)
+        x.should.is_a?(Float)
         (3.5...6).should include(x)
       end
     end
@@ -77,7 +77,7 @@ describe "Kernel#rand" do
     it "returns a Float between the two given Floats" do
       1000.times do
         x = rand(3.5...6.5)
-        x.should be_kind_of(Float)
+        x.should.is_a?(Float)
         (3.5...6.5).should include(x)
       end
     end
@@ -87,7 +87,7 @@ describe "Kernel#rand" do
     it "returns an Integer between the two Integers" do
       1000.times do
         x = rand(4..6)
-        x.should be_kind_of(Integer)
+        x.should.is_a?(Integer)
         (4..6).should include(x)
       end
     end
@@ -95,7 +95,7 @@ describe "Kernel#rand" do
     it "returns a Float between the given Integer and Float" do
       1000.times do
         x = rand(4..6.5)
-        x.should be_kind_of(Float)
+        x.should.is_a?(Float)
         (4..6.5).should include(x)
       end
     end
@@ -103,7 +103,7 @@ describe "Kernel#rand" do
     it "returns a Float between the given Float and Integer" do
       1000.times do
         x = rand(3.5..6)
-        x.should be_kind_of(Float)
+        x.should.is_a?(Float)
         (3.5..6).should include(x)
       end
     end
@@ -111,7 +111,7 @@ describe "Kernel#rand" do
     it "returns a Float between the two given Floats" do
       1000.times do
         x = rand(3.5..6.5)
-        x.should be_kind_of(Float)
+        x.should.is_a?(Float)
         (3.5..6.5).should include(x)
       end
     end
@@ -120,7 +120,7 @@ describe "Kernel#rand" do
   context "given an inclusive range between 0 and 1" do
     it "returns an Integer between the two Integers" do
       x = rand(0..1)
-      x.should be_kind_of(Integer)
+      x.should.is_a?(Integer)
       (0..1).should include(x)
     end
 
@@ -130,7 +130,7 @@ describe "Kernel#rand" do
       x2 = Random.new(seed).rand(0.0..1.0)
       x3 = Random.new(seed).rand(0.0..1)
 
-      x3.should be_kind_of(Float)
+      x3.should.is_a?(Float)
       x1.should eql(x3)
       x2.should eql(x3)
 
@@ -141,7 +141,7 @@ describe "Kernel#rand" do
   context "given an exclusive range between 0 and 1" do
     it "returns zero as an Integer" do
       x = rand(0...1)
-      x.should be_kind_of(Integer)
+      x.should.is_a?(Integer)
       x.should eql(0)
     end
 
@@ -151,7 +151,7 @@ describe "Kernel#rand" do
       x2 = Random.new(seed).rand(0.0...1.0)
       x3 = Random.new(seed).rand(0.0...1)
 
-      x3.should be_kind_of(Float)
+      x3.should.is_a?(Float)
       x1.should eql(x3)
       x2.should eql(x3)
 
@@ -160,7 +160,7 @@ describe "Kernel#rand" do
   end
 
   it "returns a numeric for an range argument where max is < 1" do
-    rand(0.25..0.75).should be_kind_of(Numeric)
+    rand(0.25..0.75).should.is_a?(Numeric)
   end
 
   it "returns nil when range is backwards" do

@@ -24,7 +24,7 @@ describe "UNIXServer#accept_nonblock" do
   end
 
   it "returns a UNIXSocket" do
-    @socket.should be_kind_of(UNIXSocket)
+    @socket.should.is_a?(UNIXSocket)
   end
 
   it 'returns :wait_readable in exceptionless mode' do

@@ -130,7 +130,7 @@ describe "CApiGCSpecs" do
     end
 
     it "returns a value when symbol is given" do
-      @f.rb_gc_latest_gc_info(:state).should be_kind_of(Symbol)
+      @f.rb_gc_latest_gc_info(:state).should.is_a?(Symbol)
     end
   end
 end

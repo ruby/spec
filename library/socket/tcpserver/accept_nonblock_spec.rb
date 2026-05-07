@@ -25,7 +25,7 @@ describe "Socket::TCPServer.accept_nonblock" do
 
     port.should == @port
     address.should == "127.0.0.1"
-    s.should be_kind_of(TCPSocket)
+    s.should.is_a?(TCPSocket)
 
     c.close
     s.close

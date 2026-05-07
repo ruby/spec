@@ -3,7 +3,7 @@ require 'pathname'
 
 describe "Pathname.new" do
   it "returns a new Pathname Object with 1 argument" do
-    Pathname.new('').should be_kind_of(Pathname)
+    Pathname.new('').should.is_a?(Pathname)
   end
 
   it "raises an ArgumentError when called with \0" do

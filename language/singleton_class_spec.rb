@@ -24,13 +24,13 @@ describe "A singleton class" do
 
   it "is a singleton Class instance" do
     o = mock('x')
-    o.singleton_class.should be_kind_of(Class)
+    o.singleton_class.should.is_a?(Class)
     o.singleton_class.should_not equal(Object)
-    o.should be_kind_of(o.singleton_class)
+    o.should.is_a?(o.singleton_class)
   end
 
   it "is a Class for classes" do
-    ClassSpecs::A.singleton_class.should be_kind_of(Class)
+    ClassSpecs::A.singleton_class.should.is_a?(Class)
   end
 
   it "inherits from Class for classes" do
@@ -39,15 +39,15 @@ describe "A singleton class" do
 
   it "is a subclass of Class's singleton class" do
     ec = ClassSpecs::A.singleton_class
-    ec.should be_kind_of(Class.singleton_class)
+    ec.should.is_a?(Class.singleton_class)
   end
 
   it "is a subclass of the same level of Class's singleton class" do
     ecec = ClassSpecs::A.singleton_class.singleton_class
     class_ec = Class.singleton_class
 
-    ecec.should be_kind_of(class_ec.singleton_class)
-    ecec.should be_kind_of(class_ec)
+    ecec.should.is_a?(class_ec.singleton_class)
+    ecec.should.is_a?(class_ec)
   end
 
   it "is a subclass of a superclass's singleton class" do

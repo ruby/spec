@@ -59,7 +59,7 @@ describe "BasicSocket#getsockopt" do
   it 'returns a Socket::Option for a numeric option' do
     opt = @sock.getsockopt(Socket::IPPROTO_IP, Socket::IP_TTL)
 
-    opt.int.should be_kind_of(Integer)
+    opt.int.should.is_a?(Integer)
   end
 
   it 'returns a Socket::Option for a struct option' do
@@ -171,7 +171,7 @@ describe "BasicSocket#getsockopt" do
       opt   = @sock.getsockopt(Socket::IPPROTO_IP, Socket::IP_TTL).to_s
       array = opt.unpack('i')
 
-      array[0].should be_kind_of(Integer)
+      array[0].should.is_a?(Integer)
       array[0].should > 0
     end
 

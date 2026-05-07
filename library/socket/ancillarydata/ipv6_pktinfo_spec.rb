@@ -44,7 +44,7 @@ with_feature :ancillary_data, :ipv6_pktinfo do
         end
 
         it 'stores the ifindex at index 1' do
-          @info[1].should be_kind_of(Integer)
+          @info[1].should.is_a?(Integer)
         end
       end
 

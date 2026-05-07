@@ -11,7 +11,7 @@ describe "StringScanner#initialize" do
   end
 
   it "returns an instance of StringScanner" do
-    @s.should be_kind_of(StringScanner)
+    @s.should.is_a?(StringScanner)
     @s.eos?.should == false
   end
 

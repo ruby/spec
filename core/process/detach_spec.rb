@@ -5,7 +5,7 @@ describe "Process.detach" do
     it "returns a thread" do
       pid = Process.fork { Process.exit! }
       thr = Process.detach(pid)
-      thr.should be_kind_of(Thread)
+      thr.should.is_a?(Thread)
       thr.join
     end
 
@@ -15,7 +15,7 @@ describe "Process.detach" do
       thr.join
 
       status = thr.value
-      status.should be_kind_of(Process::Status)
+      status.should.is_a?(Process::Status)
       status.pid.should == pid
     end
 
@@ -57,7 +57,7 @@ describe "Process.detach" do
       thr = Process.detach(pid_not_existing)
       thr.join
 
-      thr.should be_kind_of(Thread)
+      thr.should.is_a?(Thread)
     end
 
     it "calls #to_int to implicitly convert non-Integer pid to Integer" do

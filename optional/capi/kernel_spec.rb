@@ -53,7 +53,7 @@ describe "C-API Kernel function" do
 
     it "calls the method with no function callback and no block" do
       ary = [1, 3, 5]
-      @s.rb_block_call_no_func(ary).should be_kind_of(Enumerator)
+      @s.rb_block_call_no_func(ary).should.is_a?(Enumerator)
     end
 
     it "calls the method with no function callback and a block" do
@@ -659,7 +659,7 @@ describe "C-API Kernel function" do
   describe "rb_block_proc" do
     it "converts the implicit block into a proc" do
       proc = @s.rb_block_proc { 1+1 }
-      proc.should be_kind_of(Proc)
+      proc.should.is_a?(Proc)
       proc.call.should == 2
       proc.should_not.lambda?
     end
@@ -676,7 +676,7 @@ describe "C-API Kernel function" do
   describe "rb_block_lambda" do
     it "converts the implicit block into a lambda" do
       proc = @s.rb_block_lambda { 1+1 }
-      proc.should be_kind_of(Proc)
+      proc.should.is_a?(Proc)
       proc.call.should == 2
       proc.should.lambda?
     end

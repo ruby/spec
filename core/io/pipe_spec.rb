@@ -16,8 +16,8 @@ describe "IO.pipe" do
 
   it "returns two IO objects" do
     @r, @w = IO.pipe
-    @r.should be_kind_of(IO)
-    @w.should be_kind_of(IO)
+    @r.should.is_a?(IO)
+    @w.should.is_a?(IO)
   end
 
   it "returns instances of a subclass when called on a subclass" do
@@ -42,8 +42,8 @@ describe "IO.pipe" do
   describe "passed a block" do
     it "yields two IO objects" do
       IO.pipe do |r, w|
-        r.should be_kind_of(IO)
-        w.should be_kind_of(IO)
+        r.should.is_a?(IO)
+        w.should.is_a?(IO)
       end
     end
 

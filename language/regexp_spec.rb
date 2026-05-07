@@ -15,7 +15,7 @@ describe "Literal Regexps" do
   end
 
   it "yields a Regexp" do
-    /Hello/.should be_kind_of(Regexp)
+    /Hello/.should.is_a?(Regexp)
   end
 
   it "is frozen" do

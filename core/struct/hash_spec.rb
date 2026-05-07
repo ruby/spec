@@ -8,7 +8,7 @@ describe "Struct#hash" do
     [StructClasses::Ruby.new("1.8.6", "PPC"),
      StructClasses::Car.new("Hugo", "Foo", "1972")].each do |stc|
       stc.hash.should == stc.dup.hash
-      stc.hash.should be_kind_of(Integer)
+      stc.hash.should.is_a?(Integer)
     end
   end
 

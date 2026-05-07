@@ -10,7 +10,7 @@ describe "Enumerator::Generator#each" do
   end
 
   it "is an enumerable" do
-    @generator.should be_kind_of(Enumerable)
+    @generator.should.is_a?(Enumerable)
   end
 
   it "supports enumeration with a block" do

@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.exp" do
   it "returns a float" do
-    Math.exp(1.0).should be_kind_of(Float)
+    Math.exp(1.0).should.is_a?(Float)
   end
 
   it "returns the base-e exponential of the argument" do

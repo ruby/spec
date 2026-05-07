@@ -40,11 +40,11 @@ require 'stringio'
 describe "Predefined global $~" do
   it "is set to contain the MatchData object of the last match if successful" do
     md = /foo/.match 'foo'
-    $~.should be_kind_of(MatchData)
+    $~.should.is_a?(MatchData)
     $~.should equal md
 
     /bar/ =~ 'bar'
-    $~.should be_kind_of(MatchData)
+    $~.should.is_a?(MatchData)
     $~.should_not equal md
   end
 
@@ -1308,7 +1308,7 @@ end
 
 describe "The predefined standard object nil" do
   it "is an instance of NilClass" do
-    nil.should be_kind_of(NilClass)
+    nil.should.is_a?(NilClass)
   end
 
   it "raises a SyntaxError if assigned to" do
@@ -1318,7 +1318,7 @@ end
 
 describe "The predefined standard object true" do
   it "is an instance of TrueClass" do
-    true.should be_kind_of(TrueClass)
+    true.should.is_a?(TrueClass)
   end
 
   it "raises a SyntaxError if assigned to" do
@@ -1328,7 +1328,7 @@ end
 
 describe "The predefined standard object false" do
   it "is an instance of FalseClass" do
-    false.should be_kind_of(FalseClass)
+    false.should.is_a?(FalseClass)
   end
 
   it "raises a SyntaxError if assigned to" do

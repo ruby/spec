@@ -52,7 +52,7 @@ describe "SystemCallError.new" do
 
   it "constructs the appropriate Errno class" do
     e = SystemCallError.new(@example_errno)
-    e.should be_kind_of(SystemCallError)
+    e.should.is_a?(SystemCallError)
     e.should.instance_of?(@example_errno_class)
   end
 

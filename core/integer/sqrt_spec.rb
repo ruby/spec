@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Integer.sqrt" do
   it "returns an integer" do
-    Integer.sqrt(10).should be_kind_of(Integer)
+    Integer.sqrt(10).should.is_a?(Integer)
   end
 
   it "returns the integer square root of the argument" do

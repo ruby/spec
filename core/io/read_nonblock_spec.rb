@@ -14,10 +14,10 @@ describe "IO#read_nonblock" do
   it "raises an exception extending IO::WaitReadable when there is no data" do
     -> { @read.read_nonblock(5) }.should raise_error(IO::WaitReadable) { |e|
       platform_is_not :windows do
-        e.should be_kind_of(Errno::EAGAIN)
+        e.should.is_a?(Errno::EAGAIN)
       end
       platform_is :windows do
-        e.should be_kind_of(Errno::EWOULDBLOCK)
+        e.should.is_a?(Errno::EWOULDBLOCK)
       end
     }
   end

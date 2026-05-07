@@ -4,12 +4,12 @@ ruby_version_is "3.4" do
   describe "GC.config" do
     context "without arguments" do
       it "returns a hash of current settings" do
-        GC.config.should be_kind_of(Hash)
+        GC.config.should.is_a?(Hash)
       end
 
       it "includes the name of currently loaded GC implementation as a global key" do
         GC.config.should include(:implementation)
-        GC.config[:implementation].should be_kind_of(String)
+        GC.config[:implementation].should.is_a?(String)
       end
     end
 

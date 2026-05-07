@@ -4,7 +4,7 @@ require_relative '../../spec_helper'
 
 describe "String#setbyte" do
   it "returns an Integer" do
-    "a".setbyte(0,1).should be_kind_of(Integer)
+    "a".setbyte(0,1).should.is_a?(Integer)
   end
 
   it "modifies the receiver" do

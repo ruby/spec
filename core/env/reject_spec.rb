@@ -76,7 +76,7 @@ describe "ENV.reject" do
   end
 
   it "returns a Hash" do
-    ENV.reject { false }.should be_kind_of(Hash)
+    ENV.reject { false }.should.is_a?(Hash)
   end
 
   it "returns an Enumerator if called without a block" do

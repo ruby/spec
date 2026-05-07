@@ -92,7 +92,7 @@ describe "Method#source_location" do
       loc.should == nil
     else
       loc[0].should.start_with?('<internal:')
-      loc[1].should be_kind_of(Integer)
+      loc[1].should.is_a?(Integer)
     end
 
     loc = method(:tap).source_location
@@ -100,7 +100,7 @@ describe "Method#source_location" do
       loc.should == nil
     else
       loc[0].should.start_with?('<internal:')
-      loc[1].should be_kind_of(Integer)
+      loc[1].should.is_a?(Integer)
     end
   end
 

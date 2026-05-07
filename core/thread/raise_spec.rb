@@ -36,26 +36,26 @@ describe "Thread#raise on a sleeping thread" do
   it "raises a RuntimeError if no exception class is given" do
     @thr.raise
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(RuntimeError)
+    ScratchPad.recorded.should.is_a?(RuntimeError)
   end
 
   it "raises the given exception" do
     @thr.raise Exception
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(Exception)
+    ScratchPad.recorded.should.is_a?(Exception)
   end
 
   it "raises the given exception with the given message" do
     @thr.raise Exception, "get to work"
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(Exception)
+    ScratchPad.recorded.should.is_a?(Exception)
     ScratchPad.recorded.message.should == "get to work"
   end
 
   it "raises the given exception and the backtrace is the one of the interrupted thread" do
     @thr.raise Exception
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(Exception)
+    ScratchPad.recorded.should.is_a?(Exception)
     ScratchPad.recorded.backtrace[0].should include("sleep")
   end
 
@@ -155,19 +155,19 @@ describe "Thread#raise on a running thread" do
   it "raises a RuntimeError if no exception class is given" do
     @thr.raise
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(RuntimeError)
+    ScratchPad.recorded.should.is_a?(RuntimeError)
   end
 
   it "raises the given exception" do
     @thr.raise Exception
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(Exception)
+    ScratchPad.recorded.should.is_a?(Exception)
   end
 
   it "raises the given exception with the given message" do
     @thr.raise Exception, "get to work"
     Thread.pass while @thr.status
-    ScratchPad.recorded.should be_kind_of(Exception)
+    ScratchPad.recorded.should.is_a?(Exception)
     ScratchPad.recorded.message.should == "get to work"
   end
 

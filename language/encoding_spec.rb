@@ -5,7 +5,7 @@ require_relative 'fixtures/coding_utf_8'
 
 describe "The __ENCODING__ pseudo-variable" do
   it "is an instance of Encoding" do
-    __ENCODING__.should be_kind_of(Encoding)
+    __ENCODING__.should.is_a?(Encoding)
   end
 
   it "is US-ASCII by default" do

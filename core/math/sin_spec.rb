@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 # sine : (-Inf, Inf) --> (-1.0, 1.0)
 describe "Math.sin" do
   it "returns a float" do
-    Math.sin(Math::PI).should be_kind_of(Float)
+    Math.sin(Math::PI).should.is_a?(Float)
   end
 
   it "returns the sine of the argument expressed in radians" do

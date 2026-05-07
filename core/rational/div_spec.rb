@@ -2,7 +2,7 @@ require_relative "../../spec_helper"
 
 describe "Rational#div" do
   it "returns an Integer" do
-    Rational(229, 21).div(82).should be_kind_of(Integer)
+    Rational(229, 21).div(82).should.is_a?(Integer)
   end
 
   it "raises an ArgumentError if passed more than one argument" do

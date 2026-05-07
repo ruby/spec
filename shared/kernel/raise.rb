@@ -286,7 +286,7 @@ describe :kernel_raise_across_contexts, shared: true do
           end
         end
 
-        result.should be_kind_of(RuntimeError)
+        result.should.is_a?(RuntimeError)
         result.message.should == "second error"
         result.cause.should == nil
       end
@@ -314,7 +314,7 @@ describe :kernel_raise_across_contexts, shared: true do
           end
         end
 
-        result.should be_kind_of(RuntimeError)
+        result.should.is_a?(RuntimeError)
         result.message.should == "second error"
         result.cause.should == override_cause
       end
@@ -334,7 +334,7 @@ describe :kernel_raise_across_contexts, shared: true do
           end
         end
 
-        result.should be_kind_of(RuntimeError)
+        result.should.is_a?(RuntimeError)
         result.message.should == "new error"
         # Calling context has no current exception:
         result.cause.should == nil
@@ -358,7 +358,7 @@ describe :kernel_raise_across_contexts, shared: true do
             end
           end
 
-          result.should be_kind_of(RuntimeError)
+          result.should.is_a?(RuntimeError)
           result.message.should == "new error"
           result.cause.should == nil
         end

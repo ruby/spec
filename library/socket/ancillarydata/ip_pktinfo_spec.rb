@@ -71,7 +71,7 @@ with_feature :ancillary_data, :pktinfo do
         end
 
         it 'stores the ifindex at index 1' do
-          @info[1].should be_kind_of(Integer)
+          @info[1].should.is_a?(Integer)
         end
 
         it 'stores an Addrinfo at index 2' do

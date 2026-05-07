@@ -45,7 +45,7 @@ describe :prime_each, shared: true do
     end
 
     it "returns an object that is Enumerable" do
-      @prime_enum.each.should be_kind_of(Enumerable)
+      @prime_enum.each.should.is_a?(Enumerable)
     end
 
     it "returns an object that responds to #with_index" do

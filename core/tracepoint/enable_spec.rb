@@ -301,7 +301,7 @@ describe 'TracePoint#enable' do
         end
 
         ScratchPad.recorded.should == [lineno]
-        lineno.should be_kind_of(Integer)
+        lineno.should.is_a?(Integer)
       end
     end
 

@@ -15,7 +15,7 @@ describe "TCPServer#accept" do
     data = nil
     t = Thread.new do
       client = @server.accept
-      client.should be_kind_of(TCPSocket)
+      client.should.is_a?(TCPSocket)
       data = client.read(5)
       client << "goodbye"
       client.close

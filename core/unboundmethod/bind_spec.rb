@@ -16,11 +16,11 @@ describe "UnboundMethod#bind" do
   end
 
   it "returns Method for any object that is kind_of? the Module method was extracted from" do
-    @normal_um.bind(UnboundMethodSpecs::Methods.new).should be_kind_of(Method)
+    @normal_um.bind(UnboundMethodSpecs::Methods.new).should.is_a?(Method)
   end
 
   it "returns Method on any object when UnboundMethod is unbound from a module" do
-    UnboundMethodSpecs::Mod.instance_method(:from_mod).bind(Object.new).should be_kind_of(Method)
+    UnboundMethodSpecs::Mod.instance_method(:from_mod).bind(Object.new).should.is_a?(Method)
   end
 
   it "the returned Method is equal to the one directly returned by obj.method" do
@@ -29,9 +29,9 @@ describe "UnboundMethod#bind" do
   end
 
   it "returns Method for any object kind_of? the Module the method is defined in" do
-    @parent_um.bind(UnboundMethodSpecs::Child1.new).should be_kind_of(Method)
-    @child1_um.bind(UnboundMethodSpecs::Parent.new).should be_kind_of(Method)
-    @child2_um.bind(UnboundMethodSpecs::Child1.new).should be_kind_of(Method)
+    @parent_um.bind(UnboundMethodSpecs::Child1.new).should.is_a?(Method)
+    @child1_um.bind(UnboundMethodSpecs::Parent.new).should.is_a?(Method)
+    @child2_um.bind(UnboundMethodSpecs::Child1.new).should.is_a?(Method)
   end
 
   it "allows binding a Kernel method retrieved from Object on BasicObject" do

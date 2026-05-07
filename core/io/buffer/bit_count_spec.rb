@@ -57,7 +57,7 @@ ruby_version_is "4.1" do
 
     it "returns an Integer" do
       IO::Buffer.for(+"\xFF") do |buffer|
-        buffer.bit_count.should be_kind_of(Integer)
+        buffer.bit_count.should.is_a?(Integer)
       end
     end
   end

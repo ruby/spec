@@ -12,7 +12,7 @@ describe :exception_new, shared: true do
   end
 
   it "returns the exception when it has a custom constructor" do
-    ExceptionSpecs::ConstructorException.send(@method).should be_kind_of(ExceptionSpecs::ConstructorException)
+    ExceptionSpecs::ConstructorException.send(@method).should.is_a?(ExceptionSpecs::ConstructorException)
   end
 
 end

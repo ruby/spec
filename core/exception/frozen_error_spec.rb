@@ -13,7 +13,7 @@ describe "FrozenError#receiver" do
     begin
       def o.x; end
     rescue => e
-      e.should be_kind_of(FrozenError)
+      e.should.is_a?(FrozenError)
       e.receiver.should equal(o)
     else
       raise

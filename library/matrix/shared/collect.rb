@@ -7,7 +7,7 @@ describe :collect, shared: true do
   end
 
   it "returns an instance of Matrix" do
-    @m.send(@method){|n| n * 2 }.should be_kind_of(Matrix)
+    @m.send(@method){|n| n * 2 }.should.is_a?(Matrix)
   end
 
   it "returns a Matrix where each element is the result of the block" do

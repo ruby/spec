@@ -53,7 +53,7 @@ describe "Net::HTTP.new" do
       http = Net::HTTP.new("localhost", 3333, "localhost")
       http.proxy?.should == true
       http.instance_of?(Net::HTTP).should == true
-      http.should be_kind_of(Net::HTTP)
+      http.should.is_a?(Net::HTTP)
     end
 
     it "correctly sets the passed Proxy options" do

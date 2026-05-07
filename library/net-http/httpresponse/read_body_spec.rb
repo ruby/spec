@@ -64,7 +64,7 @@ describe "Net::HTTPResponse#read_body" do
 
     it "returns the ReadAdapter" do
       @res.reading_body(@socket, true) do
-        @res.read_body { nil }.should be_kind_of(Net::ReadAdapter)
+        @res.read_body { nil }.should.is_a?(Net::ReadAdapter)
       end
     end
 

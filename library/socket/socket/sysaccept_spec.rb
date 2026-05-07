@@ -76,7 +76,7 @@ describe 'Socket#sysaccept' do
         it 'returns an Array containing an Integer and an Addrinfo' do
           @fd, addrinfo = @server.sysaccept
 
-          @fd.should be_kind_of(Integer)
+          @fd.should.is_a?(Integer)
           addrinfo.should.instance_of?(Addrinfo)
         end
 

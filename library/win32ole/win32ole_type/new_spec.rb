@@ -29,12 +29,12 @@ platform_is :windows do
 
     it "creates WIN32OLE::Type object from name and valid type" do
       ole_type = WIN32OLE::Type.new("Microsoft Shell Controls And Automation", "Shell")
-      ole_type.should be_kind_of WIN32OLE::Type
+      ole_type.should.is_a? WIN32OLE::Type
     end
 
     it "creates WIN32OLE::Type object from CLSID and valid type" do
       ole_type2 = WIN32OLE::Type.new("{13709620-C279-11CE-A49E-444553540000}", "Shell")
-      ole_type2.should be_kind_of WIN32OLE::Type
+      ole_type2.should.is_a? WIN32OLE::Type
     end
 
   end

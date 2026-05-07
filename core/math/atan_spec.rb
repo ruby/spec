@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 # arctangent : (-Inf, Inf) --> (-PI/2, PI/2)
 describe "Math.atan" do
   it "returns a float" do
-    Math.atan(1).should be_kind_of(Float)
+    Math.atan(1).should.is_a?(Float)
   end
 
   it "returns the arctangent of the argument" do

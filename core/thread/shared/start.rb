@@ -12,7 +12,7 @@ describe :thread_start, shared: true do
   it "spawns a new Thread running the block" do
     run = false
     t = Thread.send(@method) { run = true }
-    t.should be_kind_of(Thread)
+    t.should.is_a?(Thread)
     t.join
 
     run.should == true
@@ -21,7 +21,7 @@ describe :thread_start, shared: true do
   it "respects Thread subclasses" do
     c = Class.new(Thread)
     t = c.send(@method) { }
-    t.should be_kind_of(c)
+    t.should.is_a?(c)
 
     t.join
   end

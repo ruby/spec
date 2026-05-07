@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.ldexp" do
   it "returns a float" do
-    Math.ldexp(1.0, 2).should be_kind_of(Float)
+    Math.ldexp(1.0, 2).should.is_a?(Float)
   end
 
   it "returns the argument multiplied by 2**n" do

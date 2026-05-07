@@ -141,7 +141,7 @@ describe "Class#new" do
     end
 
     instance = klass.new
-    instance.should be_kind_of klass
+    instance.should.is_a? klass
     instance.class.should equal klass
   end
 

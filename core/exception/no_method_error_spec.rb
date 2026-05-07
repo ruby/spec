@@ -45,7 +45,7 @@ describe "NoMethodError#message" do
     begin
       NoMethodErrorSpecs::NoMethodErrorD.new.foo
     rescue Exception => e
-      e.should be_kind_of(NoMethodError)
+      e.should.is_a?(NoMethodError)
     end
   end
 
@@ -53,7 +53,7 @@ describe "NoMethodError#message" do
     begin
       NoMethodErrorSpecs::NoMethodErrorC.new.a_protected_method
     rescue Exception => e
-      e.should be_kind_of(NoMethodError)
+      e.should.is_a?(NoMethodError)
     end
   end
 
@@ -61,7 +61,7 @@ describe "NoMethodError#message" do
     begin
       NoMethodErrorSpecs::NoMethodErrorC.new.a_private_method
     rescue Exception => e
-      e.should be_kind_of(NoMethodError)
+      e.should.is_a?(NoMethodError)
       e.message.lines[0].should =~ /private method [`']a_private_method' called for /
     end
   end

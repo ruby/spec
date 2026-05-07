@@ -12,7 +12,7 @@ describe "File.atime" do
 
   it "returns the last access time for the named file as a Time object" do
     File.atime(@file)
-    File.atime(@file).should be_kind_of(Time)
+    File.atime(@file).should.is_a?(Time)
   end
 
   platform_is :linux, :windows do
@@ -55,6 +55,6 @@ describe "File#atime" do
 
   it "returns the last access time to self" do
     @file.atime
-    @file.atime.should be_kind_of(Time)
+    @file.atime.should.is_a?(Time)
   end
 end

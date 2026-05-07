@@ -8,7 +8,7 @@ describe "Matrix.diagonal" do
   end
 
   it "returns an object of type Matrix" do
-    @m.should be_kind_of(Matrix)
+    @m.should.is_a?(Matrix)
   end
 
   it "returns a square Matrix of the right size" do

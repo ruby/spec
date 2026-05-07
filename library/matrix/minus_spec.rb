@@ -13,7 +13,7 @@ describe "Matrix#-" do
   end
 
   it "returns an instance of Matrix" do
-    (@a - @b).should be_kind_of(Matrix)
+    (@a - @b).should.is_a?(Matrix)
   end
 
   it "raises a Matrix::ErrDimensionMismatch if the matrices are different sizes" do

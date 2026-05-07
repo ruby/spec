@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Struct[]" do
   it "is a synonym for new" do
-    StructClasses::Ruby['2.0', 'i686'].should be_kind_of(StructClasses::Ruby)
+    StructClasses::Ruby['2.0', 'i686'].should.is_a?(StructClasses::Ruby)
   end
 end
 

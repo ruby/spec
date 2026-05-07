@@ -72,7 +72,7 @@ describe "Enumerator.product" do
   end
 
   it "calls #each_entry lazily" do
-    Enumerator.product(Object.new).should be_kind_of(Enumerator)
+    Enumerator.product(Object.new).should.is_a?(Enumerator)
   end
 
   it "iterates through consuming enumerator elements only once" do

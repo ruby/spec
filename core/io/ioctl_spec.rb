@@ -15,7 +15,7 @@ describe "IO#ioctl" do
           buffer = +''
           # FIONREAD in /usr/include/asm-generic/ioctls.h
           f.ioctl 0x541B, buffer
-          buffer.unpack('I').first.should be_kind_of(Integer)
+          buffer.unpack('I').first.should.is_a?(Integer)
         end
       end
     end

@@ -6,7 +6,7 @@ describe "Thread.each_caller_location" do
     Thread.each_caller_location { |l| ScratchPad << l; }
 
     ScratchPad.recorded.map(&:to_s).should == caller_locations.map(&:to_s)
-    ScratchPad.recorded[0].should be_kind_of(Thread::Backtrace::Location)
+    ScratchPad.recorded[0].should.is_a?(Thread::Backtrace::Location)
   end
 
   it "returns subset of 'Thread.to_enum(:each_caller_location)' locations" do
@@ -26,7 +26,7 @@ describe "Thread.each_caller_location" do
     end
 
     ar.map(&:to_s).should == caller_locations(1, 2).map(&:to_s)
-    ecl.should be_kind_of(Thread::Backtrace::Location)
+    ecl.should.is_a?(Thread::Backtrace::Location)
   end
 
   it "returns nil" do

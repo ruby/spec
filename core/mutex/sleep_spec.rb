@@ -79,7 +79,7 @@ describe "Mutex#sleep" do
     Thread.pass until locked
     Thread.pass until th.stop?
     th.wakeup
-    th.value.should be_kind_of(Integer)
+    th.value.should.is_a?(Integer)
   end
 
   it "wakes up when requesting sleep times near or equal to zero" do

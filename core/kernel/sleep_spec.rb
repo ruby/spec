@@ -7,7 +7,7 @@ describe "Kernel#sleep" do
   end
 
   it "returns an Integer" do
-    sleep(0.001).should be_kind_of(Integer)
+    sleep(0.001).should.is_a?(Integer)
   end
 
   it "accepts a Float" do

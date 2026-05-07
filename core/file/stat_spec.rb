@@ -28,9 +28,9 @@ platform_is_not :windows do
         st.size.should == 8
         st.size?.should == 8
         st.blksize.should >= 0
-        st.atime.should be_kind_of(Time)
-        st.ctime.should be_kind_of(Time)
-        st.mtime.should be_kind_of(Time)
+        st.atime.should.is_a?(Time)
+        st.ctime.should.is_a?(Time)
+        st.mtime.should.is_a?(Time)
       end
     end
 

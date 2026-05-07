@@ -27,11 +27,11 @@ describe "Regexp#match" do
   it_behaves_like :regexp_match, :match
 
   it "returns a MatchData object" do
-    /(.)(.)(.)/.match("abc").should be_kind_of(MatchData)
+    /(.)(.)(.)/.match("abc").should.is_a?(MatchData)
   end
 
   it "returns a MatchData object, when argument is a Symbol" do
-    /(.)(.)(.)/.match(:abc).should be_kind_of(MatchData)
+    /(.)(.)(.)/.match(:abc).should.is_a?(MatchData)
   end
 
   it "raises a TypeError on an uninitialized Regexp" do
@@ -76,7 +76,7 @@ describe "Regexp#match" do
     describe "when passed a block" do
       it "yields the MatchData" do
         /./.match("abc") {|m| ScratchPad.record m }
-        ScratchPad.recorded.should be_kind_of(MatchData)
+        ScratchPad.recorded.should.is_a?(MatchData)
       end
 
       it "returns the block result" do
@@ -94,7 +94,7 @@ describe "Regexp#match" do
   it "resets $~ if passed nil" do
     # set $~
     /./.match("a")
-    $~.should be_kind_of(MatchData)
+    $~.should.is_a?(MatchData)
 
     /1/.match(nil)
     $~.should be_nil

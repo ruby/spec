@@ -15,7 +15,7 @@ describe "Digest::MD5.file" do
     end
 
     it "returns a Digest::MD5 object" do
-      Digest::MD5.file(@file).should be_kind_of(Digest::MD5)
+      Digest::MD5.file(@file).should.is_a?(Digest::MD5)
     end
 
     it "returns a Digest::MD5 object with the correct digest" do
@@ -26,7 +26,7 @@ describe "Digest::MD5.file" do
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(@file)
       result = Digest::MD5.file(obj)
-      result.should be_kind_of(Digest::MD5)
+      result.should.is_a?(Digest::MD5)
       result.digest.should == MD5Constants::Digest
     end
   end

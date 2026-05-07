@@ -16,8 +16,8 @@ describe "Process.getrlimit" do
     it "returns a two-element Array of Integers" do
       result = Process.getrlimit Process::RLIMIT_CORE
       result.size.should == 2
-      result.first.should be_kind_of(Integer)
-      result.last.should be_kind_of(Integer)
+      result.first.should.is_a?(Integer)
+      result.last.should.is_a?(Integer)
     end
 
     context "when passed an Object" do

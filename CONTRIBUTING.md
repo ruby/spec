@@ -87,7 +87,7 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 (-1.0/0.0).should be_negative_infinity
 
 3.14.should.instance_of?(Float) # Calls #instance_of?
-3.14.should be_kind_of(Numeric) # Calls #is_a?
+3.14.should.is_a?(Numeric) # Calls #is_a?
 
 3.14.should.respond_to?(:to_i)
 Integer.should have_instance_method(:+)

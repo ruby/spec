@@ -76,7 +76,7 @@ describe "Class#subclasses" do
     classes = threads.map(&:value)
 
     superclass.subclasses.size.should == t * n
-    superclass.subclasses.each { |c| c.should be_kind_of(Class) }
+    superclass.subclasses.each { |c| c.should.is_a?(Class) }
   end
 
   def assert_subclasses(mod,subclasses)

@@ -156,7 +156,7 @@ describe "Module#autoload" do
     ScratchPad.recorded.should == :loaded
     ScratchPad.clear
 
-    ModuleSpecs::Autoload::KHash.should be_kind_of(Class)
+    ModuleSpecs::Autoload::KHash.should.is_a?(Class)
     ModuleSpecs::Autoload::KHash::K.should == :autoload_k
     ScratchPad.recorded.should be_nil
   end
@@ -714,7 +714,7 @@ describe "Module#autoload" do
           end
         end
       end
-      ModuleSpecs::Autoload.r.should be_kind_of(ModuleSpecs::Autoload::MetaScope)
+      ModuleSpecs::Autoload.r.should.is_a?(ModuleSpecs::Autoload::MetaScope)
     end
   end
 
@@ -745,7 +745,7 @@ describe "Module#autoload" do
     end
     @remove << :W
 
-    ModuleSpecs::Autoload::W::Y.should be_kind_of(Class)
+    ModuleSpecs::Autoload::W::Y.should.is_a?(Class)
     ScratchPad.recorded.should == :loaded
   end
 
@@ -760,7 +760,7 @@ describe "Module#autoload" do
     -> {
       Kernel.require fixture(__FILE__, "autoload_during_require.rb")
     }.should_not complain(verbose: true)
-    ModuleSpecs::Autoload::AutoloadDuringRequire.should be_kind_of(Class)
+    ModuleSpecs::Autoload::AutoloadDuringRequire.should.is_a?(Class)
   end
 
   it "does not call #require a second time and does not warn if feature sets and trigger autoload on itself" do
@@ -770,15 +770,15 @@ describe "Module#autoload" do
     -> {
       Kernel.require fixture(__FILE__, "autoload_self_during_require.rb")
     }.should_not complain(verbose: true)
-    ModuleSpecs::Autoload::AutoloadSelfDuringRequire.should be_kind_of(Class)
+    ModuleSpecs::Autoload::AutoloadSelfDuringRequire.should.is_a?(Class)
   end
 
   it "handles multiple autoloads in the same file" do
     $LOAD_PATH.unshift(File.expand_path('../fixtures/multi', __FILE__))
     begin
       require 'foo/bar_baz'
-      ModuleSpecs::Autoload::Foo::Bar.should be_kind_of(Class)
-      ModuleSpecs::Autoload::Foo::Baz.should be_kind_of(Class)
+      ModuleSpecs::Autoload::Foo::Bar.should.is_a?(Class)
+      ModuleSpecs::Autoload::Foo::Baz.should.is_a?(Class)
     ensure
       $LOAD_PATH.shift
     end

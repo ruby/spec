@@ -20,7 +20,7 @@ describe "Kernel#open" do
 
   it "opens a file when given a valid filename" do
     @file = open(@name)
-    @file.should be_kind_of(File)
+    @file.should.is_a?(File)
   end
 
   it "opens a file when called with a block" do
@@ -34,7 +34,7 @@ describe "Kernel#open" do
           @io = open("|date")
         end
         begin
-          @io.should be_kind_of(IO)
+          @io.should.is_a?(IO)
           @io.read
         ensure
           @io.close
@@ -64,7 +64,7 @@ describe "Kernel#open" do
           @io = open("|date /t")
         end
         begin
-          @io.should be_kind_of(IO)
+          @io.should.is_a?(IO)
           @io.read
         ensure
           @io.close
@@ -94,7 +94,7 @@ describe "Kernel#open" do
 
   it "accepts options as keyword arguments" do
     @file = open(@name, "r", 0666, flags: File::CREAT)
-    @file.should be_kind_of(File)
+    @file.should.is_a?(File)
 
     -> {
       open(@name, "r", 0666, {flags: File::CREAT})
@@ -126,7 +126,7 @@ describe "Kernel#open" do
       @file = File.open(@name)
       obj.should_receive(:to_open).and_return(@file)
       @file = open(obj)
-      @file.should be_kind_of(File)
+      @file.should.is_a?(File)
     end
 
     it "returns the value from #to_open" do

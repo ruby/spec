@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.cosh" do
   it "returns a float" do
-    Math.cosh(1.0).should be_kind_of(Float)
+    Math.cosh(1.0).should.is_a?(Float)
   end
 
   it "returns the hyperbolic cosine of the argument" do

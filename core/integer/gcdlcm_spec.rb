@@ -7,8 +7,8 @@ describe "Integer#gcdlcm" do
   end
 
   it "returns an Array" do
-    36.gcdlcm(6).should be_kind_of(Array)
-    4.gcdlcm(20981).should be_kind_of(Array)
+    36.gcdlcm(6).should.is_a?(Array)
+    4.gcdlcm(20981).should.is_a?(Array)
   end
 
   it "returns a two-element Array" do
@@ -28,13 +28,13 @@ describe "Integer#gcdlcm" do
 
   it "accepts a Bignum argument" do
     bignum = 91999**99
-    bignum.should be_kind_of(Integer)
+    bignum.should.is_a?(Integer)
     99.gcdlcm(bignum).should == [99.gcd(bignum), 99.lcm(bignum)]
   end
 
   it "works if self is a Bignum" do
     bignum = 9999**89
-    bignum.should be_kind_of(Integer)
+    bignum.should.is_a?(Integer)
     bignum.gcdlcm(99).should == [bignum.gcd(99), bignum.lcm(99)]
   end
 

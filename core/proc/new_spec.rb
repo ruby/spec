@@ -86,7 +86,7 @@ describe "Proc.new with an associated block" do
 
   it "returns a subclass of Proc" do
     obj = ProcSpecs::MyProc.new { }
-    obj.should be_kind_of(ProcSpecs::MyProc)
+    obj.should.is_a?(ProcSpecs::MyProc)
   end
 
   it "calls initialize on the Proc object" do

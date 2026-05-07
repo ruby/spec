@@ -16,13 +16,13 @@ describe "File.new" do
 
   it "returns a new File with mode string" do
     @fh = File.new(@file, 'w')
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "returns a new File with mode num" do
     @fh = File.new(@file, @flags)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -30,7 +30,7 @@ describe "File.new" do
     rm_r @file
     File.umask(0011)
     @fh = File.new(@file, @flags, 0755)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     platform_is_not :windows do
       File.stat(@file).mode.to_s(8).should == "100744"
     end
@@ -74,7 +74,7 @@ describe "File.new" do
     @fh = File.new(@file)
     fh_copy = File.new(@fh.fileno)
     fh_copy.autoclose = false
-    fh_copy.should be_kind_of(File)
+    fh_copy.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -96,7 +96,7 @@ describe "File.new" do
 
   it "creates a new file when use File::EXCL mode" do
     @fh = File.new(@file, File::EXCL)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -106,37 +106,37 @@ describe "File.new" do
 
   it "creates a new file when use File::WRONLY|File::APPEND mode" do
     @fh = File.new(@file, File::WRONLY|File::APPEND)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "returns a new File when use File::APPEND mode" do
     @fh = File.new(@file, File::APPEND)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "returns a new File when use File::RDONLY|File::APPEND mode" do
     @fh = File.new(@file, File::RDONLY|File::APPEND)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "returns a new File when use File::RDONLY|File::WRONLY mode" do
     @fh = File.new(@file, File::RDONLY|File::WRONLY)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "creates a new file when use File::WRONLY|File::TRUNC mode" do
     @fh = File.new(@file, File::WRONLY|File::TRUNC)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "returns a new read-only File when use File::RDONLY|File::CREAT mode" do
     @fh = File.new(@file, File::RDONLY|File::CREAT)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
 
     # it's read-only
@@ -146,7 +146,7 @@ describe "File.new" do
 
   it "returns a new read-only File when use File::CREAT mode" do
     @fh = File.new(@file, File::CREAT)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
 
     # it's read-only
@@ -170,7 +170,7 @@ describe "File.new" do
 
   it "accepts options as a keyword argument" do
     @fh = File.new(@file, 'w', 0755, flags: @flags)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     @fh.close
 
     -> {

@@ -130,7 +130,7 @@ describe :integer_exponent, shared: true do
         -> {
           flt = @bignum.send(@method, @bignum)
         }.should complain(/warning: in a\*\*b, b may be too big/)
-        flt.should be_kind_of(Float)
+        flt.should.is_a?(Float)
         flt.infinite?.should == 1
       end
     end

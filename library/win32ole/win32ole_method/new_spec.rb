@@ -17,8 +17,8 @@ platform_is :windows do
     end
 
     it "returns a valid WIN32OLE::Method object" do
-      WIN32OLE::Method.new(@ole_type, "Open").should be_kind_of WIN32OLE::Method
-      WIN32OLE::Method.new(@ole_type, "open").should be_kind_of WIN32OLE::Method
+      WIN32OLE::Method.new(@ole_type, "Open").should.is_a? WIN32OLE::Method
+      WIN32OLE::Method.new(@ole_type, "open").should.is_a? WIN32OLE::Method
     end
 
     it "raises WIN32OLE::RuntimeError if the method does not exist" do

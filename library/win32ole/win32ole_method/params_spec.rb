@@ -15,7 +15,7 @@ platform_is :windows do
     end
 
     it "returns empty array for Scripting Runtime's 'name' method" do
-      @m_file_name.params.should be_kind_of Array
+      @m_file_name.params.should.is_a? Array
       @m_file_name.params.should.empty?
     end
 

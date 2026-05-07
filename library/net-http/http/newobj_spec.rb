@@ -8,7 +8,7 @@ describe "Net::HTTP.newobj" do
 
   describe "when passed address" do
     it "returns a new Net::HTTP instance" do
-      @net.should be_kind_of(Net::HTTP)
+      @net.should.is_a?(Net::HTTP)
     end
 
     it "sets the new Net::HTTP instance's address to the passed address" do
@@ -30,7 +30,7 @@ describe "Net::HTTP.newobj" do
     end
 
     it "returns a new Net::HTTP instance" do
-      @net.should be_kind_of(Net::HTTP)
+      @net.should.is_a?(Net::HTTP)
     end
 
     it "sets the new Net::HTTP instance's address to the passed address" do

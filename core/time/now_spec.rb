@@ -102,7 +102,7 @@ describe "Time.now" do
         time
       end
 
-      Time.now(in: zone).should be_kind_of(Time)
+      Time.now(in: zone).should.is_a?(Time)
     end
 
     # The result also should be a Time or Time-like object (not necessary to be the same class)
@@ -115,7 +115,7 @@ describe "Time.now" do
           time + 60 * 60 # + 1 hour
         end
 
-        Time.now(in: zone).should be_kind_of(Time)
+        Time.now(in: zone).should.is_a?(Time)
         Time.now(in: zone).utc_offset.should == 3600
       end
 
@@ -128,7 +128,7 @@ describe "Time.now" do
           Class.new(Time).new(time.year, time.mon, time.day, time.hour, time.min, time.sec, time.utc_offset)
         end
 
-        Time.now(in: zone).should be_kind_of(Time)
+        Time.now(in: zone).should.is_a?(Time)
         Time.now(in: zone).utc_offset.should == 3600
       end
 
@@ -138,7 +138,7 @@ describe "Time.now" do
           time.to_i + 60*60
         end
 
-        Time.now(in: zone).should be_kind_of(Time)
+        Time.now(in: zone).should.is_a?(Time)
         Time.now(in: zone).utc_offset.should == 60*60
       end
 

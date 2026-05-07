@@ -12,7 +12,7 @@ describe 'TCPServer#initialize' do
     end
 
     it 'sets the port to the given argument' do
-      @server.local_address.ip_port.should be_kind_of(Integer)
+      @server.local_address.ip_port.should.is_a?(Integer)
       @server.local_address.ip_port.should > 0
     end
 
@@ -38,7 +38,7 @@ describe 'TCPServer#initialize' do
     end
 
     it 'sets the port to the given argument' do
-      @server.local_address.ip_port.should be_kind_of(Integer)
+      @server.local_address.ip_port.should.is_a?(Integer)
       @server.local_address.ip_port.should > 0
     end
 
@@ -67,7 +67,7 @@ describe 'TCPServer#initialize' do
       end
 
       it 'sets the port to the given port argument' do
-        @server.local_address.ip_port.should be_kind_of(Integer)
+        @server.local_address.ip_port.should.is_a?(Integer)
         @server.local_address.ip_port.should > 0
       end
 
@@ -90,7 +90,7 @@ describe 'TCPServer#initialize' do
     end
 
     it 'sets the port to the given port argument' do
-      @server.local_address.ip_port.should be_kind_of(Integer)
+      @server.local_address.ip_port.should.is_a?(Integer)
       @server.local_address.ip_port.should > 0
     end
 

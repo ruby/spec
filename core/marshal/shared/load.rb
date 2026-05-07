@@ -807,7 +807,7 @@ describe :marshal_load, shared: true do
 
   describe "for an Object" do
     it "loads an object" do
-      Marshal.send(@method, "\004\bo:\vObject\000").should be_kind_of(Object)
+      Marshal.send(@method, "\004\bo:\vObject\000").should.is_a?(Object)
     end
 
     it "loads an extended Object" do
@@ -879,7 +879,7 @@ describe :marshal_load, shared: true do
     end
 
     it "loads a UserObject" do
-      Marshal.send(@method, "\004\bo:\017UserObject\000").should be_kind_of(UserObject)
+      Marshal.send(@method, "\004\bo:\017UserObject\000").should.is_a?(UserObject)
     end
 
     describe "that extends a core type other than Object or BasicObject" do

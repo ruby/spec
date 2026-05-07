@@ -37,7 +37,7 @@ describe :kernel_system, shared: true do
     @object.system("sad").should be_nil
 
     $?.should.instance_of? Process::Status
-    $?.pid.should be_kind_of(Integer)
+    $?.pid.should.is_a?(Integer)
     $?.should_not.success?
   end
 

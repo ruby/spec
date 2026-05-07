@@ -45,7 +45,7 @@ describe "Random.rand" do
   it "coerces arguments to Integers with #to_int" do
     obj = mock_numeric('int')
     obj.should_receive(:to_int).and_return(99)
-    Random.rand(obj).should be_kind_of(Integer)
+    Random.rand(obj).should.is_a?(Integer)
   end
 end
 
@@ -201,8 +201,8 @@ describe "Random#rand with Range" do
   end
 
   it "considers Integers as Floats if one end point is a float" do
-    Random.new(42).rand(0.0..1).should be_kind_of(Float)
-    Random.new(42).rand(0..1.0).should be_kind_of(Float)
+    Random.new(42).rand(0.0..1).should.is_a?(Float)
+    Random.new(42).rand(0..1.0).should.is_a?(Float)
   end
 
   it "returns a float within a given float range" do

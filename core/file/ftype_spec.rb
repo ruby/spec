@@ -19,7 +19,7 @@ describe "File.ftype" do
 
   it "returns a String" do
     FileSpecs.normal_file do |file|
-      File.ftype(file).should be_kind_of(String)
+      File.ftype(file).should.is_a?(String)
     end
   end
 

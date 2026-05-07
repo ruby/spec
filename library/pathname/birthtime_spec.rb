@@ -4,7 +4,7 @@ require 'pathname'
 describe "Pathname#birthtime" do
   platform_is :windows, :darwin, :freebsd, :netbsd do
     it "returns the birth time for self" do
-      Pathname.new(__FILE__).birthtime.should be_kind_of(Time)
+      Pathname.new(__FILE__).birthtime.should.is_a?(Time)
     end
   end
 

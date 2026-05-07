@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.asinh" do
   it "returns a float" do
-    Math.asinh(1.5).should be_kind_of(Float)
+    Math.asinh(1.5).should.is_a?(Float)
   end
 
   it "returns the inverse hyperbolic sin of the argument" do

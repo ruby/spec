@@ -11,7 +11,7 @@ describe "Module#refine" do
     end
 
     mod.should_not == inner_self
-    inner_self.should be_kind_of(Module)
+    inner_self.should.is_a?(Module)
     inner_self.name.should == nil
   end
 

@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 # The common logarithm, having base 10
 describe "Math.log10" do
   it "returns a float" do
-    Math.log10(1).should be_kind_of(Float)
+    Math.log10(1).should.is_a?(Float)
   end
 
   it "returns the base-10 logarithm of the argument" do

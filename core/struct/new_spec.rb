@@ -38,13 +38,13 @@ describe "Struct.new" do
   it "creates a new anonymous class with nil first argument" do
     struct = Struct.new(nil, :foo)
     struct.new("bar").foo.should == "bar"
-    struct.should be_kind_of(Class)
+    struct.should.is_a?(Class)
     struct.name.should be_nil
   end
 
   it "creates a new anonymous class with symbol arguments" do
     struct = Struct.new(:make, :model)
-    struct.should be_kind_of(Class)
+    struct.should.is_a?(Class)
     struct.name.should == nil
   end
 
@@ -79,7 +79,7 @@ describe "Struct.new" do
 
   it "works when not provided any arguments" do
     c = Struct.new
-    c.should be_kind_of(Class)
+    c.should.is_a?(Class)
     c.superclass.should == Struct
   end
 

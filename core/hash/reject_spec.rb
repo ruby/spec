@@ -28,8 +28,8 @@ describe "Hash#reject" do
 
   context "with extra state" do
     it "returns Hash instance for subclasses" do
-      HashSpecs::MyHash[1 => 2, 3 => 4].reject { false }.should be_kind_of(Hash)
-      HashSpecs::MyHash[1 => 2, 3 => 4].reject { true }.should be_kind_of(Hash)
+      HashSpecs::MyHash[1 => 2, 3 => 4].reject { false }.should.is_a?(Hash)
+      HashSpecs::MyHash[1 => 2, 3 => 4].reject { true }.should.is_a?(Hash)
     end
   end
 

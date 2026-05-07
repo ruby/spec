@@ -22,7 +22,7 @@ describe "Net::HTTP.start" do
     end
 
     it "returns a new Net::HTTP object for the passed address and port" do
-      @http.should be_kind_of(Net::HTTP)
+      @http.should.is_a?(Net::HTTP)
       @http.address.should == "localhost"
       @http.port.should == @port
     end
@@ -41,7 +41,7 @@ describe "Net::HTTP.start" do
       yielded = false
       Net::HTTP.start("localhost", @port) do |net|
         yielded = true
-        net.should be_kind_of(Net::HTTP)
+        net.should.is_a?(Net::HTTP)
       end
       yielded.should == true
     end

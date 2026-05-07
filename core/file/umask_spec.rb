@@ -13,7 +13,7 @@ describe "File.umask" do
   end
 
   it "returns an Integer" do
-    File.umask.should be_kind_of(Integer)
+    File.umask.should.is_a?(Integer)
   end
 
   platform_is_not :windows do

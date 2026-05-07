@@ -7,7 +7,7 @@ describe "Rational#truncate" do
 
   describe "with no arguments (precision = 0)" do
     it "returns an integer" do
-      @rational.truncate.should be_kind_of(Integer)
+      @rational.truncate.should.is_a?(Integer)
     end
 
     it "returns the truncated value toward 0" do
@@ -19,7 +19,7 @@ describe "Rational#truncate" do
 
   describe "with an explicit precision = 0" do
     it "returns an integer" do
-      @rational.truncate(0).should be_kind_of(Integer)
+      @rational.truncate(0).should.is_a?(Integer)
     end
 
     it "returns the truncated value toward 0" do
@@ -31,8 +31,8 @@ describe "Rational#truncate" do
 
   describe "with a precision < 0" do
     it "returns an integer" do
-      @rational.truncate(-2).should be_kind_of(Integer)
-      @rational.truncate(-1).should be_kind_of(Integer)
+      @rational.truncate(-2).should.is_a?(Integer)
+      @rational.truncate(-1).should.is_a?(Integer)
     end
 
     it "moves the truncation point n decimal places left" do
@@ -44,8 +44,8 @@ describe "Rational#truncate" do
 
   describe "with a precision > 0" do
     it "returns a Rational" do
-      @rational.truncate(1).should be_kind_of(Rational)
-      @rational.truncate(2).should be_kind_of(Rational)
+      @rational.truncate(1).should.is_a?(Rational)
+      @rational.truncate(2).should.is_a?(Rational)
     end
 
     it "moves the truncation point n decimal places right" do

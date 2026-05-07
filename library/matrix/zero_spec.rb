@@ -4,7 +4,7 @@ require 'matrix'
 
 describe "Matrix.zero" do
   it "returns an object of type Matrix" do
-    Matrix.zero(3).should be_kind_of(Matrix)
+    Matrix.zero(3).should.is_a?(Matrix)
   end
 
   it "creates a n x n matrix" do

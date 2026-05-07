@@ -203,7 +203,7 @@ describe "Time.new with a timezone argument" do
       time
     end
 
-    Time.new(2000, 1, 1, 12, 0, 0, zone).should be_kind_of(Time)
+    Time.new(2000, 1, 1, 12, 0, 0, zone).should.is_a?(Time)
   end
 
   it "raises TypeError if timezone does not implement #local_to_utc method" do
@@ -223,7 +223,7 @@ describe "Time.new with a timezone argument" do
       time
     end
 
-    Time.new(2000, 1, 1, 12, 0, 0, zone).should be_kind_of(Time)
+    Time.new(2000, 1, 1, 12, 0, 0, zone).should.is_a?(Time)
   end
 
   # The result also should be a Time or Time-like object (not necessary to be the same class)
@@ -236,7 +236,7 @@ describe "Time.new with a timezone argument" do
         time - 60 * 60 # - 1 hour
       end
 
-      Time.new(2000, 1, 1, 12, 0, 0, zone).should be_kind_of(Time)
+      Time.new(2000, 1, 1, 12, 0, 0, zone).should.is_a?(Time)
       Time.new(2000, 1, 1, 12, 0, 0, zone).utc_offset.should == 60*60
     end
 
@@ -248,7 +248,7 @@ describe "Time.new with a timezone argument" do
         Class.new(Time).utc(time.year, time.mon, time.day, time.hour, t.min, t.sec)
       end
 
-      Time.new(2000, 1, 1, 12, 0, 0, zone).should be_kind_of(Time)
+      Time.new(2000, 1, 1, 12, 0, 0, zone).should.is_a?(Time)
       Time.new(2000, 1, 1, 12, 0, 0, zone).utc_offset.should == 60*60
     end
 
@@ -260,7 +260,7 @@ describe "Time.new with a timezone argument" do
         obj
       end
 
-      Time.new(2000, 1, 1, 12, 0, 0, zone).should be_kind_of(Time)
+      Time.new(2000, 1, 1, 12, 0, 0, zone).should.is_a?(Time)
       Time.new(2000, 1, 1, 12, 0, 0, zone).utc_offset.should == 60*60
     end
 
@@ -369,18 +369,18 @@ describe "Time.new with a timezone argument" do
       time = TimeSpecs::TimeWithFindTimezone.new(2000, 1, 1, 12, 0, 0, zone)
       time_loaded = Marshal.load(Marshal.dump(time))
 
-      time_loaded.zone.should be_kind_of TimeSpecs::TimezoneWithName
+      time_loaded.zone.should.is_a? TimeSpecs::TimezoneWithName
       time_loaded.zone.name.should == "Asia/Colombo"
       time_loaded.utc_offset.should == 5*3600+30*60
     end
 
     it "calls .find_timezone to build a time object if passed zone name as a timezone argument" do
       time = TimeSpecs::TimeWithFindTimezone.new(2000, 1, 1, 12, 0, 0, "Asia/Colombo")
-      time.zone.should be_kind_of TimeSpecs::TimezoneWithName
+      time.zone.should.is_a? TimeSpecs::TimezoneWithName
       time.zone.name.should == "Asia/Colombo"
 
       time = TimeSpecs::TimeWithFindTimezone.new(2000, 1, 1, 12, 0, 0, "some invalid zone name")
-      time.zone.should be_kind_of TimeSpecs::TimezoneWithName
+      time.zone.should.is_a? TimeSpecs::TimezoneWithName
       time.zone.name.should == "some invalid zone name"
     end
 

@@ -12,7 +12,7 @@ describe "File::Stat#rdev_major" do
 
   platform_is_not :windows do
     it "returns the major part of File::Stat#rdev" do
-      File.stat(@name).rdev_major.should be_kind_of(Integer)
+      File.stat(@name).rdev_major.should.is_a?(Integer)
     end
   end
 

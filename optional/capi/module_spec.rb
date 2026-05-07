@@ -62,9 +62,9 @@ describe "CApiModule" do
 
     it "defines a new module at toplevel" do
       mod = @m.rb_define_module("CApiModuleSpecsModuleB")
-      mod.should be_kind_of(Module)
+      mod.should.is_a?(Module)
       mod.name.should == "CApiModuleSpecsModuleB"
-      ::CApiModuleSpecsModuleB.should be_kind_of(Module)
+      ::CApiModuleSpecsModuleB.should.is_a?(Module)
       Object.send :remove_const, :CApiModuleSpecsModuleB
     end
   end
@@ -72,7 +72,7 @@ describe "CApiModule" do
   describe "rb_define_module_under" do
     it "creates a new module inside the inner class" do
       mod = @m.rb_define_module_under(CApiModuleSpecs, "ModuleSpecsModuleUnder1")
-      mod.should be_kind_of(Module)
+      mod.should.is_a?(Module)
     end
 
     it "sets the module name" do

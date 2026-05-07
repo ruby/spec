@@ -155,7 +155,7 @@ describe "Time#getlocal" do
       end
 
       -> {
-        Time.utc(2000, 1, 1, 12, 0, 0).getlocal(zone).should be_kind_of(Time)
+        Time.utc(2000, 1, 1, 12, 0, 0).getlocal(zone).should.is_a?(Time)
       }.should_not raise_error
     end
 
@@ -177,18 +177,18 @@ describe "Time#getlocal" do
       end
 
       -> {
-        Time.utc(2000, 1, 1, 12, 0, 0).getlocal(zone).should be_kind_of(Time)
+        Time.utc(2000, 1, 1, 12, 0, 0).getlocal(zone).should.is_a?(Time)
       }.should_not raise_error
     end
 
     context "subject's class implements .find_timezone method" do
       it "calls .find_timezone to build a time object if passed zone name as a timezone argument" do
         time = TimeSpecs::TimeWithFindTimezone.utc(2000, 1, 1, 12, 0, 0).getlocal("Asia/Colombo")
-        time.zone.should be_kind_of TimeSpecs::TimezoneWithName
+        time.zone.should.is_a? TimeSpecs::TimezoneWithName
         time.zone.name.should == "Asia/Colombo"
 
         time = TimeSpecs::TimeWithFindTimezone.utc(2000, 1, 1, 12, 0, 0).getlocal("some invalid zone name")
-        time.zone.should be_kind_of TimeSpecs::TimezoneWithName
+        time.zone.should.is_a? TimeSpecs::TimezoneWithName
         time.zone.name.should == "some invalid zone name"
       end
 

@@ -27,7 +27,7 @@ describe "Thread#priority" do
   end
 
   it "returns an integer" do
-    @thread.priority.should be_kind_of(Integer)
+    @thread.priority.should.is_a?(Integer)
   end
 end
 

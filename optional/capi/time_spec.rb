@@ -16,7 +16,7 @@ describe "CApiTimeSpecs" do
 
   describe "TIMET2NUM" do
     it "returns an Integer" do
-      @s.TIMET2NUM.should be_kind_of(Integer)
+      @s.TIMET2NUM.should.is_a?(Integer)
     end
   end
 
@@ -73,25 +73,25 @@ describe "CApiTimeSpecs" do
   describe "rb_time_interval" do
     it "creates a timeval interval for a Fixnum" do
       sec, usec = @s.rb_time_interval(1232141421)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1232141421
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 0
     end
 
     it "creates a timeval interval for a Float" do
       sec, usec = @s.rb_time_interval(1.5)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
     it "creates a timeval interval for a Rational" do
       sec, usec = @s.rb_time_interval(Rational(3, 2))
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
@@ -106,25 +106,25 @@ describe "CApiTimeSpecs" do
   describe "rb_time_interval" do
     it "creates a timeval interval for a Fixnum" do
       sec, usec = @s.rb_time_interval(1232141421)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1232141421
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 0
     end
 
     it "creates a timeval interval for a Float" do
       sec, usec = @s.rb_time_interval(1.5)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
     it "creates a timeval interval for a Rational" do
       sec, usec = @s.rb_time_interval(Rational(3, 2))
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
@@ -143,49 +143,49 @@ describe "CApiTimeSpecs" do
   describe "rb_time_timeval" do
     it "creates a timeval for a Fixnum" do
       sec, usec = @s.rb_time_timeval(1232141421)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1232141421
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 0
     end
 
     it "creates a timeval for a Float" do
       sec, usec = @s.rb_time_timeval(1.5)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
     it "creates a timeval for a Rational" do
       sec, usec = @s.rb_time_timeval(Rational(3, 2))
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
     it "creates a timeval for a negative Fixnum" do
       sec, usec = @s.rb_time_timeval(-1232141421)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == -1232141421
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 0
     end
 
     it "creates a timeval for a negative Float" do
       sec, usec = @s.rb_time_timeval(-1.5)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == -2
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
     it "creates a timeval for a negative Rational" do
       sec, usec = @s.rb_time_timeval(Rational(-3, 2))
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == -2
-      usec.should be_kind_of(Integer)
+      usec.should.is_a?(Integer)
       usec.should == 500000
     end
 
@@ -200,49 +200,49 @@ describe "CApiTimeSpecs" do
   describe "rb_time_timespec" do
     it "creates a timespec for a Fixnum" do
       sec, nsec = @s.rb_time_timespec(1232141421)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1232141421
-      nsec.should be_kind_of(Integer)
+      nsec.should.is_a?(Integer)
       nsec.should == 0
     end
 
     it "creates a timespec for a Float" do
       sec, nsec = @s.rb_time_timespec(1.5)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      nsec.should be_kind_of(Integer)
+      nsec.should.is_a?(Integer)
       nsec.should == 500000000
     end
 
     it "creates a timespec for a Rational" do
       sec, nsec = @s.rb_time_timespec(Rational(3, 2))
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == 1
-      nsec.should be_kind_of(Integer)
+      nsec.should.is_a?(Integer)
       nsec.should == 500000000
     end
 
     it "creates a timespec for a negative Fixnum" do
       sec, nsec = @s.rb_time_timespec(-1232141421)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == -1232141421
-      nsec.should be_kind_of(Integer)
+      nsec.should.is_a?(Integer)
       nsec.should == 0
     end
 
     it "creates a timespec for a negative Float" do
       sec, nsec = @s.rb_time_timespec(-1.5)
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == -2
-      nsec.should be_kind_of(Integer)
+      nsec.should.is_a?(Integer)
       nsec.should == 500000000
     end
 
     it "creates a timespec for a negative Rational" do
       sec, nsec = @s.rb_time_timespec(Rational(-3, 2))
-      sec.should be_kind_of(Integer)
+      sec.should.is_a?(Integer)
       sec.should == -2
-      nsec.should be_kind_of(Integer)
+      nsec.should.is_a?(Integer)
       nsec.should == 500000000
     end
 
@@ -286,7 +286,7 @@ describe "CApiTimeSpecs" do
 
     it "doesn't call Time.at directly" do
       Time.should_not_receive(:at)
-      @s.rb_time_timespec_new(1447087832, 476451125, 32400).should be_kind_of(Time)
+      @s.rb_time_timespec_new(1447087832, 476451125, 32400).should.is_a?(Time)
     end
   end
 

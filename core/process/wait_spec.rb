@@ -26,7 +26,7 @@ describe "Process.wait" do
     it "sets $? to a Process::Status" do
       pid = Process.spawn(ruby_cmd('exit'))
       Process.wait
-      $?.should be_kind_of(Process::Status)
+      $?.should.is_a?(Process::Status)
       $?.pid.should == pid
     end
 

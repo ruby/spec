@@ -15,7 +15,7 @@ describe "Digest::SHA256.file" do
     end
 
     it "returns a Digest::SHA256 object" do
-      Digest::SHA256.file(@file).should be_kind_of(Digest::SHA256)
+      Digest::SHA256.file(@file).should.is_a?(Digest::SHA256)
     end
 
     it "returns a Digest::SHA256 object with the correct digest" do
@@ -30,7 +30,7 @@ describe "Digest::SHA256.file" do
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(@file)
       result = Digest::SHA256.file(obj)
-      result.should be_kind_of(Digest::SHA256)
+      result.should.is_a?(Digest::SHA256)
       result.digest.should == SHA256Constants::Digest
     end
   end

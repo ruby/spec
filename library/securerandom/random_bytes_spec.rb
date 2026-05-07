@@ -8,20 +8,20 @@ describe "SecureRandom.random_bytes" do
 
   it "generates a random binary string of length 16 if no argument is provided" do
     bytes = SecureRandom.random_bytes
-    bytes.should be_kind_of(String)
+    bytes.should.is_a?(String)
     bytes.length.should == 16
   end
 
   it "generates a random binary string of length 16 if argument is nil" do
     bytes = SecureRandom.random_bytes(nil)
-    bytes.should be_kind_of(String)
+    bytes.should.is_a?(String)
     bytes.length.should == 16
   end
 
   it "generates a random binary string of specified length" do
     (1..64).each do |idx|
       bytes = SecureRandom.random_bytes(idx)
-      bytes.should be_kind_of(String)
+      bytes.should.is_a?(String)
       bytes.length.should == idx
     end
 

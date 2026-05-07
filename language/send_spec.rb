@@ -94,7 +94,7 @@ describe "Invoking a method" do
 
   it "with a block converts the block to a Proc" do
     prc = specs.makeproc { "hello" }
-    prc.should be_kind_of(Proc)
+    prc.should.is_a?(Proc)
     prc.call.should == "hello"
   end
 

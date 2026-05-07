@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.atan2" do
   it "returns a float" do
-    Math.atan2(1.2, 0.5).should be_kind_of(Float)
+    Math.atan2(1.2, 0.5).should.is_a?(Float)
   end
 
   it "returns the arc tangent of y, x" do

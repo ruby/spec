@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.tanh" do
   it "returns a float" do
-    Math.tanh(0.5).should be_kind_of(Float)
+    Math.tanh(0.5).should.is_a?(Float)
   end
 
   it "returns the hyperbolic tangent of the argument" do

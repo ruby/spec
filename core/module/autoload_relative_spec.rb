@@ -32,7 +32,7 @@ ruby_version_is "4.1" do
 
     it "loads the registered file when the constant is accessed" do
       ModuleSpecs::Autoload.autoload_relative :AutoloadRelativeB, "fixtures/autoload_relative_a.rb"
-      ModuleSpecs::Autoload::AutoloadRelativeB.should be_kind_of(Module)
+      ModuleSpecs::Autoload::AutoloadRelativeB.should.is_a?(Module)
     end
 
     it "returns nil" do

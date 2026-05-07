@@ -719,13 +719,13 @@ describe "CApiObject" do
     it "converts an Integer to string" do
       obj = 1
       i = @o.rb_any_to_s(obj)
-      i.should be_kind_of(String)
+      i.should.is_a?(String)
     end
 
     it "converts an Object to string" do
       obj = Object.new
       i = @o.rb_any_to_s(obj)
-      i.should be_kind_of(String)
+      i.should.is_a?(String)
     end
   end
 

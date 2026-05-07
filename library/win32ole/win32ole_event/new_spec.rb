@@ -27,7 +27,7 @@ platform_is :windows do
 
       it "creates WIN32OLE::Event object" do
         ev = WIN32OLE::Event.new(@xml_dom)
-        ev.should be_kind_of WIN32OLE::Event
+        ev.should.is_a? WIN32OLE::Event
       end
     end
   end

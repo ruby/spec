@@ -13,19 +13,19 @@ describe "ObjectSpace.dump" do
 
   it "dumps to string when passed output: :string" do
     string = ObjectSpace.dump("abc", output: :string)
-    string.should be_kind_of(String)
+    string.should.is_a?(String)
     string.should include('"value":"abc"')
   end
 
   it "dumps to string when :output not specified" do
     string = ObjectSpace.dump("abc")
-    string.should be_kind_of(String)
+    string.should.is_a?(String)
     string.should include('"value":"abc"')
   end
 
   it "dumps to a temporary file when passed output: :file" do
     file = ObjectSpace.dump("abc", output: :file)
-    file.should be_kind_of(File)
+    file.should.is_a?(File)
 
     file.rewind
     content = file.read
@@ -37,7 +37,7 @@ describe "ObjectSpace.dump" do
 
   it "dumps to a temporary file when passed output: :nil" do
     file = ObjectSpace.dump("abc", output: nil)
-    file.should be_kind_of(File)
+    file.should.is_a?(File)
 
     file.rewind
     file.read.should include('"value":"abc"')

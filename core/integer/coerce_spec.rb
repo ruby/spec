@@ -44,8 +44,8 @@ describe "Integer#coerce" do
       a = bignum_value
       ary = a.coerce(2)
 
-      ary[0].should be_kind_of(Integer)
-      ary[1].should be_kind_of(Integer)
+      ary[0].should.is_a?(Integer)
+      ary[1].should.is_a?(Integer)
       ary.should == [2, a]
     end
 
@@ -54,8 +54,8 @@ describe "Integer#coerce" do
       b = bignum_value
       ary = a.coerce(b)
 
-      ary[0].should be_kind_of(Integer)
-      ary[1].should be_kind_of(Integer)
+      ary[0].should.is_a?(Integer)
+      ary[1].should.is_a?(Integer)
       ary.should == [b, a]
     end
 

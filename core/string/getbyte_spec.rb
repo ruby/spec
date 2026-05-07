@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 
 describe "String#getbyte" do
   it "returns an Integer if given a valid index" do
-    "a".getbyte(0).should be_kind_of(Integer)
+    "a".getbyte(0).should.is_a?(Integer)
   end
 
   it "starts indexing at 0" do

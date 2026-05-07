@@ -4,7 +4,7 @@ require_relative 'fixtures/array'
 describe "Array literals" do
   it "[] should return a new array populated with the given elements" do
     array = [1, 'a', nil]
-    array.should be_kind_of(Array)
+    array.should.is_a?(Array)
     array[0].should == 1
     array[1].should == 'a'
     array[2].should == nil
@@ -12,7 +12,7 @@ describe "Array literals" do
 
   it "[] treats empty expressions as nil elements" do
     array = [0, (), 2, (), 4]
-    array.should be_kind_of(Array)
+    array.should.is_a?(Array)
     array[0].should == 0
     array[1].should == nil
     array[2].should == 2

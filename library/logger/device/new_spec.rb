@@ -14,11 +14,11 @@ describe "Logger::LogDevice#new" do
 
   it "creates a new log device" do
     l = Logger::LogDevice.new(@log_file)
-    l.dev.should be_kind_of(File)
+    l.dev.should.is_a?(File)
   end
 
   it "receives an IO object to log there as first argument" do
-    @log_file.should be_kind_of(IO)
+    @log_file.should.is_a?(IO)
     l = Logger::LogDevice.new(@log_file)
     l.write("foo")
     @log_file.rewind

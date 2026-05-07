@@ -10,7 +10,7 @@ describe "Matrix.rows" do
   end
 
   it "returns a Matrix" do
-    @m.should be_kind_of(Matrix)
+    @m.should.is_a?(Matrix)
   end
 
   it "creates a matrix from argument rows" do

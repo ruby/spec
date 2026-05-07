@@ -69,10 +69,10 @@ describe 'IO#write_nonblock' do
       loop { @write.write_nonblock('a' * 10_000) }
     }.should raise_error(IO::WaitWritable) { |e|
       platform_is_not :windows do
-        e.should be_kind_of(Errno::EAGAIN)
+        e.should.is_a?(Errno::EAGAIN)
       end
       platform_is :windows do
-        e.should be_kind_of(Errno::EWOULDBLOCK)
+        e.should.is_a?(Errno::EWOULDBLOCK)
       end
     }
   end

@@ -10,7 +10,7 @@ describe "TCPSocket.gethostbyname" do
   end
 
   it "returns an array elements of information on the hostname" do
-    @host_info.should be_kind_of(Array)
+    @host_info.should.is_a?(Array)
   end
 
   platform_is_not :windows do
@@ -48,7 +48,7 @@ describe "TCPSocket.gethostbyname" do
   end
 
   it "returns any aliases to the address as second value" do
-    @host_info[1].should be_kind_of(Array)
+    @host_info[1].should.is_a?(Array)
   end
 end
 
@@ -76,7 +76,7 @@ describe 'TCPSocket.gethostbyname' do
       end
 
       it 'includes the address family as the 3rd value' do
-        @array[2].should be_kind_of(Integer)
+        @array[2].should.is_a?(Integer)
       end
 
       it 'includes the IP addresses as all the remaining values' do

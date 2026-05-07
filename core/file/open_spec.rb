@@ -62,13 +62,13 @@ describe "File.open" do
 
   it "opens the file (basic case)" do
     @fh = File.open(@file)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "opens the file with unicode characters" do
     @fh = File.open(@unicode_path, "w")
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@unicode_path)
   end
 
@@ -79,7 +79,7 @@ describe "File.open" do
 
   it "opens with mode string" do
     @fh = File.open(@file, 'w')
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -90,7 +90,7 @@ describe "File.open" do
 
   it "opens a file with mode num" do
     @fh = File.open(@file, @flags)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -101,7 +101,7 @@ describe "File.open" do
 
   it "opens a file with mode and permission as nil" do
     @fh = File.open(@file, nil, nil)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
   end
 
   # For this test we delete the file first to reset the perms
@@ -109,7 +109,7 @@ describe "File.open" do
     rm_r @file
     File.umask(0011)
     @fh = File.open(@file, @flags, 0755)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     platform_is_not :windows do
       @fh.lstat.mode.to_s(8).should == "100744"
     end
@@ -161,7 +161,7 @@ describe "File.open" do
     @fh = File.open(@file)
     fh_copy = File.open(@fh.fileno)
     fh_copy.autoclose = false
-    fh_copy.should be_kind_of(File)
+    fh_copy.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -205,19 +205,19 @@ describe "File.open" do
 
   it "opens a file that no exists when use File::CREAT mode" do
     @fh = File.open(@nonexistent, File::CREAT) { |f| f }
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "opens a file that no exists when use 'a' mode" do
     @fh = File.open(@nonexistent, 'a') { |f| f }
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "opens a file that no exists when use 'w' mode" do
     @fh = File.open(@nonexistent, 'w') { |f| f }
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -364,7 +364,7 @@ describe "File.open" do
 
   it "creates a new file when use File::WRONLY|File::APPEND mode" do
     @fh = File.open(@file, File::WRONLY|File::APPEND)
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
@@ -407,7 +407,7 @@ describe "File.open" do
     fh1 = File.open(@file, "w")
     begin
       @fh = File.open(@file, File::WRONLY|File::TRUNC)
-      @fh.should be_kind_of(File)
+      @fh.should.is_a?(File)
       File.should.exist?(@file)
     ensure
       fh1.close
@@ -470,13 +470,13 @@ describe "File.open" do
 
   it "opens a file for binary read" do
     @fh = File.open(@file, "rb")
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 
   it "opens a file for binary write" do
     @fh = File.open(@file, "wb")
-    @fh.should be_kind_of(File)
+    @fh.should.is_a?(File)
     File.should.exist?(@file)
   end
 

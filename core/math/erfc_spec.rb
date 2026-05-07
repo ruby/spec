@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 # erfc is the complementary error function
 describe "Math.erfc" do
   it "returns a float" do
-    Math.erf(1).should be_kind_of(Float)
+    Math.erf(1).should.is_a?(Float)
   end
 
   it "returns the complementary error function of the argument" do

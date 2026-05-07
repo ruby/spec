@@ -41,7 +41,7 @@ describe "File.dirname" do
   end
 
   it "returns a String" do
-    File.dirname("foo").should be_kind_of(String)
+    File.dirname("foo").should.is_a?(String)
   end
 
   it "does not modify its argument" do

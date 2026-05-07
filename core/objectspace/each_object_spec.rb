@@ -185,7 +185,7 @@ describe "ObjectSpace.each_object" do
     end
 
     it "walks singleton classes" do
-      @sclass.should be_kind_of(@meta)
+      @sclass.should.is_a?(@meta)
       ObjectSpace.each_object(@meta).to_a.should include(@sclass)
     end
   end
@@ -202,7 +202,7 @@ describe "ObjectSpace.each_object" do
     expected = [ a, b, c, d ]
 
     expected << c_sclass
-    c_sclass.should be_kind_of(a.singleton_class)
+    c_sclass.should.is_a?(a.singleton_class)
 
     b.extend Enumerable # included modules should not be walked
 

@@ -23,10 +23,10 @@ describe :regexp_new, shared: true do
 
     class RegexpSpecsSubclassTwo < Regexp; end
 
-    RegexpSpecsSubclass.send(@method, "hi").should be_kind_of(RegexpSpecsSubclass)
+    RegexpSpecsSubclass.send(@method, "hi").should.is_a?(RegexpSpecsSubclass)
     RegexpSpecsSubclass.send(@method, "hi").args.first.should == "hi"
 
-    RegexpSpecsSubclassTwo.send(@method, "hi").should be_kind_of(RegexpSpecsSubclassTwo)
+    RegexpSpecsSubclassTwo.send(@method, "hi").should.is_a?(RegexpSpecsSubclassTwo)
   end
 end
 

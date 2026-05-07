@@ -45,7 +45,7 @@ describe "Thread.list" do
 
     begin
       Thread.list.each { |th|
-        th.should be_kind_of(Thread)
+        th.should.is_a?(Thread)
       }
     end while spawner.alive?
 

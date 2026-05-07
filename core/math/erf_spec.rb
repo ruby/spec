@@ -5,7 +5,7 @@ require_relative 'fixtures/classes'
 # distribution (which is a normalized form of the Gaussian function).
 describe "Math.erf" do
   it "returns a float" do
-    Math.erf(1).should be_kind_of(Float)
+    Math.erf(1).should.is_a?(Float)
   end
 
   it "returns the error function of the argument" do

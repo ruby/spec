@@ -5,7 +5,7 @@ describe "CSV.parse" do
 
   it "parses '' into []" do
     result = CSV.parse ''
-    result.should be_kind_of(Array)
+    result.should.is_a?(Array)
     result.should == []
   end
 

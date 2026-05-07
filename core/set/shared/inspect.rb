@@ -1,10 +1,10 @@
 describe :set_inspect, shared: true do
   it "returns a String representation of self" do
-    Set[].send(@method).should be_kind_of(String)
-    Set[nil, false, true].send(@method).should be_kind_of(String)
-    Set[1, 2, 3].send(@method).should be_kind_of(String)
-    Set["1", "2", "3"].send(@method).should be_kind_of(String)
-    Set[:a, "b", Set[?c]].send(@method).should be_kind_of(String)
+    Set[].send(@method).should.is_a?(String)
+    Set[nil, false, true].send(@method).should.is_a?(String)
+    Set[1, 2, 3].send(@method).should.is_a?(String)
+    Set["1", "2", "3"].send(@method).should.is_a?(String)
+    Set[:a, "b", Set[?c]].send(@method).should.is_a?(String)
   end
 
   ruby_version_is "4.0" do
@@ -28,7 +28,7 @@ describe :set_inspect, shared: true do
       set1 = Set[]
       set2 = Set[set1]
       set1 << set2
-      set1.send(@method).should be_kind_of(String)
+      set1.send(@method).should.is_a?(String)
       set1.send(@method).should include("Set[...]")
     end
   end
@@ -38,7 +38,7 @@ describe :set_inspect, shared: true do
       set1 = Set[]
       set2 = Set[set1]
       set1 << set2
-      set1.send(@method).should be_kind_of(String)
+      set1.send(@method).should.is_a?(String)
       set1.send(@method).should include("#<Set: {...}>")
     end
   end

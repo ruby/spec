@@ -34,7 +34,7 @@ platform_is_not :windows do
 
       it "returns the Etc::Group for a given gid if it exists" do
         grp = Etc.getgrgid(@gid)
-        grp.should be_kind_of(Etc::Group)
+        grp.should.is_a?(Etc::Group)
         grp.gid.should == @gid
         grp.name.should == @name
       end

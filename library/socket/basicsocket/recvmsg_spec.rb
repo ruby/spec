@@ -71,7 +71,7 @@ describe 'BasicSocket#recvmsg' do
 
             platform_is_not :windows do
               it 'stores the flags at index 2' do
-                @array[2].should be_kind_of(Integer)
+                @array[2].should.is_a?(Integer)
               end
             end
 
@@ -161,7 +161,7 @@ describe 'BasicSocket#recvmsg' do
             end
 
             it 'stores the flags at index 2' do
-              @array[2].should be_kind_of(Integer)
+              @array[2].should.is_a?(Integer)
             end
 
             describe 'the returned Addrinfo' do

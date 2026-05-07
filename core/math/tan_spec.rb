@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.tan" do
   it "returns a float" do
-    Math.tan(1.35).should be_kind_of(Float)
+    Math.tan(1.35).should.is_a?(Float)
   end
 
   it "returns the tangent of the argument" do

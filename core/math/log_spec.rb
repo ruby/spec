@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 # The natural logarithm, having base Math::E
 describe "Math.log" do
   it "returns a float" do
-    Math.log(1).should be_kind_of(Float)
+    Math.log(1).should.is_a?(Float)
   end
 
   it "returns the natural logarithm of the argument" do

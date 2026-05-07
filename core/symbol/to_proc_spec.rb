@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe "Symbol#to_proc" do
   it "returns a new Proc" do
     proc = :to_s.to_proc
-    proc.should be_kind_of(Proc)
+    proc.should.is_a?(Proc)
   end
 
   it "sends self to arguments passed when calling #call on the Proc" do

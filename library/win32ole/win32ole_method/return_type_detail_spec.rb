@@ -13,7 +13,7 @@ platform_is :windows do
     end
 
     it "returns expected value for Shell Control's 'BrowseForFolder' method" do
-      @m_browse_for_folder.return_type_detail.should be_kind_of Array
+      @m_browse_for_folder.return_type_detail.should.is_a? Array
       @m_browse_for_folder.return_type_detail.should == ['PTR', 'USERDEFINED', 'Folder']
     end
 

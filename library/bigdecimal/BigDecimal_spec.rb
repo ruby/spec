@@ -10,7 +10,7 @@ end
 describe "Kernel#BigDecimal" do
 
   it "creates a new object of class BigDecimal" do
-    BigDecimal("3.14159").should be_kind_of(BigDecimal)
+    BigDecimal("3.14159").should.is_a?(BigDecimal)
     (0..9).each {|i|
       BigDecimal("1#{i}").should == 10 + i
       BigDecimal("-1#{i}").should == -10 - i

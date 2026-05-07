@@ -26,7 +26,7 @@ describe "Kernel#inspect" do
     class << obj
       undef_method :class
     end
-    obj.inspect.should be_kind_of(String)
+    obj.inspect.should.is_a?(String)
   end
 
   ruby_version_is "4.0" do

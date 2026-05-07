@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.sqrt" do
   it "returns a float" do
-    Math.sqrt(1).should be_kind_of(Float)
+    Math.sqrt(1).should.is_a?(Float)
   end
 
   it "returns the square root of the argument" do

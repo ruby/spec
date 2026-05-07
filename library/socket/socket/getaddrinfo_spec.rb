@@ -131,8 +131,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '127.0.0.1'
       array[3].should == '127.0.0.1'
       array[4].should == Socket::AF_INET
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts an Integer as the address family using IPv6' do
@@ -143,8 +143,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '::1'
       array[3].should == '::1'
       array[4].should == Socket::AF_INET6
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts a Symbol as the address family' do
@@ -155,8 +155,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '127.0.0.1'
       array[3].should == '127.0.0.1'
       array[4].should == Socket::AF_INET
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts a Symbol as the address family using IPv6' do
@@ -167,8 +167,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '::1'
       array[3].should == '::1'
       array[4].should == Socket::AF_INET6
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts a String as the address family' do
@@ -179,8 +179,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '127.0.0.1'
       array[3].should == '127.0.0.1'
       array[4].should == Socket::AF_INET
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts a String as the address family using IPv6' do
@@ -191,8 +191,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '::1'
       array[3].should == '::1'
       array[4].should == Socket::AF_INET6
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts an object responding to #to_str as the host' do
@@ -207,8 +207,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '127.0.0.1'
       array[3].should == '127.0.0.1'
       array[4].should == Socket::AF_INET
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts an object responding to #to_str as the address family' do
@@ -223,8 +223,8 @@ describe 'Socket.getaddrinfo' do
       array[2].should == '127.0.0.1'
       array[3].should == '127.0.0.1'
       array[4].should == Socket::AF_INET
-      array[5].should be_kind_of(Integer)
-      array[6].should be_kind_of(Integer)
+      array[5].should.is_a?(Integer)
+      array[6].should.is_a?(Integer)
     end
 
     it 'accepts an Integer as the socket type' do

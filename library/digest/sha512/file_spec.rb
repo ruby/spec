@@ -15,7 +15,7 @@ describe "Digest::SHA512.file" do
     end
 
     it "returns a Digest::SHA512 object" do
-      Digest::SHA512.file(@file).should be_kind_of(Digest::SHA512)
+      Digest::SHA512.file(@file).should.is_a?(Digest::SHA512)
     end
 
     it "returns a Digest::SHA512 object with the correct digest" do
@@ -26,7 +26,7 @@ describe "Digest::SHA512.file" do
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(@file)
       result = Digest::SHA512.file(obj)
-      result.should be_kind_of(Digest::SHA512)
+      result.should.is_a?(Digest::SHA512)
       result.digest.should == SHA512Constants::Digest
     end
   end

@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Process.egid" do
   it "returns the effective group ID for this process" do
-    Process.egid.should be_kind_of(Integer)
+    Process.egid.should.is_a?(Integer)
   end
 
   it "also goes by Process::GID.eid" do

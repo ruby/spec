@@ -7,7 +7,7 @@ describe "StringIO#truncate when passed [length]" do
   end
 
   it "returns an Integer" do
-    @io.truncate(4).should be_kind_of(Integer)
+    @io.truncate(4).should.is_a?(Integer)
   end
 
   it "truncated the underlying string down to the passed length" do

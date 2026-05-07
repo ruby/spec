@@ -6,12 +6,12 @@ describe "SecureRandom.hex" do
   it "generates a random hex string of length twice the specified argument" do
     (1..64).each do |idx|
       hex = SecureRandom.hex(idx)
-      hex.should be_kind_of(String)
+      hex.should.is_a?(String)
       hex.length.should == 2 * idx
     end
 
     base64 = SecureRandom.hex(5.5)
-    base64.should be_kind_of(String)
+    base64.should.is_a?(String)
     base64.length.should eql(10)
   end
 
@@ -31,12 +31,12 @@ describe "SecureRandom.hex" do
   end
 
   it "generates a random hex string of length 32 if no argument is provided" do
-    SecureRandom.hex.should be_kind_of(String)
+    SecureRandom.hex.should.is_a?(String)
     SecureRandom.hex.length.should == 32
   end
 
   it "treats nil argument as default one and generates a random hex string of length 32" do
-    SecureRandom.hex(nil).should be_kind_of(String)
+    SecureRandom.hex(nil).should.is_a?(String)
     SecureRandom.hex(nil).length.should == 32
   end
 

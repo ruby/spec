@@ -4,7 +4,7 @@ require 'bigdecimal'
 describe "BigDecimal#to_r" do
 
   it "returns a Rational" do
-    BigDecimal("3.14159").to_r.should be_kind_of(Rational)
+    BigDecimal("3.14159").to_r.should.is_a?(Rational)
   end
 
   it "returns a Rational with bignum values" do

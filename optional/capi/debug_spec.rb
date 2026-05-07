@@ -9,7 +9,7 @@ describe "C-API Debug function" do
 
   describe "rb_debug_inspector_open" do
     it "creates a debug context and calls the given callback" do
-      @o.rb_debug_inspector_open(42).should be_kind_of(Array)
+      @o.rb_debug_inspector_open(42).should.is_a?(Array)
       @o.debug_spec_callback_data.should == 42
     end
   end
@@ -66,7 +66,7 @@ describe "C-API Debug function" do
     it "returns an array of Thread::Backtrace::Location" do
       bts = @o.rb_debug_inspector_backtrace_locations
       bts.should_not.empty?
-      bts.each { |bt| bt.should be_kind_of(Thread::Backtrace::Location) }
+      bts.each { |bt| bt.should.is_a?(Thread::Backtrace::Location) }
       location = "#{__FILE__}:#{__LINE__ - 3}"
       bts[1].to_s.should include(location)
     end

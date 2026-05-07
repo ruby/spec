@@ -50,7 +50,7 @@ describe "Module#extend_object" do
 
     it "raises a RuntimeError before extending the object" do
       -> { @receiver.send(:extend_object, @object) }.should raise_error(RuntimeError)
-      @object.should_not be_kind_of(@receiver)
+      @object.should_not.is_a?(@receiver)
     end
   end
 end
