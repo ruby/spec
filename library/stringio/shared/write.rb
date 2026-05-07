@@ -42,7 +42,7 @@ describe :stringio_write_string, shared: true do
 
   it "updates self's position" do
     @io.send(@method, 'test')
-    @io.pos.should eql(4)
+    @io.pos.should.eql?(4)
   end
 
   it "handles concurrent writes correctly" do
@@ -130,6 +130,6 @@ describe :stringio_write_append, shared: true do
 
   it "correctly updates self's position" do
     @io.send(@method, ", testing")
-    @io.pos.should eql(16)
+    @io.pos.should.eql?(16)
   end
 end

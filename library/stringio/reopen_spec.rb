@@ -95,13 +95,13 @@ describe "StringIO#reopen when passed [Object, Object]" do
   it "resets self's position to 0" do
     @io.read(5)
     @io.reopen(+"reopened")
-    @io.pos.should eql(0)
+    @io.pos.should.eql?(0)
   end
 
   it "resets self's line number to 0" do
     @io.gets
     @io.reopen(+"reopened")
-    @io.lineno.should eql(0)
+    @io.lineno.should.eql?(0)
   end
 
   it "tries to convert the passed mode Object to an Integer using #to_str" do
@@ -145,13 +145,13 @@ describe "StringIO#reopen when passed [String]" do
   it "resets self's position to 0" do
     @io.read(5)
     @io.reopen(+"reopened")
-    @io.pos.should eql(0)
+    @io.pos.should.eql?(0)
   end
 
   it "resets self's line number to 0" do
     @io.gets
     @io.reopen(+"reopened")
-    @io.lineno.should eql(0)
+    @io.lineno.should.eql?(0)
   end
 end
 
@@ -193,13 +193,13 @@ describe "StringIO#reopen when passed no arguments" do
   it "resets self's position to 0" do
     @io.read(5)
     @io.reopen
-    @io.pos.should eql(0)
+    @io.pos.should.eql?(0)
   end
 
   it "resets self's line number to 0" do
     @io.gets
     @io.reopen
-    @io.lineno.should eql(0)
+    @io.lineno.should.eql?(0)
   end
 end
 

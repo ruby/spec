@@ -3,11 +3,11 @@ require_relative 'fixtures/classes'
 
 describe "Numeric#quo" do
   it "returns the result of self divided by the given Integer as a Rational" do
-    5.quo(2).should eql(Rational(5,2))
+    5.quo(2).should.eql?(Rational(5,2))
   end
 
   it "returns the result of self divided by the given Float as a Float" do
-    2.quo(2.5).should eql(0.8)
+    2.quo(2.5).should.eql?(0.8)
   end
 
   it "returns the result of self divided by the given Bignum as a Float" do

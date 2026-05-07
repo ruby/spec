@@ -25,7 +25,7 @@ describe "SecureRandom.random_bytes" do
       bytes.length.should == idx
     end
 
-    SecureRandom.random_bytes(2.2).length.should eql(2)
+    SecureRandom.random_bytes(2.2).length.should.eql?(2)
   end
 
   it "generates different binary strings with subsequent invocations" do
@@ -48,6 +48,6 @@ describe "SecureRandom.random_bytes" do
   it "tries to convert the passed argument to an Integer using #to_int" do
     obj = mock("to_int")
     obj.should_receive(:to_int).and_return(5)
-    SecureRandom.random_bytes(obj).size.should eql(5)
+    SecureRandom.random_bytes(obj).size.should.eql?(5)
   end
 end

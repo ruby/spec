@@ -41,7 +41,7 @@ describe "Time#getlocal" do
   it "returns a Time with a UTC offset of the specified number of Rational seconds" do
     t = Time.gm(2007, 1, 9, 12, 0, 0).getlocal(Rational(7201, 2))
     t.should == Time.new(2007, 1, 9, 13, 0, Rational(1, 2), Rational(7201, 2))
-    t.utc_offset.should eql(Rational(7201, 2))
+    t.utc_offset.should.eql?(Rational(7201, 2))
   end
 
   describe "with an argument that responds to #to_r" do
@@ -50,7 +50,7 @@ describe "Time#getlocal" do
       o.should_receive(:to_r).and_return(Rational(7201, 2))
       t = Time.gm(2007, 1, 9, 12, 0, 0).getlocal(o)
       t.should == Time.new(2007, 1, 9, 13, 0, Rational(1, 2), Rational(7201, 2))
-      t.utc_offset.should eql(Rational(7201, 2))
+      t.utc_offset.should.eql?(Rational(7201, 2))
     end
   end
 

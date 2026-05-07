@@ -131,8 +131,8 @@ describe "Kernel#rand" do
       x3 = Random.new(seed).rand(0.0..1)
 
       x3.should.is_a?(Float)
-      x1.should eql(x3)
-      x2.should eql(x3)
+      x1.should.eql?(x3)
+      x2.should.eql?(x3)
 
       (0.0..1.0).should include(x3)
     end
@@ -142,7 +142,7 @@ describe "Kernel#rand" do
     it "returns zero as an Integer" do
       x = rand(0...1)
       x.should.is_a?(Integer)
-      x.should eql(0)
+      x.should.eql?(0)
     end
 
     it "returns a Float if at least one side is Float" do
@@ -152,8 +152,8 @@ describe "Kernel#rand" do
       x3 = Random.new(seed).rand(0.0...1)
 
       x3.should.is_a?(Float)
-      x1.should eql(x3)
-      x2.should eql(x3)
+      x1.should.eql?(x3)
+      x2.should.eql?(x3)
 
       (0.0...1.0).should include(x3)
     end
@@ -168,11 +168,11 @@ describe "Kernel#rand" do
   end
 
   it "returns the range start/end when Float range is 0" do
-    rand(1.0..1.0).should eql(1.0)
+    rand(1.0..1.0).should.eql?(1.0)
   end
 
   it "returns the range start/end when Integer range is 0" do
-    rand(42..42).should eql(42)
+    rand(42..42).should.eql?(42)
   end
 
   it "supports custom object types" do

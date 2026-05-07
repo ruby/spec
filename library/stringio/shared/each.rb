@@ -74,7 +74,7 @@ describe :stringio_each_no_arguments, shared: true do
       old_rs = $/
       suppress_warning {$/ = " "}
       @io.send(@method) {|s| seen << s }
-      seen.should eql(["a ", "b ", "c ", "d ", "e\n1 ", "2 ", "3 ", "4 ", "5"])
+      seen.should.eql?(["a ", "b ", "c ", "d ", "e\n1 ", "2 ", "3 ", "4 ", "5"])
     ensure
       suppress_warning {$/ = old_rs}
     end
@@ -176,13 +176,13 @@ describe :stringio_each_separator_and_limit, shared: true do
 
   it "updates self's lineno by one" do
     @io.send(@method, '>', 3) { |s| break s }
-    @io.lineno.should eql(1)
+    @io.lineno.should.eql?(1)
 
     @io.send(@method, '>', 3) { |s| break s }
-    @io.lineno.should eql(2)
+    @io.lineno.should.eql?(2)
 
     @io.send(@method, '>', 3) { |s| break s }
-    @io.lineno.should eql(3)
+    @io.lineno.should.eql?(3)
   end
 
   it "tries to convert the passed separator to a String using #to_str" do # TODO

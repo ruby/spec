@@ -1,51 +1,51 @@
 describe :integer_exponent, shared: true do
   context "fixnum" do
     it "returns self raised to the given power" do
-      2.send(@method, 0).should eql 1
-      2.send(@method, 1).should eql 2
-      2.send(@method, 2).should eql 4
+      2.send(@method, 0).should.eql? 1
+      2.send(@method, 1).should.eql? 2
+      2.send(@method, 2).should.eql? 4
 
-      9.send(@method, 0.5).should eql 3.0
-      9.send(@method, Rational(1, 2)).should eql 3.0
+      9.send(@method, 0.5).should.eql? 3.0
+      9.send(@method, Rational(1, 2)).should.eql? 3.0
       5.send(@method, -1).to_f.to_s.should == '0.2'
 
-      2.send(@method, 40).should eql 1099511627776
+      2.send(@method, 40).should.eql? 1099511627776
     end
 
     it "overflows the answer to a bignum transparently" do
-      2.send(@method, 29).should eql 536870912
-      2.send(@method, 30).should eql 1073741824
-      2.send(@method, 31).should eql 2147483648
-      2.send(@method, 32).should eql 4294967296
+      2.send(@method, 29).should.eql? 536870912
+      2.send(@method, 30).should.eql? 1073741824
+      2.send(@method, 31).should.eql? 2147483648
+      2.send(@method, 32).should.eql? 4294967296
 
-      2.send(@method, 61).should eql 2305843009213693952
-      2.send(@method, 62).should eql 4611686018427387904
-      2.send(@method, 63).should eql 9223372036854775808
-      2.send(@method, 64).should eql 18446744073709551616
-      8.send(@method, 23).should eql 590295810358705651712
+      2.send(@method, 61).should.eql? 2305843009213693952
+      2.send(@method, 62).should.eql? 4611686018427387904
+      2.send(@method, 63).should.eql? 9223372036854775808
+      2.send(@method, 64).should.eql? 18446744073709551616
+      8.send(@method, 23).should.eql? 590295810358705651712
     end
 
     it "raises negative numbers to the given power" do
-      (-2).send(@method, 29).should eql(-536870912)
-      (-2).send(@method, 30).should eql(1073741824)
-      (-2).send(@method, 31).should eql(-2147483648)
-      (-2).send(@method, 32).should eql(4294967296)
-      (-2).send(@method, 33).should eql(-8589934592)
+      (-2).send(@method, 29).should.eql?(-536870912)
+      (-2).send(@method, 30).should.eql?(1073741824)
+      (-2).send(@method, 31).should.eql?(-2147483648)
+      (-2).send(@method, 32).should.eql?(4294967296)
+      (-2).send(@method, 33).should.eql?(-8589934592)
 
-      (-2).send(@method, 61).should eql(-2305843009213693952)
-      (-2).send(@method, 62).should eql(4611686018427387904)
-      (-2).send(@method, 63).should eql(-9223372036854775808)
-      (-2).send(@method, 64).should eql(18446744073709551616)
-      (-2).send(@method, 65).should eql(-36893488147419103232)
+      (-2).send(@method, 61).should.eql?(-2305843009213693952)
+      (-2).send(@method, 62).should.eql?(4611686018427387904)
+      (-2).send(@method, 63).should.eql?(-9223372036854775808)
+      (-2).send(@method, 64).should.eql?(18446744073709551616)
+      (-2).send(@method, 65).should.eql?(-36893488147419103232)
     end
 
     it "can raise 1 to a bignum safely" do
-      1.send(@method, 4611686018427387904).should eql 1
+      1.send(@method, 4611686018427387904).should.eql? 1
     end
 
     it "can raise -1 to a bignum safely" do
-      (-1).send(@method, 4611686018427387904).should eql(1)
-      (-1).send(@method, 4611686018427387905).should eql(-1)
+      (-1).send(@method, 4611686018427387904).should.eql?(1)
+      (-1).send(@method, 4611686018427387905).should.eql?(-1)
     end
 
     ruby_version_is ""..."3.4" do

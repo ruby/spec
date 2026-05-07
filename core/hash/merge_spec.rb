@@ -90,7 +90,7 @@ describe "Hash#merge" do
     hash = { a: 1 }
     merged = hash.merge
 
-    merged.should eql(hash)
+    merged.should.eql?(hash)
     merged.should_not equal(hash)
   end
 

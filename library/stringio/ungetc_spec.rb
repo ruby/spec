@@ -20,7 +20,7 @@ describe "StringIO#ungetc when passed [char]" do
   it "decreases the current position by one" do
     @io.pos = 2
     @io.ungetc(?A)
-    @io.pos.should eql(1)
+    @io.pos.should.eql?(1)
   end
 
   it "pads with \\000 when the current position is after the end" do

@@ -5,13 +5,13 @@ describe :stringio_getc, shared: true do
 
   it "increases self's position by one" do
     @io.send(@method)
-    @io.pos.should eql(1)
+    @io.pos.should.eql?(1)
 
     @io.send(@method)
-    @io.pos.should eql(2)
+    @io.pos.should.eql?(2)
 
     @io.send(@method)
-    @io.pos.should eql(3)
+    @io.pos.should.eql?(3)
   end
 
   it "returns nil when called at the end of self" do
@@ -24,10 +24,10 @@ describe :stringio_getc, shared: true do
   it "does not increase self's position when called at the end of file" do
     @io.pos = 7
     @io.send(@method)
-    @io.pos.should eql(7)
+    @io.pos.should.eql?(7)
 
     @io.send(@method)
-    @io.pos.should eql(7)
+    @io.pos.should.eql?(7)
   end
 end
 

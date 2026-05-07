@@ -20,7 +20,7 @@ ruby_version_is ""..."4.0" do
         @cgi.content_length.should == nil
 
         ENV['CONTENT_LENGTH'] = "100"
-        @cgi.content_length.should eql(100)
+        @cgi.content_length.should.eql?(100)
       ensure
         ENV['CONTENT_LENGTH'] = old_value
       end

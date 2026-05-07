@@ -124,11 +124,11 @@ describe "Integer#div" do
     end
 
     it "returns a result of integer division of self by a float argument" do
-      @bignum.div(4294967295.5).should eql(4294967296)
+      @bignum.div(4294967295.5).should.eql?(4294967296)
       not_supported_on :opal do
-        @bignum.div(4294967295.0).should eql(4294967297)
-        @bignum.div(bignum_value(88).to_f).should eql(1)
-        @bignum.div((-bignum_value(88)).to_f).should eql(-1)
+        @bignum.div(4294967295.0).should.eql?(4294967297)
+        @bignum.div(bignum_value(88).to_f).should.eql?(1)
+        @bignum.div((-bignum_value(88)).to_f).should.eql?(-1)
       end
     end
 

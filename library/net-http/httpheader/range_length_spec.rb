@@ -9,10 +9,10 @@ describe "Net::HTTPHeader#range_length" do
 
   it "returns the length of the Range represented by the 'Content-Range' header entry" do
     @headers["Content-Range"] = "bytes 0-499/1234"
-    @headers.range_length.should eql(500)
+    @headers.range_length.should.eql?(500)
 
     @headers["Content-Range"] = "bytes 500-1233/1234"
-    @headers.range_length.should eql(734)
+    @headers.range_length.should.eql?(734)
   end
 
   it "returns nil when there is no 'Content-Range' header entry" do

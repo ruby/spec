@@ -768,8 +768,8 @@ describe "a method definition that sets more than one default parameter all to t
   it "assigns them all the same object by default" do
     foo.should == [{},{},{}]
     a, b, c = foo
-    a.should eql(b)
-    a.should eql(c)
+    a.should.eql?(b)
+    a.should.eql?(c)
   end
 
   it "allows the first argument to be given, and sets the rest to null" do

@@ -66,10 +66,10 @@ describe :stringio_read_length, shared: true do
 
   it "correctly updates the position" do
     @io.send(@method, 3)
-    @io.pos.should eql(3)
+    @io.pos.should.eql?(3)
 
     @io.send(@method, 999)
-    @io.pos.should eql(7)
+    @io.pos.should.eql?(7)
   end
 
   it "tries to convert the passed length to an Integer using #to_int" do
@@ -105,13 +105,13 @@ describe :stringio_read_no_arguments, shared: true do
 
   it "correctly updates the current position" do
     @io.send(@method)
-    @io.pos.should eql(7)
+    @io.pos.should.eql?(7)
   end
 
   it "correctly update the current position in bytes when multi-byte characters are used" do
     @io.print("example\u03A3") # Overwrite the original string with 8 characters containing 9 bytes.
     @io.send(@method)
-    @io.pos.should eql(9)
+    @io.pos.should.eql?(9)
   end
 end
 
@@ -129,7 +129,7 @@ describe :stringio_read_nil, shared: true do
 
   it "updates the current position" do
     @io.send(@method, nil)
-    @io.pos.should eql(7)
+    @io.pos.should.eql?(7)
   end
 end
 

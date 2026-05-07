@@ -5,7 +5,7 @@ describe "Set[]" do
     set = Set[1, 2, 3]
 
     set.instance_of?(Set).should == true
-    set.size.should eql(3)
+    set.size.should.eql?(3)
 
     set.should include(1)
     set.should include(2)

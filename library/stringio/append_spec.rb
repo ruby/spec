@@ -31,7 +31,7 @@ describe "StringIO#<< when passed [Object]" do
 
   it "updates self's position" do
     @io << "test"
-    @io.pos.should eql(4)
+    @io.pos.should.eql?(4)
   end
 
   it "tries to convert the passed argument to a String using #to_s" do
@@ -69,6 +69,6 @@ describe "StringIO#<< when in append mode" do
 
   it "correctly updates self's position" do
     @io << ", testing"
-    @io.pos.should eql(16)
+    @io.pos.should.eql?(16)
   end
 end

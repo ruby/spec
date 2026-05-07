@@ -15,7 +15,7 @@ describe "StringScanner#dup" do
   it "copies the passed StringScanner's position to self" do
     @orig_s.pos = 5
     s = @orig_s.dup
-    s.pos.should eql(5)
+    s.pos.should.eql?(5)
   end
 
   it "copies previous match state" do

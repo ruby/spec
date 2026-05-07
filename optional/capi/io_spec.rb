@@ -34,7 +34,7 @@ describe "C-API IO function" do
     end
 
     it "returns the io" do
-      @o.rb_io_addstr(@io, "rb_io_addstr data").should eql(@io)
+      @o.rb_io_addstr(@io, "rb_io_addstr data").should.eql?(@io)
     end
   end
 

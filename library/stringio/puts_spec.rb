@@ -158,7 +158,7 @@ describe "StringIO#puts when in append mode" do
 
   it "correctly updates self's position" do
     @io.puts(", testing")
-    @io.pos.should eql(17)
+    @io.pos.should.eql?(17)
   end
 end
 

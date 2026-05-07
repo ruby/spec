@@ -18,7 +18,7 @@ describe "Numeric#abs2" do
 
   it "returns the square of the absolute value of self" do
     @numbers.each do |number|
-      number.abs2.should eql(number.abs ** 2)
+      number.abs2.should.eql?(number.abs ** 2)
     end
   end
 

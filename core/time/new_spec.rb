@@ -31,14 +31,14 @@ describe "Time.new with a utc_offset argument" do
   end
 
   it "returns a Time with a UTC offset of the specified number of Rational seconds" do
-    Time.new(2000, 1, 1, 0, 0, 0, Rational(5, 2)).utc_offset.should eql(Rational(5, 2))
+    Time.new(2000, 1, 1, 0, 0, 0, Rational(5, 2)).utc_offset.should.eql?(Rational(5, 2))
   end
 
   describe "with an argument that responds to #to_r" do
     it "coerces using #to_r" do
       o = mock_numeric('rational')
       o.should_receive(:to_r).and_return(Rational(5, 2))
-      Time.new(2000, 1, 1, 0, 0, 0, o).utc_offset.should eql(Rational(5, 2))
+      Time.new(2000, 1, 1, 0, 0, 0, o).utc_offset.should.eql?(Rational(5, 2))
     end
   end
 

@@ -7,7 +7,7 @@ describe "Set#initialize" do
 
   it "adds all elements of the passed Enumerable to self" do
     s = Set.new([1, 2, 3])
-    s.size.should eql(3)
+    s.size.should.eql?(3)
     s.should include(1)
     s.should include(2)
     s.should include(3)
@@ -17,7 +17,7 @@ describe "Set#initialize" do
     enumerable = MockObject.new('mock-enumerable')
     enumerable.should_receive(:each_entry).and_yield(1).and_yield(2).and_yield(3)
     s = Set.new(enumerable)
-    s.size.should eql(3)
+    s.size.should.eql?(3)
     s.should include(1)
     s.should include(2)
     s.should include(3)
@@ -27,7 +27,7 @@ describe "Set#initialize" do
     enumerable = MockObject.new('mock-enumerable')
     enumerable.should_receive(:each).and_yield(1).and_yield(2).and_yield(3)
     s = Set.new(enumerable)
-    s.size.should eql(3)
+    s.size.should.eql?(3)
     s.should include(1)
     s.should include(2)
     s.should include(3)
@@ -40,15 +40,15 @@ describe "Set#initialize" do
 
   it "should initialize with empty array and set" do
     s = Set.new([])
-    s.size.should eql(0)
+    s.size.should.eql?(0)
 
     s = Set.new({})
-    s.size.should eql(0)
+    s.size.should.eql?(0)
   end
 
   it "preprocesses all elements by a passed block before adding to self" do
     s = Set.new([1, 2, 3]) { |x| x * x }
-    s.size.should eql(3)
+    s.size.should.eql?(3)
     s.should include(1)
     s.should include(4)
     s.should include(9)
@@ -56,18 +56,18 @@ describe "Set#initialize" do
 
   it "should initialize with empty array and block" do
     s = Set.new([]) { |x| x * x }
-    s.size.should eql(0)
+    s.size.should.eql?(0)
   end
 
   it "should initialize with empty set and block" do
     s = Set.new(Set.new) { |x| x * x }
-    s.size.should eql(0)
+    s.size.should.eql?(0)
   end
 
   it "should initialize with set" do
     o = Set.new([1, 2])
     s = Set.new(o)
-    s.size.should eql(2)
+    s.size.should.eql?(2)
     s.should include(1)
     s.should include(2)
   end
@@ -75,14 +75,14 @@ describe "Set#initialize" do
   it "should initialize with set and block" do
     o = Set.new([1, 2])
     s = Set.new(o) { |e| e + 2 }
-    s.size.should eql(2)
+    s.size.should.eql?(2)
     s.should include(3)
     s.should include(4)
   end
 
   it "should initialize with just block" do
     s = Set.new { |x| x * x }
-    s.size.should eql(0)
-    s.should eql(Set.new)
+    s.size.should.eql?(0)
+    s.should.eql?(Set.new)
   end
 end

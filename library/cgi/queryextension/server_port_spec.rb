@@ -20,7 +20,7 @@ ruby_version_is ""..."4.0" do
         @cgi.server_port.should == nil
 
         ENV['SERVER_PORT'] = "3000"
-        @cgi.server_port.should eql(3000)
+        @cgi.server_port.should.eql?(3000)
       ensure
         ENV['SERVER_PORT'] = old_value
       end

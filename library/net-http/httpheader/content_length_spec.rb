@@ -18,13 +18,13 @@ describe "Net::HTTPHeader#content_length" do
 
   it "returns the value of the 'Content-Length' header entry as an Integer" do
     @headers["Content-Length"] = "123"
-    @headers.content_length.should eql(123)
+    @headers.content_length.should.eql?(123)
 
     @headers["Content-Length"] = "123valid"
-    @headers.content_length.should eql(123)
+    @headers.content_length.should.eql?(123)
 
     @headers["Content-Length"] = "valid123"
-    @headers.content_length.should eql(123)
+    @headers.content_length.should.eql?(123)
   end
 end
 

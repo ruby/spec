@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns the size of the passed file as Integer" do
-      @ftp.size("test.file").should eql(1024)
+      @ftp.size("test.file").should.eql?(1024)
     end
 
     it "raises a Net::FTPPermError when the response code is 500" do

@@ -51,7 +51,7 @@ describe "Time#localtime" do
     t = Time.gm(2007, 1, 9, 12, 0, 0)
     t.localtime(Rational(7201, 2))
     t.should == Time.new(2007, 1, 9, 13, 0, Rational(1, 2), Rational(7201, 2))
-    t.utc_offset.should eql(Rational(7201, 2))
+    t.utc_offset.should.eql?(Rational(7201, 2))
   end
 
   describe "with an argument that responds to #to_r" do
@@ -61,7 +61,7 @@ describe "Time#localtime" do
       t = Time.gm(2007, 1, 9, 12, 0, 0)
       t.localtime(o)
       t.should == Time.new(2007, 1, 9, 13, 0, Rational(1, 2), Rational(7201, 2))
-      t.utc_offset.should eql(Rational(7201, 2))
+      t.utc_offset.should.eql?(Rational(7201, 2))
     end
   end
 

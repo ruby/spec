@@ -24,10 +24,10 @@ describe "StringIO#printf" do
 
   it "updates the current position" do
     @io.printf("%d %04x", 123, 123)
-    @io.pos.should eql(8)
+    @io.pos.should.eql?(8)
 
     @io.printf("%d %04x", 123, 123)
-    @io.pos.should eql(16)
+    @io.pos.should.eql?(16)
   end
 
   describe "formatting" do
@@ -56,7 +56,7 @@ describe "StringIO#printf when in read-write mode" do
 
   it "correctly updates self's position" do
     @io.printf("%s", "abc")
-    @io.pos.should eql(3)
+    @io.pos.should.eql?(3)
   end
 end
 
@@ -75,7 +75,7 @@ describe "StringIO#printf when in append mode" do
 
   it "correctly updates self's position" do
     @io.printf("%d %04x", 123, 123)
-    @io.pos.should eql(15)
+    @io.pos.should.eql?(15)
   end
 end
 

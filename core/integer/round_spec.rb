@@ -8,17 +8,17 @@ describe "Integer#round" do
 
   # redmine:5228
   it "returns itself rounded if passed a negative value" do
-    +249.round(-2).should eql(+200)
-    -249.round(-2).should eql(-200)
-    (+25 * 10**70 - 1).round(-71).should eql(+20 * 10**70)
-    (-25 * 10**70 + 1).round(-71).should eql(-20 * 10**70)
+    +249.round(-2).should.eql?(+200)
+    -249.round(-2).should.eql?(-200)
+    (+25 * 10**70 - 1).round(-71).should.eql?(+20 * 10**70)
+    (-25 * 10**70 + 1).round(-71).should.eql?(-20 * 10**70)
   end
 
   it "returns itself rounded to nearest if passed a negative value" do
-    +250.round(-2).should eql(+300)
-    -250.round(-2).should eql(-300)
-    (+25 * 10**70).round(-71).should eql(+30 * 10**70)
-    (-25 * 10**70).round(-71).should eql(-30 * 10**70)
+    +250.round(-2).should.eql?(+300)
+    -250.round(-2).should.eql?(-300)
+    (+25 * 10**70).round(-71).should.eql?(+30 * 10**70)
+    (-25 * 10**70).round(-71).should.eql?(-30 * 10**70)
   end
 
   it "raises a RangeError when passed a big negative value" do
@@ -54,24 +54,24 @@ describe "Integer#round" do
   end
 
   it "returns different rounded values depending on the half option" do
-    25.round(-1, half: :up).should      eql(30)
-    25.round(-1, half: :down).should    eql(20)
-    25.round(-1, half: :even).should    eql(20)
-    25.round(-1, half: nil).should      eql(30)
-    35.round(-1, half: :up).should      eql(40)
-    35.round(-1, half: :down).should    eql(30)
-    35.round(-1, half: :even).should    eql(40)
-    35.round(-1, half: nil).should      eql(40)
-    (-25).round(-1, half: :up).should   eql(-30)
-    (-25).round(-1, half: :down).should eql(-20)
-    (-25).round(-1, half: :even).should eql(-20)
-    (-25).round(-1, half: nil).should   eql(-30)
+    25.round(-1, half: :up).should.eql?(30)
+    25.round(-1, half: :down).should.eql?(20)
+    25.round(-1, half: :even).should.eql?(20)
+    25.round(-1, half: nil).should.eql?(30)
+    35.round(-1, half: :up).should.eql?(40)
+    35.round(-1, half: :down).should.eql?(30)
+    35.round(-1, half: :even).should.eql?(40)
+    35.round(-1, half: nil).should.eql?(40)
+    (-25).round(-1, half: :up).should.eql?(-30)
+    (-25).round(-1, half: :down).should.eql?(-20)
+    (-25).round(-1, half: :even).should.eql?(-20)
+    (-25).round(-1, half: nil).should.eql?(-30)
   end
 
   it "returns itself if passed a positive precision and the half option" do
-    35.round(1, half: :up).should      eql(35)
-    35.round(1, half: :down).should    eql(35)
-    35.round(1, half: :even).should    eql(35)
+    35.round(1, half: :up).should.eql?(35)
+    35.round(1, half: :down).should.eql?(35)
+    35.round(1, half: :even).should.eql?(35)
   end
 
   it "raises ArgumentError for an unknown rounding mode" do

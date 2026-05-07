@@ -9,18 +9,18 @@ describe "StringIO#seek" do
   it "seeks from the current position when whence is IO::SEEK_CUR" do
     @io.pos = 1
     @io.seek(1, IO::SEEK_CUR)
-    @io.pos.should eql(2)
+    @io.pos.should.eql?(2)
 
     @io.seek(-1, IO::SEEK_CUR)
-    @io.pos.should eql(1)
+    @io.pos.should.eql?(1)
   end
 
   it "seeks from the end of self when whence is IO::SEEK_END" do
     @io.seek(3, IO::SEEK_END)
-    @io.pos.should eql(11) # Outside of the StringIO's content
+    @io.pos.should.eql?(11) # Outside of the StringIO's content
 
     @io.seek(-2, IO::SEEK_END)
-    @io.pos.should eql(6)
+    @io.pos.should.eql?(6)
   end
 
   it "seeks to an absolute position when whence is IO::SEEK_SET" do
@@ -47,7 +47,7 @@ describe "StringIO#seek" do
     obj = mock("to_int")
     obj.should_receive(:to_int).and_return(2)
     @io.seek(obj)
-    @io.pos.should eql(2)
+    @io.pos.should.eql?(2)
   end
 
   it "raises a TypeError when the passed Object can't be converted to an Integer" do

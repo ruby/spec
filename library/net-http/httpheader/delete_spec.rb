@@ -12,7 +12,7 @@ describe "Net::HTTPHeader#delete when passed key" do
     @headers.delete("My-Header")
 
     @headers["My-Header"].should == nil
-    @headers.size.should eql(0)
+    @headers.size.should.eql?(0)
   end
 
   it "returns the removed values" do
@@ -25,6 +25,6 @@ describe "Net::HTTPHeader#delete when passed key" do
     @headers.delete("my-header")
 
     @headers["My-Header"].should == nil
-    @headers.size.should eql(0)
+    @headers.size.should.eql?(0)
   end
 end

@@ -37,12 +37,12 @@ describe "IO#readlines" do
   describe "when passed no arguments" do
     it "updates self's position" do
       @io.readlines
-      @io.pos.should eql(137)
+      @io.pos.should.eql?(137)
     end
 
     it "updates self's lineno based on the number of lines read" do
       @io.readlines
-      @io.lineno.should eql(9)
+      @io.lineno.should.eql?(9)
     end
 
     it "does not change $_" do
@@ -81,12 +81,12 @@ describe "IO#readlines" do
 
     it "updates self's lineno based on the number of lines read" do
       @io.readlines("r")
-      @io.lineno.should eql(5)
+      @io.lineno.should.eql?(5)
     end
 
     it "updates self's position based on the number of characters read" do
       @io.readlines("r")
-      @io.pos.should eql(137)
+      @io.pos.should.eql?(137)
     end
 
     it "does not change $_" do

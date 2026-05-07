@@ -6,9 +6,9 @@ describe "Kernel.Rational" do
     # Guard against the Mathn library
     guard -> { !defined?(Math.rsqrt) } do
       it "returns a new Rational number with 1 as the denominator" do
-        Rational(1).should eql(Rational(1, 1))
-        Rational(-3).should eql(Rational(-3, 1))
-        Rational(bignum_value).should eql(Rational(bignum_value, 1))
+        Rational(1).should.eql?(Rational(1, 1))
+        Rational(-3).should.eql?(Rational(-3, 1))
+        Rational(bignum_value).should.eql?(Rational(bignum_value, 1))
       end
     end
   end

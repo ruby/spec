@@ -52,10 +52,10 @@ describe "StringIO#print" do
 
   it "updates the current position" do
     @io.print(1, 2, 3)
-    @io.pos.should eql(3)
+    @io.pos.should.eql?(3)
 
     @io.print(1, 2, 3)
-    @io.pos.should eql(6)
+    @io.pos.should.eql?(6)
   end
 
   it "correctly updates the current position when honoring the output record separator global" do
@@ -64,7 +64,7 @@ describe "StringIO#print" do
 
     begin
       @io.print(5, 6, 7, 8)
-      @io.pos.should eql(5)
+      @io.pos.should.eql?(5)
     ensure
       suppress_warning {$\ = old_rs}
     end
@@ -86,7 +86,7 @@ describe "StringIO#print when in append mode" do
 
   it "correctly updates self's position" do
     @io.print(", testing")
-    @io.pos.should eql(16)
+    @io.pos.should.eql?(16)
   end
 end
 

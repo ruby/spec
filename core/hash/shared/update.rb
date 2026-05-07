@@ -71,6 +71,6 @@ describe :hash_update, shared: true do
 
   it "accepts zero arguments" do
     hash = { a: 1 }
-    hash.send(@method).should eql(hash)
+    hash.send(@method).should.eql?(hash)
   end
 end

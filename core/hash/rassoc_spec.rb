@@ -28,7 +28,7 @@ describe "Hash#rassoc" do
   it "uses #== to compare the argument to the values" do
     @h[:key] = 1.0
     1.should == 1.0
-    @h.rassoc(1).should eql [:key, 1.0]
+    @h.rassoc(1).should.eql? [:key, 1.0]
   end
 
   it "returns nil if the argument is not a value of the Hash" do

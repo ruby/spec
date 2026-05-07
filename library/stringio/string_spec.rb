@@ -27,13 +27,13 @@ describe "StringIO#string=" do
   it "resets the position" do
     @io.pos = 1
     @io.string = "other"
-    @io.pos.should eql(0)
+    @io.pos.should.eql?(0)
   end
 
   it "resets the line number" do
     @io.lineno = 1
     @io.string = "other"
-    @io.lineno.should eql(0)
+    @io.lineno.should.eql?(0)
   end
 
   it "tries to convert the passed Object to a String using #to_str" do

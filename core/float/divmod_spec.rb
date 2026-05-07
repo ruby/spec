@@ -3,17 +3,17 @@ require_relative '../../spec_helper'
 describe "Float#divmod" do
   it "returns an [quotient, modulus] from dividing self by other" do
     values = 3.14.divmod(2)
-    values[0].should eql(1)
+    values[0].should.eql?(1)
     values[1].should be_close(1.14, TOLERANCE)
     values = 2.8284.divmod(3.1415)
-    values[0].should eql(0)
+    values[0].should.eql?(0)
     values[1].should be_close(2.8284, TOLERANCE)
     values = -1.0.divmod(bignum_value)
-    values[0].should eql(-1)
+    values[0].should.eql?(-1)
     values[1].should be_close(18446744073709551616.0, TOLERANCE)
     values = -1.0.divmod(1)
-    values[0].should eql(-1)
-    values[1].should eql(0.0)
+    values[0].should.eql?(-1)
+    values[1].should.eql?(0.0)
   end
 
   # Behaviour established as correct in r23953
@@ -38,6 +38,6 @@ describe "Float#divmod" do
 
   # redmine #5276"
   it "returns the correct [quotient, modulus] even for large quotient" do
-    0.59.divmod(7.761021455128987e-11).first.should eql(7602092113)
+    0.59.divmod(7.761021455128987e-11).first.should.eql?(7602092113)
   end
 end

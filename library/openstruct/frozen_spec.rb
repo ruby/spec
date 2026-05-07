@@ -9,8 +9,8 @@ describe "OpenStruct.new when frozen" do
   # method_missing case handled in method_missing_spec.rb
   #
   it "is still readable" do
-    @os.age.should eql(70)
-    @os.pension.should eql(300)
+    @os.age.should.eql?(70)
+    @os.pension.should.eql?(300)
     @os.name.should == "John Smith"
   end
 

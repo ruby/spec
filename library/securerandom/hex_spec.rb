@@ -12,7 +12,7 @@ describe "SecureRandom.hex" do
 
     base64 = SecureRandom.hex(5.5)
     base64.should.is_a?(String)
-    base64.length.should eql(10)
+    base64.length.should.eql?(10)
   end
 
   it "returns an empty string when argument is 0" do
@@ -49,6 +49,6 @@ describe "SecureRandom.hex" do
   it "tries to convert the passed argument to an Integer using #to_int" do
     obj = mock("to_int")
     obj.should_receive(:to_int).and_return(5)
-    SecureRandom.hex(obj).size.should eql(10)
+    SecureRandom.hex(obj).size.should.eql?(10)
   end
 end

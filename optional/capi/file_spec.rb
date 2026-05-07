@@ -65,13 +65,13 @@ describe "C-API File function" do
   describe "FilePathValue" do
     it "returns a String argument unchanged" do
       obj = "path"
-      @s.FilePathValue(obj).should eql(obj)
+      @s.FilePathValue(obj).should.eql?(obj)
     end
 
     it "does not call #to_str on a String" do
       obj = +"path"
       obj.should_not_receive(:to_str)
-      @s.FilePathValue(obj).should eql(obj)
+      @s.FilePathValue(obj).should.eql?(obj)
     end
 
     it "calls #to_path to convert an object to a String" do

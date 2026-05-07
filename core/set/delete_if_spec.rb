@@ -13,7 +13,7 @@ describe "Set#delete_if" do
 
   it "deletes every element from self for which the passed block returns true" do
     @set.delete_if { |x| x.size == 3 }
-    @set.size.should eql(1)
+    @set.size.should.eql?(1)
 
     @set.should_not include("one")
     @set.should_not include("two")

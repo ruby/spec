@@ -15,7 +15,7 @@ describe "Struct#hash" do
   it "returns the same value if structs are #eql?" do
     car = StructClasses::Car.new("Honda", "Accord", "1998")
     similar_car = StructClasses::Car.new("Honda", "Accord", "1998")
-    car.should eql(similar_car)
+    car.should.eql?(similar_car)
     car.hash.should == similar_car.hash
   end
 

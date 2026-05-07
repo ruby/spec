@@ -29,9 +29,9 @@ end
 
 describe "Rational#/ when passed an Integer" do
   it "returns self divided by other as a Rational" do
-    (Rational(3, 4) / 2).should eql(Rational(3, 8))
-    (Rational(2, 4) / 2).should eql(Rational(1, 4))
-    (Rational(6, 7) / -2).should eql(Rational(-3, 7))
+    (Rational(3, 4) / 2).should.eql?(Rational(3, 8))
+    (Rational(2, 4) / 2).should.eql?(Rational(1, 4))
+    (Rational(6, 7) / -2).should.eql?(Rational(-3, 7))
   end
 
   it "raises a ZeroDivisionError when passed 0" do
@@ -41,8 +41,8 @@ end
 
 describe "Rational#/ when passed a Rational" do
   it "returns self divided by other as a Rational" do
-    (Rational(3, 4) / Rational(3, 4)).should eql(Rational(1, 1))
-    (Rational(2, 4) / Rational(1, 4)).should eql(Rational(2, 1))
+    (Rational(3, 4) / Rational(3, 4)).should.eql?(Rational(1, 1))
+    (Rational(2, 4) / Rational(1, 4)).should.eql?(Rational(2, 1))
 
     (Rational(2, 4) / 2).should == Rational(1, 4)
     (Rational(6, 7) / -2).should == Rational(-3, 7)
@@ -55,20 +55,20 @@ end
 
 describe "Rational#/ when passed a Float" do
   it "returns self divided by other as a Float" do
-    (Rational(3, 4) / 0.75).should eql(1.0)
-    (Rational(3, 4) / 0.25).should eql(3.0)
-    (Rational(3, 4) / 0.3).should eql(2.5)
+    (Rational(3, 4) / 0.75).should.eql?(1.0)
+    (Rational(3, 4) / 0.25).should.eql?(3.0)
+    (Rational(3, 4) / 0.3).should.eql?(2.5)
 
-    (Rational(-3, 4) / 0.3).should eql(-2.5)
-    (Rational(3, -4) / 0.3).should eql(-2.5)
-    (Rational(3, 4) / -0.3).should eql(-2.5)
+    (Rational(-3, 4) / 0.3).should.eql?(-2.5)
+    (Rational(3, -4) / 0.3).should.eql?(-2.5)
+    (Rational(3, 4) / -0.3).should.eql?(-2.5)
   end
 
   it "returns infinity when passed 0" do
-    (Rational(3, 4) / 0.0).infinite?.should eql(1)
-    (Rational(-3, -4) / 0.0).infinite?.should eql(1)
+    (Rational(3, 4) / 0.0).infinite?.should.eql?(1)
+    (Rational(-3, -4) / 0.0).infinite?.should.eql?(1)
 
-    (Rational(-3, 4) / 0.0).infinite?.should eql(-1)
-    (Rational(3, -4) / 0.0).infinite?.should eql(-1)
+    (Rational(-3, 4) / 0.0).infinite?.should.eql?(-1)
+    (Rational(3, -4) / 0.0).infinite?.should.eql?(-1)
   end
 end

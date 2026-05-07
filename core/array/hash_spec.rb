@@ -74,7 +74,7 @@ describe "Array#hash" do
     a.fill 'a', 0..3
     b = %w|a a a a|
     a.hash.should == b.hash
-    a.should eql(b)
+    a.should.eql?(b)
   end
 
   it "produces different hashes for nested arrays with different values and empty terminator" do

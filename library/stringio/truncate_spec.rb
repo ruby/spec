@@ -24,7 +24,7 @@ describe "StringIO#truncate when passed [length]" do
   it "does not change the position" do
     @io.pos = 7
     @io.truncate(4)
-    @io.pos.should eql(7)
+    @io.pos.should.eql?(7)
   end
 
   it "can grow a string to a larger size, padding it with \\000" do

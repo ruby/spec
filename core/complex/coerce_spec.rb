@@ -46,7 +46,7 @@ describe "Complex#coerce" do
     other.should_receive(:real?).any_number_of_times.and_return(true)
     result = @one.coerce(other)
     result.should == [other, @one]
-    result.first.should eql(Complex(other))
+    result.first.should.eql?(Complex(other))
     result.last.should equal(@one)
   end
 
