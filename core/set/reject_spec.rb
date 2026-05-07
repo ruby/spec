@@ -15,9 +15,9 @@ describe "Set#reject!" do
     @set.reject! { |x| x.size == 3 }
     @set.size.should.eql?(1)
 
-    @set.should_not include("one")
-    @set.should_not include("two")
-    @set.should include("three")
+    @set.should_not.include?("one")
+    @set.should_not.include?("two")
+    @set.should.include?("three")
   end
 
   it "returns self when self was modified" do
@@ -34,8 +34,8 @@ describe "Set#reject!" do
 
     enum.each { |x| x.size == 3 }
 
-    @set.should_not include("one")
-    @set.should_not include("two")
-    @set.should include("three")
+    @set.should_not.include?("one")
+    @set.should_not.include?("two")
+    @set.should.include?("three")
   end
 end

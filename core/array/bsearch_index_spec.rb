@@ -51,7 +51,7 @@ describe "Array#bsearch_index" do
     end
 
     it "returns the index of any matched elements where element is between 4 <= x < 8" do
-      [1, 2].should include(@array.bsearch_index { |x| 1 - x / 4 })
+      [1, 2].should.include?(@array.bsearch_index { |x| 1 - x / 4 })
     end
 
     it "returns the index of any matched elements where element is between 8 <= x < 10" do
@@ -65,7 +65,7 @@ describe "Array#bsearch_index" do
 
     context "magnitude does not effect the result" do
       it "returns the index of any matched elements where element is between 4n <= xn < 8n" do
-        [1, 2].should include(@array.bsearch_index { |x| (1 - x / 4) * (2**100) })
+        [1, 2].should.include?(@array.bsearch_index { |x| (1 - x / 4) * (2**100) })
       end
 
       it "returns nil when block never returns 0" do
@@ -74,7 +74,7 @@ describe "Array#bsearch_index" do
       end
 
       it "handles values from Integer#coerce" do
-        [1, 2].should include(@array.bsearch_index { |x| (2**100).coerce((1 - x / 4) * (2**100)).first })
+        [1, 2].should.include?(@array.bsearch_index { |x| (2**100).coerce((1 - x / 4) * (2**100)).first })
       end
     end
   end

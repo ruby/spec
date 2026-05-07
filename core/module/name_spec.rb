@@ -148,7 +148,7 @@ describe "Module#name" do
       "ModuleSpecs::Anonymous::StoredInMultiplePlaces::N",
       "ModuleSpecs::Anonymous::StoredInMultiplePlaces::O"
     ]
-    valid_names.should include(m::N.name) # You get one of the two, but you don't know which one.
+    valid_names.should.include?(m::N.name) # You get one of the two, but you don't know which one.
   ensure
     ModuleSpecs::Anonymous.send(:remove_const, :StoredInMultiplePlaces)
   end

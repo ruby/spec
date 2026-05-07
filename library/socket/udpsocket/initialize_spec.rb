@@ -47,7 +47,7 @@ describe 'UDPSocket#initialize' do
     -> {
       UDPSocket.new(666)
     }.should raise_error(SystemCallError) { |e|
-      [Errno::EAFNOSUPPORT, Errno::EPROTONOSUPPORT].should include(e.class)
+      [Errno::EAFNOSUPPORT, Errno::EPROTONOSUPPORT].should.include?(e.class)
     }
   end
 end

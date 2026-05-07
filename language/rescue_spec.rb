@@ -197,7 +197,7 @@ describe "The rescue keyword" do
     end
     caught.size.should == 2
     exception_list.each do |exception_class|
-      caught.map{|e| e.class}.should include(exception_class)
+      caught.map{|e| e.class}.should.include?(exception_class)
     end
   end
 
@@ -231,7 +231,7 @@ describe "The rescue keyword" do
     end
     caught.size.should == 2
     exception_list.each do |exception_class|
-      caught.map{|e| e.class}.should include(exception_class)
+      caught.map{|e| e.class}.should.include?(exception_class)
     end
   end
 

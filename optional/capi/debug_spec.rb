@@ -68,7 +68,7 @@ describe "C-API Debug function" do
       bts.should_not.empty?
       bts.each { |bt| bt.should.is_a?(Thread::Backtrace::Location) }
       location = "#{__FILE__}:#{__LINE__ - 3}"
-      bts[1].to_s.should include(location)
+      bts[1].to_s.should.include?(location)
     end
   end
 end

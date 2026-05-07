@@ -69,7 +69,7 @@ ruby_version_is "4.1" do
       encoding = Encoding.find("filesystem")
       encoding = Encoding::BINARY if encoding == Encoding::US_ASCII
       platform_is_not :windows do
-        children.should include(["こんにちは.txt".dup.force_encoding(encoding), :file])
+        children.should.include?(["こんにちは.txt".dup.force_encoding(encoding), :file])
       end
       children.first.first.encoding.should.equal?(Encoding.find("filesystem"))
     end
@@ -92,26 +92,26 @@ ruby_version_is "4.1" do
 
     it "handles symlink" do
       FileSpecs.symlink do |path|
-        Dir.scan(File.dirname(path)).map(&:last).should include(:link)
+        Dir.scan(File.dirname(path)).map(&:last).should.include?(:link)
       end
     end
 
     platform_is_not :windows do
       it "handles socket" do
         FileSpecs.socket do |path|
-          Dir.scan(File.dirname(path)).map(&:last).should include(:socket)
+          Dir.scan(File.dirname(path)).map(&:last).should.include?(:socket)
         end
       end
 
       it "handles FIFO" do
         FileSpecs.fifo do |path|
-          Dir.scan(File.dirname(path)).map(&:last).should include(:fifo)
+          Dir.scan(File.dirname(path)).map(&:last).should.include?(:fifo)
         end
       end
 
       it "handles character devices" do
         FileSpecs.character_device do |path|
-          Dir.scan(File.dirname(path)).map(&:last).should include(:characterSpecial)
+          Dir.scan(File.dirname(path)).map(&:last).should.include?(:characterSpecial)
         end
       end
     end
@@ -120,7 +120,7 @@ ruby_version_is "4.1" do
       with_block_device do
         it "handles block devices" do
           FileSpecs.block_device do |path|
-            Dir.scan(File.dirname(path)).map(&:last).should include(:blockSpecial)
+            Dir.scan(File.dirname(path)).map(&:last).should.include?(:blockSpecial)
           end
         end
       end
@@ -189,7 +189,7 @@ ruby_version_is "4.1" do
       encoding = Encoding.find("filesystem")
       encoding = Encoding::BINARY if encoding == Encoding::US_ASCII
       platform_is_not :windows do
-        children.should include(["こんにちは.txt".dup.force_encoding(encoding), :file])
+        children.should.include?(["こんにちは.txt".dup.force_encoding(encoding), :file])
       end
       children.first.first.encoding.should.equal?(Encoding.find("filesystem"))
     end

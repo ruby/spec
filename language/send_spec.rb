@@ -227,7 +227,7 @@ describe "Invoking a method" do
     end
 
     it "should omit the method_missing call from the backtrace for NameError" do
-      -> { no_such_method }.should raise_error { |e| e.backtrace.first.should_not include("method_missing") }
+      -> { no_such_method }.should raise_error { |e| e.backtrace.first.should_not.include?("method_missing") }
     end
 
     describe "if invoked as an unambiguous method call" do
@@ -247,7 +247,7 @@ describe "Invoking a method" do
     end
 
     it "should omit the method_missing call from the backtrace for NoMethodError" do
-      -> { no_such_method() }.should raise_error { |e| e.backtrace.first.should_not include("method_missing") }
+      -> { no_such_method() }.should raise_error { |e| e.backtrace.first.should_not.include?("method_missing") }
     end
   end
 

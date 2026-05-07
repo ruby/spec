@@ -8,7 +8,7 @@ ruby_version_is "3.4" do
       end
 
       it "includes the name of currently loaded GC implementation as a global key" do
-        GC.config.should include(:implementation)
+        GC.config.should.include?(:implementation)
         GC.config[:implementation].should.is_a?(String)
       end
     end
@@ -82,7 +82,7 @@ ruby_version_is "3.4" do
         end
 
         it "includes :rgengc_allow_full_mark option, true by default" do
-          GC.config.should include(:rgengc_allow_full_mark)
+          GC.config.should.include?(:rgengc_allow_full_mark)
           GC.config[:rgengc_allow_full_mark].should == true
         end
 

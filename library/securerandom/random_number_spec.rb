@@ -84,7 +84,7 @@ describe "SecureRandom.random_number" do
     256.times do
       val = SecureRandom.random_number
       # make sure the random values are not repeating
-      values.should_not include(val)
+      values.should_not.include?(val)
       values << val
     end
   end

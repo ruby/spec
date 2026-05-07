@@ -27,18 +27,18 @@ describe "Kernel#rand" do
   end
 
   it "ignores the sign of the argument" do
-    [0, 1, 2, 3].should include(rand(-4))
+    [0, 1, 2, 3].should.include?(rand(-4))
   end
 
   it "never returns a value greater or equal to 1.0 with no arguments" do
     1000.times do
-      (0...1.0).should include(rand)
+      (0...1.0).should.include?(rand)
     end
   end
 
   it "never returns a value greater or equal to any passed in max argument" do
     1000.times do
-      (0...100).to_a.should include(rand(100))
+      (0...100).to_a.should.include?(rand(100))
     end
   end
 
@@ -54,7 +54,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(4...6)
         x.should.is_a?(Integer)
-        (4...6).should include(x)
+        (4...6).should.include?(x)
       end
     end
 
@@ -62,7 +62,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(4...6.5)
         x.should.is_a?(Float)
-        (4...6.5).should include(x)
+        (4...6.5).should.include?(x)
       end
     end
 
@@ -70,7 +70,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(3.5...6)
         x.should.is_a?(Float)
-        (3.5...6).should include(x)
+        (3.5...6).should.include?(x)
       end
     end
 
@@ -78,7 +78,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(3.5...6.5)
         x.should.is_a?(Float)
-        (3.5...6.5).should include(x)
+        (3.5...6.5).should.include?(x)
       end
     end
   end
@@ -88,7 +88,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(4..6)
         x.should.is_a?(Integer)
-        (4..6).should include(x)
+        (4..6).should.include?(x)
       end
     end
 
@@ -96,7 +96,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(4..6.5)
         x.should.is_a?(Float)
-        (4..6.5).should include(x)
+        (4..6.5).should.include?(x)
       end
     end
 
@@ -104,7 +104,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(3.5..6)
         x.should.is_a?(Float)
-        (3.5..6).should include(x)
+        (3.5..6).should.include?(x)
       end
     end
 
@@ -112,7 +112,7 @@ describe "Kernel#rand" do
       1000.times do
         x = rand(3.5..6.5)
         x.should.is_a?(Float)
-        (3.5..6.5).should include(x)
+        (3.5..6.5).should.include?(x)
       end
     end
   end
@@ -121,7 +121,7 @@ describe "Kernel#rand" do
     it "returns an Integer between the two Integers" do
       x = rand(0..1)
       x.should.is_a?(Integer)
-      (0..1).should include(x)
+      (0..1).should.include?(x)
     end
 
     it "returns a Float if at least one side is Float" do
@@ -134,7 +134,7 @@ describe "Kernel#rand" do
       x1.should.eql?(x3)
       x2.should.eql?(x3)
 
-      (0.0..1.0).should include(x3)
+      (0.0..1.0).should.include?(x3)
     end
   end
 
@@ -155,7 +155,7 @@ describe "Kernel#rand" do
       x1.should.eql?(x3)
       x2.should.eql?(x3)
 
-      (0.0...1.0).should include(x3)
+      (0.0...1.0).should.include?(x3)
     end
   end
 

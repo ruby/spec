@@ -235,7 +235,7 @@ describe "CApiObject" do
   describe "rb_obj_instance_variables" do
     it "returns an array with instance variable names as symbols" do
       o = ObjectTest.new
-      @o.rb_obj_instance_variables(o).should include(:@foo)
+      @o.rb_obj_instance_variables(o).should.include?(:@foo)
     end
   end
 

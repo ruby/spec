@@ -9,7 +9,7 @@ describe "BigDecimal constants" do
   it "has a BASE value" do
     # The actual one is decided based on HAVE_INT64_T in MRI,
     # which is hard to check here.
-    [10000, 1000000000].should include(BigDecimal::BASE)
+    [10000, 1000000000].should.include?(BigDecimal::BASE)
   end
 
   it "has a NaN value" do

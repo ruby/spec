@@ -25,7 +25,7 @@ describe "Core extension by bigdecimal" do
       # log(BigDecimal(r, 1000), 50)
       result2 = BigDecimal('0.22314354220170971436137296411949880462556361100853e0')
       r = Rational(1_234_567_890, 987_654_321)
-      [result1, result2].should include(BigMath.log(r, 50).mult(1, 50))
+      [result1, result2].should.include?(BigMath.log(r, 50).mult(1, 50))
     end
   end
 

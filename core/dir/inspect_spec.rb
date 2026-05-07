@@ -19,6 +19,6 @@ describe "Dir#inspect" do
   end
 
   it "includes the directory name" do
-    @dir.inspect.should include(Dir.getwd)
+    @dir.inspect.should.include?(Dir.getwd)
   end
 end

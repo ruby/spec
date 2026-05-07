@@ -77,7 +77,7 @@ describe "BasicObject#instance_exec" do
   end
 
   it "sets class variables in the receiver" do
-    BasicObjectSpecs::InstExec.class_variables.should include(:@@count)
+    BasicObjectSpecs::InstExec.class_variables.should.include?(:@@count)
     BasicObjectSpecs::InstExec.send(:class_variable_get, :@@count).should == 2
   end
 

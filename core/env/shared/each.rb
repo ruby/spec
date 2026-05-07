@@ -9,8 +9,8 @@ describe :env_each, shared: true do
       ENV["foo"] = "bar"
       ENV["baz"] = "boo"
       ENV.send(@method) { |k, v| e << [k, v] }.should.equal?(ENV)
-      e.should include(["foo", "bar"])
-      e.should include(["baz", "boo"])
+      e.should.include?(["foo", "bar"])
+      e.should.include?(["baz", "boo"])
     ensure
       ENV.replace orig
     end

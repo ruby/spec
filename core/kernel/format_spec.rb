@@ -20,7 +20,7 @@ describe "Kernel.format" do
         format("test", 1)
       RUBY
 
-      ruby_exe(code, args: "2>&1").should include("warning: too many arguments for format string")
+      ruby_exe(code, args: "2>&1").should.include?("warning: too many arguments for format string")
     end
 
     it "does not warns if too many keyword arguments are passed" do
@@ -29,7 +29,7 @@ describe "Kernel.format" do
         format("test %{test}", test: 1, unused: 2)
       RUBY
 
-      ruby_exe(code, args: "2>&1").should_not include("warning")
+      ruby_exe(code, args: "2>&1").should_not.include?("warning")
     end
 
     ruby_bug "#20593", ""..."3.4" do
@@ -40,7 +40,7 @@ describe "Kernel.format" do
           format("test", {})
         RUBY
 
-        ruby_exe(code, args: "2>&1").should_not include("warning")
+        ruby_exe(code, args: "2>&1").should_not.include?("warning")
       end
     end
   end

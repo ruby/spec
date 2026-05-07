@@ -471,15 +471,15 @@ describe "Module#prepend" do
     m1 = Module.new
     m1::MY_CONSTANT = 1
     m2 = Module.new { prepend(m1) }
-    m2.constants.should include(:MY_CONSTANT)
+    m2.constants.should.include?(:MY_CONSTANT)
   end
 
   it "imports instance methods" do
-    Module.new { prepend ModuleSpecs::A }.instance_methods.should include(:ma)
+    Module.new { prepend ModuleSpecs::A }.instance_methods.should.include?(:ma)
   end
 
   it "does not import methods to modules and classes" do
-    Module.new { prepend ModuleSpecs::A }.methods.should_not include(:ma)
+    Module.new { prepend ModuleSpecs::A }.methods.should_not.include?(:ma)
   end
 
   it "allows wrapping methods" do
@@ -505,7 +505,7 @@ describe "Module#prepend" do
 
   it "includes prepended modules in ancestors" do
     m = Module.new
-    Class.new { prepend(m) }.ancestors.should include(m)
+    Class.new { prepend(m) }.ancestors.should.include?(m)
   end
 
   it "reports the prepended module as the method owner" do
@@ -566,7 +566,7 @@ describe "Module#prepend" do
 
   it "depends on prepend_features to add the module" do
     m = Module.new { def self.prepend_features(mod) end }
-    Class.new { prepend(m) }.ancestors.should_not include(m)
+    Class.new { prepend(m) }.ancestors.should_not.include?(m)
   end
 
   it "adds the module in the subclass chains" do
@@ -817,7 +817,7 @@ describe "Module#prepend" do
       pre = Module.new
       mod.prepend pre
 
-      cls.instance_methods.should include(:foo)
+      cls.instance_methods.should.include?(:foo)
     end
   end
 end

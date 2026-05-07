@@ -1056,7 +1056,7 @@ describe "Execution variable $:" do
   end
 
   it "does not include the current directory" do
-    $:.should_not include(".")
+    $:.should_not.include?(".")
   end
 
   it "is the same object as $LOAD_PATH and $-I" do
@@ -1066,7 +1066,7 @@ describe "Execution variable $:" do
 
   it "can be changed via <<" do
     $: << "foo"
-    $:.should include("foo")
+    $:.should.include?("foo")
   ensure
     $:.delete("foo")
   end
@@ -1263,7 +1263,7 @@ describe "Global variable $0" do
     it "actually sets the program name" do
       title = "rubyspec-dollar0-test"
       $0 = title
-      `ps -ocommand= -p#{$$}`.should include(title)
+      `ps -ocommand= -p#{$$}`.should.include?(title)
     end
   end
 

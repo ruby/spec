@@ -12,7 +12,7 @@ describe "Set#add?" do
 
   it "adds the passed Object to self" do
     @set.add?("cat")
-    @set.should include("cat")
+    @set.should.include?("cat")
   end
 
   it "returns self when the Object has not yet been added to self" do

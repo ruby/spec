@@ -20,7 +20,7 @@ describe :set_inspect, shared: true do
   end
 
   it "puts spaces between the elements" do
-    Set["1", "2"].send(@method).should include('", "')
+    Set["1", "2"].send(@method).should.include?('", "')
   end
 
   ruby_version_is "4.0" do
@@ -29,7 +29,7 @@ describe :set_inspect, shared: true do
       set2 = Set[set1]
       set1 << set2
       set1.send(@method).should.is_a?(String)
-      set1.send(@method).should include("Set[...]")
+      set1.send(@method).should.include?("Set[...]")
     end
   end
 
@@ -39,7 +39,7 @@ describe :set_inspect, shared: true do
       set2 = Set[set1]
       set1 << set2
       set1.send(@method).should.is_a?(String)
-      set1.send(@method).should include("#<Set: {...}>")
+      set1.send(@method).should.include?("#<Set: {...}>")
     end
   end
 end

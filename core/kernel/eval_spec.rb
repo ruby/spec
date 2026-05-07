@@ -362,7 +362,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπ")
+      EvalSpecs.constants(false).should.include?(:"Vπ")
       EvalSpecs::Vπ.should == 3.14
     ensure
       EvalSpecs.send(:remove_const, :Vπ)
@@ -377,7 +377,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπemacs")
+      EvalSpecs.constants(false).should.include?(:"Vπemacs")
       EvalSpecs::Vπemacs.should == 3.14
     ensure
       EvalSpecs.send(:remove_const, :Vπemacs)
@@ -392,7 +392,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπspaces")
+      EvalSpecs.constants(false).should.include?(:"Vπspaces")
       EvalSpecs::Vπspaces.should == 3.14
     ensure
       EvalSpecs.send(:remove_const, :Vπspaces)
@@ -408,7 +408,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπshebang")
+      EvalSpecs.constants(false).should.include?(:"Vπshebang")
       EvalSpecs::Vπshebang.should == 3.14
     ensure
       EvalSpecs.send(:remove_const, :Vπshebang)
@@ -424,7 +424,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπshebang_spaces")
+      EvalSpecs.constants(false).should.include?(:"Vπshebang_spaces")
       EvalSpecs::Vπshebang_spaces.should == 3.14
     ensure
       EvalSpecs.send(:remove_const, :Vπshebang_spaces)
@@ -442,7 +442,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπstring")
+      EvalSpecs.constants(false).should.include?(:"Vπstring")
       EvalSpecs::Vπstring.should == "frozen"
       EvalSpecs::Vπstring.encoding.should == Encoding::UTF_8
       EvalSpecs::Vπstring.frozen?.should == !frozen_string_default
@@ -459,7 +459,7 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should include(:"Vπsame_line")
+      EvalSpecs.constants(false).should.include?(:"Vπsame_line")
       EvalSpecs::Vπsame_line.should == "frozen"
       EvalSpecs::Vπsame_line.encoding.should == Encoding::UTF_8
       EvalSpecs::Vπsame_line.frozen?.should == true
@@ -478,9 +478,9 @@ end
 CODE
       code.encoding.should == Encoding::BINARY
       eval(code)
-      EvalSpecs.constants(false).should_not include(:"Vπfrozen_first")
+      EvalSpecs.constants(false).should_not.include?(:"Vπfrozen_first")
       binary_constant = "Vπfrozen_first".b.to_sym
-      EvalSpecs.constants(false).should include(binary_constant)
+      EvalSpecs.constants(false).should.include?(binary_constant)
       value = EvalSpecs.const_get(binary_constant)
       value.should == "frozen"
       value.encoding.should == Encoding::BINARY

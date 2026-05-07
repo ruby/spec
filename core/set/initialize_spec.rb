@@ -8,9 +8,9 @@ describe "Set#initialize" do
   it "adds all elements of the passed Enumerable to self" do
     s = Set.new([1, 2, 3])
     s.size.should.eql?(3)
-    s.should include(1)
-    s.should include(2)
-    s.should include(3)
+    s.should.include?(1)
+    s.should.include?(2)
+    s.should.include?(3)
   end
 
   it "uses #each_entry on the provided Enumerable" do
@@ -18,9 +18,9 @@ describe "Set#initialize" do
     enumerable.should_receive(:each_entry).and_yield(1).and_yield(2).and_yield(3)
     s = Set.new(enumerable)
     s.size.should.eql?(3)
-    s.should include(1)
-    s.should include(2)
-    s.should include(3)
+    s.should.include?(1)
+    s.should.include?(2)
+    s.should.include?(3)
   end
 
   it "uses #each on the provided Enumerable if it does not respond to #each_entry" do
@@ -28,9 +28,9 @@ describe "Set#initialize" do
     enumerable.should_receive(:each).and_yield(1).and_yield(2).and_yield(3)
     s = Set.new(enumerable)
     s.size.should.eql?(3)
-    s.should include(1)
-    s.should include(2)
-    s.should include(3)
+    s.should.include?(1)
+    s.should.include?(2)
+    s.should.include?(3)
   end
 
   it "raises if the provided Enumerable does not respond to #each_entry or #each" do
@@ -49,9 +49,9 @@ describe "Set#initialize" do
   it "preprocesses all elements by a passed block before adding to self" do
     s = Set.new([1, 2, 3]) { |x| x * x }
     s.size.should.eql?(3)
-    s.should include(1)
-    s.should include(4)
-    s.should include(9)
+    s.should.include?(1)
+    s.should.include?(4)
+    s.should.include?(9)
   end
 
   it "should initialize with empty array and block" do
@@ -68,16 +68,16 @@ describe "Set#initialize" do
     o = Set.new([1, 2])
     s = Set.new(o)
     s.size.should.eql?(2)
-    s.should include(1)
-    s.should include(2)
+    s.should.include?(1)
+    s.should.include?(2)
   end
 
   it "should initialize with set and block" do
     o = Set.new([1, 2])
     s = Set.new(o) { |e| e + 2 }
     s.size.should.eql?(2)
-    s.should include(3)
-    s.should include(4)
+    s.should.include?(3)
+    s.should.include?(4)
   end
 
   it "should initialize with just block" do

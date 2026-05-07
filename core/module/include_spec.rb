@@ -33,10 +33,10 @@ describe "Module#include" do
   end
 
   it "adds all ancestor modules when a previously included module is included again" do
-    ModuleSpecs::MultipleIncludes.ancestors.should include(ModuleSpecs::MA, ModuleSpecs::MB)
+    ModuleSpecs::MultipleIncludes.ancestors.to_set.should >= Set[ModuleSpecs::MA, ModuleSpecs::MB]
     ModuleSpecs::MB.include(ModuleSpecs::MC)
     ModuleSpecs::MultipleIncludes.include(ModuleSpecs::MB)
-    ModuleSpecs::MultipleIncludes.ancestors.should include(ModuleSpecs::MA, ModuleSpecs::MB, ModuleSpecs::MC)
+    ModuleSpecs::MultipleIncludes.ancestors.to_set.should >= Set[ModuleSpecs::MA, ModuleSpecs::MB, ModuleSpecs::MC]
   end
 
   it "raises a TypeError when the argument is not a Module" do
@@ -64,9 +64,9 @@ describe "Module#include" do
   end
 
   it "imports constants to modules and classes" do
-    ModuleSpecs::A.constants.should include(:CONSTANT_A)
-    ModuleSpecs::B.constants.should include(:CONSTANT_A, :CONSTANT_B)
-    ModuleSpecs::C.constants.should include(:CONSTANT_A, :CONSTANT_B)
+    ModuleSpecs::A.constants.should.include?(:CONSTANT_A)
+    ModuleSpecs::B.constants.to_set.should >= Set[:CONSTANT_A, :CONSTANT_B]
+    ModuleSpecs::C.constants.to_set.should >= Set[:CONSTANT_A, :CONSTANT_B]
   end
 
   it "shadows constants from ancestors" do
@@ -84,9 +84,9 @@ describe "Module#include" do
   end
 
   it "imports instance methods to modules and classes" do
-    ModuleSpecs::A.instance_methods.should include(:ma)
-    ModuleSpecs::B.instance_methods.should include(:ma,:mb)
-    ModuleSpecs::C.instance_methods.should include(:ma,:mb)
+    ModuleSpecs::A.instance_methods.should.include?(:ma)
+    ModuleSpecs::B.instance_methods.to_set.should >= Set[:ma,:mb]
+    ModuleSpecs::C.instance_methods.to_set.should >= Set[:ma,:mb]
   end
 
   it "does not import methods to modules and classes" do

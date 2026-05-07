@@ -28,7 +28,7 @@ describe "Net::HTTP.post" do
   ruby_version_is ""..."4.0" do
     it "sends Content-Type: application/x-www-form-urlencoded by default" do
       response = Net::HTTP.post(URI("http://localhost:#{NetHTTPSpecs.port}/request/header"), "test=test")
-      response.body.should include({ "Content-Type" => "application/x-www-form-urlencoded" }.inspect.delete("{}"))
+      response.body.should.include?({ "Content-Type" => "application/x-www-form-urlencoded" }.inspect.delete("{}"))
     end
   end
 

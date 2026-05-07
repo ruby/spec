@@ -10,7 +10,7 @@ describe :argf_each_codepoint, shared: true do
 
   it "is a public method" do
     argf @filenames do
-      @argf.public_methods(false).should include(@method)
+      @argf.public_methods(false).should.include?(@method)
     end
   end
 

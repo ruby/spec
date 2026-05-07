@@ -82,7 +82,7 @@ describe "ObjectSpace.dump_all" do
       ObjectSpace.dump_all(output: :stdout)
     RUBY
 
-    stdout.should include('"value":"abc"')
+    stdout.should.include?('"value":"abc"')
   end
 
   it "dumps Ruby heap to provided IO when passed output: IO" do

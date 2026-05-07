@@ -15,7 +15,7 @@ describe "Dir#read" do
     # an FS does not necessarily impose order
     ls = Dir.entries DirSpecs.mock_dir
     dir = Dir.open DirSpecs.mock_dir
-    ls.should include(dir.read)
+    ls.should.include?(dir.read)
     dir.close
   end
 

@@ -363,7 +363,7 @@ describe :kernel_require, shared: true do
 
     it "stores an absolute path" do
       @object.require(@path).should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     platform_is_not :windows do
@@ -387,8 +387,8 @@ describe :kernel_require, shared: true do
           ScratchPad.recorded.should == [:loaded]
 
           features = $LOADED_FEATURES.select { |path| path.end_with?('load_fixture.rb') }
-          features.should include(symlink_path)
-          features.should_not include(canonical_path)
+          features.should.include?(symlink_path)
+          features.should_not.include?(canonical_path)
         end
 
         it "stores the same path that __FILE__ returns in the required file" do
@@ -482,13 +482,13 @@ describe :kernel_require, shared: true do
       prev = $LOADED_FEATURES.dup
 
       @object.require(@path).should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
 
       $LOADED_FEATURES.replace(prev)
 
-      $LOADED_FEATURES.should_not include(@path)
+      $LOADED_FEATURES.should_not.include?(@path)
       @object.require(@path).should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "does not load twice the same file with and without extension" do
@@ -534,14 +534,14 @@ describe :kernel_require, shared: true do
       Dir.chdir CODE_LOADING_DIR do
         @object.require("../code/load_fixture.rb").should == true
       end
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "stores ./ relative paths as absolute paths" do
       Dir.chdir CODE_LOADING_DIR do
         @object.require("./load_fixture.rb").should == true
       end
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "collapses duplicate path separators" do
@@ -551,19 +551,19 @@ describe :kernel_require, shared: true do
       Dir.chdir CODE_LOADING_DIR do
         @object.require(path).should == true
       end
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "expands absolute paths containing .." do
       path = File.join CODE_LOADING_DIR, "..", "code", "load_fixture.rb"
       @object.require(path).should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "adds the suffix of the resolved filename" do
       $LOAD_PATH << CODE_LOADING_DIR
       @object.require("load_fixture").should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "does not load a non-canonical path for a file already loaded" do
@@ -594,7 +594,7 @@ describe :kernel_require, shared: true do
     it "unicode_normalize is part of core and not $LOADED_FEATURES" do
       features = ruby_exe("puts $LOADED_FEATURES", options: '--disable-gems')
       features.lines.each { |feature|
-        feature.should_not include("unicode_normalize")
+        feature.should_not.include?("unicode_normalize")
       }
 
       -> { @object.require("unicode_normalize") }.should raise_error(LoadError)
@@ -632,12 +632,12 @@ describe :kernel_require, shared: true do
     # "#3171"
     it "performs tilde expansion on a .rb file before storing paths in $LOADED_FEATURES" do
       @object.require("~/load_fixture.rb").should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
 
     it "performs tilde expansion on a non-extensioned file before storing paths in $LOADED_FEATURES" do
       @object.require("~/load_fixture").should == true
-      $LOADED_FEATURES.should include(@path)
+      $LOADED_FEATURES.should.include?(@path)
     end
   end
 

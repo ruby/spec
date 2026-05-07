@@ -95,7 +95,7 @@ describe "Struct.new" do
 
   it "processes passed block with instance_eval" do
     klass = Struct.new(:something) { @something_else = 'something else entirely!' }
-    klass.instance_variables.should include(:@something_else)
+    klass.instance_variables.should.include?(:@something_else)
   end
 
   context "with a block" do

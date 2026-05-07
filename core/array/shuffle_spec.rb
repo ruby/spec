@@ -31,7 +31,7 @@ describe "Array#shuffle" do
 
     result = [1, 2].shuffle(random: obj)
     result.size.should == 2
-    result.should include(1, 2)
+    result.sort.should == [1, 2]
   end
 
   it "raises a NoMethodError if an object passed for the RNG does not define #rand" do

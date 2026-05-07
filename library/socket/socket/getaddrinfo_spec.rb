@@ -43,7 +43,7 @@ describe "Socket.getaddrinfo" do
       addrinfo.each do |a|
         case a.last
         when Socket::IPPROTO_UDP, Socket::IPPROTO_TCP
-          expected.should include(a)
+          expected.should.include?(a)
         else
           # don't check this. It's some weird protocol we don't know about
           # so we can't spec it.
@@ -90,7 +90,7 @@ describe "Socket.getaddrinfo" do
         ["AF_INET6", 9, "::", "::", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP],
         ["AF_INET6", 9, "0:0:0:0:0:0:0:0", "0:0:0:0:0:0:0:0", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]
       ]
-      res.each { |a| expected.should include(a) }
+      res.each { |a| expected.should.include?(a) }
     end
 
     it "accepts empty addresses for IPv6 non-passive sockets" do
@@ -104,7 +104,7 @@ describe "Socket.getaddrinfo" do
         ["AF_INET6", 9, "::1", "::1", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP],
         ["AF_INET6", 9, "0:0:0:0:0:0:0:1", "0:0:0:0:0:0:0:1", Socket::AF_INET6, Socket::SOCK_STREAM, Socket::IPPROTO_TCP]
       ]
-      res.each { |a| expected.should include(a) }
+      res.each { |a| expected.should.include?(a) }
     end
 
     it "raises ResolutionError when fails to resolve address" do
@@ -237,7 +237,7 @@ describe 'Socket.getaddrinfo' do
         Socket::AF_INET,
         Socket::SOCK_STREAM,
       ]
-      [0, Socket::IPPROTO_TCP].should include(proto)
+      [0, Socket::IPPROTO_TCP].should.include?(proto)
     end
 
     it 'accepts a Symbol as the socket type' do
@@ -250,7 +250,7 @@ describe 'Socket.getaddrinfo' do
         Socket::AF_INET,
         Socket::SOCK_STREAM,
       ]
-      [0, Socket::IPPROTO_TCP].should include(proto)
+      [0, Socket::IPPROTO_TCP].should.include?(proto)
     end
 
     it 'accepts a String as the socket type' do
@@ -263,7 +263,7 @@ describe 'Socket.getaddrinfo' do
         Socket::AF_INET,
         Socket::SOCK_STREAM,
       ]
-      [0, Socket::IPPROTO_TCP].should include(proto)
+      [0, Socket::IPPROTO_TCP].should.include?(proto)
     end
 
     it 'accepts an object responding to #to_str as the socket type' do
@@ -280,7 +280,7 @@ describe 'Socket.getaddrinfo' do
         Socket::AF_INET,
         Socket::SOCK_STREAM,
       ]
-      [0, Socket::IPPROTO_TCP].should include(proto)
+      [0, Socket::IPPROTO_TCP].should.include?(proto)
     end
 
     platform_is_not :windows do
@@ -294,7 +294,7 @@ describe 'Socket.getaddrinfo' do
           Socket::AF_INET,
           Socket::SOCK_DGRAM,
         ]
-        [0, Socket::IPPROTO_UDP].should include(proto)
+        [0, Socket::IPPROTO_UDP].should.include?(proto)
       end
     end
 
@@ -309,7 +309,7 @@ describe 'Socket.getaddrinfo' do
         Socket::AF_INET,
         Socket::SOCK_STREAM,
       ]
-      [0, Socket::IPPROTO_TCP].should include(proto)
+      [0, Socket::IPPROTO_TCP].should.include?(proto)
     end
 
     it 'performs a reverse lookup when the reverse_lookup argument is true' do
@@ -349,7 +349,7 @@ describe 'Socket.getaddrinfo' do
         Socket::AF_INET,
         Socket::SOCK_STREAM,
       ]
-      [0, Socket::IPPROTO_TCP].should include(proto)
+      [0, Socket::IPPROTO_TCP].should.include?(proto)
     end
   end
 

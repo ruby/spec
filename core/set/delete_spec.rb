@@ -7,7 +7,7 @@ describe "Set#delete" do
 
   it "deletes the passed Object from self" do
     @set.delete("a")
-    @set.should_not include("a")
+    @set.should_not.include?("a")
   end
 
   it "returns self" do
@@ -23,7 +23,7 @@ describe "Set#delete?" do
 
   it "deletes the passed Object from self" do
     @set.delete?("a")
-    @set.should_not include("a")
+    @set.should_not.include?("a")
   end
 
   it "returns self when the passed Object is in self" do

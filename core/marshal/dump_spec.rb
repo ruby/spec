@@ -877,7 +877,7 @@ describe "Marshal.dump" do
         base = "\x04\bIu:\tTime\r#{@t_dump}\a"
         offset = ":\voffseti\x020*"
         zone = ":\tzoneI\"\bAST\x06:\x06EF" # Last is 'F' (US-ASCII)
-        [ "#{base}#{offset}#{zone}", "#{base}#{zone}#{offset}" ].should include(dump)
+        [ "#{base}#{offset}#{zone}", "#{base}#{zone}#{offset}" ].should.include?(dump)
       end
     end
 
@@ -889,7 +889,7 @@ describe "Marshal.dump" do
 
     it "ignores overridden name method" do
       obj = MarshalSpec::TimeWithOverriddenName.new
-      Marshal.dump(obj).should include("MarshalSpec::TimeWithOverriddenName")
+      Marshal.dump(obj).should.include?("MarshalSpec::TimeWithOverriddenName")
     end
 
     ruby_version_is "4.0" do

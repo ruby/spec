@@ -747,7 +747,7 @@ describe "Process.spawn" do
     platform_is :windows do
       it "raises Errno::EACCES or Errno::ENOEXEC when the file is not an executable file" do
         -> { Process.spawn __FILE__ }.should raise_error(SystemCallError) { |e|
-          [Errno::EACCES, Errno::ENOEXEC].should include(e.class)
+          [Errno::EACCES, Errno::ENOEXEC].should.include?(e.class)
         }
       end
     end
@@ -755,7 +755,7 @@ describe "Process.spawn" do
 
   it "raises an Errno::EACCES or Errno::EISDIR when passed a directory" do
     -> { Process.spawn __dir__ }.should raise_error(SystemCallError) { |e|
-      [Errno::EACCES, Errno::EISDIR].should include(e.class)
+      [Errno::EACCES, Errno::EISDIR].should.include?(e.class)
     }
   end
 

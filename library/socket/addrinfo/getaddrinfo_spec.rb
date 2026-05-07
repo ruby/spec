@@ -54,7 +54,7 @@ describe 'Addrinfo.getaddrinfo' do
       array    = Addrinfo.getaddrinfo('127.0.0.1', 80)
       possible = [Socket::SOCK_STREAM, Socket::SOCK_DGRAM]
 
-      possible.should include(array[0].socktype)
+      possible.should.include?(array[0].socktype)
     end
   end
 
@@ -69,7 +69,7 @@ describe 'Addrinfo.getaddrinfo' do
       array    = Addrinfo.getaddrinfo('127.0.0.1', 80)
       possible = [Socket::IPPROTO_TCP, Socket::IPPROTO_UDP]
 
-      possible.should include(array[0].protocol)
+      possible.should.include?(array[0].protocol)
     end
   end
 

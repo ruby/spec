@@ -35,7 +35,7 @@ describe "BasicObject#singleton_method_added" do
       end
     end
 
-    ScratchPad.recorded.should_not include(:new_instance_method)
+    ScratchPad.recorded.should_not.include?(:new_instance_method)
   end
 
   it "is called when a singleton method is defined on a module" do

@@ -4,7 +4,7 @@ require_relative '../../shared/kernel/raise'
 
 describe "Fiber#raise" do
   it "is a public method" do
-    Fiber.public_instance_methods.should include(:raise)
+    Fiber.public_instance_methods.should.include?(:raise)
   end
 
   it_behaves_like :kernel_raise, :raise, FiberSpecs::NewFiberToRaise

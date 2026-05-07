@@ -56,8 +56,8 @@ describe :thread_exit, shared: true do
     Thread.pass while @inner.status and @inner.status != "sleep"
     @outer.send(@method)
     @outer.join
-    ScratchPad.recorded.should include(:inner_ensure_clause)
-    ScratchPad.recorded.should include(:outer_ensure_clause)
+    ScratchPad.recorded.should.include?(:inner_ensure_clause)
+    ScratchPad.recorded.should.include?(:outer_ensure_clause)
   end
 
   it "does not set $!" do

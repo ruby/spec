@@ -9,7 +9,7 @@ describe "Symbol.all_symbols" do
 
   it "includes symbols that are strongly referenced" do
     symbol = "symbol_specs_#{rand(5_000_000)}".to_sym
-    Symbol.all_symbols.should include(symbol)
+    Symbol.all_symbols.should.include?(symbol)
   end
 
   it "includes symbols that are referenced in source code but not yet executed" do

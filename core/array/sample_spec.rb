@@ -43,7 +43,7 @@ describe "Array#sample" do
 
   it "returns elements from the Array" do
     array = [1, 2, 3, 4]
-    array.sample(3).all? { |x| array.should include(x) }
+    array.sample(3).all? { |x| array.should.include?(x) }
   end
 
   it "returns at most the number of elements in the Array" do

@@ -272,7 +272,7 @@ describe "The alias keyword" do
     end
 
     child.instance_method(:parent_method_alias).owner.should == child
-    child.instance_methods(false).should include(:parent_method_alias)
+    child.instance_methods(false).should.include?(:parent_method_alias)
   end
 end
 

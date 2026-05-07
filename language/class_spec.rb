@@ -177,7 +177,7 @@ describe "A class definition" do
   end
 
   it "stores instance variables defined in the class body in the class object" do
-    ClassSpecs.string_instance_variables(ClassSpecs::B).should include("@ivar")
+    ClassSpecs.string_instance_variables(ClassSpecs::B).should.include?("@ivar")
     ClassSpecs::B.instance_variable_get(:@ivar).should == :ivar
   end
 
@@ -189,9 +189,9 @@ describe "A class definition" do
   end
 
   it "allows the definition of class-level instance variables in a class method" do
-    ClassSpecs.string_instance_variables(ClassSpecs::C).should_not include("@civ")
+    ClassSpecs.string_instance_variables(ClassSpecs::C).should_not.include?("@civ")
     ClassSpecs::C.make_class_instance_variable
-    ClassSpecs.string_instance_variables(ClassSpecs::C).should include("@civ")
+    ClassSpecs.string_instance_variables(ClassSpecs::C).should.include?("@civ")
     ClassSpecs::C.remove_instance_variable :@civ
   end
 
@@ -286,7 +286,8 @@ end
 
 describe "An outer class definition" do
   it "contains the inner classes" do
-    ClassSpecs::Container.constants.should include(:A, :B)
+    ClassSpecs::Container.constants.should.include?(:A)
+    ClassSpecs::Container.constants.should.include?(:B)
   end
 end
 

@@ -86,7 +86,7 @@ describe "Range#bsearch" do
 
       it "returns an element at an index for which block returns 0" do
         result = (0..4).bsearch { |x| x < 1 ? 1 : x > 3 ? -1 : 0 }
-        [1, 2].should include(result)
+        [1, 2].should.include?(result)
       end
     end
 
@@ -262,7 +262,7 @@ describe "Range#bsearch" do
 
       it "returns an element at an index for which block returns 0" do
         result = eval("(0..)").bsearch { |x| x < 1 ? 1 : x > 3 ? -1 : 0 }
-        [1, 2, 3].should include(result)
+        [1, 2, 3].should.include?(result)
       end
     end
 
@@ -380,7 +380,7 @@ describe "Range#bsearch" do
 
       it "returns an element at an index for which block returns 0" do
         result = (...10).bsearch { |x| x < 1 ? 1 : x > 3 ? -1 : 0 }
-        [1, 2, 3].should include(result)
+        [1, 2, 3].should.include?(result)
       end
     end
 

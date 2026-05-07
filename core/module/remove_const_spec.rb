@@ -74,7 +74,7 @@ describe "Module#remove_const" do
   end
 
   it "is a private method" do
-    Module.private_methods.should include(:remove_const)
+    Module.private_methods.should.include?(:remove_const)
   end
 
   it "returns nil when removing autoloaded constant" do

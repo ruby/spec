@@ -207,7 +207,7 @@ describe "BasicSocket#setsockopt" do
       onoff, seconds = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER).linger
       seconds.should == 10
       # Both results can be produced depending on the OS and value of Socket::SO_LINGER
-      [true, Socket::SO_LINGER].should include(onoff)
+      [true, Socket::SO_LINGER].should.include?(onoff)
     end
   end
 end

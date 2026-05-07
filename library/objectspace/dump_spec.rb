@@ -14,13 +14,13 @@ describe "ObjectSpace.dump" do
   it "dumps to string when passed output: :string" do
     string = ObjectSpace.dump("abc", output: :string)
     string.should.is_a?(String)
-    string.should include('"value":"abc"')
+    string.should.include?('"value":"abc"')
   end
 
   it "dumps to string when :output not specified" do
     string = ObjectSpace.dump("abc")
     string.should.is_a?(String)
-    string.should include('"value":"abc"')
+    string.should.include?('"value":"abc"')
   end
 
   it "dumps to a temporary file when passed output: :file" do
@@ -29,7 +29,7 @@ describe "ObjectSpace.dump" do
 
     file.rewind
     content = file.read
-    content.should include('"value":"abc"')
+    content.should.include?('"value":"abc"')
   ensure
     file.close
     File.unlink file.path
@@ -40,7 +40,7 @@ describe "ObjectSpace.dump" do
     file.should.is_a?(File)
 
     file.rewind
-    file.read.should include('"value":"abc"')
+    file.read.should.include?('"value":"abc"')
   ensure
     file.close
     File.unlink file.path
@@ -48,7 +48,7 @@ describe "ObjectSpace.dump" do
 
   it "dumps to stdout when passed output: :stdout" do
     stdout = ruby_exe('ObjectSpace.dump("abc", output: :stdout)', options: "-robjspace").chomp
-    stdout.should include('"value":"abc"')
+    stdout.should.include?('"value":"abc"')
   end
 
   it "dumps to provided IO when passed output: IO" do
@@ -58,7 +58,7 @@ describe "ObjectSpace.dump" do
     result.should.equal? io
 
     io.rewind
-    io.read.should include('"value":"abc"')
+    io.read.should.include?('"value":"abc"')
   ensure
     io.close
     rm_r filename

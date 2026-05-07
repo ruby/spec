@@ -32,7 +32,7 @@ describe "Dir#each" do
     @dir.each {}.should == @dir
     @dir.read.should == nil
     @dir.rewind
-    ls.should include(@dir.read)
+    ls.should.include?(@dir.read)
   end
 
   it "returns the same result when called repeatedly" do

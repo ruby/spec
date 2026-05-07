@@ -34,7 +34,7 @@ describe 'UDPSocket.new' do
 
   it 'raises Errno::EAFNOSUPPORT or Errno::EPROTONOSUPPORT if unsupported family passed' do
     -> { UDPSocket.new(-1) }.should raise_error(SystemCallError) { |e|
-      [Errno::EAFNOSUPPORT, Errno::EPROTONOSUPPORT].should include(e.class)
+      [Errno::EAFNOSUPPORT, Errno::EPROTONOSUPPORT].should.include?(e.class)
     }
   end
 end

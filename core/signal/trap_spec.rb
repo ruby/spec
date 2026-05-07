@@ -258,7 +258,7 @@ describe "Signal.trap" do
         -> {
           Signal.trap(signal, -> {})
         }.should raise_error(StandardError) { |e|
-          [ArgumentError, Errno::EINVAL].should include(e.class)
+          [ArgumentError, Errno::EINVAL].should.include?(e.class)
           e.message.should =~ /Invalid argument|Signal already used by VM or OS/
         }
       end

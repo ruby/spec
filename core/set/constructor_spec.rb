@@ -7,8 +7,8 @@ describe "Set[]" do
     set.instance_of?(Set).should == true
     set.size.should.eql?(3)
 
-    set.should include(1)
-    set.should include(2)
-    set.should include(3)
+    set.should.include?(1)
+    set.should.include?(2)
+    set.should.include?(3)
   end
 end

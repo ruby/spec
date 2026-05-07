@@ -11,8 +11,8 @@ describe "ENV.each_value" do
       ENV["1"] = "3"
       ENV["2"] = "4"
       ENV.each_value { |v| e << v }.should.equal?(ENV)
-      e.should include("3")
-      e.should include("4")
+      e.should.include?("3")
+      e.should.include?("4")
     ensure
       ENV.replace orig
     end

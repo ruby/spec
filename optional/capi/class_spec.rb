@@ -46,29 +46,31 @@ describe "C-API Class function" do
   describe "rb_class_instance_methods" do
     it "returns the public and protected methods of self and its ancestors" do
       methods = @s.rb_class_instance_methods(ModuleSpecs::Basic)
-      methods.should include(:protected_module, :public_module)
+      methods.should.include?(:protected_module)
+      methods.should.include?(:public_module)
 
       methods = @s.rb_class_instance_methods(ModuleSpecs::Basic, true)
-      methods.should include(:protected_module, :public_module)
+      methods.should.include?(:protected_module)
+      methods.should.include?(:public_module)
     end
 
     it "when passed false as a parameter, returns the instance methods of the class" do
       methods = @s.rb_class_instance_methods(ModuleSpecs::Child, false)
-      methods.should include(:protected_child, :public_child)
+      methods.to_set.should >= Set[:protected_child, :public_child]
     end
   end
 
   describe "rb_class_public_instance_methods" do
     it "returns a list of public methods in module and its ancestors" do
       methods = @s.rb_class_public_instance_methods(ModuleSpecs::CountsChild)
-      methods.should include(:public_3)
-      methods.should include(:public_2)
-      methods.should include(:public_1)
+      methods.should.include?(:public_3)
+      methods.should.include?(:public_2)
+      methods.should.include?(:public_1)
 
       methods = @s.rb_class_public_instance_methods(ModuleSpecs::CountsChild, true)
-      methods.should include(:public_3)
-      methods.should include(:public_2)
-      methods.should include(:public_1)
+      methods.should.include?(:public_3)
+      methods.should.include?(:public_2)
+      methods.should.include?(:public_1)
     end
 
     it "when passed false as a parameter, should return only methods defined in that module" do
@@ -79,14 +81,14 @@ describe "C-API Class function" do
   describe "rb_class_protected_instance_methods" do
     it "returns a list of protected methods in module and its ancestors" do
       methods = @s.rb_class_protected_instance_methods(ModuleSpecs::CountsChild)
-      methods.should include(:protected_3)
-      methods.should include(:protected_2)
-      methods.should include(:protected_1)
+      methods.should.include?(:protected_3)
+      methods.should.include?(:protected_2)
+      methods.should.include?(:protected_1)
 
       methods = @s.rb_class_protected_instance_methods(ModuleSpecs::CountsChild, true)
-      methods.should include(:protected_3)
-      methods.should include(:protected_2)
-      methods.should include(:protected_1)
+      methods.should.include?(:protected_3)
+      methods.should.include?(:protected_2)
+      methods.should.include?(:protected_1)
     end
 
     it "when passed false as a parameter, should return only methods defined in that module" do

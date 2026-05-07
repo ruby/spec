@@ -100,7 +100,7 @@ ruby_version_is "4.1" do
 
     describe "when Object is frozen" do
       it "raises a FrozenError before defining the constant" do
-        ruby_exe(<<-RUBY).should include("FrozenError")
+        ruby_exe(<<-RUBY).should.include?("FrozenError")
           Object.freeze
           begin
             autoload_relative :Foo, "autoload_b.rb"

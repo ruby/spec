@@ -94,7 +94,7 @@ describe "Kernel#require_relative with a relative path" do
     missing_path = "#{@dir}/nonexistent.rb"
     expanded_missing_path = File.expand_path(missing_path, __dir__)
     -> { require_relative(missing_path) }.should raise_error(LoadError) { |e|
-      e.message.should include(expanded_missing_path)
+      e.message.should.include?(expanded_missing_path)
       e.path.should == expanded_missing_path
     }
     ScratchPad.recorded.should == []
@@ -181,7 +181,7 @@ describe "Kernel#require_relative with a relative path" do
     it "loads a .rb extensioned file when passed a non-.rb extensioned path" do
       require_relative("#{@dir}/load_fixture.ext").should == true
       ScratchPad.recorded.should == [:loaded]
-      $LOADED_FEATURES.should include "#{@abs_dir}/load_fixture.ext.rb"
+      $LOADED_FEATURES.should.include? "#{@abs_dir}/load_fixture.ext.rb"
     end
 
     it "loads a .rb extensioned file when a complex-extensioned C-extension file of the same name is loaded" do
@@ -191,7 +191,7 @@ describe "Kernel#require_relative with a relative path" do
       $LOADED_FEATURES << "#{@abs_dir}/load_fixture.ext.dll"
       require_relative("#{@dir}/load_fixture.ext").should == true
       ScratchPad.recorded.should == [:loaded]
-      $LOADED_FEATURES.should include "#{@abs_dir}/load_fixture.ext.rb"
+      $LOADED_FEATURES.should.include? "#{@abs_dir}/load_fixture.ext.rb"
     end
 
     it "does not load a C-extension file if a complex-extensioned .rb file is already loaded" do
@@ -204,7 +204,7 @@ describe "Kernel#require_relative with a relative path" do
   describe "($LOADED_FEATURES)" do
     it "stores an absolute path" do
       require_relative(@path).should == true
-      $LOADED_FEATURES.should include(@abs_path)
+      $LOADED_FEATURES.should.include?(@abs_path)
     end
 
     platform_is_not :windows, :wasi do
@@ -231,8 +231,8 @@ describe "Kernel#require_relative with a relative path" do
           ScratchPad.recorded.should == [:loaded]
 
           features = $LOADED_FEATURES.select { |path| path.end_with?('load_fixture.rb') }
-          features.should include(absolute_path)
-          features.should_not include(canonical_path)
+          features.should.include?(absolute_path)
+          features.should_not.include?(canonical_path)
         end
 
         it "stores the same path that __FILE__ returns in the required file" do
@@ -261,14 +261,14 @@ describe "Kernel#require_relative with a relative path" do
 
     it "adds the suffix of the resolved filename" do
       require_relative("#{@dir}/load_fixture").should == true
-      $LOADED_FEATURES.should include("#{@abs_dir}/load_fixture.rb")
+      $LOADED_FEATURES.should.include?("#{@abs_dir}/load_fixture.rb")
     end
 
     it "loads a path for a file already loaded with a relative path" do
       $LOAD_PATH << File.expand_path(@dir)
       $LOADED_FEATURES << "load_fixture.rb" << "load_fixture"
       require_relative(@path).should == true
-      $LOADED_FEATURES.should include(@abs_path)
+      $LOADED_FEATURES.should.include?(@abs_path)
       ScratchPad.recorded.should == [:loaded]
     end
   end
@@ -383,7 +383,7 @@ describe "Kernel#require_relative with an absolute path" do
     it "loads a .rb extensioned file when passed a non-.rb extensioned path" do
       require_relative("#{@dir}/load_fixture.ext").should == true
       ScratchPad.recorded.should == [:loaded]
-      $LOADED_FEATURES.should include "#{@abs_dir}/load_fixture.ext.rb"
+      $LOADED_FEATURES.should.include? "#{@abs_dir}/load_fixture.ext.rb"
     end
 
     it "loads a .rb extensioned file when a complex-extensioned C-extension file of the same name is loaded" do
@@ -393,7 +393,7 @@ describe "Kernel#require_relative with an absolute path" do
       $LOADED_FEATURES << "#{@abs_dir}/load_fixture.ext.dll"
       require_relative("#{@dir}/load_fixture.ext").should == true
       ScratchPad.recorded.should == [:loaded]
-      $LOADED_FEATURES.should include "#{@abs_dir}/load_fixture.ext.rb"
+      $LOADED_FEATURES.should.include? "#{@abs_dir}/load_fixture.ext.rb"
     end
 
     it "does not load a C-extension file if a complex-extensioned .rb file is already loaded" do
@@ -406,7 +406,7 @@ describe "Kernel#require_relative with an absolute path" do
   describe "($LOAD_FEATURES)" do
     it "stores an absolute path" do
       require_relative(@path).should == true
-      $LOADED_FEATURES.should include(@abs_path)
+      $LOADED_FEATURES.should.include?(@abs_path)
     end
 
     it "does not store the path if the load fails" do
@@ -423,14 +423,14 @@ describe "Kernel#require_relative with an absolute path" do
 
     it "adds the suffix of the resolved filename" do
       require_relative("#{@dir}/load_fixture").should == true
-      $LOADED_FEATURES.should include("#{@abs_dir}/load_fixture.rb")
+      $LOADED_FEATURES.should.include?("#{@abs_dir}/load_fixture.rb")
     end
 
     it "loads a path for a file already loaded with a relative path" do
       $LOAD_PATH << File.expand_path(@dir)
       $LOADED_FEATURES << "load_fixture.rb" << "load_fixture"
       require_relative(@path).should == true
-      $LOADED_FEATURES.should include(@abs_path)
+      $LOADED_FEATURES.should.include?(@abs_path)
       ScratchPad.recorded.should == [:loaded]
     end
   end

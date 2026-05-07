@@ -5,7 +5,7 @@ describe :set_add, shared: true do
 
   it "adds the passed Object to self" do
     @set.send(@method, "dog")
-    @set.should include("dog")
+    @set.should.include?("dog")
   end
 
   it "returns self" do

@@ -4,7 +4,7 @@ require_relative '../../shared/kernel/raise'
 
 describe "Thread#raise" do
   it "is a public method" do
-    Thread.public_instance_methods.should include(:raise)
+    Thread.public_instance_methods.should.include?(:raise)
   end
 
   it_behaves_like :kernel_raise, :raise, ThreadSpecs::NewThreadToRaise
@@ -56,7 +56,7 @@ describe "Thread#raise on a sleeping thread" do
     @thr.raise Exception
     Thread.pass while @thr.status
     ScratchPad.recorded.should.is_a?(Exception)
-    ScratchPad.recorded.backtrace[0].should include("sleep")
+    ScratchPad.recorded.backtrace[0].should.include?("sleep")
   end
 
   it "is captured and raised by Thread#value" do
@@ -108,8 +108,8 @@ describe "Thread#raise on a sleeping thread" do
       raise_again_line = __LINE__; t.raise raised
       raised_again = t.value
 
-      raised_again.backtrace.first.should include("#{__FILE__}:#{initial_raise_line}:")
-      raised_again.backtrace.first.should_not include("#{__FILE__}:#{raise_again_line}:")
+      raised_again.backtrace.first.should.include?("#{__FILE__}:#{initial_raise_line}:")
+      raised_again.backtrace.first.should_not.include?("#{__FILE__}:#{raise_again_line}:")
     end
   end
 
