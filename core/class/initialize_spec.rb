@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Class#initialize" do
   it "is private" do
-    Class.should have_private_method(:initialize)
+    Class.private_methods(false).should.include?(:initialize)
   end
 
   it "raises a TypeError when called on already initialized classes" do
