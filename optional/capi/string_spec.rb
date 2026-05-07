@@ -823,7 +823,7 @@ describe "C-API String function" do
     it "freezes the string" do
       s = ""
       @s.rb_str_freeze(s).should == s
-      s.frozen?.should be_true
+      s.frozen?.should == true
     end
   end
 
@@ -888,7 +888,7 @@ describe "C-API String function" do
   describe "rb_str_equal" do
     it "compares two same strings" do
       s = "hello"
-      @s.rb_str_equal(s, "hello").should be_true
+      @s.rb_str_equal(s, "hello").should == true
     end
 
     it "compares two different strings" do

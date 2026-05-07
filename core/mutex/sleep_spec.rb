@@ -47,7 +47,7 @@ describe "Mutex#sleep" do
     m = Mutex.new
     m.lock
     m.sleep(0.001)
-    m.locked?.should be_true
+    m.locked?.should == true
   end
 
   it "relocks the mutex when woken by an exception being raised" do
@@ -65,7 +65,7 @@ describe "Mutex#sleep" do
     Thread.pass until locked
     Thread.pass until th.stop?
     th.raise(Exception)
-    th.value.should be_true
+    th.value.should == true
   end
 
   it "returns the rounded number of seconds asleep" do

@@ -29,6 +29,6 @@ describe "Numeric#abs2" do
   end
 
   it "returns NaN when self is NaN" do
-    nan_value.abs2.nan?.should be_true
+    nan_value.abs2.nan?.should == true
   end
 end

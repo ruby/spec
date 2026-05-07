@@ -83,7 +83,7 @@ describe "C-API Hash function" do
 
   describe "rb_hash_freeze" do
     it "freezes the hash" do
-      @s.rb_hash_freeze({}).frozen?.should be_true
+      @s.rb_hash_freeze({}).frozen?.should == true
     end
   end
 
@@ -102,7 +102,7 @@ describe "C-API Hash function" do
     it "returns nil if the key does not exist" do
       hsh = { }
       @s.rb_hash_aref(hsh, :chunky).should be_nil
-      @s.rb_hash_aref_nil(hsh, :chunky).should be_true
+      @s.rb_hash_aref_nil(hsh, :chunky).should == true
     end
   end
 
@@ -267,13 +267,13 @@ describe "C-API Hash function" do
     it "does not return the default value if it exists" do
       hsh = Hash.new(0)
       @s.rb_hash_lookup(hsh, :chunky).should be_nil
-      @s.rb_hash_lookup_nil(hsh, :chunky).should be_true
+      @s.rb_hash_lookup_nil(hsh, :chunky).should == true
     end
 
     it "returns nil if the key does not exist" do
       hsh = { }
       @s.rb_hash_lookup(hsh, :chunky).should be_nil
-      @s.rb_hash_lookup_nil(hsh, :chunky).should be_true
+      @s.rb_hash_lookup_nil(hsh, :chunky).should == true
     end
 
     describe "rb_hash_lookup2" do
@@ -291,7 +291,7 @@ describe "C-API Hash function" do
 
       it "returns undefined if that is the default value specified" do
         hsh = Hash.new(0)
-        @s.rb_hash_lookup2_default_undef(hsh, :chunky).should be_true
+        @s.rb_hash_lookup2_default_undef(hsh, :chunky).should == true
       end
     end
   end

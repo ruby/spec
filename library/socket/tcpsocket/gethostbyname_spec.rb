@@ -20,12 +20,12 @@ describe "TCPSocket.gethostbyname" do
 
     it "returns the address type as the third value" do
       address_type = @host_info[2]
-      [Socket::AF_INET, Socket::AF_INET6].include?(address_type).should be_true
+      [Socket::AF_INET, Socket::AF_INET6].include?(address_type).should == true
     end
 
     it "returns the IP address as the fourth value" do
       ip = @host_info[3]
-      ["127.0.0.1", "::1"].include?(ip).should be_true
+      ["127.0.0.1", "::1"].include?(ip).should == true
     end
   end
 

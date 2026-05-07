@@ -7,11 +7,11 @@ describe :equal, shared: true do
   end
 
   it "returns true for self" do
-    @matrix.send(@method, @matrix).should be_true
+    @matrix.send(@method, @matrix).should == true
   end
 
   it "returns true for equal matrices" do
-    @matrix.send(@method, Matrix[ [1, 2, 3, 4, 5], [2, 3, 4, 5, 6] ]).should be_true
+    @matrix.send(@method, Matrix[ [1, 2, 3, 4, 5], [2, 3, 4, 5, 6] ]).should == true
   end
 
   it "returns false for different matrices" do
@@ -28,6 +28,6 @@ describe :equal, shared: true do
   end
 
   it "doesn't distinguish on subclasses" do
-    MatrixSub.ins.send(@method, Matrix.I(2)).should be_true
+    MatrixSub.ins.send(@method, Matrix.I(2)).should == true
   end
 end

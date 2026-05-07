@@ -17,7 +17,7 @@ platform_is_not :windows do
       it "closes the log" do
         Syslog.opened?.should == false
         Syslog.open
-        Syslog.opened?.should be_true
+        Syslog.opened?.should == true
         Syslog.close
         Syslog.opened?.should == false
       end

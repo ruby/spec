@@ -138,7 +138,7 @@ describe "Zlib::Inflate#inflate" do
     end
 
     it "properly handles chunked data" do
-      @chunks.all? { |chunk| chunk =~ /\A0+\z/ }.should be_true
+      @chunks.all? { |chunk| chunk =~ /\A0+\z/ }.should == true
     end
   end
 

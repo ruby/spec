@@ -37,9 +37,9 @@ describe "IO::Buffer#locked" do
     @buffer = IO::Buffer.new(4)
     slice = @buffer.slice(0, 2)
     @buffer.locked do
-      @buffer.locked?.should be_true
+      @buffer.locked?.should == true
       slice.locked?.should == false
-      slice.locked { slice.locked?.should be_true }
+      slice.locked { slice.locked?.should == true }
     end
   end
 
@@ -47,9 +47,9 @@ describe "IO::Buffer#locked" do
     @buffer = IO::Buffer.new(4)
     slice = @buffer.slice(0, 2)
     slice.locked do
-      slice.locked?.should be_true
+      slice.locked?.should == true
       @buffer.locked?.should == false
-      @buffer.locked { @buffer.locked?.should be_true }
+      @buffer.locked { @buffer.locked?.should == true }
     end
   end
 end
@@ -68,7 +68,7 @@ describe "IO::Buffer#locked?" do
   it "is true only inside of #locked block" do
     @buffer = IO::Buffer.new(4)
     @buffer.locked do
-      @buffer.locked?.should be_true
+      @buffer.locked?.should == true
     end
     @buffer.locked?.should == false
   end

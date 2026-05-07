@@ -3,11 +3,11 @@ require 'matrix'
 
 describe "Matrix.hermitian?" do
   it "returns true for a hermitian Matrix" do
-    Matrix[[1, 2, Complex(0, 3)], [2, 4, 5], [Complex(0, -3), 5, 6]].hermitian?.should be_true
+    Matrix[[1, 2, Complex(0, 3)], [2, 4, 5], [Complex(0, -3), 5, 6]].hermitian?.should == true
   end
 
   it "returns true for a 0x0 empty matrix" do
-    Matrix.empty.hermitian?.should be_true
+    Matrix.empty.hermitian?.should == true
   end
 
   it "returns false for an asymmetric Matrix" do
@@ -29,6 +29,6 @@ describe "Matrix.hermitian?" do
 
   it "returns false for a matrix with complex values on the diagonal" do
     Matrix[[Complex(1,1)]].hermitian?.should == false
-    Matrix[[Complex(1,0)]].hermitian?.should be_true
+    Matrix[[Complex(1,0)]].hermitian?.should == true
   end
 end

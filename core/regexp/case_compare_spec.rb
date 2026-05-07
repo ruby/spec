@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Regexp#===" do
   it "is true if there is a match" do
-    (/abc/ === "aabcc").should be_true
+    (/abc/ === "aabcc").should == true
   end
 
   it "is false if there is no match" do
@@ -10,7 +10,7 @@ describe "Regexp#===" do
   end
 
   it "returns true if it matches a Symbol" do
-    (/a/ === :a).should be_true
+    (/a/ === :a).should == true
   end
 
   it "returns false if it does not match a Symbol" do
@@ -30,6 +30,6 @@ describe "Regexp#===" do
       end
     end.new
 
-    (/abc/ === stringlike).should be_true
+    (/abc/ === stringlike).should == true
   end
 end

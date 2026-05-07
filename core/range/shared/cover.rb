@@ -6,26 +6,26 @@ describe :range_cover, shared: true do
   it "uses the range element's <=> to make the comparison" do
     a = mock('a')
     a.should_receive(:<=>).twice.and_return(-1,-1)
-    (a..'z').send(@method, 'b').should be_true
+    (a..'z').send(@method, 'b').should == true
   end
 
   it "uses a continuous inclusion test" do
-    ('a'..'f').send(@method, 'aa').should be_true
-    ('a'..'f').send(@method, 'babe').should be_true
-    ('a'..'f').send(@method, 'baby').should be_true
+    ('a'..'f').send(@method, 'aa').should == true
+    ('a'..'f').send(@method, 'babe').should == true
+    ('a'..'f').send(@method, 'baby').should == true
     ('a'..'f').send(@method, 'ga').should == false
-    (-10..-2).send(@method, -2.5).should be_true
+    (-10..-2).send(@method, -2.5).should == true
   end
 
   describe "on string elements" do
     it "returns true if other is matched by element.succ" do
-      ('a'..'c').send(@method, 'b').should be_true
-      ('a'...'c').send(@method, 'b').should be_true
+      ('a'..'c').send(@method, 'b').should == true
+      ('a'...'c').send(@method, 'b').should == true
     end
 
     it "returns true if other is not matched by element.succ" do
-      ('a'..'c').send(@method, 'bc').should be_true
-      ('a'...'c').send(@method, 'bc').should be_true
+      ('a'..'c').send(@method, 'bc').should == true
+      ('a'...'c').send(@method, 'bc').should == true
     end
   end
 
@@ -40,19 +40,19 @@ describe :range_cover, shared: true do
       end
 
       it "returns true if other is equal as first element" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should == true
       end
 
       it "returns true if other is matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should == true
       end
 
       it "returns true if other is not matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(2)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(2)).should == true
       end
 
       it "returns true if other is equal as last element but not matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(99)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(99)).should == true
       end
 
       it "returns false if other is greater than last element but matched by element.succ" do
@@ -70,15 +70,15 @@ describe :range_cover, shared: true do
       end
 
       it "returns true if other is equal as first element" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should == true
       end
 
       it "returns true if other is matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should == true
       end
 
       it "returns true if other is not matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(2)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(2)).should == true
       end
 
       it "returns false if other is equal as last element but not matched by element.succ" do
@@ -95,15 +95,15 @@ end
 describe :range_cover_subrange, shared: true do
   context "range argument" do
     it "accepts range argument" do
-      (0..10).send(@method, (3..7)).should be_true
+      (0..10).send(@method, (3..7)).should == true
       (0..10).send(@method, (3..15)).should == false
       (0..10).send(@method, (-2..7)).should == false
 
-      (1.1..7.9).send(@method, (2.5..6.5)).should be_true
+      (1.1..7.9).send(@method, (2.5..6.5)).should == true
       (1.1..7.9).send(@method, (2.5..8.5)).should == false
       (1.1..7.9).send(@method, (0.5..6.5)).should == false
 
-      ('c'..'i').send(@method, ('d'..'f')).should be_true
+      ('c'..'i').send(@method, ('d'..'f')).should == true
       ('c'..'i').send(@method, ('d'..'z')).should == false
       ('c'..'i').send(@method, ('a'..'f')).should == false
 
@@ -112,13 +112,13 @@ describe :range_cover_subrange, shared: true do
       range_20_110 = RangeSpecs::TenfoldSucc.new(20)..RangeSpecs::TenfoldSucc.new(110)
       range_0_90 = RangeSpecs::TenfoldSucc.new(0)..RangeSpecs::TenfoldSucc.new(90)
 
-      range_10_100.send(@method, range_20_90).should be_true
+      range_10_100.send(@method, range_20_90).should == true
       range_10_100.send(@method, range_20_110).should == false
       range_10_100.send(@method, range_0_90).should == false
     end
 
     it "supports boundaries of different comparable types" do
-      (0..10).send(@method, (3.1..7.9)).should be_true
+      (0..10).send(@method, (3.1..7.9)).should == true
       (0..10).send(@method, (3.1..15.9)).should == false
       (0..10).send(@method, (-2.1..7.9)).should == false
     end
@@ -130,51 +130,51 @@ describe :range_cover_subrange, shared: true do
 
     it "honors exclusion of right boundary (:exclude_end option)" do
       # Integer
-      (0..10).send(@method, (0..10)).should be_true
-      (0...10).send(@method, (0...10)).should be_true
+      (0..10).send(@method, (0..10)).should == true
+      (0...10).send(@method, (0...10)).should == true
 
-      (0..10).send(@method, (0...10)).should be_true
+      (0..10).send(@method, (0...10)).should == true
       (0...10).send(@method, (0..10)).should == false
 
-      (0...11).send(@method, (0..10)).should be_true
-      (0..10).send(@method, (0...11)).should be_true
+      (0...11).send(@method, (0..10)).should == true
+      (0..10).send(@method, (0...11)).should == true
 
       # Float
-      (0..10.1).send(@method, (0..10.1)).should be_true
-      (0...10.1).send(@method, (0...10.1)).should be_true
+      (0..10.1).send(@method, (0..10.1)).should == true
+      (0...10.1).send(@method, (0...10.1)).should == true
 
-      (0..10.1).send(@method, (0...10.1)).should be_true
+      (0..10.1).send(@method, (0...10.1)).should == true
       (0...10.1).send(@method, (0..10.1)).should == false
 
-      (0...11.1).send(@method, (0..10.1)).should be_true
+      (0...11.1).send(@method, (0..10.1)).should == true
       (0..10.1).send(@method, (0...11.1)).should == false
     end
   end
 
   it "allows self to be a beginless range" do
-    (...10).send(@method, (3..7)).should be_true
+    (...10).send(@method, (3..7)).should == true
     (...10).send(@method, (3..15)).should == false
 
-    (..7.9).send(@method, (2.5..6.5)).should be_true
+    (..7.9).send(@method, (2.5..6.5)).should == true
     (..7.9).send(@method, (2.5..8.5)).should == false
 
-    (..'i').send(@method, ('d'..'f')).should be_true
+    (..'i').send(@method, ('d'..'f')).should == true
     (..'i').send(@method, ('d'..'z')).should == false
   end
 
   it "allows self to be a endless range" do
-    eval("(0...)").send(@method, (3..7)).should be_true
+    eval("(0...)").send(@method, (3..7)).should == true
     eval("(5...)").send(@method, (3..15)).should == false
 
-    eval("(1.1..)").send(@method, (2.5..6.5)).should be_true
+    eval("(1.1..)").send(@method, (2.5..6.5)).should == true
     eval("(3.3..)").send(@method, (2.5..8.5)).should == false
 
-    eval("('a'..)").send(@method, ('d'..'f')).should be_true
+    eval("('a'..)").send(@method, ('d'..'f')).should == true
     eval("('p'..)").send(@method, ('d'..'z')).should == false
   end
 
   it "accepts beginless range argument" do
-    (..10).send(@method, (...10)).should be_true
+    (..10).send(@method, (...10)).should == true
     (0..10).send(@method, (...10)).should == false
 
     (1.1..7.9).send(@method, (...10.5)).should == false
@@ -183,7 +183,7 @@ describe :range_cover_subrange, shared: true do
   end
 
   it "accepts endless range argument" do
-    eval("(0..)").send(@method, eval("(0...)")).should be_true
+    eval("(0..)").send(@method, eval("(0...)")).should == true
     (0..10).send(@method, eval("(0...)")).should == false
 
     (1.1..7.9).send(@method, eval("(0.8...)")).should == false

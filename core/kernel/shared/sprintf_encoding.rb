@@ -4,7 +4,7 @@ describe :kernel_sprintf_encoding, shared: true do
   it "can produce a string with valid encoding" do
     string = @method.call("good day %{valid}", valid: "e")
     string.encoding.should == Encoding::UTF_8
-    string.valid_encoding?.should be_true
+    string.valid_encoding?.should == true
   end
 
   it "can produce a string with invalid encoding" do

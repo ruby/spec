@@ -25,7 +25,7 @@ describe "The module keyword" do
 
   it "reopens an existing module" do
     module ModuleSpecs; Reopened = true; end
-    ModuleSpecs::Reopened.should be_true
+    ModuleSpecs::Reopened.should == true
   ensure
     ModuleSpecs.send(:remove_const, :Reopened)
   end

@@ -4,7 +4,7 @@ describe "Mutex#locked?" do
   it "returns true if locked" do
     m = Mutex.new
     m.lock
-    m.locked?.should be_true
+    m.locked?.should == true
   end
 
   it "returns false if unlocked" do
@@ -27,7 +27,7 @@ describe "Mutex#locked?" do
 
     Thread.pass until m1_locked
 
-    m1.locked?.should be_true
+    m1.locked?.should == true
     m2.unlock # release th
     th.join
     # A Thread releases its locks upon termination

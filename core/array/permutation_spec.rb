@@ -78,7 +78,7 @@ describe "Array#permutation" do
        [3, 1],      [3, 2],      [3, [4, 5]],
       [[4, 5], 1], [[4, 5], 2], [[4, 5], 3]
     ]
-    expected.each {|e| got.include?(e).should be_true}
+    expected.each {|e| got.include?(e).should == true}
     got.size.should == expected.size
   end
 

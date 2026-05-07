@@ -20,7 +20,7 @@ describe "Math.cos" do
   end
 
   it "returns NaN given NaN" do
-    Math.cos(nan_value).nan?.should be_true
+    Math.cos(nan_value).nan?.should == true
   end
 
   describe "coerces its argument with #to_f" do

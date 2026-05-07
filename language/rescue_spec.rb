@@ -186,7 +186,7 @@ describe "The rescue keyword" do
     rescue *exception_list
       caught_it = true
     end
-    caught_it.should be_true
+    caught_it.should == true
     caught = []
     [->{raise ArbitraryException}, ->{raise SpecificExampleException}].each do |block|
       begin
@@ -210,7 +210,7 @@ describe "The rescue keyword" do
     rescue *exceptions
       caught_it = true
     end
-    caught_it.should be_true
+    caught_it.should == true
   end
 
   it "can combine a splatted list of exceptions with a literal list of exceptions" do
@@ -220,7 +220,7 @@ describe "The rescue keyword" do
     rescue ArbitraryException, *exception_list
       caught_it = true
     end
-    caught_it.should be_true
+    caught_it.should == true
     caught = []
     [->{raise ArbitraryException}, ->{raise SpecificExampleException}].each do |block|
       begin

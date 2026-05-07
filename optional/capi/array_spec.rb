@@ -307,7 +307,7 @@ describe "C-API Array function" do
 
   describe "rb_ary_includes" do
     it "returns true if the array includes the element" do
-      @s.rb_ary_includes([1, 2, 3], 2).should be_true
+      @s.rb_ary_includes([1, 2, 3], 2).should == true
     end
 
     it "returns false if the array does not include the element" do
@@ -437,7 +437,7 @@ describe "C-API Array function" do
     it "freezes the object exactly like Kernel#freeze" do
       ary = [1,2]
       @s.rb_ary_freeze(ary)
-      ary.frozen?.should be_true
+      ary.frozen?.should == true
     end
   end
 

@@ -29,7 +29,7 @@ describe "Net::HTTP#proxy?" do
   describe "when self is a proxy class instance" do
     it "returns false" do
       http_with_proxy = Net::HTTP.Proxy("localhost", 1234, "rspec", "rocks")
-      http_with_proxy.new("localhost", 3333).proxy?.should be_true
+      http_with_proxy.new("localhost", 3333).proxy?.should == true
     end
   end
 end

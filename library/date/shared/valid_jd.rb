@@ -1,9 +1,9 @@
 describe :date_valid_jd?, shared: true do
   it "returns true if passed a number value" do
-    Date.send(@method, -100).should be_true
-    Date.send(@method, 100.0).should be_true
-    Date.send(@method, 2**100).should be_true
-    Date.send(@method, Rational(1,2)).should be_true
+    Date.send(@method, -100).should == true
+    Date.send(@method, 100.0).should == true
+    Date.send(@method, 2**100).should == true
+    Date.send(@method, Rational(1,2)).should == true
   end
 
   it "returns false if passed nil" do

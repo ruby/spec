@@ -9,11 +9,11 @@ describe "StringIO#reopen when passed [Object, Integer]" do
   it "reopens self with the passed Object in the passed mode" do
     @io.reopen("reopened", IO::RDONLY)
     @io.closed_read?.should == false
-    @io.closed_write?.should be_true
+    @io.closed_write?.should == true
     @io.string.should == "reopened"
 
     @io.reopen(+"reopened, twice", IO::WRONLY)
-    @io.closed_read?.should be_true
+    @io.closed_read?.should == true
     @io.closed_write?.should == false
     @io.string.should == "reopened, twice"
 
@@ -57,7 +57,7 @@ describe "StringIO#reopen when passed [Object, Object]" do
   it "reopens self with the passed Object in the passed mode" do
     @io.reopen("reopened", "r")
     @io.closed_read?.should == false
-    @io.closed_write?.should be_true
+    @io.closed_write?.should == true
     @io.string.should == "reopened"
 
     @io.reopen(+"reopened, twice", "r+")
@@ -109,7 +109,7 @@ describe "StringIO#reopen when passed [Object, Object]" do
     obj.should_receive(:to_str).and_return("r")
     @io.reopen("reopened", obj)
     @io.closed_read?.should == false
-    @io.closed_write?.should be_true
+    @io.closed_write?.should == true
     @io.string.should == "reopened"
   end
 

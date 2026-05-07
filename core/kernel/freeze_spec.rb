@@ -6,7 +6,7 @@ describe "Kernel#freeze" do
     o = mock('o')
     o.frozen?.should == false
     o.freeze
-    o.frozen?.should be_true
+    o.frozen?.should == true
   end
 
   it "returns self" do
@@ -16,34 +16,34 @@ describe "Kernel#freeze" do
 
   describe "on integers" do
     it "has no effect since they are already frozen" do
-      1.frozen?.should be_true
+      1.frozen?.should == true
       1.freeze
 
       bignum = bignum_value
-      bignum.frozen?.should be_true
+      bignum.frozen?.should == true
       bignum.freeze
     end
   end
 
   describe "on a Float" do
     it "has no effect since it is already frozen" do
-      1.2.frozen?.should be_true
+      1.2.frozen?.should == true
       1.2.freeze
     end
   end
 
   describe "on a Symbol" do
     it "has no effect since it is already frozen" do
-      :sym.frozen?.should be_true
+      :sym.frozen?.should == true
       :sym.freeze
     end
   end
 
   describe "on true, false and nil" do
     it "has no effect since they are already frozen" do
-      nil.frozen?.should be_true
-      true.frozen?.should be_true
-      false.frozen?.should be_true
+      nil.frozen?.should == true
+      true.frozen?.should == true
+      false.frozen?.should == true
 
       nil.freeze
       true.freeze
@@ -54,7 +54,7 @@ describe "Kernel#freeze" do
   describe "on a Complex" do
     it "has no effect since it is already frozen" do
       c = Complex(1.3, 3.1)
-      c.frozen?.should be_true
+      c.frozen?.should == true
       c.freeze
     end
   end
@@ -62,7 +62,7 @@ describe "Kernel#freeze" do
   describe "on a Rational" do
     it "has no effect since it is already frozen" do
       r = Rational(1, 3)
-      r.frozen?.should be_true
+      r.frozen?.should == true
       r.freeze
     end
   end

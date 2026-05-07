@@ -12,7 +12,7 @@ describe "Kernel#instance_variable_defined?" do
     end
 
     it "returns true if the instance variable is defined" do
-      @instance.instance_variable_defined?("@greeting").should be_true
+      @instance.instance_variable_defined?("@greeting").should == true
     end
   end
 
@@ -22,7 +22,7 @@ describe "Kernel#instance_variable_defined?" do
     end
 
     it "returns true if the instance variable is defined" do
-      @instance.instance_variable_defined?(:@greeting).should be_true
+      @instance.instance_variable_defined?(:@greeting).should == true
     end
   end
 

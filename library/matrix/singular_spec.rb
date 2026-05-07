@@ -4,10 +4,10 @@ require 'matrix'
 describe "Matrix#singular?" do
   it "returns true for singular matrices" do
     m = Matrix[ [1,2,3], [3,4,3], [0,0,0] ]
-    m.singular?.should be_true
+    m.singular?.should == true
 
     m = Matrix[ [1,2,9], [3,4,9], [1,2,9] ]
-    m.singular?.should be_true
+    m.singular?.should == true
   end
 
   it "returns false if the Matrix is regular" do

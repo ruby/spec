@@ -18,7 +18,7 @@ ruby_version_is ""..."4.1" do
     it "sets self into binary mode" do
       @ftp.binary.should be_nil
       @ftp.send(:initialize)
-      @ftp.binary.should be_true
+      @ftp.binary.should == true
     end
 
     it "sets self into active mode" do

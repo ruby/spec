@@ -30,7 +30,7 @@ describe "Numeric#to_c" do
     @numbers.each do |number|
       real = number.to_c.real
       if Float === number and number.nan?
-        real.nan?.should be_true
+        real.nan?.should == true
       else
         real.should == number
       end

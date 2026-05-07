@@ -110,18 +110,18 @@ describe "CApiModule" do
   describe "rb_const_defined" do
     # The fixture converts C boolean test to Ruby 'true' / 'false'
     it "returns C non-zero if a constant is defined" do
-      @m.rb_const_defined(CApiModuleSpecs::A, :X).should be_true
+      @m.rb_const_defined(CApiModuleSpecs::A, :X).should == true
     end
 
     it "returns C non-zero if a constant is defined in Object" do
-      @m.rb_const_defined(CApiModuleSpecs::A, :Module).should be_true
+      @m.rb_const_defined(CApiModuleSpecs::A, :Module).should == true
     end
   end
 
   describe "rb_const_defined_at" do
     # The fixture converts C boolean test to Ruby 'true' / 'false'
     it "returns C non-zero if a constant is defined" do
-      @m.rb_const_defined_at(CApiModuleSpecs::A, :X).should be_true
+      @m.rb_const_defined_at(CApiModuleSpecs::A, :X).should == true
     end
 
     it "does not search in ancestors for the constant" do

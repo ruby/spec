@@ -5,7 +5,7 @@ describe :hash_greater_than, shared: true do
   end
 
   it "returns true if the other hash is a subset of self" do
-    @h1.send(@method, @h2).should be_true
+    @h1.send(@method, @h2).should == true
   end
 
   it "returns false if the other hash is not a subset of self" do
@@ -18,6 +18,6 @@ describe :hash_greater_than, shared: true do
       { a: 1, b: 2 }
     end
 
-    @h1.send(@method, o).should be_true
+    @h1.send(@method, o).should == true
   end
 end

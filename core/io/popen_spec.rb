@@ -126,12 +126,12 @@ describe "IO.popen" do
 
     it "closes the IO after yielding" do
       io = IO.popen(ruby_cmd('exit'), "r") { |_io| _io }
-      io.closed?.should be_true
+      io.closed?.should == true
     end
 
     it "allows the IO to be closed inside the block" do
       io = IO.popen(ruby_cmd('exit'), 'r') { |_io| _io.close; _io }
-      io.closed?.should be_true
+      io.closed?.should == true
     end
 
     it "returns the value of the block" do

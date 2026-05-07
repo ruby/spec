@@ -389,7 +389,7 @@ describe "C-API Encoding function" do
     it "returns true if the object encoding is only ASCII" do
       str = "abc".force_encoding("us-ascii")
       str.valid_encoding? # make sure to set the coderange
-      @s.ENC_CODERANGE_ASCIIONLY(str).should be_true
+      @s.ENC_CODERANGE_ASCIIONLY(str).should == true
     end
 
     it "returns false if the object encoding is not ASCII only" do
@@ -689,7 +689,7 @@ describe "C-API Encoding function" do
 
   describe "rb_enc_str_asciionly_p" do
     it "returns true for an ASCII string" do
-      @s.rb_enc_str_asciionly_p("hello").should be_true
+      @s.rb_enc_str_asciionly_p("hello").should == true
     end
 
     it "returns false for a non-ASCII string" do

@@ -134,14 +134,14 @@ describe "Hash#compare_by_identity?" do
   it "returns true once #compare_by_identity has been invoked on self" do
     h = {}
     h.compare_by_identity
-    h.compare_by_identity?.should be_true
+    h.compare_by_identity?.should == true
   end
 
   it "returns true when called multiple times on the same ident hash" do
     h = {}
     h.compare_by_identity
-    h.compare_by_identity?.should be_true
-    h.compare_by_identity?.should be_true
-    h.compare_by_identity?.should be_true
+    h.compare_by_identity?.should == true
+    h.compare_by_identity?.should == true
+    h.compare_by_identity?.should == true
   end
 end

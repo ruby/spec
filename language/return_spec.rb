@@ -229,7 +229,7 @@ describe "The return keyword" do
       def f
         1.times { 1.times {return true}; false}; false
       end
-      f.should be_true
+      f.should == true
     end
   end
 

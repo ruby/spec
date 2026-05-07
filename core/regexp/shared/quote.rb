@@ -29,7 +29,7 @@ describe :regexp_quote, shared: true do
 
   it "sets the encoding of the result to the encoding of the String if any non-US-ASCII characters are present in an input String with valid encoding" do
     str = "ありがとう".dup.force_encoding("utf-8")
-    str.valid_encoding?.should be_true
+    str.valid_encoding?.should == true
     Regexp.send(@method, str).encoding.should == Encoding::UTF_8
   end
 

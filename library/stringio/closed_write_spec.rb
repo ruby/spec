@@ -7,6 +7,6 @@ describe "StringIO#closed_write?" do
     io.close_read
     io.closed_write?.should == false
     io.close_write
-    io.closed_write?.should be_true
+    io.closed_write?.should == true
   end
 end

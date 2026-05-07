@@ -5,7 +5,7 @@ describe :queue_clear, shared: true do
     queue << 1
     queue.empty?.should == false
     queue.clear
-    queue.empty?.should be_true
+    queue.empty?.should == true
   end
 
   # TODO: test for atomicity of Queue#clear

@@ -110,7 +110,7 @@ describe "C-API Class function" do
     it "allocates and initializes a new object" do
       o = @s.rb_class_new_instance([], CApiClassSpecs::Alloc)
       o.class.should == CApiClassSpecs::Alloc
-      o.initialized.should be_true
+      o.initialized.should == true
     end
 
     it "passes arguments to the #initialize method" do
@@ -143,7 +143,7 @@ describe "C-API Class function" do
       o = c.new
       -> { o.included? }.should raise_error(NameError)
       @s.rb_include_module(c, CApiClassSpecs::M)
-      o.included?.should be_true
+      o.included?.should == true
     end
   end
 
@@ -242,11 +242,11 @@ describe "C-API Class function" do
     end
 
     it "returns true when the class variable is defined" do
-      @s.rb_cvar_defined(CApiClassSpecs::CVars, "@@cvar").should be_true
+      @s.rb_cvar_defined(CApiClassSpecs::CVars, "@@cvar").should == true
     end
 
     it "returns true if the class instance variable is defined" do
-      @s.rb_cvar_defined(CApiClassSpecs::CVars, "@c_ivar").should be_true
+      @s.rb_cvar_defined(CApiClassSpecs::CVars, "@c_ivar").should == true
     end
   end
 

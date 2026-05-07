@@ -18,8 +18,8 @@ describe "Encoding.aliases" do
   end
 
   it "has alias names as its keys" do
-    Encoding.aliases.key?('BINARY').should be_true
-    Encoding.aliases.key?('ASCII').should be_true
+    Encoding.aliases.key?('BINARY').should == true
+    Encoding.aliases.key?('ASCII').should == true
   end
 
   it "has the names of the aliased encoding as its values" do

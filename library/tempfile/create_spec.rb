@@ -13,10 +13,10 @@ describe "Tempfile.create" do
     @tempfile = Tempfile.create
     # Unlike Tempfile.open this returns a true File,
     # but `.should.instance_of?(File)` would be true either way.
-    @tempfile.instance_of?(File).should be_true
+    @tempfile.instance_of?(File).should == true
 
     @tempfile.should_not.closed?
-    File.file?(@tempfile.path).should be_true
+    File.file?(@tempfile.path).should == true
 
     @tempfile.path.should.start_with?(Dir.tmpdir)
     @tempfile.path.should_not == "#{Dir.tmpdir}/"
@@ -72,7 +72,7 @@ describe "Tempfile.create" do
       Tempfile.create do |tempfile|
         @tempfile = tempfile
         @tempfile.should_not.closed?
-        File.exist?(@tempfile.path).should be_true
+        File.exist?(@tempfile.path).should == true
       end
 
       @tempfile.should.closed?
@@ -161,7 +161,7 @@ describe "Tempfile.create" do
         @tempfile = Tempfile.create(anonymous: false)
         @tempfile.should_not.closed?
         @tempfile.path.should.start_with?(Dir.tmpdir)
-        File.file?(@tempfile.path).should be_true
+        File.file?(@tempfile.path).should == true
       end
     end
   end
@@ -170,7 +170,7 @@ describe "Tempfile.create" do
     it "passes them along to File.open" do
       @tempfile = Tempfile.create(encoding: "IBM037:IBM037", binmode: true)
       @tempfile.external_encoding.should == Encoding.find("IBM037")
-      @tempfile.binmode?.should be_true
+      @tempfile.binmode?.should == true
     end
   end
 end

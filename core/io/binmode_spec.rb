@@ -49,7 +49,7 @@ describe "IO#binmode?" do
   it "is true after a call to IO#binmode" do
     @file.binmode?.should == false
     @file.binmode
-    @file.binmode?.should be_true
+    @file.binmode?.should == true
   end
 
   it "propagates to dup'ed IO objects" do

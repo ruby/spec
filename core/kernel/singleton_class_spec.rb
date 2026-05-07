@@ -41,7 +41,7 @@ describe "Kernel#singleton_class" do
   it "returns a frozen singleton class if object is frozen" do
     obj = Object.new
     obj.freeze
-    obj.singleton_class.frozen?.should be_true
+    obj.singleton_class.frozen?.should == true
   end
 
   context "for an IO object with a replaced singleton class" do

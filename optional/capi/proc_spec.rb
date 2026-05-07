@@ -138,12 +138,12 @@ describe "C-API Proc function" do
   describe "rb_obj_is_proc" do
     it "returns true for Proc" do
       prc = Proc.new {|a,b| a * b }
-      @p.rb_obj_is_proc(prc).should be_true
+      @p.rb_obj_is_proc(prc).should == true
     end
 
     it "returns true for subclass of Proc" do
       prc = Class.new(Proc).new {}
-      @p.rb_obj_is_proc(prc).should be_true
+      @p.rb_obj_is_proc(prc).should == true
     end
 
     it "returns false for non Proc instances" do

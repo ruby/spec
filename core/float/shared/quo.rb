@@ -12,8 +12,8 @@ describe :float_quo, shared: true do
   end
 
   it "returns NaN when the argument is NaN" do
-    -1819.999999.send(@method, nan_value).nan?.should be_true
-    11109.1981271.send(@method, nan_value).nan?.should be_true
+    -1819.999999.send(@method, nan_value).nan?.should == true
+    11109.1981271.send(@method, nan_value).nan?.should == true
   end
 
   it "returns Infinity when the argument is 0.0" do

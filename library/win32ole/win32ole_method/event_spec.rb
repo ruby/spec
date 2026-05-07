@@ -14,7 +14,7 @@ platform_is :windows do
       end
 
       it "returns true for System Monitor Control's 'OnDblClick' method" do
-        @on_dbl_click_method.event?.should be_true
+        @on_dbl_click_method.event?.should == true
       end
 
     end

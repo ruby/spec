@@ -112,7 +112,7 @@ describe "Zlib::GzipReader#ungetbyte" do
 
         it 'does not make eof? false' do
           @gz.ungetbyte nil
-          @gz.eof?.should be_true
+          @gz.eof?.should == true
         end
       end
     end

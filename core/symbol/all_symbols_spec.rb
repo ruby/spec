@@ -13,7 +13,7 @@ describe "Symbol.all_symbols" do
   end
 
   it "includes symbols that are referenced in source code but not yet executed" do
-    Symbol.all_symbols.any? { |s| s.to_s == 'symbol_specs_referenced_in_source_code' }.should be_true
+    Symbol.all_symbols.any? { |s| s.to_s == 'symbol_specs_referenced_in_source_code' }.should == true
     :symbol_specs_referenced_in_source_code
   end
 end

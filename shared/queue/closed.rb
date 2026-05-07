@@ -7,6 +7,6 @@ describe :queue_closed?, shared: true do
   it "returns true when the queue is closed" do
     queue = @object.call
     queue.close
-    queue.closed?.should be_true
+    queue.closed?.should == true
   end
 end

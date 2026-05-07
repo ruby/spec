@@ -7,7 +7,7 @@ describe "Vector#eql?" do
   end
 
   it "returns true for self" do
-    @vector.eql?(@vector).should be_true
+    @vector.eql?(@vector).should == true
   end
 
   it "returns false when there are a pair corresponding elements which are not equal in the sense of Kernel#eql?" do

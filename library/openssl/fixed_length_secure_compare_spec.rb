@@ -5,7 +5,7 @@ describe "OpenSSL.fixed_length_secure_compare" do
   it "returns true for two strings with the same content" do
     input1 = "the quick brown fox jumps over the lazy dog"
     input2 = "the quick brown fox jumps over the lazy dog"
-    OpenSSL.fixed_length_secure_compare(input1, input2).should be_true
+    OpenSSL.fixed_length_secure_compare(input1, input2).should == true
   end
 
   it "returns false for two strings of equal size with different content" do
@@ -19,7 +19,7 @@ describe "OpenSSL.fixed_length_secure_compare" do
     input1.should_receive(:to_str).and_return("the quick brown fox jumps over the lazy dog")
     input2 = mock("input2")
     input2.should_receive(:to_str).and_return("the quick brown fox jumps over the lazy dog")
-    OpenSSL.fixed_length_secure_compare(input1, input2).should be_true
+    OpenSSL.fixed_length_secure_compare(input1, input2).should == true
   end
 
   it "does not accept arguments that are not string and cannot be coerced into strings" do

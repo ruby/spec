@@ -12,13 +12,13 @@ describe "String#ascii_only?" do
     end
 
     it "returns true if the encoding is US-ASCII" do
-      "hello".dup.force_encoding(Encoding::US_ASCII).ascii_only?.should be_true
-      "hello".encode(Encoding::US_ASCII).ascii_only?.should be_true
+      "hello".dup.force_encoding(Encoding::US_ASCII).ascii_only?.should == true
+      "hello".encode(Encoding::US_ASCII).ascii_only?.should == true
     end
 
     it "returns true for all single-character UTF-8 Strings" do
       0.upto(127) do |n|
-        n.chr.ascii_only?.should be_true
+        n.chr.ascii_only?.should == true
       end
     end
   end
@@ -46,8 +46,8 @@ describe "String#ascii_only?" do
   end
 
   it "returns true for the empty String with an ASCII-compatible encoding" do
-    "".ascii_only?.should be_true
-    "".encode('UTF-8').ascii_only?.should be_true
+    "".ascii_only?.should == true
+    "".encode('UTF-8').ascii_only?.should == true
   end
 
   it "returns false for the empty String with a non-ASCII-compatible encoding" do
@@ -64,7 +64,7 @@ describe "String#ascii_only?" do
     euro = "\u20AC"
     interp = "#{base} #{euro}"
     euro.ascii_only?.should == false
-    base.ascii_only?.should be_true
+    base.ascii_only?.should == true
     interp.ascii_only?.should == false
   end
 

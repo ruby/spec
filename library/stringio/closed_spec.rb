@@ -7,10 +7,10 @@ describe "StringIO#closed?" do
     io.close_read
     io.closed?.should == false
     io.close_write
-    io.closed?.should be_true
+    io.closed?.should == true
 
     io = StringIO.new(+"example", "r+")
     io.close
-    io.closed?.should be_true
+    io.closed?.should == true
   end
 end

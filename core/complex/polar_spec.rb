@@ -15,14 +15,14 @@ describe "Complex.polar" do
     a = Complex.polar(1.0+0.0i, Math::PI/2+0.0i)
     a.real.should be_close(0.0, TOLERANCE)
     a.imag.should be_close(1.0, TOLERANCE)
-    a.real.real?.should be_true
-    a.imag.real?.should be_true
+    a.real.real?.should == true
+    a.imag.real?.should == true
 
     b = Complex.polar(1+0.0i)
     b.real.should be_close(1.0, TOLERANCE)
     b.imag.should be_close(0.0, TOLERANCE)
-    b.real.real?.should be_true
-    b.imag.real?.should be_true
+    b.real.real?.should == true
+    b.imag.real?.should == true
   end
 end
 

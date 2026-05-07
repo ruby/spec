@@ -3,7 +3,7 @@ require 'bigdecimal'
 
 describe "BigDecimal constants" do
   it "defines a VERSION value" do
-    BigDecimal.const_defined?(:VERSION).should be_true
+    BigDecimal.const_defined?(:VERSION).should == true
   end
 
   it "has a BASE value" do
@@ -13,7 +13,7 @@ describe "BigDecimal constants" do
   end
 
   it "has a NaN value" do
-    BigDecimal::NAN.nan?.should be_true
+    BigDecimal::NAN.nan?.should == true
   end
 
   it "has an INFINITY value" do

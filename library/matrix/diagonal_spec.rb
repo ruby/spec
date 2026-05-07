@@ -41,11 +41,11 @@ end
 
 describe "Matrix.diagonal?" do
   it "returns true for a diagonal Matrix" do
-    Matrix.diagonal([1, 2, 3]).diagonal?.should be_true
+    Matrix.diagonal([1, 2, 3]).diagonal?.should == true
   end
 
   it "returns true for a zero square Matrix" do
-    Matrix.zero(3).diagonal?.should be_true
+    Matrix.zero(3).diagonal?.should == true
   end
 
   it "returns false for a non diagonal square Matrix" do
@@ -54,7 +54,7 @@ describe "Matrix.diagonal?" do
   end
 
   it "returns true for an empty 0x0 matrix" do
-    Matrix.empty(0,0).diagonal?.should be_true
+    Matrix.empty(0,0).diagonal?.should == true
   end
 
   it "raises an error for rectangular matrices" do

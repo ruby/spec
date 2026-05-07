@@ -12,11 +12,11 @@ describe "Matrix#regular?" do
   end
 
   it "returns true if the Matrix is regular" do
-    Matrix[ [0,1], [1,0] ].regular?.should be_true
+    Matrix[ [0,1], [1,0] ].regular?.should == true
   end
 
   it "returns true for an empty 0x0 matrix" do
-    Matrix.empty(0,0).regular?.should be_true
+    Matrix.empty(0,0).regular?.should == true
   end
 
   it "raises an error for rectangular matrices" do

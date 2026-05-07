@@ -19,7 +19,7 @@ describe "Module#class_variable_defined?" do
     obj = mock("metaclass class variable")
     meta = obj.singleton_class
     meta.send :class_variable_set, :@@var, 1
-    meta.send(:class_variable_defined?, :@@var).should be_true
+    meta.send(:class_variable_defined?, :@@var).should == true
   end
 
   it "returns false if the class variable is not defined in a metaclass" do

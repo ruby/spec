@@ -270,7 +270,7 @@ describe "CApiTimeSpecs" do
     end
 
     it "returns time object in UTC if offset given equals INT_MAX - 1" do
-      @s.rb_time_timespec_new(1447087832, 476451125, 0x7ffffffe).utc?.should be_true
+      @s.rb_time_timespec_new(1447087832, 476451125, 0x7ffffffe).utc?.should == true
     end
 
     it "returns time object in localtime if offset given equals INT_MAX" do

@@ -15,7 +15,7 @@ describe "Thread#priority" do
   end
 
   it "inherits the priority of the current thread while running" do
-    @thread.alive?.should be_true
+    @thread.alive?.should == true
     @thread.priority.should == @current_priority
   end
 

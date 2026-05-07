@@ -11,7 +11,7 @@ describe "IO::Buffer#resize" do
       @buffer = IO::Buffer.new(4)
       @buffer.resize(IO::Buffer::PAGE_SIZE)
       @buffer.size.should == IO::Buffer::PAGE_SIZE
-      @buffer.internal?.should be_true
+      @buffer.internal?.should == true
       @buffer.mapped?.should == false
     end
 
@@ -21,7 +21,7 @@ describe "IO::Buffer#resize" do
         @buffer.resize(4)
         @buffer.size.should == 4
         @buffer.internal?.should == false
-        @buffer.mapped?.should be_true
+        @buffer.mapped?.should == true
       end
     end
 
@@ -30,7 +30,7 @@ describe "IO::Buffer#resize" do
         @buffer = IO::Buffer.new(IO::Buffer::PAGE_SIZE, IO::Buffer::MAPPED)
         @buffer.resize(4)
         @buffer.size.should == 4
-        @buffer.internal?.should be_true
+        @buffer.internal?.should == true
         @buffer.mapped?.should == false
       end
     end
@@ -88,7 +88,7 @@ describe "IO::Buffer#resize" do
       @buffer.resize(IO::Buffer::PAGE_SIZE)
       @buffer.size.should == IO::Buffer::PAGE_SIZE
       @buffer.internal?.should == false
-      @buffer.mapped?.should be_true
+      @buffer.mapped?.should == true
     end
 
     it "allows resizing after a free, creating a regular buffer according to new size" do
@@ -96,7 +96,7 @@ describe "IO::Buffer#resize" do
       @buffer.free
       @buffer.resize(10)
       @buffer.size.should == 10
-      @buffer.internal?.should be_true
+      @buffer.internal?.should == true
       @buffer.mapped?.should == false
     end
   end
@@ -104,7 +104,7 @@ describe "IO::Buffer#resize" do
   it "allows resizing to 0, freeing memory" do
     @buffer = IO::Buffer.new(4)
     @buffer.resize(0)
-    @buffer.null?.should be_true
+    @buffer.null?.should == true
   end
 
   it "can be called repeatedly" do

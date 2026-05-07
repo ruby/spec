@@ -26,6 +26,6 @@ describe "Numeric#fdiv" do
   end
 
   it "returns NaN if other is NaN" do
-    3334.fdiv(nan_value).nan?.should be_true
+    3334.fdiv(nan_value).nan?.should == true
   end
 end

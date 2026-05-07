@@ -8,7 +8,7 @@ platform_is :windows do
     end
 
     it "returns an array containing 'Shell.Explorer'" do
-      WIN32OLE::Type.progids().include?('Shell.Explorer').should be_true
+      WIN32OLE::Type.progids().include?('Shell.Explorer').should == true
     end
 
   end

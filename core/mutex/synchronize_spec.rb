@@ -19,7 +19,7 @@ describe "Mutex#synchronize" do
 
     Thread.pass until synchronized
 
-    m1.locked?.should be_true
+    m1.locked?.should == true
     m2.unlock
     th.join
     m1.locked?.should == false

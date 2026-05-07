@@ -11,11 +11,11 @@ describe :file_grpowned, shared: true do
 
   platform_is_not :windows do
     it "returns true if the file exist" do
-      @object.send(@method, @file).should be_true
+      @object.send(@method, @file).should == true
     end
 
     it "accepts an object that has a #to_path method" do
-      @object.send(@method, mock_to_path(@file)).should be_true
+      @object.send(@method, mock_to_path(@file)).should == true
     end
 
     it 'takes non primary groups into account' do

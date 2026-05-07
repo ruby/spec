@@ -27,7 +27,7 @@ ruby_version_is "4.1" do
       path = ModuleSpecs::Autoload.autoload?(:AutoloadRelativeA)
       path.should_not be_nil
       path.should.end_with?("autoload_relative_a.rb")
-      File.exist?(path).should be_true
+      File.exist?(path).should == true
     end
 
     it "loads the registered file when the constant is accessed" do
@@ -113,7 +113,7 @@ ruby_version_is "4.1" do
       ModuleSpecs::Autoload.autoload_relative :NestedPath, "fixtures/autoload_relative_a.rb"
       path = ModuleSpecs::Autoload.autoload?(:NestedPath)
       path.should_not be_nil
-      File.exist?(path).should be_true
+      File.exist?(path).should == true
     end
 
     describe "interoperability with autoload?" do
@@ -121,7 +121,7 @@ ruby_version_is "4.1" do
         ModuleSpecs::Autoload.autoload_relative :QueryTest, "fixtures/autoload_relative_a.rb"
         path = ModuleSpecs::Autoload.autoload?(:QueryTest)
         # Should be an absolute path
-        Pathname.new(path).absolute?.should be_true
+        Pathname.new(path).absolute?.should == true
       end
     end
 end

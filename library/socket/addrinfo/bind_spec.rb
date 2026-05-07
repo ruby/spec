@@ -22,7 +22,7 @@ describe "Addrinfo#bind" do
       @socket = sock
       sock.should be_kind_of(Socket)
     end
-    @socket.closed?.should be_true
+    @socket.closed?.should == true
   end
 
 end

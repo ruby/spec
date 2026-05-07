@@ -230,39 +230,39 @@ describe :file_fnmatch, shared: true do
 
   it "returns true if '/' in pattern match '/' in path when flags includes FNM_PATHNAME" do
     pattern = '*/*'
-    File.send(@method, pattern, 'dave/.profile', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
+    File.send(@method, pattern, 'dave/.profile', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
 
     pattern = '**/foo'
-    File.send(@method, pattern, 'a/b/c/foo', File::FNM_PATHNAME).should be_true
-    File.send(@method, pattern, '/a/b/c/foo', File::FNM_PATHNAME).should be_true
-    File.send(@method, pattern, 'c:/a/b/c/foo', File::FNM_PATHNAME).should be_true
-    File.send(@method, pattern, 'a/.b/c/foo', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
+    File.send(@method, pattern, 'a/b/c/foo', File::FNM_PATHNAME).should == true
+    File.send(@method, pattern, '/a/b/c/foo', File::FNM_PATHNAME).should == true
+    File.send(@method, pattern, 'c:/a/b/c/foo', File::FNM_PATHNAME).should == true
+    File.send(@method, pattern, 'a/.b/c/foo', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
   end
 
   it "has special handling for ./ when using * and FNM_PATHNAME" do
     File.send(@method, './*', '.', File::FNM_PATHNAME).should == false
-    File.send(@method, './*', './', File::FNM_PATHNAME).should be_true
+    File.send(@method, './*', './', File::FNM_PATHNAME).should == true
     File.send(@method, './*/', './', File::FNM_PATHNAME).should == false
-    File.send(@method, './**', './', File::FNM_PATHNAME).should be_true
-    File.send(@method, './**/', './', File::FNM_PATHNAME).should be_true
+    File.send(@method, './**', './', File::FNM_PATHNAME).should == true
+    File.send(@method, './**/', './', File::FNM_PATHNAME).should == true
     File.send(@method, './*', '.', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == false
-    File.send(@method, './*', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
+    File.send(@method, './*', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
     File.send(@method, './*/', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == false
-    File.send(@method, './**', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
-    File.send(@method, './**/', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
+    File.send(@method, './**', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
+    File.send(@method, './**/', './', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
   end
 
   it "matches **/* with FNM_PATHNAME to recurse directories" do
-    File.send(@method, 'nested/**/*', 'nested/subdir', File::FNM_PATHNAME).should be_true
-    File.send(@method, 'nested/**/*', 'nested/subdir/file', File::FNM_PATHNAME).should be_true
-    File.send(@method, 'nested/**/*', 'nested/.dotsubdir', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
-    File.send(@method, 'nested/**/*', 'nested/.dotsubir/.dotfile', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
+    File.send(@method, 'nested/**/*', 'nested/subdir', File::FNM_PATHNAME).should == true
+    File.send(@method, 'nested/**/*', 'nested/subdir/file', File::FNM_PATHNAME).should == true
+    File.send(@method, 'nested/**/*', 'nested/.dotsubdir', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
+    File.send(@method, 'nested/**/*', 'nested/.dotsubir/.dotfile', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
   end
 
   it "matches ** with FNM_PATHNAME only in current directory" do
-    File.send(@method, 'nested/**', 'nested/subdir', File::FNM_PATHNAME).should be_true
+    File.send(@method, 'nested/**', 'nested/subdir', File::FNM_PATHNAME).should == true
     File.send(@method, 'nested/**', 'nested/subdir/file', File::FNM_PATHNAME).should == false
-    File.send(@method, 'nested/**', 'nested/.dotsubdir', File::FNM_PATHNAME | File::FNM_DOTMATCH).should be_true
+    File.send(@method, 'nested/**', 'nested/.dotsubdir', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == true
     File.send(@method, 'nested/**', 'nested/.dotsubir/.dotfile', File::FNM_PATHNAME | File::FNM_DOTMATCH).should == false
   end
 

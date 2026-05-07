@@ -55,23 +55,23 @@ describe :range_cover_and_include, shared: true do
   end
 
   it "returns true if argument is equal to the first value of the range" do
-    (0..5).send(@method, 0).should be_true
-    ('f'..'s').send(@method, 'f').should be_true
+    (0..5).send(@method, 0).should == true
+    ('f'..'s').send(@method, 'f').should == true
   end
 
   it "returns true if argument is equal to the last value of the range" do
-    (0..5).send(@method, 5).should be_true
-    (0...5).send(@method, 4).should be_true
-    ('f'..'s').send(@method, 's').should be_true
+    (0..5).send(@method, 5).should == true
+    (0...5).send(@method, 4).should == true
+    ('f'..'s').send(@method, 's').should == true
   end
 
   it "returns true if argument is less than the last value of the range and greater than the first value" do
-    (20..30).send(@method, 28).should be_true
-    ('e'..'h').send(@method, 'g').should be_true
+    (20..30).send(@method, 28).should == true
+    ('e'..'h').send(@method, 'g').should == true
   end
 
   it "returns true if argument is sole element in the range" do
-    (30..30).send(@method, 30).should be_true
+    (30..30).send(@method, 30).should == true
   end
 
   it "returns false if range is empty" do

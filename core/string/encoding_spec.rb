@@ -70,7 +70,7 @@ describe "String#encoding for Strings with \\u escapes" do
 
   it "returns US-ASCII if self is US-ASCII only" do
     s = "\u{40}"
-    s.ascii_only?.should be_true
+    s.ascii_only?.should == true
     s.encoding.should == Encoding::US_ASCII
   end
 
@@ -122,7 +122,7 @@ describe "String#encoding for Strings with \\x escapes" do
 
   it "returns US-ASCII if self is US-ASCII only" do
     s = "\x61"
-    s.ascii_only?.should be_true
+    s.ascii_only?.should == true
     s.encoding.should == Encoding::US_ASCII
   end
 

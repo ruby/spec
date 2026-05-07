@@ -119,7 +119,7 @@ describe "Regexp#match?" do
 
   context "when matches the given value" do
     it "returns true but does not set Regexp.last_match" do
-      /string/i.match?('string').should be_true
+      /string/i.match?('string').should == true
       Regexp.last_match.should be_nil
     end
   end
@@ -129,7 +129,7 @@ describe "Regexp#match?" do
   end
 
   it "takes matching position as the 2nd argument" do
-    /str/i.match?('string', 0).should be_true
+    /str/i.match?('string', 0).should == true
     /str/i.match?('string', 1).should == false
   end
 

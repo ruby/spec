@@ -15,9 +15,9 @@ describe "OpenStruct#==" do
   end
 
   it "returns true when self and other are equal method/value wise" do
-    (@os == @os).should be_true
-    (@os == OpenStruct.new(name: "John")).should be_true
-    (@os == OpenStructSpecs::OpenStructSub.new(name: "John")).should be_true
+    (@os == @os).should == true
+    (@os == OpenStruct.new(name: "John")).should == true
+    (@os == OpenStructSpecs::OpenStructSub.new(name: "John")).should == true
 
     (@os == OpenStruct.new(name: "Jonny")).should == false
     (@os == OpenStructSpecs::OpenStructSub.new(name: "Jonny")).should == false

@@ -16,7 +16,7 @@ describe "Set#disjoint?" do
     end
 
     it "returns true when a Set has no element in common with a Set-like object" do
-      Set[1, 2].disjoint?(SetSpecs::SetLike.new([3, 4])).should be_true
+      Set[1, 2].disjoint?(SetSpecs::SetLike.new([3, 4])).should == true
     end
   end
 end

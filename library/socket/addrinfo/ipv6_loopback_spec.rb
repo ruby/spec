@@ -23,7 +23,7 @@ describe "Addrinfo#ipv6_loopback?" do
     end
 
     it "returns true for the loopback address" do
-      @loopback.ipv6_loopback?.should be_true
+      @loopback.ipv6_loopback?.should == true
     end
 
     it "returns false for another address" do

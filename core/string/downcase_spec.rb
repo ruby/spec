@@ -24,7 +24,7 @@ describe "String#downcase" do
       downcased.should == "king"
       downcased.size.should == 4
       downcased.bytesize.should == 4
-      downcased.ascii_only?.should be_true
+      downcased.ascii_only?.should == true
     end
   end
 
@@ -109,7 +109,7 @@ describe "String#downcase!" do
       downcased.should == "king"
       downcased.size.should == 4
       downcased.bytesize.should == 4
-      downcased.ascii_only?.should be_true
+      downcased.ascii_only?.should == true
     end
   end
 

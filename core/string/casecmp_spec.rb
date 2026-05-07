@@ -190,7 +190,7 @@ describe 'String#casecmp? independent of case' do
   end
 
   it "case folds" do
-    "ß".casecmp?("ss").should be_true
+    "ß".casecmp?("ss").should == true
   end
 
   it "returns nil if other can't be converted to a string" do

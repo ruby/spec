@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Float#eql?" do
   it "returns true if other is a Float equal to self" do
-    0.0.eql?(0.0).should be_true
+    0.0.eql?(0.0).should == true
   end
 
   it "returns false if other is a Float not equal to self" do

@@ -87,7 +87,7 @@ describe "CApiObject" do
       o.initialized.should be_nil
 
       @o.rb_obj_call_init(o, 2, [:one, :two])
-      o.initialized.should be_true
+      o.initialized.should == true
       o.arguments.should == [:one, :two]
     end
 
@@ -441,7 +441,7 @@ describe "CApiObject" do
 
   describe "FL_ABLE" do
     it "returns correct boolean for type" do
-      @o.FL_ABLE(Object.new).should be_true
+      @o.FL_ABLE(Object.new).should == true
       @o.FL_ABLE(true).should == false
       @o.FL_ABLE(nil).should == false
       @o.FL_ABLE(1).should == false
@@ -600,37 +600,37 @@ describe "CApiObject" do
     end
 
     it "returns C true if passed Qtrue" do
-      @o.RTEST(true).should be_true
+      @o.RTEST(true).should == true
     end
 
     it "returns C true if passed a Symbol" do
-      @o.RTEST(:test).should be_true
+      @o.RTEST(:test).should == true
     end
 
     it "returns C true if passed an Object" do
-      @o.RTEST(Object.new).should be_true
+      @o.RTEST(Object.new).should == true
     end
   end
 
   describe "rb_special_const_p" do
     it "returns true if passed Qfalse" do
-      @o.rb_special_const_p(false).should be_true
+      @o.rb_special_const_p(false).should == true
     end
 
     it "returns true if passed Qtrue" do
-      @o.rb_special_const_p(true).should be_true
+      @o.rb_special_const_p(true).should == true
     end
 
     it "returns true if passed Qnil" do
-      @o.rb_special_const_p(nil).should be_true
+      @o.rb_special_const_p(nil).should == true
     end
 
     it "returns true if passed a Symbol" do
-      @o.rb_special_const_p(:test).should be_true
+      @o.rb_special_const_p(:test).should == true
     end
 
     it "returns true if passed a Fixnum" do
-      @o.rb_special_const_p(10).should be_true
+      @o.rb_special_const_p(10).should == true
     end
 
     it "returns false if passed an Object" do
@@ -665,7 +665,7 @@ describe "CApiObject" do
     it "freezes the object passed to it" do
       obj = ""
       @o.rb_obj_freeze(obj).should == obj
-      obj.frozen?.should be_true
+      obj.frozen?.should == true
     end
   end
 
@@ -774,13 +774,13 @@ describe "CApiObject" do
   describe "rb_equal" do
     it "returns true if the arguments are the same exact object" do
       s = "hello"
-      @o.rb_equal(s, s).should be_true
+      @o.rb_equal(s, s).should == true
     end
 
     it "calls == to check equality and coerces to true/false" do
       m = mock("string")
       m.should_receive(:==).and_return(8)
-      @o.rb_equal(m, "hello").should be_true
+      @o.rb_equal(m, "hello").should == true
 
       m2 = mock("string")
       m2.should_receive(:==).and_return(nil)
@@ -791,11 +791,11 @@ describe "CApiObject" do
   describe "rb_class_inherited_p" do
 
     it "returns true if mod equals arg" do
-      @o.rb_class_inherited_p(Array, Array).should be_true
+      @o.rb_class_inherited_p(Array, Array).should == true
     end
 
     it "returns true if mod is a subclass of arg" do
-      @o.rb_class_inherited_p(Array, Object).should be_true
+      @o.rb_class_inherited_p(Array, Object).should == true
     end
 
     it "returns nil if mod is not a subclass of arg" do

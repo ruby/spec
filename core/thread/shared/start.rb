@@ -15,7 +15,7 @@ describe :thread_start, shared: true do
     t.should be_kind_of(Thread)
     t.join
 
-    run.should be_true
+    run.should == true
   end
 
   it "respects Thread subclasses" do

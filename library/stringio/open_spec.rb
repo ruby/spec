@@ -21,7 +21,7 @@ describe "StringIO.open when passed [Object, mode]" do
   it "closes self after yielding" do
     io = nil
     StringIO.open(+"example", "r") { |strio| io = strio }
-    io.closed?.should be_true
+    io.closed?.should == true
   end
 
   it "even closes self when an exception is raised while yielding" do
@@ -33,7 +33,7 @@ describe "StringIO.open when passed [Object, mode]" do
       end
     rescue
     end
-    io.closed?.should be_true
+    io.closed?.should == true
   end
 
   it "sets self's string to nil after yielding" do
@@ -57,11 +57,11 @@ describe "StringIO.open when passed [Object, mode]" do
   it "sets the mode based on the passed mode" do
     io = StringIO.open(+"example", "r")
     io.closed_read?.should == false
-    io.closed_write?.should be_true
+    io.closed_write?.should == true
 
     io = StringIO.open(+"example", "rb")
     io.closed_read?.should == false
-    io.closed_write?.should be_true
+    io.closed_write?.should == true
 
     io = StringIO.open(+"example", "r+")
     io.closed_read?.should == false
@@ -72,11 +72,11 @@ describe "StringIO.open when passed [Object, mode]" do
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", "w")
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", "wb")
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", "w+")
@@ -88,11 +88,11 @@ describe "StringIO.open when passed [Object, mode]" do
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", "a")
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", "ab")
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", "a+")
@@ -107,18 +107,18 @@ describe "StringIO.open when passed [Object, mode]" do
   it "allows passing the mode as an Integer" do
     io = StringIO.open(+"example", IO::RDONLY)
     io.closed_read?.should == false
-    io.closed_write?.should be_true
+    io.closed_write?.should == true
 
     io = StringIO.open(+"example", IO::RDWR)
     io.closed_read?.should == false
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::WRONLY)
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::WRONLY | IO::TRUNC)
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::RDWR | IO::TRUNC)
@@ -126,7 +126,7 @@ describe "StringIO.open when passed [Object, mode]" do
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::WRONLY | IO::APPEND)
-    io.closed_read?.should be_true
+    io.closed_read?.should == true
     io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::RDWR | IO::APPEND)
@@ -144,7 +144,7 @@ describe "StringIO.open when passed [Object, mode]" do
     io = StringIO.open(+"example", obj)
 
     io.closed_read?.should == false
-    io.closed_write?.should be_true
+    io.closed_write?.should == true
   end
 
   it "raises an Errno::EACCES error when passed a frozen string with a write-mode" do
@@ -188,7 +188,7 @@ describe "StringIO.open when passed [Object]" do
     (str = "example").freeze
     io = StringIO.open(str)
     io.closed_read?.should == false
-    io.closed_write?.should be_true
+    io.closed_write?.should == true
   end
 end
 

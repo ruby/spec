@@ -24,7 +24,7 @@ describe 'TCPServer#initialize' do
     end
 
     it "sets the socket to binmode" do
-      @server.binmode?.should be_true
+      @server.binmode?.should == true
     end
   end
 

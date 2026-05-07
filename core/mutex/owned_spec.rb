@@ -12,7 +12,7 @@ describe "Mutex#owned?" do
     it "returns true" do
       m = Mutex.new
       m.lock
-      m.owned?.should be_true
+      m.owned?.should == true
     end
   end
 

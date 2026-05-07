@@ -60,7 +60,7 @@ describe "Enumerable#all?" do
 
     it "gathers whole arrays as elements when each yields multiple" do
       multi = EnumerableSpecs::YieldsMultiWithFalse.new
-      multi.all?.should be_true
+      multi.all?.should == true
     end
   end
 

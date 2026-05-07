@@ -18,7 +18,7 @@ describe "Process::Status#signaled?" do
 
     platform_is_not :windows do
       it "returns true" do
-        $?.signaled?.should be_true
+        $?.signaled?.should == true
       end
     end
 

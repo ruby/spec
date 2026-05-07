@@ -34,6 +34,6 @@ describe "StringScanner#dup" do
   it "copies the passed StringScanner scan pointer to self" do
     @orig_s.terminate
     s = @orig_s.dup
-    s.eos?.should be_true
+    s.eos?.should == true
   end
 end

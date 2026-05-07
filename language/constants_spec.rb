@@ -554,7 +554,7 @@ describe "Module#private_constant marked constants" do
     end
 
     it "can be accessed from the module itself" do
-      ConstantVisibility::PrivConstModule.private_constant_from_self.should be_true
+      ConstantVisibility::PrivConstModule.private_constant_from_self.should == true
     end
 
     it "is defined? from the module itself" do
@@ -562,7 +562,7 @@ describe "Module#private_constant marked constants" do
     end
 
     it "can be accessed from lexical scope" do
-      ConstantVisibility::PrivConstModule::Nested.private_constant_from_scope.should be_true
+      ConstantVisibility::PrivConstModule::Nested.private_constant_from_scope.should == true
     end
 
     it "is defined? from lexical scope" do
@@ -570,11 +570,11 @@ describe "Module#private_constant marked constants" do
     end
 
     it "can be accessed from classes that include the module" do
-      ConstantVisibility::ClassIncludingPrivConstModule.new.private_constant_from_include.should be_true
+      ConstantVisibility::ClassIncludingPrivConstModule.new.private_constant_from_include.should == true
     end
 
     it "can be accessed from modules that include the module" do
-      ConstantVisibility::ModuleIncludingPrivConstModule.private_constant_from_include.should be_true
+      ConstantVisibility::ModuleIncludingPrivConstModule.private_constant_from_include.should == true
     end
 
     it "raises a NameError when accessed directly from modules that include the module" do
@@ -643,7 +643,7 @@ describe "Module#private_constant marked constants" do
     end
 
     it "can be accessed from the class itself" do
-      ConstantVisibility::PrivConstClass.private_constant_from_self.should be_true
+      ConstantVisibility::PrivConstClass.private_constant_from_self.should == true
     end
 
     it "is defined? from the class itself" do
@@ -651,7 +651,7 @@ describe "Module#private_constant marked constants" do
     end
 
     it "can be accessed from lexical scope" do
-      ConstantVisibility::PrivConstClass::Nested.private_constant_from_scope.should be_true
+      ConstantVisibility::PrivConstClass::Nested.private_constant_from_scope.should == true
     end
 
     it "is defined? from lexical scope" do
@@ -659,7 +659,7 @@ describe "Module#private_constant marked constants" do
     end
 
     it "can be accessed from subclasses" do
-      ConstantVisibility::PrivConstClassChild.new.private_constant_from_subclass.should be_true
+      ConstantVisibility::PrivConstClassChild.new.private_constant_from_subclass.should == true
     end
 
     it "is defined? from subclasses" do

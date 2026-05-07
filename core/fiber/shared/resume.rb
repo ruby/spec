@@ -20,12 +20,12 @@ describe :fiber_resume, shared: true do
     invoked = false
     fiber = Fiber.new { invoked = true }
     fiber.send(@method)
-    invoked.should be_true
+    invoked.should == true
   end
 
   it "returns the last value encountered on first invocation" do
     fiber = Fiber.new { 1+1; true }
-    fiber.send(@method).should be_true
+    fiber.send(@method).should == true
   end
 
   it "runs until the end of the block" do

@@ -16,10 +16,10 @@ describe "Kernel.proc" do
 
   it "returned the passed Proc if given an existing Proc" do
     some_lambda = -> {}
-    some_lambda.lambda?.should be_true
+    some_lambda.lambda?.should == true
     l = proc(&some_lambda)
     l.should equal(some_lambda)
-    l.lambda?.should be_true
+    l.lambda?.should == true
   end
 
   it_behaves_like :kernel_lambda, :proc

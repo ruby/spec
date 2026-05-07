@@ -96,7 +96,7 @@ describe "File.dirname" do
   it "handles Shift JIS 0x5C (\\) as second byte of a multi-byte sequence" do
     # dir/fileソname.txt
     path = "dir/file\x83\x5cname.txt".b.force_encoding(Encoding::SHIFT_JIS)
-    path.valid_encoding?.should be_true
+    path.valid_encoding?.should == true
     File.dirname(path).should == "dir"
   end
 
@@ -124,7 +124,7 @@ describe "File.dirname" do
     it "handles Shift JIS 0x5C (\\) as second byte of a multi-byte sequence (windows)" do
       # dir\fileソname.txt
       path = "dir\\file\x83\x5cname.txt".b.force_encoding(Encoding::SHIFT_JIS)
-      path.valid_encoding?.should be_true
+      path.valid_encoding?.should == true
       File.dirname(path).should == "dir"
     end
   end

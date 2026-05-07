@@ -13,17 +13,17 @@ describe "Kernel.lambda" do
 
   it "creates a lambda-style Proc if given a literal block" do
     l = lambda { 42 }
-    l.lambda?.should be_true
+    l.lambda?.should == true
   end
 
   it "creates a lambda-style Proc if given a literal block via #send" do
     l = send(:lambda) { 42 }
-    l.lambda?.should be_true
+    l.lambda?.should == true
   end
 
   it "creates a lambda-style Proc if given a literal block via #__send__" do
     l = __send__(:lambda) { 42 }
-    l.lambda?.should be_true
+    l.lambda?.should == true
   end
 
   it "checks the arity of the call when no args are specified" do
@@ -79,7 +79,7 @@ describe "Kernel.lambda" do
       @reached_end_of_method = true
     end
     test
-    @reached_end_of_method.should be_true
+    @reached_end_of_method.should == true
   end
 
   it "allows long returns to flow through it" do

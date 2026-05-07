@@ -19,7 +19,7 @@ describe :sizedqueue_max=, shared: true do
     q.enq 2
     q.enq 3
     q.max = 2
-    (q.size > q.max).should be_true
+    (q.size > q.max).should == true
     q.deq.should == 1
     q.deq.should == 2
     q.deq.should == 3

@@ -451,7 +451,7 @@ describe "CApiNumericSpecs" do
       obj = mock("rb_num_coerce_relop")
       obj.should_receive(:coerce).with(2).and_return([1, 2])
 
-      @s.rb_num_coerce_relop(2, obj, :<).should be_true
+      @s.rb_num_coerce_relop(2, obj, :<).should == true
     end
 
     it "calls the specified method on the first argument returned by #coerce" do

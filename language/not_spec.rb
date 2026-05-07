@@ -7,8 +7,8 @@ describe "The not keyword" do
   end
 
   it "negates a `false' value" do
-    (not false).should be_true
-    (not nil).should be_true
+    (not false).should == true
+    (not nil).should == true
   end
 
   it "accepts an argument" do
@@ -20,11 +20,11 @@ describe "The not keyword" do
   end
 
   it "returns true if the argument is false" do
-    (not(false)).should be_true
+    (not(false)).should == true
   end
 
   it "returns true if the argument is nil" do
-    (not(nil)).should be_true
+    (not(nil)).should == true
   end
 end
 
@@ -35,13 +35,13 @@ describe "The `!' keyword" do
   end
 
   it "negates a `false' value" do
-    (!false).should be_true
-    (!nil).should be_true
+    (!false).should == true
+    (!nil).should == true
   end
 
   it "doubled turns a truthful object into `true'" do
-    (!!true).should be_true
-    (!!'true').should be_true
+    (!!true).should == true
+    (!!'true').should == true
   end
 
   it "doubled turns a not truthful object into `false'" do

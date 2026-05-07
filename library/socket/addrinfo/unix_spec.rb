@@ -62,7 +62,7 @@ describe "Addrinfo#unix?" do
       end
 
       it "returns true" do
-        @addrinfo.unix?.should be_true
+        @addrinfo.unix?.should == true
       end
     end
   end

@@ -124,7 +124,7 @@ describe "Module#module_function with specific method names" do
     m = Module.new do
       module_function :require
     end
-    m.respond_to?(:require).should be_true
+    m.respond_to?(:require).should == true
   end
 
   it "creates Module methods that super up the singleton class of the module" do

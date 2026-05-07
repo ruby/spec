@@ -65,8 +65,8 @@ describe "Integer#fdiv" do
   end
 
   it "returns NaN when the argument is NaN" do
-    -1.fdiv(nan_value).nan?.should be_true
-    1.fdiv(nan_value).nan?.should be_true
+    -1.fdiv(nan_value).nan?.should == true
+    1.fdiv(nan_value).nan?.should == true
   end
 
   it "returns Infinity when the argument is 0" do

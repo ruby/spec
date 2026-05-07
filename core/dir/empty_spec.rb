@@ -12,7 +12,7 @@ describe "Dir.empty?" do
 
   it "returns true for empty directories" do
     result = Dir.empty? @empty_dir
-    result.should be_true
+    result.should == true
   end
 
   it "returns false for non-empty directories" do

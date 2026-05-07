@@ -36,7 +36,7 @@ describe "BasicObject#equal?" do
     # same objects, overriding == to return false
     o3 = mock("object")
     o3.stub!(:==).and_return(false)
-    o3.equal?(o3).should be_true
+    o3.equal?(o3).should == true
   end
 
   it "is unaffected by overriding eql?" do
@@ -49,6 +49,6 @@ describe "BasicObject#equal?" do
     # same objects, overriding eql? to return false
     o3 = mock("object")
     o3.stub!(:eql?).and_return(false)
-    o3.equal?(o3).should be_true
+    o3.equal?(o3).should == true
   end
 end

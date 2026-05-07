@@ -8,7 +8,7 @@ describe "IO::Buffer#shared?" do
 
   it "is true for a buffer created with SHARED flag" do
     @buffer = IO::Buffer.new(12, IO::Buffer::INTERNAL | IO::Buffer::SHARED)
-    @buffer.shared?.should be_true
+    @buffer.shared?.should == true
   end
 
   it "is true for a non-private buffer created with .map" do
@@ -16,7 +16,7 @@ describe "IO::Buffer#shared?" do
     File.copy_stream(fixture(__dir__, "read_text.txt"), path)
     file = File.open(path, "r+")
     @buffer = IO::Buffer.map(file)
-    @buffer.shared?.should be_true
+    @buffer.shared?.should == true
   ensure
     @buffer.free
     file.close

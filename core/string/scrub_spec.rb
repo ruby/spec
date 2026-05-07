@@ -146,7 +146,7 @@ describe "String#scrub!" do
     input = "a"
     input.freeze
     input.scrub!
-    input.frozen?.should be_true
+    input.frozen?.should == true
   end
 
   it "preserves the instance variables of already valid strings" do

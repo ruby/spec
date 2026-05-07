@@ -11,7 +11,7 @@ describe :syslog_reopen, shared: true do
     it "reopens the log" do
       Syslog.open
       -> { Syslog.send(@method)}.should_not raise_error
-      Syslog.opened?.should be_true
+      Syslog.opened?.should == true
       Syslog.close
     end
 
@@ -26,7 +26,7 @@ describe :syslog_reopen, shared: true do
         s.ident.should == "rubyspec"
         s.options.should == 3
         s.facility.should == Syslog::LOG_USER
-        s.opened?.should be_true
+        s.opened?.should == true
       end
       Syslog.opened?.should == false
     end

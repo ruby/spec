@@ -112,7 +112,7 @@ describe "Proc#curry with arity argument" do
 
   # [ruby-core:24127]
   it "retains the lambda-ness of the Proc on which its called" do
-    @lambda_add.curry(3).lambda?.should be_true
+    @lambda_add.curry(3).lambda?.should == true
     @proc_add.curry(3).lambda?.should == false
   end
 

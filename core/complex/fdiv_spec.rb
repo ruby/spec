@@ -20,26 +20,26 @@ describe "Complex#fdiv" do
   end
 
   it "sets the real part to NaN if self's real part is NaN" do
-    Complex(nan_value).fdiv(2).real.nan?.should be_true
+    Complex(nan_value).fdiv(2).real.nan?.should == true
   end
 
   it "sets the imaginary part to NaN if self's imaginary part is NaN" do
-    Complex(2, nan_value).fdiv(2).imag.nan?.should be_true
+    Complex(2, nan_value).fdiv(2).imag.nan?.should == true
   end
 
   it "sets the real and imaginary part to NaN if self's real and imaginary parts are NaN" do
-    Complex(nan_value, nan_value).fdiv(2).imag.nan?.should be_true
-    Complex(nan_value, nan_value).fdiv(2).real.nan?.should be_true
+    Complex(nan_value, nan_value).fdiv(2).imag.nan?.should == true
+    Complex(nan_value, nan_value).fdiv(2).real.nan?.should == true
   end
 
   it "sets the real and imaginary part to NaN if self's real part and the argument are both NaN" do
-    Complex(nan_value, 2).fdiv(nan_value).imag.nan?.should be_true
-    Complex(nan_value, 2).fdiv(nan_value).real.nan?.should be_true
+    Complex(nan_value, 2).fdiv(nan_value).imag.nan?.should == true
+    Complex(nan_value, 2).fdiv(nan_value).real.nan?.should == true
   end
 
   it "sets the real and imaginary part to NaN if self's real part, self's imaginary part, and the argument are NaN" do
-    Complex(nan_value, nan_value).fdiv(nan_value).imag.nan?.should be_true
-    Complex(nan_value, nan_value).fdiv(nan_value).real.nan?.should be_true
+    Complex(nan_value, nan_value).fdiv(nan_value).imag.nan?.should == true
+    Complex(nan_value, nan_value).fdiv(nan_value).real.nan?.should == true
   end
 
   it "sets the real part to Infinity if self's real part is Infinity" do
@@ -58,8 +58,8 @@ describe "Complex#fdiv" do
   end
 
   it "sets the real part to NaN and the imaginary part to NaN if self's imaginary part, self's real part, and the argument are Infinity" do
-    Complex(infinity_value, infinity_value).fdiv(infinity_value).real.nan?.should be_true
-    Complex(infinity_value, infinity_value).fdiv(infinity_value).imag.nan?.should be_true
+    Complex(infinity_value, infinity_value).fdiv(infinity_value).real.nan?.should == true
+    Complex(infinity_value, infinity_value).fdiv(infinity_value).imag.nan?.should == true
   end
 end
 

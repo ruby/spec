@@ -14,7 +14,7 @@ describe "Delegator when frozen" do
   end
 
   it "is frozen" do
-    @delegate.frozen?.should be_true
+    @delegate.frozen?.should == true
   end
 
   it "is not writable" do
@@ -22,7 +22,7 @@ describe "Delegator when frozen" do
   end
 
   it "creates a frozen clone" do
-    @delegate.clone.frozen?.should be_true
+    @delegate.clone.frozen?.should == true
   end
 
   it "creates an unfrozen dup" do

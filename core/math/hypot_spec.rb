@@ -20,9 +20,9 @@ describe "Math.hypot" do
   end
 
   it "returns NaN given NaN" do
-    Math.hypot(nan_value, 0).nan?.should be_true
-    Math.hypot(0, nan_value).nan?.should be_true
-    Math.hypot(nan_value, nan_value).nan?.should be_true
+    Math.hypot(nan_value, 0).nan?.should == true
+    Math.hypot(0, nan_value).nan?.should == true
+    Math.hypot(nan_value, nan_value).nan?.should == true
   end
 
   it "raises a TypeError if the argument is nil" do

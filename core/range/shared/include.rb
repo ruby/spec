@@ -5,8 +5,8 @@ require_relative '../fixtures/classes'
 describe :range_include, shared: true do
   describe "on string elements" do
     it "returns true if other is matched by element.succ" do
-      ('a'..'c').send(@method, 'b').should be_true
-      ('a'...'c').send(@method, 'b').should be_true
+      ('a'..'c').send(@method, 'b').should == true
+      ('a'...'c').send(@method, 'b').should == true
     end
 
     it "returns false if other is not matched by element.succ" do
@@ -26,11 +26,11 @@ describe :range_include, shared: true do
       end
 
       it "returns true if other is equal as first element" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should == true
       end
 
       it "returns true if other is matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should == true
       end
 
       it "returns false if other is not matched by element.succ" do
@@ -56,11 +56,11 @@ describe :range_include, shared: true do
       end
 
       it "returns true if other is equal as first element" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(1)).should == true
       end
 
       it "returns true if other is matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should be_true
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(10)).should == true
       end
 
       it "returns false if other is not matched by element.succ" do

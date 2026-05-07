@@ -17,7 +17,7 @@ describe "Encoding.list" do
   end
 
   it "includes the default external encoding" do
-    Encoding.list.include?(Encoding.default_external).should be_true
+    Encoding.list.include?(Encoding.default_external).should == true
   end
 
   it "does not include any alias names" do
@@ -28,7 +28,7 @@ describe "Encoding.list" do
 
   it "includes all aliased encodings" do
     Encoding.aliases.values.each do |enc_alias|
-      Encoding.list.include?(Encoding.find(enc_alias)).should be_true
+      Encoding.list.include?(Encoding.find(enc_alias)).should == true
     end
   end
 

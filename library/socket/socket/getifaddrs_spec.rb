@@ -51,7 +51,7 @@ describe 'Socket.getifaddrs' do
       @addrs.all? do |addr|
         addr.should.instance_of?(Addrinfo)
         true
-      end.should be_true
+      end.should == true
     end
 
     it 'has an address family' do
@@ -59,7 +59,7 @@ describe 'Socket.getifaddrs' do
         addr.afamily.should be_kind_of(Integer)
         addr.afamily.should_not == Socket::AF_UNSPEC
         true
-      end.should be_true
+      end.should == true
     end
   end
 
@@ -73,7 +73,7 @@ describe 'Socket.getifaddrs' do
         @addrs.all? do |addr|
           addr.should.instance_of?(Addrinfo)
           true
-        end.should be_true
+        end.should == true
       end
 
       it 'has an address family' do
@@ -81,7 +81,7 @@ describe 'Socket.getifaddrs' do
           addr.afamily.should be_kind_of(Integer)
           addr.afamily.should_not == Socket::AF_UNSPEC
           true
-        end.should be_true
+        end.should == true
       end
     end
 
@@ -94,7 +94,7 @@ describe 'Socket.getifaddrs' do
         @addrs.all? do |addr|
           addr.should.instance_of?(Addrinfo)
           true
-        end.should be_true
+        end.should == true
       end
 
       it 'has an address family' do
@@ -102,14 +102,14 @@ describe 'Socket.getifaddrs' do
           addr.afamily.should be_kind_of(Integer)
           addr.afamily.should_not == Socket::AF_UNSPEC
           true
-        end.should be_true
+        end.should == true
       end
 
       it 'has an IP address' do
         @addrs.all? do |addr|
           addr.ip_address.should.instance_of?(String)
           true
-        end.should be_true
+        end.should == true
       end
     end
   end

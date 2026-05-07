@@ -56,7 +56,7 @@ describe :string_codepoints, shared: true do
 
   it "is synonymous with #bytes for Strings which are single-byte optimizable" do
     s = "(){}".encode('ascii')
-    s.ascii_only?.should be_true
+    s.ascii_only?.should == true
     s.send(@method).to_a.should == s.bytes.to_a
   end
 

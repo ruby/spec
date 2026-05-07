@@ -29,7 +29,7 @@ describe "Encoding#names" do
       e = Encoding.find(name) or next
       aliases = Encoding.aliases.select{|a,n| n == name}.keys
       names = e.names
-      aliases.each {|a| names.include?(a).should be_true}
+      aliases.each {|a| names.include?(a).should == true}
     end
   end
 end

@@ -31,7 +31,7 @@ describe "StringScanner#matched?" do
 
   it "returns true if the last match was successful" do
     @s.match?(/\w+/)
-    @s.matched?.should be_true
+    @s.matched?.should == true
   end
 
   it "returns false if there's no match" do

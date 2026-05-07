@@ -53,7 +53,7 @@ describe :string_unpack_float_le, shared: true do
 
   it "decodes NaN" do
     # mumble mumble NaN mumble https://bugs.ruby-lang.org/issues/5884
-    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should be_true
+    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should == true
   end
 
   it "raise ArgumentError for NULL bytes between directives" do
@@ -121,7 +121,7 @@ describe :string_unpack_float_be, shared: true do
 
   it "decodes NaN" do
     # mumble mumble NaN mumble https://bugs.ruby-lang.org/issues/5884
-    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should be_true
+    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should == true
   end
 
   it "raise ArgumentError for NULL bytes between directives" do
@@ -192,7 +192,7 @@ describe :string_unpack_double_le, shared: true do
 
   it "decodes NaN" do
     # mumble mumble NaN mumble https://bugs.ruby-lang.org/issues/5884
-    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should be_true
+    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should == true
   end
 
   it "raise ArgumentError for NULL bytes between directives" do
@@ -262,7 +262,7 @@ describe :string_unpack_double_be, shared: true do
 
   it "decodes NaN" do
     # mumble mumble NaN mumble https://bugs.ruby-lang.org/issues/5884
-    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should be_true
+    [nan_value].pack(unpack_format).unpack(unpack_format).first.nan?.should == true
   end
 
   it "raise ArgumentError for NULL bytes between directives" do

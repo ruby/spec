@@ -26,7 +26,7 @@ describe :array_pack_unicode, shared: true do
   it "constructs strings with valid encodings" do
     str = [0x85].pack("U*")
     str.should == "\xc2\x85"
-    str.valid_encoding?.should be_true
+    str.valid_encoding?.should == true
   end
 
   it "encodes values larger than UTF-8 max codepoints" do

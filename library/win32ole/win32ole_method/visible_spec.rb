@@ -13,7 +13,7 @@ platform_is :windows do
     end
 
     it "returns true for Shell Control's 'BrowseForFolder' method" do
-      @m_browse_for_folder.visible?.should be_true
+      @m_browse_for_folder.visible?.should == true
     end
 
   end

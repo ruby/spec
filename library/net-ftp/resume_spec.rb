@@ -9,7 +9,7 @@ ruby_version_is ""..."4.1" do
       ftp.resume.should == false
 
       ftp.resume = true
-      ftp.resume.should be_true
+      ftp.resume.should == true
     end
   end
 
@@ -17,7 +17,7 @@ ruby_version_is ""..."4.1" do
     it "sets self to resume uploads/downloads when set to true" do
       ftp = Net::FTP.new
       ftp.resume = true
-      ftp.resume.should be_true
+      ftp.resume.should == true
 
       ftp.resume = false
       ftp.resume.should == false

@@ -9,6 +9,6 @@ describe "ThreadGroup#enclosed?" do
   it "returns true when a ThreadGroup is enclosed" do
     thread_group = ThreadGroup.new
     thread_group.enclose
-    thread_group.enclosed?.should be_true
+    thread_group.enclosed?.should == true
   end
 end

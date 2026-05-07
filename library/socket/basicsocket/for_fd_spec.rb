@@ -33,6 +33,6 @@ describe "BasicSocket.for_fd" do
     socket2 = Socket.for_fd(@socket1.fileno)
     socket2.autoclose = false
 
-    socket2.binmode?.should be_true
+    socket2.binmode?.should == true
   end
 end

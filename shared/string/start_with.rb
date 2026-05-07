@@ -60,7 +60,7 @@ describe :start_with, shared: true do
 
   it "sets Regexp.last_match if it returns true" do
     regexp = /test-(\d+)/
-    "test-1337".send(@method).start_with?(regexp).should be_true
+    "test-1337".send(@method).start_with?(regexp).should == true
     Regexp.last_match.should_not be_nil
     Regexp.last_match[1].should == "1337"
     $1.should == "1337"

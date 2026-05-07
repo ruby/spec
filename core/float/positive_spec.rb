@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe "Float#positive?" do
   describe "on positive numbers" do
     it "returns true" do
-      0.1.positive?.should be_true
+      0.1.positive?.should == true
     end
   end
 

@@ -62,7 +62,7 @@ describe 'TCPSocket#initialize' do
 
       it 'set the socket to binmode' do
         @client = TCPSocket.new(ip_address, @port)
-        @client.binmode?.should be_true
+        @client.binmode?.should == true
       end
 
       it 'connects to the right address' do

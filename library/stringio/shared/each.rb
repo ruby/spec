@@ -86,7 +86,7 @@ describe :stringio_each_no_arguments, shared: true do
 
   it "returns an Enumerator when passed no block" do
     enum = @io.send(@method)
-    enum.instance_of?(Enumerator).should be_true
+    enum.instance_of?(Enumerator).should == true
 
     seen = []
     enum.each { |b| seen << b }

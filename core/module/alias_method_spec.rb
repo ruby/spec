@@ -130,42 +130,42 @@ describe "Module#alias_method" do
 
     it "keeps initialize private when aliasing" do
       @class.make_alias(:initialize, :public_one)
-      @class.private_instance_methods.include?(:initialize).should be_true
+      @class.private_instance_methods.include?(:initialize).should == true
 
       @subclass.make_alias(:initialize, :public_one)
-      @subclass.private_instance_methods.include?(:initialize).should be_true
+      @subclass.private_instance_methods.include?(:initialize).should == true
     end
 
     it "keeps initialize_copy private when aliasing" do
       @class.make_alias(:initialize_copy, :public_one)
-      @class.private_instance_methods.include?(:initialize_copy).should be_true
+      @class.private_instance_methods.include?(:initialize_copy).should == true
 
       @subclass.make_alias(:initialize_copy, :public_one)
-      @subclass.private_instance_methods.include?(:initialize_copy).should be_true
+      @subclass.private_instance_methods.include?(:initialize_copy).should == true
     end
 
     it "keeps initialize_clone private when aliasing" do
       @class.make_alias(:initialize_clone, :public_one)
-      @class.private_instance_methods.include?(:initialize_clone).should be_true
+      @class.private_instance_methods.include?(:initialize_clone).should == true
 
       @subclass.make_alias(:initialize_clone, :public_one)
-      @subclass.private_instance_methods.include?(:initialize_clone).should be_true
+      @subclass.private_instance_methods.include?(:initialize_clone).should == true
     end
 
     it "keeps initialize_dup private when aliasing" do
       @class.make_alias(:initialize_dup, :public_one)
-      @class.private_instance_methods.include?(:initialize_dup).should be_true
+      @class.private_instance_methods.include?(:initialize_dup).should == true
 
       @subclass.make_alias(:initialize_dup, :public_one)
-      @subclass.private_instance_methods.include?(:initialize_dup).should be_true
+      @subclass.private_instance_methods.include?(:initialize_dup).should == true
     end
 
     it "keeps respond_to_missing? private when aliasing" do
       @class.make_alias(:respond_to_missing?, :public_one)
-      @class.private_instance_methods.include?(:respond_to_missing?).should be_true
+      @class.private_instance_methods.include?(:respond_to_missing?).should == true
 
       @subclass.make_alias(:respond_to_missing?, :public_one)
-      @subclass.private_instance_methods.include?(:respond_to_missing?).should be_true
+      @subclass.private_instance_methods.include?(:respond_to_missing?).should == true
     end
   end
 end

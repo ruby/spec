@@ -17,6 +17,6 @@ describe "Net::HTTPHeader#chunked?" do
     @headers.chunked?.should == false
 
     @headers["Transfer-Encoding"] = "chunked"
-    @headers.chunked?.should be_true
+    @headers.chunked?.should == true
   end
 end

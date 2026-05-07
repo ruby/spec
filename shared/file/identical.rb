@@ -44,8 +44,8 @@ describe :file_identical, shared: true do
   end
 
   it "returns true if both named files are identical" do
-    @object.send(@method, @file1, @file1).should be_true
-    @object.send(@method, @link, @link).should be_true
+    @object.send(@method, @file1, @file1).should == true
+    @object.send(@method, @link, @link).should == true
     @object.send(@method, @file1, @file2).should == false
   end
 end

@@ -126,7 +126,7 @@ describe "C-API IO function" do
     it "closes an IO object" do
       @io.closed?.should == false
       @o.rb_io_close(@io)
-      @io.closed?.should be_true
+      @io.closed?.should == true
     end
   end
 
@@ -157,7 +157,7 @@ describe "C-API IO function" do
       it "returns true when nonblock flag is set" do
         require 'io/nonblock'
         @o.rb_io_set_nonblock(@io)
-        @io.nonblock?.should be_true
+        @io.nonblock?.should == true
       end
     end
   end
@@ -197,7 +197,7 @@ describe "C-API IO function" do
 
     it "sets binmode" do
       @o.rb_io_binmode(@io)
-      @io.binmode?.should be_true
+      @io.binmode?.should == true
     end
   end
 end
@@ -340,7 +340,7 @@ describe "C-API IO function" do
         end
 
         @o.errno = Errno::EAGAIN.new.errno
-        @o.rb_io_wait_readable(@r_io, true).should be_true
+        @o.rb_io_wait_readable(@r_io, true).should == true
         @o.instance_variable_get(:@read_data).should == "rb_io_wait_re"
 
         thr.join
@@ -684,7 +684,7 @@ describe "rb_fd_fix_cloexec" do
 
   it "sets close_on_exec on the IO" do
     @o.rb_fd_fix_cloexec(@io)
-    @io.close_on_exec?.should be_true
+    @io.close_on_exec?.should == true
   end
 
 end
@@ -705,7 +705,7 @@ describe "rb_cloexec_open" do
 
   it "sets close_on_exec on the newly-opened IO" do
     @io = @o.rb_cloexec_open(@name, 0, 0)
-    @io.close_on_exec?.should be_true
+    @io.close_on_exec?.should == true
   end
 end
 
@@ -750,14 +750,14 @@ describe "rb_cloexec_fcntl_dupfd" do
 
   it "duplicates a file descriptor and sets close_on_exec" do
     @dup = @o.rb_cloexec_fcntl_dupfd(@io, 3)
-    @dup.close_on_exec?.should be_true
+    @dup.close_on_exec?.should == true
     @dup.fileno.should_not == @io.fileno
   end
 
   it "returns a file descriptor greater than or equal to minfd" do
     @dup = @o.rb_cloexec_fcntl_dupfd(@io, 100)
     @dup.fileno.should >= 100
-    @dup.close_on_exec?.should be_true
+    @dup.close_on_exec?.should == true
   end
 end
 

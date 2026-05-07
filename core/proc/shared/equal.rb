@@ -8,24 +8,24 @@ describe :proc_equal, shared: true do
 
   it "returns true if self and other are the same object" do
     p = proc { :foo }
-    p.send(@method, p).should be_true
+    p.send(@method, p).should == true
 
     p = Proc.new { :foo }
-    p.send(@method, p).should be_true
+    p.send(@method, p).should == true
 
     p = -> { :foo }
-    p.send(@method, p).should be_true
+    p.send(@method, p).should == true
   end
 
   it "returns true if other is a dup of the original" do
     p = proc { :foo }
-    p.send(@method, p.dup).should be_true
+    p.send(@method, p.dup).should == true
 
     p = Proc.new { :foo }
-    p.send(@method, p.dup).should be_true
+    p.send(@method, p.dup).should == true
 
     p = -> { :foo }
-    p.send(@method, p.dup).should be_true
+    p.send(@method, p.dup).should == true
   end
 
   # identical here means the same method invocation.

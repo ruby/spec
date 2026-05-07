@@ -27,7 +27,7 @@ describe :numeric_rect, shared: true do
   it "returns self as the first element" do
     @numbers.each do |number|
       if Float === number and number.nan?
-        number.send(@method).first.nan?.should be_true
+        number.send(@method).first.nan?.should == true
       else
         number.send(@method).first.should == number
       end

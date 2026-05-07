@@ -6,7 +6,7 @@ describe "File.absolute_path?" do
   end
 
   it "returns true if it's an absolute pathname" do
-    File.absolute_path?(@abs).should be_true
+    File.absolute_path?(@abs).should == true
   end
 
   it "returns false if it's a relative path" do
@@ -31,21 +31,21 @@ describe "File.absolute_path?" do
   it "calls #to_path on its argument" do
     mock = mock_to_path(File.expand_path(__FILE__))
 
-    File.absolute_path?(mock).should be_true
+    File.absolute_path?(mock).should == true
   end
 
   platform_is_not :windows do
     it "takes into consideration the platform's root" do
       File.absolute_path?("C:\\foo\\bar").should == false
       File.absolute_path?("C:/foo/bar").should == false
-      File.absolute_path?("/foo/bar\\baz").should be_true
+      File.absolute_path?("/foo/bar\\baz").should == true
     end
   end
 
   platform_is :windows do
     it "takes into consideration the platform path separator(s)" do
-      File.absolute_path?("C:\\foo\\bar").should be_true
-      File.absolute_path?("C:/foo/bar").should be_true
+      File.absolute_path?("C:\\foo\\bar").should == true
+      File.absolute_path?("C:/foo/bar").should == true
       File.absolute_path?("/foo/bar\\baz").should == false
     end
   end

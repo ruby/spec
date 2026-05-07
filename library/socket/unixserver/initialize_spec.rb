@@ -17,7 +17,7 @@ describe 'UNIXServer#initialize' do
   end
 
   it 'sets the socket to binmode' do
-    @server.binmode?.should be_true
+    @server.binmode?.should == true
   end
 
   it 'raises Errno::EADDRINUSE when the socket is already in use' do

@@ -19,7 +19,7 @@ describe "Math.ldexp" do
   end
 
   it "returns NaN given NaN" do
-    Math.ldexp(nan_value, 0).nan?.should be_true
+    Math.ldexp(nan_value, 0).nan?.should == true
   end
 
   it "raises RangeError if NaN is given as the second arg" do

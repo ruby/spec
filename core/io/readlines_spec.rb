@@ -237,7 +237,7 @@ describe "IO.readlines" do
   it "encodes lines using the default external encoding" do
     Encoding.default_external = Encoding::UTF_8
     lines = IO.readlines(@name)
-    lines.all? { |s| s.encoding == Encoding::UTF_8 }.should be_true
+    lines.all? { |s| s.encoding == Encoding::UTF_8 }.should == true
   end
 
   it "encodes lines using the default internal encoding, when set" do
@@ -245,13 +245,13 @@ describe "IO.readlines" do
     Encoding.default_internal = Encoding::UTF_16
     suppress_warning {$/ = $/.encode Encoding::UTF_16}
     lines = IO.readlines(@name)
-    lines.all? { |s| s.encoding == Encoding::UTF_16 }.should be_true
+    lines.all? { |s| s.encoding == Encoding::UTF_16 }.should == true
   end
 
   it "ignores the default internal encoding if the external encoding is BINARY" do
     Encoding.default_external = Encoding::BINARY
     Encoding.default_internal = Encoding::UTF_8
     lines = IO.readlines(@name)
-    lines.all? { |s| s.encoding == Encoding::BINARY }.should be_true
+    lines.all? { |s| s.encoding == Encoding::BINARY }.should == true
   end
 end

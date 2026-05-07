@@ -247,6 +247,6 @@ describe "Array#sort!" do
       ary.sort!{|x,y| break if x==i; x<=>y}
       ary
     }
-    partially_sorted.any?{|ary| ary != [1, 2, 3, 4, 5]}.should be_true
+    partially_sorted.any?{|ary| ary != [1, 2, 3, 4, 5]}.should == true
   end
 end

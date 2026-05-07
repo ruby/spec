@@ -4,12 +4,12 @@ require 'matrix'
 
 describe "Matrix#real?" do
   it "returns true for matrices with all real entries" do
-    Matrix[ [1,   2], [3, 4] ].real?.should be_true
-    Matrix[ [1.9, 2], [3, 4] ].real?.should be_true
+    Matrix[ [1,   2], [3, 4] ].real?.should == true
+    Matrix[ [1.9, 2], [3, 4] ].real?.should == true
   end
 
   it "returns true for empty matrices" do
-    Matrix.empty.real?.should be_true
+    Matrix.empty.real?.should == true
   end
 
   it "returns false if one element is a Complex" do

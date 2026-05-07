@@ -27,9 +27,9 @@ describe :kernel_float, shared: true do
 
   it "returns the identical NaN for NaN" do
     nan = nan_value
-    nan.nan?.should be_true
+    nan.nan?.should == true
     nan2 = @object.send(:Float, nan)
-    nan2.nan?.should be_true
+    nan2.nan?.should == true
     nan2.should equal(nan)
   end
 
@@ -344,7 +344,7 @@ describe :kernel_float, shared: true do
     nan = nan_value
     (nan_to_f = mock('NaN')).should_receive(:to_f).once.and_return(nan)
     nan2 = @object.send(:Float, nan_to_f)
-    nan2.nan?.should be_true
+    nan2.nan?.should == true
     nan2.should equal(nan)
   end
 

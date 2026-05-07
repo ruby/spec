@@ -19,7 +19,7 @@ describe "A lambda literal -> () { }" do
   end
 
   it "returns a lambda" do
-    -> { }.lambda?.should be_true
+    -> { }.lambda?.should == true
   end
 
   it "may include a rescue clause" do
@@ -325,7 +325,7 @@ describe "A lambda expression 'lambda { ... }'" do
   end
 
   it "returns a lambda" do
-    lambda { }.lambda?.should be_true
+    lambda { }.lambda?.should == true
   end
 
   it "requires a block" do

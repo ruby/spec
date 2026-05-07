@@ -44,7 +44,7 @@ describe "Numeric#polar" do
 
   it "returns [NaN, NaN] if self is NaN" do
     nan_value.polar.size.should == 2
-    nan_value.polar.first.nan?.should be_true
-    nan_value.polar.last.nan?.should be_true
+    nan_value.polar.first.nan?.should == true
+    nan_value.polar.last.nan?.should == true
   end
 end

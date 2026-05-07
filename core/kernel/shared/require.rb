@@ -2,19 +2,19 @@ describe :kernel_require_basic, shared: true do
   describe "(path resolution)" do
     it "loads an absolute path" do
       path = File.expand_path "load_fixture.rb", CODE_LOADING_DIR
-      @object.send(@method, path).should be_true
+      @object.send(@method, path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
     it "loads a non-canonical absolute path" do
       path = File.join CODE_LOADING_DIR, "..", "code", "load_fixture.rb"
-      @object.send(@method, path).should be_true
+      @object.send(@method, path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
     it "loads a file defining many methods" do
       path = File.expand_path "methods_fixture.rb", CODE_LOADING_DIR
-      @object.send(@method, path).should be_true
+      @object.send(@method, path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -52,7 +52,7 @@ describe :kernel_require_basic, shared: true do
       path = File.expand_path "load_fixture.rb", CODE_LOADING_DIR
       name = mock("load_fixture.rb mock")
       name.should_receive(:to_str).and_return(path)
-      @object.send(@method, name).should be_true
+      @object.send(@method, name).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -92,7 +92,7 @@ describe :kernel_require_basic, shared: true do
       name.stub!(:to_path).and_return("load_fixture.rb")
       $LOAD_PATH << "."
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, name).should be_true
+        @object.send(@method, name).should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
@@ -101,7 +101,7 @@ describe :kernel_require_basic, shared: true do
       path = File.expand_path "load_fixture.rb", CODE_LOADING_DIR
       str = mock("load_fixture.rb mock")
       str.should_receive(:to_path).and_return(path)
-      @object.send(@method, str).should be_true
+      @object.send(@method, str).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -111,21 +111,21 @@ describe :kernel_require_basic, shared: true do
       to_path = mock("load_fixture_rb #to_path mock")
       name.should_receive(:to_path).and_return(to_path)
       to_path.should_receive(:to_str).and_return(path)
-      @object.send(@method, name).should be_true
+      @object.send(@method, name).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
     # "http://redmine.ruby-lang.org/issues/show/2578"
     it "loads a ./ relative path from the current working directory with empty $LOAD_PATH" do
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, "./load_fixture.rb").should be_true
+        @object.send(@method, "./load_fixture.rb").should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
 
     it "loads a ../ relative path from the current working directory with empty $LOAD_PATH" do
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, "../code/load_fixture.rb").should be_true
+        @object.send(@method, "../code/load_fixture.rb").should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
@@ -133,7 +133,7 @@ describe :kernel_require_basic, shared: true do
     it "loads a ./ relative path from the current working directory with non-empty $LOAD_PATH" do
       $LOAD_PATH << "an_irrelevant_dir"
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, "./load_fixture.rb").should be_true
+        @object.send(@method, "./load_fixture.rb").should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
@@ -141,7 +141,7 @@ describe :kernel_require_basic, shared: true do
     it "loads a ../ relative path from the current working directory with non-empty $LOAD_PATH" do
       $LOAD_PATH << "an_irrelevant_dir"
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, "../code/load_fixture.rb").should be_true
+        @object.send(@method, "../code/load_fixture.rb").should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
@@ -149,14 +149,14 @@ describe :kernel_require_basic, shared: true do
     it "loads a non-canonical path from the current working directory with non-empty $LOAD_PATH" do
       $LOAD_PATH << "an_irrelevant_dir"
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, "../code/../code/load_fixture.rb").should be_true
+        @object.send(@method, "../code/../code/load_fixture.rb").should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
 
     it "resolves a filename against $LOAD_PATH entries" do
       $LOAD_PATH << CODE_LOADING_DIR
-      @object.send(@method, "load_fixture.rb").should be_true
+      @object.send(@method, "load_fixture.rb").should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -164,13 +164,13 @@ describe :kernel_require_basic, shared: true do
       obj = mock("to_path")
       obj.should_receive(:to_path).at_least(:once).and_return(CODE_LOADING_DIR)
       $LOAD_PATH << obj
-      @object.send(@method, "load_fixture.rb").should be_true
+      @object.send(@method, "load_fixture.rb").should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
     it "does not require file twice after $LOAD_PATH change" do
       $LOAD_PATH << CODE_LOADING_DIR
-      @object.require("load_fixture.rb").should be_true
+      @object.require("load_fixture.rb").should == true
       $LOAD_PATH.push CODE_LOADING_DIR + "/gem"
       @object.require("load_fixture.rb").should == false
       ScratchPad.recorded.should == [:loaded]
@@ -194,7 +194,7 @@ describe :kernel_require_basic, shared: true do
 
     it "resolves a non-canonical path against $LOAD_PATH entries" do
       $LOAD_PATH << File.dirname(CODE_LOADING_DIR)
-      @object.send(@method, "code/../code/load_fixture.rb").should be_true
+      @object.send(@method, "code/../code/load_fixture.rb").should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -203,7 +203,7 @@ describe :kernel_require_basic, shared: true do
       sep = File::Separator + File::Separator
       path = ["..", "code", "load_fixture.rb"].join(sep)
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, path).should be_true
+        @object.send(@method, path).should == true
       end
       ScratchPad.recorded.should == [:loaded]
     end
@@ -214,7 +214,7 @@ describe :kernel_require, shared: true do
   describe "(path resolution)" do
     it "loads .rb file when passed absolute path without extension" do
       path = File.expand_path "load_fixture", CODE_LOADING_DIR
-      @object.send(@method, path).should be_true
+      @object.send(@method, path).should == true
       # This should _not_ be [:no_ext]
       ScratchPad.recorded.should == [:loaded]
     end
@@ -261,7 +261,7 @@ describe :kernel_require, shared: true do
     it "loads a file that recursively requires itself" do
       path = File.expand_path "recursive_require_fixture.rb", CODE_LOADING_DIR
       -> {
-        @object.require(path).should be_true
+        @object.require(path).should == true
       }.should complain(/circular require considered harmful/, verbose: true)
       ScratchPad.recorded.should == [:loaded]
     end
@@ -284,13 +284,13 @@ describe :kernel_require, shared: true do
     end
 
     it "loads a .rb extensioned file when a C-extension file exists on an earlier load path" do
-      @object.require("load_fixture").should be_true
+      @object.require("load_fixture").should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
     it "does not load a feature twice when $LOAD_PATH has been modified" do
       $LOAD_PATH.replace [CODE_LOADING_DIR]
-      @object.require("load_fixture").should be_true
+      @object.require("load_fixture").should == true
       $LOAD_PATH.replace [File.expand_path("b", CODE_LOADING_DIR), CODE_LOADING_DIR]
       @object.require("load_fixture").should == false
     end
@@ -310,7 +310,7 @@ describe :kernel_require, shared: true do
     it "loads a .rb extensioned file when passed a non-extensioned path" do
       path = File.expand_path "load_fixture", CODE_LOADING_DIR
       File.should.exist?(path)
-      @object.require(path).should be_true
+      @object.require(path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -320,7 +320,7 @@ describe :kernel_require, shared: true do
       $LOADED_FEATURES << File.expand_path("load_fixture.so", CODE_LOADING_DIR)
       $LOADED_FEATURES << File.expand_path("load_fixture.dll", CODE_LOADING_DIR)
       path = File.expand_path "load_fixture", CODE_LOADING_DIR
-      @object.require(path).should be_true
+      @object.require(path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -334,7 +334,7 @@ describe :kernel_require, shared: true do
     it "loads a .rb extensioned file when passed a non-.rb extensioned path" do
       path = File.expand_path "load_fixture.ext", CODE_LOADING_DIR
       File.should.exist?(path)
-      @object.require(path).should be_true
+      @object.require(path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -344,7 +344,7 @@ describe :kernel_require, shared: true do
       $LOADED_FEATURES << File.expand_path("load_fixture.ext.so", CODE_LOADING_DIR)
       $LOADED_FEATURES << File.expand_path("load_fixture.ext.dll", CODE_LOADING_DIR)
       path = File.expand_path "load_fixture.ext", CODE_LOADING_DIR
-      @object.require(path).should be_true
+      @object.require(path).should == true
       ScratchPad.recorded.should == [:loaded]
     end
 
@@ -362,7 +362,7 @@ describe :kernel_require, shared: true do
     end
 
     it "stores an absolute path" do
-      @object.require(@path).should be_true
+      @object.require(@path).should == true
       $LOADED_FEATURES.should include(@path)
     end
 
@@ -383,7 +383,7 @@ describe :kernel_require, shared: true do
         it "does not canonicalize the path and stores a path with symlinks" do
           symlink_path = "#{@symlink_to_code_dir}/load_fixture.rb"
           canonical_path = "#{CODE_LOADING_DIR}/load_fixture.rb"
-          @object.require(symlink_path).should be_true
+          @object.require(symlink_path).should == true
           ScratchPad.recorded.should == [:loaded]
 
           features = $LOADED_FEATURES.select { |path| path.end_with?('load_fixture.rb') }
@@ -393,13 +393,13 @@ describe :kernel_require, shared: true do
 
         it "stores the same path that __FILE__ returns in the required file" do
           symlink_path = "#{@symlink_to_code_dir}/load_fixture_and__FILE__.rb"
-          @object.require(symlink_path).should be_true
+          @object.require(symlink_path).should == true
           loaded_feature = $LOADED_FEATURES.last
           ScratchPad.recorded.should == [loaded_feature]
         end
 
         it "requires only once when a new matching file added to path" do
-          @object.require('load_fixture').should be_true
+          @object.require('load_fixture').should == true
           ScratchPad.recorded.should == [:loaded]
 
           symlink_to_code_dir_two = tmp("codesymlinktwo")
@@ -433,7 +433,7 @@ describe :kernel_require, shared: true do
 
         it "canonicalizes the entry in $LOAD_PATH but not the filename passed to #require" do
           $LOAD_PATH.unshift(@symlink_to_dir)
-          @object.require("symfile").should be_true
+          @object.require("symfile").should == true
           loaded_feature = "#{@dir}/symfile.rb"
           ScratchPad.recorded.should == [loaded_feature]
           $".last.should == loaded_feature
@@ -481,19 +481,19 @@ describe :kernel_require, shared: true do
     it "respects being replaced with a new array" do
       prev = $LOADED_FEATURES.dup
 
-      @object.require(@path).should be_true
+      @object.require(@path).should == true
       $LOADED_FEATURES.should include(@path)
 
       $LOADED_FEATURES.replace(prev)
 
       $LOADED_FEATURES.should_not include(@path)
-      @object.require(@path).should be_true
+      @object.require(@path).should == true
       $LOADED_FEATURES.should include(@path)
     end
 
     it "does not load twice the same file with and without extension" do
       $LOAD_PATH << CODE_LOADING_DIR
-      @object.require("load_fixture.rb").should be_true
+      @object.require("load_fixture.rb").should == true
       @object.require("load_fixture").should == false
     end
 
@@ -504,13 +504,13 @@ describe :kernel_require, shared: true do
 
       it "loads a .rb extensioned file when a non extensioned file is in $LOADED_FEATURES" do
         $LOAD_PATH << CODE_LOADING_DIR
-        @object.require("load_fixture").should be_true
+        @object.require("load_fixture").should == true
         ScratchPad.recorded.should == [:loaded]
       end
 
       it "loads a .rb extensioned file from a subdirectory" do
         $LOAD_PATH << File.dirname(CODE_LOADING_DIR)
-        @object.require("code/load_fixture").should be_true
+        @object.require("code/load_fixture").should == true
         ScratchPad.recorded.should == [:loaded]
       end
 
@@ -532,14 +532,14 @@ describe :kernel_require, shared: true do
 
     it "stores ../ relative paths as absolute paths" do
       Dir.chdir CODE_LOADING_DIR do
-        @object.require("../code/load_fixture.rb").should be_true
+        @object.require("../code/load_fixture.rb").should == true
       end
       $LOADED_FEATURES.should include(@path)
     end
 
     it "stores ./ relative paths as absolute paths" do
       Dir.chdir CODE_LOADING_DIR do
-        @object.require("./load_fixture.rb").should be_true
+        @object.require("./load_fixture.rb").should == true
       end
       $LOADED_FEATURES.should include(@path)
     end
@@ -549,20 +549,20 @@ describe :kernel_require, shared: true do
       sep = File::Separator + File::Separator
       path = ["..", "code", "load_fixture.rb"].join(sep)
       Dir.chdir CODE_LOADING_DIR do
-        @object.require(path).should be_true
+        @object.require(path).should == true
       end
       $LOADED_FEATURES.should include(@path)
     end
 
     it "expands absolute paths containing .." do
       path = File.join CODE_LOADING_DIR, "..", "code", "load_fixture.rb"
-      @object.require(path).should be_true
+      @object.require(path).should == true
       $LOADED_FEATURES.should include(@path)
     end
 
     it "adds the suffix of the resolved filename" do
       $LOAD_PATH << CODE_LOADING_DIR
-      @object.require("load_fixture").should be_true
+      @object.require("load_fixture").should == true
       $LOADED_FEATURES.should include(@path)
     end
 
@@ -602,13 +602,13 @@ describe :kernel_require, shared: true do
 
     it "does not load a file earlier on the $LOAD_PATH when other similar features were already loaded" do
       Dir.chdir CODE_LOADING_DIR do
-        @object.send(@method, "../code/load_fixture").should be_true
+        @object.send(@method, "../code/load_fixture").should == true
       end
       ScratchPad.recorded.should == [:loaded]
 
       $LOAD_PATH.unshift "#{CODE_LOADING_DIR}/b"
       # This loads because the above load was not on the $LOAD_PATH
-      @object.send(@method, "load_fixture").should be_true
+      @object.send(@method, "load_fixture").should == true
       ScratchPad.recorded.should == [:loaded, :loaded]
 
       $LOAD_PATH.unshift "#{CODE_LOADING_DIR}/c"
@@ -631,12 +631,12 @@ describe :kernel_require, shared: true do
 
     # "#3171"
     it "performs tilde expansion on a .rb file before storing paths in $LOADED_FEATURES" do
-      @object.require("~/load_fixture.rb").should be_true
+      @object.require("~/load_fixture.rb").should == true
       $LOADED_FEATURES.should include(@path)
     end
 
     it "performs tilde expansion on a non-extensioned file before storing paths in $LOADED_FEATURES" do
-      @object.require("~/load_fixture").should be_true
+      @object.require("~/load_fixture").should == true
       $LOADED_FEATURES.should include(@path)
     end
   end
@@ -694,7 +694,7 @@ describe :kernel_require, shared: true do
       t1.join
       t2.join
 
-      t1_res.should be_true
+      t1_res.should == true
       t2_res.should == false
 
       ScratchPad.recorded.should == [:con_pre, :con_post, :t2_post, :t1_post]
@@ -719,8 +719,8 @@ describe :kernel_require, shared: true do
       t1.join
       t2.join
 
-      t1_res.should be_true
-      t2_res.should be_true
+      t1_res.should == true
+      t2_res.should == true
 
       ScratchPad.recorded.should == [:con2_pre, :con3, :con2_post]
     end
@@ -759,7 +759,7 @@ describe :kernel_require, shared: true do
       t1.join
       t2.join
 
-      t2_res.should be_true
+      t2_res.should == true
 
       ScratchPad.recorded.should == [:con_pre, :con_pre, :con_post, :t2_post, :t1_post]
     end
@@ -808,7 +808,7 @@ describe :kernel_require, shared: true do
       t2.join
 
       t1_res.should == false
-      t2_res.should be_true
+      t2_res.should == true
 
       ScratchPad.recorded.should == [:con_pre, :con_pre, :con_post, :t2_post, :t1_post]
     end

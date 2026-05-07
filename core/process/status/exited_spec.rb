@@ -7,7 +7,7 @@ describe "Process::Status#exited?" do
     end
 
     it "returns true" do
-      $?.exited?.should be_true
+      $?.exited?.should == true
     end
   end
 
@@ -25,7 +25,7 @@ describe "Process::Status#exited?" do
 
     platform_is :windows do
       it "always returns true" do
-        $?.exited?.should be_true
+        $?.exited?.should == true
       end
     end
   end

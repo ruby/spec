@@ -16,7 +16,7 @@ describe "Thread#thread_variable?" do
 
   it "returns true if the thread variables contain 'key'" do
     @t.thread_variable_set(:a, 2)
-    @t.thread_variable?(:a).should be_true
+    @t.thread_variable?(:a).should == true
   end
 
   it "accepts String and Symbol keys interchangeably" do
@@ -25,15 +25,15 @@ describe "Thread#thread_variable?" do
 
     @t.thread_variable_set(:a, 49)
 
-    @t.thread_variable?('a').should be_true
-    @t.thread_variable?(:a).should be_true
+    @t.thread_variable?('a').should == true
+    @t.thread_variable?(:a).should == true
   end
 
   it "converts a key that is neither String nor Symbol with #to_str" do
     key = mock('key')
     key.should_receive(:to_str).and_return('a')
     @t.thread_variable_set(:a, 49)
-    @t.thread_variable?(key).should be_true
+    @t.thread_variable?(key).should == true
   end
 
   it "does not raise FrozenError if the thread is frozen" do

@@ -103,7 +103,7 @@ describe "C-API Thread function" do
 
   describe "ruby_native_thread_p" do
     it "returns non-zero for a ruby thread" do
-      @t.ruby_native_thread_p.should be_true
+      @t.ruby_native_thread_p.should == true
     end
 
     it "returns zero for a non ruby thread" do
@@ -128,7 +128,7 @@ describe "C-API Thread function" do
       thr.wakeup
 
       # Make sure it stopped and we got a proper value
-      thr.value.should be_true
+      thr.value.should == true
     end
 
     platform_is_not :windows do
@@ -159,7 +159,7 @@ describe "C-API Thread function" do
 
         going_to_block = true
         # Make sure it stopped and we got a proper value
-        @t.rb_thread_call_without_gvl.should be_true
+        @t.rb_thread_call_without_gvl.should == true
 
         interrupter.join
       end
@@ -181,14 +181,14 @@ describe "C-API Thread function" do
       thr.wakeup
 
       # Make sure it stopped and we got a proper value
-      thr.value.should be_true
+      thr.value.should == true
     end
   end
 
   ruby_version_is "4.0" do
     describe "ruby_thread_has_gvl_p" do
       it "returns true if the current thread has the GVL" do
-        @t.ruby_thread_has_gvl_p.should be_true
+        @t.ruby_thread_has_gvl_p.should == true
       end
     end
   end

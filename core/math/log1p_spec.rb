@@ -29,7 +29,7 @@ ruby_version_is "4.0" do
     end
 
     it "returns NaN given NaN" do
-      Math.log1p(nan_value).nan?.should be_true
+      Math.log1p(nan_value).nan?.should == true
     end
 
     it "raises a TypeError if the argument is nil" do

@@ -1,12 +1,12 @@
 describe :array_eql, shared: true do
   it "returns true if other is the same array" do
     a = [1]
-    a.send(@method, a).should be_true
+    a.send(@method, a).should == true
   end
 
   it "returns true if corresponding elements are #eql?" do
-    [].send(@method, []).should be_true
-    [1, 2, 3, 4].send(@method, [1, 2, 3, 4]).should be_true
+    [].send(@method, []).should == true
+    [1, 2, 3, 4].send(@method, [1, 2, 3, 4]).should == true
   end
 
   it "returns false if other is shorter than self" do
@@ -27,33 +27,33 @@ describe :array_eql, shared: true do
 
   it "handles well recursive arrays" do
     a = ArraySpecs.empty_recursive_array
-    a       .send(@method,    [a]    ).should be_true
-    a       .send(@method,    [[a]]  ).should be_true
-    [a]     .send(@method,    a      ).should be_true
-    [[a]]   .send(@method,    a      ).should be_true
+    a       .send(@method,    [a]    ).should == true
+    a       .send(@method,    [[a]]  ).should == true
+    [a]     .send(@method,    a      ).should == true
+    [[a]]   .send(@method,    a      ).should == true
     # These may be surprising, but no difference can be
     # found between these arrays, so they are ==.
     # There is no "path" that will lead to a difference
     # (contrary to other examples below)
 
     a2 = ArraySpecs.empty_recursive_array
-    a       .send(@method,    a2     ).should be_true
-    a       .send(@method,    [a2]   ).should be_true
-    a       .send(@method,    [[a2]] ).should be_true
-    [a]     .send(@method,    a2     ).should be_true
-    [[a]]   .send(@method,    a2     ).should be_true
+    a       .send(@method,    a2     ).should == true
+    a       .send(@method,    [a2]   ).should == true
+    a       .send(@method,    [[a2]] ).should == true
+    [a]     .send(@method,    a2     ).should == true
+    [[a]]   .send(@method,    a2     ).should == true
 
     back = []
     forth = [back]; back << forth;
-    back   .send(@method,  a  ).should be_true
+    back   .send(@method,  a  ).should == true
 
     x = []; x << x << x
     x       .send(@method,    a                ).should == false  # since x.size != a.size
     x       .send(@method,    [a, a]           ).should == false  # since x[0].size != [a, a][0].size
     x       .send(@method,    [x, a]           ).should == false  # since x[1].size != [x, a][1].size
     [x, a]  .send(@method,    [a, x]           ).should == false  # etc...
-    x       .send(@method,    [x, x]           ).should be_true
-    x       .send(@method,    [[x, x], [x, x]] ).should be_true
+    x       .send(@method,    [x, x]           ).should == true
+    x       .send(@method,    [[x, x], [x, x]] ).should == true
 
     tree = [];
     branch = []; branch << tree << tree; tree << branch
@@ -62,8 +62,8 @@ describe :array_eql, shared: true do
     forest = [tree, branch, :bird, a]; forest << forest
     forest2 = [tree2, branch2, :bird, a2]; forest2 << forest2
 
-    forest .send(@method,     forest2         ).should be_true
-    forest .send(@method,     [tree2, branch, :bird, a, forest2]).should be_true
+    forest .send(@method,     forest2         ).should == true
+    forest .send(@method,     [tree2, branch, :bird, a, forest2]).should == true
 
     diffforest = [branch2, tree2, :bird, a2]; diffforest << forest2
     forest .send(@method,     diffforest      ).should == false # since forest[0].size == 1 != 3 == diffforest[0]
@@ -81,12 +81,12 @@ describe :array_eql, shared: true do
   it "does not call #to_ary on Array subclasses" do
     ary = ArraySpecs::ToAryArray[5, 6, 7]
     ary.should_not_receive(:to_ary)
-    [5, 6, 7].send(@method, ary).should be_true
+    [5, 6, 7].send(@method, ary).should == true
   end
 
   it "ignores array class differences" do
-    ArraySpecs::MyArray[1, 2, 3].send(@method, [1, 2, 3]).should be_true
-    ArraySpecs::MyArray[1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3]).should be_true
-    [1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3]).should be_true
+    ArraySpecs::MyArray[1, 2, 3].send(@method, [1, 2, 3]).should == true
+    ArraySpecs::MyArray[1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3]).should == true
+    [1, 2, 3].send(@method, ArraySpecs::MyArray[1, 2, 3]).should == true
   end
 end

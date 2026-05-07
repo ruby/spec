@@ -38,7 +38,7 @@ describe "Math.log" do
   end
 
   it "returns NaN given NaN" do
-    Math.log(nan_value).nan?.should be_true
+    Math.log(nan_value).nan?.should == true
   end
 
   it "raises a TypeError if the argument is nil" do

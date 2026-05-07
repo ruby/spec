@@ -5,7 +5,7 @@ require_relative 'fixtures/classes'
 describe "StructClass#keyword_init?" do
   it "returns true for a struct that accepts keyword arguments to initialize" do
     struct = Struct.new(:arg, keyword_init: true)
-    struct.keyword_init?.should be_true
+    struct.keyword_init?.should == true
   end
 
   it "returns false for a struct that does not accept keyword arguments to initialize" do
@@ -25,16 +25,16 @@ describe "StructClass#keyword_init?" do
 
   it "returns true for any truthy value, not just for true" do
     struct = Struct.new(:arg, keyword_init: 1)
-    struct.keyword_init?.should be_true
+    struct.keyword_init?.should == true
 
     struct = Struct.new(:arg, keyword_init: "")
-    struct.keyword_init?.should be_true
+    struct.keyword_init?.should == true
 
     struct = Struct.new(:arg, keyword_init: [])
-    struct.keyword_init?.should be_true
+    struct.keyword_init?.should == true
 
     struct = Struct.new(:arg, keyword_init: {})
-    struct.keyword_init?.should be_true
+    struct.keyword_init?.should == true
   end
 
   context "class inheriting Struct" do

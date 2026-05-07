@@ -76,7 +76,7 @@ ruby_version_is ""..."4.0" do
       @cookie.path.should == "some/path/"
       @cookie.domain.should == "example.com"
       @cookie.expires.should == Time.at(1196524602)
-      @cookie.secure.should be_true
+      @cookie.secure.should == true
     end
 
     it "does set self's path based on ENV[\"SCRIPT_NAME\"] when the Hash has no 'path' entry" do

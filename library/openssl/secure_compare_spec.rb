@@ -5,7 +5,7 @@ describe "OpenSSL.secure_compare" do
   it "returns true for two strings with the same content" do
     input1 = "the quick brown fox jumps over the lazy dog"
     input2 = "the quick brown fox jumps over the lazy dog"
-    OpenSSL.secure_compare(input1, input2).should be_true
+    OpenSSL.secure_compare(input1, input2).should == true
   end
 
   it "returns false for two strings with different content" do
@@ -23,7 +23,7 @@ describe "OpenSSL.secure_compare" do
 
     input = mock("input")
     input.should_receive(:to_str).twice.and_return("the quick brown fox jumps over the lazy dog")
-    OpenSSL.secure_compare(input, input).should be_true
+    OpenSSL.secure_compare(input, input).should == true
   end
 
   it "does not accept arguments that are not string and cannot be coerced into strings" do

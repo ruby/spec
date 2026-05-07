@@ -134,7 +134,7 @@ describe "Signal.trap" do
       Process.kill :HUP, Process.pid
       Thread.pass until done
 
-      ScratchPad.recorded.should be_true
+      ScratchPad.recorded.should == true
     end
 
     it "registers an handler doing nothing with :IGNORE" do

@@ -4,13 +4,13 @@ describe "Mutex#try_lock" do
   describe "when unlocked" do
     it "returns true" do
       m = Mutex.new
-      m.try_lock.should be_true
+      m.try_lock.should == true
     end
 
     it "locks the mutex" do
       m = Mutex.new
       m.try_lock
-      m.locked?.should be_true
+      m.locked?.should == true
     end
   end
 

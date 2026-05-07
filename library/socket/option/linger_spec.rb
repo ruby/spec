@@ -41,12 +41,12 @@ describe "Socket::Option#linger" do
 
     so = Socket::Option.linger(1, 10)
     ary = so.linger
-    ary[0].should be_true
+    ary[0].should == true
     ary[1].should == 10
 
     so = Socket::Option.linger(true, 9)
     ary = so.linger
-    ary[0].should be_true
+    ary[0].should == true
     ary[1].should == 9
   end
 

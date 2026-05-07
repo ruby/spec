@@ -32,7 +32,7 @@ describe "Enumerable#one?" do
 
   describe "with no block" do
     it "returns true if only one element evaluates to true" do
-      [false, nil, true].one?.should be_true
+      [false, nil, true].one?.should == true
     end
 
     it "returns false if two elements evaluate to true" do
@@ -51,7 +51,7 @@ describe "Enumerable#one?" do
 
   describe "with a block" do
     it "returns true if block returns true once" do
-      [:a, :b, :c].one? { |s| s == :a }.should be_true
+      [:a, :b, :c].one? { |s| s == :a }.should == true
     end
 
     it "returns false if the block returns true more than once" do

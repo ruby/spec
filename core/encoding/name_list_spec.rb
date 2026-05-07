@@ -11,13 +11,13 @@ describe "Encoding.name_list" do
 
   it "includes all aliases" do
     Encoding.aliases.keys.each do |enc_alias|
-      Encoding.name_list.include?(enc_alias).should be_true
+      Encoding.name_list.include?(enc_alias).should == true
     end
   end
 
   it "includes all non-dummy encodings" do
     Encoding.list.each do |enc|
-      Encoding.name_list.include?(enc.name).should be_true
+      Encoding.name_list.include?(enc.name).should == true
     end
   end
 end

@@ -20,7 +20,7 @@ describe "Math.sin" do
   end
 
   it "returns NaN given NaN" do
-    Math.sin(nan_value).nan?.should be_true
+    Math.sin(nan_value).nan?.should == true
   end
 
   it "raises a TypeError if the argument is nil" do

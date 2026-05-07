@@ -14,7 +14,7 @@ describe "Delegator#!=" do
 
   it "is delegated when passed the delegated object" do
     @base.should_receive(:"!=").and_return(true)
-    (@delegator != @base).should be_true
+    (@delegator != @base).should == true
   end
 
   it "is delegated in general" do

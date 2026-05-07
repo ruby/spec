@@ -12,12 +12,12 @@ describe "BasicObject#instance_eval" do
 
   it "sets self to the receiver in the context of the passed block" do
     a = BasicObject.new
-    a.instance_eval { self }.equal?(a).should be_true
+    a.instance_eval { self }.equal?(a).should == true
   end
 
   it "evaluates strings" do
     a = BasicObject.new
-    a.instance_eval('self').equal?(a).should be_true
+    a.instance_eval('self').equal?(a).should == true
   end
 
   it "raises an ArgumentError when no arguments and no block are given" do
@@ -71,9 +71,9 @@ describe "BasicObject#instance_eval" do
 
   it "binds self to the receiver" do
     s = "hola"
-    (s == s.instance_eval { self }).should be_true
+    (s == s.instance_eval { self }).should == true
     o = mock('o')
-    (o == o.instance_eval("self")).should be_true
+    (o == o.instance_eval("self")).should == true
   end
 
   it "executes in the context of the receiver" do

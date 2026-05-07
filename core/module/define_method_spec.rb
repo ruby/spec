@@ -415,7 +415,7 @@ describe "Module#define_method" do
     end
 
     o = DefineMethodByProcClass.new
-    o.proc_test.should be_true
+    o.proc_test.should == true
   end
 
   it "accepts a String method name" do

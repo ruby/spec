@@ -23,10 +23,10 @@ describe 'Pathname#empty?' do
   end
 
   it 'return true when file is empty' do
-    Pathname.new(@file).empty?.should be_true
+    Pathname.new(@file).empty?.should == true
   end
 
   it 'returns true when directory is empty' do
-    Pathname.new(@dir).empty?.should be_true
+    Pathname.new(@dir).empty?.should == true
   end
 end

@@ -82,7 +82,7 @@ describe "Range#max given a block" do
     (1..10).max {|a,b| acc << [a,b]; a }
     acc.flatten!
     (1..10).each do |value|
-      acc.include?(value).should be_true
+      acc.include?(value).should == true
     end
   end
 

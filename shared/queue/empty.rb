@@ -1,7 +1,7 @@
 describe :queue_empty?, shared: true do
   it "returns true on an empty Queue" do
     queue = @object.call
-    queue.empty?.should be_true
+    queue.empty?.should == true
   end
 
   it "returns false when Queue is not empty" do

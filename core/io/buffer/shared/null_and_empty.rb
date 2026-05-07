@@ -29,29 +29,29 @@ describe :io_buffer_null_and_empty, shared: true do
 
   it "is true for a 0-sized buffer" do
     @buffer = IO::Buffer.new(0)
-    @buffer.send(@method).should be_true
+    @buffer.send(@method).should == true
   end
 
   it "is true for a slice of a 0-sized buffer" do
     @buffer = IO::Buffer.new(0)
-    @buffer.slice(0, 0).send(@method).should be_true
+    @buffer.slice(0, 0).send(@method).should == true
   end
 
   it "is true for a freed buffer" do
     @buffer = IO::Buffer.new(1)
     @buffer.free
-    @buffer.send(@method).should be_true
+    @buffer.send(@method).should == true
   end
 
   it "is true for a buffer resized to 0" do
     @buffer = IO::Buffer.new(1)
     @buffer.resize(0)
-    @buffer.send(@method).should be_true
+    @buffer.send(@method).should == true
   end
 
   it "is true for a buffer whose memory was transferred" do
     buffer = IO::Buffer.new(1)
     @buffer = buffer.transfer
-    buffer.send(@method).should be_true
+    buffer.send(@method).should == true
   end
 end

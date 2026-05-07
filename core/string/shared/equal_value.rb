@@ -20,7 +20,7 @@ describe :string_equal_value, shared: true do
     # Don't use @method for :== in `obj.should_receive(:==)`
     obj.should_receive(:==).and_return(true)
 
-    'hello'.send(@method, obj).should be_true
+    'hello'.send(@method, obj).should == true
   end
 
   it "is not fooled by NUL characters" do

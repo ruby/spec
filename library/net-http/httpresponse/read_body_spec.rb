@@ -57,7 +57,7 @@ describe "Net::HTTPResponse#read_body" do
           buffer << body
         end
 
-        yielded.should be_true
+        yielded.should == true
         buffer.should == "test body"
       end
     end

@@ -39,7 +39,7 @@ describe 'UNIXSocket#initialize' do
     end
 
     it 'sets the socket to binmode' do
-      @socket.binmode?.should be_true
+      @socket.binmode?.should == true
     end
 
     platform_is_not :windows do

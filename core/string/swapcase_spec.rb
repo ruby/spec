@@ -25,7 +25,7 @@ describe "String#swapcase" do
       swapcased.should == "aSSET"
       swapcased.size.should == 5
       swapcased.bytesize.should == 5
-      swapcased.ascii_only?.should be_true
+      swapcased.ascii_only?.should == true
     end
   end
 
@@ -114,7 +114,7 @@ describe "String#swapcase!" do
       swapcased.should == "aSSET"
       swapcased.size.should == 5
       swapcased.bytesize.should == 5
-      swapcased.ascii_only?.should be_true
+      swapcased.ascii_only?.should == true
     end
   end
 

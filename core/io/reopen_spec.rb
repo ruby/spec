@@ -214,7 +214,7 @@ describe "IO#reopen with an IO at EOF" do
   end
 
   it "resets the EOF status to false" do
-    @io.eof?.should be_true
+    @io.eof?.should == true
     @io.reopen @other_io
     @io.eof?.should == false
   end

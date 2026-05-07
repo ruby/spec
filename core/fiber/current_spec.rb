@@ -7,7 +7,7 @@ describe "Fiber.current" do
     # We can always transfer to the root Fiber; it will never die
     5.times do
       root.transfer.should be_nil
-      root.alive?.should be_true
+      root.alive?.should == true
     end
   end
 
@@ -16,7 +16,7 @@ describe "Fiber.current" do
       this = Fiber.current
       this.should.instance_of?(Fiber)
       this.should == fiber
-      this.alive?.should be_true
+      this.alive?.should == true
     end
     fiber.resume
   end
@@ -28,7 +28,7 @@ describe "Fiber.current" do
       this = Fiber.current
       this.should.instance_of?(Fiber)
       this.should == fiber
-      this.alive?.should be_true
+      this.alive?.should == true
     end
 
     fiber2 = Fiber.new do

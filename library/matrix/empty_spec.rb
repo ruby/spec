@@ -4,9 +4,9 @@ require 'matrix'
 
 describe "Matrix#empty?" do
   it "returns true when the Matrix is empty" do
-    Matrix[ ].empty?.should be_true
-    Matrix[ [], [], [] ].empty?.should be_true
-    Matrix[ [], [], [] ].transpose.empty?.should be_true
+    Matrix[ ].empty?.should == true
+    Matrix[ [], [], [] ].empty?.should == true
+    Matrix[ [], [], [] ].transpose.empty?.should == true
   end
 
   it "returns false when the Matrix has elements" do

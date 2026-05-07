@@ -5,7 +5,7 @@ describe "Date#julian?" do
 
   it "marks a day before the calendar reform as Julian" do
     Date.civil(1007, 2, 27).should.julian?
-    Date.civil(1907, 2, 27, Date.civil(1930, 1, 1).jd).julian?.should be_true
+    Date.civil(1907, 2, 27, Date.civil(1930, 1, 1).jd).julian?.should == true
   end
 
   it "marks a day after the calendar reform as Julian" do

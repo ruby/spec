@@ -12,7 +12,7 @@ describe "Encoding::InvalidByteSequenceError#incomplete_input?" do
     begin
       ec.convert("\xA1")
     rescue Encoding::InvalidByteSequenceError => e
-      e.incomplete_input?.should be_true
+      e.incomplete_input?.should == true
     end
   end
 

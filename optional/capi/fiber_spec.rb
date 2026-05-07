@@ -19,7 +19,7 @@ describe "C-API Fiber function" do
     it "returns the fibers alive status" do
       fiber = Fiber.new { Fiber.yield }
       fiber.resume
-      @s.rb_fiber_alive_p(fiber).should be_true
+      @s.rb_fiber_alive_p(fiber).should == true
       fiber.resume
       @s.rb_fiber_alive_p(fiber).should == false
     end

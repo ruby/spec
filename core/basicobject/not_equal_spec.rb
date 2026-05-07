@@ -8,13 +8,13 @@ describe "BasicObject#!=" do
   it "returns true if other is not identical to self" do
     a = BasicObject.new
     b = BasicObject.new
-    (a != b).should be_true
+    (a != b).should == true
   end
 
   it "returns true if other is an Object" do
     a = BasicObject.new
     b = Object.new
-    (a != b).should be_true
+    (a != b).should == true
   end
 
   it "returns false if other is identical to self" do
@@ -34,7 +34,7 @@ describe "BasicObject#!=" do
     it "returns true if other is not identical to self" do
       a = Object.new
       b = Object.new
-      a.send(:!=, b).should be_true
+      a.send(:!=, b).should == true
     end
 
     it "returns false if other is identical to self" do

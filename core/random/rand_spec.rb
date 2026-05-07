@@ -171,7 +171,7 @@ describe "Random#rand with Range" do
   it "returns an object that is a member of the Range" do
     prng = Random.new
     r = 20..30
-    20.times { r.member?(prng.rand(r)).should be_true }
+    20.times { r.member?(prng.rand(r)).should == true }
   end
 
   it "works with inclusive ranges" do

@@ -94,10 +94,10 @@ describe "Object#to_yaml" do
 
   it "returns the YAML representation for Range objects" do
     yaml = Range.new(1,3).to_yaml
-    yaml.include?("!ruby/range").should be_true
-    yaml.include?("begin: 1").should be_true
-    yaml.include?("end: 3").should be_true
-    yaml.include?("excl: false").should be_true
+    yaml.include?("!ruby/range").should == true
+    yaml.include?("begin: 1").should == true
+    yaml.include?("end: 3").should == true
+    yaml.include?("excl: false").should == true
   end
 
   it "returns the YAML representation of numeric constants" do

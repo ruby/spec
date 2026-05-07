@@ -10,7 +10,7 @@ ruby_version_is ""..."4.0" do
 
     it "returns whether self is a secure cookie or not" do
       @cookie.secure = true
-      @cookie.secure.should be_true
+      @cookie.secure.should == true
 
       @cookie.secure = false
       @cookie.secure.should == false
@@ -23,12 +23,12 @@ ruby_version_is ""..."4.0" do
     end
 
     it "returns true" do
-      (@cookie.secure = true).should be_true
+      (@cookie.secure = true).should == true
     end
 
     it "sets self to a secure cookie" do
       @cookie.secure = true
-      @cookie.secure.should be_true
+      @cookie.secure.should == true
     end
   end
 
@@ -64,10 +64,10 @@ ruby_version_is ""..."4.0" do
       @cookie.secure = true
 
       @cookie.secure = Object.new
-      @cookie.secure.should be_true
+      @cookie.secure.should == true
 
       @cookie.secure = "Test"
-      @cookie.secure.should be_true
+      @cookie.secure.should == true
     end
   end
 end

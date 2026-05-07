@@ -31,7 +31,7 @@ ruby_version_is ""..."4.1" do
           yielded = true
           ftp.should equal(@ftp)
         end
-        yielded.should be_true
+        yielded.should == true
       end
 
       it "closes the Net::FTP instance after yielding" do

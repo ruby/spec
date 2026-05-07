@@ -24,7 +24,7 @@ describe "String#upcase" do
       upcased.should == "ASSET"
       upcased.size.should == 5
       upcased.bytesize.should == 5
-      upcased.ascii_only?.should be_true
+      upcased.ascii_only?.should == true
     end
   end
 
@@ -112,7 +112,7 @@ describe "String#upcase!" do
       upcased.should == "ASSET"
       upcased.size.should == 5
       upcased.bytesize.should == 5
-      upcased.ascii_only?.should be_true
+      upcased.ascii_only?.should == true
     end
   end
 

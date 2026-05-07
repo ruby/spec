@@ -20,7 +20,7 @@ platform_is :windows do
     end
 
     it "returns 4-element array of WIN32OLE::Param for Shell's 'BrowseForFolder' method" do
-      @m_browse_for_folder.params.all? { |p| p.kind_of? WIN32OLE::Param }.should be_true
+      @m_browse_for_folder.params.all? { |p| p.kind_of? WIN32OLE::Param }.should == true
       @m_browse_for_folder.params.size == 4
     end
 

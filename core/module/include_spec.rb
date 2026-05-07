@@ -146,7 +146,7 @@ describe "Module#include" do
 
       anc = B.ancestors
       [B, U, V, W, A, X].each do |i|
-        anc.include?(i).should be_true
+        anc.include?(i).should == true
       end
 
       class B; include V; end
@@ -154,7 +154,7 @@ describe "Module#include" do
       # the only new module is Y, it is added after U since it follows U in V mixin list:
       anc = B.ancestors
       [B, U, Y, V, W, A, X].each do |i|
-        anc.include?(i).should be_true
+        anc.include?(i).should == true
       end
     end
   end

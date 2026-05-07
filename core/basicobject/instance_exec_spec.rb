@@ -8,7 +8,7 @@ describe "BasicObject#instance_exec" do
 
   it "sets self to the receiver in the context of the passed block" do
     a = BasicObject.new
-    a.instance_exec { self }.equal?(a).should be_true
+    a.instance_exec { self }.equal?(a).should == true
   end
 
   it "passes arguments to the block" do

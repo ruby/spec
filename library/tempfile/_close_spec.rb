@@ -16,6 +16,6 @@ describe "Tempfile#_close" do
 
   it "closes self" do
     @tempfile.send(:_close)
-    @tempfile.closed?.should be_true
+    @tempfile.closed?.should == true
   end
 end

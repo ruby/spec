@@ -31,7 +31,7 @@ ruby_version_is "4.1" do
       path = KernelSpecs.autoload?(:KSAutoloadRelativeA)
       path.should_not be_nil
       path.should.end_with?("autoload_relative_b.rb")
-      File.exist?(path).should be_true
+      File.exist?(path).should == true
     end
 
     it "loads the file when the constant is accessed" do
@@ -92,7 +92,7 @@ ruby_version_is "4.1" do
         path = KernelSpecs.autoload?(:KSAutoloadRelativeI)
         path.should_not be_nil
         # Should still resolve even with empty $LOAD_PATH
-        File.exist?(path).should be_true
+        File.exist?(path).should == true
       ensure
         $LOAD_PATH.replace(original_load_path)
       end

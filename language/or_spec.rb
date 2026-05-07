@@ -26,24 +26,24 @@ describe "The || operator" do
   end
 
   it "treats empty expressions as nil" do
-    (() || true).should be_true
+    (() || true).should == true
     (() || false).should == false
-    (true || ()).should be_true
+    (true || ()).should == true
     (false || ()).should be_nil
     (() || ()).should be_nil
   end
 
   it "has a higher precedence than 'break' in 'break true || false'" do
     # see also 'break true or false' below
-    -> { break false || true }.call.should be_true
+    -> { break false || true }.call.should == true
   end
 
   it "has a higher precedence than 'next' in 'next true || false'" do
-    -> { next false || true }.call.should be_true
+    -> { next false || true }.call.should == true
   end
 
   it "has a higher precedence than 'return' in 'return true || false'" do
-    -> { return false || true }.call.should be_true
+    -> { return false || true }.call.should == true
   end
 end
 
@@ -68,9 +68,9 @@ describe "The or operator" do
   end
 
   it "treats empty expressions as nil" do
-    (() or true).should be_true
+    (() or true).should == true
     (() or false).should == false
-    (true or ()).should be_true
+    (true or ()).should == true
     (false or ()).should be_nil
     (() or ()).should be_nil
   end

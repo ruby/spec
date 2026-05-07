@@ -20,8 +20,8 @@ end
 describe "Proc#[] with frozen_string_literal: true/false" do
   it "doesn't duplicate frozen strings" do
     ProcArefSpecs.aref.frozen?.should == false
-    ProcArefSpecs.aref_freeze.frozen?.should be_true
-    ProcArefFrozenSpecs.aref.frozen?.should be_true
-    ProcArefFrozenSpecs.aref_freeze.frozen?.should be_true
+    ProcArefSpecs.aref_freeze.frozen?.should == true
+    ProcArefFrozenSpecs.aref.frozen?.should == true
+    ProcArefFrozenSpecs.aref_freeze.frozen?.should == true
   end
 end

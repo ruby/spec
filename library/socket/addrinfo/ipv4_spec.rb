@@ -7,7 +7,7 @@ describe "Addrinfo#ipv4?" do
     end
 
     it "returns true" do
-      @addrinfo.ipv4?.should be_true
+      @addrinfo.ipv4?.should == true
     end
   end
 

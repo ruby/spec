@@ -8,7 +8,7 @@ describe "Addrinfo#ip?" do
     end
 
     it "returns true" do
-      @addrinfo.ip?.should be_true
+      @addrinfo.ip?.should == true
     end
   end
 
@@ -18,7 +18,7 @@ describe "Addrinfo#ip?" do
     end
 
     it "returns true" do
-      @addrinfo.ip?.should be_true
+      @addrinfo.ip?.should == true
     end
   end
 

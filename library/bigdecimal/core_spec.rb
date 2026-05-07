@@ -33,15 +33,15 @@ describe "Core extension by bigdecimal" do
     it "returns the passed argument, self as Float, when given a Float" do
       result = Rational(3, 4).coerce(1.0)
       result.should == [1.0, 0.75]
-      result.first.is_a?(Float).should be_true
-      result.last.is_a?(Float).should be_true
+      result.first.is_a?(Float).should == true
+      result.last.is_a?(Float).should == true
     end
 
     it "returns the passed argument, self as Rational, when given an Integer" do
       result = Rational(3, 4).coerce(10)
       result.should == [Rational(10, 1), Rational(3, 4)]
-      result.first.is_a?(Rational).should be_true
-      result.last.is_a?(Rational).should be_true
+      result.first.is_a?(Rational).should == true
+      result.last.is_a?(Rational).should == true
     end
 
     it "coerces to Rational, when given a Complex" do

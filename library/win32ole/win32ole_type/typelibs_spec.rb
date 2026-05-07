@@ -16,7 +16,7 @@ platform_is :windows do
     end
 
     it "returns array of type libraries" do
-      WIN32OLE::Type.typelibs().include?("Microsoft Shell Controls And Automation").should be_true
+      WIN32OLE::Type.typelibs().include?("Microsoft Shell Controls And Automation").should == true
     end
 
   end

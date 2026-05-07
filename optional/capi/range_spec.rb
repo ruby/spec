@@ -70,7 +70,7 @@ describe "C-API Range function" do
     it "returns correct begin, length and result" do
       r = 2..5
       begp, lenp, result = @s.rb_range_beg_len(r, 10, 0)
-      result.should be_true
+      result.should == true
       begp.should == 2
       lenp.should == 4
     end
@@ -133,7 +133,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, beg, len, step = @s.rb_arithmetic_sequence_beg_len_step(as, 6, error_code)
-      success.should be_true
+      success.should == true
 
       beg.should == 2
       len.should == 4
@@ -145,7 +145,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, _, len, _ = @s.rb_arithmetic_sequence_beg_len_step(as, 6, error_code)
-      success.should be_true
+      success.should == true
       len.should == 3
     end
 
@@ -154,7 +154,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, beg, len, _ = @s.rb_arithmetic_sequence_beg_len_step(as, 6, error_code)
-      success.should be_true
+      success.should == true
 
       beg.should == 4
       len.should == 2
@@ -165,7 +165,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, beg, len, _ = @s.rb_arithmetic_sequence_beg_len_step(as, 6, error_code)
-      success.should be_true
+      success.should == true
 
       beg.should == 2
       len.should == 4
@@ -176,7 +176,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, _, len, _ = @s.rb_arithmetic_sequence_beg_len_step(as, 6, error_code)
-      success.should be_true
+      success.should == true
       len.should == 4
     end
 
@@ -185,7 +185,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, beg, len, step = @s.rb_arithmetic_sequence_beg_len_step(as, 6, error_code)
-      success.should be_true
+      success.should == true
 
       beg.should == 5
       len.should == 0
@@ -213,7 +213,7 @@ describe "C-API Range function" do
       error_code = 1
 
       success, beg, len, step = @s.rb_arithmetic_sequence_beg_len_step(as, 1, error_code)
-      success.should be_true
+      success.should == true
 
       beg.should == 2
       len.should == 4

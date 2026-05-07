@@ -32,7 +32,7 @@ describe :prime_each, shared: true do
       all_prime &&= (2..Math.sqrt(prime)).all? { |d| prime % d != 0 }
     end
 
-    all_prime.should be_true
+    all_prime.should == true
   end
 
   it "returns the last evaluated expression in the passed block" do
@@ -106,9 +106,9 @@ describe :prime_each_with_arguments, shared: true do
 
     ScratchPad.recorded.all? do |prime|
       (2..Math.sqrt(prime)).all? { |d| prime % d != 0 }
-    end.should be_true
+    end.should == true
 
-    ScratchPad.recorded.all? { |prime| prime <= bound }.should be_true
+    ScratchPad.recorded.all? { |prime| prime <= bound }.should == true
   end
 
   it "returns nil when no prime is generated" do
@@ -132,7 +132,7 @@ describe :prime_each_with_arguments, shared: true do
   describe "when not passed a block" do
     it "returns an object that returns primes less than or equal to the bound" do
       bound = 100
-      @object.each(bound).all? { |prime| prime <= bound }.should be_true
+      @object.each(bound).all? { |prime| prime <= bound }.should == true
     end
   end
 end

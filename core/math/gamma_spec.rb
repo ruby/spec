@@ -64,6 +64,6 @@ describe "Math.gamma" do
   end
 
   it "returns NaN given NaN" do
-    Math.gamma(nan_value).nan?.should be_true
+    Math.gamma(nan_value).nan?.should == true
   end
 end

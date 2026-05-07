@@ -34,7 +34,7 @@ describe "Tempfile.open" do
   it "returns a new, open Tempfile instance" do
     @tempfile = Tempfile.open("specs")
     # Delegation messes up .should.instance_of?(Tempfile)
-    @tempfile.instance_of?(Tempfile).should be_true
+    @tempfile.instance_of?(Tempfile).should == true
   end
 
   it "is passed an array [base, suffix] as first argument" do
@@ -46,7 +46,7 @@ describe "Tempfile.open" do
     Tempfile.open("specs", Dir.tmpdir, encoding: "IBM037:IBM037", binmode: true) do |tempfile|
       @tempfile = tempfile
       tempfile.external_encoding.should == Encoding.find("IBM037")
-      tempfile.binmode?.should be_true
+      tempfile.binmode?.should == true
     end
   end
 
@@ -75,7 +75,7 @@ describe "Tempfile.open when passed a block" do
       ScratchPad.record :yielded
 
       # Delegation messes up .should.instance_of?(Tempfile)
-      tempfile.instance_of?(Tempfile).should be_true
+      tempfile.instance_of?(Tempfile).should == true
       tempfile.closed?.should == false
     end
 
@@ -92,6 +92,6 @@ describe "Tempfile.open when passed a block" do
 
   it "closes the yielded Tempfile after the block" do
     Tempfile.open("specs") { |tempfile| @tempfile = tempfile }
-    @tempfile.closed?.should be_true
+    @tempfile.closed?.should == true
   end
 end

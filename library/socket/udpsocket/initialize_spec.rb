@@ -27,7 +27,7 @@ describe 'UDPSocket#initialize' do
 
   it 'sets the socket to binmode' do
     @socket = UDPSocket.new(:INET)
-    @socket.binmode?.should be_true
+    @socket.binmode?.should == true
   end
 
   platform_is_not :windows do

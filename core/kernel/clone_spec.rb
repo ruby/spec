@@ -40,7 +40,7 @@ describe "Kernel#clone" do
 
     it 'copies frozen?' do
       o = ''.freeze.clone
-      o.frozen?.should be_true
+      o.frozen?.should == true
     end
   end
 
@@ -56,7 +56,7 @@ describe "Kernel#clone" do
 
     it "copies frozen?" do
       o = "".freeze.clone(freeze: nil)
-      o.frozen?.should be_true
+      o.frozen?.should == true
     end
   end
 

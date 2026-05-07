@@ -25,7 +25,7 @@ describe "Float#numerator" do
   end
 
   it "returns NaN for NaN" do
-    nan_value.numerator.nan?.should be_true
+    nan_value.numerator.nan?.should == true
   end
 
   it "returns Infinity for Infinity" do

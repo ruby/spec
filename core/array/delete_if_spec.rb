@@ -17,7 +17,7 @@ describe "Array#delete_if" do
   end
 
   it "returns self" do
-    @a.delete_if{ true }.equal?(@a).should be_true
+    @a.delete_if{ true }.equal?(@a).should == true
   end
 
   it_behaves_like :enumeratorize, :delete_if

@@ -1,6 +1,6 @@
 describe :enum_for, shared: true do
   it "is defined in Kernel" do
-    Kernel.method_defined?(@method).should be_true
+    Kernel.method_defined?(@method).should == true
   end
 
   it "returns a new enumerator" do

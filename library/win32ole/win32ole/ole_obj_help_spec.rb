@@ -13,7 +13,7 @@ platform_is :windows do
     end
 
     it "returns an instance of WIN32OLE::Type" do
-      @dict.ole_obj_help.kind_of?(WIN32OLE::Type).should be_true
+      @dict.ole_obj_help.kind_of?(WIN32OLE::Type).should == true
     end
   end
 end

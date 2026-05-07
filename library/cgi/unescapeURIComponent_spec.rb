@@ -91,7 +91,7 @@ describe "CGI.unescapeURIComponent" do
       decoded = CGI.unescapeURIComponent(string, Encoding::US_ASCII)
       decoded.encoding.should == Encoding::SHIFT_JIS
       decoded.should == "｢ｦ｣".encode(Encoding::SHIFT_JIS)
-      decoded.valid_encoding?.should be_true
+      decoded.valid_encoding?.should == true
     end
 
     it "uses source string's encoding even if it's also invalid" do

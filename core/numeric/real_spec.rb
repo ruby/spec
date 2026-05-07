@@ -16,7 +16,7 @@ describe "Numeric#real" do
   it "returns self" do
     @numbers.each do |number|
       if number.to_f.nan?
-        number.real.nan?.should be_true
+        number.real.nan?.should == true
       else
         number.real.should == number
       end

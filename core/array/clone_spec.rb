@@ -23,9 +23,9 @@ describe "Array#clone" do
     aa = a.clone
     bb = b.clone
 
-    a.respond_to?(:a_singleton_method).should be_true
+    a.respond_to?(:a_singleton_method).should == true
     b.respond_to?(:a_singleton_method).should == false
-    aa.respond_to?(:a_singleton_method).should be_true
+    aa.respond_to?(:a_singleton_method).should == true
     bb.respond_to?(:a_singleton_method).should == false
   end
 end

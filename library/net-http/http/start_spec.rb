@@ -28,7 +28,7 @@ describe "Net::HTTP.start" do
     end
 
     it "opens the tcp connection" do
-      @http.started?.should be_true
+      @http.started?.should == true
     end
   end
 
@@ -43,11 +43,11 @@ describe "Net::HTTP.start" do
         yielded = true
         net.should be_kind_of(Net::HTTP)
       end
-      yielded.should be_true
+      yielded.should == true
     end
 
     it "opens the tcp connection before yielding" do
-      Net::HTTP.start("localhost", @port) { |http| http.started?.should be_true }
+      Net::HTTP.start("localhost", @port) { |http| http.started?.should == true }
     end
 
     it "closes the tcp connection after yielding" do
@@ -75,7 +75,7 @@ describe "Net::HTTP#start" do
 
   it "opens the tcp connection" do
     @http.start
-    @http.started?.should be_true
+    @http.started?.should == true
   end
 
   describe "when self has already been started" do
@@ -96,11 +96,11 @@ describe "Net::HTTP#start" do
         yielded = true
         http.should equal(@http)
       end
-      yielded.should be_true
+      yielded.should == true
     end
 
     it "opens the tcp connection before yielding" do
-      @http.start { |http| http.started?.should be_true }
+      @http.start { |http| http.started?.should == true }
     end
 
     it "closes the tcp connection after yielding" do

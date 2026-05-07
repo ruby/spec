@@ -16,7 +16,7 @@ describe "Set#compare_by_identity" do
     elt = [1]
     set = Set.new
     set << elt
-    set.member?(elt.dup).should be_true
+    set.member?(elt.dup).should == true
     set.compare_by_identity
     set.member?(elt.dup).should == false
   end
@@ -28,7 +28,7 @@ describe "Set#compare_by_identity" do
     def o.hash; 123; end
     set << o
     set.compare_by_identity
-    set.member?(o).should be_true
+    set.member?(o).should == true
   end
 
   it "returns self" do
@@ -69,7 +69,7 @@ describe "Set#compare_by_identity" do
     elt.should_not_receive(:hash)
     set = Set.new.compare_by_identity
     set << elt
-    set.member?(elt).should be_true
+    set.member?(elt).should == true
   end
 
   it "regards #dup'd objects as having different identities" do

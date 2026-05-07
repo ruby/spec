@@ -3,9 +3,9 @@ require 'prime'
 
 describe "Integer#prime?" do
   it "returns a true value for prime numbers" do
-    2.prime?.should be_true
-    3.prime?.should be_true
-    (2**31-1).prime?.should be_true  # 8th Mersenne prime (M8)
+    2.prime?.should == true
+    3.prime?.should == true
+    (2**31-1).prime?.should == true  # 8th Mersenne prime (M8)
   end
 
   it "returns a false value for composite numbers" do

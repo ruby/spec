@@ -18,7 +18,7 @@ describe "Thread#abort_on_exception" do
 
   it "returns true when #abort_on_exception= is passed true" do
     @thread.abort_on_exception = true
-    @thread.abort_on_exception.should be_true
+    @thread.abort_on_exception.should == true
   end
 end
 
@@ -81,7 +81,7 @@ describe "Thread.abort_on_exception" do
 
   it "returns true when .abort_on_exception= is passed true" do
     Thread.abort_on_exception = true
-    Thread.abort_on_exception.should be_true
+    Thread.abort_on_exception.should == true
   end
 end
 

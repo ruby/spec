@@ -285,7 +285,7 @@ describe "Process.spawn" do
     it "unsets other environment variables when given a true :unsetenv_others option" do
       ENV["FOO"] = "BAR"
       Process.wait Process.spawn(*@common_env_spawn_args, unsetenv_others: true)
-      $?.success?.should be_true
+      $?.success?.should == true
       File.read(@name).should == "\n"
     end
   end
@@ -293,7 +293,7 @@ describe "Process.spawn" do
   it "does not unset other environment variables when given a false :unsetenv_others option" do
     ENV["FOO"] = "BAR"
     Process.wait Process.spawn(*@common_env_spawn_args, unsetenv_others: false)
-    $?.success?.should be_true
+    $?.success?.should == true
     File.read(@name).should == "BAR\n"
   end
 
@@ -301,7 +301,7 @@ describe "Process.spawn" do
     it "does not unset environment variables included in the environment hash" do
       env = @minimal_env.merge({"FOO" => "BAR"})
       Process.wait Process.spawn(env, "echo #{@var}>#{@name}", unsetenv_others: true)
-      $?.success?.should be_true
+      $?.success?.should == true
       File.read(@name).should == "BAR\n"
     end
   end

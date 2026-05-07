@@ -258,7 +258,7 @@ describe "Zlib::GzipReader#ungetc" do
 
       it 'does not make eof? false' do
         @gz.ungetc ''
-        @gz.eof?.should be_true
+        @gz.eof?.should == true
       end
     end
 
@@ -276,7 +276,7 @@ describe "Zlib::GzipReader#ungetc" do
 
         it 'does not make eof? false' do
           @gz.ungetc nil
-          @gz.eof?.should be_true
+          @gz.eof?.should == true
         end
       end
     end

@@ -8,7 +8,7 @@ describe 'TracePoint#self' do
       next unless TracePointSpec.target_thread?
       trace = tp.self
     }.enable do
-      trace.equal?(self).should be_true
+      trace.equal?(self).should == true
     end
   end
 

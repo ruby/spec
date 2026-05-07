@@ -462,7 +462,7 @@ CODE
       EvalSpecs.constants(false).should include(:"Vπsame_line")
       EvalSpecs::Vπsame_line.should == "frozen"
       EvalSpecs::Vπsame_line.encoding.should == Encoding::UTF_8
-      EvalSpecs::Vπsame_line.frozen?.should be_true
+      EvalSpecs::Vπsame_line.frozen?.should == true
     ensure
       EvalSpecs.send(:remove_const, :Vπsame_line)
     end

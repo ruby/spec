@@ -12,7 +12,7 @@ describe :file_directory, shared: true do
   end
 
   it "returns true if the argument is a directory" do
-    @object.send(@method, @dir).should be_true
+    @object.send(@method, @dir).should == true
   end
 
   it "returns false if the argument is not a directory" do
@@ -20,7 +20,7 @@ describe :file_directory, shared: true do
   end
 
   it "accepts an object that has a #to_path method" do
-    @object.send(@method, mock_to_path(@dir)).should be_true
+    @object.send(@method, mock_to_path(@dir)).should == true
   end
 
   it "raises a TypeError when passed an Integer" do
@@ -53,7 +53,7 @@ describe :file_directory_io, shared: true do
   platform_is_not :windows do
     it "returns true if the argument is an IO that is a directory" do
       File.open(@dir, "r") do |f|
-        @object.send(@method, f).should be_true
+        @object.send(@method, f).should == true
       end
     end
   end

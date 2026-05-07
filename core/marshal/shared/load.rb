@@ -1173,7 +1173,7 @@ describe :marshal_load, shared: true do
 
   describe "for true" do
     it "loads" do
-      Marshal.send(@method, "\x04\bT").should be_true
+      Marshal.send(@method, "\x04\bT").should == true
     end
   end
 

@@ -17,7 +17,7 @@ ruby_version_is "4.0" do
     end
 
     it "returns NaN given NaN" do
-      Math.expm1(nan_value).nan?.should be_true
+      Math.expm1(nan_value).nan?.should == true
     end
 
     it "raises a TypeError if the argument is nil" do

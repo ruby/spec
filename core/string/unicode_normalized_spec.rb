@@ -49,27 +49,27 @@ describe "String#unicode_normalized?" do
     str = "a\u0300"
     str.unicode_normalized?(:nfc).should == false
     str.unicode_normalize!(:nfc)
-    str.unicode_normalized?(:nfc).should be_true
+    str.unicode_normalized?(:nfc).should == true
   end
 
   it "returns true if str is in Unicode normalization form (nfd)" do
     str = "a\u00E0"
     str.unicode_normalized?(:nfd).should == false
     str.unicode_normalize!(:nfd)
-    str.unicode_normalized?(:nfd).should be_true
+    str.unicode_normalized?(:nfd).should == true
   end
 
   it "returns true if str is in Unicode normalization form (nfkc)" do
     str = "a\u0300"
     str.unicode_normalized?(:nfkc).should == false
     str.unicode_normalize!(:nfkc)
-    str.unicode_normalized?(:nfkc).should be_true
+    str.unicode_normalized?(:nfkc).should == true
   end
 
   it "returns true if str is in Unicode normalization form (nfkd)" do
     str = "a\u00E0"
     str.unicode_normalized?(:nfkd).should == false
     str.unicode_normalize!(:nfkd)
-    str.unicode_normalized?(:nfkd).should be_true
+    str.unicode_normalized?(:nfkd).should == true
   end
 end

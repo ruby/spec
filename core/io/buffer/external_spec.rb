@@ -8,7 +8,7 @@ describe "IO::Buffer#external?" do
 
   it "is true for a buffer with externally-managed memory" do
     @buffer = IO::Buffer.for("string")
-    @buffer.external?.should be_true
+    @buffer.external?.should == true
   end
 
   it "is false for a buffer with self-managed memory" do

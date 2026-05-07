@@ -56,7 +56,7 @@ describe "File#size" do
   end
 
   it "is an instance method" do
-    @file.respond_to?(:size).should be_true
+    @file.respond_to?(:size).should == true
   end
 
   it "returns the file's size as an Integer" do

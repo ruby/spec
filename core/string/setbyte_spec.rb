@@ -34,7 +34,7 @@ describe "String#setbyte" do
 
   it "can invalidate a String's encoding" do
     str = "glark"
-    str.valid_encoding?.should be_true
+    str.valid_encoding?.should == true
     str.setbyte(2,253)
     str.valid_encoding?.should == false
 
@@ -84,7 +84,7 @@ describe "String#setbyte" do
 
   it "raises a FrozenError if self is frozen" do
     str = "cold".freeze
-    str.frozen?.should be_true
+    str.frozen?.should == true
     -> { str.setbyte(3,96) }.should raise_error(FrozenError)
   end
 

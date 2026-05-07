@@ -18,8 +18,8 @@ describe "Numeric#negative?" do
 
   describe "on negative numbers" do
     it "returns true" do
-      -1.negative?.should be_true
-      -0.1.negative?.should be_true
+      -1.negative?.should == true
+      -0.1.negative?.should == true
     end
   end
 end

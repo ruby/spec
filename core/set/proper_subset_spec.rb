@@ -8,14 +8,14 @@ describe "Set#proper_subset?" do
   end
 
   it "returns true if passed a Set that self is a proper subset of" do
-    Set[].proper_subset?(@set).should be_true
-    Set[].proper_subset?(Set[1, 2, 3]).should be_true
-    Set[].proper_subset?(Set["a", :b, ?c]).should be_true
+    Set[].proper_subset?(@set).should == true
+    Set[].proper_subset?(Set[1, 2, 3]).should == true
+    Set[].proper_subset?(Set["a", :b, ?c]).should == true
 
-    Set[1, 2, 3].proper_subset?(@set).should be_true
-    Set[1, 3].proper_subset?(@set).should be_true
-    Set[1, 2].proper_subset?(@set).should be_true
-    Set[1].proper_subset?(@set).should be_true
+    Set[1, 2, 3].proper_subset?(@set).should == true
+    Set[1, 3].proper_subset?(@set).should == true
+    Set[1, 2].proper_subset?(@set).should == true
+    Set[1].proper_subset?(@set).should == true
 
     Set[5].proper_subset?(@set).should == false
     Set[1, 5].proper_subset?(@set).should == false

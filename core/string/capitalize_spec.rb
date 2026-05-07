@@ -28,7 +28,7 @@ describe "String#capitalize" do
       capitalized.should == "Sset"
       capitalized.size.should == 4
       capitalized.bytesize.should == 4
-      capitalized.ascii_only?.should be_true
+      capitalized.ascii_only?.should == true
     end
   end
 
@@ -127,7 +127,7 @@ describe "String#capitalize!" do
       capitalized.should == "Sset"
       capitalized.size.should == 4
       capitalized.bytesize.should == 4
-      capitalized.ascii_only?.should be_true
+      capitalized.ascii_only?.should == true
     end
   end
 

@@ -1097,8 +1097,8 @@ describe "Execution variable $:" do
       idx = $:.index(RbConfig::CONFIG['sitelibdir'])
     end
 
-    $:[idx..-1].all? { |p| p.instance_variable_defined?(:@gem_prelude_index) }.should be_true
-    $:[0...idx].all? { |p| !p.instance_variable_defined?(:@gem_prelude_index) }.should be_true
+    $:[idx..-1].all? { |p| p.instance_variable_defined?(:@gem_prelude_index) }.should == true
+    $:[0...idx].all? { |p| !p.instance_variable_defined?(:@gem_prelude_index) }.should == true
   end
 end
 
@@ -1176,7 +1176,7 @@ describe "Global variable $-d" do
 
   it "is an alias of $DEBUG" do
     $DEBUG = true
-    $-d.should be_true
+    $-d.should == true
     $-d = false
     $DEBUG.should == false
   end
@@ -1198,7 +1198,7 @@ describe "Global variable $VERBOSE" do
   it "converts truthy values to true" do
     [true, 1, 0, [], ""].each do |true_value|
       $VERBOSE = true_value
-      $VERBOSE.should be_true
+      $VERBOSE.should == true
     end
   end
 
@@ -1224,7 +1224,7 @@ describe :verbose_global_alias, shared: true do
 
   it "is an alias of $VERBOSE" do
     $VERBOSE = true
-    eval(@method).should be_true
+    eval(@method).should == true
     eval("#{@method} = false")
     $VERBOSE.should == false
   end

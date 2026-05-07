@@ -10,7 +10,7 @@ describe "ARGF.close" do
     argf [@file1_name, @file2_name] do
       io = @argf.to_io
       @argf.close
-      io.closed?.should be_true
+      io.closed?.should == true
     end
   end
 

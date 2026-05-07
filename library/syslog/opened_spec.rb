@@ -16,7 +16,7 @@ platform_is_not :windows do
 
       it "returns true if the log is opened" do
         Syslog.open
-        Syslog.opened?.should be_true
+        Syslog.opened?.should == true
         Syslog.close
       end
 
@@ -29,8 +29,8 @@ platform_is_not :windows do
 
       it "works inside a block" do
         Syslog.open do |s|
-          s.opened?.should be_true
-          Syslog.opened?.should be_true
+          s.opened?.should == true
+          Syslog.opened?.should == true
         end
         Syslog.opened?.should == false
       end

@@ -12,7 +12,7 @@ describe "IO::Buffer#transfer" do
       info = buffer.to_s
       @buffer = buffer.transfer
       @buffer.to_s.should == info
-      buffer.null?.should be_true
+      buffer.null?.should == true
     end
 
     it "transfers mapped memory to a new buffer, nullifying the original" do
@@ -20,7 +20,7 @@ describe "IO::Buffer#transfer" do
       info = buffer.to_s
       @buffer = buffer.transfer
       @buffer.to_s.should == info
-      buffer.null?.should be_true
+      buffer.null?.should == true
     end
   end
 
@@ -31,7 +31,7 @@ describe "IO::Buffer#transfer" do
         info = buffer.to_s
         @buffer = buffer.transfer
         @buffer.to_s.should == info
-        buffer.null?.should be_true
+        buffer.null?.should == true
       end
     end
   end
@@ -43,7 +43,7 @@ describe "IO::Buffer#transfer" do
         info = buffer.to_s
         @buffer = buffer.transfer
         @buffer.to_s.should == info
-        buffer.null?.should be_true
+        buffer.null?.should == true
       end
     end
 
@@ -53,7 +53,7 @@ describe "IO::Buffer#transfer" do
           info = buffer.to_s
           @buffer = buffer.transfer
           @buffer.to_s.should == info
-          buffer.null?.should be_true
+          buffer.null?.should == true
         end
         @buffer.null?.should == false
       end
@@ -66,7 +66,7 @@ describe "IO::Buffer#transfer" do
         info = buffer.to_s
         @buffer = buffer.transfer
         @buffer.to_s.should == info
-        buffer.null?.should be_true
+        buffer.null?.should == true
       end
       @buffer.null?.should == false
     end
@@ -76,8 +76,8 @@ describe "IO::Buffer#transfer" do
     buffer_1 = IO::Buffer.new(4)
     buffer_2 = buffer_1.transfer
     @buffer = buffer_2.transfer
-    buffer_1.null?.should be_true
-    buffer_2.null?.should be_true
+    buffer_1.null?.should == true
+    buffer_2.null?.should == true
     @buffer.null?.should == false
   end
 
@@ -95,7 +95,7 @@ describe "IO::Buffer#transfer" do
       @buffer.set_string("test")
 
       new_slice = slice.transfer
-      slice.null?.should be_true
+      slice.null?.should == true
       new_slice.null?.should == false
       @buffer.null?.should == false
 

@@ -61,7 +61,7 @@ describe "Symbol#match?" do
 
   context "when matches the given regex" do
     it "returns true but does not set Regexp.last_match" do
-      :string.match?(/string/i).should be_true
+      :string.match?(/string/i).should == true
       Regexp.last_match.should be_nil
     end
   end
@@ -71,7 +71,7 @@ describe "Symbol#match?" do
   end
 
   it "takes matching position as the 2nd argument" do
-    :string.match?(/str/i, 0).should be_true
+    :string.match?(/str/i, 0).should == true
     :string.match?(/str/i, 1).should == false
   end
 end

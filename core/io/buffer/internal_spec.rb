@@ -8,7 +8,7 @@ describe "IO::Buffer#internal?" do
 
   it "is true for an internally-allocated buffer" do
     @buffer = IO::Buffer.new(12)
-    @buffer.internal?.should be_true
+    @buffer.internal?.should == true
   end
 
   it "is false for an externally-allocated buffer" do

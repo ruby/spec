@@ -33,7 +33,7 @@ describe "Enumerable#none?" do
   describe "with no block" do
     it "returns true if none of the elements in self are true" do
       e = EnumerableSpecs::Numerous.new(false, nil, false)
-      e.none?.should be_true
+      e.none?.should == true
     end
 
     it "returns false if at least one of the elements in self are true" do
@@ -65,7 +65,7 @@ describe "Enumerable#none?" do
     end
 
     it "returns true if the block never returns true" do
-      @e.none? {|e| false }.should be_true
+      @e.none? {|e| false }.should == true
     end
 
     it "returns false if the block ever returns true" do

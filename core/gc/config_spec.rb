@@ -83,7 +83,7 @@ ruby_version_is "3.4" do
 
         it "includes :rgengc_allow_full_mark option, true by default" do
           GC.config.should include(:rgengc_allow_full_mark)
-          GC.config[:rgengc_allow_full_mark].should be_true
+          GC.config[:rgengc_allow_full_mark].should == true
         end
 
         it "allows to set :rgengc_allow_full_mark" do

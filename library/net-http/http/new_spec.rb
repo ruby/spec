@@ -9,7 +9,7 @@ describe "Net::HTTP.new" do
 
     it "returns a Net::HTTP instance" do
       @http.proxy?.should == false
-      @http.instance_of?(Net::HTTP).should be_true
+      @http.instance_of?(Net::HTTP).should == true
     end
 
     it "sets the new Net::HTTP instance's address to the passed address" do
@@ -32,7 +32,7 @@ describe "Net::HTTP.new" do
 
     it "returns a Net::HTTP instance" do
       @http.proxy?.should == false
-      @http.instance_of?(Net::HTTP).should be_true
+      @http.instance_of?(Net::HTTP).should == true
     end
 
     it "sets the new Net::HTTP instance's address to the passed address" do
@@ -51,8 +51,8 @@ describe "Net::HTTP.new" do
   describe "when passed address, port, *proxy_options" do
     it "returns a Net::HTTP instance" do
       http = Net::HTTP.new("localhost", 3333, "localhost")
-      http.proxy?.should be_true
-      http.instance_of?(Net::HTTP).should be_true
+      http.proxy?.should == true
+      http.instance_of?(Net::HTTP).should == true
       http.should be_kind_of(Net::HTTP)
     end
 

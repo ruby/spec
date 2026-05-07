@@ -7,14 +7,14 @@ describe "Set#proper_superset?" do
   end
 
   it "returns true if passed a Set that self is a proper superset of" do
-    @set.proper_superset?(Set[]).should be_true
-    Set[1, 2, 3].proper_superset?(Set[]).should be_true
-    Set["a", :b, ?c].proper_superset?(Set[]).should be_true
+    @set.proper_superset?(Set[]).should == true
+    Set[1, 2, 3].proper_superset?(Set[]).should == true
+    Set["a", :b, ?c].proper_superset?(Set[]).should == true
 
-    @set.proper_superset?(Set[1, 2, 3]).should be_true
-    @set.proper_superset?(Set[1, 3]).should be_true
-    @set.proper_superset?(Set[1, 2]).should be_true
-    @set.proper_superset?(Set[1]).should be_true
+    @set.proper_superset?(Set[1, 2, 3]).should == true
+    @set.proper_superset?(Set[1, 3]).should == true
+    @set.proper_superset?(Set[1, 2]).should == true
+    @set.proper_superset?(Set[1]).should == true
 
     @set.proper_superset?(Set[5]).should == false
     @set.proper_superset?(Set[1, 5]).should == false
@@ -35,7 +35,7 @@ describe "Set#proper_superset?" do
   ruby_version_is ""..."4.0" do
     context "when comparing to a Set-like object" do
       it "returns true if passed a Set-like object that self is a proper superset of" do
-        Set[1, 2, 3, 4].proper_superset?(SetSpecs::SetLike.new([1, 2, 3])).should be_true
+        Set[1, 2, 3, 4].proper_superset?(SetSpecs::SetLike.new([1, 2, 3])).should == true
       end
     end
   end

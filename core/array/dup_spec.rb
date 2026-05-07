@@ -23,7 +23,7 @@ describe "Array#dup" do
     aa = a.dup
     bb = b.dup
 
-    a.respond_to?(:a_singleton_method).should be_true
+    a.respond_to?(:a_singleton_method).should == true
     b.respond_to?(:a_singleton_method).should == false
     aa.respond_to?(:a_singleton_method).should == false
     bb.respond_to?(:a_singleton_method).should == false

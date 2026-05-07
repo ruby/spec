@@ -34,7 +34,7 @@ describe "Socket::BasicSocket#close_write" do
   it "fully closes the socket if it was already closed for reading" do
     @server.close_read
     @server.close_write
-    @server.closed?.should be_true
+    @server.closed?.should == true
   end
 
   it 'raises IOError when called on a fully closed socket' do

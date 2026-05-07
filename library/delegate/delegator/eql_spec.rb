@@ -6,14 +6,14 @@ describe "Delegator#eql?" do
     base = mock('base')
     delegator = DelegateSpecs::Delegator.new(base)
 
-    delegator.eql?(delegator).should be_true
+    delegator.eql?(delegator).should == true
   end
 
   it "returns true when compared with the inner object" do
     base = mock('base')
     delegator = DelegateSpecs::Delegator.new(base)
 
-    delegator.eql?(base).should be_true
+    delegator.eql?(base).should == true
   end
 
   it "returns false when compared with the delegator with other object" do

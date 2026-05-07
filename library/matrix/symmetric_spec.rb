@@ -3,11 +3,11 @@ require 'matrix'
 
 describe "Matrix.symmetric?" do
   it "returns true for a symmetric Matrix" do
-    Matrix[[1, 2, Complex(0, 3)], [2, 4, 5], [Complex(0, 3), 5, 6]].symmetric?.should be_true
+    Matrix[[1, 2, Complex(0, 3)], [2, 4, 5], [Complex(0, 3), 5, 6]].symmetric?.should == true
   end
 
   it "returns true for a 0x0 empty matrix" do
-    Matrix.empty.symmetric?.should be_true
+    Matrix.empty.symmetric?.should == true
   end
 
   it "returns false for an asymmetric Matrix" do

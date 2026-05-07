@@ -6,7 +6,7 @@ describe "Complex#eql?" do
   end
 
   it "returns true when the respective parts are of the same classes and self == other" do
-    Complex(1, 2).eql?(Complex(1, 2)).should be_true
+    Complex(1, 2).eql?(Complex(1, 2)).should == true
   end
 
   it "returns false when the real parts are of different classes" do
@@ -26,6 +26,6 @@ describe "Complex#eql?" do
     imag = mock_numeric('imag')
     real.should_not_receive(:eql?)
     imag.should_not_receive(:eql?)
-    Complex(real, imag).eql?(Complex(real, imag)).should be_true
+    Complex(real, imag).eql?(Complex(real, imag)).should == true
   end
 end

@@ -10,7 +10,7 @@ describe "Array#shuffle" do
       s.sort.should == a
       different ||= (a != s)
     end
-    different.should be_true # Will fail once in a blue moon (4!^10)
+    different.should == true # Will fail once in a blue moon (4!^10)
   end
 
   it "is not destructive" do
@@ -98,7 +98,7 @@ describe "Array#shuffle!" do
       a.sort.should == [1, 2, 3, 4]
       different ||= (a != [1, 2, 3, 4])
     end
-    different.should be_true # Will fail once in a blue moon (4!^10)
+    different.should == true # Will fail once in a blue moon (4!^10)
     a.should equal(original)
   end
 
