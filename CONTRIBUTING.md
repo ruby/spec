@@ -89,7 +89,6 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 
 3.14.should.respond_to?(:to_i)
 Integer.should.method_defined?(:+, false)
-Array.should.respond_to?(:new)
 ```
 
 #### Exception matchers
@@ -108,7 +107,7 @@ Array.should.respond_to?(:new)
 }
 ```
 
-##### `should_not raise_error`
+##### `should_not.raise`
 
 **Avoid this!** Instead, use an expectation testing what the code in the lambda does.
 If an exception is raised, it will fail the example anyway.
