@@ -17,7 +17,7 @@ describe :enumerator_lazy_select, shared: true do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.send(@method) {}
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
   end
 
   it "sets #size to nil" do

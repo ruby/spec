@@ -23,7 +23,7 @@ end
 describe "Array#reverse!" do
   it "reverses the elements in place" do
     a = [6, 3, 4, 2, 1]
-    a.reverse!.should equal(a)
+    a.reverse!.should.equal?(a)
     a.should == [1, 2, 4, 3, 6]
     [].reverse!.should == []
   end

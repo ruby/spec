@@ -25,7 +25,7 @@ describe "Array#delete_if" do
   it "returns self when called on an Array emptied with #shift" do
     array = [1]
     array.shift
-    array.delete_if { |x| true }.should equal(array)
+    array.delete_if { |x| true }.should.equal?(array)
   end
 
   it "returns an Enumerator if no block given, and the enumerator can modify the original array" do

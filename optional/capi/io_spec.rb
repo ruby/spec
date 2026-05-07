@@ -638,11 +638,11 @@ describe "C-API IO function" do
       it "deduplicates path String" do
         path = "a.txt".dup
         io = @o.rb_io_open_descriptor(File, @r_io.fileno, 0, path, 60, "US-ASCII", "UTF-8", 0, {})
-        io.path.should_not equal(path)
+        io.path.should_not.equal?(path)
 
         path = "a.txt".freeze
         io = @o.rb_io_open_descriptor(File, @r_io.fileno, 0, path, 60, "US-ASCII", "UTF-8", 0, {})
-        io.path.should_not equal(path)
+        io.path.should_not.equal?(path)
       end
 
       it "calls #to_str to convert a path to a String" do

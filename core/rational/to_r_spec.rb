@@ -3,10 +3,10 @@ require_relative "../../spec_helper"
 describe "Rational#to_r" do
   it "returns self" do
     a = Rational(3, 4)
-    a.to_r.should equal(a)
+    a.to_r.should.equal?(a)
 
     a = Rational(bignum_value, 4)
-    a.to_r.should equal(a)
+    a.to_r.should.equal?(a)
   end
 
   it "raises TypeError trying to convert BasicObject" do

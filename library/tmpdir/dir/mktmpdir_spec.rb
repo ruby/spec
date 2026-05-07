@@ -67,7 +67,7 @@ describe "Dir.mktmpdir when passed a block" do
       @tmpdir = path
       :test
     end
-    result.should equal(:test)
+    result.should.equal?(:test)
   end
 end
 

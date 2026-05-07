@@ -20,7 +20,7 @@ describe "Enumerator::Lazy#initialize" do
   end
 
   it "returns self" do
-    @uninitialized.send(:initialize, @receiver) {}.should equal(@uninitialized)
+    @uninitialized.send(:initialize, @receiver) {}.should.equal?(@uninitialized)
   end
 
   describe "when the returned lazy enumerator is evaluated by Enumerable#first" do
@@ -40,7 +40,7 @@ describe "Enumerator::Lazy#initialize" do
   end
 
   it "sets given size to own size if the given size is Float::INFINITY" do
-    @uninitialized.send(:initialize, @receiver, Float::INFINITY) {}.size.should equal(Float::INFINITY)
+    @uninitialized.send(:initialize, @receiver, Float::INFINITY) {}.size.should.equal?(Float::INFINITY)
   end
 
   it "sets given size to own size if the given size is an Integer" do

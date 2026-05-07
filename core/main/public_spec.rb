@@ -31,7 +31,7 @@ describe "main#public" do
   end
 
   it "returns argument" do
-    eval("public :main_private_method", TOPLEVEL_BINDING).should equal(:main_private_method)
+    eval("public :main_private_method", TOPLEVEL_BINDING).should.equal?(:main_private_method)
   end
 
 

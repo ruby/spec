@@ -77,7 +77,7 @@ describe "CApiObject" do
 
       obj2.foo.should == obj1.foo
 
-      obj2.should_not equal(obj1)
+      obj2.should_not.equal?(obj1)
     end
   end
 
@@ -244,14 +244,14 @@ describe "CApiObject" do
       ary = [1, 2]
       ary.should_not_receive(:to_ary)
 
-      @o.rb_check_convert_type(ary, "Array", "to_ary").should equal(ary)
+      @o.rb_check_convert_type(ary, "Array", "to_ary").should.equal?(ary)
     end
 
     it "returns the passed object and does not call the converting method if the object is a subclass of the specified type" do
       obj = CApiObjectSpecs::SubArray.new
       obj.should_not_receive(:to_array)
 
-      @o.rb_check_convert_type(obj, "Array", "to_array").should equal(obj)
+      @o.rb_check_convert_type(obj, "Array", "to_array").should.equal?(obj)
     end
 
     it "returns nil if the converting method returns nil" do
@@ -276,14 +276,14 @@ describe "CApiObject" do
       ary = [1, 2]
       ary.should_not_receive(:to_ary)
 
-      @o.rb_convert_type(ary, "Array", "to_ary").should equal(ary)
+      @o.rb_convert_type(ary, "Array", "to_ary").should.equal?(ary)
     end
 
     it "returns the passed object and does not call the converting method if the object is a subclass of the specified type" do
       obj = CApiObjectSpecs::SubArray.new
       obj.should_not_receive(:to_array)
 
-      @o.rb_convert_type(obj, "Array", "to_array").should equal(obj)
+      @o.rb_convert_type(obj, "Array", "to_array").should.equal?(obj)
     end
 
     it "raises a TypeError if the converting method returns nil" do
@@ -308,12 +308,12 @@ describe "CApiObject" do
   describe "rb_check_array_type" do
     it "returns the argument if it's an Array" do
       x = Array.new
-      @o.rb_check_array_type(x).should equal(x)
+      @o.rb_check_array_type(x).should.equal?(x)
     end
 
     it "returns the argument if it's a kind of Array" do
       x = AryChild.new
-      @o.rb_check_array_type(x).should equal(x)
+      @o.rb_check_array_type(x).should.equal?(x)
     end
 
     it "returns nil when the argument does not respond to #to_ary" do
@@ -330,14 +330,14 @@ describe "CApiObject" do
       x = Array.new
       obj = mock("to_ary")
       obj.should_receive(:to_ary).and_return(x)
-      @o.rb_check_array_type(obj).should equal(x)
+      @o.rb_check_array_type(obj).should.equal?(x)
     end
 
     it "sends #to_ary to the argument and returns the result if it's a kind of Array" do
       x = AryChild.new
       obj = mock("to_ary")
       obj.should_receive(:to_ary).and_return(x)
-      @o.rb_check_array_type(obj).should equal(x)
+      @o.rb_check_array_type(obj).should.equal?(x)
     end
 
     it "sends #to_ary to the argument and raises TypeError if it's not a kind of Array" do
@@ -356,12 +356,12 @@ describe "CApiObject" do
   describe "rb_check_string_type" do
     it "returns the argument if it's a String" do
       x = String.new
-      @o.rb_check_string_type(x).should equal(x)
+      @o.rb_check_string_type(x).should.equal?(x)
     end
 
     it "returns the argument if it's a kind of String" do
       x = StrChild.new
-      @o.rb_check_string_type(x).should equal(x)
+      @o.rb_check_string_type(x).should.equal?(x)
     end
 
     it "returns nil when the argument does not respond to #to_str" do
@@ -378,14 +378,14 @@ describe "CApiObject" do
       x = String.new
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(x)
-      @o.rb_check_string_type(obj).should equal(x)
+      @o.rb_check_string_type(obj).should.equal?(x)
     end
 
     it "sends #to_str to the argument and returns the result if it's a kind of String" do
       x = StrChild.new
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(x)
-      @o.rb_check_string_type(obj).should equal(x)
+      @o.rb_check_string_type(obj).should.equal?(x)
     end
 
     it "sends #to_str to the argument and raises TypeError if it's not a kind of String" do
@@ -403,7 +403,7 @@ describe "CApiObject" do
 
   describe "rb_check_to_integer" do
     it "returns the object when passed a Fixnum" do
-      @o.rb_check_to_integer(5, "to_int").should equal(5)
+      @o.rb_check_to_integer(5, "to_int").should.equal?(5)
     end
 
     it "returns the object when passed a Bignum" do
@@ -414,7 +414,7 @@ describe "CApiObject" do
       obj = mock("rb_check_to_integer")
       obj.should_receive(:to_integer).and_return(10)
 
-      @o.rb_check_to_integer(obj, "to_integer").should equal(10)
+      @o.rb_check_to_integer(obj, "to_integer").should.equal?(10)
     end
 
     it "calls the converting method and returns a Bignum value" do
@@ -476,9 +476,9 @@ describe "CApiObject" do
 
     it "returns the singleton class if it exists" do
       o = ObjectTest.new
-      @o.rb_class_of(o).should equal ObjectTest
+      @o.rb_class_of(o).should.equal? ObjectTest
       s = o.singleton_class
-      @o.rb_class_of(o).should equal s
+      @o.rb_class_of(o).should.equal? s
     end
   end
 
@@ -493,7 +493,7 @@ describe "CApiObject" do
     it "does not return the singleton class if it exists" do
       o = ObjectTest.new
       o.singleton_class
-      @o.rb_obj_class(o).should equal ObjectTest
+      @o.rb_obj_class(o).should.equal? ObjectTest
     end
   end
 

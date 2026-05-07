@@ -8,7 +8,7 @@ describe "Array#difference" do
   it "returns a copy when called without any parameter" do
     x = [1, 2, 3, 2]
     x.difference.should == x
-    x.difference.should_not equal x
+    x.difference.should_not.equal? x
   end
 
   it "does not return subclass instances for Array subclasses" do

@@ -49,7 +49,7 @@ describe "File.readlink" do
       it "returns the name of the file referenced by the given link" do
         touch @file
         result = File.readlink(@link)
-        result.encoding.should equal Encoding.find('filesystem')
+        result.encoding.should.equal? Encoding.find('filesystem')
         result.should == @file.dup.force_encoding(Encoding.find('filesystem'))
       end
     end

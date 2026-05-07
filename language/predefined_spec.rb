@@ -41,11 +41,11 @@ describe "Predefined global $~" do
   it "is set to contain the MatchData object of the last match if successful" do
     md = /foo/.match 'foo'
     $~.should.is_a?(MatchData)
-    $~.should equal md
+    $~.should.equal? md
 
     /bar/ =~ 'bar'
     $~.should.is_a?(MatchData)
-    $~.should_not equal md
+    $~.should_not.equal? md
   end
 
   it "is set to nil if the last match was unsuccessful" do
@@ -135,7 +135,7 @@ describe "Predefined global $&" do
 
   it "sets the encoding to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::EUC_JP) =~ /b/
-    $&.encoding.should equal(Encoding::EUC_JP)
+    $&.encoding.should.equal?(Encoding::EUC_JP)
   end
 
   it "is read-only" do
@@ -161,12 +161,12 @@ describe "Predefined global $`" do
 
   it "sets the encoding to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::EUC_JP) =~ /b/
-    $`.encoding.should equal(Encoding::EUC_JP)
+    $`.encoding.should.equal?(Encoding::EUC_JP)
   end
 
   it "sets an empty result to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::ISO_8859_1) =~ /a/
-    $`.encoding.should equal(Encoding::ISO_8859_1)
+    $`.encoding.should.equal?(Encoding::ISO_8859_1)
   end
 
   it "is read-only" do
@@ -192,12 +192,12 @@ describe "Predefined global $'" do
 
   it "sets the encoding to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::EUC_JP) =~ /b/
-    $'.encoding.should equal(Encoding::EUC_JP)
+    $'.encoding.should.equal?(Encoding::EUC_JP)
   end
 
   it "sets an empty result to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::ISO_8859_1) =~ /c/
-    $'.encoding.should equal(Encoding::ISO_8859_1)
+    $'.encoding.should.equal?(Encoding::ISO_8859_1)
   end
 
   it "is read-only" do
@@ -228,7 +228,7 @@ describe "Predefined global $+" do
 
   it "sets the encoding to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::EUC_JP) =~ /(b)/
-    $+.encoding.should equal(Encoding::EUC_JP)
+    $+.encoding.should.equal?(Encoding::EUC_JP)
   end
 
   it "is read-only" do
@@ -268,7 +268,7 @@ describe "Predefined globals $1..N" do
 
   it "sets the encoding to the encoding of the source String" do
     "abc".dup.force_encoding(Encoding::EUC_JP) =~ /(b)/
-    $1.encoding.should equal(Encoding::EUC_JP)
+    $1.encoding.should.equal?(Encoding::EUC_JP)
   end
 end
 
@@ -291,7 +291,7 @@ describe "Predefined global $stdout" do
 
     obj.stub!(:write)
     $stdout = obj
-    $stdout.should equal(obj)
+    $stdout.should.equal?(obj)
   end
 end
 
@@ -691,7 +691,7 @@ describe "Predefined global $/" do
     it "can be assigned a String" do
       str = +"abc"
       $/ = str
-      $/.should equal(str)
+      $/.should.equal?(str)
     end
   end
 
@@ -717,7 +717,7 @@ describe "Predefined global $/" do
     it "assigns the given String if it's frozen and has no instance variables" do
       str = "abc".freeze
       $/ = str
-      $/.should equal(str)
+      $/.should.equal?(str)
     end
   end
 
@@ -732,7 +732,7 @@ describe "Predefined global $/" do
 
   it "changes $-0" do
     $/ = "xyz"
-    $-0.should equal($/)
+    $-0.should.equal?($/)
   end
 
   it "does not call #to_str to convert the object to a String" do
@@ -772,7 +772,7 @@ describe "Predefined global $-0" do
     it "can be assigned a String" do
       str = +"abc"
       $-0 = str
-      $-0.should equal(str)
+      $-0.should.equal?(str)
     end
   end
 
@@ -798,7 +798,7 @@ describe "Predefined global $-0" do
     it "assigns the given String if it's frozen and has no instance variables" do
       str = "abc".freeze
       $-0 = str
-      $-0.should equal(str)
+      $-0.should.equal?(str)
     end
   end
 
@@ -813,7 +813,7 @@ describe "Predefined global $-0" do
 
   it "changes $/" do
     $-0 = "xyz"
-    $/.should equal($-0)
+    $/.should.equal?($-0)
   end
 
   it "does not call #to_str to convert the object to a String" do
@@ -850,7 +850,7 @@ describe "Predefined global $\\" do
   it "can be assigned a String" do
     str = "abc"
     $\ = str
-    $\.should equal(str)
+    $\.should.equal?(str)
   end
 
   it "can be assigned nil" do
@@ -1104,7 +1104,7 @@ end
 
 describe "Global variable $\"" do
   it "is an alias for $LOADED_FEATURES" do
-    $".should equal $LOADED_FEATURES
+    $".should.equal? $LOADED_FEATURES
   end
 
   it "is read-only" do
@@ -1433,12 +1433,12 @@ describe "The predefined global constant" do
   describe "STDIN" do
     platform_is_not :windows do
       it "has the same external encoding as Encoding.default_external" do
-        STDIN.external_encoding.should equal(Encoding.default_external)
+        STDIN.external_encoding.should.equal?(Encoding.default_external)
       end
 
       it "has the same external encoding as Encoding.default_external when that encoding is changed" do
         Encoding.default_external = Encoding::ISO_8859_16
-        STDIN.external_encoding.should equal(Encoding::ISO_8859_16)
+        STDIN.external_encoding.should.equal?(Encoding::ISO_8859_16)
       end
 
       it "has nil for the internal encoding" do

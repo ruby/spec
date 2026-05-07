@@ -7,7 +7,7 @@ describe "Array#pack with :buffer option" do
     n = [ 65, 66, 67 ]
     buffer = " "*3
     result = n.pack("ccc", buffer: buffer)      #=> "ABC"
-    result.should equal(buffer)
+    result.should.equal?(buffer)
   end
 
   it "adds result at the end of buffer content" do

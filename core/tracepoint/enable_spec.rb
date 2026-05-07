@@ -54,7 +54,7 @@ describe 'TracePoint#enable' do
       TracePoint.new(:line) do |tp|
         next unless TracePointSpec.target_thread?
         event_name = tp.event
-      end.enable { event_name.should equal(:line) }
+      end.enable { event_name.should.equal?(:line) }
     end
 
     it 'enables the trace object only for the current thread' do
@@ -85,7 +85,7 @@ describe 'TracePoint#enable' do
         event_name = tp.event
       end
       trace.enable do |*args|
-        event_name.should equal(:line)
+        event_name.should.equal?(:line)
         args.should == []
       end
       trace.should_not.enabled?

@@ -30,7 +30,7 @@ describe "NameError#name" do
 
     -> {
       Object.new.instance_variable_get(invalid_ivar_name)
-    }.should raise_error(NameError) {|e| e.name.should equal(invalid_ivar_name) }
+    }.should raise_error(NameError) {|e| e.name.should.equal?(invalid_ivar_name) }
   end
 
   it "returns the first argument passed to the method when a NameError is raised from #class_variable_get" do
@@ -38,6 +38,6 @@ describe "NameError#name" do
 
     -> {
       Object.class_variable_get(invalid_cvar_name)
-    }.should raise_error(NameError) {|e| e.name.should equal(invalid_cvar_name) }
+    }.should raise_error(NameError) {|e| e.name.should.equal?(invalid_cvar_name) }
   end
 end

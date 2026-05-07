@@ -80,8 +80,8 @@ end
 describe "String#scan with pattern and block" do
   it "returns self" do
     s = "foo"
-    s.scan(/./) {}.should equal(s)
-    s.scan(/roar/) {}.should equal(s)
+    s.scan(/./) {}.should.equal?(s)
+    s.scan(/roar/) {}.should.equal?(s)
   end
 
   it "passes each match to the block as one argument: an array" do

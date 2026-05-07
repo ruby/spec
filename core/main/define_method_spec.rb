@@ -23,6 +23,6 @@ describe "main#define_method" do
   end
 
   it 'returns the method name as symbol' do
-    eval(@code, TOPLEVEL_BINDING).should equal :boom
+    eval(@code, TOPLEVEL_BINDING).should.equal? :boom
   end
 end

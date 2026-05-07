@@ -19,7 +19,7 @@ describe "Module#deprecate_constant" do
       -> {
         value = @module::PUBLIC1
       }.should complain(/warning: constant .+::PUBLIC1 is deprecated/)
-      value.should equal(@value)
+      value.should.equal?(@value)
 
       -> { @module::PRIVATE }.should raise_error(NameError)
     end
@@ -61,7 +61,7 @@ describe "Module#deprecate_constant" do
   end
 
   it "returns self" do
-    @module.deprecate_constant(:PUBLIC1).should equal(@module)
+    @module.deprecate_constant(:PUBLIC1).should.equal?(@module)
   end
 
   it "raises a NameError when given an undefined name" do

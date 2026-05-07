@@ -13,7 +13,7 @@ describe "Range#reverse_each" do
 
   it "returns self" do
     r = (1..3)
-    r.reverse_each { |x| }.should equal(r)
+    r.reverse_each { |x| }.should.equal?(r)
   end
 
   it "returns an Enumerator if no block given" do

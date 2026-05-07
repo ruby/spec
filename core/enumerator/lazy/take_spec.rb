@@ -17,7 +17,7 @@ describe "Enumerator::Lazy#take" do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.take(1)
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
   end
 
   it "sets given count to size if the given count is less than old size" do

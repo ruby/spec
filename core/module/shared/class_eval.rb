@@ -45,7 +45,7 @@ describe :module_class_eval, shared: true do
     ModuleSpecs.send(@method) do |block_parameter|
       given = block_parameter
     end
-    given.should equal ModuleSpecs
+    given.should.equal? ModuleSpecs
   end
 
   it "uses the optional filename and lineno parameters for error messages" do

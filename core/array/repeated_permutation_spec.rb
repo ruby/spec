@@ -16,7 +16,7 @@ describe "Array#repeated_permutation" do
 
   it "yields all repeated_permutations to the block then returns self when called with block but no arguments" do
     yielded = []
-    @numbers.repeated_permutation(2) {|n| yielded << n}.should equal(@numbers)
+    @numbers.repeated_permutation(2) {|n| yielded << n}.should.equal?(@numbers)
     yielded.sort.should == @permutations
   end
 

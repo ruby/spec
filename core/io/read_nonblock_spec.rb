@@ -106,7 +106,7 @@ describe "IO#read_nonblock" do
     buffer = +""
     @write.write("1")
     output = @read.read_nonblock(1, buffer)
-    output.should equal(buffer)
+    output.should.equal?(buffer)
   end
 
   it "discards the existing buffer content upon successful read" do

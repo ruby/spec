@@ -16,7 +16,7 @@ describe "String#initialize" do
 
     it "does not raise an exception when frozen" do
       a = "hello".freeze
-      a.send(:initialize).should equal(a)
+      a.send(:initialize).should.equal?(a)
     end
   end
 

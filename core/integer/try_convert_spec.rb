@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 describe "Integer.try_convert" do
   it "returns the argument if it's an Integer" do
     x = 42
-    Integer.try_convert(x).should equal(x)
+    Integer.try_convert(x).should.equal?(x)
   end
 
   it "returns nil when the argument does not respond to #to_int" do
@@ -21,7 +21,7 @@ describe "Integer.try_convert" do
     x = 234
     obj = mock("to_int")
     obj.should_receive(:to_int).and_return(x)
-    Integer.try_convert(obj).should equal(x)
+    Integer.try_convert(obj).should.equal?(x)
   end
 
   it "sends #to_int to the argument and raises TypeError if it's not a kind of Integer" do

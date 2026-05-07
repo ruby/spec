@@ -10,19 +10,19 @@ describe :env_update, shared: true do
   end
 
   it "adds the parameter hash to ENV, returning ENV" do
-    ENV.send(@method, "foo" => "0", "bar" => "1").should equal(ENV)
+    ENV.send(@method, "foo" => "0", "bar" => "1").should.equal?(ENV)
     ENV["foo"].should == "0"
     ENV["bar"].should == "1"
   end
 
   it "adds the multiple parameter hashes to ENV, returning ENV" do
-    ENV.send(@method, {"foo" => "multi1"}, {"bar" => "multi2"}).should equal(ENV)
+    ENV.send(@method, {"foo" => "multi1"}, {"bar" => "multi2"}).should.equal?(ENV)
     ENV["foo"].should == "multi1"
     ENV["bar"].should == "multi2"
   end
 
   it "returns ENV when no block given" do
-    ENV.send(@method, {"foo" => "0", "bar" => "1"}).should equal(ENV)
+    ENV.send(@method, {"foo" => "0", "bar" => "1"}).should.equal?(ENV)
   end
 
   it "yields key, the old value and the new value when replacing an entry" do
@@ -63,7 +63,7 @@ describe :env_update, shared: true do
   end
 
   it "returns ENV when block given" do
-    ENV.send(@method, {"foo" => "0", "bar" => "1"}){}.should equal(ENV)
+    ENV.send(@method, {"foo" => "0", "bar" => "1"}){}.should.equal?(ENV)
   end
 
   it "raises TypeError when a name is not coercible to String" do

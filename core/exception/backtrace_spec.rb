@@ -94,13 +94,13 @@ describe "Exception#backtrace" do
       raise
     rescue RuntimeError => err
       bt = err.backtrace
-      err.dup.backtrace.should equal(bt)
+      err.dup.backtrace.should.equal?(bt)
 
       new_bt = ['hi']
       err.set_backtrace new_bt
 
       err.backtrace.should == new_bt
-      err.dup.backtrace.should equal(new_bt)
+      err.dup.backtrace.should.equal?(new_bt)
     end
   end
 end

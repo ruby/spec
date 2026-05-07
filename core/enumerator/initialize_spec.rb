@@ -12,7 +12,7 @@ describe "Enumerator#initialize" do
   end
 
   it "returns self when given a block" do
-    @uninitialized.send(:initialize) {}.should equal(@uninitialized)
+    @uninitialized.send(:initialize) {}.should.equal?(@uninitialized)
   end
 
   # Maybe spec should be broken up?
@@ -36,7 +36,7 @@ describe "Enumerator#initialize" do
   end
 
   it "sets size to the given size if the given size is Float::INFINITY" do
-    @uninitialized.send(:initialize, Float::INFINITY) {}.size.should equal(Float::INFINITY)
+    @uninitialized.send(:initialize, Float::INFINITY) {}.size.should.equal?(Float::INFINITY)
   end
 
   it "sets size to the given size if the given size is an Integer" do

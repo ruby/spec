@@ -164,7 +164,7 @@ describe "CApiGlobalSpecs" do
 
       it "returns $stdin" do
         $stdin = @stream
-        @f.rb_stdin.should equal($stdin)
+        @f.rb_stdin.should.equal?($stdin)
       end
     end
 
@@ -175,7 +175,7 @@ describe "CApiGlobalSpecs" do
 
       it "returns $stdout" do
         $stdout = @stream
-        @f.rb_stdout.should equal($stdout)
+        @f.rb_stdout.should.equal?($stdout)
       end
     end
 
@@ -186,7 +186,7 @@ describe "CApiGlobalSpecs" do
 
       it "returns $stderr" do
         $stderr = @stream
-        @f.rb_stderr.should equal($stderr)
+        @f.rb_stderr.should.equal?($stderr)
       end
     end
 
@@ -197,7 +197,7 @@ describe "CApiGlobalSpecs" do
 
       it "is an alias of rb_stdout" do
         $stdout = @stream
-        @f.rb_defout.should equal($stdout)
+        @f.rb_defout.should.equal?($stdout)
       end
     end
   end

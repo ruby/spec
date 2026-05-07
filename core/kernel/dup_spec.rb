@@ -25,7 +25,7 @@ describe "Kernel#dup" do
     end
 
     dup = instance.dup
-    dup.class.should equal klass
+    dup.class.should.equal? klass
   end
 
   it "does not copy frozen state from the original" do

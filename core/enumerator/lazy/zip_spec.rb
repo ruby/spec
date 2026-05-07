@@ -17,7 +17,7 @@ describe "Enumerator::Lazy#zip" do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.zip []
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
   end
 
   it "keeps size" do

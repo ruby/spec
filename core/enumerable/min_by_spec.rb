@@ -18,7 +18,7 @@ describe "Enumerable#min_by" do
 
   it "returns the object that appears first in #each in case of a tie" do
     a, b, c = '2', '1', '1'
-    EnumerableSpecs::Numerous.new(a, b, c).min_by {|obj| obj.to_i }.should equal(b)
+    EnumerableSpecs::Numerous.new(a, b, c).min_by {|obj| obj.to_i }.should.equal?(b)
   end
 
   it "uses min.<=>(current) to determine order" do

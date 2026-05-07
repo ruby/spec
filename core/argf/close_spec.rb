@@ -16,7 +16,7 @@ describe "ARGF.close" do
 
   it "returns self" do
     argf [@file1_name, @file2_name] do
-      @argf.close.should equal(@argf)
+      @argf.close.should.equal?(@argf)
     end
   end
 

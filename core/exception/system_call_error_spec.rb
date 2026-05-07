@@ -14,7 +14,7 @@ describe "SystemCallError" do
     end
 
     exc = ExceptionSpecs::SCESub.new
-    ScratchPad.recorded.should equal(:initialize)
+    ScratchPad.recorded.should.equal?(:initialize)
     exc.should.instance_of?(ExceptionSpecs::SCESub)
   ensure
     ExceptionSpecs.send(:remove_const, :SCESub)

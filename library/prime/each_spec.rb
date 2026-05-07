@@ -36,7 +36,7 @@ describe :prime_each, shared: true do
   end
 
   it "returns the last evaluated expression in the passed block" do
-    @object.each { break :value }.should equal(:value)
+    @object.each { break :value }.should.equal?(:value)
   end
 
   describe "when not passed a block" do

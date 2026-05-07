@@ -47,10 +47,10 @@ describe "Array#last" do
 
   it "properly handles recursive arrays" do
     empty = ArraySpecs.empty_recursive_array
-    empty.last.should equal(empty)
+    empty.last.should.equal?(empty)
 
     array = ArraySpecs.recursive_array
-    array.last.should equal(array)
+    array.last.should.equal?(array)
   end
 
   it "tries to convert the passed argument to an Integer using #to_int" do

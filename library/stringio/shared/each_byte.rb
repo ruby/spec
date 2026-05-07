@@ -23,7 +23,7 @@ describe :stringio_each_byte, shared: true do
   end
 
   it "returns self" do
-    @io.send(@method) {}.should equal(@io)
+    @io.send(@method) {}.should.equal?(@io)
   end
 
   it "returns an Enumerator when passed no block" do

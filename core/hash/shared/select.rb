@@ -77,7 +77,7 @@ describe :hash_select!, shared: true do
 
   it "is equivalent to keep_if if changes are made" do
     h = { a: 2 }
-    h.send(@method) { |k,v| v <= 1 }.should equal h
+    h.send(@method) { |k,v| v <= 1 }.should.equal? h
 
     h = { 1 => 2, 3 => 4 }
     all_args_select = []
@@ -87,7 +87,7 @@ describe :hash_select!, shared: true do
 
   it "removes all entries if the block is false" do
     h = { a: 1, b: 2, c: 3 }
-    h.send(@method) { |k,v| false }.should equal(h)
+    h.send(@method) { |k,v| false }.should.equal?(h)
     h.should == {}
   end
 

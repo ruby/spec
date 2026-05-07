@@ -39,13 +39,13 @@ describe "Hash#to_proc" do
 
     context "with a stored key" do
       it "returns the paired value" do
-        @proc.call(@key).should equal(@value)
+        @proc.call(@key).should.equal?(@value)
       end
     end
 
     context "passed as a block" do
       it "retrieves the hash's values" do
-        [@key].map(&@proc)[0].should equal(@value)
+        [@key].map(&@proc)[0].should.equal?(@value)
       end
 
       context "to instance_exec" do
@@ -72,7 +72,7 @@ describe "Hash#to_proc" do
         end
 
         it "returns the default value" do
-          @proc.call(@unstored).should equal(@default)
+          @proc.call(@unstored).should.equal?(@default)
         end
       end
 

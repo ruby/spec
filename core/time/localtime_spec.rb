@@ -12,7 +12,7 @@ describe "Time#localtime" do
 
   it "returns self" do
     t = Time.gm(2007, 1, 9, 12, 0, 0)
-    t.localtime.should equal(t)
+    t.localtime.should.equal?(t)
   end
 
   it "converts time to the UTC offset specified as an Integer number of seconds" do
@@ -26,7 +26,7 @@ describe "Time#localtime" do
     it "does not raise an error if already in the right time zone" do
       time = Time.now
       time.freeze
-      time.localtime.should equal(time)
+      time.localtime.should.equal?(time)
     end
 
     it "raises a FrozenError if the time has a different time zone" do

@@ -6,7 +6,7 @@ describe :kernel_float, shared: true do
     float = 1.12
     float2 = @object.send(:Float, float)
     float2.should == float
-    float2.should equal float
+    float2.should.equal? float
   end
 
   it "returns a Float for Fixnums" do
@@ -30,14 +30,14 @@ describe :kernel_float, shared: true do
     nan.nan?.should == true
     nan2 = @object.send(:Float, nan)
     nan2.nan?.should == true
-    nan2.should equal(nan)
+    nan2.should.equal?(nan)
   end
 
   it "returns the same Infinity for Infinity" do
     infinity = infinity_value
     infinity2 = @object.send(:Float, infinity)
     infinity2.should == infinity_value
-    infinity.should equal(infinity2)
+    infinity.should.equal?(infinity2)
   end
 
   it "converts Strings to floats without calling #to_f" do
@@ -345,14 +345,14 @@ describe :kernel_float, shared: true do
     (nan_to_f = mock('NaN')).should_receive(:to_f).once.and_return(nan)
     nan2 = @object.send(:Float, nan_to_f)
     nan2.nan?.should == true
-    nan2.should equal(nan)
+    nan2.should.equal?(nan)
   end
 
   it "returns the identical Infinity if #to_f is called and it returns Infinity" do
     infinity = infinity_value
     (infinity_to_f = mock('Infinity')).should_receive(:to_f).once.and_return(infinity)
     infinity2 = @object.send(:Float, infinity_to_f)
-    infinity2.should equal(infinity)
+    infinity2.should.equal?(infinity)
   end
 
   it "raises a TypeError if #to_f is not provided" do

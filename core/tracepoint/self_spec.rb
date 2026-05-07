@@ -21,6 +21,6 @@ describe 'TracePoint#self' do
       class TracePointSpec::C
       end
     end
-    trace.should equal TracePointSpec::C
+    trace.should.equal? TracePointSpec::C
   end
 end

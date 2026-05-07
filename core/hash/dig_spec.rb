@@ -60,7 +60,7 @@ describe "Hash#dig" do
   it "respects Hash's default" do
     default = {bar: 42}
     h = Hash.new(default)
-    h.dig(:foo).should equal default
+    h.dig(:foo).should.equal? default
     h.dig(:foo, :bar).should == 42
   end
 end

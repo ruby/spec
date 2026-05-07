@@ -116,7 +116,7 @@ describe :kernel_load, shared: true do
       path = File.expand_path "load_wrap_fixture.rb", CODE_LOADING_DIR
       @object.load(path, true)
 
-      ScratchPad.recorded[0].should equal(String)
+      ScratchPad.recorded[0].should.equal?(String)
     end
 
     it "sets self as a copy of the top-level main" do
@@ -126,7 +126,7 @@ describe :kernel_load, shared: true do
       top_level = ScratchPad.recorded[2]
       top_level.to_s.should == "main"
       top_level.method(:to_s).owner.should == top_level.singleton_class
-      top_level.should_not equal(main)
+      top_level.should_not.equal?(main)
       top_level.should.instance_of?(Object)
     end
 

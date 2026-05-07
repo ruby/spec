@@ -196,7 +196,7 @@ describe "File.basename" do
                  else
                    File.basename(original)
                  end
-        result.should_not equal(original)
+        result.should_not.equal?(original)
         result.frozen?.should == false
       end
     end

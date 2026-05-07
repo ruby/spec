@@ -33,7 +33,7 @@ describe "Array#fetch" do
     o = mock('5')
     def o.to_int(); 5; end
 
-    [1, 2, 3].fetch(o) { |i| i }.should equal(o)
+    [1, 2, 3].fetch(o) { |i| i }.should.equal?(o)
   end
 
   it "gives precedence to the default block over the default argument" do

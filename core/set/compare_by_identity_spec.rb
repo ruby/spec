@@ -34,13 +34,13 @@ describe "Set#compare_by_identity" do
   it "returns self" do
     set = Set.new
     result = set.compare_by_identity
-    result.should equal(set)
+    result.should.equal?(set)
   end
 
   it "is idempotent and has no effect on an already compare_by_identity set" do
     set = Set.new.compare_by_identity
     set << :foo
-    set.compare_by_identity.should equal(set)
+    set.compare_by_identity.should.equal?(set)
     set.should.compare_by_identity?
     set.to_a.should == [:foo]
   end

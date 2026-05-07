@@ -4,8 +4,8 @@ require_relative 'fixtures/classes'
 describe "Array#insert" do
   it "returns self" do
     ary = []
-    ary.insert(0).should equal(ary)
-    ary.insert(0, :a).should equal(ary)
+    ary.insert(0).should.equal?(ary)
+    ary.insert(0, :a).should.equal?(ary)
   end
 
   it "inserts objects before the element at index for non-negative index" do

@@ -779,7 +779,7 @@ describe "a method definition that sets more than one default parameter all to t
   it "assigns the parameters different objects across different default calls" do
     a, _b, _c = foo
     d, _e, _f = foo
-    a.should_not equal(d)
+    a.should_not.equal?(d)
   end
 
   it "only allows overriding the default value of the first such parameter in each set" do

@@ -16,7 +16,7 @@ describe "Set#add?" do
   end
 
   it "returns self when the Object has not yet been added to self" do
-    @set.add?("cat").should equal(@set)
+    @set.add?("cat").should.equal?(@set)
   end
 
   it "returns nil when the Object has already been added to self" do

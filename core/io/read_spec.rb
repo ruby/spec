@@ -374,14 +374,14 @@ describe "IO#read" do
   it "returns the given buffer" do
     buf = +""
 
-    @io.read(nil, buf).should equal buf
+    @io.read(nil, buf).should.equal? buf
   end
 
   it "returns the given buffer when there is nothing to read" do
     buf = +""
 
     @io.read
-    @io.read(nil, buf).should equal buf
+    @io.read(nil, buf).should.equal? buf
   end
 
   it "coerces the second argument to string and uses it as a buffer" do
@@ -389,7 +389,7 @@ describe "IO#read" do
     obj = mock("buff")
     obj.should_receive(:to_str).any_number_of_times.and_return(buf)
 
-    @io.read(15, obj).should_not equal obj
+    @io.read(15, obj).should_not.equal? obj
     buf.should == @contents
   end
 
@@ -578,20 +578,20 @@ describe :io_read_internal_encoding, shared: true do
   end
 
   it "sets the String encoding to the internal encoding" do
-    @io.read.encoding.should equal(Encoding::UTF_8)
+    @io.read.encoding.should.equal?(Encoding::UTF_8)
   end
 
   describe "when passed nil for limit" do
     it "sets the buffer to a transcoded String" do
       result = @io.read(nil, buf = +"")
-      buf.should equal(result)
+      buf.should.equal?(result)
       buf.should == "ありがとう\n"
     end
 
     it "sets the buffer's encoding to the internal encoding" do
       buf = "".dup.force_encoding Encoding::ISO_8859_1
       @io.read(nil, buf)
-      buf.encoding.should equal(Encoding::UTF_8)
+      buf.encoding.should.equal?(Encoding::UTF_8)
     end
   end
 end
@@ -602,15 +602,15 @@ describe :io_read_size_internal_encoding, shared: true do
   end
 
   it "returns a String in BINARY when passed a size" do
-    @io.read(4).encoding.should equal(Encoding::BINARY)
-    @io.read(0).encoding.should equal(Encoding::BINARY)
+    @io.read(4).encoding.should.equal?(Encoding::BINARY)
+    @io.read(0).encoding.should.equal?(Encoding::BINARY)
   end
 
   it "does not change the buffer's encoding when passed a limit" do
     buf = "".dup.force_encoding Encoding::ISO_8859_1
     @io.read(4, buf)
     buf.should == [164, 162, 164, 234].pack('C*').force_encoding(Encoding::ISO_8859_1)
-    buf.encoding.should equal(Encoding::ISO_8859_1)
+    buf.encoding.should.equal?(Encoding::ISO_8859_1)
   end
 
   it "truncates the buffer but does not change the buffer's encoding when no data remains" do
@@ -619,7 +619,7 @@ describe :io_read_size_internal_encoding, shared: true do
 
     @io.read(1, buf).should == nil
     buf.size.should == 0
-    buf.encoding.should equal(Encoding::ISO_8859_1)
+    buf.encoding.should.equal?(Encoding::ISO_8859_1)
   end
 end
 
@@ -637,7 +637,7 @@ describe "IO#read" do
     end
 
     it "sets the String encoding to Encoding.default_external" do
-      @io.read.encoding.should equal(Encoding.default_external)
+      @io.read.encoding.should.equal?(Encoding.default_external)
     end
   end
 
@@ -656,7 +656,7 @@ describe "IO#read" do
       end
 
       it "sets the String encoding to the external encoding" do
-        @io.read.encoding.should equal(Encoding::EUC_JP)
+        @io.read.encoding.should.equal?(Encoding::EUC_JP)
       end
 
       it_behaves_like :io_read_size_internal_encoding, nil

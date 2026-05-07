@@ -30,7 +30,7 @@ end
 describe "String#lstrip!" do
   it "modifies self in place and returns self" do
     a = "  hello  "
-    a.lstrip!.should equal(a)
+    a.lstrip!.should.equal?(a)
     a.should == "hello  "
   end
 

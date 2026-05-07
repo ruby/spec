@@ -18,7 +18,7 @@ describe "Kernel.proc" do
     some_lambda = -> {}
     some_lambda.lambda?.should == true
     l = proc(&some_lambda)
-    l.should equal(some_lambda)
+    l.should.equal?(some_lambda)
     l.lambda?.should == true
   end
 

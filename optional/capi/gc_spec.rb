@@ -10,9 +10,9 @@ describe "CApiGCSpecs" do
   describe "rb_gc_register_address" do
     it "correctly gets the value from a registered address" do
       @f.registered_tagged_address.should == 10
-      @f.registered_tagged_address.should equal(@f.registered_tagged_address)
+      @f.registered_tagged_address.should.equal?(@f.registered_tagged_address)
       @f.registered_reference_address.should == "Globally registered data"
-      @f.registered_reference_address.should equal(@f.registered_reference_address)
+      @f.registered_reference_address.should.equal?(@f.registered_reference_address)
     end
 
     it "keeps the value alive even if the value is assigned after rb_gc_register_address() is called" do

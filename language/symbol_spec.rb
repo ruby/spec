@@ -68,7 +68,7 @@ describe "A Symbol literal" do
       [:'a string', :'a string'],
       [:"#{var}", :"#{var}"]
     ].each { |a, b|
-      a.should equal(b)
+      a.should.equal?(b)
     }
   end
 

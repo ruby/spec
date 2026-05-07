@@ -97,7 +97,7 @@ end
 describe "String#delete!" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.delete!("aeiou", "^e").should equal(a)
+    a.delete!("aeiou", "^e").should.equal?(a)
     a.should == "hell"
   end
 

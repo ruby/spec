@@ -6,7 +6,7 @@ describe "Integer#chr without argument" do
   end
 
   it "returns a new String for each call" do
-    82.chr.should_not equal(82.chr)
+    82.chr.should_not.equal?(82.chr)
   end
 
   it "raises a RangeError is self is less than 0" do
@@ -150,7 +150,7 @@ describe "Integer#chr with an encoding argument" do
   end
 
   it "returns a new String for each call" do
-    8287.chr(Encoding::UTF_8).should_not equal(8287.chr(Encoding::UTF_8))
+    8287.chr(Encoding::UTF_8).should_not.equal?(8287.chr(Encoding::UTF_8))
   end
 
   it "accepts a String as an argument" do

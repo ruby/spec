@@ -12,13 +12,13 @@ describe "String#delete_prefix" do
   it "returns a copy of the string, when the prefix isn't found" do
     s = 'hello'
     r = s.delete_prefix('hello!')
-    r.should_not equal s
+    r.should_not.equal? s
     r.should == s
     r = s.delete_prefix('ell')
-    r.should_not equal s
+    r.should_not.equal? s
     r.should == s
     r = s.delete_prefix('')
-    r.should_not equal s
+    r.should_not.equal? s
     r.should == s
   end
 
@@ -52,7 +52,7 @@ end
 describe "String#delete_prefix!" do
   it "removes the found prefix" do
     s = 'hello'
-    s.delete_prefix!('hell').should equal(s)
+    s.delete_prefix!('hell').should.equal?(s)
     s.should == 'o'
   end
 

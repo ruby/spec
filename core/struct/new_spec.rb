@@ -116,7 +116,7 @@ describe "Struct.new" do
       klass = Struct.new(:attr) do |block_parameter|
         given = block_parameter
       end
-      klass.should equal(given)
+      klass.should.equal?(given)
     end
   end
 

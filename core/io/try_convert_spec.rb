@@ -13,7 +13,7 @@ describe "IO.try_convert" do
   end
 
   it "returns the passed IO object" do
-    IO.try_convert(@io).should equal(@io)
+    IO.try_convert(@io).should.equal?(@io)
   end
 
   it "does not call #to_io on an IO instance" do
@@ -24,7 +24,7 @@ describe "IO.try_convert" do
   it "calls #to_io to coerce an object" do
     obj = mock("io")
     obj.should_receive(:to_io).and_return(@io)
-    IO.try_convert(obj).should equal(@io)
+    IO.try_convert(obj).should.equal?(@io)
   end
 
   it "returns nil when the passed object does not respond to #to_io" do

@@ -25,7 +25,7 @@ describe "Enumerator::Generator#each" do
   end
 
   it "returns the block returned value" do
-    @generator.each {}.should equal(:block_returned)
+    @generator.each {}.should.equal?(:block_returned)
   end
 
   it "requires multiple arguments" do

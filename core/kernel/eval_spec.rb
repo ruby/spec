@@ -263,8 +263,8 @@ describe "Kernel#eval" do
 
   # See http://jira.codehaus.org/browse/JRUBY-5163
   it "uses the receiver as self inside the eval" do
-    eval("self").should equal(self)
-    Kernel.eval("self").should equal(Kernel)
+    eval("self").should.equal?(self)
+    Kernel.eval("self").should.equal?(Kernel)
   end
 
   it "does not pass the block to the method being eval'ed" do

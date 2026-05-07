@@ -35,7 +35,7 @@ describe "NoMethodError#args" do
       NoMethodErrorSpecs::NoMethodErrorB.new.foo(1,a)
     rescue Exception => e
       e.args.should == [1,a]
-      e.args[1].should equal a
+      e.args[1].should.equal? a
     end
   end
 end

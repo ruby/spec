@@ -122,7 +122,7 @@ describe "Multiple assignment" do
       ary = [1, 2]
 
       x = (a, b = ary)
-      x.should equal(ary)
+      x.should.equal?(ary)
     end
 
     it "returns the RHS when it is an Array subclass" do
@@ -130,7 +130,7 @@ describe "Multiple assignment" do
       ary = cls.new [1, 2]
 
       x = (a, b = ary)
-      x.should equal(ary)
+      x.should.equal?(ary)
     end
 
     it "does not call #to_ary on an Array subclass instance" do
@@ -189,7 +189,7 @@ describe "Multiple assignment" do
       ary = cls.new [1, 2]
 
       x = (*a = ary)
-      x.should equal(ary)
+      x.should.equal?(ary)
       a.should.instance_of?(Array)
     end
 
@@ -393,7 +393,7 @@ describe "Multiple assignment" do
       ary = [1, 2]
 
       (a = *ary).should == [1, 2]
-      a.should_not equal(ary)
+      a.should_not.equal?(ary)
     end
 
     it "does not call #to_a on an Array subclass" do

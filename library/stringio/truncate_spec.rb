@@ -18,7 +18,7 @@ describe "StringIO#truncate when passed [length]" do
   it "does not create a copy of the underlying string" do
     io = StringIO.new(str = +"123456789")
     io.truncate(4)
-    io.string.should equal(str)
+    io.string.should.equal?(str)
   end
 
   it "does not change the position" do

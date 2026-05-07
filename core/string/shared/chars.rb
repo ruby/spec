@@ -11,7 +11,7 @@ describe :string_chars, shared: true do
 
   it "returns self" do
     s = StringSpecs::MyString.new "hello"
-    s.send(@method){}.should equal(s)
+    s.send(@method){}.should.equal?(s)
   end
 
   it "is unicode aware" do

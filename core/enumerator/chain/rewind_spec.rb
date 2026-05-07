@@ -10,7 +10,7 @@ describe "Enumerator::Chain#rewind" do
   end
 
   it "returns self" do
-    @enum.rewind.should equal @enum
+    @enum.rewind.should.equal? @enum
   end
 
   it "does nothing if receiver has not been iterated" do

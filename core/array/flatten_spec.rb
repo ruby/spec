@@ -13,7 +13,7 @@ describe "Array#flatten" do
   it "returns dup when the level of recursion is 0" do
     a = [ 1, 2, [3, [4, 5] ] ]
     a.flatten(0).should == a
-    a.flatten(0).should_not equal(a)
+    a.flatten(0).should_not.equal?(a)
   end
 
   it "ignores negative levels" do
@@ -168,7 +168,7 @@ describe "Array#flatten!" do
 
   it "returns self if made some modifications" do
     a = [[[1, [2, 3]],[2, 3, [4, [4, [5, 5]], [1, 2, 3]]], [4]], []]
-    a.flatten!.should equal(a)
+    a.flatten!.should.equal?(a)
   end
 
   it "returns nil if no modifications took place" do

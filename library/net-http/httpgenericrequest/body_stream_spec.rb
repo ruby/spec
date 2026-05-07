@@ -9,7 +9,7 @@ describe "Net::HTTPGenericRequest#body_stream" do
 
     stream = StringIO.new("test")
     request.body_stream = stream
-    request.body_stream.should equal(stream)
+    request.body_stream.should.equal?(stream)
   end
 end
 
@@ -21,7 +21,7 @@ describe "Net::HTTPGenericRequest#body_stream=" do
 
   it "sets self's body stream to the passed Object" do
     @request.body_stream = @stream
-    @request.body_stream.should equal(@stream)
+    @request.body_stream.should.equal?(@stream)
   end
 
   it "sets self's body to nil" do

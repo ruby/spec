@@ -47,7 +47,7 @@ describe "String#chop" do
 
   it "returns a new string when applied to an empty string" do
     s = ""
-    s.chop.should_not equal(s)
+    s.chop.should_not.equal?(s)
   end
 
   it "returns String instances when called on a subclass" do
@@ -99,7 +99,7 @@ describe "String#chop!" do
 
   it "returns self if modifications were made" do
     str = "hello"
-    str.chop!.should equal(str)
+    str.chop!.should.equal?(str)
   end
 
   it "returns nil when called on an empty string" do

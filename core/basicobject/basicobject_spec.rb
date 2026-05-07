@@ -38,7 +38,7 @@ describe "BasicObject metaclass" do
   end
 
   it "has Class as superclass" do
-    @meta.superclass.should equal(Class)
+    @meta.superclass.should.equal?(Class)
   end
 
   it "contains methods for the BasicObject class" do
@@ -61,7 +61,7 @@ describe "BasicObject instance metaclass" do
   end
 
   it "has BasicObject as superclass" do
-    @meta.superclass.should equal(BasicObject)
+    @meta.superclass.should.equal?(BasicObject)
   end
 
   it "contains methods defined for the BasicObject instance" do

@@ -21,7 +21,7 @@ describe "Set#reject!" do
   end
 
   it "returns self when self was modified" do
-    @set.reject! { |x| true }.should equal(@set)
+    @set.reject! { |x| true }.should.equal?(@set)
   end
 
   it "returns nil when self was not modified" do

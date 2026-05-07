@@ -20,7 +20,7 @@ describe "Hash#rehash" do
 
     h.keys.include?(k1).should == true
 
-    h.rehash.should equal(h)
+    h.rehash.should.equal?(h)
     h.key?(k1).should == true
     h[k1].should == :v1
   end

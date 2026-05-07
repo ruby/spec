@@ -82,7 +82,7 @@ describe "IO#reopen with a String" do
   end
 
   it "returns self" do
-    @io.reopen(@name).should equal(@io)
+    @io.reopen(@name).should.equal?(@io)
   end
 
   it "positions a newly created instance at the beginning of the new stream" do

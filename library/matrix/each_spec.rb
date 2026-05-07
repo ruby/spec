@@ -14,7 +14,7 @@ describe "Matrix#each" do
   end
 
   it "returns self" do
-    @m.each{}.should equal(@m)
+    @m.each{}.should.equal?(@m)
   end
 
   it "yields the elements starting with the those of the first row" do

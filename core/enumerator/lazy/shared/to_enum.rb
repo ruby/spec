@@ -14,7 +14,7 @@ describe :enumerator_lazy_to_enum, shared: true do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @infinite.send @method
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@infinite)
+    ret.should_not.equal?(@infinite)
   end
 
   it "sets #size to nil when not given a block" do

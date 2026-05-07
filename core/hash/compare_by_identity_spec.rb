@@ -27,21 +27,21 @@ describe "Hash#compare_by_identity" do
   it "returns self" do
     h = {}
     h[:foo] = :bar
-    h.compare_by_identity.should equal h
+    h.compare_by_identity.should.equal? h
   end
 
   it "has no effect on an already compare_by_identity hash" do
     @idh[:foo] = :bar
-    @idh.compare_by_identity.should equal @idh
+    @idh.compare_by_identity.should.equal? @idh
     @idh.should.compare_by_identity?
     @idh[:foo].should == :bar
   end
 
   it "uses the semantics of BasicObject#equal? to determine key identity" do
-    [1].should_not equal([1])
+    [1].should_not.equal?([1])
     @idh[[1]] = :c
     @idh[[1]] = :d
-    :bar.should equal(:bar)
+    :bar.should.equal?(:bar)
     @idh[:bar] = :e
     @idh[:bar] = :f
     @idh.values.should == [:c, :d, :f]
@@ -107,7 +107,7 @@ describe "Hash#compare_by_identity" do
     @idh[foo] = true
     @idh[foo] = true
     @idh.size.should == 1
-    @idh.keys.first.should equal foo
+    @idh.keys.first.should.equal? foo
   end
 
   # Check `#[]=` call with a String literal.

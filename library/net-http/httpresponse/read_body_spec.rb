@@ -17,7 +17,7 @@ describe "Net::HTTPResponse#read_body" do
 
     it "returns the previously read body if called a second time" do
       @res.reading_body(@socket, true) do
-        @res.read_body.should equal(@res.read_body)
+        @res.read_body.should.equal?(@res.read_body)
       end
     end
   end
@@ -34,7 +34,7 @@ describe "Net::HTTPResponse#read_body" do
     it "returns the passed buffer" do
       @res.reading_body(@socket, true) do
         buffer = +""
-        @res.read_body(buffer).should equal(buffer)
+        @res.read_body(buffer).should.equal?(buffer)
       end
     end
 

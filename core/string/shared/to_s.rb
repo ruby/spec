@@ -1,7 +1,7 @@
 describe :string_to_s, shared: true do
   it "returns self when self.class == String" do
     a = "a string"
-    a.should equal(a.send(@method))
+    a.should.equal?(a.send(@method))
   end
 
   it "returns a new instance of String when called on a subclass" do

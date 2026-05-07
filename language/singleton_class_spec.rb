@@ -25,7 +25,7 @@ describe "A singleton class" do
   it "is a singleton Class instance" do
     o = mock('x')
     o.singleton_class.should.is_a?(Class)
-    o.singleton_class.should_not equal(Object)
+    o.singleton_class.should_not.equal?(Object)
     o.should.is_a?(o.singleton_class)
   end
 

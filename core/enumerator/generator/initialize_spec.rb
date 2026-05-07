@@ -13,7 +13,7 @@ describe "Enumerator::Generator#initialize" do
   end
 
   it "returns self when given a block" do
-    @uninitialized.send(:initialize) {}.should equal(@uninitialized)
+    @uninitialized.send(:initialize) {}.should.equal?(@uninitialized)
   end
 
   describe "on frozen instance" do

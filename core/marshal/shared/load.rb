@@ -111,7 +111,7 @@ describe :marshal_load, shared: true do
         source_object = ["foo" + "bar", "foobar"]
         object = Marshal.send(@method, Marshal.dump(source_object), freeze: true)
 
-        object[0].should equal(object[1])
+        object[0].should.equal?(object[1])
       end
     end
 
@@ -462,7 +462,7 @@ describe :marshal_load, shared: true do
       obj.instance_variable_set(:@mix, s)
       new_obj = Marshal.send(@method, "\004\bI[\b\"\0065I\"\twell\006:\t@fooi\017\"\ahi\006:\t@mix@\a")
       new_obj.should == obj
-      new_obj.instance_variable_get(:@mix).should equal new_obj[1]
+      new_obj.instance_variable_get(:@mix).should.equal? new_obj[1]
       new_obj[1].instance_variable_get(:@foo).should == 10
     end
 
@@ -651,7 +651,7 @@ describe :marshal_load, shared: true do
       data = "\x04\bI\"\babc\x06:\x06EF"
       result = Marshal.send(@method, data)
       result.should == str
-      result.encoding.should equal(Encoding::US_ASCII)
+      result.encoding.should.equal?(Encoding::US_ASCII)
     end
 
     it "loads a UTF-8 String" do
@@ -659,7 +659,7 @@ describe :marshal_load, shared: true do
       data = "\x04\bI\"\vm\xC3\xB6hre\x06:\x06ET"
       result = Marshal.send(@method, data)
       result.should == str
-      result.encoding.should equal(Encoding::UTF_8)
+      result.encoding.should.equal?(Encoding::UTF_8)
     end
 
     it "loads a String in another encoding" do
@@ -667,7 +667,7 @@ describe :marshal_load, shared: true do
       data = "\x04\bI\"\x0Fm\x00\xF6\x00h\x00r\x00e\x00\x06:\rencoding\"\rUTF-16LE"
       result = Marshal.send(@method, data)
       result.should == str
-      result.encoding.should equal(Encoding::UTF_16LE)
+      result.encoding.should.equal?(Encoding::UTF_16LE)
     end
 
     it "loads a String as BINARY if no encoding is specified at the end" do
@@ -1119,7 +1119,7 @@ describe :marshal_load, shared: true do
       t = Time.new
 
       t1, t2 = Marshal.send(@method, Marshal.dump([t, t]))
-      t1.should equal t2
+      t1.should.equal? t2
     end
 
     it "keeps the local zone" do

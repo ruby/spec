@@ -20,7 +20,7 @@ describe "Time#round" do
   it "returns an instance of Time, even if #round is called on a subclass" do
     subclass = Class.new(Time)
     instance = subclass.at(0)
-    instance.class.should equal subclass
+    instance.class.should.equal? subclass
     instance.round.should.instance_of?(Time)
   end
 

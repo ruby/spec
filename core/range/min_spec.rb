@@ -20,7 +20,7 @@ describe "Range#min" do
   end
 
   it "returns the start point when the endpoint equals the start point and the range is inclusive" do
-    (7..7).min.should equal(7)
+    (7..7).min.should.equal?(7)
   end
 
   it "returns nil when the start point is greater than the endpoint in a Float range" do
@@ -30,13 +30,13 @@ describe "Range#min" do
   it "returns start point when the range is Time..Time(included end point)" do
     time_start = Time.now
     time_end = Time.now + 1.0
-    (time_start..time_end).min.should equal(time_start)
+    (time_start..time_end).min.should.equal?(time_start)
   end
 
   it "returns start point when the range is Time...Time(excluded end point)" do
     time_start = Time.now
     time_end = Time.now + 1.0
-    (time_start...time_end).min.should equal(time_start)
+    (time_start...time_end).min.should.equal?(time_start)
   end
 
   it "returns the start point for endless ranges" do

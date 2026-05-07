@@ -88,7 +88,7 @@ describe "Module#remove_method" do
   end
 
   it "returns self" do
-    @module.send(:remove_method, :method_to_remove).should equal(@module)
+    @module.send(:remove_method, :method_to_remove).should.equal?(@module)
   end
 
   it "raises a NameError when attempting to remove method further up the inheritance tree" do
@@ -125,7 +125,7 @@ describe "Module#remove_method" do
     end
 
     it "does not raise exceptions when no arguments given" do
-      @frozen.send(:remove_method).should equal(@frozen)
+      @frozen.send(:remove_method).should.equal?(@frozen)
     end
   end
 end

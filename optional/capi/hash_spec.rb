@@ -77,7 +77,7 @@ describe "C-API Hash function" do
       hsh = {}
       dup = @s.rb_hash_dup(hsh)
       dup.should == hsh
-      dup.should_not equal(hsh)
+      dup.should_not.equal?(hsh)
     end
   end
 
@@ -117,7 +117,7 @@ describe "C-API Hash function" do
   describe "rb_hash_clear" do
     it "returns self that cleared keys and values" do
       hsh = { :key => 'value' }
-      @s.rb_hash_clear(hsh).should equal(hsh)
+      @s.rb_hash_clear(hsh).should.equal?(hsh)
       hsh.should == {}
     end
   end

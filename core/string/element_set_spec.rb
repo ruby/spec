@@ -127,7 +127,7 @@ describe "String#[]= with Integer index" do
     str = " ".force_encoding Encoding::US_ASCII
     rep = [160].pack('C').force_encoding Encoding::BINARY
     str[0] = rep
-    str.encoding.should equal(Encoding::BINARY)
+    str.encoding.should.equal?(Encoding::BINARY)
   end
 
   it "updates the string to a compatible encoding" do
@@ -189,7 +189,7 @@ describe "String#[]= with String index" do
     str = " ".force_encoding Encoding::US_ASCII
     rep = [160].pack('C').force_encoding Encoding::BINARY
     str[" "] = rep
-    str.encoding.should equal(Encoding::BINARY)
+    str.encoding.should.equal?(Encoding::BINARY)
   end
 
   it "raises an Encoding::CompatibilityError if the replacement encoding is incompatible" do
@@ -302,7 +302,7 @@ describe "String#[]= with a Regexp index" do
     str = " ".force_encoding Encoding::US_ASCII
     rep = [160].pack('C').force_encoding Encoding::BINARY
     str[/ /] = rep
-    str.encoding.should equal(Encoding::BINARY)
+    str.encoding.should.equal?(Encoding::BINARY)
   end
 
   it "raises an Encoding::CompatibilityError if the replacement encoding is incompatible" do
@@ -423,7 +423,7 @@ describe "String#[]= with a Range index" do
     str = " ".force_encoding Encoding::US_ASCII
     rep = [160].pack('C').force_encoding Encoding::BINARY
     str[0..1] = rep
-    str.encoding.should equal(Encoding::BINARY)
+    str.encoding.should.equal?(Encoding::BINARY)
   end
 
   it "raises an Encoding::CompatibilityError if the replacement encoding is incompatible" do
@@ -578,7 +578,7 @@ describe "String#[]= with Integer index, count" do
     str = " ".force_encoding Encoding::US_ASCII
     rep = [160].pack('C').force_encoding Encoding::BINARY
     str[0, 1] = rep
-    str.encoding.should equal(Encoding::BINARY)
+    str.encoding.should.equal?(Encoding::BINARY)
   end
 
   it "raises an Encoding::CompatibilityError if the replacement encoding is incompatible" do

@@ -31,7 +31,7 @@ describe "main#private" do
   end
 
   it "returns argument" do
-    eval("private :main_public_method", TOPLEVEL_BINDING).should equal(:main_public_method)
+    eval("private :main_public_method", TOPLEVEL_BINDING).should.equal?(:main_public_method)
   end
 
   it "raises a NameError when at least one of given method names is undefined" do

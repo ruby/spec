@@ -5,9 +5,9 @@ describe :stringio_read, shared: true do
 
   it "returns the passed buffer String" do
     # Note: Rubinius bug:
-    # @io.send(@method, 7, buffer = +"").should equal(buffer)
+    # @io.send(@method, 7, buffer = +"").should.equal?(buffer)
     ret = @io.send(@method, 7, buffer = +"")
-    ret.should equal(buffer)
+    ret.should.equal?(buffer)
   end
 
   it "reads length bytes and writes them to the buffer String" do

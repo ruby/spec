@@ -22,7 +22,7 @@ describe :argf_each_codepoint, shared: true do
 
   it "returns self when passed a block" do
     argf @filenames do
-      @argf.send(@method) {}.should equal(@argf)
+      @argf.send(@method) {}.should.equal?(@argf)
     end
   end
 

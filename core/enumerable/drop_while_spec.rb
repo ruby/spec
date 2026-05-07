@@ -38,7 +38,7 @@ describe "Enumerable#drop_while" do
 
   it "doesn't return self when it could" do
     a = [1,2,3]
-    a.drop_while{false}.should_not equal(a)
+    a.drop_while{false}.should_not.equal?(a)
   end
 
   it "gathers whole arrays as elements when each yields multiple" do

@@ -30,7 +30,7 @@ end
 describe "String#rstrip!" do
   it "modifies self in place and returns self" do
     a = "  hello  "
-    a.rstrip!.should equal(a)
+    a.rstrip!.should.equal?(a)
     a.should == "  hello"
   end
 

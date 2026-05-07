@@ -7,7 +7,7 @@ describe "Class.new with a block given" do
     klass = Class.new do
       self_in_block = self
     end
-    self_in_block.should equal klass
+    self_in_block.should.equal? klass
   end
 
   it "uses the given block as the class' body" do
@@ -142,7 +142,7 @@ describe "Class#new" do
 
     instance = klass.new
     instance.should.is_a? klass
-    instance.class.should equal klass
+    instance.class.should.equal? klass
   end
 
   it "passes the block to #initialize" do

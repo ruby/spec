@@ -63,11 +63,11 @@ describe "Array#product" do
   describe "when given an empty block" do
     it "returns self" do
       arr = [1,2]
-      arr.product([3,4,5],[6,8]){}.should equal(arr)
+      arr.product([3,4,5],[6,8]){}.should.equal?(arr)
       arr = []
-      arr.product([3,4,5],[6,8]){}.should equal(arr)
+      arr.product([3,4,5],[6,8]){}.should.equal?(arr)
       arr = [1,2]
-      arr.product([]){}.should equal(arr)
+      arr.product([]){}.should.equal?(arr)
     end
   end
 end

@@ -4,12 +4,12 @@ require 'stringio'
 describe "StringIO.open when passed [Object, mode]" do
   it "uses the passed Object as the StringIO backend" do
     io = StringIO.open(str = "example", "r")
-    io.string.should equal(str)
+    io.string.should.equal?(str)
   end
 
   it "returns the blocks return value when yielding" do
     ret = StringIO.open(+"example", "r") { :test }
-    ret.should equal(:test)
+    ret.should.equal?(:test)
   end
 
   it "yields self to the passed block" do
@@ -158,13 +158,13 @@ end
 describe "StringIO.open when passed [Object]" do
   it "uses the passed Object as the StringIO backend" do
     io = StringIO.open(str = "example")
-    io.string.should equal(str)
+    io.string.should.equal?(str)
   end
 
   it "yields self to the passed block" do
     io = nil
     ret = StringIO.open(+"example") { |strio| io = strio }
-    io.should equal(ret)
+    io.should.equal?(ret)
   end
 
   it "sets the mode to read-write (r+)" do
@@ -196,7 +196,7 @@ describe "StringIO.open when passed no arguments" do
   it "yields self to the passed block" do
     io = nil
     ret = StringIO.open { |strio| io = strio }
-    io.should equal(ret)
+    io.should.equal?(ret)
   end
 
   it "sets the mode to read-write (r+)" do

@@ -56,7 +56,7 @@ describe "Time.at" do
     it "creates a dup time object with the value given by time" do
       t1 = Time.new
       t2 = Time.at(t1)
-      t1.should_not equal t2
+      t1.should_not.equal? t2
     end
 
     it "returns a UTC time if the argument is UTC" do

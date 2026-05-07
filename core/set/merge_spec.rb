@@ -8,7 +8,7 @@ describe "Set#merge" do
 
   it "returns self" do
     set = Set[1, 2]
-    set.merge([3, 4]).should equal(set)
+    set.merge([3, 4]).should.equal?(set)
   end
 
   it "raises an ArgumentError when passed a non-Enumerable" do

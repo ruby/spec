@@ -11,8 +11,8 @@ describe "Set#delete" do
   end
 
   it "returns self" do
-    @set.delete("a").should equal(@set)
-    @set.delete("x").should equal(@set)
+    @set.delete("a").should.equal?(@set)
+    @set.delete("x").should.equal?(@set)
   end
 end
 
@@ -27,7 +27,7 @@ describe "Set#delete?" do
   end
 
   it "returns self when the passed Object is in self" do
-    @set.delete?("a").should equal(@set)
+    @set.delete?("a").should.equal?(@set)
   end
 
   it "returns nil when the passed Object is not in self" do

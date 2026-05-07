@@ -19,7 +19,7 @@ describe "OpenStruct#to_h" do
   end
 
   it "does not return the hash used as initializer" do
-    @to_h.should_not equal(@h)
+    @to_h.should_not.equal?(@h)
   end
 
   it "returns a Hash that is independent from the struct" do

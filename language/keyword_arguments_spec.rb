@@ -95,7 +95,7 @@ describe "Keyword arguments" do
       end
 
       h2 = bar(h)
-      h2.should equal(h)
+      h2.should.equal?(h)
       Hash.ruby2_keywords_hash?(h).should == true
     end
   end

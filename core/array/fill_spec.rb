@@ -10,7 +10,7 @@ describe "Array#fill" do
 
   it "returns self" do
     ary = [1, 2, 3]
-    ary.fill(:a).should equal(ary)
+    ary.fill(:a).should.equal?(ary)
   end
 
   it "is destructive" do
@@ -25,10 +25,10 @@ describe "Array#fill" do
     ary.fill(str).should == [str, str, str, str]
     str << "y"
     ary.should == [str, str, str, str]
-    ary[0].should equal(str)
-    ary[1].should equal(str)
-    ary[2].should equal(str)
-    ary[3].should equal(str)
+    ary[0].should.equal?(str)
+    ary[1].should.equal?(str)
+    ary[2].should.equal?(str)
+    ary[3].should.equal?(str)
   end
 
   it "replaces all elements in the array with the filler if not given a index nor a length" do

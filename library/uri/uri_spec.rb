@@ -19,7 +19,7 @@ describe "the URI method" do
 
   it "returns the argument if it is a URI object" do
     result = URI.parse("http://ruby-lang.org")
-    URI(result).should equal(result)
+    URI(result).should.equal?(result)
   end
 
   #apparently this was a concern?  imported from MRI tests

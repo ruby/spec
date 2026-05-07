@@ -55,9 +55,9 @@ describe "Array#rotate" do
 
   it "does not return self" do
     a = [1, 2, 3]
-    a.rotate.should_not equal(a)
+    a.rotate.should_not.equal?(a)
     a = []
-    a.rotate(0).should_not equal(a)
+    a.rotate(0).should_not.equal?(a)
   end
 
   it "does not return subclass instance for Array subclasses" do
@@ -69,7 +69,7 @@ describe "Array#rotate!" do
   describe "when passed no argument" do
     it "moves the first element to the end and returns self" do
       a = [1, 2, 3, 4, 5]
-      a.rotate!.should equal(a)
+      a.rotate!.should.equal?(a)
       a.should == [2, 3, 4, 5, 1]
     end
   end
@@ -77,11 +77,11 @@ describe "Array#rotate!" do
   describe "with an argument n" do
     it "moves the first (n % size) elements at the end and returns self" do
       a = [1, 2, 3, 4, 5]
-      a.rotate!(2).should equal(a)
+      a.rotate!(2).should.equal?(a)
       a.should == [3, 4, 5, 1, 2]
-      a.rotate!(-12).should equal(a)
+      a.rotate!(-12).should.equal?(a)
       a.should == [1, 2, 3, 4, 5]
-      a.rotate!(13).should equal(a)
+      a.rotate!(13).should.equal?(a)
       a.should == [4, 5, 1, 2, 3]
     end
 
@@ -105,19 +105,19 @@ describe "Array#rotate!" do
 
   it "does nothing and returns self when the length is zero or one" do
     a = [1]
-    a.rotate!.should equal(a)
+    a.rotate!.should.equal?(a)
     a.should == [1]
-    a.rotate!(2).should equal(a)
+    a.rotate!(2).should.equal?(a)
     a.should == [1]
-    a.rotate!(-21).should equal(a)
+    a.rotate!(-21).should.equal?(a)
     a.should == [1]
 
     a = []
-    a.rotate!.should equal(a)
+    a.rotate!.should.equal?(a)
     a.should == []
-    a.rotate!(2).should equal(a)
+    a.rotate!(2).should.equal?(a)
     a.should == []
-    a.rotate!(-21).should equal(a)
+    a.rotate!(-21).should.equal?(a)
     a.should == []
   end
 

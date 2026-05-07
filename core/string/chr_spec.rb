@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe "String#chr" do
   it "returns a copy of self" do
     s = 'e'
-    s.should_not equal s.chr
+    s.should_not.equal? s.chr
   end
 
   it "returns a String" do

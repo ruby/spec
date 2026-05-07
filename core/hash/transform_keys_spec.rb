@@ -7,7 +7,7 @@ describe "Hash#transform_keys" do
 
   it "returns new hash" do
     ret = @hash.transform_keys(&:succ)
-    ret.should_not equal(@hash)
+    ret.should_not.equal?(@hash)
     ret.should.instance_of?(Hash)
   end
 
@@ -22,7 +22,7 @@ describe "Hash#transform_keys" do
   it "makes both hashes to share values" do
     value = [1, 2, 3]
     new_hash = { a: value }.transform_keys(&:upcase)
-    new_hash[:A].should equal(value)
+    new_hash[:A].should.equal?(value)
   end
 
   context "when no block is given" do
@@ -84,7 +84,7 @@ describe "Hash#transform_keys!" do
   end
 
   it "returns self" do
-    @hash.transform_keys!(&:succ).should equal(@hash)
+    @hash.transform_keys!(&:succ).should.equal?(@hash)
   end
 
   it "updates self as transformed values with the given block" do

@@ -4,12 +4,12 @@ require_relative 'fixtures/classes'
 describe "String.try_convert" do
   it "returns the argument if it's a String" do
     x = String.new
-    String.try_convert(x).should equal(x)
+    String.try_convert(x).should.equal?(x)
   end
 
   it "returns the argument if it's a kind of String" do
     x = StringSpecs::MyString.new
-    String.try_convert(x).should equal(x)
+    String.try_convert(x).should.equal?(x)
   end
 
   it "returns nil when the argument does not respond to #to_str" do
@@ -26,14 +26,14 @@ describe "String.try_convert" do
     x = String.new
     obj = mock("to_str")
     obj.should_receive(:to_str).and_return(x)
-    String.try_convert(obj).should equal(x)
+    String.try_convert(obj).should.equal?(x)
   end
 
   it "sends #to_str to the argument and returns the result if it's a kind of String" do
     x = StringSpecs::MyString.new
     obj = mock("to_str")
     obj.should_receive(:to_str).and_return(x)
-    String.try_convert(obj).should equal(x)
+    String.try_convert(obj).should.equal?(x)
   end
 
   it "sends #to_str to the argument and raises TypeError if it's not a kind of String" do

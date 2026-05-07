@@ -13,7 +13,7 @@ describe "BasicObject#instance_exec" do
 
   it "passes arguments to the block" do
     a = BasicObject.new
-    a.instance_exec(1) { |b| b }.should equal(1)
+    a.instance_exec(1) { |b| b }.should.equal?(1)
   end
 
   it "raises a LocalJumpError unless given a block" do

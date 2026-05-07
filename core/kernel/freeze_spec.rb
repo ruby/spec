@@ -11,7 +11,7 @@ describe "Kernel#freeze" do
 
   it "returns self" do
     o = Object.new
-    o.freeze.should equal(o)
+    o.freeze.should.equal?(o)
   end
 
   describe "on integers" do

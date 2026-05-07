@@ -5,7 +5,7 @@ require_relative 'fixtures/classes'
 describe "String#prepend" do
   it "prepends the given argument to self and returns self" do
     str = "world"
-    str.prepend("hello ").should equal(str)
+    str.prepend("hello ").should.equal?(str)
     str.should == "hello world"
   end
 
@@ -49,7 +49,7 @@ describe "String#prepend" do
 
   it "returns self when given no arguments" do
     str = "hello"
-    str.prepend.should equal(str)
+    str.prepend.should.equal?(str)
     str.should == "hello"
   end
 end

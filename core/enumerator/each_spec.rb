@@ -55,13 +55,13 @@ describe "Enumerator#each" do
   end
 
   it "returns self if not given arguments and not given a block" do
-    @enum_with_arguments.each.should equal(@enum_with_arguments)
+    @enum_with_arguments.each.should.equal?(@enum_with_arguments)
 
-    @enum_with_yielder.each.should equal(@enum_with_yielder)
+    @enum_with_yielder.each.should.equal?(@enum_with_yielder)
   end
 
   it "returns the same value from receiver.each if block is given" do
-    @enum_with_arguments.each {}.should equal(:method_returned)
+    @enum_with_arguments.each {}.should.equal?(:method_returned)
   end
 
   it "passes given arguments at initialized to receiver.each" do
@@ -78,13 +78,13 @@ describe "Enumerator#each" do
   end
 
   it "returns the same value from receiver.each if block and arguments are given" do
-    @enum_with_arguments.each(:each1, :each2) {}.should equal(:method_returned)
+    @enum_with_arguments.each(:each1, :each2) {}.should.equal?(:method_returned)
   end
 
   it "returns new Enumerator if given arguments but not given a block" do
     ret = @enum_with_arguments.each 1
     ret.should.instance_of?(Enumerator)
-    ret.should_not equal(@enum_with_arguments)
+    ret.should_not.equal?(@enum_with_arguments)
   end
 
   it "does not destructure yielded array values when chaining each.map" do

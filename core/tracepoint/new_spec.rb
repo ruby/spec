@@ -12,15 +12,15 @@ describe 'TracePoint.new' do
       next unless TracePointSpec.target_thread?
       event_name = tp.event
     }.enable do
-      event_name.should equal(:line)
+      event_name.should.equal?(:line)
 
       event_name = nil
       TracePointSpec.test
-      event_name.should equal(:line)
+      event_name.should.equal?(:line)
 
       event_name = nil
       TracePointSpec::B.new.foo
-      event_name.should equal(:line)
+      event_name.should.equal?(:line)
     end
   end
 
@@ -44,13 +44,13 @@ describe 'TracePoint.new' do
       event_name = tp.event
     end.enable do
       TracePointSpec.test
-      event_name.should equal(:call)
+      event_name.should.equal?(:call)
 
       TracePointSpec::B.new.foo
-      event_name.should equal(:call)
+      event_name.should.equal?(:call)
 
       class TracePointSpec::B; end
-      event_name.should equal(:end)
+      event_name.should.equal?(:end)
     end
   end
 

@@ -13,7 +13,7 @@ describe "IO#binmode" do
 
   it "returns self" do
     @io = new_io(@name)
-    @io.binmode.should equal(@io)
+    @io.binmode.should.equal?(@io)
   end
 
   it "raises an IOError on closed stream" do

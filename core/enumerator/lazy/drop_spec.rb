@@ -17,7 +17,7 @@ describe "Enumerator::Lazy#drop" do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.drop(1)
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
   end
 
   it "sets difference of given count with old size to new size" do

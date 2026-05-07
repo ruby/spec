@@ -2,7 +2,7 @@
 describe :string_replace, shared: true do
   it "returns self" do
     a = "a"
-    a.send(@method, "b").should equal(a)
+    a.send(@method, "b").should.equal?(a)
   end
 
   it "replaces the content of self with other" do

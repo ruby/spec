@@ -49,19 +49,19 @@ describe "Dir.children" do
     platform_is_not :windows do
       children.should include("こんにちは.txt".dup.force_encoding(encoding))
     end
-    children.first.encoding.should equal(Encoding.find("filesystem"))
+    children.first.encoding.should.equal?(Encoding.find("filesystem"))
   end
 
   it "returns children encoded with the specified encoding" do
     dir = File.join(DirSpecs.mock_dir, 'special')
     children = Dir.children(dir, encoding: "euc-jp").sort
-    children.first.encoding.should equal(Encoding::EUC_JP)
+    children.first.encoding.should.equal?(Encoding::EUC_JP)
   end
 
   it "returns children transcoded to the default internal encoding" do
     Encoding.default_internal = Encoding::EUC_KR
     children = Dir.children(File.join(DirSpecs.mock_dir, 'special')).sort
-    children.first.encoding.should equal(Encoding::EUC_KR)
+    children.first.encoding.should.equal?(Encoding::EUC_KR)
   end
 
   it "raises a SystemCallError if called with a nonexistent directory" do
@@ -115,21 +115,21 @@ describe "Dir#children" do
     platform_is_not :windows do
       children.should include("こんにちは.txt".dup.force_encoding(encoding))
     end
-    children.first.encoding.should equal(Encoding.find("filesystem"))
+    children.first.encoding.should.equal?(Encoding.find("filesystem"))
   end
 
   it "returns children encoded with the specified encoding" do
     path = File.join(DirSpecs.mock_dir, 'special')
     @dir = Dir.new(path, encoding: "euc-jp")
     children = @dir.children.sort
-    children.first.encoding.should equal(Encoding::EUC_JP)
+    children.first.encoding.should.equal?(Encoding::EUC_JP)
   end
 
   it "returns children transcoded to the default internal encoding" do
     Encoding.default_internal = Encoding::EUC_KR
     @dir = Dir.new(File.join(DirSpecs.mock_dir, 'special'))
     children = @dir.children.sort
-    children.first.encoding.should equal(Encoding::EUC_KR)
+    children.first.encoding.should.equal?(Encoding::EUC_KR)
   end
 
   it "returns the same result when called repeatedly" do

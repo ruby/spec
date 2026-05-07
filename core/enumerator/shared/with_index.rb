@@ -16,7 +16,7 @@ describe :enum_with_index, shared: true do
   end
 
   it "returns the object being enumerated when given a block" do
-    @enum.send(@method) { |o, i| :glark }.should equal(@origin)
+    @enum.send(@method) { |o, i| :glark }.should.equal?(@origin)
   end
 
   it "binds splat arguments properly" do

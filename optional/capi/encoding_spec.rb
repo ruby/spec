@@ -298,7 +298,7 @@ describe "C-API Encoding function" do
     it "returns a String in US-ASCII encoding when high bits are set" do
       xEE = [0xEE].pack('C').force_encoding('utf-8')
       result = @s.rb_enc_str_new(xEE, 1, Encoding::US_ASCII)
-      result.encoding.should equal(Encoding::US_ASCII)
+      result.encoding.should.equal?(Encoding::US_ASCII)
     end
   end
 

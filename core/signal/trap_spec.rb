@@ -14,7 +14,7 @@ describe "Signal.trap" do
     end
 
     it "returns the previous handler" do
-      Signal.trap(:HUP, @saved_trap).should equal(@proc)
+      Signal.trap(:HUP, @saved_trap).should.equal?(@proc)
     end
 
     it "accepts a block" do
@@ -203,35 +203,35 @@ describe "Signal.trap" do
 
     it "accepts long names as Strings" do
       Signal.trap "SIGHUP", @proc
-      Signal.trap("SIGHUP", @saved_trap).should equal(@proc)
+      Signal.trap("SIGHUP", @saved_trap).should.equal?(@proc)
     end
 
     it "accepts short names as Strings" do
       Signal.trap "HUP", @proc
-      Signal.trap("HUP", @saved_trap).should equal(@proc)
+      Signal.trap("HUP", @saved_trap).should.equal?(@proc)
     end
 
     it "accepts long names as Symbols" do
       Signal.trap :SIGHUP, @proc
-      Signal.trap(:SIGHUP, @saved_trap).should equal(@proc)
+      Signal.trap(:SIGHUP, @saved_trap).should.equal?(@proc)
     end
 
     it "accepts short names as Symbols" do
       Signal.trap :HUP, @proc
-      Signal.trap(:HUP, @saved_trap).should equal(@proc)
+      Signal.trap(:HUP, @saved_trap).should.equal?(@proc)
     end
 
     it "calls #to_str on an object to convert to a String" do
       obj = mock("signal")
       obj.should_receive(:to_str).exactly(2).times.and_return("HUP")
       Signal.trap obj, @proc
-      Signal.trap(obj, @saved_trap).should equal(@proc)
+      Signal.trap(obj, @saved_trap).should.equal?(@proc)
     end
 
     it "accepts Integer values" do
       hup = Signal.list["HUP"]
       Signal.trap hup, @proc
-      Signal.trap(hup, @saved_trap).should equal(@proc)
+      Signal.trap(hup, @saved_trap).should.equal?(@proc)
     end
 
     it "does not call #to_int on an object to convert to an Integer" do

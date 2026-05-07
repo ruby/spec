@@ -16,7 +16,7 @@ describe :stringio_each_separator, shared: true do
   end
 
   it "returns self" do
-    @io.send(@method) {|l| l }.should equal(@io)
+    @io.send(@method) {|l| l }.should.equal?(@io)
   end
 
   it "tries to convert the passed separator to a String using #to_str" do
@@ -81,7 +81,7 @@ describe :stringio_each_no_arguments, shared: true do
   end
 
   it "returns self" do
-    @io.send(@method) {|l| l }.should equal(@io)
+    @io.send(@method) {|l| l }.should.equal?(@io)
   end
 
   it "returns an Enumerator when passed no block" do

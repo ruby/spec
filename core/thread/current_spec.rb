@@ -9,8 +9,8 @@ describe "Thread.current" do
 
   it "returns the current thread" do
     t = Thread.new { Thread.current }
-    t.value.should equal(t)
-    Thread.current.should_not equal(t.value)
+    t.value.should.equal?(t)
+    Thread.current.should_not.equal?(t.value)
   end
 
   it "returns the correct thread in a Fiber" do
@@ -22,10 +22,10 @@ describe "Thread.current" do
         cur = Thread.current
         Fiber.new {
           Thread.current
-        }.resume.should equal cur
+        }.resume.should.equal? cur
         cur
       }
-      t.value.should equal t
+      t.value.should.equal? t
     end
   end
 end

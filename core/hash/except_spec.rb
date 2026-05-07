@@ -7,7 +7,7 @@ describe "Hash#except" do
 
   it "returns a new duplicate hash without arguments" do
     ret = @hash.except
-    ret.should_not equal(@hash)
+    ret.should_not.equal?(@hash)
     ret.should == @hash
   end
 

@@ -42,7 +42,7 @@ describe "Array#sort" do
     a = [1, 2, 3]
     sorted = a.sort
     sorted.should == a
-    sorted.should_not equal(a)
+    sorted.should_not.equal?(a)
   end
 
   it "properly handles recursive arrays" do
@@ -184,13 +184,13 @@ describe "Array#sort!" do
 
   it "returns self if the order of elements changed" do
     a = [6, 7, 2, 3, 7]
-    a.sort!.should equal(a)
+    a.sort!.should.equal?(a)
     a.should == [2, 3, 6, 7, 7]
   end
 
   it "returns self even if makes no modification" do
     a = [1, 2, 3, 4, 5]
-    a.sort!.should equal(a)
+    a.sort!.should.equal?(a)
     a.should == [1, 2, 3, 4, 5]
   end
 

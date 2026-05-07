@@ -42,9 +42,9 @@ describe "Array#rassoc" do
     a = [s1, s2]
 
     s1.should_not_receive(:to_ary)
-    a.rassoc(2).should equal(s1)
+    a.rassoc(2).should.equal?(s1)
 
     a.rassoc(3).should == [2, 3]
-    s2.called.should equal(:to_ary)
+    s2.called.should.equal?(:to_ary)
   end
 end

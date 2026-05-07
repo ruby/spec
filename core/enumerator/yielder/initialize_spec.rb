@@ -13,6 +13,6 @@ describe "Enumerator::Yielder#initialize" do
   end
 
   it "returns self when given a block" do
-    @uninitialized.send(:initialize) {}.should equal(@uninitialized)
+    @uninitialized.send(:initialize) {}.should.equal?(@uninitialized)
   end
 end

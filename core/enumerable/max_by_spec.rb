@@ -18,7 +18,7 @@ describe "Enumerable#max_by" do
 
   it "returns the object that appears first in #each in case of a tie" do
     a, b, c = '1', '2', '2'
-    EnumerableSpecs::Numerous.new(a, b, c).max_by {|obj| obj.to_i }.should equal(b)
+    EnumerableSpecs::Numerous.new(a, b, c).max_by {|obj| obj.to_i }.should.equal?(b)
   end
 
   it "uses max.<=>(current) to determine order" do

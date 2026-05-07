@@ -200,6 +200,6 @@ describe "Module#name" do
   it "always returns the same String for a given Module" do
     s1 = ModuleSpecs.name
     s2 = ModuleSpecs.name
-    s1.should equal(s2)
+    s1.should.equal?(s2)
   end
 end

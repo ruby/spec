@@ -19,7 +19,7 @@ ruby_version_is ""..."1.9" do
     it "when matches sets $_ to a new string, leaving the former value unaltered" do
       orig_value = $_ = "hello"
       gsub("ello", "ola")
-      $_.should_not equal(orig_value)
+      $_.should_not.equal?(orig_value)
       $_.should == "hola"
       orig_value.should == "hello"
     end

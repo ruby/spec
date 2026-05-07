@@ -37,7 +37,7 @@ end
 describe "String#reverse!" do
   it "reverses self in place and always returns self" do
     a = "stressed"
-    a.reverse!.should equal(a)
+    a.reverse!.should.equal?(a)
     a.should == "desserts"
 
     "".reverse!.should == ""

@@ -38,7 +38,7 @@ describe "Enumerable#take_while" do
 
   it "doesn't return self when it could" do
     a = [1,2,3]
-    a.take_while{true}.should_not equal(a)
+    a.take_while{true}.should_not.equal?(a)
   end
 
   it "calls the block with initial args when yielded with multiple arguments" do

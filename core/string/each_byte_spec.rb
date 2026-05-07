@@ -35,7 +35,7 @@ describe "String#each_byte" do
 
   it "returns self" do
     s = "hello"
-    (s.each_byte {}).should equal(s)
+    (s.each_byte {}).should.equal?(s)
   end
 
   describe "when no block is given" do

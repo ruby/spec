@@ -456,7 +456,7 @@ describe "Constant resolution within a singleton class (class << obj)" do
   it "uses its own namespace for nested modules" do
     a = ConstantSpecs::CS_SINGLETON3[0].x
     b = ConstantSpecs::CS_SINGLETON3[1].x
-    a.should_not equal(b)
+    a.should_not.equal?(b)
   end
 
   it "allows nested modules to have proper resolution" do

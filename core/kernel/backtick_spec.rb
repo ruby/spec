@@ -28,7 +28,7 @@ describe "Kernel#`" do
 
   it "produces a String in the default external encoding" do
     Encoding.default_external = Encoding::SHIFT_JIS
-    `echo disc`.encoding.should equal(Encoding::SHIFT_JIS)
+    `echo disc`.encoding.should.equal?(Encoding::SHIFT_JIS)
   end
 
   it "raises an Errno::ENOENT if the command is not executable" do

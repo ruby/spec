@@ -9,7 +9,7 @@ describe "Array#concat" do
 
   it "appends the elements in the other array" do
     ary = [1, 2, 3]
-    ary.concat([9, 10, 11]).should equal(ary)
+    ary.concat([9, 10, 11]).should.equal?(ary)
     ary.should == [1, 2, 3, 9, 10, 11]
     ary.concat([])
     ary.should == [1, 2, 3, 9, 10, 11]
@@ -68,7 +68,7 @@ describe "Array#concat" do
 
   it "returns self when given no arguments" do
     ary = [1, 2]
-    ary.concat.should equal(ary)
+    ary.concat.should.equal?(ary)
     ary.should == [1, 2]
   end
 end

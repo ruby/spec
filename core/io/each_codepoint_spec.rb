@@ -24,7 +24,7 @@ describe "IO#each_codepoint" do
   end
 
   it "returns self" do
-    @io.each_codepoint { |l| l }.should equal(@io)
+    @io.each_codepoint { |l| l }.should.equal?(@io)
   end
 end
 

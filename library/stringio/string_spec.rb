@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 describe "StringIO#string" do
   it "returns the underlying string" do
     io = StringIO.new(str = "hello")
-    io.string.should equal(str)
+    io.string.should.equal?(str)
   end
 end
 
@@ -15,13 +15,13 @@ describe "StringIO#string=" do
 
   it "returns the passed String" do
     str = "test"
-    (@io.string = str).should equal(str)
+    (@io.string = str).should.equal?(str)
   end
 
   it "changes the underlying string" do
     str = "hello"
     @io.string = str
-    @io.string.should equal(str)
+    @io.string.should.equal?(str)
   end
 
   it "resets the position" do

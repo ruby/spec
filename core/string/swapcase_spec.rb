@@ -84,7 +84,7 @@ end
 describe "String#swapcase!" do
   it "modifies self in place" do
     a = "cYbEr_PuNk11"
-    a.swapcase!.should equal(a)
+    a.swapcase!.should.equal?(a)
     a.should == "CyBeR_pUnK11"
   end
 

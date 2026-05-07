@@ -10,7 +10,7 @@ describe :hash_each, shared: true do
   it "yields the key and value of each pair to a block expecting |key, value|" do
     r = {}
     h = { a: 1, b: 2, c: 3, d: 5 }
-    h.send(@method) { |k,v| r[k.to_s] = v.to_s }.should equal(h)
+    h.send(@method) { |k,v| r[k.to_s] = v.to_s }.should.equal?(h)
     r.should == { "a" => "1", "b" => "2", "c" => "3", "d" => "5" }
   end
 

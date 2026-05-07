@@ -22,7 +22,7 @@ describe "StringIO#putc when passed [String]" do
 
   it "returns the passed String" do
     str = "test"
-    @io.putc(str).should equal(str)
+    @io.putc(str).should.equal?(str)
   end
 
   it "correctly updates the current position" do

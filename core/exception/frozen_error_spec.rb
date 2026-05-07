@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe "FrozenError.new" do
   it "should take optional receiver argument" do
     o = Object.new
-    FrozenError.new("msg", receiver: o).receiver.should equal(o)
+    FrozenError.new("msg", receiver: o).receiver.should.equal?(o)
   end
 end
 
@@ -14,7 +14,7 @@ describe "FrozenError#receiver" do
       def o.x; end
     rescue => e
       e.should.is_a?(FrozenError)
-      e.receiver.should equal(o)
+      e.receiver.should.equal?(o)
     else
       raise
     end

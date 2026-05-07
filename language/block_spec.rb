@@ -13,7 +13,7 @@ describe "A block yielded a single" do
 
     it "receives the identical Array object" do
       ary = [1, 2]
-      m(ary) { |a| a }.should equal(ary)
+      m(ary) { |a| a }.should.equal?(ary)
     end
 
     it "assigns the Array to a single rest argument" do
@@ -322,7 +322,7 @@ describe "A block" do
       obj = mock("block yield to_ary")
       obj.should_not_receive(:to_ary)
 
-      @y.s(obj) { |a| a }.should equal(obj)
+      @y.s(obj) { |a| a }.should.equal?(obj)
     end
 
     it "assigns the first value yielded to the argument" do

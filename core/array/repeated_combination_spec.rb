@@ -10,12 +10,12 @@ describe "Array#repeated_combination" do
   end
 
   it "returns self when a block is given" do
-    @array.repeated_combination(2){}.should equal(@array)
+    @array.repeated_combination(2){}.should.equal?(@array)
   end
 
   it "yields nothing for negative length and return self" do
-    @array.repeated_combination(-1){ fail }.should equal(@array)
-    @array.repeated_combination(-10){ fail }.should equal(@array)
+    @array.repeated_combination(-1){ fail }.should.equal?(@array)
+    @array.repeated_combination(-10){ fail }.should.equal?(@array)
   end
 
   it "yields the expected repeated_combinations" do

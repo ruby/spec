@@ -25,7 +25,7 @@ describe "Hash#default_proc=" do
     h = Hash.new { 'Paris' }
     obj = mock('to_proc')
     obj.should_receive(:to_proc).and_return(Proc.new { 'Montreal' })
-    (h.default_proc = obj).should equal(obj)
+    (h.default_proc = obj).should.equal?(obj)
     h[:cool_city].should == 'Montreal'
   end
 
@@ -42,7 +42,7 @@ describe "Hash#default_proc=" do
 
   it "returns the passed Proc" do
     new_proc = Proc.new {}
-    ({}.default_proc = new_proc).should equal(new_proc)
+    ({}.default_proc = new_proc).should.equal?(new_proc)
   end
 
   it "clears the default proc if passed nil" do

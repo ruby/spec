@@ -22,7 +22,7 @@ describe "String#chomp" do
 
     it "returns a copy of the String when it is not modified" do
       str = "abc"
-      str.chomp.should_not equal(str)
+      str.chomp.should_not.equal?(str)
     end
 
     it "removes one trailing newline" do
@@ -67,7 +67,7 @@ describe "String#chomp" do
 
     it "returns a copy of the String" do
       str = "abc"
-      str.chomp(nil).should_not equal(str)
+      str.chomp(nil).should_not.equal?(str)
     end
 
     it "returns an empty String when self is empty" do
@@ -171,7 +171,7 @@ describe "String#chomp!" do
 
     it "modifies self" do
       str = "abc\n"
-      str.chomp!.should equal(str)
+      str.chomp!.should.equal?(str)
     end
 
     it "returns nil if self is not modified" do

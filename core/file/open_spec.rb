@@ -689,7 +689,7 @@ describe "File.open when passed a file descriptor" do
   it "opens a file" do
     @file = File.open(@fd, "w")
     @file.should.instance_of?(File)
-    @file.fileno.should equal(@fd)
+    @file.fileno.should.equal?(@fd)
     @file.write @content
     @file.flush
     File.read(@name).should == @content
@@ -698,7 +698,7 @@ describe "File.open when passed a file descriptor" do
   it "opens a file when passed a block" do
     @file = File.open(@fd, "w") do |f|
       f.should.instance_of?(File)
-      f.fileno.should equal(@fd)
+      f.fileno.should.equal?(@fd)
       f.write @content
       f
     end

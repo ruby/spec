@@ -1,9 +1,9 @@
 describe :array_unshift, shared: true do
   it "prepends object to the original array" do
     a = [1, 2, 3]
-    a.send(@method, "a").should equal(a)
+    a.send(@method, "a").should.equal?(a)
     a.should == ['a', 1, 2, 3]
-    a.send(@method).should equal(a)
+    a.send(@method).should.equal?(a)
     a.should == ['a', 1, 2, 3]
     a.send(@method, 5, 4, 3)
     a.should == [5, 4, 3, 'a', 1, 2, 3]

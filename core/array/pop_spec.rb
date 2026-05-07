@@ -71,7 +71,7 @@ describe "Array#pop" do
       popped2.should == []
       a.should == []
 
-      popped1.should_not equal(popped2)
+      popped1.should_not.equal?(popped2)
     end
 
     it "returns whole elements if n exceeds size of the array" do
@@ -82,10 +82,10 @@ describe "Array#pop" do
 
     it "does not return self even when it returns whole elements" do
       a = [1, 2, 3, 4, 5]
-      a.pop(5).should_not equal(a)
+      a.pop(5).should_not.equal?(a)
 
       a = [1, 2, 3, 4, 5]
-      a.pop(6).should_not equal(a)
+      a.pop(6).should_not.equal?(a)
     end
 
     it "raises an ArgumentError if n is negative" do

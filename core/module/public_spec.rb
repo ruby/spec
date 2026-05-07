@@ -30,10 +30,10 @@ describe "Module#public" do
   it "returns argument or arguments if given" do
     (class << Object.new; self; end).class_eval do
       def foo; end
-      public(:foo).should equal(:foo)
+      public(:foo).should.equal?(:foo)
       public([:foo, :foo]).should == [:foo, :foo]
       public(:foo, :foo).should == [:foo, :foo]
-      public.should equal(nil)
+      public.should.equal?(nil)
     end
   end
 

@@ -25,7 +25,7 @@ describe "Kernel#clone" do
     end
 
     clone = instance.clone
-    clone.class.should equal klass
+    clone.class.should.equal? klass
   end
 
   describe "with no arguments" do

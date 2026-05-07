@@ -24,7 +24,7 @@ describe :io_each, shared: true do
     end
 
     it "returns self" do
-      @io.send(@method) { |l| l }.should equal(@io)
+      @io.send(@method) { |l| l }.should.equal?(@io)
     end
 
     it "does not change $_" do
@@ -143,7 +143,7 @@ describe :io_each, shared: true do
 
     describe "when a block is given" do
       it "accepts an empty block" do
-        @io.send(@method, nil, 1024) {}.should equal(@io)
+        @io.send(@method, nil, 1024) {}.should.equal?(@io)
       end
 
       describe "when passed nil as a separator" do

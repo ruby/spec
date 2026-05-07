@@ -18,7 +18,7 @@ describe "Enumerator::Lazy#chunk" do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.chunk {}
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
   end
 
   it "sets #size to nil" do

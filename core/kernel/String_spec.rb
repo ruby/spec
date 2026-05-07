@@ -81,7 +81,7 @@ describe :kernel_String, shared: true do
     string = +"Hello"
     string.should_not_receive(:to_s)
     string2 = @object.send(@method, string)
-    string.should equal(string2)
+    string.should.equal?(string2)
   end
 
   it "returns the same object if it is an instance of a String subclass" do
@@ -89,7 +89,7 @@ describe :kernel_String, shared: true do
     string = subklass.new("Hello")
     string.should_not_receive(:to_s)
     string2 = @object.send(@method, string)
-    string.should equal(string2)
+    string.should.equal?(string2)
   end
 end
 

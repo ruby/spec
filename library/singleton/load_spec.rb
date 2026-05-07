@@ -7,15 +7,15 @@ require_relative 'fixtures/classes'
 describe "Singleton._load" do
   it "returns the singleton instance for anything passed in" do
     klass = SingletonSpecs::MyClass
-    klass._load("").should equal(klass.instance)
-    klass._load("42").should equal(klass.instance)
-    klass._load(42).should equal(klass.instance)
+    klass._load("").should.equal?(klass.instance)
+    klass._load("42").should.equal?(klass.instance)
+    klass._load(42).should.equal?(klass.instance)
   end
 
   it "returns the singleton instance for anything passed in to subclass" do
     subklass = SingletonSpecs::MyClassChild
-    subklass._load("").should equal(subklass.instance)
-    subklass._load("42").should equal(subklass.instance)
-    subklass._load(42).should equal(subklass.instance)
+    subklass._load("").should.equal?(subklass.instance)
+    subklass._load("42").should.equal?(subklass.instance)
+    subklass._load(42).should.equal?(subklass.instance)
   end
 end

@@ -39,7 +39,7 @@ describe :stringio_codepoints, shared: true do
   end
 
   it "returns self" do
-    @io.send(@method) {|l| l }.should equal(@io)
+    @io.send(@method) {|l| l }.should.equal?(@io)
   end
 
 end

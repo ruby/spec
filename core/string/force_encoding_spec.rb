@@ -50,7 +50,7 @@ describe "String#force_encoding" do
 
   it "returns self" do
     str = "abc"
-    str.force_encoding('utf-8').should equal(str)
+    str.force_encoding('utf-8').should.equal?(str)
   end
 
   it "sets the encoding even if the String contents are invalid in that encoding" do

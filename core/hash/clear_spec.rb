@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 describe "Hash#clear" do
   it "removes all key, value pairs" do
     h = { 1 => 2, 3 => 4 }
-    h.clear.should equal(h)
+    h.clear.should.equal?(h)
     h.should == {}
   end
 

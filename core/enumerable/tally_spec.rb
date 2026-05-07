@@ -45,7 +45,7 @@ describe "Enumerable#tally with a hash" do
   it "returns the given hash" do
     enum = EnumerableSpecs::Numerous.new('foo', 'bar', 'foo', 'baz')
     hash = { 'foo' => 1 }
-    enum.tally(hash).should equal(hash)
+    enum.tally(hash).should.equal?(hash)
   end
 
   it "calls #to_hash to convert argument to Hash implicitly if passed not a Hash" do

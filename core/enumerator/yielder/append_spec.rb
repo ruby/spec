@@ -19,7 +19,7 @@ describe "Enumerator::Yielder#<<" do
 
   it "returns self" do
     y = Enumerator::Yielder.new {|x| x + 1}
-    (y << 1).should equal(y)
+    (y << 1).should.equal?(y)
   end
 
   context "when multiple arguments passed" do

@@ -7,7 +7,7 @@ describe "String#sub with pattern, replacement" do
     a = "hello"
     b = a.sub(/w.*$/, "*")
 
-    b.should_not equal(a)
+    b.should_not.equal?(a)
     b.should == "hello"
   end
 
@@ -281,7 +281,7 @@ end
 describe "String#sub! with pattern, replacement" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.sub!(/[aeiou]/, '*').should equal(a)
+    a.sub!(/[aeiou]/, '*').should.equal?(a)
     a.should == "h*llo"
   end
 
@@ -326,7 +326,7 @@ end
 describe "String#sub! with pattern and block" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.sub!(/[aeiou]/) { '*' }.should equal(a)
+    a.sub!(/[aeiou]/) { '*' }.should.equal?(a)
     a.should == "h*llo"
   end
 

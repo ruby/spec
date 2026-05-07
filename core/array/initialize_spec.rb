@@ -19,7 +19,7 @@ describe "Array#initialize" do
 
   it "preserves the object's identity even when changing its value" do
     a = [1, 2, 3]
-    a.send(:initialize).should equal(a)
+    a.send(:initialize).should.equal?(a)
     a.should_not == [1, 2, 3]
   end
 
@@ -92,8 +92,8 @@ describe "Array#initialize with (size, object=nil)" do
     a = []
     obj = [3]
     a.send(:initialize, 2, obj).should == [obj, obj]
-    a[0].should equal(obj)
-    a[1].should equal(obj)
+    a[0].should.equal?(obj)
+    a[1].should.equal?(obj)
 
     b = []
     b.send(:initialize, 3, 14).should == [14, 14, 14]

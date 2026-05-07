@@ -70,7 +70,7 @@ describe "Net::HTTP#start" do
   end
 
   it "returns self" do
-    @http.start.should equal(@http)
+    @http.start.should.equal?(@http)
   end
 
   it "opens the tcp connection" do
@@ -94,7 +94,7 @@ describe "Net::HTTP#start" do
       yielded = false
       @http.start do |http|
         yielded = true
-        http.should equal(@http)
+        http.should.equal?(@http)
       end
       yielded.should == true
     end

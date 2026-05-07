@@ -21,7 +21,7 @@ describe "Matrix#column" do
   end
 
   it "returns self when called with a block" do
-    @m.column(0) { |x| x }.should equal(@m)
+    @m.column(0) { |x| x }.should.equal?(@m)
   end
 
   it "returns nil when out of bounds" do

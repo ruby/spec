@@ -15,7 +15,7 @@ describe "Array#compact" do
 
   it "does not return self" do
     a = [1, 2, 3]
-    a.compact.should_not equal(a)
+    a.compact.should_not.equal?(a)
   end
 
   it "does not return subclass instance for Array subclasses" do
@@ -26,19 +26,19 @@ end
 describe "Array#compact!" do
   it "removes all nil elements" do
     a = ['a', nil, 'b', false, 'c']
-    a.compact!.should equal(a)
+    a.compact!.should.equal?(a)
     a.should == ["a", "b", false, "c"]
     a = [nil, 'a', 'b', false, 'c']
-    a.compact!.should equal(a)
+    a.compact!.should.equal?(a)
     a.should == ["a", "b", false, "c"]
     a = ['a', 'b', false, 'c', nil]
-    a.compact!.should equal(a)
+    a.compact!.should.equal?(a)
     a.should == ["a", "b", false, "c"]
   end
 
   it "returns self if some nil elements are removed" do
     a = ['a', nil, 'b', false, 'c']
-    a.compact!.should equal a
+    a.compact!.should.equal? a
   end
 
   it "returns nil if there are no nil elements to remove" do

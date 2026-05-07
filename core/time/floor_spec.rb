@@ -20,7 +20,7 @@ describe "Time#floor" do
   it "returns an instance of Time, even if #floor is called on a subclass" do
     subclass = Class.new(Time)
     instance = subclass.at(0)
-    instance.class.should equal subclass
+    instance.class.should.equal? subclass
     instance.floor.should.instance_of?(Time)
   end
 

@@ -79,7 +79,7 @@ describe "Hash#reject!" do
 
   it "removes all entries if the block is true" do
     h = { a: 1, b: 2, c: 3 }
-    h.reject! { |k,v| true }.should equal(h)
+    h.reject! { |k,v| true }.should.equal?(h)
     h.should == {}
   end
 

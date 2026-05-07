@@ -19,8 +19,8 @@ describe "Enumerable#minmax_by" do
   it "returns the object that appears first in #each in case of a tie" do
     a, b, c, d = '1', '1', '2', '2'
     mm = EnumerableSpecs::Numerous.new(a, b, c, d).minmax_by {|obj| obj.to_i }
-    mm[0].should equal(a)
-    mm[1].should equal(c)
+    mm[0].should.equal?(a)
+    mm[1].should.equal?(c)
   end
 
   it "uses min/max.<=>(current) to determine order" do

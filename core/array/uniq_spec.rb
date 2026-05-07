@@ -138,7 +138,7 @@ describe "Array#uniq!" do
 
   it "returns self" do
     a = [ "a", "a", "b", "b", "c" ]
-    a.should equal(a.uniq!)
+    a.should.equal?(a.uniq!)
   end
 
   it "properly handles recursive arrays" do

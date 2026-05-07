@@ -16,7 +16,7 @@ describe :kernel_sprintf_encoding, shared: true do
   it "returns a String in the same encoding as the format String if compatible" do
     string = "%s".dup.force_encoding(Encoding::KOI8_U)
     result = @method.call(string, "dogs")
-    result.encoding.should equal(Encoding::KOI8_U)
+    result.encoding.should.equal?(Encoding::KOI8_U)
   end
 
   it "returns a String in the argument's encoding if format encoding is more restrictive" do
@@ -24,7 +24,7 @@ describe :kernel_sprintf_encoding, shared: true do
     argument = "b\303\274r".dup.force_encoding(Encoding::UTF_8)
 
     result = @method.call(string, argument)
-    result.encoding.should equal(Encoding::UTF_8)
+    result.encoding.should.equal?(Encoding::UTF_8)
   end
 
   it "raises Encoding::CompatibilityError if both encodings are ASCII compatible and there are not ASCII characters" do

@@ -75,7 +75,7 @@ describe :string_succ_bang, shared: true do
     ["", "abcd", "THX1138"].each do |s|
       s = +s
       r = s.dup.send(@method)
-      s.send(@method).should equal(s)
+      s.send(@method).should.equal?(s)
       s.should == r
     end
   end

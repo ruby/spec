@@ -120,7 +120,7 @@ describe "C-API Array function" do
 
     it "returns the original array" do
       a = [1,2,3]
-      @s.rb_ary_reverse(a).should equal(a)
+      @s.rb_ary_reverse(a).should.equal?(a)
     end
   end
 
@@ -166,7 +166,7 @@ describe "C-API Array function" do
       b = @s.rb_ary_dup(a)
 
       b.should == a
-      b.should_not equal(a)
+      b.should_not.equal?(a)
     end
   end
 
@@ -473,7 +473,7 @@ describe "C-API Array function" do
 
       it "returns the given array" do
         array = [1, 2, 3]
-        @s.rb_ary_to_ary(array).should equal(array)
+        @s.rb_ary_to_ary(array).should.equal?(array)
       end
 
     end

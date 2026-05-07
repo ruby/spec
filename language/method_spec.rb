@@ -19,7 +19,7 @@ describe "A method send" do
       x = mock("splat argument")
       x.should_not_receive(:to_ary)
 
-      m(*x).should equal(x)
+      m(*x).should.equal?(x)
     end
 
     it "calls #to_a" do
@@ -114,7 +114,7 @@ describe "A method send" do
     it "copies the splatted array" do
       args = [3, 4]
       m(1, 2, *args, 4, 5).should == [1, 2, [3, 4], 4, 5]
-      m(1, 2, *args, 4, 5)[2].should_not equal(args)
+      m(1, 2, *args, 4, 5)[2].should_not.equal?(args)
     end
 
     it "allows an array being splatted to be modified by another argument" do
@@ -504,7 +504,7 @@ describe "A method" do
         def m(a) a end
       ruby
 
-      m((args = 1, 2, 3)).should equal(args)
+      m((args = 1, 2, 3)).should.equal?(args)
     end
 
     evaluate <<-ruby do
@@ -955,7 +955,7 @@ describe "A method" do
 
       m().should == nil
       m(1, 2, 3, 4).should == nil
-      m(&(l = ->{})).should equal(l)
+      m(&(l = ->{})).should.equal?(l)
     end
 
     evaluate <<-ruby do

@@ -18,7 +18,7 @@ describe "Process._fork" do
       Process.should_receive(:_fork).once.and_return(42)
 
       pid = Process.fork {}
-      pid.should equal(42)
+      pid.should.equal?(42)
     end
   end
 end

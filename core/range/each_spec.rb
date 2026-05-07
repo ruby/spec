@@ -73,7 +73,7 @@ describe "Range#each" do
 
   it "returns self" do
     range = 1..10
-    range.each{}.should equal(range)
+    range.each{}.should.equal?(range)
   end
 
   it "returns an enumerator when no block given" do

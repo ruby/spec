@@ -71,7 +71,7 @@ describe "Hash.[]" do
 
       result = Hash[to_hash]
       result.should == h
-      result.should_not equal(h)
+      result.should_not.equal?(h)
     end
   end
 

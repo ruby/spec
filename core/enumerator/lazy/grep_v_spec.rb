@@ -19,11 +19,11 @@ describe "Enumerator::Lazy#grep_v" do
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.grep_v(Object) {}
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
 
     ret = @yieldsmixed.grep_v(Object)
     ret.should.instance_of?(Enumerator::Lazy)
-    ret.should_not equal(@yieldsmixed)
+    ret.should_not.equal?(@yieldsmixed)
   end
 
   it "sets #size to nil" do

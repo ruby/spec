@@ -53,10 +53,10 @@ describe "Array#first" do
 
   it "properly handles recursive arrays" do
     empty = ArraySpecs.empty_recursive_array
-    empty.first.should equal(empty)
+    empty.first.should.equal?(empty)
 
     ary = ArraySpecs.head_recursive_array
-    ary.first.should equal(ary)
+    ary.first.should.equal?(ary)
   end
 
   it "tries to convert the passed argument to an Integer using #to_int" do

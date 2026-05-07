@@ -21,7 +21,7 @@ describe "Set#delete_if" do
   end
 
   it "returns self" do
-    @set.delete_if { |x| x }.should equal(@set)
+    @set.delete_if { |x| x }.should.equal?(@set)
   end
 
   it "returns an Enumerator when passed no block" do

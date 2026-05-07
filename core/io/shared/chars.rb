@@ -38,7 +38,7 @@ describe :io_chars, shared: true do
   end
 
   it "returns itself" do
-    @io.send(@method) { |c| }.should equal(@io)
+    @io.send(@method) { |c| }.should.equal?(@io)
   end
 
   it "returns an enumerator for a closed stream" do

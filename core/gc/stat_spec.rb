@@ -12,7 +12,7 @@ describe "GC.stat" do
     stat = GC.stat(hash)
 
     stat.should.is_a?(Hash)
-    stat.should equal hash
+    stat.should.equal? hash
     stat[:count].should.is_a?(Integer)
     stat[:__other__].should == "world"
   end

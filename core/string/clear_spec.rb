@@ -14,7 +14,7 @@ describe "String#clear" do
   it "returns self after emptying it" do
     cleared = @s.clear
     cleared.should == ""
-    cleared.should equal @s
+    cleared.should.equal? @s
   end
 
   it "preserves its encoding" do

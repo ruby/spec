@@ -21,7 +21,7 @@ describe "Set#keep_if" do
   end
 
   it "returns self" do
-    @set.keep_if {}.should equal(@set)
+    @set.keep_if {}.should.equal?(@set)
   end
 
   it "returns an Enumerator when passed no block" do

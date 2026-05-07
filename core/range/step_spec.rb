@@ -7,7 +7,7 @@ describe "Range#step" do
 
   it "returns self" do
     r = 1..2
-    r.step { }.should equal(r)
+    r.step { }.should.equal?(r)
   end
 
   ruby_version_is ""..."3.4" do

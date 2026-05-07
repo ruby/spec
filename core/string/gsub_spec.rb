@@ -495,13 +495,13 @@ end
 describe "String#gsub! with pattern and replacement" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.gsub!(/[aeiou]/, '*').should equal(a)
+    a.gsub!(/[aeiou]/, '*').should.equal?(a)
     a.should == "h*ll*"
   end
 
   it "modifies self in place with multi-byte characters and returns self" do
     a = "¿por qué?"
-    a.gsub!(/([a-z\d]*)/, "*").should equal(a)
+    a.gsub!(/([a-z\d]*)/, "*").should.equal?(a)
     a.should == "*¿** **é*?*"
   end
 
@@ -547,7 +547,7 @@ end
 describe "String#gsub! with pattern and block" do
   it "modifies self in place and returns self" do
     a = "hello"
-    a.gsub!(/[aeiou]/) { '*' }.should equal(a)
+    a.gsub!(/[aeiou]/) { '*' }.should.equal?(a)
     a.should == "h*ll*"
   end
 

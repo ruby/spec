@@ -11,6 +11,6 @@ describe "Set#clear" do
   end
 
   it "returns self" do
-    @set.clear.should equal(@set)
+    @set.clear.should.equal?(@set)
   end
 end

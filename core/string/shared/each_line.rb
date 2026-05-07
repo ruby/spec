@@ -93,7 +93,7 @@ describe :string_each_line, shared: true do
 
   it "returns self" do
     s = "hello\nworld"
-    (s.send(@method) {}).should equal(s)
+    (s.send(@method) {}).should.equal?(s)
   end
 
   it "tries to convert the separator to a string using to_str" do

@@ -985,7 +985,7 @@ describe :kernel_sprintf, shared: true do
       -> {
         @method.call("%<foo>s", @object)
       }.should raise_error(KeyError) { |err|
-        err.receiver.should equal(@object)
+        err.receiver.should.equal?(@object)
       }
     end
 

@@ -99,7 +99,7 @@ describe "Array#shuffle!" do
       different ||= (a != [1, 2, 3, 4])
     end
     different.should == true # Will fail once in a blue moon (4!^10)
-    a.should equal(original)
+    a.should.equal?(original)
   end
 
   it "raises a FrozenError on a frozen array" do

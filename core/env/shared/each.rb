@@ -8,7 +8,7 @@ describe :env_each, shared: true do
       ENV.clear
       ENV["foo"] = "bar"
       ENV["baz"] = "boo"
-      ENV.send(@method) { |k, v| e << [k, v] }.should equal(ENV)
+      ENV.send(@method) { |k, v| e << [k, v] }.should.equal?(ENV)
       e.should include(["foo", "bar"])
       e.should include(["baz", "boo"])
     ensure
@@ -55,9 +55,9 @@ describe :env_each, shared: true do
       Encoding.default_internal = internal = Encoding::IBM437
 
       ENV.send(@method) do |key, value|
-        key.encoding.should equal(internal)
+        key.encoding.should.equal?(internal)
         if value.ascii_only?
-          value.encoding.should equal(internal)
+          value.encoding.should.equal?(internal)
         end
       end
     end

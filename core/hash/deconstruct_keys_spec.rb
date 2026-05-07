@@ -4,7 +4,7 @@ describe "Hash#deconstruct_keys" do
   it "returns self" do
     hash = {a: 1, b: 2}
 
-    hash.deconstruct_keys([:a, :b]).should equal hash
+    hash.deconstruct_keys([:a, :b]).should.equal? hash
   end
 
   it "requires one argument" do

@@ -8,7 +8,7 @@ describe "StringIO#initialize when passed [Object, mode]" do
 
   it "uses the passed Object as the StringIO backend" do
     @io.send(:initialize, str = "example", "r")
-    @io.string.should equal(str)
+    @io.string.should.equal?(str)
   end
 
   it "sets the mode based on the passed mode" do
@@ -159,7 +159,7 @@ describe "StringIO#initialize when passed [Object]" do
 
   it "uses the passed Object as the StringIO backend" do
     @io.send(:initialize, str = "example")
-    @io.string.should equal(str)
+    @io.string.should.equal?(str)
   end
 
   it "sets the mode to read-write if the string is mutable" do

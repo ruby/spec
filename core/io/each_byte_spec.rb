@@ -52,6 +52,6 @@ describe "IO#each_byte" do
   end
 
   it "returns self on an empty stream" do
-    @io.each_byte { |b| }.should equal(@io)
+    @io.each_byte { |b| }.should.equal?(@io)
   end
 end

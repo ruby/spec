@@ -91,7 +91,7 @@ describe "Hash#merge" do
     merged = hash.merge
 
     merged.should.eql?(hash)
-    merged.should_not equal(hash)
+    merged.should_not.equal?(hash)
   end
 
   it "retains the default value" do

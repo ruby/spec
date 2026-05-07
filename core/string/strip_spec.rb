@@ -20,7 +20,7 @@ end
 describe "String#strip!" do
   it "modifies self in place and returns self" do
     a = "   hello   "
-    a.strip!.should equal(a)
+    a.strip!.should.equal?(a)
     a.should == "hello"
 
     a = "\tgoodbye\r\v\n"

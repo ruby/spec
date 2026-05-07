@@ -65,8 +65,8 @@ describe "Array.new with (size, object=nil)" do
     obj = [3]
     a = Array.new(2, obj)
     a.should == [obj, obj]
-    a[0].should equal(obj)
-    a[1].should equal(obj)
+    a[0].should.equal?(obj)
+    a[1].should.equal?(obj)
 
     Array.new(3, 14).should == [14, 14, 14]
   end

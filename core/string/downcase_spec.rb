@@ -85,7 +85,7 @@ end
 describe "String#downcase!" do
   it "modifies self in place" do
     a = "HeLlO"
-    a.downcase!.should equal(a)
+    a.downcase!.should.equal?(a)
     a.should == "hello"
   end
 
@@ -190,6 +190,6 @@ describe "String#downcase!" do
   end
 
   it "sets the result String encoding to the source String encoding" do
-    "ABC".downcase.encoding.should equal(Encoding::UTF_8)
+    "ABC".downcase.encoding.should.equal?(Encoding::UTF_8)
   end
 end

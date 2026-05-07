@@ -7,7 +7,7 @@ describe "Hash#transform_values" do
 
   it "returns new hash" do
     ret = @hash.transform_values(&:succ)
-    ret.should_not equal(@hash)
+    ret.should_not.equal?(@hash)
     ret.should.instance_of?(Hash)
   end
 
@@ -19,7 +19,7 @@ describe "Hash#transform_values" do
     key = [1, 2, 3]
     new_hash = { key => 1 }.transform_values(&:succ)
     new_hash[key].should == 2
-    new_hash.keys[0].should equal(key)
+    new_hash.keys[0].should.equal?(key)
   end
 
   context "when no block is given" do
@@ -69,7 +69,7 @@ describe "Hash#transform_values!" do
   end
 
   it "returns self" do
-    @hash.transform_values!(&:succ).should equal(@hash)
+    @hash.transform_values!(&:succ).should.equal?(@hash)
   end
 
   it "updates self as transformed values with the given block" do

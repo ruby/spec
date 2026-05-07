@@ -79,7 +79,7 @@ describe "Kernel#instance_variable_set" do
 
     it "keeps stored object after any exceptions" do
       -> { @frozen.instance_variable_set(:@ivar, :replacement) }.should raise_error(Exception)
-      @frozen.ivar.should equal(:origin)
+      @frozen.ivar.should.equal?(:origin)
     end
 
     it "raises a FrozenError when passed replacement is identical to stored object" do

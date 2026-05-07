@@ -42,10 +42,10 @@ describe "Module#protected" do
   it "returns argument or arguments if given" do
     (class << Object.new; self; end).class_eval do
       def foo; end
-      protected(:foo).should equal(:foo)
+      protected(:foo).should.equal?(:foo)
       protected([:foo, :foo]).should == [:foo, :foo]
       protected(:foo, :foo).should == [:foo, :foo]
-      protected.should equal(nil)
+      protected.should.equal?(nil)
     end
   end
 

@@ -75,8 +75,8 @@ describe "IO#set_encoding when passed nil, nil" do
       Encoding.default_internal = Encoding::IBM866
 
       @io.set_encoding nil, nil
-      @io.external_encoding.should equal(Encoding::IBM437)
-      @io.internal_encoding.should equal(Encoding::IBM866)
+      @io.external_encoding.should.equal?(Encoding::IBM437)
+      @io.internal_encoding.should.equal?(Encoding::IBM866)
     end
 
     it "prevents the #internal_encoding from changing when Encoding.default_internal is changed" do
@@ -94,17 +94,17 @@ describe "IO#set_encoding when passed nil, nil" do
 
       Encoding.default_external = Encoding::IBM437
 
-      @io.external_encoding.should equal(Encoding::IBM437)
+      @io.external_encoding.should.equal?(Encoding::IBM437)
     end
   end
 
   describe "with 'rb' mode" do
     it "returns Encoding.default_external" do
       @io = new_io @name, "rb"
-      @io.external_encoding.should equal(Encoding::BINARY)
+      @io.external_encoding.should.equal?(Encoding::BINARY)
 
       @io.set_encoding nil, nil
-      @io.external_encoding.should equal(Encoding.default_external)
+      @io.external_encoding.should.equal?(Encoding.default_external)
     end
   end
 
@@ -158,7 +158,7 @@ describe "IO#set_encoding" do
   end
 
   it "returns self" do
-    @io.set_encoding(Encoding::UTF_8).should equal(@io)
+    @io.set_encoding(Encoding::UTF_8).should.equal?(@io)
   end
 
   it "sets the external encoding when passed an Encoding argument" do

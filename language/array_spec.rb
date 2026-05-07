@@ -89,7 +89,7 @@ describe "The unpacking splat operator (*)" do
   it "returns a new array containing the same values when applied to an array inside an empty array" do
     splatted_array = [3, 4, 5]
     [*splatted_array].should == splatted_array
-    [*splatted_array].should_not equal(splatted_array)
+    [*splatted_array].should_not.equal?(splatted_array)
   end
 
   it "unpacks the start and count arguments in an array slice assignment" do

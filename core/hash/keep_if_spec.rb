@@ -12,19 +12,19 @@ describe "Hash#keep_if" do
 
   it "keeps every entry for which block is true and returns self" do
     h = { a: 1, b: 2, c: 3, d: 4 }
-    h.keep_if { |k,v| v % 2 == 0 }.should equal(h)
+    h.keep_if { |k,v| v % 2 == 0 }.should.equal?(h)
     h.should == { b: 2, d: 4 }
   end
 
   it "removes all entries if the block is false" do
     h = { a: 1, b: 2, c: 3 }
-    h.keep_if { |k,v| false }.should equal(h)
+    h.keep_if { |k,v| false }.should.equal?(h)
     h.should == {}
   end
 
   it "returns self even if unmodified" do
     h = { 1 => 2, 3 => 4 }
-    h.keep_if { true }.should equal(h)
+    h.keep_if { true }.should.equal?(h)
   end
 
   it "raises a FrozenError if called on a frozen instance" do

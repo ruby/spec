@@ -101,7 +101,7 @@ describe "Proc.new with a block argument" do
     passed_prc = Proc.new { "hello".size }
     prc = Proc.new(&passed_prc)
 
-    prc.should equal(passed_prc)
+    prc.should.equal?(passed_prc)
     prc.call.should == 5
   end
 
@@ -110,7 +110,7 @@ describe "Proc.new with a block argument" do
     passed_prc = Proc.new(&method)
     prc = Proc.new(&passed_prc)
 
-    prc.should equal(passed_prc)
+    prc.should.equal?(passed_prc)
     prc.call.should == 5
   end
 
@@ -118,7 +118,7 @@ describe "Proc.new with a block argument" do
     passed_prc = Proc.new(&:size)
     prc = Proc.new(&passed_prc)
 
-    prc.should equal(passed_prc)
+    prc.should.equal?(passed_prc)
     prc.call("hello").should == 5
   end
 end
@@ -129,7 +129,7 @@ describe "Proc.new with a block argument called indirectly from a subclass" do
     passed_prc.class.should == ProcSpecs::MyProc
     prc = ProcSpecs::MyProc.new(&passed_prc)
 
-    prc.should equal(passed_prc)
+    prc.should.equal?(passed_prc)
     prc.call.should == 5
   end
 
@@ -139,7 +139,7 @@ describe "Proc.new with a block argument called indirectly from a subclass" do
     passed_prc.class.should == ProcSpecs::MyProc
     prc = ProcSpecs::MyProc.new(&passed_prc)
 
-    prc.should equal(passed_prc)
+    prc.should.equal?(passed_prc)
     prc.call.should == 5
   end
 
@@ -148,7 +148,7 @@ describe "Proc.new with a block argument called indirectly from a subclass" do
     passed_prc.class.should == ProcSpecs::MyProc
     prc = ProcSpecs::MyProc.new(&passed_prc)
 
-    prc.should equal(passed_prc)
+    prc.should.equal?(passed_prc)
     prc.call("hello").should == 5
   end
 end

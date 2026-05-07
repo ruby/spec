@@ -65,7 +65,7 @@ describe "C-API Kernel function" do
 
     it "can pass extra data to the function" do
       ary = [3]
-      @s.rb_block_call_extra_data(ary).should equal(ary)
+      @s.rb_block_call_extra_data(ary).should.equal?(ary)
     end
   end
 
@@ -667,7 +667,7 @@ describe "C-API Kernel function" do
     it "passes through an existing lambda and does not convert to a proc" do
       b = -> { 1+1 }
       proc = @s.rb_block_proc(&b)
-      proc.should equal(b)
+      proc.should.equal?(b)
       proc.call.should == 2
       proc.should.lambda?
     end
@@ -684,7 +684,7 @@ describe "C-API Kernel function" do
     it "passes through an existing Proc and does not convert to a lambda" do
       b = proc { 1+1 }
       proc = @s.rb_block_lambda(&b)
-      proc.should equal(b)
+      proc.should.equal?(b)
       proc.call.should == 2
       proc.should_not.lambda?
     end

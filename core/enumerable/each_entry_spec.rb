@@ -11,7 +11,7 @@ describe "Enumerable#each_entry" do
 
   it "yields multiple arguments as an array" do
     acc = []
-    @enum.each_entry {|g| acc << g}.should equal(@enum)
+    @enum.each_entry {|g| acc << g}.should.equal?(@enum)
     acc.should == @entries
   end
 

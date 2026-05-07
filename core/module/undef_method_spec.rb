@@ -46,7 +46,7 @@ describe "Module#undef_method" do
   end
 
   it "returns self" do
-    @module.send(:undef_method, :method_to_undef).should equal(@module)
+    @module.send(:undef_method, :method_to_undef).should.equal?(@module)
   end
 
   it "raises a NameError when passed a missing name for a module" do
@@ -103,7 +103,7 @@ describe "Module#undef_method" do
     end
 
     it "does not raise exceptions when no arguments given" do
-      @frozen.send(:undef_method).should equal(@frozen)
+      @frozen.send(:undef_method).should.equal?(@frozen)
     end
   end
 end

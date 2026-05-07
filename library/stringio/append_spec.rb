@@ -7,7 +7,7 @@ describe "StringIO#<< when passed [Object]" do
   end
 
   it "returns self" do
-    (@io << "just testing").should equal(@io)
+    (@io << "just testing").should.equal?(@io)
   end
 
   it "writes the passed argument onto self" do

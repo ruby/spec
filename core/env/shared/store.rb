@@ -14,7 +14,7 @@ describe :env_store, shared: true do
 
   it "returns the value" do
     value = "bar"
-    ENV.send(@method, "foo", value).should equal(value)
+    ENV.send(@method, "foo", value).should.equal?(value)
   end
 
   it "deletes the environment variable when the value is nil" do

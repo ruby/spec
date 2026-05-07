@@ -9,6 +9,6 @@ describe :set_add, shared: true do
   end
 
   it "returns self" do
-    @set.send(@method, "dog").should equal(@set)
+    @set.send(@method, "dog").should.equal?(@set)
   end
 end

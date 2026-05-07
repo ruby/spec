@@ -66,8 +66,8 @@ describe "Exception#dup" do
       begin
         raise RuntimeError
       rescue RuntimeError => e
-        e.cause.should equal(cause)
-        e.dup.cause.should equal(cause)
+        e.cause.should.equal?(cause)
+        e.dup.cause.should.equal?(cause)
       end
     end
   end

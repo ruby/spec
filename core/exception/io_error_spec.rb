@@ -8,9 +8,9 @@ describe "IO::EAGAINWaitReadable" do
 
   it "is the same as IO::EWOULDBLOCKWaitReadable if Errno::EAGAIN is the same as Errno::EWOULDBLOCK" do
     if Errno::EAGAIN.equal? Errno::EWOULDBLOCK
-      IO::EAGAINWaitReadable.should equal IO::EWOULDBLOCKWaitReadable
+      IO::EAGAINWaitReadable.should.equal? IO::EWOULDBLOCKWaitReadable
     else
-      IO::EAGAINWaitReadable.should_not equal IO::EWOULDBLOCKWaitReadable
+      IO::EAGAINWaitReadable.should_not.equal? IO::EWOULDBLOCKWaitReadable
     end
   end
 end
@@ -30,9 +30,9 @@ describe "IO::EAGAINWaitWritable" do
 
   it "is the same as IO::EWOULDBLOCKWaitWritable if Errno::EAGAIN is the same as Errno::EWOULDBLOCK" do
     if Errno::EAGAIN.equal? Errno::EWOULDBLOCK
-      IO::EAGAINWaitWritable.should equal IO::EWOULDBLOCKWaitWritable
+      IO::EAGAINWaitWritable.should.equal? IO::EWOULDBLOCKWaitWritable
     else
-      IO::EAGAINWaitWritable.should_not equal IO::EWOULDBLOCKWaitWritable
+      IO::EAGAINWaitWritable.should_not.equal? IO::EWOULDBLOCKWaitWritable
     end
   end
 end

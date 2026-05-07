@@ -160,7 +160,7 @@ describe "Kernel.Complex()" do
     it "returns the passed argument" do
       n = mock_numeric("unreal")
       n.should_receive(:real?).any_number_of_times.and_return(false)
-      Complex(n).should equal(n)
+      Complex(n).should.equal?(n)
     end
   end
 
@@ -169,8 +169,8 @@ describe "Kernel.Complex()" do
       n = mock_numeric("real")
       n.should_receive(:real?).any_number_of_times.and_return(true)
       result = Complex(n)
-      result.real.should equal(n)
-      result.imag.should equal(0)
+      result.real.should.equal?(n)
+      result.imag.should.equal?(0)
     end
   end
 
@@ -185,7 +185,7 @@ describe "Kernel.Complex()" do
         n2.should_receive(:real?).any_number_of_times.and_return(r2)
         n2.should_receive(:*).with(Complex(0, 1)).and_return(n3)
         n1.should_receive(:+).with(n3).and_return(n4)
-        Complex(n1, n2).should equal(n4)
+        Complex(n1, n2).should.equal?(n4)
       end
     end
   end
@@ -197,8 +197,8 @@ describe "Kernel.Complex()" do
       n1.should_receive(:real?).any_number_of_times.and_return(true)
       n2.should_receive(:real?).any_number_of_times.and_return(true)
       result = Complex(n1, n2)
-      result.real.should equal(n1)
-      result.imag.should equal(n2)
+      result.real.should.equal?(n1)
+      result.imag.should.equal?(n2)
     end
   end
 
@@ -207,7 +207,7 @@ describe "Kernel.Complex()" do
       n = mock("n")
       c = Complex(0, 0)
       n.should_receive(:to_c).and_return(c)
-      Complex(n).should equal(c)
+      Complex(n).should.equal?(c)
     end
   end
 

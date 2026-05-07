@@ -95,7 +95,7 @@ describe "String#center with length, padding" do
       str = "abc".dup.force_encoding Encoding::IBM437
       result = str.center 6
       result.should == " abc  "
-      result.encoding.should equal(Encoding::IBM437)
+      result.encoding.should.equal?(Encoding::IBM437)
     end
   end
 
@@ -104,7 +104,7 @@ describe "String#center with length, padding" do
       str = "abc".dup.force_encoding Encoding::IBM437
       result = str.center 6, "あ"
       result.should == "あabcああ"
-      result.encoding.should equal(Encoding::UTF_8)
+      result.encoding.should.equal?(Encoding::UTF_8)
     end
 
     it "raises an Encoding::CompatibilityError if the encodings are incompatible" do

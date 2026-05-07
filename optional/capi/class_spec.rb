@@ -11,8 +11,8 @@ autoload :ClassIdUnderAutoload, "#{object_path}/class_id_under_autoload_spec"
 
 describe :rb_path_to_class, shared: true do
   it "returns a class or module from a scoped String" do
-    @s.send(@method, "CApiClassSpecs::A::B").should equal(CApiClassSpecs::A::B)
-    @s.send(@method, "CApiClassSpecs::A::M").should equal(CApiClassSpecs::A::M)
+    @s.send(@method, "CApiClassSpecs::A::B").should.equal?(CApiClassSpecs::A::B)
+    @s.send(@method, "CApiClassSpecs::A::M").should.equal?(CApiClassSpecs::A::M)
   end
 
   it "resolves autoload constants" do
@@ -183,7 +183,7 @@ describe "C-API Class function" do
     it "calls the method in the superclass with the correct self" do
       @s.define_call_super_method CApiClassSpecs::SubSelf, "call_super_method"
       obj = CApiClassSpecs::SubSelf.new
-      obj.call_super_method.should equal obj
+      obj.call_super_method.should.equal? obj
     end
 
     it "calls the method in the superclass through two native levels" do
@@ -290,7 +290,7 @@ describe "C-API Class function" do
 
     it "creates a subclass of the superclass" do
       @cls.should.is_a?(Class)
-      ClassSpecDefineClass.should equal(@cls)
+      ClassSpecDefineClass.should.equal?(@cls)
       @cls.superclass.should == CApiClassSpecs::Super
     end
 

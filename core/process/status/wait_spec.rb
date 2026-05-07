@@ -28,7 +28,7 @@ describe "Process::Status.wait" do
     it "should not set $? to the Process::Status" do
       pid = Process.spawn(ruby_cmd('exit'))
       status = Process::Status.wait
-      $?.should_not equal(status)
+      $?.should_not.equal?(status)
     end
 
     it "should not change the value of $?" do
@@ -36,7 +36,7 @@ describe "Process::Status.wait" do
       Process.wait
       status = $?
       Process::Status.wait
-      status.should equal($?)
+      status.should.equal?($?)
     end
 
     it "waits for any child process if no pid is given" do

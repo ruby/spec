@@ -42,7 +42,7 @@ describe "Hash#initialize" do
 
   it "returns self" do
     h = Hash.new
-    h.send(:initialize).should equal(h)
+    h.send(:initialize).should.equal?(h)
   end
 
   it "raises a FrozenError if called on a frozen instance" do

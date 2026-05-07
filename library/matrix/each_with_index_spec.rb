@@ -21,7 +21,7 @@ describe "Matrix#each_with_index" do
   end
 
   it "returns self" do
-    @m.each_with_index{}.should equal(@m)
+    @m.each_with_index{}.should.equal?(@m)
   end
 
   it "yields the elements starting with the those of the first row" do

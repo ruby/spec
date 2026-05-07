@@ -2,7 +2,7 @@
 describe :string_concat, shared: true do
   it "concatenates the given argument to self and returns self" do
     str = 'hello '
-    str.send(@method, 'world').should equal(str)
+    str.send(@method, 'world').should.equal?(str)
     str.should == "hello world"
   end
 

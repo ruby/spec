@@ -67,7 +67,7 @@ describe "Module#using" do
       result = using refinement
     end
 
-    result.should equal(mod)
+    result.should.equal?(mod)
   end
 
   it "works in classes too" do

@@ -37,7 +37,7 @@ describe "Vector.each2" do
     end
 
     it "returns self when given a block" do
-      @v.each2(@v2){}.should equal(@v)
+      @v.each2(@v2){}.should.equal?(@v)
     end
 
     it "returns an enumerator if no block given" do

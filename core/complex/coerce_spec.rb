@@ -37,8 +37,8 @@ describe "Complex#coerce" do
     other = Complex(2)
     result = @one.coerce(other)
     result.should == [other, @one]
-    result.first.should equal(other)
-    result.last.should equal(@one)
+    result.first.should.equal?(other)
+    result.last.should.equal?(@one)
   end
 
   it "returns an array containing other as Complex and self when other is a Numeric which responds to #real? with true" do
@@ -47,7 +47,7 @@ describe "Complex#coerce" do
     result = @one.coerce(other)
     result.should == [other, @one]
     result.first.should.eql?(Complex(other))
-    result.last.should equal(@one)
+    result.last.should.equal?(@one)
   end
 
   it "raises TypeError when other is a Numeric which responds to #real? with false" do

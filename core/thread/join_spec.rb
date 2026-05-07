@@ -4,21 +4,21 @@ require_relative 'fixtures/classes'
 describe "Thread#join" do
   it "returns the thread when it is finished" do
     t = Thread.new {}
-    t.join.should equal(t)
+    t.join.should.equal?(t)
   end
 
   it "returns the thread when it is finished when given a timeout" do
     t = Thread.new {}
     t.join
-    t.join(0).should equal(t)
+    t.join(0).should.equal?(t)
   end
 
   it "coerces timeout to a Float if it is not nil" do
     t = Thread.new {}
     t.join
-    t.join(0).should equal(t)
-    t.join(0.0).should equal(t)
-    t.join(nil).should equal(t)
+    t.join(0).should.equal?(t)
+    t.join(0.0).should.equal?(t)
+    t.join(nil).should.equal?(t)
   end
 
   it "raises TypeError if the argument is not a valid timeout" do
@@ -60,7 +60,7 @@ describe "Thread#join" do
 
   it "returns the dead thread" do
     t = Thread.new { Thread.current.kill }
-    t.join.should equal(t)
+    t.join.should.equal?(t)
   end
 
   it "raises any uncaught exception encountered in ensure block" do

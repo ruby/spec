@@ -6,7 +6,7 @@ describe :array_collect, shared: true do
     a = ['a', 'b', 'c', 'd']
     b = a.send(@method) { |i| i + '!' }
     b.should == ["a!", "b!", "c!", "d!"]
-    b.should_not equal a
+    b.should_not.equal? a
   end
 
   it "does not return subclass instance" do
@@ -54,14 +54,14 @@ end
 describe :array_collect_b, shared: true do
   it "replaces each element with the value returned by block" do
     a = [7, 9, 3, 5]
-    a.send(@method) { |i| i - 1 }.should equal(a)
+    a.send(@method) { |i| i - 1 }.should.equal?(a)
     a.should == [6, 8, 2, 4]
   end
 
   it "returns self" do
     a = [1, 2, 3, 4, 5]
     b = a.send(@method) {|i| i+1 }
-    a.should equal b
+    a.should.equal? b
   end
 
   it "returns the evaluated value of block but its contents is partially modified, if it broke in the block" do

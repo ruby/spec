@@ -195,7 +195,7 @@ describe "A lambda literal -> () { }" do
 
       @a.().should == nil
       @a.(1, 2, 3, 4).should == nil
-      @a.(&(l = ->{})).should equal(l)
+      @a.(&(l = ->{})).should.equal?(l)
     end
 
     evaluate <<-ruby do
@@ -317,7 +317,7 @@ describe "A lambda expression 'lambda { ... }'" do
       lambda { }
     end
 
-    obj.define.should equal(obj)
+    obj.define.should.equal?(obj)
   end
 
   it "does not execute the block" do
@@ -535,7 +535,7 @@ describe "A lambda expression 'lambda { ... }'" do
 
       @a.().should == nil
       @a.(1, 2, 3, 4).should == nil
-      @a.(&(l = ->{})).should equal(l)
+      @a.(&(l = ->{})).should.equal?(l)
     end
 
     evaluate <<-ruby do

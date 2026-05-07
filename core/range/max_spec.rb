@@ -27,7 +27,7 @@ describe "Range#max" do
   end
 
   it "returns the endpoint when the endpoint equals the start point and the range is inclusive" do
-    (5..5).max.should equal(5)
+    (5..5).max.should.equal?(5)
   end
 
   it "returns nil when the endpoint is less than the start point in a Float range" do
@@ -37,7 +37,7 @@ describe "Range#max" do
   it "returns end point when the range is Time..Time(included end point)" do
     time_start = Time.now
     time_end = Time.now + 1.0
-    (time_start..time_end).max.should equal(time_end)
+    (time_start..time_end).max.should.equal?(time_end)
   end
 
   it "raises TypeError when called on a Time...Time(excluded end point)" do

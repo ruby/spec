@@ -58,7 +58,7 @@ describe "Fiber#transfer" do
         end
         io_fiber.transfer(Fiber.current)
         value = Object.new
-        io_fiber.transfer(value).should equal value
+        io_fiber.transfer(value).should.equal? value
       end.join
     end
   end

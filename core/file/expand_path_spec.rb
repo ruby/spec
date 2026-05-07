@@ -138,10 +138,10 @@ describe "File.expand_path" do
     Encoding.default_external = Encoding::SHIFT_JIS
 
     path = "./a".dup.force_encoding Encoding::CP1251
-    File.expand_path(path).encoding.should equal(Encoding::CP1251)
+    File.expand_path(path).encoding.should.equal?(Encoding::CP1251)
 
     weird_path = [222, 173, 190, 175].pack('C*')
-    File.expand_path(weird_path).encoding.should equal(Encoding::BINARY)
+    File.expand_path(weird_path).encoding.should.equal?(Encoding::BINARY)
   end
 
   platform_is_not :windows do

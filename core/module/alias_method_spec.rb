@@ -93,8 +93,8 @@ describe "Module#alias_method" do
 
   describe "returned value" do
     it "returns symbol of the defined method name" do
-      @class.send(:alias_method, :checking_return_value, :public_one).should equal(:checking_return_value)
-      @class.send(:alias_method, 'checking_return_value', :public_one).should equal(:checking_return_value)
+      @class.send(:alias_method, :checking_return_value, :public_one).should.equal?(:checking_return_value)
+      @class.send(:alias_method, 'checking_return_value', :public_one).should.equal?(:checking_return_value)
     end
   end
 

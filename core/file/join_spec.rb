@@ -52,7 +52,7 @@ describe "File.join" do
   it "returns a duplicate string when given a single argument" do
     str = "usr"
     File.join(str).should == str
-    File.join(str).should_not equal(str)
+    File.join(str).should_not.equal?(str)
   end
 
   it "supports any number of arguments" do

@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Array#min" do
   it "is defined on Array" do
-    [1].method(:max).owner.should equal Array
+    [1].method(:max).owner.should.equal? Array
   end
 
   it "returns nil with no values" do

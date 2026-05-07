@@ -21,7 +21,7 @@ describe :set_select_bang, shared: true do
   end
 
   it "returns self when self was modified" do
-    @set.send(@method) { false }.should equal(@set)
+    @set.send(@method) { false }.should.equal?(@set)
   end
 
   it "returns nil when self was not modified" do

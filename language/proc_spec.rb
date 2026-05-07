@@ -57,7 +57,7 @@ describe "A Proc" do
       obj = mock("block yield to_ary")
       obj.should_not_receive(:to_ary)
 
-      @l.call(obj).should equal(obj)
+      @l.call(obj).should.equal?(obj)
     end
 
     it "raises an ArgumentError if no value is passed" do

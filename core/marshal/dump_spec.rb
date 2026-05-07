@@ -954,7 +954,7 @@ describe "Marshal.dump" do
         begin
           raise RuntimeError, "the consequence"
         rescue RuntimeError => e
-          e.cause.should equal(cause)
+          e.cause.should.equal?(cause)
           exc = e
         end
       end

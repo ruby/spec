@@ -50,7 +50,7 @@ describe "Array#* with an integer" do
 
   it "does not return self even if the passed integer is 1" do
     ary = [1, 2, 3]
-    (ary * 1).should_not equal(ary)
+    (ary * 1).should_not.equal?(ary)
   end
 
   it "properly handles recursive arrays" do

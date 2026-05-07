@@ -4,13 +4,13 @@ require_relative 'fixtures/classes'
 describe "Array#clear" do
   it "removes all elements" do
     a = [1, 2, 3, 4]
-    a.clear.should equal(a)
+    a.clear.should.equal?(a)
     a.should == []
   end
 
   it "returns self" do
     a = [1]
-    a.should equal a.clear
+    a.should.equal? a.clear
   end
 
   it "leaves the Array empty" do

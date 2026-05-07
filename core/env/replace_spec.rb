@@ -11,7 +11,7 @@ describe "ENV.replace" do
   end
 
   it "replaces ENV with a Hash" do
-    ENV.replace("foo" => "0", "bar" => "1").should equal(ENV)
+    ENV.replace("foo" => "0", "bar" => "1").should.equal?(ENV)
     ENV.size.should == 2
     ENV["foo"].should == "0"
     ENV["bar"].should == "1"
