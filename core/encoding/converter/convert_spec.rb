@@ -34,8 +34,7 @@ describe "Encoding::Converter#convert" do
 
   it "raises UndefinedConversionError if the String contains characters invalid for the target encoding" do
     ec = Encoding::Converter.new('UTF-8', Encoding.find('macCyrillic'))
-    -> { ec.convert("\u{6543}".dup.force_encoding('UTF-8')) }.should \
-      raise_error(Encoding::UndefinedConversionError)
+    -> { ec.convert("\u{6543}".dup.force_encoding('UTF-8')) }.should raise_error(Encoding::UndefinedConversionError)
   end
 
   it "raises an ArgumentError if called on a finished stream" do

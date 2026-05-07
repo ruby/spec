@@ -18,10 +18,8 @@ describe "Matrix.[]" do
   end
 
   it "raises for non-rectangular matrices" do
-    ->{ Matrix[ [0], [0,1] ] }.should \
-      raise_error(Matrix::ErrDimensionMismatch)
-    ->{ Matrix[ [0,1], [0,1,2], [0,1] ]}.should \
-      raise_error(Matrix::ErrDimensionMismatch)
+    ->{ Matrix[ [0], [0,1] ] }.should raise_error(Matrix::ErrDimensionMismatch)
+    ->{ Matrix[ [0,1], [0,1,2], [0,1] ]}.should raise_error(Matrix::ErrDimensionMismatch)
   end
 
   it "accepts vector arguments" do
