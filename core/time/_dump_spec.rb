@@ -10,7 +10,7 @@ describe "Time#_dump" do
   end
 
   it "is a private method" do
-    Time.should have_private_instance_method(:_dump, false)
+    Time.private_instance_methods(false).should.include?(:_dump)
   end
 
   # http://redmine.ruby-lang.org/issues/show/627

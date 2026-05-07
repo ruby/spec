@@ -23,7 +23,7 @@ ruby_version_is "4.1" do
     end
 
     it "is a private method" do
-      Kernel.should have_private_instance_method(:autoload_relative)
+      Kernel.private_instance_methods(false).should.include?(:autoload_relative)
     end
 
     it "registers a file to load relative to the current file" do

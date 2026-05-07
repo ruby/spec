@@ -809,6 +809,6 @@ describe "Kernel#Integer" do
   it_behaves_like :kernel_integer_string_base, :Integer
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:Integer)
+    Kernel.private_instance_methods(false).should.include?(:Integer)
   end
 end

@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Kernel.loop" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:loop)
+    Kernel.private_instance_methods(false).should.include?(:loop)
   end
 
   it "calls block until it is terminated by a break" do

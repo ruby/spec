@@ -3,7 +3,7 @@ require_relative 'fixtures/caller'
 
 describe 'Kernel#caller' do
   it 'is a private method' do
-    Kernel.should have_private_instance_method(:caller)
+    Kernel.private_instance_methods(false).should.include?(:caller)
   end
 
   it 'returns an Array of caller locations' do

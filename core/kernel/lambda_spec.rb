@@ -8,7 +8,7 @@ describe "Kernel.lambda" do
   it_behaves_like :kernel_lambda, :lambda
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:lambda)
+    Kernel.private_instance_methods(false).should.include?(:lambda)
   end
 
   it "creates a lambda-style Proc if given a literal block" do

@@ -12,7 +12,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "is private" do
-      Net::FTP.should have_private_instance_method(:initialize)
+      Net::FTP.private_instance_methods(false).should.include?(:initialize)
     end
 
     it "sets self into binary mode" do

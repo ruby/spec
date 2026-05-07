@@ -3,7 +3,7 @@ require 'pathname'
 
 describe "Kernel#Pathname" do
   it "is a private instance method" do
-    Kernel.should have_private_instance_method(:Pathname)
+    Kernel.private_instance_methods(false).should.include?(:Pathname)
   end
 
   it "is also a public method" do

@@ -17,7 +17,7 @@ describe "Enumerator::Product#initialize_copy" do
   end
 
   it "is a private method" do
-    Enumerator::Product.should have_private_instance_method(:initialize_copy, false)
+    Enumerator::Product.private_instance_methods(false).should.include?(:initialize_copy)
   end
 
   it "does nothing if the argument is the same as the receiver" do

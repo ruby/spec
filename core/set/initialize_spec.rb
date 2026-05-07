@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Set#initialize" do
   it "is private" do
-    Set.should have_private_instance_method(:initialize)
+    Set.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "adds all elements of the passed Enumerable to self" do

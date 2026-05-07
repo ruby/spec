@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Kernel#fail" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:fail)
+    Kernel.private_instance_methods(false).should.include?(:fail)
   end
 
   it "raises a RuntimeError" do

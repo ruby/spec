@@ -7,12 +7,12 @@ describe "Module#extend_object" do
   end
 
   it "is a private method" do
-    Module.should have_private_instance_method(:extend_object)
+    Module.private_instance_methods(false).should.include?(:extend_object)
   end
 
   describe "on Class" do
     it "is undefined" do
-      Class.should_not have_private_instance_method(:extend_object, true)
+      Class.private_instance_methods(true).should_not.include?(:extend_object)
     end
 
     it "raises a TypeError if calling after rebinded to Class" do

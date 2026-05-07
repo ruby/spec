@@ -16,7 +16,7 @@ describe "Enumerator::Lazy#initialize" do
   end
 
   it "is a private method" do
-    Enumerator::Lazy.should have_private_instance_method(:initialize, false)
+    Enumerator::Lazy.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "returns self" do

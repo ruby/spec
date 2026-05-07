@@ -101,6 +101,6 @@ describe "Kernel#String" do
   it_behaves_like :kernel_String, :String, Object.new
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:String)
+    Kernel.private_instance_methods(false).should.include?(:String)
   end
 end

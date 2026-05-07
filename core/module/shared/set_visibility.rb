@@ -2,7 +2,7 @@
 
 describe :set_visibility, shared: true do
   it "is a private method" do
-    Module.should have_private_instance_method(@method, false)
+    Module.private_instance_methods(false).should.include?(@method)
   end
 
   describe "with argument" do

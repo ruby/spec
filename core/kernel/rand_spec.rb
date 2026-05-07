@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Kernel#rand" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:rand)
+    Kernel.private_instance_methods(false).should.include?(:rand)
   end
 
   it "returns a float if no argument is passed" do

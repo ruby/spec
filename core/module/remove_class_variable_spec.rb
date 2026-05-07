@@ -39,6 +39,6 @@ describe "Module#remove_class_variable" do
   end
 
   it "is public" do
-    Module.should_not have_private_instance_method(:remove_class_variable)
+    Module.private_instance_methods(true).should_not.include?(:remove_class_variable)
   end
 end

@@ -9,7 +9,7 @@ end
 
 describe "Kernel#binding" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:binding)
+    Kernel.private_instance_methods(false).should.include?(:binding)
   end
 
   before :each do

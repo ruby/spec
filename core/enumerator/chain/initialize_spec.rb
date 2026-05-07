@@ -6,7 +6,7 @@ describe "Enumerator::Chain#initialize" do
   end
 
   it "is a private method" do
-    Enumerator::Chain.should have_private_instance_method(:initialize, false)
+    Enumerator::Chain.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "returns self" do

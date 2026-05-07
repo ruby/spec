@@ -6,7 +6,7 @@ describe "Range#initialize" do
   end
 
   it "is private" do
-    Range.should have_private_instance_method("initialize")
+    Range.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "initializes correctly the Range object when given 2 arguments" do

@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Regexp#initialize" do
   it "is a private method" do
-    Regexp.should have_private_instance_method(:initialize)
+    Regexp.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "raises a FrozenError on a Regexp literal" do

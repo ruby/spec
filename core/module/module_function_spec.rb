@@ -3,12 +3,12 @@ require_relative 'fixtures/classes'
 
 describe "Module#module_function" do
   it "is a private method" do
-    Module.should have_private_instance_method(:module_function)
+    Module.private_instance_methods(false).should.include?(:module_function)
   end
 
   describe "on Class" do
     it "is undefined" do
-      Class.should_not have_private_instance_method(:module_function, true)
+      Class.private_instance_methods(true).should_not.include?(:module_function)
     end
 
     it "raises a TypeError if calling after rebinded to Class" do
@@ -83,7 +83,7 @@ describe "Module#module_function with specific method names" do
 
     (o = mock('x')).extend(m)
     o.respond_to?(:test).should == false
-    m.should have_private_instance_method(:test)
+    m.private_instance_methods(false).should.include?(:test)
     o.send(:test).should == "hello"
     -> { o.test }.should raise_error(NoMethodError)
   end

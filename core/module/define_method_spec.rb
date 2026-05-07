@@ -116,7 +116,7 @@ describe "Module#define_method when name is not a special private name" do
         end
 
         klass.should have_public_instance_method(:bar)
-        klass.should have_private_instance_method(:baz)
+        klass.private_instance_methods(false).should.include?(:baz)
       end
     end
 
@@ -156,7 +156,7 @@ describe "Module#define_method when name is not a special private name" do
         end
 
         klass.should have_public_instance_method(:bar)
-        klass.should have_private_instance_method(:baz)
+        klass.private_instance_methods(false).should.include?(:baz)
       end
     end
 
@@ -182,7 +182,7 @@ describe "Module#define_method when name is :initialize" do
       klass = Class.new do
         define_method(:initialize) { }
       end
-      klass.should have_private_instance_method(:initialize)
+      klass.private_instance_methods(false).should.include?(:initialize)
     end
   end
 
@@ -193,7 +193,7 @@ describe "Module#define_method when name is :initialize" do
         end
         define_method(:initialize, instance_method(:test_method))
       end
-      klass.should have_private_instance_method(:initialize)
+      klass.private_instance_methods(false).should.include?(:initialize)
     end
   end
 end

@@ -25,7 +25,7 @@ describe "Kernel#autoload" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:autoload)
+    Kernel.private_instance_methods(false).should.include?(:autoload)
   end
 
   it "registers a file to load the first time the named constant is accessed" do
@@ -102,7 +102,7 @@ end
 
 describe "Kernel#autoload?" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:autoload?)
+    Kernel.private_instance_methods(false).should.include?(:autoload?)
   end
 
   it "returns the name of the file that will be autoloaded" do

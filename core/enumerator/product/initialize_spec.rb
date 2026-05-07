@@ -6,7 +6,7 @@ describe "Enumerator::Product#initialize" do
   end
 
   it "is a private method" do
-    Enumerator::Product.should have_private_instance_method(:initialize, false)
+    Enumerator::Product.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "returns self" do

@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Refinement#append_features" do
   it "is not defined" do
-    Refinement.should_not have_private_instance_method(:append_features)
+    Refinement.private_instance_methods(true).should_not.include?(:append_features)
   end
 
   it "is not called by Module#include" do

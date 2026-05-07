@@ -6,7 +6,7 @@ require_relative 'fixtures/classes'
 ruby_version_is ""..."1.9" do
   describe "Kernel#gsub" do
     it "is a private method" do
-      Kernel.should have_private_instance_method(:gsub)
+      Kernel.private_instance_methods(false).should.include?(:gsub)
     end
 
     it "raises a TypeError if $_ is not a String" do
@@ -86,7 +86,7 @@ ruby_version_is ""..."1.9" do
 
   describe "Kernel#gsub!" do
     it "is a private method" do
-      Kernel.should have_private_instance_method(:gsub!)
+      Kernel.private_instance_methods(false).should.include?(:gsub!)
     end
   end
 

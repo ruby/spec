@@ -15,7 +15,7 @@ describe "Kernel#open" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:open)
+    Kernel.private_instance_methods(false).should.include?(:open)
   end
 
   it "opens a file when given a valid filename" do

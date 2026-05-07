@@ -11,7 +11,7 @@ describe "Kernel#srand" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:srand)
+    Kernel.private_instance_methods(false).should.include?(:srand)
   end
 
   it "returns the previous seed value" do

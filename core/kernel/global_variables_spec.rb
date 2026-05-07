@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Kernel.global_variables" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:global_variables)
+    Kernel.private_instance_methods(false).should.include?(:global_variables)
   end
 
   before :all do

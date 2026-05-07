@@ -313,7 +313,7 @@ describe "CApiModule" do
       cls = Class.new
       cls.include(@mod)
 
-      cls.should have_private_instance_method(:test_module_function)
+      cls.private_instance_methods(true).should.include?(:test_module_function)
     end
 
     it "returns the correct arity for private instance method" do
@@ -328,14 +328,14 @@ describe "CApiModule" do
     it "defines a private method on a class" do
       cls = Class.new
       @m.rb_define_private_method(cls, "test_method")
-      cls.should have_private_instance_method(:test_method)
+      cls.private_instance_methods(false).should.include?(:test_method)
       cls.new.send(:test_method).should == :test_method
     end
 
     it "defines a private method on a module" do
       mod = Module.new
       @m.rb_define_private_method(mod, "test_method")
-      mod.should have_private_instance_method(:test_method)
+      mod.private_instance_methods(false).should.include?(:test_method)
     end
   end
 

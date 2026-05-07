@@ -7,7 +7,7 @@ describe "Module#method_added" do
   end
 
   it "is a private instance method" do
-    Module.should have_private_instance_method(:method_added)
+    Module.private_instance_methods(false).should.include?(:method_added)
   end
 
   it "returns nil in the default implementation" do

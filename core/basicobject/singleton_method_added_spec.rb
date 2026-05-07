@@ -7,7 +7,7 @@ describe "BasicObject#singleton_method_added" do
   end
 
   it "is a private method" do
-    BasicObject.should have_private_instance_method(:singleton_method_added)
+    BasicObject.private_instance_methods(false).should.include?(:singleton_method_added)
   end
 
   it "is called when a singleton method is defined on an object" do

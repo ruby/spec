@@ -4,7 +4,7 @@ require_relative 'shared/replace'
 
 describe "String#initialize" do
   it "is a private method" do
-    String.should have_private_instance_method(:initialize)
+    String.private_instance_methods(false).should.include?(:initialize)
   end
 
   describe "with no arguments" do

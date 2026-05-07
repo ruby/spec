@@ -7,7 +7,7 @@ describe "Kernel#local_variables" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:local_variables)
+    Kernel.private_instance_methods(false).should.include?(:local_variables)
   end
 
   it "contains locals as they are added" do

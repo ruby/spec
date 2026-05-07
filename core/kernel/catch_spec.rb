@@ -122,6 +122,6 @@ end
 
 describe "Kernel#catch" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:catch)
+    Kernel.private_instance_methods(false).should.include?(:catch)
   end
 end

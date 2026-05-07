@@ -5,7 +5,7 @@ EvalSpecs::A.new.c
 
 describe "Kernel#eval" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:eval)
+    Kernel.private_instance_methods(false).should.include?(:eval)
   end
 
   it "is a module function" do

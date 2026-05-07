@@ -7,7 +7,7 @@ describe "Array#initialize" do
   end
 
   it "is private" do
-    Array.should have_private_instance_method("initialize")
+    Array.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "is called on subclasses" do

@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Refinement#extend_object" do
   it "is not defined" do
-    Refinement.should_not have_private_instance_method(:extend_object)
+    Refinement.private_instance_methods(true).should_not.include?(:extend_object)
   end
 
   it "is not called by Object#extend" do

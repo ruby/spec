@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Hash#initialize" do
   it "is private" do
-    Hash.should have_private_instance_method("initialize")
+    Hash.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "can be used to reset default_proc" do

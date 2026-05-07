@@ -75,6 +75,6 @@ end
 
 describe "Kernel#throw" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:throw)
+    Kernel.private_instance_methods(false).should.include?(:throw)
   end
 end

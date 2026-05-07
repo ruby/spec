@@ -3,7 +3,7 @@ require_relative '../fiber/fixtures/scheduler'
 
 describe "Kernel#sleep" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:sleep)
+    Kernel.private_instance_methods(false).should.include?(:sleep)
   end
 
   it "returns an Integer" do

@@ -408,6 +408,6 @@ end
 
 describe "Kernel#Float" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:Float)
+    Kernel.private_instance_methods(false).should.include?(:Float)
   end
 end

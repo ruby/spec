@@ -3,12 +3,12 @@ require_relative 'fixtures/classes'
 
 describe "Module#append_features" do
   it "is a private method" do
-    Module.should have_private_instance_method(:append_features)
+    Module.private_instance_methods(false).should.include?(:append_features)
   end
 
   describe "on Class" do
     it "is undefined" do
-      Class.should_not have_private_instance_method(:append_features, true)
+      Class.private_instance_methods(true).should_not.include?(:append_features)
     end
 
     it "raises a TypeError if calling after rebinded to Class" do

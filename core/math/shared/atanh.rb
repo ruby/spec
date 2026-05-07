@@ -29,7 +29,7 @@ end
 
 describe :math_atanh_private, shared: true do
   it "is a private instance method" do
-    Math.should have_private_instance_method(@method)
+    Math.private_instance_methods(false).should.include?(@method)
   end
 end
 

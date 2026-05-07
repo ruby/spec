@@ -14,7 +14,7 @@ describe "Kernel#warn" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:warn)
+    Kernel.private_instance_methods(false).should.include?(:warn)
   end
 
   it "accepts multiple arguments" do

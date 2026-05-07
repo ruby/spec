@@ -7,7 +7,7 @@ describe "Kernel#respond_to_missing?" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:respond_to_missing?, false)
+    Kernel.private_instance_methods(false).should.include?(:respond_to_missing?)
   end
 
   it "is only an instance method" do

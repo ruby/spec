@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Kernel" do
   it "has private instance method Array()" do
-    Kernel.should have_private_instance_method(:Array)
+    Kernel.private_instance_methods(false).should.include?(:Array)
   end
 end
 

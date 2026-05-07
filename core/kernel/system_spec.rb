@@ -121,7 +121,7 @@ end
 
 describe "Kernel#system" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:system)
+    Kernel.private_instance_methods(false).should.include?(:system)
   end
 
   it_behaves_like :kernel_system, :system, KernelSpecs::Method.new

@@ -14,7 +14,7 @@ describe "Kernel#trace_var" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:trace_var)
+    Kernel.private_instance_methods(false).should.include?(:trace_var)
   end
 
   it "hooks assignments to a global variable" do

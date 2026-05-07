@@ -5,7 +5,7 @@ ruby_version_is ""..."4.0" do
 
   describe "CGI#initialize" do
     it "is private" do
-      CGI.should have_private_instance_method(:initialize)
+      CGI.private_instance_methods(false).should.include?(:initialize)
     end
   end
 

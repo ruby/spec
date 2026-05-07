@@ -3,7 +3,7 @@ require 'net/http'
 
 describe "Net::HTTP#initialize" do
   it "is private" do
-    Net::HTTP.should have_private_instance_method(:initialize)
+    Net::HTTP.private_instance_methods(false).should.include?(:initialize)
   end
 
   describe "when passed address" do

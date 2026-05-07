@@ -13,7 +13,7 @@ end
 
 describe "Kernel" do
   it "has private instance method Hash()" do
-    Kernel.should have_private_instance_method(:Hash)
+    Kernel.private_instance_methods(false).should.include?(:Hash)
   end
 end
 

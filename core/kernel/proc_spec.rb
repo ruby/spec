@@ -6,7 +6,7 @@ require_relative 'shared/lambda'
 
 describe "Kernel.proc" do
   it "is a private method" do
-    Kernel.should have_private_instance_method(:proc)
+    Kernel.private_instance_methods(false).should.include?(:proc)
   end
 
   it "creates a proc-style Proc if given a literal block" do

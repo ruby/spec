@@ -7,7 +7,7 @@ describe "StringScanner#initialize" do
   end
 
   it "is a private method" do
-    StringScanner.should have_private_instance_method(:initialize)
+    StringScanner.private_instance_methods(false).should.include?(:initialize)
   end
 
   it "returns an instance of StringScanner" do

@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Module#prepend_features" do
   it "is a private method" do
-    Module.should have_private_instance_method(:prepend_features, true)
+    Module.private_instance_methods(false).should.include?(:prepend_features)
   end
 
   it "gets called when self is included in another module/class" do
@@ -52,7 +52,7 @@ describe "Module#prepend_features" do
 
   describe "on Class" do
     it "is undefined" do
-      Class.should_not have_private_instance_method(:prepend_features, true)
+      Class.private_instance_methods(true).should_not.include?(:prepend_features)
     end
 
     it "raises a TypeError if calling after rebinded to Class" do

@@ -11,7 +11,7 @@ describe "Kernel#`" do
   end
 
   it "is a private method" do
-    Kernel.should have_private_instance_method(:`)
+    Kernel.private_instance_methods(false).should.include?(:`)
   end
 
   it "returns the standard output of the executed sub-process" do

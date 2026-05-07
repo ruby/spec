@@ -14,7 +14,7 @@ end
 
 describe "Defining a method at the top-level" do
   it "defines it on Object with private visibility by default" do
-    Object.should have_private_instance_method(:some_toplevel_method, false)
+    Object.private_instance_methods(false).should.include?(:some_toplevel_method)
   end
 
   it "defines it on Object with public visibility after calling public" do
@@ -28,7 +28,7 @@ describe "Defining an 'initialize' method" do
       def initialize
       end
     end
-    DefInitializeSpec.should have_private_instance_method(:initialize, false)
+    DefInitializeSpec.private_instance_methods(false).should.include?(:initialize)
   end
 end
 
@@ -38,7 +38,7 @@ describe "Defining an 'initialize_copy' method" do
       def initialize_copy
       end
     end
-    DefInitializeCopySpec.should have_private_instance_method(:initialize_copy, false)
+    DefInitializeCopySpec.private_instance_methods(false).should.include?(:initialize_copy)
   end
 end
 
@@ -48,7 +48,7 @@ describe "Defining an 'initialize_dup' method" do
       def initialize_dup
       end
     end
-    DefInitializeDupSpec.should have_private_instance_method(:initialize_dup, false)
+    DefInitializeDupSpec.private_instance_methods(false).should.include?(:initialize_dup)
   end
 end
 
@@ -58,7 +58,7 @@ describe "Defining an 'initialize_clone' method" do
       def initialize_clone
       end
     end
-    DefInitializeCloneSpec.should have_private_instance_method(:initialize_clone, false)
+    DefInitializeCloneSpec.private_instance_methods(false).should.include?(:initialize_clone)
   end
 end
 
@@ -68,7 +68,7 @@ describe "Defining a 'respond_to_missing?' method" do
       def respond_to_missing?
       end
     end
-    DefRespondToMissingPSpec.should have_private_instance_method(:respond_to_missing?, false)
+    DefRespondToMissingPSpec.private_instance_methods(false).should.include?(:respond_to_missing?)
   end
 end
 
@@ -809,7 +809,7 @@ describe "The def keyword" do
         }.call
       end
 
-      DefSpecsLambdaVisibility.should have_private_instance_method("some_method")
+      DefSpecsLambdaVisibility.private_instance_methods(false).should.include?(:some_method)
     end
   end
 end
