@@ -59,7 +59,7 @@ describe "Float#round" do
   it "returns self for exceptional values when passed a non-negative precision" do
     Float::INFINITY.round(2).should == Float::INFINITY
     (-Float::INFINITY).round(2).should == -Float::INFINITY
-    Float::NAN.round(2).should be_nan
+    Float::NAN.round(2).should.nan?
   end
 
   # redmine:5227

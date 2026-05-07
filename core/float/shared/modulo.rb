@@ -16,13 +16,13 @@ describe :float_modulo, shared: true do
   end
 
   it "returns NaN when called on NaN or Infinities" do
-    Float::NAN.send(@method, 42).should be_nan
-    Float::INFINITY.send(@method, 42).should be_nan
-    (-Float::INFINITY).send(@method, 42).should be_nan
+    Float::NAN.send(@method, 42).should.nan?
+    Float::INFINITY.send(@method, 42).should.nan?
+    (-Float::INFINITY).send(@method, 42).should.nan?
   end
 
   it "returns NaN when modulus is NaN" do
-    4.2.send(@method, Float::NAN).should be_nan
+    4.2.send(@method, Float::NAN).should.nan?
   end
 
   it "returns -0.0 when called on -0.0 with a non zero modulus" do

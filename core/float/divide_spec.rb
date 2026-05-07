@@ -26,10 +26,10 @@ describe "Float#/" do
   end
 
   it "returns NaN when dividing zero by zero" do
-    (0.0 / 0.0).should be_nan
-    (-0.0 / 0.0).should be_nan
-    (0.0 / -0.0).should be_nan
-    (-0.0 / -0.0).should be_nan
+    (0.0 / 0.0).should.nan?
+    (-0.0 / 0.0).should.nan?
+    (0.0 / -0.0).should.nan?
+    (-0.0 / -0.0).should.nan?
   end
 
   it "raises a TypeError when given a non-Numeric" do
