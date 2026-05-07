@@ -234,46 +234,46 @@ describe "Class methods of a singleton class" do
   end
 
   it "include ones of the object's class" do
-    @k_sc.should have_method(:example_class_method)
+    @k_sc.should.respond_to?(:example_class_method)
   end
 
   it "does not include instance methods of the object's class" do
-    @k_sc.should_not have_method(:example_instance_method)
+    @k_sc.should_not.respond_to?(:example_instance_method)
   end
 
   it "include instance methods of Class" do
-    @a_sc.should have_method(:example_instance_method_of_class)
+    @a_sc.should.respond_to?(:example_instance_method_of_class)
   end
 
   it "does not include class methods of Class" do
-    @a_sc.should_not have_method(:example_class_method_of_class)
+    @a_sc.should_not.respond_to?(:example_class_method_of_class)
   end
 
   describe "for a class" do
     it "include instance methods of Class" do
-      @a_c_sc.should have_method(:example_instance_method_of_class)
+      @a_c_sc.should.respond_to?(:example_instance_method_of_class)
     end
 
     it "include class methods of Class" do
-      @a_c_sc.should have_method(:example_class_method_of_class)
+      @a_c_sc.should.respond_to?(:example_class_method_of_class)
     end
 
     it "include instance methods of the singleton class of Class" do
-      @a_c_sc.should have_method(:example_instance_method_of_singleton_class)
+      @a_c_sc.should.respond_to?(:example_instance_method_of_singleton_class)
     end
 
     it "does not include class methods of the singleton class of Class" do
-      @a_c_sc.should_not have_method(:example_class_method_of_singleton_class)
+      @a_c_sc.should_not.respond_to?(:example_class_method_of_singleton_class)
     end
   end
 
   describe "for a singleton class" do
     it "include instance methods of the singleton class of Class" do
-      @a_c_sc.singleton_class.should have_method(:example_instance_method_of_singleton_class)
+      @a_c_sc.singleton_class.should.respond_to?(:example_instance_method_of_singleton_class)
     end
 
     it "include class methods of the singleton class of Class" do
-      @a_c_sc.singleton_class.should have_method(:example_class_method_of_singleton_class)
+      @a_c_sc.singleton_class.should.respond_to?(:example_class_method_of_singleton_class)
     end
   end
 end

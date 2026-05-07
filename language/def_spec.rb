@@ -523,7 +523,7 @@ describe "A nested method definition" do
 
     DefSpecNested::TARGET.defs_method
     DefSpecNested.should.method_defined?(:inherited_method, false)
-    DefSpecNested::TARGET.should_not have_method :inherited_method
+    DefSpecNested::TARGET.should_not.respond_to? :inherited_method
 
     obj = DefSpecNested.new
     obj.inherited_method.should == obj
@@ -545,8 +545,8 @@ describe "A nested method definition" do
     obj = DefSpecNested::OBJ
     obj.create_method_in_instance_eval
 
-    obj.should have_method :arg_method
-    obj.should have_method :body_method
+    obj.should.respond_to? :arg_method
+    obj.should.respond_to? :body_method
 
     DefSpecNested.should_not.method_defined? :arg_method
     DefSpecNested.should_not.method_defined? :body_method

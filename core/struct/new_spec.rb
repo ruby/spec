@@ -133,13 +133,13 @@ describe "Struct.new" do
     end
 
     it "creates reader methods" do
-      StructClasses::Ruby.new.should have_method(:version)
-      StructClasses::Ruby.new.should have_method(:platform)
+      StructClasses::Ruby.new.should.respond_to?(:version)
+      StructClasses::Ruby.new.should.respond_to?(:platform)
     end
 
     it "creates writer methods" do
-      StructClasses::Ruby.new.should have_method(:version=)
-      StructClasses::Ruby.new.should have_method(:platform=)
+      StructClasses::Ruby.new.should.respond_to?(:version=)
+      StructClasses::Ruby.new.should.respond_to?(:platform=)
     end
 
     it "fails with too many arguments" do

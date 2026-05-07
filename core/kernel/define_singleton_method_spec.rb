@@ -14,7 +14,7 @@ describe "Kernel#define_singleton_method" do
     end
 
     it "adds the new method to the methods list" do
-      DefineSingletonMethodSpecClass.should have_method(:another_test_method)
+      DefineSingletonMethodSpecClass.should.respond_to?(:another_test_method)
     end
 
     it "defines any Child class method from any Parent's class methods" do

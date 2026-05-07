@@ -91,7 +91,7 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 
 3.14.should.respond_to?(:to_i)
 Integer.should.method_defined?(:+, false)
-Array.should have_method(:new)
+Array.should.respond_to?(:new)
 ```
 
 Also `have_constant`, `have_private_instance_method`, `have_singleton_method`, etc.

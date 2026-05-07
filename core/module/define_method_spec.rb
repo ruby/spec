@@ -47,7 +47,7 @@ describe "Module#define_method when given an UnboundMethod" do
       end
       define_method(:another_test_method, instance_method(:test_method))
     end
-    klass.new.should have_method(:another_test_method)
+    klass.new.should.respond_to?(:another_test_method)
   end
 
   describe "defining a method on a singleton class" do
@@ -795,7 +795,7 @@ describe "Module#define_method when passed a Proc object" do
 
       o = c.new
       o.test
-      o.should_not have_method :nested_method_in_proc_for_define_method
+      o.should_not.respond_to? :nested_method_in_proc_for_define_method
 
       t.new.nested_method_in_proc_for_define_method.should == 42
     end

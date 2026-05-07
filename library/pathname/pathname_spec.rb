@@ -7,7 +7,7 @@ describe "Kernel#Pathname" do
   end
 
   it "is also a public method" do
-    Kernel.should have_method(:Pathname)
+    Kernel.should.respond_to?(:Pathname)
   end
 
   it "returns same argument when called with a pathname argument" do

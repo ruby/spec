@@ -237,7 +237,7 @@ describe "CApiModule" do
   describe "rb_define_global_function" do
     it "defines a method on Kernel" do
       @m.rb_define_global_function("module_specs_global_function")
-      Kernel.should have_method(:module_specs_global_function)
+      Kernel.should.respond_to?(:module_specs_global_function)
       module_specs_global_function.should == :test_method
     end
   end
