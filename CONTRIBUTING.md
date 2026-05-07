@@ -94,8 +94,6 @@ Integer.should.method_defined?(:+, false)
 Array.should.respond_to?(:new)
 ```
 
-Also `have_constant`, `have_private_instance_method`, `have_singleton_method`, etc.
-
 #### Exception matchers
 
 ```ruby
