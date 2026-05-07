@@ -4,7 +4,7 @@ describe "Thread#backtrace_locations" do
   it "returns an Array" do
     locations = Thread.current.backtrace_locations
     locations.should.instance_of?(Array)
-    locations.should_not be_empty
+    locations.should_not.empty?
   end
 
   it "sets each element to a Thread::Backtrace::Location" do
@@ -15,7 +15,7 @@ describe "Thread#backtrace_locations" do
   it "can be called on any Thread" do
     locations = Thread.new { Thread.current.backtrace_locations }.value
     locations.should.instance_of?(Array)
-    locations.should_not be_empty
+    locations.should_not.empty?
     locations.each { |loc| loc.should.instance_of?(Thread::Backtrace::Location) }
   end
 

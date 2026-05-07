@@ -64,7 +64,7 @@ describe "StringIO#readpartial" do
     buffer = +'hello'
     @string.readpartial(100)
     -> { @string.readpartial(1, buffer) }.should raise_error(EOFError)
-    buffer.should be_empty
+    buffer.should.empty?
   end
 
   it "raises IOError if the stream is closed" do

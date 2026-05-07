@@ -12,7 +12,7 @@ describe "Process.wait2" do
       leaked = Process.waitall
       $stderr.puts "leaked before wait2 specs: #{leaked}" unless leaked.empty?
       # Ruby-space should not see PIDs used by rjit
-      leaked.should be_empty
+      leaked.should.empty?
     rescue Errno::ECHILD # No child processes
     rescue NotImplementedError
     end

@@ -11,7 +11,7 @@ describe 'Socket.ip_address_list' do
     end
 
     it 'is not empty' do
-      @array.should_not be_empty
+      @array.should_not.empty?
     end
 
     it 'contains Addrinfo objects' do
@@ -29,7 +29,7 @@ describe 'Socket.ip_address_list' do
     it 'has a non-empty IP address' do
       @array.each do |addr|
         addr.ip_address.should.instance_of?(String)
-        addr.ip_address.should_not be_empty
+        addr.ip_address.should_not.empty?
       end
     end
 

@@ -22,7 +22,7 @@ describe "UNIXServer#accept" do
       data, info = sock.recvfrom(5)
 
       data.should == 'hello'
-      info.should_not be_empty
+      info.should_not.empty?
     ensure
       sock.close
       client.close

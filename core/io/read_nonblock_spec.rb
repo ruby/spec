@@ -121,7 +121,7 @@ describe "IO#read_nonblock" do
     buffer = +"existing content"
     @write.close
     -> { @read.read_nonblock(1, buffer) }.should raise_error(EOFError)
-    buffer.should be_empty
+    buffer.should.empty?
   end
 
   it "raises IOError on closed stream" do

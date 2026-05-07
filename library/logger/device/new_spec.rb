@@ -33,7 +33,7 @@ describe "Logger::LogDevice#new" do
 
     File.should.exist?(path)
     File.open(path) do |f|
-      f.readlines.should_not be_empty
+      f.readlines.should_not.empty?
     end
 
     rm_r path

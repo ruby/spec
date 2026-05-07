@@ -719,7 +719,7 @@ describe "C-API Kernel function" do
     it "returns a caller backtrace" do
       backtrace = @s.rb_make_backtrace
       lines = backtrace.select {|l| l =~ /#{__FILE__}/ }
-      lines.should_not be_empty
+      lines.should_not.empty?
     end
   end
 

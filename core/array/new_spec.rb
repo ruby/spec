@@ -22,7 +22,7 @@ end
 
 describe "Array.new with no arguments" do
   it "returns an empty array" do
-    Array.new.should be_empty
+    Array.new.should.empty?
   end
 
   it "does not use the given block" do

@@ -12,7 +12,7 @@ describe 'Socket.getifaddrs' do
 
   describe 'the returned Array' do
     it 'should not be empty' do
-      @ifaddrs.should_not be_empty
+      @ifaddrs.should_not.empty?
     end
 
     it 'contains instances of Socket::Ifaddr' do

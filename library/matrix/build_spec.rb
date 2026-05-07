@@ -43,13 +43,13 @@ describe "Matrix.build" do
     m = Matrix.build(0, 3){
       raise "Should not yield"
     }
-    m.should be_empty
+    m.should.empty?
     m.column_size.should == 3
 
     m = Matrix.build(3, 0){
       raise "Should not yield"
     }
-    m.should be_empty
+    m.should.empty?
     m.row_size.should == 3
   end
 

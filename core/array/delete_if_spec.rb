@@ -31,9 +31,9 @@ describe "Array#delete_if" do
   it "returns an Enumerator if no block given, and the enumerator can modify the original array" do
     enum = @a.delete_if
     enum.should.instance_of?(Enumerator)
-    @a.should_not be_empty
+    @a.should_not.empty?
     enum.each { true }
-    @a.should be_empty
+    @a.should.empty?
   end
 
   it "returns an Enumerator if no block given, and the array is frozen" do

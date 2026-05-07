@@ -49,7 +49,7 @@ end
 
 describe "Array#initialize with no arguments" do
   it "makes the array empty" do
-    [1, 2, 3].send(:initialize).should be_empty
+    [1, 2, 3].send(:initialize).should.empty?
   end
 
   it "does not use the given block" do

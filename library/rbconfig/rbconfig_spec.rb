@@ -80,7 +80,7 @@ describe 'RbConfig::CONFIG' do
       ar = RbConfig::CONFIG.fetch('AR')
       out = `#{ar} --version`
       $?.should.success?
-      out.should_not be_empty
+      out.should_not.empty?
     end
 
     it "['STRIP'] exists and can be executed" do

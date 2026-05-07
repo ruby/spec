@@ -43,7 +43,7 @@ describe "Array#product" do
 
       acc = []
       [1,2].product([3,4,5],[],[6,8]){|array| acc << array}
-      acc.should be_empty
+      acc.should.empty?
     end
 
     it "returns self" do

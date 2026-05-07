@@ -49,7 +49,7 @@ describe :enum_for, shared: true do
       100
     end
 
-    ScratchPad.recorded.should be_empty
+    ScratchPad.recorded.should.empty?
 
     enum.size
     ScratchPad.recorded.should == [:called]

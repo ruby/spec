@@ -105,7 +105,7 @@ describe "IO#sysread on a file" do
     buffer = +"existing content"
     @file.seek(0, :END)
     -> { @file.sysread(1, buffer) }.should raise_error(EOFError)
-    buffer.should be_empty
+    buffer.should.empty?
   end
 
   it "preserves the encoding of the given buffer" do
