@@ -29,7 +29,7 @@ describe "C-API Struct function" do
     end
 
     it "creates a constant scoped under Struct for the named Struct" do
-      Struct.should have_constant(:CAPIStruct)
+      Struct.should.const_defined?(:CAPIStruct, false)
     end
 
     it "returns the member names as Symbols" do
@@ -84,11 +84,11 @@ describe "C-API Struct function" do
     end
 
     it "does not create a constant scoped under Struct for the named Struct" do
-      Struct.should_not have_constant(:CAPIStructUnder)
+      Struct.should_not.const_defined?(:CAPIStructUnder)
     end
 
     it "creates a constant scoped under the namespace of the given class" do
-      CApiStructSpecs.should have_constant(:CAPIStructUnder)
+      CApiStructSpecs.should.const_defined?(:CAPIStructUnder, false)
     end
 
     it "returns the member names as Symbols" do

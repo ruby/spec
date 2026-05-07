@@ -139,7 +139,7 @@ describe "Module#const_set" do
 
     it "raises a FrozenError before setting the name" do
       -> { @frozen.const_set @name, nil }.should raise_error(FrozenError)
-      @frozen.should_not have_constant(@name)
+      @frozen.should_not.const_defined?(@name)
     end
   end
 end

@@ -133,11 +133,11 @@ describe "A constant on a singleton class" do
   end
 
   it "appears in the singleton class constant list" do
-    @object.singleton_class.should have_constant(:CONST)
+    @object.singleton_class.should.const_defined?(:CONST, false)
   end
 
   it "does not appear in the object's class constant list" do
-    @object.class.should_not have_constant(:CONST)
+    @object.class.should_not.const_defined?(:CONST)
   end
 
   it "is not preserved when the object is duped" do

@@ -37,7 +37,7 @@ describe "Kernel#autoload" do
   end
 
   it "sets the autoload constant in Object's constant table" do
-    Object.should have_constant(:KSAutoloadA)
+    Object.should.const_defined?(:KSAutoloadA, false)
   end
 
   it "loads the file when the constant is accessed" do
@@ -137,7 +137,7 @@ describe "Kernel.autoload" do
   end
 
   it "sets the autoload constant in Object's constant table" do
-    Object.should have_constant(:KSAutoloadBB)
+    Object.should.const_defined?(:KSAutoloadBB, false)
   end
 
   it "calls #to_path on non-String filenames" do

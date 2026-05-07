@@ -47,7 +47,7 @@ end
 
 describe "Errno::ENOTSUP" do
   it "is defined" do
-    Errno.should have_constant(:ENOTSUP)
+    Errno.should.const_defined?(:ENOTSUP, false)
   end
 
   it "is the same class as Errno::EOPNOTSUPP if they represent the same errno value" do

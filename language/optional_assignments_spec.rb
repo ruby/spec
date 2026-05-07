@@ -623,7 +623,7 @@ end
 describe 'Optional constant assignment' do
   describe 'with ||=' do
     it "assigns a scoped constant if previously undefined" do
-      ConstantSpecs.should_not have_constant(:OpAssignUndefined)
+      ConstantSpecs.should_not.const_defined?(:OpAssignUndefined)
       module ConstantSpecs
         OpAssignUndefined ||= 42
       end

@@ -55,7 +55,7 @@ describe "Module#autoload" do
 
   it "sets the autoload constant in the constants table" do
     ModuleSpecs::Autoload.autoload :B, @non_existent
-    ModuleSpecs::Autoload.should have_constant(:B)
+    ModuleSpecs::Autoload.should.const_defined?(:B, false)
   end
 
   it "can be overridden with a second autoload on the same constant" do
@@ -71,7 +71,7 @@ describe "Module#autoload" do
   end
 
   it "loads the registered constant when it is accessed" do
-    ModuleSpecs::Autoload.should_not have_constant(:X)
+    ModuleSpecs::Autoload.should_not.const_defined?(:X)
     ModuleSpecs::Autoload.autoload :X, fixture(__FILE__, "autoload_x.rb")
     @remove << :X
     ModuleSpecs::Autoload::X.should == :x
@@ -217,7 +217,7 @@ describe "Module#autoload" do
       defined?(ModuleSpecs::Autoload::Dog::R).should == "constant"
       ScratchPad.recorded.should == nil
 
-      ModuleSpecs::Autoload::Dog.should have_constant(:R)
+      ModuleSpecs::Autoload::Dog.should.const_defined?(:R, false)
     end
 
     it "loads an autoloaded parent when referencing a nested constant" do
@@ -454,12 +454,12 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.autoload :Fail, @non_existent
 
     ModuleSpecs::Autoload.const_defined?(:Fail).should == true
-    ModuleSpecs::Autoload.should have_constant(:Fail)
+    ModuleSpecs::Autoload.should.const_defined?(:Fail, false)
     ModuleSpecs::Autoload.autoload?(:Fail).should == @non_existent
 
     -> { ModuleSpecs::Autoload::Fail }.should raise_error(LoadError)
 
-    ModuleSpecs::Autoload.should have_constant(:Fail)
+    ModuleSpecs::Autoload.should.const_defined?(:Fail, false)
     ModuleSpecs::Autoload.const_defined?(:Fail).should == true
     ModuleSpecs::Autoload.autoload?(:Fail).should == @non_existent
 
@@ -472,13 +472,13 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.autoload :Raise, path
 
     ModuleSpecs::Autoload.const_defined?(:Raise).should == true
-    ModuleSpecs::Autoload.should have_constant(:Raise)
+    ModuleSpecs::Autoload.should.const_defined?(:Raise, false)
     ModuleSpecs::Autoload.autoload?(:Raise).should == path
 
     -> { ModuleSpecs::Autoload::Raise }.should raise_error(RuntimeError)
     ScratchPad.recorded.should == [:raise]
 
-    ModuleSpecs::Autoload.should have_constant(:Raise)
+    ModuleSpecs::Autoload.should.const_defined?(:Raise, false)
     ModuleSpecs::Autoload.const_defined?(:Raise).should == true
     ModuleSpecs::Autoload.autoload?(:Raise).should == path
 
@@ -492,13 +492,13 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.autoload :O, path
 
     ModuleSpecs::Autoload.const_defined?(:O).should == true
-    ModuleSpecs::Autoload.should have_constant(:O)
+    ModuleSpecs::Autoload.should.const_defined?(:O, false)
     ModuleSpecs::Autoload.autoload?(:O).should == path
 
     -> { ModuleSpecs::Autoload::O }.should raise_error(NameError)
 
     ModuleSpecs::Autoload.const_defined?(:O).should == false
-    ModuleSpecs::Autoload.should_not have_constant(:O)
+    ModuleSpecs::Autoload.should_not.const_defined?(:O)
     ModuleSpecs::Autoload.autoload?(:O).should == nil
     -> { ModuleSpecs::Autoload.const_get(:O) }.should raise_error(NameError)
   end
@@ -524,7 +524,7 @@ describe "Module#autoload" do
       autoload :R, fixture(__FILE__, "autoload.rb")
       defined?(R).should == 'constant'
     end
-    ModuleSpecs::Autoload::Q.should have_constant(:R)
+    ModuleSpecs::Autoload::Q.should.const_defined?(:R, false)
   end
 
   it "does not load the file when removing an autoload constant" do
@@ -532,7 +532,7 @@ describe "Module#autoload" do
       autoload :R, fixture(__FILE__, "autoload.rb")
       remove_const :R
     end
-    ModuleSpecs::Autoload::Q.should_not have_constant(:R)
+    ModuleSpecs::Autoload::Q.should_not.const_defined?(:R)
   end
 
   it "does not load the file when accessing the constants table of the module" do
@@ -573,7 +573,7 @@ describe "Module#autoload" do
           DeclaredAndDefinedInParent.should == :declared_and_defined_in_parent
 
           # The constant is really in Autoload, not Autoload::LexicalScope
-          self.should_not have_constant(:DeclaredAndDefinedInParent)
+          self.should_not.const_defined?(:DeclaredAndDefinedInParent)
           -> { const_get(:DeclaredAndDefinedInParent) }.should raise_error(NameError)
         end
         DeclaredAndDefinedInParent.should == :declared_and_defined_in_parent
@@ -851,7 +851,7 @@ describe "Module#autoload" do
     it "raises a FrozenError before setting the name" do
       frozen_module = Module.new.freeze
       -> { frozen_module.autoload :Foo, @non_existent }.should raise_error(FrozenError)
-      frozen_module.should_not have_constant(:Foo)
+      frozen_module.should_not.const_defined?(:Foo)
     end
   end
 

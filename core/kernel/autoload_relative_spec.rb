@@ -41,7 +41,7 @@ ruby_version_is "4.1" do
 
     it "sets the autoload constant in the constant table" do
       KernelSpecs.autoload_relative :KSAutoloadRelativeC, "fixtures/autoload_relative_b.rb"
-      KernelSpecs.should have_constant(:KSAutoloadRelativeC)
+      KernelSpecs.should.const_defined?(:KSAutoloadRelativeC, false)
     end
 
     it "can autoload in instance_eval with a file context" do
@@ -62,8 +62,8 @@ ruby_version_is "4.1" do
       KernelSpecs.autoload_relative :KSAutoloadRelativeE, "fixtures/autoload_relative_b.rb"
       KernelSpecs.autoload_relative "KSAutoloadRelativeF", "fixtures/autoload_relative_b.rb"
 
-      KernelSpecs.should have_constant(:KSAutoloadRelativeE)
-      KernelSpecs.should have_constant(:KSAutoloadRelativeF)
+      KernelSpecs.should.const_defined?(:KSAutoloadRelativeE, false)
+      KernelSpecs.should.const_defined?(:KSAutoloadRelativeF, false)
     end
 
     it "returns nil" do

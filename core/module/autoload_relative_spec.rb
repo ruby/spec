@@ -50,7 +50,7 @@ ruby_version_is "4.1" do
 
     it "sets the autoload constant in the constants table" do
       ModuleSpecs::Autoload.autoload_relative :AutoloadRelativeTableTest, "fixtures/autoload_relative_a.rb"
-      ModuleSpecs::Autoload.should have_constant(:AutoloadRelativeTableTest)
+      ModuleSpecs::Autoload.should.const_defined?(:AutoloadRelativeTableTest, false)
     end
 
     it "calls #to_path on non-String filenames" do
