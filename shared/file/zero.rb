@@ -57,7 +57,7 @@ describe :file_zero, shared: true do
 
   # See https://bugs.ruby-lang.org/issues/449 for background
   it "returns true or false for a directory" do
-    @object.send(@method, @dir).should be_true_or_false
+    [true, false].should.include? @object.send(@method, @dir)
   end
 end
 
