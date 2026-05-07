@@ -19,7 +19,7 @@ describe "Module#undef_method" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:undef_method, false)
+    Module.public_instance_methods(false).should.include?(:undef_method)
   end
 
   it "requires multiple arguments" do

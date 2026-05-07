@@ -3,7 +3,7 @@ require_relative '../../shared/kernel/equal'
 
 describe "BasicObject#equal?" do
   it "is a public instance method" do
-    BasicObject.should have_public_instance_method(:equal?)
+    BasicObject.public_instance_methods(false).should.include?(:equal?)
   end
 
   it_behaves_like :object_equal, :equal?

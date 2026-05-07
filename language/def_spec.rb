@@ -18,7 +18,7 @@ describe "Defining a method at the top-level" do
   end
 
   it "defines it on Object with public visibility after calling public" do
-    Object.should have_public_instance_method(:public_toplevel_method, false)
+    Object.public_instance_methods(false).should.include?(:public_toplevel_method)
   end
 end
 

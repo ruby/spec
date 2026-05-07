@@ -102,8 +102,8 @@ describe :set_visibility, shared: true do
         module_eval " def test2() end "
       }
 
-      mod.should have_public_instance_method(:test1, false)
-      mod.should have_public_instance_method(:test2, false)
+      mod.public_instance_methods(false).should.include?(:test1)
+      mod.public_instance_methods(false).should.include?(:test2)
     end
 
     it "does not affect outside method definitions when itself is inside a module_eval" do
@@ -114,7 +114,7 @@ describe :set_visibility, shared: true do
         def test1() end
       }
 
-      mod.should have_public_instance_method(:test1, false)
+      mod.public_instance_methods(false).should.include?(:test1)
     end
 
     it "affects normally if itself and method definitions are inside a module_eval" do

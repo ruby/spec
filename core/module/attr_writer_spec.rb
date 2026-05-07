@@ -70,7 +70,7 @@ describe "Module#attr_writer" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:attr_writer, false)
+    Module.public_instance_methods(false).should.include?(:attr_writer)
   end
 
   it "returns an array of defined method names as symbols" do

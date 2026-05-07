@@ -144,7 +144,7 @@ describe "Module#attr" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:attr, false)
+    Module.public_instance_methods(false).should.include?(:attr)
   end
 
   it "returns an array of defined method names as symbols" do

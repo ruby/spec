@@ -78,7 +78,7 @@ describe "Module#attr_accessor" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:attr_accessor, false)
+    Module.public_instance_methods(false).should.include?(:attr_accessor)
   end
 
   it "returns an array of defined method names as symbols" do

@@ -19,7 +19,7 @@ ruby_version_is "4.1" do
     end
 
     it "is a public method" do
-      Module.should have_public_instance_method(:autoload_relative, false)
+      Module.public_instance_methods(false).should.include?(:autoload_relative)
     end
 
     it "registers a file to load relative to the current file the first time the named constant is accessed" do

@@ -3,7 +3,7 @@ require_relative '../fixtures/common'
 
 describe :proc_equal, shared: true do
   it "is a public method" do
-    Proc.should have_public_instance_method(@method, false)
+    Proc.public_instance_methods(false).should.include?(@method)
   end
 
   it "returns true if self and other are the same object" do

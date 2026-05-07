@@ -21,7 +21,7 @@ describe "Module#remove_method" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:remove_method, false)
+    Module.public_instance_methods(false).should.include?(:remove_method)
   end
 
   it "removes the method from a class" do

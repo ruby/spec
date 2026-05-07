@@ -7,7 +7,7 @@ describe "Kernel#respond_to?" do
   end
 
   it "is a public method" do
-    Kernel.should have_public_instance_method(:respond_to?, false)
+    Kernel.public_instance_methods(false).should.include?(:respond_to?)
   end
 
   it "is only an instance method" do

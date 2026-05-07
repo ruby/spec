@@ -19,7 +19,7 @@ describe "Kernel#remove_instance_variable" do
   end
 
   it "is a public method" do
-    Kernel.should have_public_instance_method(:remove_instance_variable, false)
+    Kernel.public_instance_methods(false).should.include?(:remove_instance_variable)
   end
 
   it "raises a NameError if the instance variable is not defined" do

@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "BasicObject#instance_exec" do
   it "is a public instance method" do
-    BasicObject.should have_public_instance_method(:instance_exec)
+    BasicObject.public_instance_methods(false).should.include?(:instance_exec)
   end
 
   it "sets self to the receiver in the context of the passed block" do

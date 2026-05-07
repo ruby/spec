@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Module#public_instance_method" do
   it "is a public method" do
-    Module.should have_public_instance_method(:public_instance_method, false)
+    Module.public_instance_methods(false).should.include?(:public_instance_method)
   end
 
   it "requires an argument" do

@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Module#prepend" do
   it "is a public method" do
-    Module.should have_public_instance_method(:prepend, false)
+    Module.public_instance_methods(false).should.include?(:prepend)
   end
 
   it "does not affect the superclass" do

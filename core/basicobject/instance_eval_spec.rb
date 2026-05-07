@@ -7,7 +7,7 @@ describe "BasicObject#instance_eval" do
   end
 
   it "is a public instance method" do
-    BasicObject.should have_public_instance_method(:instance_eval)
+    BasicObject.public_instance_methods(false).should.include?(:instance_eval)
   end
 
   it "sets self to the receiver in the context of the passed block" do

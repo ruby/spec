@@ -9,7 +9,7 @@ describe "Module#instance_method" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:instance_method, false)
+    Module.public_instance_methods(false).should.include?(:instance_method)
   end
 
   it "requires an argument" do

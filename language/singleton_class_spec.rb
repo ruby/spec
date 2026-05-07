@@ -168,7 +168,7 @@ describe "Defining instance methods on a singleton class" do
   end
 
   it "defines public methods" do
-    @k_sc.should have_public_instance_method(:singleton_method)
+    @k_sc.public_instance_methods(false).should.include?(:singleton_method)
   end
 end
 

@@ -115,7 +115,7 @@ describe "Module#define_method when name is not a special private name" do
           define_method(:baz, ModuleSpecs::EmptyFooMethod)
         end
 
-        klass.should have_public_instance_method(:bar)
+        klass.public_instance_methods(false).should.include?(:bar)
         klass.private_instance_methods(false).should.include?(:baz)
       end
     end
@@ -129,8 +129,8 @@ describe "Module#define_method when name is not a special private name" do
           klass.send(:define_method, :baz, ModuleSpecs::EmptyFooMethod)
         end
 
-        klass.should have_public_instance_method(:bar)
-        klass.should have_public_instance_method(:baz)
+        klass.public_instance_methods(false).should.include?(:bar)
+        klass.public_instance_methods(false).should.include?(:baz)
       end
     end
 
@@ -155,7 +155,7 @@ describe "Module#define_method when name is not a special private name" do
           define_method(:baz) {}
         end
 
-        klass.should have_public_instance_method(:bar)
+        klass.public_instance_methods(false).should.include?(:bar)
         klass.private_instance_methods(false).should.include?(:baz)
       end
     end
@@ -169,8 +169,8 @@ describe "Module#define_method when name is not a special private name" do
           klass.send(:define_method, :baz) {}
         end
 
-        klass.should have_public_instance_method(:bar)
-        klass.should have_public_instance_method(:baz)
+        klass.public_instance_methods(false).should.include?(:bar)
+        klass.public_instance_methods(false).should.include?(:baz)
       end
     end
   end
@@ -429,7 +429,7 @@ describe "Module#define_method" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:define_method)
+    Module.public_instance_methods(false).should.include?(:define_method)
   end
 
   it "returns its symbol" do

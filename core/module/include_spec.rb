@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Module#include" do
   it "is a public method" do
-    Module.should have_public_instance_method(:include, false)
+    Module.public_instance_methods(false).should.include?(:include)
   end
 
   it "calls #append_features(self) in reversed order on each module" do

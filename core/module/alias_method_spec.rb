@@ -88,7 +88,7 @@ describe "Module#alias_method" do
   end
 
   it "is a public method" do
-    Module.should have_public_instance_method(:alias_method, false)
+    Module.public_instance_methods(false).should.include?(:alias_method)
   end
 
   describe "returned value" do
@@ -108,10 +108,10 @@ describe "Module#alias_method" do
   end
 
   it "accesses a method defined on Object from Kernel" do
-    Kernel.should_not have_public_instance_method(:module_specs_public_method_on_object)
+    Kernel.public_instance_methods(true).should_not.include?(:module_specs_public_method_on_object)
 
-    Kernel.should have_public_instance_method(:module_specs_alias_on_kernel)
-    Object.should have_public_instance_method(:module_specs_alias_on_kernel)
+    Kernel.public_instance_methods(false).should.include?(:module_specs_alias_on_kernel)
+    Object.public_instance_methods(true).should.include?(:module_specs_alias_on_kernel)
   end
 
   it "can call a method with super aliased twice" do
