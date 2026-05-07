@@ -57,7 +57,7 @@ describe "String#force_encoding" do
     str = "\u{9765}"
     str.force_encoding('euc-jp')
     str.encoding.should == Encoding::EUC_JP
-    str.valid_encoding?.should be_false
+    str.valid_encoding?.should == false
   end
 
   it "does not transcode self" do

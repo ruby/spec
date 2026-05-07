@@ -28,7 +28,7 @@ describe "Addrinfo#ip?" do
     end
 
     it "returns false" do
-      @addrinfo.ip?.should be_false
+      @addrinfo.ip?.should == false
     end
   end
 end

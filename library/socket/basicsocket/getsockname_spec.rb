@@ -3,7 +3,7 @@ require_relative '../fixtures/classes'
 
 describe "Socket::BasicSocket#getsockname" do
   after :each do
-    @socket.closed?.should be_false
+    @socket.closed?.should == false
     @socket.close
   end
 

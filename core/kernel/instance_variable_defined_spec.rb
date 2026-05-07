@@ -8,7 +8,7 @@ describe "Kernel#instance_variable_defined?" do
 
   describe "when passed a String" do
     it "returns false if the instance variable is not defined" do
-      @instance.instance_variable_defined?("@goodbye").should be_false
+      @instance.instance_variable_defined?("@goodbye").should == false
     end
 
     it "returns true if the instance variable is defined" do
@@ -18,7 +18,7 @@ describe "Kernel#instance_variable_defined?" do
 
   describe "when passed a Symbol" do
     it "returns false if the instance variable is not defined" do
-      @instance.instance_variable_defined?(:@goodbye).should be_false
+      @instance.instance_variable_defined?(:@goodbye).should == false
     end
 
     it "returns true if the instance variable is defined" do
@@ -35,7 +35,7 @@ describe "Kernel#instance_variable_defined?" do
 
   it "returns false if the instance variable is not defined for different types" do
     [nil, false, true, 1, 2.0, :test, "test"].each do |obj|
-      obj.instance_variable_defined?("@goodbye").should be_false
+      obj.instance_variable_defined?("@goodbye").should == false
     end
   end
 end

@@ -7,7 +7,7 @@ describe :string_each_codepoint_without_block, shared: true do
 
     it "returns an Enumerator even when self has an invalid encoding" do
       s = "\xDF".dup.force_encoding(Encoding::UTF_8)
-      s.valid_encoding?.should be_false
+      s.valid_encoding?.should == false
       s.send(@method).should.instance_of?(Enumerator)
     end
 
@@ -24,7 +24,7 @@ describe :string_each_codepoint_without_block, shared: true do
 
         it "should return the size of the string even when the string has an invalid encoding" do
           s = "\xDF".dup.force_encoding(Encoding::UTF_8)
-          s.valid_encoding?.should be_false
+          s.valid_encoding?.should == false
           s.send(@method).size.should == 1
         end
       end

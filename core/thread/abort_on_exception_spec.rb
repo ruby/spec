@@ -13,7 +13,7 @@ describe "Thread#abort_on_exception" do
   end
 
   it "is false by default" do
-    @thread.abort_on_exception.should be_false
+    @thread.abort_on_exception.should == false
   end
 
   it "returns true when #abort_on_exception= is passed true" do

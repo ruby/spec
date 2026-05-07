@@ -5,7 +5,7 @@ describe "Rational#==" do
     obj = mock("Object")
     obj.should_receive(:==).and_return(:result)
 
-    (Rational(3, 4) == obj).should_not be_false
+    (Rational(3, 4) == obj).should_not == false
   end
 end
 

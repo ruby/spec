@@ -25,7 +25,7 @@ describe "Module#class_variable_defined?" do
   it "returns false if the class variable is not defined in a metaclass" do
     obj = mock("metaclass class variable")
     meta = obj.singleton_class
-    meta.class_variable_defined?(:@@var).should be_false
+    meta.class_variable_defined?(:@@var).should == false
   end
 
   it "returns true if a class variables with the given name is defined in an included module" do

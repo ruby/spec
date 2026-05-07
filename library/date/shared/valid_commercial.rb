@@ -15,7 +15,7 @@ describe :date_valid_commercial?, shared: true do
   end
 
   it "returns false it is not a valid commercial date" do
-    Date.send(@method, 1999, 53, 1).should be_false
+    Date.send(@method, 1999, 53, 1).should == false
   end
 
   it "handles negative week and day numbers" do
@@ -28,7 +28,7 @@ describe :date_valid_commercial?, shared: true do
     Date.send(@method, 1582, -12, -3).should be_true
     Date.send(@method, 2007, -44, -2).should be_true
     Date.send(@method, 2008, -44, -2).should be_true
-    Date.send(@method, 1999, -53, -1).should be_false
+    Date.send(@method, 1999, -53, -1).should == false
   end
 
 end

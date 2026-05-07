@@ -1178,7 +1178,7 @@ describe "Global variable $-d" do
     $DEBUG = true
     $-d.should be_true
     $-d = false
-    $DEBUG.should be_false
+    $DEBUG.should == false
   end
 end
 
@@ -1192,7 +1192,7 @@ describe "Global variable $VERBOSE" do
   end
 
   it "is false by default" do
-    $VERBOSE.should be_false
+    $VERBOSE.should == false
   end
 
   it "converts truthy values to true" do
@@ -1204,7 +1204,7 @@ describe "Global variable $VERBOSE" do
 
   it "allows false" do
     $VERBOSE = false
-    $VERBOSE.should be_false
+    $VERBOSE.should == false
   end
 
   it "allows nil without coercing to false" do
@@ -1226,7 +1226,7 @@ describe :verbose_global_alias, shared: true do
     $VERBOSE = true
     eval(@method).should be_true
     eval("#{@method} = false")
-    $VERBOSE.should be_false
+    $VERBOSE.should == false
   end
 end
 

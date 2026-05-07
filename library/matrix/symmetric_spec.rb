@@ -11,7 +11,7 @@ describe "Matrix.symmetric?" do
   end
 
   it "returns false for an asymmetric Matrix" do
-    Matrix[[1, 2],[-2, 1]].symmetric?.should be_false
+    Matrix[[1, 2],[-2, 1]].symmetric?.should == false
   end
 
   it "raises an error for rectangular matrices" do

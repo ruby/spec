@@ -11,7 +11,7 @@ describe "Thread#thread_variable?" do
 
   it "returns false if the thread variables do not contain 'key'" do
     @t.thread_variable_set(:a, 2)
-    @t.thread_variable?(:b).should be_false
+    @t.thread_variable?(:b).should == false
   end
 
   it "returns true if the thread variables contain 'key'" do
@@ -20,8 +20,8 @@ describe "Thread#thread_variable?" do
   end
 
   it "accepts String and Symbol keys interchangeably" do
-    @t.thread_variable?('a').should be_false
-    @t.thread_variable?(:a).should be_false
+    @t.thread_variable?('a').should == false
+    @t.thread_variable?(:a).should == false
 
     @t.thread_variable_set(:a, 49)
 
@@ -38,7 +38,7 @@ describe "Thread#thread_variable?" do
 
   it "does not raise FrozenError if the thread is frozen" do
     @t.freeze
-    @t.thread_variable?(:a).should be_false
+    @t.thread_variable?(:a).should == false
   end
 
   it "raises a TypeError if the key is neither Symbol nor String when thread variables are already set" do

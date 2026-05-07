@@ -11,7 +11,7 @@ describe "Matrix.hermitian?" do
   end
 
   it "returns false for an asymmetric Matrix" do
-    Matrix[[1, 2],[-2, 1]].hermitian?.should be_false
+    Matrix[[1, 2],[-2, 1]].hermitian?.should == false
   end
 
   it "raises an error for rectangular matrices" do
@@ -28,7 +28,7 @@ describe "Matrix.hermitian?" do
   end
 
   it "returns false for a matrix with complex values on the diagonal" do
-    Matrix[[Complex(1,1)]].hermitian?.should be_false
+    Matrix[[Complex(1,1)]].hermitian?.should == false
     Matrix[[Complex(1,0)]].hermitian?.should be_true
   end
 end

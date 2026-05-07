@@ -394,7 +394,7 @@ describe "C-API Encoding function" do
 
     it "returns false if the object encoding is not ASCII only" do
       str = "ありがとう".force_encoding("utf-8")
-      @s.ENC_CODERANGE_ASCIIONLY(str).should be_false
+      @s.ENC_CODERANGE_ASCIIONLY(str).should == false
     end
   end
 
@@ -693,7 +693,7 @@ describe "C-API Encoding function" do
     end
 
     it "returns false for a non-ASCII string" do
-      @s.rb_enc_str_asciionly_p("hüllo").should be_false
+      @s.rb_enc_str_asciionly_p("hüllo").should == false
     end
   end
 

@@ -24,7 +24,7 @@ describe :date_valid_civil?, shared: true do
     #   -15 -14 -13 -12 -11 -10  -9
     #    -8  -7  -6  -5  -4  -3  -2
     #    -1
-    Date.send(@method, 1582, -3, -22).should be_false
+    Date.send(@method, 1582, -3, -22).should == false
     Date.send(@method, 1582, -3, -21).should be_true
     Date.send(@method, 1582, -3, -18).should be_true
     Date.send(@method, 1582, -3, -17).should be_true

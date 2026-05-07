@@ -6,7 +6,7 @@ ruby_version_is ""..."4.1" do
   describe "Net::FTP#passive" do
     it "returns true when self is in passive mode" do
       ftp = Net::FTP.new
-      ftp.passive.should be_false
+      ftp.passive.should == false
 
       ftp.passive = true
       ftp.passive.should be_true
@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
       ftp.passive.should be_true
 
       ftp.passive = false
-      ftp.passive.should be_false
+      ftp.passive.should == false
     end
   end
 end

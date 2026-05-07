@@ -8,8 +8,8 @@ describe "Date#gregorian_leap?" do
   end
 
   it "returns false if a year is not a leap year in the Gregorian calendar" do
-    Date.gregorian_leap?(1900).should be_false
-    Date.gregorian_leap?(1999).should be_false
-    Date.gregorian_leap?(2002).should be_false
+    Date.gregorian_leap?(1900).should == false
+    Date.gregorian_leap?(1999).should == false
+    Date.gregorian_leap?(2002).should == false
   end
 end

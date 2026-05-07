@@ -7,11 +7,11 @@ platform_is_not :windows do
     platform_is_not :windows do
 
       before :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       after :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
         # make sure we return the mask to the default value
         Syslog.open { |s| s.mask = 255 }
       end
@@ -74,11 +74,11 @@ platform_is_not :windows do
     platform_is_not :windows do
 
       before :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       after :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
         # make sure we return the mask to the default value
         Syslog.open { |s| s.mask = 255 }
       end

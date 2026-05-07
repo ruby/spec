@@ -5,10 +5,10 @@ describe "Matrix#regular?" do
 
   it "returns false for singular matrices" do
     m = Matrix[ [1,2,3], [3,4,3], [0,0,0] ]
-    m.regular?.should be_false
+    m.regular?.should == false
 
     m = Matrix[ [1,2,9], [3,4,9], [1,2,9] ]
-    m.regular?.should be_false
+    m.regular?.should == false
   end
 
   it "returns true if the Matrix is regular" do

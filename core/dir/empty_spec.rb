@@ -17,12 +17,12 @@ describe "Dir.empty?" do
 
   it "returns false for non-empty directories" do
     result = Dir.empty? __dir__
-    result.should be_false
+    result.should == false
   end
 
   it "returns false for a non-directory" do
     result = Dir.empty? __FILE__
-    result.should be_false
+    result.should == false
   end
 
   it "raises ENOENT for nonexistent directories" do

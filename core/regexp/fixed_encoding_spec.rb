@@ -3,11 +3,11 @@ require_relative '../../spec_helper'
 
 describe "Regexp#fixed_encoding?" do
   it "returns false by default" do
-    /needle/.fixed_encoding?.should be_false
+    /needle/.fixed_encoding?.should == false
   end
 
   it "returns false if the 'n' modifier was supplied to the Regexp" do
-    /needle/n.fixed_encoding?.should be_false
+    /needle/n.fixed_encoding?.should == false
   end
 
   it "returns true if the 'u' modifier was supplied to the Regexp" do

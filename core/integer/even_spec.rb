@@ -4,19 +4,19 @@ describe "Integer#even?" do
   context "fixnum" do
     it "returns true for a Fixnum when it is an even number" do
       (-2).even?.should be_true
-      (-1).even?.should be_false
+      (-1).even?.should == false
 
       0.even?.should be_true
-      1.even?.should be_false
+      1.even?.should == false
       2.even?.should be_true
     end
 
     it "returns true for a Bignum when it is an even number" do
       bignum_value(0).even?.should be_true
-      bignum_value(1).even?.should be_false
+      bignum_value(1).even?.should == false
 
       (-bignum_value(0)).even?.should be_true
-      (-bignum_value(1)).even?.should be_false
+      (-bignum_value(1)).even?.should == false
     end
   end
 
@@ -30,11 +30,11 @@ describe "Integer#even?" do
     end
 
     it "returns false if self is odd and positive" do
-      (9879**976).even?.should be_false
+      (9879**976).even?.should == false
     end
 
     it "returns false if self is odd and negative" do
-      (-9879**976).even?.should be_false
+      (-9879**976).even?.should == false
     end
   end
 end

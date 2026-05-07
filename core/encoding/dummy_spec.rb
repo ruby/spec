@@ -2,8 +2,8 @@ require_relative '../../spec_helper'
 
 describe "Encoding#dummy?" do
   it "returns false for proper encodings" do
-    Encoding::UTF_8.dummy?.should be_false
-    Encoding::ASCII.dummy?.should be_false
+    Encoding::UTF_8.dummy?.should == false
+    Encoding::ASCII.dummy?.should == false
   end
 
   it "returns true for dummy encodings" do

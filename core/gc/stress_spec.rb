@@ -7,11 +7,11 @@ describe "GC.stress" do
   end
 
   it "returns current status of GC stress mode" do
-    GC.stress.should be_false
+    GC.stress.should == false
     GC.stress = true
     GC.stress.should be_true
     GC.stress = false
-    GC.stress.should be_false
+    GC.stress.should == false
   end
 end
 

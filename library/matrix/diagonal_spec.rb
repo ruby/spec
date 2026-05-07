@@ -49,8 +49,8 @@ describe "Matrix.diagonal?" do
   end
 
   it "returns false for a non diagonal square Matrix" do
-    Matrix[[0, 1], [0, 0]].diagonal?.should be_false
-    Matrix[[1, 2, 3], [1, 2, 3], [1, 2, 3]].diagonal?.should be_false
+    Matrix[[0, 1], [0, 0]].diagonal?.should == false
+    Matrix[[1, 2, 3], [1, 2, 3], [1, 2, 3]].diagonal?.should == false
   end
 
   it "returns true for an empty 0x0 matrix" do

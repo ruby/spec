@@ -22,7 +22,7 @@ end
 describe "Net::HTTP#proxy?" do
   describe "when self is no proxy class instance" do
     it "returns false" do
-      Net::HTTP.new("localhost", 3333).proxy?.should be_false
+      Net::HTTP.new("localhost", 3333).proxy?.should == false
     end
   end
 

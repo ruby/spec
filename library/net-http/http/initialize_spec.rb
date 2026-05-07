@@ -21,7 +21,7 @@ describe "Net::HTTP#initialize" do
     end
 
     it "does not start the new Net::HTTP instance" do
-      @net.started?.should be_false
+      @net.started?.should == false
     end
   end
 
@@ -40,7 +40,7 @@ describe "Net::HTTP#initialize" do
     end
 
     it "does not start the new Net::HTTP instance" do
-      @net.started?.should be_false
+      @net.started?.should == false
     end
   end
 end

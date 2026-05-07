@@ -10,7 +10,7 @@ describe "StructClass#keyword_init?" do
 
   it "returns false for a struct that does not accept keyword arguments to initialize" do
     struct = Struct.new(:arg, keyword_init: false)
-    struct.keyword_init?.should be_false
+    struct.keyword_init?.should == false
   end
 
   it "returns nil for a struct that did not explicitly specify keyword_init" do

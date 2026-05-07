@@ -311,7 +311,7 @@ describe "C-API Array function" do
     end
 
     it "returns false if the array does not include the element" do
-      @s.rb_ary_includes([1, 2, 3], 4).should be_false
+      @s.rb_ary_includes([1, 2, 3], 4).should == false
     end
   end
 
@@ -352,7 +352,7 @@ describe "C-API Array function" do
         s2.should == s
 
         # Make sure they're different objects
-        s2.equal?(s).should be_false
+        s2.equal?(s).should == false
       end
 
       it "calls a function with the other function available as a block" do
@@ -387,7 +387,7 @@ describe "C-API Array function" do
       s2.should == s
 
       # Make sure they're different objects
-      s2.equal?(s).should be_false
+      s2.equal?(s).should == false
     end
 
     it "calls a function with the other function available as a block" do

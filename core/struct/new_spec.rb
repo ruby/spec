@@ -50,7 +50,7 @@ describe "Struct.new" do
 
   it "does not create a constant with symbol as first argument" do
     Struct.new(:Animal2, :name, :legs, :eyeballs)
-    Struct.const_defined?("Animal2").should be_false
+    Struct.const_defined?("Animal2").should == false
   end
 
   it "allows non-ASCII member name" do

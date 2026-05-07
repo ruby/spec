@@ -7,14 +7,14 @@ describe :date_valid_jd?, shared: true do
   end
 
   it "returns false if passed nil" do
-    Date.send(@method, nil).should be_false
+    Date.send(@method, nil).should == false
   end
 
   it "returns false if passed symbol" do
-    Date.send(@method, :number).should be_false
+    Date.send(@method, :number).should == false
   end
 
   it "returns false if passed false" do
-    Date.send(@method, false).should be_false
+    Date.send(@method, false).should == false
   end
 end

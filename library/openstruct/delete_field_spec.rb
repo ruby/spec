@@ -13,7 +13,7 @@ describe "OpenStruct#delete_field" do
 
   it "does remove the accessor methods" do
     @os.delete_field(:name)
-    @os.respond_to?(:name).should be_false
-    @os.respond_to?(:name=).should be_false
+    @os.respond_to?(:name).should == false
+    @os.respond_to?(:name=).should == false
   end
 end

@@ -39,7 +39,7 @@ describe "Comparable#==" do
     end
 
     it "returns false" do
-      (a == b).should be_false
+      (a == b).should == false
     end
   end
 

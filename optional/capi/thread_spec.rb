@@ -107,7 +107,7 @@ describe "C-API Thread function" do
     end
 
     it "returns zero for a non ruby thread" do
-      @t.ruby_native_thread_p_new_thread.should be_false
+      @t.ruby_native_thread_p_new_thread.should == false
     end
   end
 

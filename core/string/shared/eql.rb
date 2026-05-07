@@ -8,8 +8,8 @@ describe :string_eql_value, shared: true do
   end
 
   it "returns false if self <=> string does not return 0" do
-    "more".send(@method, "MORE").should be_false
-    "less".send(@method, "greater").should be_false
+    "more".send(@method, "MORE").should == false
+    "less".send(@method, "greater").should == false
   end
 
   it "ignores encoding difference of compatible string" do
@@ -17,11 +17,11 @@ describe :string_eql_value, shared: true do
   end
 
   it "considers encoding difference of incompatible string" do
-    "\xff".dup.force_encoding("utf-8").send(@method, "\xff".dup.force_encoding("iso-8859-1")).should be_false
+    "\xff".dup.force_encoding("utf-8").send(@method, "\xff".dup.force_encoding("iso-8859-1")).should == false
   end
 
   it "considers encoding compatibility" do
-    "abcd".dup.force_encoding("utf-8").send(@method, "abcd".dup.force_encoding("utf-32le")).should be_false
+    "abcd".dup.force_encoding("utf-8").send(@method, "abcd".dup.force_encoding("utf-32le")).should == false
   end
 
   it "ignores subclass differences" do

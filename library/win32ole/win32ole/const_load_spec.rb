@@ -8,7 +8,7 @@ platform_is :windows do
     end
 
     it "loads constant SsfWINDOWS into WIN32OLE namespace" do
-      WIN32OLE.const_defined?(:SsfWINDOWS).should be_false
+      WIN32OLE.const_defined?(:SsfWINDOWS).should == false
       WIN32OLE.const_load @win32ole
       WIN32OLE.const_defined?(:SsfWINDOWS).should be_true
     end
@@ -23,7 +23,7 @@ platform_is :windows do
     it "loads constants into given namespace" do
       module WIN32OLE_RUBYSPEC; end
 
-      WIN32OLE_RUBYSPEC.const_defined?(:SsfWINDOWS).should be_false
+      WIN32OLE_RUBYSPEC.const_defined?(:SsfWINDOWS).should == false
       WIN32OLE.const_load @win32ole, WIN32OLE_RUBYSPEC
       WIN32OLE_RUBYSPEC.const_defined?(:SsfWINDOWS).should be_true
 

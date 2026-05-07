@@ -20,7 +20,7 @@ describe :string_replace, shared: true do
 
   it "carries over the encoding invalidity" do
     a = "\u{8765}".force_encoding('ascii')
-    "".send(@method, a).valid_encoding?.should be_false
+    "".send(@method, a).valid_encoding?.should == false
   end
 
   it "tries to convert other to string using to_str" do

@@ -9,7 +9,7 @@ describe :hash_comparison, shared: true do
     h1 = { a: 1 }
     h2 = { a: 2 }
 
-    h1.send(@method, h2).should be_false
-    h2.send(@method, h1).should be_false
+    h1.send(@method, h2).should == false
+    h2.send(@method, h1).should == false
   end
 end

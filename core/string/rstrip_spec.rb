@@ -70,11 +70,11 @@ describe "String#rstrip!" do
 
   it "raises an Encoding::CompatibilityError if the last non-space codepoint is invalid" do
     s = "abc\xDF".force_encoding(Encoding::UTF_8)
-    s.valid_encoding?.should be_false
+    s.valid_encoding?.should == false
     -> { s.rstrip! }.should raise_error(Encoding::CompatibilityError)
 
     s = "abc\xDF   ".force_encoding(Encoding::UTF_8)
-    s.valid_encoding?.should be_false
+    s.valid_encoding?.should == false
     -> { s.rstrip! }.should raise_error(Encoding::CompatibilityError)
   end
 end

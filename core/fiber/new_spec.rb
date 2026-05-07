@@ -22,7 +22,7 @@ describe "Fiber.new" do
   it "does not invoke the block" do
     invoked = false
     fiber = Fiber.new { invoked = true }
-    invoked.should be_false
+    invoked.should == false
     fiber.resume
   end
 

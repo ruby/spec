@@ -13,16 +13,16 @@ describe "Matrix#square?" do
   end
 
   it "returns false when the Matrix is rectangular" do
-    Matrix[ [1, 2] ].square?.should be_false
+    Matrix[ [1, 2] ].square?.should == false
   end
 
   it "returns false when the Matrix is rectangular" do
-    Matrix[ [1], [2] ].square?.should be_false
+    Matrix[ [1], [2] ].square?.should == false
   end
 
   it "returns handles empty matrices" do
     Matrix[].square?.should be_true
-    Matrix[[]].square?.should be_false
-    Matrix.columns([[]]).square?.should be_false
+    Matrix[[]].square?.should == false
+    Matrix.columns([[]]).square?.should == false
   end
 end

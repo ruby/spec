@@ -228,7 +228,7 @@ describe "Process.setrlimit" do
 
   platform_is :windows do
     it "is not implemented" do
-      Process.respond_to?(:setrlimit).should be_false
+      Process.respond_to?(:setrlimit).should == false
       -> do
         Process.setrlimit(nil, nil)
       end.should raise_error NotImplementedError

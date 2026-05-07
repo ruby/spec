@@ -16,6 +16,6 @@ describe "GC::Profiler.enabled?" do
 
   it "reports as disabled when disabled" do
     GC::Profiler.disable
-    GC::Profiler.enabled?.should be_false
+    GC::Profiler.enabled?.should == false
   end
 end

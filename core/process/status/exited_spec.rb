@@ -19,7 +19,7 @@ describe "Process::Status#exited?" do
 
     platform_is_not :windows do
       it "returns false" do
-        $?.exited?.should be_false
+        $?.exited?.should == false
       end
     end
 

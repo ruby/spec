@@ -9,7 +9,7 @@ describe :hash_greater_than, shared: true do
   end
 
   it "returns false if the other hash is not a subset of self" do
-    @h2.send(@method, @h1).should be_false
+    @h2.send(@method, @h1).should == false
   end
 
   it "converts the right operand to a hash before comparing" do

@@ -67,11 +67,11 @@ describe "Symbol#match?" do
   end
 
   it "returns false when does not match the given regex" do
-    :string.match?(/STRING/).should be_false
+    :string.match?(/STRING/).should == false
   end
 
   it "takes matching position as the 2nd argument" do
     :string.match?(/str/i, 0).should be_true
-    :string.match?(/str/i, 1).should be_false
+    :string.match?(/str/i, 1).should == false
   end
 end

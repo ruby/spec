@@ -3,17 +3,17 @@ require_relative '../../spec_helper'
 describe "Integer#odd?" do
   context "fixnum" do
     it "returns true when self is an odd number" do
-      (-2).odd?.should be_false
+      (-2).odd?.should == false
       (-1).odd?.should be_true
 
-      0.odd?.should be_false
+      0.odd?.should == false
       1.odd?.should be_true
-      2.odd?.should be_false
+      2.odd?.should == false
 
-      bignum_value(0).odd?.should be_false
+      bignum_value(0).odd?.should == false
       bignum_value(1).odd?.should be_true
 
-      (-bignum_value(0)).odd?.should be_false
+      (-bignum_value(0)).odd?.should == false
       (-bignum_value(1)).odd?.should be_true
     end
   end
@@ -28,11 +28,11 @@ describe "Integer#odd?" do
     end
 
     it "returns false if self is even and positive" do
-      (10000000**10).odd?.should be_false
+      (10000000**10).odd?.should == false
     end
 
     it "returns false if self is even and negative" do
-      (-1000000**100).odd?.should be_false
+      (-1000000**100).odd?.should == false
     end
   end
 end

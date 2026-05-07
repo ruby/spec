@@ -21,7 +21,7 @@ describe "C-API Fiber function" do
       fiber.resume
       @s.rb_fiber_alive_p(fiber).should be_true
       fiber.resume
-      @s.rb_fiber_alive_p(fiber).should be_false
+      @s.rb_fiber_alive_p(fiber).should == false
     end
   end
 

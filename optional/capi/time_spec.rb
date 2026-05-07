@@ -261,7 +261,7 @@ describe "CApiTimeSpecs" do
 
     describe "when offset given is within range of -86400 and 86400 (exclusive)" do
       it "sets time's is_gmt to false" do
-        @s.rb_time_timespec_new(1447087832, 476451125, 0).gmt?.should be_false
+        @s.rb_time_timespec_new(1447087832, 476451125, 0).gmt?.should == false
       end
 
       it "sets time's offset to the offset given" do

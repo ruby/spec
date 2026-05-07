@@ -53,7 +53,7 @@ describe "Net::HTTP.start" do
     it "closes the tcp connection after yielding" do
       net = nil
       Net::HTTP.start("localhost", @port) { |x| net = x }
-      net.started?.should be_false
+      net.started?.should == false
     end
   end
 end
@@ -105,7 +105,7 @@ describe "Net::HTTP#start" do
 
     it "closes the tcp connection after yielding" do
       @http.start { }
-      @http.started?.should be_false
+      @http.started?.should == false
     end
   end
 end

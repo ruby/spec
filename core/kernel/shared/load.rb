@@ -106,7 +106,7 @@ describe :kernel_load, shared: true do
       path = File.expand_path "load_wrap_fixture.rb", CODE_LOADING_DIR
       @object.load(path, true)
 
-      Object.const_defined?(:LoadSpecWrap).should be_false
+      Object.const_defined?(:LoadSpecWrap).should == false
 
       wrap_module = ScratchPad.recorded[1]
       wrap_module.should.instance_of?(Module)
@@ -170,7 +170,7 @@ describe :kernel_load, shared: true do
       mod = Module.new
       @object.load(path, mod)
 
-      Object.const_defined?(:LoadSpecWrap).should be_false
+      Object.const_defined?(:LoadSpecWrap).should == false
       mod.const_defined?(:LoadSpecWrap).should be_true
 
       wrap_module = ScratchPad.recorded[1]

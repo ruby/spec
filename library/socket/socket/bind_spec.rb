@@ -8,7 +8,7 @@ describe "Socket#bind on SOCK_DGRAM socket" do
   end
 
   after :each do
-    @sock.closed?.should be_false
+    @sock.closed?.should == false
     @sock.close
   end
 
@@ -50,7 +50,7 @@ describe "Socket#bind on SOCK_STREAM socket" do
   end
 
   after :each do
-    @sock.closed?.should be_false
+    @sock.closed?.should == false
     @sock.close
   end
 

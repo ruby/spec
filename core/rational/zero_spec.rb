@@ -9,6 +9,6 @@ describe "Rational#zero?" do
   end
 
   it "returns false if the numerator isn't 0" do
-    Rational(26).zero?.should be_false
+    Rational(26).zero?.should == false
   end
 end

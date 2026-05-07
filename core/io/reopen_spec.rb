@@ -77,7 +77,7 @@ describe "IO#reopen with a String" do
   it "does not raise an exception when called on a closed stream with a path" do
     @io.close
     @io.reopen @name, "r"
-    @io.closed?.should be_false
+    @io.closed?.should == false
     @io.gets.should == "Line 1: One\n"
   end
 
@@ -216,7 +216,7 @@ describe "IO#reopen with an IO at EOF" do
   it "resets the EOF status to false" do
     @io.eof?.should be_true
     @io.reopen @other_io
-    @io.eof?.should be_false
+    @io.eof?.should == false
   end
 end
 

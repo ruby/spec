@@ -893,7 +893,7 @@ describe "C-API String function" do
 
     it "compares two different strings" do
       s = "hello"
-      @s.rb_str_equal(s, "hella").should be_false
+      @s.rb_str_equal(s, "hella").should == false
     end
   end
 

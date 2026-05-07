@@ -17,13 +17,13 @@ describe "Set#proper_subset?" do
     Set[1, 2].proper_subset?(@set).should be_true
     Set[1].proper_subset?(@set).should be_true
 
-    Set[5].proper_subset?(@set).should be_false
-    Set[1, 5].proper_subset?(@set).should be_false
-    Set[nil].proper_subset?(@set).should be_false
-    Set["test"].proper_subset?(@set).should be_false
+    Set[5].proper_subset?(@set).should == false
+    Set[1, 5].proper_subset?(@set).should == false
+    Set[nil].proper_subset?(@set).should == false
+    Set["test"].proper_subset?(@set).should == false
 
-    @set.proper_subset?(@set).should be_false
-    Set[].proper_subset?(Set[]).should be_false
+    @set.proper_subset?(@set).should == false
+    Set[].proper_subset?(Set[]).should == false
   end
 
   it "raises an ArgumentError when passed a non-Set" do

@@ -33,7 +33,7 @@ describe :file_grpowned, shared: true do
 
   platform_is :windows do
     it "returns false if the file exist" do
-      @object.send(@method, @file).should be_false
+      @object.send(@method, @file).should == false
     end
   end
 end

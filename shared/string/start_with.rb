@@ -65,7 +65,7 @@ describe :start_with, shared: true do
     Regexp.last_match[1].should == "1337"
     $1.should == "1337"
 
-    "test-asdf".send(@method).start_with?(regexp).should be_false
+    "test-asdf".send(@method).start_with?(regexp).should == false
     Regexp.last_match.should be_nil
     $1.should be_nil
   end

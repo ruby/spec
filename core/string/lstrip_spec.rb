@@ -64,11 +64,11 @@ describe "String#lstrip!" do
 
   it "raises an ArgumentError if the first non-space codepoint is invalid" do
     s = "\xDFabc".force_encoding(Encoding::UTF_8)
-    s.valid_encoding?.should be_false
+    s.valid_encoding?.should == false
     -> { s.lstrip! }.should raise_error(ArgumentError)
 
     s = "   \xDFabc".force_encoding(Encoding::UTF_8)
-    s.valid_encoding?.should be_false
+    s.valid_encoding?.should == false
     -> { s.lstrip! }.should raise_error(ArgumentError)
   end
 end

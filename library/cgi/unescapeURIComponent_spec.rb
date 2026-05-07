@@ -99,7 +99,7 @@ describe "CGI.unescapeURIComponent" do
       decoded = CGI.unescapeURIComponent(string, Encoding::SHIFT_JIS)
       decoded.encoding.should == Encoding::US_ASCII
       decoded.should == "\xFF".dup.force_encoding(Encoding::US_ASCII)
-      decoded.valid_encoding?.should be_false
+      decoded.valid_encoding?.should == false
     end
   end
 

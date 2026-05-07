@@ -30,14 +30,14 @@ describe "A class variable defined in a module" do
   end
 
   it "is not defined in these classes" do
-    ClassVariablesSpec::ClassC.cvar_defined?.should be_false
+    ClassVariablesSpec::ClassC.cvar_defined?.should == false
   end
 
   it "is only updated in the module a method defined in the module is used" do
     ClassVariablesSpec::ClassC.cvar_m = "new value"
     ClassVariablesSpec::ClassC.cvar_m.should == "new value"
 
-    ClassVariablesSpec::ClassC.cvar_defined?.should be_false
+    ClassVariablesSpec::ClassC.cvar_defined?.should == false
   end
 
   it "is updated in the class when a Method defined in the class is used" do
@@ -59,7 +59,7 @@ describe "A class variable defined in a module" do
   end
 
   it "is not defined in the extending module" do
-    ClassVariablesSpec::ModuleO.class_variable_defined?(:@@cvar_n).should be_false
+    ClassVariablesSpec::ModuleO.class_variable_defined?(:@@cvar_n).should == false
   end
 end
 

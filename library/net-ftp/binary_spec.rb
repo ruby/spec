@@ -9,7 +9,7 @@ ruby_version_is ""..."4.1" do
       ftp.binary.should be_true
 
       ftp.binary = false
-      ftp.binary.should be_false
+      ftp.binary.should == false
     end
   end
 
@@ -21,7 +21,7 @@ ruby_version_is ""..."4.1" do
       ftp.binary.should be_true
 
       ftp.binary = false
-      ftp.binary.should be_false
+      ftp.binary.should == false
     end
   end
 end

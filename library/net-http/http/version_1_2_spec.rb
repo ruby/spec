@@ -7,7 +7,7 @@ describe "Net::HTTP.version_1_2" do
     Net::HTTP.version_1_2
 
     Net::HTTP.version_1_2?.should be_true
-    Net::HTTP.version_1_1?.should be_false
+    Net::HTTP.version_1_1?.should == false
   end
 
   it "returns true" do

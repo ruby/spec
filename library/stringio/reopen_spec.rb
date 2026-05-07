@@ -8,18 +8,18 @@ describe "StringIO#reopen when passed [Object, Integer]" do
 
   it "reopens self with the passed Object in the passed mode" do
     @io.reopen("reopened", IO::RDONLY)
-    @io.closed_read?.should be_false
+    @io.closed_read?.should == false
     @io.closed_write?.should be_true
     @io.string.should == "reopened"
 
     @io.reopen(+"reopened, twice", IO::WRONLY)
     @io.closed_read?.should be_true
-    @io.closed_write?.should be_false
+    @io.closed_write?.should == false
     @io.string.should == "reopened, twice"
 
     @io.reopen(+"reopened, another time", IO::RDWR)
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
     @io.string.should == "reopened, another time"
   end
 
@@ -56,23 +56,23 @@ describe "StringIO#reopen when passed [Object, Object]" do
 
   it "reopens self with the passed Object in the passed mode" do
     @io.reopen("reopened", "r")
-    @io.closed_read?.should be_false
+    @io.closed_read?.should == false
     @io.closed_write?.should be_true
     @io.string.should == "reopened"
 
     @io.reopen(+"reopened, twice", "r+")
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
     @io.string.should == "reopened, twice"
 
     @io.reopen(+"reopened, another", "w+")
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
     @io.string.should == ""
 
     @io.reopen(+"reopened, another time", "r+")
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
     @io.string.should == "reopened, another time"
   end
 
@@ -108,7 +108,7 @@ describe "StringIO#reopen when passed [Object, Object]" do
     obj = mock("to_str")
     obj.should_receive(:to_str).and_return("r")
     @io.reopen("reopened", obj)
-    @io.closed_read?.should be_false
+    @io.closed_read?.should == false
     @io.closed_write?.should be_true
     @io.string.should == "reopened"
   end
@@ -136,8 +136,8 @@ describe "StringIO#reopen when passed [String]" do
 
     @io.reopen(+"reopened")
 
-    @io.closed_write?.should be_false
-    @io.closed_read?.should be_false
+    @io.closed_write?.should == false
+    @io.closed_read?.should == false
 
     @io.string.should == "reopened"
   end
@@ -186,8 +186,8 @@ describe "StringIO#reopen when passed no arguments" do
   it "resets self's mode to read-write" do
     @io.close
     @io.reopen
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
   end
 
   it "resets self's position to 0" do

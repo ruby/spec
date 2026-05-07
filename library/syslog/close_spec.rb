@@ -7,19 +7,19 @@ platform_is_not :windows do
     platform_is_not :windows do
 
       before :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       after :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "closes the log" do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
         Syslog.open
         Syslog.opened?.should be_true
         Syslog.close
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "raises a RuntimeError if the log's already closed" do

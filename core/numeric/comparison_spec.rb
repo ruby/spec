@@ -26,12 +26,12 @@ describe "Numeric#<=>" do
     end
 
     it "is called when instances are compared with #<" do
-      (@a < @b).should be_false
+      (@a < @b).should == false
       ScratchPad.recorded.should == :numeric_comparison
     end
 
     it "is called when instances are compared with #<=" do
-      (@a <= @b).should be_false
+      (@a <= @b).should == false
       ScratchPad.recorded.should == :numeric_comparison
     end
 

@@ -22,7 +22,7 @@ describe "Encoding::InvalidByteSequenceError#incomplete_input?" do
     begin
       ec.convert("\xfffffffff")
     rescue Encoding::InvalidByteSequenceError => e
-      e.incomplete_input?.should be_false
+      e.incomplete_input?.should == false
     end
   end
 end

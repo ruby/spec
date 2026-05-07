@@ -16,9 +16,9 @@ describe "Matrix.lower_triangular?" do
   end
 
   it "returns false for a non lower triangular square Matrix" do
-    Matrix[[0, 1], [0, 0]].lower_triangular?.should be_false
-    Matrix[[1, 2, 3], [1, 2, 3], [1, 2, 3]].lower_triangular?.should be_false
-    Matrix[[0, 1], [0, 0], [0, 0], [0, 0]].lower_triangular?.should be_false
-    Matrix[[0, 0, 0, 1], [0, 0, 0, 0]].lower_triangular?.should be_false
+    Matrix[[0, 1], [0, 0]].lower_triangular?.should == false
+    Matrix[[1, 2, 3], [1, 2, 3], [1, 2, 3]].lower_triangular?.should == false
+    Matrix[[0, 1], [0, 0], [0, 0], [0, 0]].lower_triangular?.should == false
+    Matrix[[0, 0, 0, 1], [0, 0, 0, 0]].lower_triangular?.should == false
   end
 end

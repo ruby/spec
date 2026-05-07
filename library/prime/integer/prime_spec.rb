@@ -9,9 +9,9 @@ describe "Integer#prime?" do
   end
 
   it "returns a false value for composite numbers" do
-    4.prime?.should be_false
-    15.prime?.should be_false
-    (2**32-1).prime?.should be_false
-    ( (2**17-1)*(2**19-1) ).prime?.should be_false  # M6*M7
+    4.prime?.should == false
+    15.prime?.should == false
+    (2**32-1).prime?.should == false
+    ( (2**17-1)*(2**19-1) ).prime?.should == false  # M6*M7
   end
 end

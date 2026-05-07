@@ -9,7 +9,7 @@ describe :kernel_remove_instance_variable, shared: true do
 
   it "removes the instance variable" do
     @instance.send :remove_instance_variable, @object
-    @instance.instance_variable_defined?(@object).should be_false
+    @instance.instance_variable_defined?(@object).should == false
   end
 end
 

@@ -54,13 +54,13 @@ describe "Kernel#respond_to_missing?" do
   it "causes #respond_to? to return false if called and returning false" do
     obj = mock('object')
     obj.should_receive(:respond_to_missing?).with(:undefined_method, false).and_return(false)
-    obj.respond_to?(:undefined_method).should be_false
+    obj.respond_to?(:undefined_method).should == false
   end
 
   it "causes #respond_to? to return false if called and returning nil" do
     obj = mock('object')
     obj.should_receive(:respond_to_missing?).with(:undefined_method, false).and_return(nil)
-    obj.respond_to?(:undefined_method).should be_false
+    obj.respond_to?(:undefined_method).should == false
   end
 
   it "isn't called when obj responds to the given public method" do
@@ -75,7 +75,7 @@ describe "Kernel#respond_to_missing?" do
 
   it "is called when obj responds to the given protected method, include_private = false" do
     @a.should_receive(:respond_to_missing?)
-    @a.respond_to?(:protected_method, false).should be_false
+    @a.respond_to?(:protected_method, false).should == false
   end
 
   it "isn't called when obj responds to the given protected method, include_private = true" do

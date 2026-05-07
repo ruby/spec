@@ -19,7 +19,7 @@ describe "BasicObject#!=" do
 
   it "returns false if other is identical to self" do
     a = BasicObject.new
-    (a != a).should be_false
+    (a != a).should == false
   end
 
   it "dispatches to #==" do
@@ -27,7 +27,7 @@ describe "BasicObject#!=" do
     b = BasicObject.new
     a.should_receive(:==).and_return(true)
 
-    (a != b).should be_false
+    (a != b).should == false
   end
 
   describe "when invoked using Kernel#send" do
@@ -39,7 +39,7 @@ describe "BasicObject#!=" do
 
     it "returns false if other is identical to self" do
       a = Object.new
-      a.send(:!=, a).should be_false
+      a.send(:!=, a).should == false
     end
 
     it "dispatches to #==" do
@@ -47,7 +47,7 @@ describe "BasicObject#!=" do
       b = Object.new
       a.should_receive(:==).and_return(true)
 
-      a.send(:!=, b).should be_false
+      a.send(:!=, b).should == false
     end
   end
 end

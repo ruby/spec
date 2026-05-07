@@ -4,8 +4,8 @@ require 'date'
 describe "Date#gregorian?" do
 
   it "marks a day before the calendar reform as Julian" do
-    Date.civil(1007, 2, 27).gregorian?.should be_false
-    Date.civil(1907, 2, 27, Date.civil(1930, 1, 1).jd).gregorian?.should be_false
+    Date.civil(1007, 2, 27).gregorian?.should == false
+    Date.civil(1907, 2, 27, Date.civil(1930, 1, 1).jd).gregorian?.should == false
   end
 
   it "marks a day after the calendar reform as Julian" do

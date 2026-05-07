@@ -459,7 +459,7 @@ describe "CApiNumericSpecs" do
       obj.should_receive(:coerce).with(2).and_return([obj, 2])
       obj.should_receive(:<).with(2).and_return(false)
 
-      @s.rb_num_coerce_relop(2, obj, :<).should be_false
+      @s.rb_num_coerce_relop(2, obj, :<).should == false
     end
 
     it "raises an ArgumentError if #<op> returns nil" do

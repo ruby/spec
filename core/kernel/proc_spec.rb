@@ -11,7 +11,7 @@ describe "Kernel.proc" do
 
   it "creates a proc-style Proc if given a literal block" do
     l = proc { 42 }
-    l.lambda?.should be_false
+    l.lambda?.should == false
   end
 
   it "returned the passed Proc if given an existing Proc" do

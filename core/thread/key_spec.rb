@@ -33,13 +33,13 @@ describe "Thread#key?" do
       Thread.current[:val1] = 1
       Fiber.yield
       Thread.current.key?(:val1).should be_true
-      Thread.current.key?(:val2).should be_false
+      Thread.current.key?(:val2).should == false
     end
     Thread.current.key?(:val1).should_not be_true
     fib.resume
     Thread.current[:val2] = 2
     fib.resume
-    Thread.current.key?(:val1).should be_false
+    Thread.current.key?(:val1).should == false
     Thread.current.key?(:val2).should be_true
   end
 

@@ -7,11 +7,11 @@ platform_is_not :windows do
     platform_is_not :windows, :darwin, :aix, :android do
 
       before :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       after :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "receives a priority as first argument" do

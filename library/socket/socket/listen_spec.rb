@@ -7,7 +7,7 @@ describe "Socket#listen" do
   end
 
   after :each do
-    @socket.closed?.should be_false
+    @socket.closed?.should == false
     @socket.close
   end
 

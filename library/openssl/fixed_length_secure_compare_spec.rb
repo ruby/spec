@@ -11,7 +11,7 @@ describe "OpenSSL.fixed_length_secure_compare" do
   it "returns false for two strings of equal size with different content" do
     input1 = "the quick brown fox jumps over the lazy dog"
     input2 = "the lazy dog jumps over the quick brown fox"
-    OpenSSL.fixed_length_secure_compare(input1, input2).should be_false
+    OpenSSL.fixed_length_secure_compare(input1, input2).should == false
   end
 
   it "converts both arguments to strings using #to_str" do

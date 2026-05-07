@@ -8,7 +8,7 @@ describe "Net::HTTP.new" do
     end
 
     it "returns a Net::HTTP instance" do
-      @http.proxy?.should be_false
+      @http.proxy?.should == false
       @http.instance_of?(Net::HTTP).should be_true
     end
 
@@ -21,7 +21,7 @@ describe "Net::HTTP.new" do
     end
 
     it "does not start the new Net::HTTP instance" do
-      @http.started?.should be_false
+      @http.started?.should == false
     end
   end
 
@@ -31,7 +31,7 @@ describe "Net::HTTP.new" do
     end
 
     it "returns a Net::HTTP instance" do
-      @http.proxy?.should be_false
+      @http.proxy?.should == false
       @http.instance_of?(Net::HTTP).should be_true
     end
 
@@ -44,7 +44,7 @@ describe "Net::HTTP.new" do
     end
 
     it "does not start the new Net::HTTP instance" do
-      @http.started?.should be_false
+      @http.started?.should == false
     end
   end
 

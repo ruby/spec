@@ -11,11 +11,11 @@ describe "Matrix#singular?" do
   end
 
   it "returns false if the Matrix is regular" do
-    Matrix[ [0,1], [1,0] ].singular?.should be_false
+    Matrix[ [0,1], [1,0] ].singular?.should == false
   end
 
   it "returns false for an empty 0x0 matrix" do
-    Matrix.empty(0,0).singular?.should be_false
+    Matrix.empty(0,0).singular?.should == false
   end
 
   it "raises an error for rectangular matrices" do

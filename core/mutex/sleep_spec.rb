@@ -38,7 +38,7 @@ describe "Mutex#sleep" do
     th = Thread.new { m.lock; locked = true; m.sleep }
     Thread.pass until locked
     Thread.pass until th.stop?
-    m.locked?.should be_false
+    m.locked?.should == false
     th.run
     th.join
   end

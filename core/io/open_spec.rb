@@ -32,7 +32,7 @@ describe "IO.open" do
         super()
         ScratchPad.record :called
       end
-      io.closed?.should be_false
+      io.closed?.should == false
     end
     ScratchPad.recorded.should == :called
   end

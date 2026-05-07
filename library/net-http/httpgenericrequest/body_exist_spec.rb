@@ -7,7 +7,7 @@ describe "Net::HTTPGenericRequest#body_exist?" do
     request.body_exist?.should be_true
 
     request = Net::HTTPGenericRequest.new("POST", true, false, "/some/path")
-    request.body_exist?.should be_false
+    request.body_exist?.should == false
   end
 
   describe "when $VERBOSE is true" do

@@ -96,7 +96,7 @@ describe "C-API Hash function" do
     it "returns the default value if it exists" do
       hsh = Hash.new(0)
       @s.rb_hash_aref(hsh, :chunky).should == 0
-      @s.rb_hash_aref_nil(hsh, :chunky).should be_false
+      @s.rb_hash_aref_nil(hsh, :chunky).should == false
     end
 
     it "returns nil if the key does not exist" do

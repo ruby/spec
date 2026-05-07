@@ -128,7 +128,7 @@ end
 describe "Hash#compare_by_identity?" do
   it "returns false by default" do
     h = {}
-    h.compare_by_identity?.should be_false
+    h.compare_by_identity?.should == false
   end
 
   it "returns true once #compare_by_identity has been invoked on self" do

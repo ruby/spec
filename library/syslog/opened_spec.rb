@@ -7,11 +7,11 @@ platform_is_not :windows do
     platform_is_not :windows do
 
       before :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       after :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "returns true if the log is opened" do
@@ -21,10 +21,10 @@ platform_is_not :windows do
       end
 
       it "returns false otherwise" do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
         Syslog.open
         Syslog.close
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "works inside a block" do
@@ -32,7 +32,7 @@ platform_is_not :windows do
           s.opened?.should be_true
           Syslog.opened?.should be_true
         end
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
     end
   end

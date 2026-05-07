@@ -12,7 +12,7 @@ describe "IO::Buffer#resize" do
       @buffer.resize(IO::Buffer::PAGE_SIZE)
       @buffer.size.should == IO::Buffer::PAGE_SIZE
       @buffer.internal?.should be_true
-      @buffer.mapped?.should be_false
+      @buffer.mapped?.should == false
     end
 
     platform_is :linux do
@@ -20,7 +20,7 @@ describe "IO::Buffer#resize" do
         @buffer = IO::Buffer.new(IO::Buffer::PAGE_SIZE, IO::Buffer::MAPPED)
         @buffer.resize(4)
         @buffer.size.should == 4
-        @buffer.internal?.should be_false
+        @buffer.internal?.should == false
         @buffer.mapped?.should be_true
       end
     end
@@ -31,7 +31,7 @@ describe "IO::Buffer#resize" do
         @buffer.resize(4)
         @buffer.size.should == 4
         @buffer.internal?.should be_true
-        @buffer.mapped?.should be_false
+        @buffer.mapped?.should == false
       end
     end
   end
@@ -87,7 +87,7 @@ describe "IO::Buffer#resize" do
       @buffer = IO::Buffer.new(0)
       @buffer.resize(IO::Buffer::PAGE_SIZE)
       @buffer.size.should == IO::Buffer::PAGE_SIZE
-      @buffer.internal?.should be_false
+      @buffer.internal?.should == false
       @buffer.mapped?.should be_true
     end
 
@@ -97,7 +97,7 @@ describe "IO::Buffer#resize" do
       @buffer.resize(10)
       @buffer.size.should == 10
       @buffer.internal?.should be_true
-      @buffer.mapped?.should be_false
+      @buffer.mapped?.should == false
     end
   end
 

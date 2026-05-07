@@ -3,7 +3,7 @@ describe :hash_eql, shared: true do
     value = mock('x')
     value.should_not_receive(:==)
     value.should_not_receive(:eql?)
-    { 1 => value }.send(@method, { 2 => value }).should be_false
+    { 1 => value }.send(@method, { 2 => value }).should == false
   end
 
   it "returns false when the numbers of keys differ without comparing any elements" do
@@ -13,8 +13,8 @@ describe :hash_eql, shared: true do
     obj.should_not_receive(:==)
     obj.should_not_receive(:eql?)
 
-    {}.send(@method, h).should be_false
-    h.send(@method, {}).should be_false
+    {}.send(@method, h).should == false
+    h.send(@method, {}).should == false
   end
 
   it "first compares keys via hash" do
@@ -23,7 +23,7 @@ describe :hash_eql, shared: true do
     y = mock('y')
     y.should_receive(:hash).any_number_of_times.and_return(0)
 
-    { x => 1 }.send(@method, { y => 1 }).should be_false
+    { x => 1 }.send(@method, { y => 1 }).should == false
   end
 
   it "does not compare keys with different hash codes via eql?" do
@@ -35,7 +35,7 @@ describe :hash_eql, shared: true do
     x.should_receive(:hash).any_number_of_times.and_return(0)
     y.should_receive(:hash).any_number_of_times.and_return(1)
 
-    { x => 1 }.send(@method, { y => 1 }).should be_false
+    { x => 1 }.send(@method, { y => 1 }).should == false
   end
 
   it "computes equality for recursive hashes" do
@@ -48,7 +48,7 @@ describe :hash_eql, shared: true do
   it "doesn't call to_hash on objects" do
     mock_hash = mock("fake hash")
     def mock_hash.to_hash() {} end
-    {}.send(@method, mock_hash).should be_false
+    {}.send(@method, mock_hash).should == false
   end
 
   it "computes equality for complex recursive hashes" do
@@ -61,11 +61,11 @@ describe :hash_eql, shared: true do
     c.merge! other: c, self: c
     c.send(@method, a).should be_true # subtle, but they both have the same structure!
     a[:delta] = c[:delta] = a
-    c.send(@method, a).should be_false # not quite the same structure, as a[:other][:delta] = nil
+    c.send(@method, a).should == false # not quite the same structure, as a[:other][:delta] = nil
     c[:delta] = 42
-    c.send(@method, a).should be_false
+    c.send(@method, a).should == false
     a[:delta] = 42
-    c.send(@method, a).should be_false
+    c.send(@method, a).should == false
     b[:delta] = 42
     c.send(@method, a).should be_true
   end
@@ -81,14 +81,14 @@ describe :hash_eql, shared: true do
     a.send(@method, b).should be_true # subtle, but they both have the same structure!
     x.send(@method, y).should be_true
     y << x
-    y.send(@method, z).should be_false
+    y.send(@method, z).should == false
     z << x
     y.send(@method, z).should be_true
 
     a[:foo], a[:bar] = a[:bar], a[:foo]
-    a.send(@method, b).should be_false
+    a.send(@method, b).should == false
     b[:bar] = b[:foo]
-    b.send(@method, c).should be_false
+    b.send(@method, c).should == false
   end
 end
 
@@ -100,7 +100,7 @@ describe :hash_eql_additional, shared: true do
     def y.==(o) false end
     def x.eql?(o) false end
     def y.eql?(o) false end
-    { 1 => x }.send(@method, { 1 => y }).should be_false
+    { 1 => x }.send(@method, { 1 => y }).should == false
 
     x = mock('x')
     y = mock('y')
@@ -114,28 +114,28 @@ describe :hash_eql_additional, shared: true do
   it "compares keys with eql? semantics" do
     { 1.0 => "x" }.send(@method, { 1.0 => "x" }).should be_true
     { 1.0 => "x" }.send(@method, { 1.0 => "x" }).should be_true
-    { 1 => "x" }.send(@method, { 1.0 => "x" }).should be_false
-    { 1.0 => "x" }.send(@method, { 1 => "x" }).should be_false
+    { 1 => "x" }.send(@method, { 1.0 => "x" }).should == false
+    { 1.0 => "x" }.send(@method, { 1 => "x" }).should == false
   end
 
   it "returns true if and only if other Hash has the same number of keys and each key-value pair matches" do
     a = { a: 5 }
     b = {}
-    a.send(@method, b).should be_false
+    a.send(@method, b).should == false
 
     b[:a] = 5
     a.send(@method, b).should be_true
 
     not_supported_on :opal do
       c = { "a" => 5 }
-      a.send(@method, c).should be_false
+      a.send(@method, c).should == false
     end
 
     c = { "A" => 5 }
-    a.send(@method, c).should be_false
+    a.send(@method, c).should == false
 
     c = { a: 6 }
-    a.send(@method, c).should be_false
+    a.send(@method, c).should == false
   end
 
   it "does not call to_hash on hash subclasses" do
@@ -163,7 +163,7 @@ describe :hash_eql_additional, shared: true do
       obj
     end
 
-    { a[0] => 1 }.send(@method, { a[1] => 1 }).should be_false
+    { a[0] => 1 }.send(@method, { a[1] => 1 }).should == false
 
     a = Array.new(2) do
       obj = mock('0')

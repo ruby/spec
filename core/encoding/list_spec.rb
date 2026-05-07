@@ -22,7 +22,7 @@ describe "Encoding.list" do
 
   it "does not include any alias names" do
     Encoding.aliases.keys.each do |enc_alias|
-      Encoding.list.include?(enc_alias).should be_false
+      Encoding.list.include?(enc_alias).should == false
     end
   end
 

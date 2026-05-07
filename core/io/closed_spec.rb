@@ -15,6 +15,6 @@ describe "IO#closed?" do
   end
 
   it "returns false on open stream" do
-    @io.closed?.should be_false
+    @io.closed?.should == false
   end
 end

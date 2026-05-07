@@ -21,7 +21,7 @@ describe "IO.popen" do
 
   it "returns an open IO" do
     @io = IO.popen(ruby_cmd('exit'), "r")
-    @io.closed?.should be_false
+    @io.closed?.should == false
   end
 
   it "reads a read-only pipe" do
@@ -114,7 +114,7 @@ describe "IO.popen" do
   describe "with a block" do
     it "yields an open IO to the block" do
       IO.popen(ruby_cmd('exit'), "r") do |io|
-        io.closed?.should be_false
+        io.closed?.should == false
       end
     end
 

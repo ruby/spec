@@ -32,20 +32,20 @@ describe :method_equal, shared: true do
   it "returns false on a method which is neither aliased nor the same method" do
     m2 = @m.method(:zero)
 
-    @m_foo.send(@method, m2).should be_false
+    @m_foo.send(@method, m2).should == false
   end
 
   it "returns false for a method which is not bound to the same object" do
     m2_foo = @m2.method(:foo)
     a_baz = @a.method(:baz)
 
-    @m_foo.send(@method, m2_foo).should be_false
-    @m_foo.send(@method, a_baz).should be_false
+    @m_foo.send(@method, m2_foo).should == false
+    @m_foo.send(@method, a_baz).should == false
   end
 
   it "returns false if the two methods are bound to the same object but were defined independently" do
     m2 = @m.method(:same_as_foo)
-    @m_foo.send(@method, m2).should be_false
+    @m_foo.send(@method, m2).should == false
   end
 
   it "returns true if a method was defined using the other one" do
@@ -58,8 +58,8 @@ describe :method_equal, shared: true do
     defn = @m.method(:zero)
     defined = @m.method(:zero_defined_method)
 
-    defn.send(@method, defined).should be_false
-    defined.send(@method, defn).should be_false
+    defn.send(@method, defined).should == false
+    defined.send(@method, defn).should == false
   end
 
   describe 'missing methods' do
@@ -69,7 +69,7 @@ describe :method_equal, shared: true do
       miss2 = @m.method(:also_handled)
 
       miss1.send(@method, miss1bis).should be_true
-      miss1.send(@method, miss2).should be_false
+      miss1.send(@method, miss2).should == false
     end
 
     it 'calls respond_to_missing? with true to include private methods' do
@@ -81,14 +81,14 @@ describe :method_equal, shared: true do
   it "returns false if the two methods are bound to different objects, have the same names, and identical bodies" do
     a = MethodSpecs::Eql.instance_method(:same_body)
     b = MethodSpecs::Eql2.instance_method(:same_body)
-    a.send(@method, b).should be_false
+    a.send(@method, b).should == false
   end
 
   it "returns false if the argument is not a Method object" do
-    String.instance_method(:size).send(@method, 7).should be_false
+    String.instance_method(:size).send(@method, 7).should == false
   end
 
   it "returns false if the argument is an unbound version of self" do
-    method(:load).send(@method, method(:load).unbind).should be_false
+    method(:load).send(@method, method(:load).unbind).should == false
   end
 end

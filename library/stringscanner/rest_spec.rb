@@ -39,7 +39,7 @@ describe "StringScanner#rest?" do
 
   it "returns false if there is no more data in the string" do
     @s.terminate
-    @s.rest?.should be_false
+    @s.rest?.should == false
   end
 
   it "is the opposite of eos?" do

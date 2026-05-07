@@ -57,7 +57,7 @@ describe "A constant on a metaclass" do
   end
 
   it "is not defined on the object's class" do
-    @object.class.const_defined?(:CONST).should be_false
+    @object.class.const_defined?(:CONST).should == false
   end
 
   it "is not defined in the metaclass opener's scope" do

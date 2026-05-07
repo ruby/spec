@@ -41,6 +41,6 @@ describe "Time#dup" do
     t = Time.now
     t.freeze
     t2 = t.dup
-    t2.frozen?.should be_false
+    t2.frozen?.should == false
   end
 end

@@ -60,7 +60,7 @@ describe "Complex#==" do
       obj = mock("Object")
       obj.should_receive(:==).with(value).and_return(:expected)
 
-      (value == obj).should_not be_false
+      (value == obj).should_not == false
     end
   end
 
@@ -77,7 +77,7 @@ describe "Complex#==" do
     end
 
     it "returns false when the imaginary part is not zero" do
-      (Complex(3, 1) == @other).should be_false
+      (Complex(3, 1) == @other).should == false
     end
   end
 

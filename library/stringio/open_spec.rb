@@ -56,82 +56,82 @@ describe "StringIO.open when passed [Object, mode]" do
 
   it "sets the mode based on the passed mode" do
     io = StringIO.open(+"example", "r")
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
 
     io = StringIO.open(+"example", "rb")
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
 
     io = StringIO.open(+"example", "r+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "rb+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "w")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "wb")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "w+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "wb+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "a")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "ab")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "a+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", "ab+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
   end
 
   it "allows passing the mode as an Integer" do
     io = StringIO.open(+"example", IO::RDONLY)
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
 
     io = StringIO.open(+"example", IO::RDWR)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::WRONLY)
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::WRONLY | IO::TRUNC)
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::RDWR | IO::TRUNC)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::WRONLY | IO::APPEND)
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.open(+"example", IO::RDWR | IO::APPEND)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
   end
 
   it "raises a FrozenError when passed a frozen String in truncate mode as StringIO backend" do
@@ -143,7 +143,7 @@ describe "StringIO.open when passed [Object, mode]" do
     obj.should_receive(:to_str).and_return("r")
     io = StringIO.open(+"example", obj)
 
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
   end
 
@@ -169,8 +169,8 @@ describe "StringIO.open when passed [Object]" do
 
   it "sets the mode to read-write (r+)" do
     io = StringIO.open(+"example")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.new(+"example")
     io.printf("%d", 123)
@@ -187,7 +187,7 @@ describe "StringIO.open when passed [Object]" do
   it "automatically sets the mode to read-only when passed a frozen string" do
     (str = "example").freeze
     io = StringIO.open(str)
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
   end
 end
@@ -201,8 +201,8 @@ describe "StringIO.open when passed no arguments" do
 
   it "sets the mode to read-write (r+)" do
     io = StringIO.open
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.new(+"example")
     io.printf("%d", 123)

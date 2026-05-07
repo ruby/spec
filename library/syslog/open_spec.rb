@@ -8,11 +8,11 @@ platform_is_not :windows do
     platform_is_not :windows do
 
       before :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       after :each do
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "returns the module" do
@@ -69,7 +69,7 @@ platform_is_not :windows do
 
       it "closes the log if after it receives a block" do
         Syslog.open{ }
-        Syslog.opened?.should be_false
+        Syslog.opened?.should == false
       end
 
       it "raises an error if the log is opened" do

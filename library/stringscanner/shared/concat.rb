@@ -3,7 +3,7 @@ describe :strscan_concat, shared: true do
     s = StringScanner.new(+"hello ")
     s.send(@method, 'world').should == s
     s.string.should == "hello world"
-    s.eos?.should be_false
+    s.eos?.should == false
   end
 
   it "raises a TypeError if the given argument can't be converted to a String" do

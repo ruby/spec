@@ -13,7 +13,7 @@ describe :dir_exist, shared: true do
 
   it "understands non-ASCII paths" do
     subdir = File.join(tmp("\u{9876}\u{665}"))
-    Dir.send(@method, subdir).should be_false
+    Dir.send(@method, subdir).should == false
     Dir.mkdir(subdir)
     Dir.send(@method, subdir).should be_true
     Dir.rmdir(subdir)
@@ -24,7 +24,7 @@ describe :dir_exist, shared: true do
   end
 
   it "returns false if the given directory doesn't exist" do
-    Dir.send(@method, 'y26dg27n2nwjs8a/').should be_false
+    Dir.send(@method, 'y26dg27n2nwjs8a/').should == false
   end
 
   it "doesn't require the name to have a trailing slash" do
@@ -36,12 +36,12 @@ describe :dir_exist, shared: true do
   it "doesn't expand paths" do
     skip "$HOME not valid directory" unless ENV['HOME'] && File.directory?(ENV['HOME'])
     Dir.send(@method, File.expand_path('~')).should be_true
-    Dir.send(@method, '~').should be_false
+    Dir.send(@method, '~').should == false
   end
 
   it "returns false if the argument exists but is a file" do
     File.should.exist?(__FILE__)
-    Dir.send(@method, __FILE__).should be_false
+    Dir.send(@method, __FILE__).should == false
   end
 
   it "doesn't set $! when file doesn't exist" do

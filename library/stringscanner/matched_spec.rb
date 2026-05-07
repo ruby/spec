@@ -36,6 +36,6 @@ describe "StringScanner#matched?" do
 
   it "returns false if there's no match" do
     @s.match?(/\d+/)
-    @s.matched?.should be_false
+    @s.matched?.should == false
   end
 end

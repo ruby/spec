@@ -85,7 +85,7 @@ describe "IO::Buffer#free" do
 
       slice.free
       slice.null?.should be_true
-      buffer.null?.should be_false
+      buffer.null?.should == false
 
       buffer.free
     end
@@ -95,8 +95,8 @@ describe "IO::Buffer#free" do
       slice = buffer.slice(0, 2)
 
       buffer.free
-      slice.null?.should be_false
-      slice.valid?.should be_false
+      slice.null?.should == false
+      slice.valid?.should == false
     end
   end
 end

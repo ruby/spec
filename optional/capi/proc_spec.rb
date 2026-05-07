@@ -147,10 +147,10 @@ describe "C-API Proc function" do
     end
 
     it "returns false for non Proc instances" do
-      @p.rb_obj_is_proc("aoeui").should be_false
-      @p.rb_obj_is_proc(123).should be_false
-      @p.rb_obj_is_proc(true).should be_false
-      @p.rb_obj_is_proc([]).should be_false
+      @p.rb_obj_is_proc("aoeui").should == false
+      @p.rb_obj_is_proc(123).should == false
+      @p.rb_obj_is_proc(true).should == false
+      @p.rb_obj_is_proc([]).should == false
     end
   end
 end
@@ -183,6 +183,6 @@ describe "C-API when calling Proc.new from a C function" do
 
   # Ruby -> C -> Ruby -> block_given?
   it "returns false from block_given? in a Ruby method called by the C function" do
-    @p.rb_Proc_new(6).should be_false
+    @p.rb_Proc_new(6).should == false
   end
 end

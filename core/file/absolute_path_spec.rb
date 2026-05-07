@@ -10,21 +10,21 @@ describe "File.absolute_path?" do
   end
 
   it "returns false if it's a relative path" do
-    File.absolute_path?(File.basename(__FILE__)).should be_false
+    File.absolute_path?(File.basename(__FILE__)).should == false
   end
 
   it "returns false if it's a tricky relative path" do
-    File.absolute_path?("C:foo\\bar").should be_false
+    File.absolute_path?("C:foo\\bar").should == false
   end
 
   it "does not expand '~' to a home directory." do
-    File.absolute_path?('~').should be_false
+    File.absolute_path?('~').should == false
   end
 
   it "does not expand '~user' to a home directory." do
     path = File.dirname(@abs)
     Dir.chdir(path) do
-      File.absolute_path?('~user').should be_false
+      File.absolute_path?('~user').should == false
     end
   end
 
@@ -36,8 +36,8 @@ describe "File.absolute_path?" do
 
   platform_is_not :windows do
     it "takes into consideration the platform's root" do
-      File.absolute_path?("C:\\foo\\bar").should be_false
-      File.absolute_path?("C:/foo/bar").should be_false
+      File.absolute_path?("C:\\foo\\bar").should == false
+      File.absolute_path?("C:/foo/bar").should == false
       File.absolute_path?("/foo/bar\\baz").should be_true
     end
   end
@@ -46,7 +46,7 @@ describe "File.absolute_path?" do
     it "takes into consideration the platform path separator(s)" do
       File.absolute_path?("C:\\foo\\bar").should be_true
       File.absolute_path?("C:/foo/bar").should be_true
-      File.absolute_path?("/foo/bar\\baz").should be_false
+      File.absolute_path?("/foo/bar\\baz").should == false
     end
   end
 end

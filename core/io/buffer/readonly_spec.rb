@@ -18,11 +18,11 @@ describe "IO::Buffer#readonly?" do
 
   it "is false for a modifiable buffer" do
     @buffer = IO::Buffer.new(12)
-    @buffer.readonly?.should be_false
+    @buffer.readonly?.should == false
   end
 
   it "is false for a null buffer" do
     @buffer = IO::Buffer.new(0)
-    @buffer.readonly?.should be_false
+    @buffer.readonly?.should == false
   end
 end

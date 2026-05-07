@@ -125,16 +125,16 @@ describe "Regexp#match?" do
   end
 
   it "returns false when does not match the given value" do
-    /STRING/.match?('string').should be_false
+    /STRING/.match?('string').should == false
   end
 
   it "takes matching position as the 2nd argument" do
     /str/i.match?('string', 0).should be_true
-    /str/i.match?('string', 1).should be_false
+    /str/i.match?('string', 1).should == false
   end
 
   it "returns false when given nil" do
-    /./.match?(nil).should be_false
+    /./.match?(nil).should == false
   end
 end
 

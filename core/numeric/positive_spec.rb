@@ -11,15 +11,15 @@ describe "Numeric#positive?" do
 
   describe "on zero" do
     it "returns false" do
-      0.positive?.should be_false
-      0.0.positive?.should be_false
+      0.positive?.should == false
+      0.0.positive?.should == false
     end
   end
 
   describe "on negative numbers" do
     it "returns false" do
-      -1.positive?.should be_false
-      -0.1.positive?.should be_false
+      -1.positive?.should == false
+      -0.1.positive?.should == false
     end
   end
 end

@@ -22,7 +22,7 @@ describe "Mutex#synchronize" do
     m1.locked?.should be_true
     m2.unlock
     th.join
-    m1.locked?.should be_false
+    m1.locked?.should == false
   end
 
   it "blocks the caller if already locked" do

@@ -17,7 +17,7 @@ describe "Net::HTTP#finish" do
     it "closes the tcp connection" do
       @http.start
       @http.finish
-      @http.started?.should be_false
+      @http.started?.should == false
     end
   end
 

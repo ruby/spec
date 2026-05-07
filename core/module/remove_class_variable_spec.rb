@@ -18,7 +18,7 @@ describe "Module#remove_class_variable" do
     meta = obj.singleton_class
     meta.send :class_variable_set, :@@var, 1
     meta.send(:remove_class_variable, :@@var).should == 1
-    meta.class_variable_defined?(:@@var).should be_false
+    meta.class_variable_defined?(:@@var).should == false
   end
 
   it "raises a NameError when removing class variable declared in included module" do

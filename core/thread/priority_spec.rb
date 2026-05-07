@@ -22,7 +22,7 @@ describe "Thread#priority" do
   it "maintain the priority of the current thread after death" do
     ThreadSpecs.state = :exit
     @thread.join
-    @thread.alive?.should be_false
+    @thread.alive?.should == false
     @thread.priority.should == @current_priority
   end
 

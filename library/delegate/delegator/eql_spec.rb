@@ -22,7 +22,7 @@ describe "Delegator#eql?" do
     delegator0 = DelegateSpecs::Delegator.new(base)
     delegator1 = DelegateSpecs::Delegator.new(other)
 
-    delegator0.eql?(delegator1).should be_false
+    delegator0.eql?(delegator1).should == false
   end
 
   it "returns false when compared with the other object" do
@@ -30,6 +30,6 @@ describe "Delegator#eql?" do
     other = mock('other')
     delegator = DelegateSpecs::Delegator.new(base)
 
-    delegator.eql?(other).should be_false
+    delegator.eql?(other).should == false
   end
 end

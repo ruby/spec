@@ -79,7 +79,7 @@ describe :io_copy_stream_to_io, shared: true do
 
   it "does not close the destination IO" do
     IO.copy_stream(@object.from, @to_io)
-    @to_io.closed?.should be_false
+    @to_io.closed?.should == false
   end
 
   it "copies only length bytes when specified" do
@@ -134,7 +134,7 @@ describe "IO.copy_stream" do
 
     it "does not close the source IO" do
       IO.copy_stream(@from_io, @to_name)
-      @from_io.closed?.should be_false
+      @from_io.closed?.should == false
     end
 
     platform_is_not :windows do
@@ -240,7 +240,7 @@ describe "IO.copy_stream" do
 
     it "does not close the source IO" do
       IO.copy_stream(@from_io, @to_name)
-      @from_io.closed?.should be_false
+      @from_io.closed?.should == false
     end
 
     platform_is_not :windows do

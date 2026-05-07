@@ -10,8 +10,8 @@ describe "Matrix#empty?" do
   end
 
   it "returns false when the Matrix has elements" do
-    Matrix[ [1, 2] ].empty?.should be_false
-    Matrix[ [1], [2] ].empty?.should be_false
+    Matrix[ [1, 2] ].empty?.should == false
+    Matrix[ [1], [2] ].empty?.should == false
   end
 
   it "doesn't accept any parameter" do

@@ -12,7 +12,7 @@ describe "BasicObject" do
   end
 
   it "does not define built-in constants (according to const_defined?)" do
-    BasicObject.const_defined?(:Kernel).should be_false
+    BasicObject.const_defined?(:Kernel).should == false
   end
 
   it "does not define built-in constants (according to defined?)" do

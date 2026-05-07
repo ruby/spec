@@ -130,7 +130,7 @@ describe "The super keyword" do
       end
     end
 
-    c2.new.m('a') { raise }.should be_false
+    c2.new.m('a') { raise }.should == false
   end
 
   it "uses block argument given to method when used in a block" do

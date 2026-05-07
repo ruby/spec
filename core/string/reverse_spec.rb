@@ -24,7 +24,7 @@ describe "String#reverse" do
   it "works with a broken string" do
     str = "微軟\xDF\xDE正黑體".force_encoding(Encoding::UTF_8)
 
-    str.valid_encoding?.should be_false
+    str.valid_encoding?.should == false
 
     str.reverse.should == "體黑正\xDE\xDF軟微"
   end
@@ -62,7 +62,7 @@ describe "String#reverse!" do
   it "works with a broken string" do
     str = "微軟\xDF\xDE正黑體".force_encoding(Encoding::UTF_8)
 
-    str.valid_encoding?.should be_false
+    str.valid_encoding?.should == false
     str.reverse!
 
     str.should == "體黑正\xDE\xDF軟微"

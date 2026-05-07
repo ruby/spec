@@ -6,7 +6,7 @@ describe "Regexp#===" do
   end
 
   it "is false if there is no match" do
-    (/abc/ === "xyz").should be_false
+    (/abc/ === "xyz").should == false
   end
 
   it "returns true if it matches a Symbol" do
@@ -14,13 +14,13 @@ describe "Regexp#===" do
   end
 
   it "returns false if it does not match a Symbol" do
-    (/a/ === :b).should be_false
+    (/a/ === :b).should == false
   end
 
   # mirroring https://github.com/ruby/ruby/blob/master/test/ruby/test_regexp.rb
   it "returns false if the other value cannot be coerced to a string" do
-    (/abc/ === nil).should be_false
-    (/abc/ === /abc/).should be_false
+    (/abc/ === nil).should == false
+    (/abc/ === /abc/).should == false
   end
 
   it "uses #to_str on string-like objects" do

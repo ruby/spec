@@ -36,16 +36,16 @@ describe "Enumerable#one?" do
     end
 
     it "returns false if two elements evaluate to true" do
-      [false, :value, nil, true].one?.should be_false
+      [false, :value, nil, true].one?.should == false
     end
 
     it "returns false if all elements evaluate to false" do
-      [false, nil, false].one?.should be_false
+      [false, nil, false].one?.should == false
     end
 
     it "gathers whole arrays as elements when each yields multiple" do
       multi = EnumerableSpecs::YieldsMultiWithSingleTrue.new
-      multi.one?.should be_false
+      multi.one?.should == false
     end
   end
 
@@ -55,11 +55,11 @@ describe "Enumerable#one?" do
     end
 
     it "returns false if the block returns true more than once" do
-      [:a, :b, :c].one? { |s| s == :a || s == :b }.should be_false
+      [:a, :b, :c].one? { |s| s == :a || s == :b }.should == false
     end
 
     it "returns false if the block only returns false" do
-      [:a, :b, :c].one? { |s| s == :d }.should be_false
+      [:a, :b, :c].one? { |s| s == :d }.should == false
     end
 
     it "does not hide exceptions out of the block" do

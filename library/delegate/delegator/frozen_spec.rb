@@ -10,7 +10,7 @@ describe "Delegator when frozen" do
 
   it "is still readable" do
     @delegate.should == [42, :hello]
-    @delegate.include?("bar").should be_false
+    @delegate.include?("bar").should == false
   end
 
   it "is frozen" do
@@ -26,7 +26,7 @@ describe "Delegator when frozen" do
   end
 
   it "creates an unfrozen dup" do
-    @delegate.dup.frozen?.should be_false
+    @delegate.dup.frozen?.should == false
   end
 
   it "causes mutative calls to raise RuntimeError" do
@@ -34,6 +34,6 @@ describe "Delegator when frozen" do
   end
 
   it "returns false if only the delegated object is frozen" do
-    DelegateSpecs::Delegator.new([1,2,3].freeze).frozen?.should be_false
+    DelegateSpecs::Delegator.new([1,2,3].freeze).frozen?.should == false
   end
 end

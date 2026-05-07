@@ -3,7 +3,7 @@ describe :queue_clear, shared: true do
     queue = @object.call
     queue << Object.new
     queue << 1
-    queue.empty?.should be_false
+    queue.empty?.should == false
     queue.clear
     queue.empty?.should be_true
   end

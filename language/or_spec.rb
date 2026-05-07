@@ -27,7 +27,7 @@ describe "The || operator" do
 
   it "treats empty expressions as nil" do
     (() || true).should be_true
-    (() || false).should be_false
+    (() || false).should == false
     (true || ()).should be_true
     (false || ()).should be_nil
     (() || ()).should be_nil
@@ -69,7 +69,7 @@ describe "The or operator" do
 
   it "treats empty expressions as nil" do
     (() or true).should be_true
-    (() or false).should be_false
+    (() or false).should == false
     (true or ()).should be_true
     (false or ()).should be_nil
     (() or ()).should be_nil

@@ -7,6 +7,6 @@ describe "Net::HTTPGenericRequest#request_body_permitted?" do
     request.request_body_permitted?.should be_true
 
     request = Net::HTTPGenericRequest.new("POST", false, true, "/some/path")
-    request.request_body_permitted?.should be_false
+    request.request_body_permitted?.should == false
   end
 end

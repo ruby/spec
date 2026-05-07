@@ -18,7 +18,7 @@ describe "Mutex#try_lock" do
     it "returns false" do
       m = Mutex.new
       m.lock
-      m.try_lock.should be_false
+      m.try_lock.should == false
     end
   end
 
@@ -26,7 +26,7 @@ describe "Mutex#try_lock" do
     it "returns false" do
       m = Mutex.new
       m.lock
-      Thread.new { m.try_lock }.value.should be_false
+      Thread.new { m.try_lock }.value.should == false
     end
   end
 end

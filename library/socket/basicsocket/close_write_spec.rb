@@ -23,7 +23,7 @@ describe "Socket::BasicSocket#close_write" do
 
   it 'does not fully close the socket' do
     @server.close_write
-    @server.closed?.should be_false
+    @server.closed?.should == false
   end
 
   it "does not prevent reading" do

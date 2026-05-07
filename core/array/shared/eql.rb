@@ -10,19 +10,19 @@ describe :array_eql, shared: true do
   end
 
   it "returns false if other is shorter than self" do
-    [1, 2, 3, 4].send(@method, [1, 2, 3]).should be_false
+    [1, 2, 3, 4].send(@method, [1, 2, 3]).should == false
   end
 
   it "returns false if other is longer than self" do
-    [1, 2, 3, 4].send(@method, [1, 2, 3, 4, 5]).should be_false
+    [1, 2, 3, 4].send(@method, [1, 2, 3, 4, 5]).should == false
   end
 
   it "returns false immediately when sizes of the arrays differ" do
     obj = mock('1')
     obj.should_not_receive(@method)
 
-    []        .send(@method,    [obj]  ).should be_false
-    [obj]     .send(@method,    []     ).should be_false
+    []        .send(@method,    [obj]  ).should == false
+    [obj]     .send(@method,    []     ).should == false
   end
 
   it "handles well recursive arrays" do
@@ -48,10 +48,10 @@ describe :array_eql, shared: true do
     back   .send(@method,  a  ).should be_true
 
     x = []; x << x << x
-    x       .send(@method,    a                ).should be_false  # since x.size != a.size
-    x       .send(@method,    [a, a]           ).should be_false  # since x[0].size != [a, a][0].size
-    x       .send(@method,    [x, a]           ).should be_false  # since x[1].size != [x, a][1].size
-    [x, a]  .send(@method,    [a, x]           ).should be_false  # etc...
+    x       .send(@method,    a                ).should == false  # since x.size != a.size
+    x       .send(@method,    [a, a]           ).should == false  # since x[0].size != [a, a][0].size
+    x       .send(@method,    [x, a]           ).should == false  # since x[1].size != [x, a][1].size
+    [x, a]  .send(@method,    [a, x]           ).should == false  # etc...
     x       .send(@method,    [x, x]           ).should be_true
     x       .send(@method,    [[x, x], [x, x]] ).should be_true
 
@@ -66,16 +66,16 @@ describe :array_eql, shared: true do
     forest .send(@method,     [tree2, branch, :bird, a, forest2]).should be_true
 
     diffforest = [branch2, tree2, :bird, a2]; diffforest << forest2
-    forest .send(@method,     diffforest      ).should be_false # since forest[0].size == 1 != 3 == diffforest[0]
-    forest .send(@method,     [nil]           ).should be_false
-    forest .send(@method,     [forest]        ).should be_false
+    forest .send(@method,     diffforest      ).should == false # since forest[0].size == 1 != 3 == diffforest[0]
+    forest .send(@method,     [nil]           ).should == false
+    forest .send(@method,     [forest]        ).should == false
   end
 
   it "does not call #to_ary on its argument" do
     obj = mock('to_ary')
     obj.should_not_receive(:to_ary)
 
-    [1, 2, 3].send(@method, obj).should be_false
+    [1, 2, 3].send(@method, obj).should == false
   end
 
   it "does not call #to_ary on Array subclasses" do

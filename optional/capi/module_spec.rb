@@ -125,11 +125,11 @@ describe "CApiModule" do
     end
 
     it "does not search in ancestors for the constant" do
-      @m.rb_const_defined_at(CApiModuleSpecs::B, :X).should be_false
+      @m.rb_const_defined_at(CApiModuleSpecs::B, :X).should == false
     end
 
     it "does not search in Object" do
-      @m.rb_const_defined_at(CApiModuleSpecs::A, :Module).should be_false
+      @m.rb_const_defined_at(CApiModuleSpecs::A, :Module).should == false
     end
   end
 

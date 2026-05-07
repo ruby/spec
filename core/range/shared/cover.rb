@@ -13,7 +13,7 @@ describe :range_cover, shared: true do
     ('a'..'f').send(@method, 'aa').should be_true
     ('a'..'f').send(@method, 'babe').should be_true
     ('a'..'f').send(@method, 'baby').should be_true
-    ('a'..'f').send(@method, 'ga').should be_false
+    ('a'..'f').send(@method, 'ga').should == false
     (-10..-2).send(@method, -2.5).should be_true
   end
 
@@ -36,7 +36,7 @@ describe :range_cover, shared: true do
       end
 
       it "returns false if other is less than first element" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(0)).should be_false
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(0)).should == false
       end
 
       it "returns true if other is equal as first element" do
@@ -56,7 +56,7 @@ describe :range_cover, shared: true do
       end
 
       it "returns false if other is greater than last element but matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(100)).should be_false
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(100)).should == false
       end
     end
 
@@ -66,7 +66,7 @@ describe :range_cover, shared: true do
       end
 
       it "returns false if other is less than first element" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(0)).should be_false
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(0)).should == false
       end
 
       it "returns true if other is equal as first element" do
@@ -82,11 +82,11 @@ describe :range_cover, shared: true do
       end
 
       it "returns false if other is equal as last element but not matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(99)).should be_false
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(99)).should == false
       end
 
       it "returns false if other is greater than last element but matched by element.succ" do
-        @range.send(@method, RangeSpecs::TenfoldSucc.new(100)).should be_false
+        @range.send(@method, RangeSpecs::TenfoldSucc.new(100)).should == false
       end
     end
   end
@@ -96,16 +96,16 @@ describe :range_cover_subrange, shared: true do
   context "range argument" do
     it "accepts range argument" do
       (0..10).send(@method, (3..7)).should be_true
-      (0..10).send(@method, (3..15)).should be_false
-      (0..10).send(@method, (-2..7)).should be_false
+      (0..10).send(@method, (3..15)).should == false
+      (0..10).send(@method, (-2..7)).should == false
 
       (1.1..7.9).send(@method, (2.5..6.5)).should be_true
-      (1.1..7.9).send(@method, (2.5..8.5)).should be_false
-      (1.1..7.9).send(@method, (0.5..6.5)).should be_false
+      (1.1..7.9).send(@method, (2.5..8.5)).should == false
+      (1.1..7.9).send(@method, (0.5..6.5)).should == false
 
       ('c'..'i').send(@method, ('d'..'f')).should be_true
-      ('c'..'i').send(@method, ('d'..'z')).should be_false
-      ('c'..'i').send(@method, ('a'..'f')).should be_false
+      ('c'..'i').send(@method, ('d'..'z')).should == false
+      ('c'..'i').send(@method, ('a'..'f')).should == false
 
       range_10_100 = RangeSpecs::TenfoldSucc.new(10)..RangeSpecs::TenfoldSucc.new(100)
       range_20_90 = RangeSpecs::TenfoldSucc.new(20)..RangeSpecs::TenfoldSucc.new(90)
@@ -113,19 +113,19 @@ describe :range_cover_subrange, shared: true do
       range_0_90 = RangeSpecs::TenfoldSucc.new(0)..RangeSpecs::TenfoldSucc.new(90)
 
       range_10_100.send(@method, range_20_90).should be_true
-      range_10_100.send(@method, range_20_110).should be_false
-      range_10_100.send(@method, range_0_90).should be_false
+      range_10_100.send(@method, range_20_110).should == false
+      range_10_100.send(@method, range_0_90).should == false
     end
 
     it "supports boundaries of different comparable types" do
       (0..10).send(@method, (3.1..7.9)).should be_true
-      (0..10).send(@method, (3.1..15.9)).should be_false
-      (0..10).send(@method, (-2.1..7.9)).should be_false
+      (0..10).send(@method, (3.1..15.9)).should == false
+      (0..10).send(@method, (-2.1..7.9)).should == false
     end
 
     it "returns false if types are not comparable" do
-      (0..10).send(@method, ('a'..'z')).should be_false
-      (0..10).send(@method, (RangeSpecs::TenfoldSucc.new(0)..RangeSpecs::TenfoldSucc.new(100))).should be_false
+      (0..10).send(@method, ('a'..'z')).should == false
+      (0..10).send(@method, (RangeSpecs::TenfoldSucc.new(0)..RangeSpecs::TenfoldSucc.new(100))).should == false
     end
 
     it "honors exclusion of right boundary (:exclude_end option)" do
@@ -134,7 +134,7 @@ describe :range_cover_subrange, shared: true do
       (0...10).send(@method, (0...10)).should be_true
 
       (0..10).send(@method, (0...10)).should be_true
-      (0...10).send(@method, (0..10)).should be_false
+      (0...10).send(@method, (0..10)).should == false
 
       (0...11).send(@method, (0..10)).should be_true
       (0..10).send(@method, (0...11)).should be_true
@@ -144,50 +144,50 @@ describe :range_cover_subrange, shared: true do
       (0...10.1).send(@method, (0...10.1)).should be_true
 
       (0..10.1).send(@method, (0...10.1)).should be_true
-      (0...10.1).send(@method, (0..10.1)).should be_false
+      (0...10.1).send(@method, (0..10.1)).should == false
 
       (0...11.1).send(@method, (0..10.1)).should be_true
-      (0..10.1).send(@method, (0...11.1)).should be_false
+      (0..10.1).send(@method, (0...11.1)).should == false
     end
   end
 
   it "allows self to be a beginless range" do
     (...10).send(@method, (3..7)).should be_true
-    (...10).send(@method, (3..15)).should be_false
+    (...10).send(@method, (3..15)).should == false
 
     (..7.9).send(@method, (2.5..6.5)).should be_true
-    (..7.9).send(@method, (2.5..8.5)).should be_false
+    (..7.9).send(@method, (2.5..8.5)).should == false
 
     (..'i').send(@method, ('d'..'f')).should be_true
-    (..'i').send(@method, ('d'..'z')).should be_false
+    (..'i').send(@method, ('d'..'z')).should == false
   end
 
   it "allows self to be a endless range" do
     eval("(0...)").send(@method, (3..7)).should be_true
-    eval("(5...)").send(@method, (3..15)).should be_false
+    eval("(5...)").send(@method, (3..15)).should == false
 
     eval("(1.1..)").send(@method, (2.5..6.5)).should be_true
-    eval("(3.3..)").send(@method, (2.5..8.5)).should be_false
+    eval("(3.3..)").send(@method, (2.5..8.5)).should == false
 
     eval("('a'..)").send(@method, ('d'..'f')).should be_true
-    eval("('p'..)").send(@method, ('d'..'z')).should be_false
+    eval("('p'..)").send(@method, ('d'..'z')).should == false
   end
 
   it "accepts beginless range argument" do
     (..10).send(@method, (...10)).should be_true
-    (0..10).send(@method, (...10)).should be_false
+    (0..10).send(@method, (...10)).should == false
 
-    (1.1..7.9).send(@method, (...10.5)).should be_false
+    (1.1..7.9).send(@method, (...10.5)).should == false
 
-    ('c'..'i').send(@method, (..'i')).should be_false
+    ('c'..'i').send(@method, (..'i')).should == false
   end
 
   it "accepts endless range argument" do
     eval("(0..)").send(@method, eval("(0...)")).should be_true
-    (0..10).send(@method, eval("(0...)")).should be_false
+    (0..10).send(@method, eval("(0...)")).should == false
 
-    (1.1..7.9).send(@method, eval("(0.8...)")).should be_false
+    (1.1..7.9).send(@method, eval("(0.8...)")).should == false
 
-    ('c'..'i').send(@method, eval("('a'..)")).should be_false
+    ('c'..'i').send(@method, eval("('a'..)")).should == false
   end
 end

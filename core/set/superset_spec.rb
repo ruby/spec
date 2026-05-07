@@ -19,10 +19,10 @@ describe "Set#superset?" do
     @set.superset?(Set[1, 2]).should be_true
     @set.superset?(Set[1]).should be_true
 
-    @set.superset?(Set[5]).should be_false
-    @set.superset?(Set[1, 5]).should be_false
-    @set.superset?(Set[nil]).should be_false
-    @set.superset?(Set["test"]).should be_false
+    @set.superset?(Set[5]).should == false
+    @set.superset?(Set[1, 5]).should == false
+    @set.superset?(Set[nil]).should == false
+    @set.superset?(Set["test"]).should == false
   end
 
   it "raises an ArgumentError when passed a non-Set" do

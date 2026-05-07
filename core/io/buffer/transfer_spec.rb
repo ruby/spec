@@ -55,7 +55,7 @@ describe "IO::Buffer#transfer" do
           @buffer.to_s.should == info
           buffer.null?.should be_true
         end
-        @buffer.null?.should be_false
+        @buffer.null?.should == false
       end
     end
   end
@@ -68,7 +68,7 @@ describe "IO::Buffer#transfer" do
         @buffer.to_s.should == info
         buffer.null?.should be_true
       end
-      @buffer.null?.should be_false
+      @buffer.null?.should == false
     end
   end
 
@@ -78,7 +78,7 @@ describe "IO::Buffer#transfer" do
     @buffer = buffer_2.transfer
     buffer_1.null?.should be_true
     buffer_2.null?.should be_true
-    @buffer.null?.should be_false
+    @buffer.null?.should == false
   end
 
   it "is disallowed while locked, raising IO::Buffer::LockedError" do
@@ -96,8 +96,8 @@ describe "IO::Buffer#transfer" do
 
       new_slice = slice.transfer
       slice.null?.should be_true
-      new_slice.null?.should be_false
-      @buffer.null?.should be_false
+      new_slice.null?.should == false
+      @buffer.null?.should == false
 
       new_slice.set_string("ea")
       @buffer.get_string.should == "east"
@@ -108,8 +108,8 @@ describe "IO::Buffer#transfer" do
       slice = buffer.slice(0, 2)
       @buffer = buffer.transfer
 
-      slice.null?.should be_false
-      slice.valid?.should be_false
+      slice.null?.should == false
+      slice.valid?.should == false
       -> { slice.get_string }.should raise_error(IO::Buffer::InvalidatedError, "Buffer has been invalidated!")
     end
   end

@@ -94,7 +94,7 @@ describe "Zlib::GzipReader#ungetbyte" do
 
       it 'makes eof? false' do
         @gz.ungetbyte 0x21
-        @gz.eof?.should be_false
+        @gz.eof?.should == false
       end
     end
 

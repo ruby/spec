@@ -124,7 +124,7 @@ describe "C-API IO function" do
 
   describe "rb_io_close" do
     it "closes an IO object" do
-      @io.closed?.should be_false
+      @io.closed?.should == false
       @o.rb_io_close(@io)
       @io.closed?.should be_true
     end
@@ -253,7 +253,7 @@ describe "C-API IO function" do
   describe "rb_io_wait_writable" do
     it "returns false if there is no error condition" do
       @o.errno = 0
-      @o.rb_io_wait_writable(@w_io).should be_false
+      @o.rb_io_wait_writable(@w_io).should == false
     end
 
     it "raises an IOError if the IO is closed" do
@@ -322,7 +322,7 @@ describe "C-API IO function" do
     describe "rb_io_wait_readable" do
       it "returns false if there is no error condition" do
         @o.errno = 0
-        @o.rb_io_wait_readable(@r_io, false).should be_false
+        @o.rb_io_wait_readable(@r_io, false).should == false
       end
 
       it "raises and IOError if passed a closed stream" do

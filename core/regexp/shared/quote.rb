@@ -35,7 +35,7 @@ describe :regexp_quote, shared: true do
 
   it "sets the encoding of the result to BINARY if any non-US-ASCII characters are present in an input String with invalid encoding" do
     str = "\xff".dup.force_encoding "us-ascii"
-    str.valid_encoding?.should be_false
+    str.valid_encoding?.should == false
     Regexp.send(@method, "\xff").encoding.should == Encoding::BINARY
   end
 end

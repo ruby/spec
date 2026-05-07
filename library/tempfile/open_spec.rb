@@ -14,7 +14,7 @@ describe "Tempfile#open" do
   it "reopens self" do
     @tempfile.close
     @tempfile.open
-    @tempfile.closed?.should be_false
+    @tempfile.closed?.should == false
   end
 
   it "reopens self in read and write mode and does not truncate" do
@@ -53,7 +53,7 @@ describe "Tempfile.open" do
   it "uses a blank string for basename when passed no arguments" do
     Tempfile.open() do |tempfile|
       @tempfile = tempfile
-      tempfile.closed?.should be_false
+      tempfile.closed?.should == false
     end
     @tempfile.should_not == nil
   end
@@ -76,7 +76,7 @@ describe "Tempfile.open when passed a block" do
 
       # Delegation messes up .should.instance_of?(Tempfile)
       tempfile.instance_of?(Tempfile).should be_true
-      tempfile.closed?.should be_false
+      tempfile.closed?.should == false
     end
 
     ScratchPad.recorded.should == :yielded

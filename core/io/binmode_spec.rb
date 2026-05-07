@@ -47,7 +47,7 @@ describe "IO#binmode?" do
   end
 
   it "is true after a call to IO#binmode" do
-    @file.binmode?.should be_false
+    @file.binmode?.should == false
     @file.binmode
     @file.binmode?.should be_true
   end

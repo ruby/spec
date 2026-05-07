@@ -14,7 +14,7 @@ platform_is :windows do
     end
 
     it "returns false for 3rd parameter of FileSystemObject's 'CopyFile' method" do
-      @param_overwritefiles.retval?.should be_false
+      @param_overwritefiles.retval?.should == false
     end
 
   end

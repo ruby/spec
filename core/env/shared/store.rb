@@ -20,7 +20,7 @@ describe :env_store, shared: true do
   it "deletes the environment variable when the value is nil" do
     ENV["foo"] = "bar"
     ENV.send(@method, "foo", nil)
-    ENV.key?("foo").should be_false
+    ENV.key?("foo").should == false
   end
 
   it "coerces the key argument with #to_str" do
@@ -55,6 +55,6 @@ describe :env_store, shared: true do
 
   it "does nothing when the key is not a valid environment variable key and the value is nil" do
     ENV.send(@method, "foo=", nil)
-    ENV.key?("foo=").should be_false
+    ENV.key?("foo=").should == false
   end
 end

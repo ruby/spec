@@ -16,7 +16,7 @@ describe :file_directory, shared: true do
   end
 
   it "returns false if the argument is not a directory" do
-    @object.send(@method, @file).should be_false
+    @object.send(@method, @file).should == false
   end
 
   it "accepts an object that has a #to_path method" do
@@ -47,7 +47,7 @@ describe :file_directory_io, shared: true do
   end
 
   it "returns false if the argument is an IO that's not a directory" do
-    @object.send(@method, STDIN).should be_false
+    @object.send(@method, STDIN).should == false
   end
 
   platform_is_not :windows do
@@ -61,6 +61,6 @@ describe :file_directory_io, shared: true do
   it "calls #to_io to convert a non-IO object" do
     io = mock('FileDirectoryIO')
     io.should_receive(:to_io).and_return(STDIN)
-    @object.send(@method, io).should be_false
+    @object.send(@method, io).should == false
   end
 end

@@ -36,7 +36,7 @@ describe "String#setbyte" do
     str = "glark"
     str.valid_encoding?.should be_true
     str.setbyte(2,253)
-    str.valid_encoding?.should be_false
+    str.valid_encoding?.should == false
 
     str = "ABC"
     str.setbyte(0, 0x20) # ' '

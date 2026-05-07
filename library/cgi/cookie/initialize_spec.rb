@@ -20,7 +20,7 @@ ruby_version_is ""..."4.0" do
 
     it "sets self to a non-secure cookie" do
       @cookie.send(:initialize, "test")
-      @cookie.secure.should be_false
+      @cookie.secure.should == false
     end
 
     it "does set self's path to an empty String when ENV[\"SCRIPT_NAME\"] is not set" do
@@ -144,7 +144,7 @@ ruby_version_is ""..."4.0" do
 
     it "sets self to a non-secure cookie" do
       @cookie.send(:initialize, "test", "one", "two", "three")
-      @cookie.secure.should be_false
+      @cookie.secure.should == false
     end
   end
 end

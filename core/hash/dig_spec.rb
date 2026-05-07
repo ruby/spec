@@ -5,7 +5,7 @@ describe "Hash#dig" do
   it "returns #[] with one arg" do
     h = { 0 => false, a: 1 }
     h.dig(:a).should == 1
-    h.dig(0).should be_false
+    h.dig(0).should == false
     h.dig(1).should be_nil
   end
 

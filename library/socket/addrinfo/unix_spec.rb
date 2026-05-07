@@ -40,7 +40,7 @@ describe "Addrinfo#unix?" do
     end
 
     it "returns false" do
-      @addrinfo.unix?.should be_false
+      @addrinfo.unix?.should == false
     end
 
   end
@@ -51,7 +51,7 @@ describe "Addrinfo#unix?" do
     end
 
     it "returns false" do
-      @addrinfo.unix?.should be_false
+      @addrinfo.unix?.should == false
     end
   end
 

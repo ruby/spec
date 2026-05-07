@@ -7,6 +7,6 @@ describe "Date#friday?" do
   end
 
   it "should not be friday" do
-    Date.new(2000, 1, 8).friday?.should be_false
+    Date.new(2000, 1, 8).friday?.should == false
   end
 end

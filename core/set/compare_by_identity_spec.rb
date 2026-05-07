@@ -18,7 +18,7 @@ describe "Set#compare_by_identity" do
     set << elt
     set.member?(elt.dup).should be_true
     set.compare_by_identity
-    set.member?(elt.dup).should be_false
+    set.member?(elt.dup).should == false
   end
 
   it "rehashes internally so that old members can be looked up" do

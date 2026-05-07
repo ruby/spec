@@ -10,10 +10,10 @@ describe "Matrix.upper_triangular?" do
   end
 
   it "returns false for a non upper triangular square Matrix" do
-    Matrix[[0, 0], [1, 0]].upper_triangular?.should be_false
-    Matrix[[1, 2, 3], [1, 2, 3], [1, 2, 3]].upper_triangular?.should be_false
-    Matrix[[0, 0], [0, 0], [0, 0], [0, 1]].upper_triangular?.should be_false
-    Matrix[[0, 0, 0, 0], [1, 0, 0, 0]].upper_triangular?.should be_false
+    Matrix[[0, 0], [1, 0]].upper_triangular?.should == false
+    Matrix[[1, 2, 3], [1, 2, 3], [1, 2, 3]].upper_triangular?.should == false
+    Matrix[[0, 0], [0, 0], [0, 0], [0, 1]].upper_triangular?.should == false
+    Matrix[[0, 0, 0, 0], [1, 0, 0, 0]].upper_triangular?.should == false
   end
 
   it "returns true for an empty matrix" do

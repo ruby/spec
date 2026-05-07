@@ -9,9 +9,9 @@ describe "Prime#prime?" do
   end
 
   it "returns a false value for composite numbers" do
-    Prime.prime?(4).should be_false
-    Prime.prime?(15).should be_false
-    Prime.prime?(2**32-1).should be_false
-    Prime.prime?( (2**17-1)*(2**19-1) ).should be_false  # M6*M7
+    Prime.prime?(4).should == false
+    Prime.prime?(15).should == false
+    Prime.prime?(2**32-1).should == false
+    Prime.prime?( (2**17-1)*(2**19-1) ).should == false  # M6*M7
   end
 end

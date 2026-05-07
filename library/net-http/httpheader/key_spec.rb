@@ -8,7 +8,7 @@ describe "Net::HTTPHeader#key? when passed key" do
   end
 
   it "returns true if the header entry with the passed key exists" do
-    @headers.key?("My-Header").should be_false
+    @headers.key?("My-Header").should == false
     @headers["My-Header"] = "test"
     @headers.key?("My-Header").should be_true
   end

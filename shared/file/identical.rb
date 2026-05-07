@@ -25,9 +25,9 @@ describe :file_identical, shared: true do
   end
 
   it "returns false if any of the files doesn't exist" do
-    @object.send(@method, @file1, @non_exist).should be_false
-    @object.send(@method, @non_exist, @file1).should be_false
-    @object.send(@method, @non_exist, @non_exist).should be_false
+    @object.send(@method, @file1, @non_exist).should == false
+    @object.send(@method, @non_exist, @file1).should == false
+    @object.send(@method, @non_exist, @non_exist).should == false
   end
 
   it "accepts an object that has a #to_path method" do
@@ -46,6 +46,6 @@ describe :file_identical, shared: true do
   it "returns true if both named files are identical" do
     @object.send(@method, @file1, @file1).should be_true
     @object.send(@method, @link, @link).should be_true
-    @object.send(@method, @file1, @file2).should be_false
+    @object.send(@method, @file1, @file2).should == false
   end
 end

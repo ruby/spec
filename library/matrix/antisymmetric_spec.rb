@@ -17,7 +17,7 @@ describe "Matrix#antisymmetric?" do
       Matrix[[1, -2, 3], [2, 0, 6], [-3, -6, 0]],  # wrong diagonal element
       Matrix[[0, 2, -3], [2, 0, 6], [-3, 6, 0]]    # only signs wrong
     ].each do |matrix|
-      matrix.antisymmetric?.should be_false
+      matrix.antisymmetric?.should == false
     end
   end
 

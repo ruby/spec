@@ -442,9 +442,9 @@ describe "CApiObject" do
   describe "FL_ABLE" do
     it "returns correct boolean for type" do
       @o.FL_ABLE(Object.new).should be_true
-      @o.FL_ABLE(true).should be_false
-      @o.FL_ABLE(nil).should be_false
-      @o.FL_ABLE(1).should be_false
+      @o.FL_ABLE(true).should == false
+      @o.FL_ABLE(nil).should == false
+      @o.FL_ABLE(1).should == false
     end
   end
 
@@ -592,11 +592,11 @@ describe "CApiObject" do
 
   describe "RTEST" do
     it "returns C false if passed Qfalse" do
-      @o.RTEST(false).should be_false
+      @o.RTEST(false).should == false
     end
 
     it "returns C false if passed Qnil" do
-      @o.RTEST(nil).should be_false
+      @o.RTEST(nil).should == false
     end
 
     it "returns C true if passed Qtrue" do
@@ -634,7 +634,7 @@ describe "CApiObject" do
     end
 
     it "returns false if passed an Object" do
-      @o.rb_special_const_p(Object.new).should be_false
+      @o.rb_special_const_p(Object.new).should == false
     end
   end
 
@@ -784,7 +784,7 @@ describe "CApiObject" do
 
       m2 = mock("string")
       m2.should_receive(:==).and_return(nil)
-      @o.rb_equal(m2, "hello").should be_false
+      @o.rb_equal(m2, "hello").should == false
     end
   end
 

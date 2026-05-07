@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe 'TracePoint.new' do
   it 'returns a new TracePoint object, not enabled by default' do
-    TracePoint.new(:line) {}.enabled?.should be_false
+    TracePoint.new(:line) {}.enabled?.should == false
   end
 
   it 'includes :line event when event is not specified' do

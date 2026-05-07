@@ -8,11 +8,11 @@ describe "Addrinfo#ipv6_loopback?" do
     end
 
     it "returns false for the loopback address" do
-      @loopback.ipv6_loopback?.should be_false
+      @loopback.ipv6_loopback?.should == false
     end
 
     it "returns false for another address" do
-      @other.ipv6_loopback?.should be_false
+      @other.ipv6_loopback?.should == false
     end
   end
 
@@ -27,7 +27,7 @@ describe "Addrinfo#ipv6_loopback?" do
     end
 
     it "returns false for another address" do
-      @other.ipv6_loopback?.should be_false
+      @other.ipv6_loopback?.should == false
     end
   end
 
@@ -37,7 +37,7 @@ describe "Addrinfo#ipv6_loopback?" do
     end
 
     it "returns false" do
-      @addrinfo.ipv6_loopback?.should be_false
+      @addrinfo.ipv6_loopback?.should == false
     end
   end
 end

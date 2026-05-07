@@ -26,7 +26,7 @@ ruby_version_is ""..."4.1" do
 
     it "does not close the socket automatically" do
       @ftp.quit
-      @ftp.closed?.should be_false
+      @ftp.closed?.should == false
     end
 
     it "returns nil" do

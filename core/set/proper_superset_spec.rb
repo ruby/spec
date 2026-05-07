@@ -16,13 +16,13 @@ describe "Set#proper_superset?" do
     @set.proper_superset?(Set[1, 2]).should be_true
     @set.proper_superset?(Set[1]).should be_true
 
-    @set.proper_superset?(Set[5]).should be_false
-    @set.proper_superset?(Set[1, 5]).should be_false
-    @set.proper_superset?(Set[nil]).should be_false
-    @set.proper_superset?(Set["test"]).should be_false
+    @set.proper_superset?(Set[5]).should == false
+    @set.proper_superset?(Set[1, 5]).should == false
+    @set.proper_superset?(Set[nil]).should == false
+    @set.proper_superset?(Set["test"]).should == false
 
-    @set.proper_superset?(@set).should be_false
-    Set[].proper_superset?(Set[]).should be_false
+    @set.proper_superset?(@set).should == false
+    Set[].proper_superset?(Set[]).should == false
   end
 
   it "raises an ArgumentError when passed a non-Set" do

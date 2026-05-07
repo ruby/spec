@@ -14,7 +14,7 @@ describe "Delegator#==" do
 
   it "is delegated when passed the delegated object" do
     @base.should_receive(:==).and_return(false)
-    (@delegator == @base).should be_false
+    (@delegator == @base).should == false
   end
 
   it "is delegated in general" do

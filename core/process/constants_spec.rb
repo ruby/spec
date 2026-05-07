@@ -107,7 +107,7 @@ describe "Process::Constants" do
           RLIM_SAVED_MAX
           RLIM_SAVED_CUR
       ].each do |const|
-        Process.const_defined?(const).should be_false
+        Process.const_defined?(const).should == false
       end
     end
   end

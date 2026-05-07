@@ -16,7 +16,7 @@ describe "Set#intersect?" do
     end
 
     it "returns false when a Set has no element in common with a Set-like object" do
-      Set[1, 2].intersect?(SetSpecs::SetLike.new([3, 4])).should be_false
+      Set[1, 2].intersect?(SetSpecs::SetLike.new([3, 4])).should == false
     end
   end
 end

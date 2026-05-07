@@ -76,7 +76,7 @@ describe "Tempfile.create" do
       end
 
       @tempfile.should.closed?
-      File.exist?(@tempfile.path).should be_false
+      File.exist?(@tempfile.path).should == false
     end
   end
 
@@ -142,7 +142,7 @@ describe "Tempfile.create" do
         @tempfile = Tempfile.create(anonymous: true)
         @tempfile.should_not.closed?
         @tempfile.path.should == "#{Dir.tmpdir}/"
-        File.file?(@tempfile.path).should be_false
+        File.file?(@tempfile.path).should == false
       end
 
       it "unlinks file before calling the block" do
@@ -150,7 +150,7 @@ describe "Tempfile.create" do
           @tempfile = tempfile
           @tempfile.should_not.closed?
           @tempfile.path.should == "#{Dir.tmpdir}/"
-          File.file?(@tempfile.path).should be_false
+          File.file?(@tempfile.path).should == false
         end
         @tempfile.should.closed?
       end

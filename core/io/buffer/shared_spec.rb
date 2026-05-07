@@ -25,11 +25,11 @@ describe "IO::Buffer#shared?" do
 
   it "is false for an unshared buffer" do
     @buffer = IO::Buffer.new(12)
-    @buffer.shared?.should be_false
+    @buffer.shared?.should == false
   end
 
   it "is false for a null buffer" do
     @buffer = IO::Buffer.new(0)
-    @buffer.shared?.should be_false
+    @buffer.shared?.should == false
   end
 end

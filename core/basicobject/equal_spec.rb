@@ -15,7 +15,7 @@ describe "BasicObject#equal?" do
       def o1.__id__; 10; end
       def o2.__id__; 10; end
     }
-    o1.equal?(o2).should be_false
+    o1.equal?(o2).should == false
   end
 
   it "is unaffected by overriding object_id" do
@@ -23,7 +23,7 @@ describe "BasicObject#equal?" do
     o1.stub!(:object_id).and_return(10)
     o2 = mock("object")
     o2.stub!(:object_id).and_return(10)
-    o1.equal?(o2).should be_false
+    o1.equal?(o2).should == false
   end
 
   it "is unaffected by overriding ==" do
@@ -31,7 +31,7 @@ describe "BasicObject#equal?" do
     o1 = mock("object")
     o1.stub!(:==).and_return(true)
     o2 = mock("object")
-    o1.equal?(o2).should be_false
+    o1.equal?(o2).should == false
 
     # same objects, overriding == to return false
     o3 = mock("object")
@@ -44,7 +44,7 @@ describe "BasicObject#equal?" do
     o1 = mock("object")
     o1.stub!(:eql?).and_return(true)
     o2 = mock("object")
-    o1.equal?(o2).should be_false
+    o1.equal?(o2).should == false
 
     # same objects, overriding eql? to return false
     o3 = mock("object")

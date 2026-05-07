@@ -174,7 +174,7 @@ describe "Kernel#require_relative with a relative path" do
 
     it "does not load a C-extension file if a .rb extensioned file is already loaded" do
       $LOADED_FEATURES << "#{@abs_dir}/load_fixture.rb"
-      require_relative("#{@dir}/load_fixture").should be_false
+      require_relative("#{@dir}/load_fixture").should == false
       ScratchPad.recorded.should == []
     end
 
@@ -196,7 +196,7 @@ describe "Kernel#require_relative with a relative path" do
 
     it "does not load a C-extension file if a complex-extensioned .rb file is already loaded" do
       $LOADED_FEATURES << "#{@abs_dir}/load_fixture.ext.rb"
-      require_relative("#{@dir}/load_fixture.ext").should be_false
+      require_relative("#{@dir}/load_fixture.ext").should == false
       ScratchPad.recorded.should == []
     end
   end
@@ -255,7 +255,7 @@ describe "Kernel#require_relative with a relative path" do
 
     it "does not load an absolute path that is already stored" do
       $LOADED_FEATURES << @abs_path
-      require_relative(@path).should be_false
+      require_relative(@path).should == false
       ScratchPad.recorded.should == []
     end
 
@@ -376,7 +376,7 @@ describe "Kernel#require_relative with an absolute path" do
 
     it "does not load a C-extension file if a .rb extensioned file is already loaded" do
       $LOADED_FEATURES << "#{@abs_dir}/load_fixture.rb"
-      require_relative("#{@dir}/load_fixture").should be_false
+      require_relative("#{@dir}/load_fixture").should == false
       ScratchPad.recorded.should == []
     end
 
@@ -398,7 +398,7 @@ describe "Kernel#require_relative with an absolute path" do
 
     it "does not load a C-extension file if a complex-extensioned .rb file is already loaded" do
       $LOADED_FEATURES << "#{@abs_dir}/load_fixture.ext.rb"
-      require_relative("#{@dir}/load_fixture.ext").should be_false
+      require_relative("#{@dir}/load_fixture.ext").should == false
       ScratchPad.recorded.should == []
     end
   end
@@ -417,7 +417,7 @@ describe "Kernel#require_relative with an absolute path" do
 
     it "does not load an absolute path that is already stored" do
       $LOADED_FEATURES << @abs_path
-      require_relative(@path).should be_false
+      require_relative(@path).should == false
       ScratchPad.recorded.should == []
     end
 

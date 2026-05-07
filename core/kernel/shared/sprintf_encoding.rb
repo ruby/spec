@@ -10,7 +10,7 @@ describe :kernel_sprintf_encoding, shared: true do
   it "can produce a string with invalid encoding" do
     string = @method.call("good day %{invalid}", invalid: "\x80")
     string.encoding.should == Encoding::UTF_8
-    string.valid_encoding?.should be_false
+    string.valid_encoding?.should == false
   end
 
   it "returns a String in the same encoding as the format String if compatible" do

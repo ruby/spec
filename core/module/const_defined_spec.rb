@@ -38,7 +38,7 @@ describe "Module#const_defined?" do
   end
 
   it "returns false if the constant is defined in the receiver's superclass and the inherit flag is false" do
-    ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4, false).should be_false
+    ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4, false).should == false
   end
 
   it "returns true if the constant is defined in the receiver's superclass and the inherit flag is true" do
@@ -46,7 +46,7 @@ describe "Module#const_defined?" do
   end
 
   it "coerces the inherit flag to a boolean" do
-    ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4, nil).should be_false
+    ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4, nil).should == false
     ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4, :true).should be_true
   end
 
@@ -71,10 +71,10 @@ describe "Module#const_defined?" do
 
   it "returns false if the constant is not defined in the receiver, its superclass, or any included modules" do
     # The following constant isn't defined at all.
-    ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4726).should be_false
+    ConstantSpecs::ContainerA::ChildA.const_defined?(:CS_CONST4726).should == false
     # DETACHED_CONSTANT is defined in ConstantSpecs::Detached, which isn't
     # included by or inherited from ParentA
-    ConstantSpecs::ParentA.const_defined?(:DETACHED_CONSTANT).should be_false
+    ConstantSpecs::ParentA.const_defined?(:DETACHED_CONSTANT).should == false
   end
 
   it "does not call #const_missing if the constant is not defined in the receiver" do
@@ -122,11 +122,11 @@ describe "Module#const_defined?" do
   end
 
   it "returns false when passed a scoped constant name for a constant in the inheritance hierarchy and the inherited flag is false" do
-    ConstantSpecs::ClassD.const_defined?("ClassE::CS_CONST2", false).should be_false
+    ConstantSpecs::ClassD.const_defined?("ClassE::CS_CONST2", false).should == false
   end
 
   it "returns false when the name begins with '::' and the toplevel constant does not exist" do
-    ConstantSpecs.const_defined?("::Name").should be_false
+    ConstantSpecs.const_defined?("::Name").should == false
   end
 
   it "raises a NameError if the name does not start with a capital letter" do

@@ -41,7 +41,7 @@ describe "C-API Range function" do
       beg, fin, excl = @s.rb_range_values(10..20)
       beg.should == 10
       fin.should == 20
-      excl.should be_false
+      excl.should == false
     end
 
     it "stores the range properties of non-Range object" do
@@ -62,7 +62,7 @@ describe "C-API Range function" do
       beg, fin, excl = @s.rb_range_values(range_like)
       beg.should == 10
       fin.should == 20
-      excl.should be_false
+      excl.should == false
     end
   end
 

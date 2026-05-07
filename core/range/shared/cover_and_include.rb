@@ -46,7 +46,7 @@ describe :range_cover_and_include, shared: true do
     m.should_receive(:coerce).and_return([1, 2])
     m.should_receive(:<=>).and_return(1)
 
-    rng.send(@method, m).should be_false
+    rng.send(@method, m).should == false
   end
 
   it "raises an ArgumentError without exactly one argument" do
@@ -75,12 +75,12 @@ describe :range_cover_and_include, shared: true do
   end
 
   it "returns false if range is empty" do
-    (30...30).send(@method, 30).should be_false
-    (30...30).send(@method, nil).should be_false
+    (30...30).send(@method, 30).should == false
+    (30...30).send(@method, nil).should == false
   end
 
   it "returns false if the range does not contain the argument" do
-    ('A'..'C').send(@method, 20.9).should be_false
-    ('A'...'C').send(@method, 'C').should be_false
+    ('A'..'C').send(@method, 20.9).should == false
+    ('A'...'C').send(@method, 'C').should == false
   end
 end

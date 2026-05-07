@@ -6,6 +6,6 @@ describe "BasicObject#!" do
   end
 
   it "returns false" do
-    (!BasicObject.new).should be_false
+    (!BasicObject.new).should == false
   end
 end

@@ -17,7 +17,7 @@ describe "Process::Status#success?" do
     end
 
     it "returns false" do
-      $?.success?.should be_false
+      $?.success?.should == false
     end
   end
 

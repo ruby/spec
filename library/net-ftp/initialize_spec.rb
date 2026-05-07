@@ -24,19 +24,19 @@ ruby_version_is ""..."4.1" do
     it "sets self into active mode" do
       @ftp.passive.should be_nil
       @ftp.send(:initialize)
-      @ftp.passive.should be_false
+      @ftp.passive.should == false
     end
 
     it "sets self into non-debug mode" do
       @ftp.debug_mode.should be_nil
       @ftp.send(:initialize)
-      @ftp.debug_mode.should be_false
+      @ftp.debug_mode.should == false
     end
 
     it "sets self to not resume file uploads/downloads" do
       @ftp.resume.should be_nil
       @ftp.send(:initialize)
-      @ftp.resume.should be_false
+      @ftp.resume.should == false
     end
 
     describe "when passed no arguments" do

@@ -6,7 +6,7 @@ describe "Encoding#ascii_compatible?" do
   end
 
   it "returns false if self does not represent an ASCII-compatible encoding" do
-    Encoding::UTF_16LE.ascii_compatible?.should be_false
+    Encoding::UTF_16LE.ascii_compatible?.should == false
   end
 
   it "returns false for UTF_16 and UTF_32" do

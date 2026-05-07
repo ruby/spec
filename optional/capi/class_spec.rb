@@ -238,7 +238,7 @@ describe "C-API Class function" do
 
   describe "rb_cvar_defined" do
     it "returns false when the class variable is not defined" do
-      @s.rb_cvar_defined(CApiClassSpecs::CVars, "@@nocvar").should be_false
+      @s.rb_cvar_defined(CApiClassSpecs::CVars, "@@nocvar").should == false
     end
 
     it "returns true when the class variable is defined" do

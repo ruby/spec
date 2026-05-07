@@ -12,7 +12,7 @@ describe "StringScanner#initialize" do
 
   it "returns an instance of StringScanner" do
     @s.should be_kind_of(StringScanner)
-    @s.eos?.should be_false
+    @s.eos?.should == false
   end
 
   it "converts the argument into a string using #to_str" do

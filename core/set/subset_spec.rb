@@ -20,10 +20,10 @@ describe "Set#subset?" do
     Set[1, 2].subset?(@set).should be_true
     Set[1].subset?(@set).should be_true
 
-    Set[5].subset?(@set).should be_false
-    Set[1, 5].subset?(@set).should be_false
-    Set[nil].subset?(@set).should be_false
-    Set["test"].subset?(@set).should be_false
+    Set[5].subset?(@set).should == false
+    Set[1, 5].subset?(@set).should == false
+    Set[nil].subset?(@set).should == false
+    Set["test"].subset?(@set).should == false
   end
 
   it "raises an ArgumentError when passed a non-Set" do

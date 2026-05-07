@@ -7,6 +7,6 @@ describe "Date#eql?" do
   end
 
   it "returns false if self is not equal to another date" do
-    Date.civil(2007, 10, 11).eql?(Date.civil(2007, 10, 12)).should be_false
+    Date.civil(2007, 10, 11).eql?(Date.civil(2007, 10, 12)).should == false
   end
 end

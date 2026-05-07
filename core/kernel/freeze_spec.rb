@@ -4,7 +4,7 @@ require_relative 'fixtures/classes'
 describe "Kernel#freeze" do
   it "prevents self from being further modified" do
     o = mock('o')
-    o.frozen?.should be_false
+    o.frozen?.should == false
     o.freeze
     o.frozen?.should be_true
   end

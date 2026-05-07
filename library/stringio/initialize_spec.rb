@@ -14,100 +14,100 @@ describe "StringIO#initialize when passed [Object, mode]" do
   it "sets the mode based on the passed mode" do
     io = StringIO.allocate
     io.send(:initialize, +"example", "r")
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "rb")
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "r+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "rb+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "w")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "wb")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "w+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "wb+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "a")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "ab")
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "a+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", "ab+")
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
   end
 
   it "allows passing the mode as an Integer" do
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::RDONLY)
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
 
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::RDWR)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::WRONLY)
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::WRONLY | IO::TRUNC)
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::RDWR | IO::TRUNC)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::WRONLY | IO::APPEND)
     io.closed_read?.should be_true
-    io.closed_write?.should be_false
+    io.closed_write?.should == false
 
     io = StringIO.allocate
     io.send(:initialize, +"example", IO::RDWR | IO::APPEND)
-    io.closed_read?.should be_false
-    io.closed_write?.should be_false
+    io.closed_read?.should == false
+    io.closed_write?.should == false
   end
 
   it "raises a FrozenError when passed a frozen String in truncate mode as StringIO backend" do
@@ -120,7 +120,7 @@ describe "StringIO#initialize when passed [Object, mode]" do
     obj.should_receive(:to_str).and_return("r")
     @io.send(:initialize, +"example", obj)
 
-    @io.closed_read?.should be_false
+    @io.closed_read?.should == false
     @io.closed_write?.should be_true
   end
 
@@ -164,13 +164,13 @@ describe "StringIO#initialize when passed [Object]" do
 
   it "sets the mode to read-write if the string is mutable" do
     @io.send(:initialize, +"example")
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
   end
 
   it "sets the mode to read if the string is frozen" do
     @io.send(:initialize, -"example")
-    @io.closed_read?.should be_false
+    @io.closed_read?.should == false
     @io.closed_write?.should be_true
   end
 
@@ -184,7 +184,7 @@ describe "StringIO#initialize when passed [Object]" do
   it "automatically sets the mode to read-only when passed a frozen string" do
     (str = "example").freeze
     @io.send(:initialize, str)
-    @io.closed_read?.should be_false
+    @io.closed_read?.should == false
     @io.closed_write?.should be_true
   end
 end
@@ -193,7 +193,7 @@ end
 describe "StringIO#initialize when passed keyword arguments" do
   it "sets the mode based on the passed :mode option" do
     io = StringIO.new("example", mode: "r")
-    io.closed_read?.should be_false
+    io.closed_read?.should == false
     io.closed_write?.should be_true
   end
 
@@ -285,8 +285,8 @@ describe "StringIO#initialize when passed no arguments" do
 
   it "sets the mode to read-write" do
     @io.send(:initialize)
-    @io.closed_read?.should be_false
-    @io.closed_write?.should be_false
+    @io.closed_read?.should == false
+    @io.closed_write?.should == false
   end
 
   it "uses an empty String as the StringIO backend" do

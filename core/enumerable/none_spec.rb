@@ -38,12 +38,12 @@ describe "Enumerable#none?" do
 
     it "returns false if at least one of the elements in self are true" do
       e = EnumerableSpecs::Numerous.new(false, nil, true, false)
-      e.none?.should be_false
+      e.none?.should == false
     end
 
     it "gathers whole arrays as elements when each yields multiple" do
       multi = EnumerableSpecs::YieldsMultiWithFalse.new
-      multi.none?.should be_false
+      multi.none?.should == false
     end
   end
 
@@ -69,7 +69,7 @@ describe "Enumerable#none?" do
     end
 
     it "returns false if the block ever returns true" do
-      @e.none? {|e| e == 3 ? true : false }.should be_false
+      @e.none? {|e| e == 3 ? true : false }.should == false
     end
 
     it "does not hide exceptions out of the block" do

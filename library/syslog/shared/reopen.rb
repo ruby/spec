@@ -1,11 +1,11 @@
 describe :syslog_reopen, shared: true do
   platform_is_not :windows do
     before :each do
-      Syslog.opened?.should be_false
+      Syslog.opened?.should == false
     end
 
     after :each do
-      Syslog.opened?.should be_false
+      Syslog.opened?.should == false
     end
 
     it "reopens the log" do
@@ -28,7 +28,7 @@ describe :syslog_reopen, shared: true do
         s.facility.should == Syslog::LOG_USER
         s.opened?.should be_true
       end
-      Syslog.opened?.should be_false
+      Syslog.opened?.should == false
     end
 
     it "returns the module" do

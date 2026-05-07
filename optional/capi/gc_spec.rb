@@ -72,12 +72,12 @@ describe "CApiGCSpecs" do
 
     it "GC stays enabled when enabled" do
       GC.enable
-      @f.rb_gc_enable.should be_false
+      @f.rb_gc_enable.should == false
     end
 
     it "disables GC when enabled" do
       GC.enable
-      @f.rb_gc_disable.should be_false
+      @f.rb_gc_disable.should == false
     end
 
     it "GC stays disabled when disabled" do

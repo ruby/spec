@@ -7,10 +7,10 @@ describe "Matrix#permutation?" do
   end
 
   it "returns false for a non permutation square Matrix" do
-    Matrix[[0, 1], [0, 0]].permutation?.should be_false
-    Matrix[[-1, 0], [0, -1]].permutation?.should be_false
-    Matrix[[1, 0], [1, 0]].permutation?.should be_false
-    Matrix[[1, 0], [1, 1]].permutation?.should be_false
+    Matrix[[0, 1], [0, 0]].permutation?.should == false
+    Matrix[[-1, 0], [0, -1]].permutation?.should == false
+    Matrix[[1, 0], [1, 0]].permutation?.should == false
+    Matrix[[1, 0], [1, 1]].permutation?.should == false
   end
 
   it "returns true for an empty 0x0 matrix" do

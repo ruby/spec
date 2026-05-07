@@ -6,6 +6,6 @@ describe "Symbol#empty?" do
   end
 
   it "returns false if self is non-empty" do
-    :"a".empty?.should be_false
+    :"a".empty?.should == false
   end
 end
