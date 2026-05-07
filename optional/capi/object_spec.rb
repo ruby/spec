@@ -929,7 +929,7 @@ describe "CApiObject" do
         @o.rb_define_alloc_func(klass)
         obj = klass.allocate
         obj.class.should.equal?(klass)
-        obj.should have_instance_variable(:@from_custom_allocator)
+        obj.should.instance_variable_defined?(:@from_custom_allocator)
       end
 
       it "sets up the allocator for a subclass of String" do
@@ -937,7 +937,7 @@ describe "CApiObject" do
         @o.rb_define_alloc_func(klass)
         obj = klass.allocate
         obj.class.should.equal?(klass)
-        obj.should have_instance_variable(:@from_custom_allocator)
+        obj.should.instance_variable_defined?(:@from_custom_allocator)
         obj.should == ""
       end
 
@@ -946,7 +946,7 @@ describe "CApiObject" do
         @o.rb_define_alloc_func(klass)
         obj = klass.allocate
         obj.class.should.equal?(klass)
-        obj.should have_instance_variable(:@from_custom_allocator)
+        obj.should.instance_variable_defined?(:@from_custom_allocator)
         obj.should == []
       end
     end
