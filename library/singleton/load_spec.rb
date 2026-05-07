@@ -1,7 +1,6 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
-# TODO: change to a.should be_equal(b)
 # TODO: write spec for cloning classes and calling private methods
 # TODO: write spec for private_methods not showing up via extended
 describe "Singleton._load" do
