@@ -12,7 +12,7 @@ describe "Tempfile.create" do
   it "returns a new, open regular File instance placed in tmpdir" do
     @tempfile = Tempfile.create
     # Unlike Tempfile.open this returns a true File,
-    # but `.should be_an_instance_of(File)` would be true either way.
+    # but `.should.instance_of?(File)` would be true either way.
     @tempfile.instance_of?(File).should be_true
 
     @tempfile.should_not.closed?

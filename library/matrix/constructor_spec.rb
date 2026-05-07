@@ -26,7 +26,7 @@ describe "Matrix.[]" do
 
   it "accepts vector arguments" do
     a = Matrix[Vector[1, 2], Vector[3, 4]]
-    a.should be_an_instance_of(Matrix)
+    a.should.instance_of?(Matrix)
     a.should == Matrix[ [1, 2], [3, 4] ]
   end
 
@@ -38,7 +38,7 @@ describe "Matrix.[]" do
 
 
   it "returns a Matrix object" do
-    Matrix[ [1] ].should be_an_instance_of(Matrix)
+    Matrix[ [1] ].should.instance_of?(Matrix)
   end
 
   it "can create an nxn Matrix" do
@@ -59,7 +59,7 @@ describe "Matrix.[]" do
 
   describe "for a subclass of Matrix" do
     it "returns an instance of that subclass" do
-      MatrixSub[ [20,30], [40.5, 9] ].should be_an_instance_of(MatrixSub)
+      MatrixSub[ [20,30], [40.5, 9] ].should.instance_of?(MatrixSub)
     end
   end
 end

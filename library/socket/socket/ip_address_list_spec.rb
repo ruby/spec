@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe 'Socket.ip_address_list' do
   it 'returns an Array' do
-    Socket.ip_address_list.should be_an_instance_of(Array)
+    Socket.ip_address_list.should.instance_of?(Array)
   end
 
   describe 'the returned Array' do
@@ -16,7 +16,7 @@ describe 'Socket.ip_address_list' do
 
     it 'contains Addrinfo objects' do
       @array.each do |klass|
-        klass.should be_an_instance_of(Addrinfo)
+        klass.should.instance_of?(Addrinfo)
       end
     end
   end
@@ -28,7 +28,7 @@ describe 'Socket.ip_address_list' do
 
     it 'has a non-empty IP address' do
       @array.each do |addr|
-        addr.ip_address.should be_an_instance_of(String)
+        addr.ip_address.should.instance_of?(String)
         addr.ip_address.should_not be_empty
       end
     end

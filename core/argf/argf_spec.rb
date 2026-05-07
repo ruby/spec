@@ -6,6 +6,6 @@ describe "ARGF" do
   end
 
   it "is an instance of ARGF.class" do
-    ARGF.should be_an_instance_of(ARGF.class)
+    ARGF.should.instance_of?(ARGF.class)
   end
 end

@@ -11,11 +11,11 @@ describe "A lambda literal -> () { }" do
       end
     end
 
-    klass.new.create_lambda.should be_an_instance_of(Proc)
+    klass.new.create_lambda.should.instance_of?(Proc)
   end
 
   it "does not execute the block" do
-    -> { fail }.should be_an_instance_of(Proc)
+    -> { fail }.should.instance_of?(Proc)
   end
 
   it "returns a lambda" do
@@ -23,11 +23,11 @@ describe "A lambda literal -> () { }" do
   end
 
   it "may include a rescue clause" do
-    eval('-> do raise ArgumentError; rescue ArgumentError; 7; end').should be_an_instance_of(Proc)
+    eval('-> do raise ArgumentError; rescue ArgumentError; 7; end').should.instance_of?(Proc)
   end
 
   it "may include a ensure clause" do
-    eval('-> do 1; ensure; 2; end').should be_an_instance_of(Proc)
+    eval('-> do 1; ensure; 2; end').should.instance_of?(Proc)
   end
 
   it "has its own scope for local variables" do
@@ -143,7 +143,7 @@ describe "A lambda literal -> () { }" do
       ruby
 
       @a.().should be_nil
-      @a.() { }.should be_an_instance_of(Proc)
+      @a.() { }.should.instance_of?(Proc)
     end
 
     evaluate <<-ruby do
@@ -321,7 +321,7 @@ describe "A lambda expression 'lambda { ... }'" do
   end
 
   it "does not execute the block" do
-    lambda { fail }.should be_an_instance_of(Proc)
+    lambda { fail }.should.instance_of?(Proc)
   end
 
   it "returns a lambda" do
@@ -335,7 +335,7 @@ describe "A lambda expression 'lambda { ... }'" do
   end
 
   it "may include a rescue clause" do
-    eval('lambda do raise ArgumentError; rescue ArgumentError; 7; end').should be_an_instance_of(Proc)
+    eval('lambda do raise ArgumentError; rescue ArgumentError; 7; end').should.instance_of?(Proc)
   end
 
   context "with an implicit block" do
@@ -485,7 +485,7 @@ describe "A lambda expression 'lambda { ... }'" do
       ruby
 
       @a.().should be_nil
-      @a.() { }.should be_an_instance_of(Proc)
+      @a.() { }.should.instance_of?(Proc)
     end
 
     evaluate <<-ruby do

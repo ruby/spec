@@ -16,7 +16,7 @@ describe 'UNIXSocket#local_address' do
   end
 
   it 'returns an Addrinfo' do
-    @client.local_address.should be_an_instance_of(Addrinfo)
+    @client.local_address.should.instance_of?(Addrinfo)
   end
 
   describe 'the returned Addrinfo' do
@@ -57,7 +57,7 @@ describe 'UNIXSocket#local_address with a UNIX socket pair' do
   end
 
   it 'returns an Addrinfo' do
-    @sock.local_address.should be_an_instance_of(Addrinfo)
+    @sock.local_address.should.instance_of?(Addrinfo)
   end
 
   describe 'the returned Addrinfo' do

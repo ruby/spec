@@ -88,7 +88,7 @@ describe "The break statement in a captured block" do
           e
         end
       end
-      thread_with_break.value.should be_an_instance_of(LocalJumpError)
+      thread_with_break.value.should.instance_of?(LocalJumpError)
     end
   end
 end

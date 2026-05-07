@@ -75,7 +75,7 @@ describe "String#upcase" do
   end
 
   it "returns a String instance for subclasses" do
-    StringSpecs::MyString.new("fooBAR").upcase.should be_an_instance_of(String)
+    StringSpecs::MyString.new("fooBAR").upcase.should.instance_of?(String)
   end
 end
 

@@ -138,7 +138,7 @@ describe 'Socket#bind' do
 
       it 'binds to an Addrinfo' do
         @socket.bind(@addr).should == 0
-        @socket.local_address.should be_an_instance_of(Addrinfo)
+        @socket.local_address.should.instance_of?(Addrinfo)
       end
 
       it 'uses a new Addrinfo for the local address' do

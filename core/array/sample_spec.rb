@@ -38,7 +38,7 @@ describe "Array#sample" do
   end
 
   it "returns an Array of elements when passed a count" do
-    [1, 2, 3, 4].sample(3).should be_an_instance_of(Array)
+    [1, 2, 3, 4].sample(3).should.instance_of?(Array)
   end
 
   it "returns elements from the Array" do
@@ -71,7 +71,7 @@ describe "Array#sample" do
   end
 
   it "does not return subclass instances with Array subclass" do
-    ArraySpecs::MyArray[1, 2, 3].sample(2).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].sample(2).should.instance_of?(Array)
   end
 
   describe "with options" do
@@ -79,7 +79,7 @@ describe "Array#sample" do
       obj = mock("array_sample_random")
       obj.should_receive(:rand).and_return(0.5)
 
-      [1, 2].sample(random: obj).should be_an_instance_of(Integer)
+      [1, 2].sample(random: obj).should.instance_of?(Integer)
     end
 
     it "raises a NoMethodError if an object passed for the RNG does not define #rand" do

@@ -58,7 +58,7 @@ describe 'Socket#accept' do
 
           value = thread.value
           begin
-            value.should be_an_instance_of(Array)
+            value.should.instance_of?(Array)
           ensure
             client.close
             value[0].close
@@ -82,8 +82,8 @@ describe 'Socket#accept' do
         it 'returns an Array containing a Socket and an Addrinfo' do
           @socket, addrinfo = @server.accept
 
-          @socket.should be_an_instance_of(Socket)
-          addrinfo.should be_an_instance_of(Addrinfo)
+          @socket.should.instance_of?(Socket)
+          addrinfo.should.instance_of?(Addrinfo)
         end
 
         describe 'the returned Addrinfo' do

@@ -4,7 +4,7 @@ require_relative 'shared/enumerable_enumeratorized'
 
 describe "Enumerable#minmax_by" do
   it "returns an enumerator if no block" do
-    EnumerableSpecs::Numerous.new(42).minmax_by.should be_an_instance_of(Enumerator)
+    EnumerableSpecs::Numerous.new(42).minmax_by.should.instance_of?(Enumerator)
   end
 
   it "returns nil if #each yields no objects" do

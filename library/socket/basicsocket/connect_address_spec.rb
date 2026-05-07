@@ -25,7 +25,7 @@ describe 'Socket#connect_address' do
     end
 
     it 'returns an Addrinfo' do
-      @sock.connect_address.should be_an_instance_of(Addrinfo)
+      @sock.connect_address.should.instance_of?(Addrinfo)
     end
 
     it 'uses 127.0.0.1 as the IP address' do
@@ -65,7 +65,7 @@ describe 'Socket#connect_address' do
       end
 
       it 'returns an Addrinfo' do
-        @sock.connect_address.should be_an_instance_of(Addrinfo)
+        @sock.connect_address.should.instance_of?(Addrinfo)
       end
 
       it 'uses ::1 as the IP address' do
@@ -126,7 +126,7 @@ describe 'Socket#connect_address' do
     end
 
     it 'returns an Addrinfo' do
-      @sock.connect_address.should be_an_instance_of(Addrinfo)
+      @sock.connect_address.should.instance_of?(Addrinfo)
     end
 
     it 'uses the correct socket path' do

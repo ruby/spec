@@ -197,11 +197,11 @@ describe "String#split with String" do
       ["", ".", " "].each do |pat|
         [-1, 0, 1, 2].each do |limit|
           StringSpecs::MyString.new(str).split(pat, limit).each do |x|
-            x.should be_an_instance_of(String)
+            x.should.instance_of?(String)
           end
 
           str.split(StringSpecs::MyString.new(pat), limit).each do |x|
-            x.should be_an_instance_of(String)
+            x.should.instance_of?(String)
           end
         end
       end
@@ -391,7 +391,7 @@ describe "String#split with Regexp" do
       [//, /:/, /\s+/].each do |pat|
         [-1, 0, 1, 2].each do |limit|
           StringSpecs::MyString.new(str).split(pat, limit).each do |x|
-            x.should be_an_instance_of(String)
+            x.should.instance_of?(String)
           end
         end
       end
@@ -522,10 +522,10 @@ describe "String#split with Regexp" do
       StringSpecs::MyString.new("a|b").split("|") { |str| a << str }
       first, last = a
 
-      first.should be_an_instance_of(String)
+      first.should.instance_of?(String)
       first.should == "a"
 
-      last.should be_an_instance_of(String)
+      last.should.instance_of?(String)
       last.should == "b"
     end
   end

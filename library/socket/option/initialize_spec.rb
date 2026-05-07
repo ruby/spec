@@ -10,7 +10,7 @@ describe 'Socket::Option#initialize' do
       opt = Socket::Option
         .new(Socket::AF_INET, Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, @bool)
 
-      opt.should be_an_instance_of(Socket::Option)
+      opt.should.instance_of?(Socket::Option)
 
       opt.family.should  == Socket::AF_INET
       opt.level.should   == Socket::SOL_SOCKET
@@ -23,7 +23,7 @@ describe 'Socket::Option#initialize' do
     it 'returns a Socket::Option' do
       opt = Socket::Option.new(:INET, :SOCKET, :KEEPALIVE, @bool)
 
-      opt.should be_an_instance_of(Socket::Option)
+      opt.should.instance_of?(Socket::Option)
 
       opt.family.should  == Socket::AF_INET
       opt.level.should   == Socket::SOL_SOCKET
@@ -54,7 +54,7 @@ describe 'Socket::Option#initialize' do
     it 'returns a Socket::Option' do
       opt = Socket::Option.new('INET', 'SOCKET', 'KEEPALIVE', @bool)
 
-      opt.should be_an_instance_of(Socket::Option)
+      opt.should.instance_of?(Socket::Option)
 
       opt.family.should  == Socket::AF_INET
       opt.level.should   == Socket::SOL_SOCKET

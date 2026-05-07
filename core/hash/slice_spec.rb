@@ -8,7 +8,7 @@ describe "Hash#slice" do
   it "returns a new empty hash without arguments" do
     ret = @hash.slice
     ret.should_not equal(@hash)
-    ret.should be_an_instance_of(Hash)
+    ret.should.instance_of?(Hash)
     ret.should == {}
   end
 

@@ -2,11 +2,11 @@ require_relative '../../spec_helper'
 
 describe "Encoding.name_list" do
   it "returns an Array" do
-    Encoding.name_list.should be_an_instance_of(Array)
+    Encoding.name_list.should.instance_of?(Array)
   end
 
   it "returns encoding names as Strings" do
-    Encoding.name_list.each {|e| e.should be_an_instance_of(String) }
+    Encoding.name_list.each {|e| e.should.instance_of?(String) }
   end
 
   it "includes all aliases" do

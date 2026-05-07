@@ -4,7 +4,7 @@ require_relative 'shared/enumerable_enumeratorized'
 
 describe "Enumerable#min_by" do
   it "returns an enumerator if no block" do
-    EnumerableSpecs::Numerous.new(42).min_by.should be_an_instance_of(Enumerator)
+    EnumerableSpecs::Numerous.new(42).min_by.should.instance_of?(Enumerator)
   end
 
   it "returns nil if #each yields no objects" do
@@ -48,7 +48,7 @@ describe "Enumerable#min_by" do
 
     context "without a block" do
       it "returns an enumerator" do
-        @enum.min_by(2).should be_an_instance_of(Enumerator)
+        @enum.min_by(2).should.instance_of?(Enumerator)
       end
     end
 

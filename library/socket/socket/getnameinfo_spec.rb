@@ -130,7 +130,7 @@ describe 'Socket.getnameinfo' do
       describe 'without custom flags' do
         it 'returns an Array containing the hostname and service name' do
           array = Socket.getnameinfo(@addr)
-          array.should be_an_instance_of(Array)
+          array.should.instance_of?(Array)
           array[0].should == @hostname
           array[1].should == 'ftp'
         end
@@ -139,7 +139,7 @@ describe 'Socket.getnameinfo' do
           addr = [family_name, 21, ip_address, nil]
 
           array = Socket.getnameinfo(addr)
-          array.should be_an_instance_of(Array)
+          array.should.instance_of?(Array)
           array[0].should == @hostname
           array[1].should == 'ftp'
         end

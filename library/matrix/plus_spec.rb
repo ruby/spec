@@ -36,7 +36,7 @@ describe "Matrix#+" do
   describe "for a subclass of Matrix" do
     it "returns an instance of that subclass" do
       m = MatrixSub.ins
-      (m+m).should be_an_instance_of(MatrixSub)
+      (m+m).should.instance_of?(MatrixSub)
     end
   end
 end

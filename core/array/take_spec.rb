@@ -27,6 +27,6 @@ describe "Array#take" do
   end
 
   it 'returns a Array instance for Array subclasses' do
-    ArraySpecs::MyArray[1, 2, 3, 4, 5].take(1).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3, 4, 5].take(1).should.instance_of?(Array)
   end
 end

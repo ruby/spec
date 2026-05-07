@@ -16,10 +16,10 @@ describe "IO#stat" do
   end
 
   it "returns a File::Stat object for the stream" do
-    STDOUT.stat.should be_an_instance_of(File::Stat)
+    STDOUT.stat.should.instance_of?(File::Stat)
   end
 
   it "can stat pipes" do
-    @io.stat.should be_an_instance_of(File::Stat)
+    @io.stat.should.instance_of?(File::Stat)
   end
 end

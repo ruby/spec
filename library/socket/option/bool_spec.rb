@@ -4,7 +4,7 @@ require_relative '../fixtures/classes'
 describe "Socket::Option.bool" do
   it "creates a new Socket::Option" do
     so = Socket::Option.bool(:INET, :SOCKET, :KEEPALIVE, true)
-    so.should be_an_instance_of(Socket::Option)
+    so.should.instance_of?(Socket::Option)
     so.family.should == Socket::AF_INET
     so.level.should == Socket::SOL_SOCKET
     so.optname.should == Socket::SO_KEEPALIVE

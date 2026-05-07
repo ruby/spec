@@ -45,7 +45,7 @@ describe "UnboundMethod#bind" do
 
   it "binds a Parent's class method to any Child's class methods" do
     m = UnboundMethodSpecs::Parent.method(:class_method).unbind.bind(UnboundMethodSpecs::Child1)
-    m.should be_an_instance_of(Method)
+    m.should.instance_of?(Method)
     m.call.should == "I am UnboundMethodSpecs::Child1"
   end
 

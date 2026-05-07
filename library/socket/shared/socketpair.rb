@@ -12,8 +12,8 @@ describe :socket_socketpair, shared: true do
       begin
         s1, s2 = Socket.public_send(@method, :UNIX, :STREAM)
 
-        s1.should be_an_instance_of(Socket)
-        s2.should be_an_instance_of(Socket)
+        s1.should.instance_of?(Socket)
+        s2.should.instance_of?(Socket)
       ensure
         s1.close
         s2.close
@@ -24,8 +24,8 @@ describe :socket_socketpair, shared: true do
       it 'returns two Socket objects' do
         s1, s2 = Socket.public_send(@method, Socket::AF_UNIX, Socket::SOCK_STREAM)
 
-        s1.should be_an_instance_of(Socket)
-        s2.should be_an_instance_of(Socket)
+        s1.should.instance_of?(Socket)
+        s2.should.instance_of?(Socket)
         s1.close
         s2.close
       end
@@ -35,8 +35,8 @@ describe :socket_socketpair, shared: true do
       it 'returns two Socket objects' do
         s1, s2 = Socket.public_send(@method, :UNIX, :STREAM)
 
-        s1.should be_an_instance_of(Socket)
-        s2.should be_an_instance_of(Socket)
+        s1.should.instance_of?(Socket)
+        s2.should.instance_of?(Socket)
         s1.close
         s2.close
       end
@@ -54,8 +54,8 @@ describe :socket_socketpair, shared: true do
       it 'returns two Socket objects' do
         s1, s2 = Socket.public_send(@method, 'UNIX', 'STREAM')
 
-        s1.should be_an_instance_of(Socket)
-        s2.should be_an_instance_of(Socket)
+        s1.should.instance_of?(Socket)
+        s2.should.instance_of?(Socket)
         s1.close
         s2.close
       end
@@ -79,8 +79,8 @@ describe :socket_socketpair, shared: true do
 
         s1, s2 = Socket.public_send(@method, family, type)
 
-        s1.should be_an_instance_of(Socket)
-        s2.should be_an_instance_of(Socket)
+        s1.should.instance_of?(Socket)
+        s2.should.instance_of?(Socket)
         s1.close
         s2.close
       end
@@ -118,8 +118,8 @@ describe :socket_socketpair, shared: true do
 
     it 'accepts a custom protocol as an Integer as the 3rd argument' do
       s1, s2 = Socket.public_send(@method, :UNIX, :STREAM, Socket::IPPROTO_IP)
-      s1.should be_an_instance_of(Socket)
-      s2.should be_an_instance_of(Socket)
+      s1.should.instance_of?(Socket)
+      s2.should.instance_of?(Socket)
       s1.close
       s2.close
     end

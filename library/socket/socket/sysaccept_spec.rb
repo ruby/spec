@@ -59,7 +59,7 @@ describe 'Socket#sysaccept' do
 
           @client.connect(@server_addr)
 
-          thread.value.should be_an_instance_of(Array)
+          thread.value.should.instance_of?(Array)
         end
       end
 
@@ -77,7 +77,7 @@ describe 'Socket#sysaccept' do
           @fd, addrinfo = @server.sysaccept
 
           @fd.should be_kind_of(Integer)
-          addrinfo.should be_an_instance_of(Addrinfo)
+          addrinfo.should.instance_of?(Addrinfo)
         end
 
         it 'returns a new file descriptor' do

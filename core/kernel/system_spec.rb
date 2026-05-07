@@ -5,14 +5,14 @@ describe :kernel_system, shared: true do
   it "executes the specified command in a subprocess" do
     -> { @object.system("echo a") }.should output_to_fd("a\n")
 
-    $?.should be_an_instance_of Process::Status
+    $?.should.instance_of? Process::Status
     $?.should.success?
   end
 
   it "returns true when the command exits with a zero exit status" do
     @object.system(ruby_cmd('exit 0')).should == true
 
-    $?.should be_an_instance_of Process::Status
+    $?.should.instance_of? Process::Status
     $?.should.success?
     $?.exitstatus.should == 0
   end
@@ -20,7 +20,7 @@ describe :kernel_system, shared: true do
   it "returns false when the command exits with a non-zero exit status" do
     @object.system(ruby_cmd('exit 1')).should == false
 
-    $?.should be_an_instance_of Process::Status
+    $?.should.instance_of? Process::Status
     $?.should_not.success?
     $?.exitstatus.should == 1
   end
@@ -36,7 +36,7 @@ describe :kernel_system, shared: true do
   it "returns nil when command execution fails" do
     @object.system("sad").should be_nil
 
-    $?.should be_an_instance_of Process::Status
+    $?.should.instance_of? Process::Status
     $?.pid.should be_kind_of(Integer)
     $?.should_not.success?
   end

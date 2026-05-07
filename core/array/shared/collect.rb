@@ -10,7 +10,7 @@ describe :array_collect, shared: true do
   end
 
   it "does not return subclass instance" do
-    ArraySpecs::MyArray[1, 2, 3].send(@method) { |x| x + 1 }.should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].send(@method) { |x| x + 1 }.should.instance_of?(Array)
   end
 
   it "does not change self" do
@@ -33,7 +33,7 @@ describe :array_collect, shared: true do
 
   it "returns an Enumerator when no block given" do
     a = [1, 2, 3]
-    a.send(@method).should be_an_instance_of(Enumerator)
+    a.send(@method).should.instance_of?(Enumerator)
   end
 
   it "raises an ArgumentError when no block and with arguments" do
@@ -80,7 +80,7 @@ describe :array_collect_b, shared: true do
   it "returns an Enumerator when no block given, and the enumerator can modify the original array" do
     a = [1, 2, 3]
     enum = a.send(@method)
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.each{|i| "#{i}!" }
     a.should == ["1!", "2!", "3!"]
   end

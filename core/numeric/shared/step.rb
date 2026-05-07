@@ -26,7 +26,7 @@ describe :numeric_step, shared: true do
 
   describe "when self, stop and step are Integers" do
     it "yields only Integers" do
-      @step.call(1, 5, 1) { |x| x.should be_an_instance_of(Integer) }
+      @step.call(1, 5, 1) { |x| x.should.instance_of?(Integer) }
     end
 
     describe "with a positive step" do
@@ -66,15 +66,15 @@ describe :numeric_step, shared: true do
 
   describe "when at least one of self, stop or step is a Float" do
     it "yields Floats even if only self is a Float" do
-      @step.call(1.5, 5, 1) { |x| x.should be_an_instance_of(Float) }
+      @step.call(1.5, 5, 1) { |x| x.should.instance_of?(Float) }
     end
 
     it "yields Floats even if only stop is a Float" do
-      @step.call(1, 5.0, 1) { |x| x.should be_an_instance_of(Float) }
+      @step.call(1, 5.0, 1) { |x| x.should.instance_of?(Float) }
     end
 
     it "yields Floats even if only step is a Float" do
-      @step.call(1, 5, 1.0) { |x| x.should be_an_instance_of(Float) }
+      @step.call(1, 5, 1.0) { |x| x.should.instance_of?(Float) }
     end
 
     describe "with a positive step" do
@@ -259,11 +259,11 @@ describe :numeric_step, shared: true do
     step_enum_class = Enumerator::ArithmeticSequence
 
     it "returns an #{step_enum_class} when not passed a block and self > stop" do
-      @step.call(1, 0, 2).should be_an_instance_of(step_enum_class)
+      @step.call(1, 0, 2).should.instance_of?(step_enum_class)
     end
 
     it "returns an #{step_enum_class} when not passed a block and self < stop" do
-      @step.call(1, 2, 3).should be_an_instance_of(step_enum_class)
+      @step.call(1, 2, 3).should.instance_of?(step_enum_class)
     end
 
     it "returns an #{step_enum_class} that uses the given step" do
@@ -273,13 +273,13 @@ describe :numeric_step, shared: true do
     describe "when step is a String" do
       describe "with self and stop as Integers" do
         it "returns an Enumerator" do
-          @step.call(1, 5, "foo").should be_an_instance_of(Enumerator)
+          @step.call(1, 5, "foo").should.instance_of?(Enumerator)
         end
       end
 
       describe "with self and stop as Floats" do
         it "returns an Enumerator" do
-          @step.call(1.1, 5.1, "foo").should be_an_instance_of(Enumerator)
+          @step.call(1.1, 5.1, "foo").should.instance_of?(Enumerator)
         end
       end
     end

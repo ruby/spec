@@ -8,6 +8,6 @@ describe :string_to_s, shared: true do
     a = StringSpecs::MyString.new("a string")
     s = a.send(@method)
     s.should == "a string"
-    s.should be_an_instance_of(String)
+    s.should.instance_of?(String)
   end
 end

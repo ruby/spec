@@ -86,7 +86,7 @@ describe "IO.popen" do
 
   it "returns an instance of a subclass when called on a subclass" do
     @io = IOSpecs::SubIO.popen(ruby_cmd('exit'), "r")
-    @io.should be_an_instance_of(IOSpecs::SubIO)
+    @io.should.instance_of?(IOSpecs::SubIO)
   end
 
   it "coerces mode argument with #to_str" do
@@ -120,7 +120,7 @@ describe "IO.popen" do
 
     it "yields an instance of a subclass when called on a subclass" do
       IOSpecs::SubIO.popen(ruby_cmd('exit'), "r") do |io|
-        io.should be_an_instance_of(IOSpecs::SubIO)
+        io.should.instance_of?(IOSpecs::SubIO)
       end
     end
 

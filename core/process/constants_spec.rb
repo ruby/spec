@@ -21,7 +21,7 @@ describe "Process::Constants" do
           RLIMIT_NOFILE
       ].each do |const|
         Process.const_defined?(const).should be_true
-        Process.const_get(const).should be_an_instance_of(Integer)
+        Process.const_get(const).should.instance_of?(Integer)
       end
     end
   end
@@ -34,7 +34,7 @@ describe "Process::Constants" do
         RLIMIT_AS
       ].each do |const|
         Process.const_defined?(const).should be_true
-        Process.const_get(const).should be_an_instance_of(Integer)
+        Process.const_get(const).should.instance_of?(Integer)
       end
     end
   end
@@ -62,7 +62,7 @@ describe "Process::Constants" do
         RLIM_SAVED_CUR
       ].each do |const|
         Process.const_defined?(const).should be_true
-        Process.const_get(const).should be_an_instance_of(Integer)
+        Process.const_get(const).should.instance_of?(Integer)
       end
     end
   end
@@ -74,7 +74,7 @@ describe "Process::Constants" do
         RLIMIT_AS
       ].each do |const|
         Process.const_defined?(const).should be_true
-        Process.const_get(const).should be_an_instance_of(Integer)
+        Process.const_get(const).should.instance_of?(Integer)
       end
     end
   end
@@ -85,7 +85,7 @@ describe "Process::Constants" do
         RLIMIT_NPTS
       ].each do |const|
         Process.const_defined?(const).should be_true
-        Process.const_get(const).should be_an_instance_of(Integer)
+        Process.const_get(const).should.instance_of?(Integer)
       end
     end
   end

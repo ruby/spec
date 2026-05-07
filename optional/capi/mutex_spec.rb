@@ -10,7 +10,7 @@ describe "C-API Mutex functions" do
 
   describe "rb_mutex_new" do
     it "creates a new mutex" do
-      @s.rb_mutex_new.should be_an_instance_of(Mutex)
+      @s.rb_mutex_new.should.instance_of?(Mutex)
     end
   end
 

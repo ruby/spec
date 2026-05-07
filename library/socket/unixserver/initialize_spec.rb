@@ -13,7 +13,7 @@ describe 'UNIXServer#initialize' do
   end
 
   it 'returns a new UNIXServer' do
-    @server.should be_an_instance_of(UNIXServer)
+    @server.should.instance_of?(UNIXServer)
   end
 
   it 'sets the socket to binmode' do

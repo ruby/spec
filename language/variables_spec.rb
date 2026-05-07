@@ -190,7 +190,7 @@ describe "Multiple assignment" do
 
       x = (*a = ary)
       x.should equal(ary)
-      a.should be_an_instance_of(Array)
+      a.should.instance_of?(Array)
     end
 
     it "calls #to_ary to convert an Object RHS with MLHS" do
@@ -412,10 +412,10 @@ describe "Multiple assignment" do
       x = (a = *ary)
 
       x.should == [1, 2]
-      x.should be_an_instance_of(Array)
+      x.should.instance_of?(Array)
 
       a.should == [1, 2]
-      a.should be_an_instance_of(Array)
+      a.should.instance_of?(Array)
     end
 
     it "unfreezes the array returned from calling 'to_a' on the splatted value" do

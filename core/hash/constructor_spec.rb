@@ -87,20 +87,20 @@ describe "Hash.[]" do
   end
 
   it "returns an instance of a subclass when passed an Array" do
-    HashSpecs::MyHash[1,2,3,4].should be_an_instance_of(HashSpecs::MyHash)
+    HashSpecs::MyHash[1,2,3,4].should.instance_of?(HashSpecs::MyHash)
   end
 
   it "returns instances of subclasses" do
-    HashSpecs::MyHash[].should be_an_instance_of(HashSpecs::MyHash)
+    HashSpecs::MyHash[].should.instance_of?(HashSpecs::MyHash)
   end
 
   it "returns an instance of the class it's called on" do
     Hash[HashSpecs::MyHash[1, 2]].class.should == Hash
-    HashSpecs::MyHash[Hash[1, 2]].should be_an_instance_of(HashSpecs::MyHash)
+    HashSpecs::MyHash[Hash[1, 2]].should.instance_of?(HashSpecs::MyHash)
   end
 
   it "does not call #initialize on the subclass instance" do
-    HashSpecs::MyInitializerHash[Hash[1, 2]].should be_an_instance_of(HashSpecs::MyInitializerHash)
+    HashSpecs::MyInitializerHash[Hash[1, 2]].should.instance_of?(HashSpecs::MyInitializerHash)
   end
 
   it "does not retain the default value" do

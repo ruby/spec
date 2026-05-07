@@ -4,23 +4,23 @@ require_relative 'fixtures/module'
 describe "The module keyword" do
   it "creates a new module without semicolon" do
     module ModuleSpecsKeywordWithoutSemicolon end
-    ModuleSpecsKeywordWithoutSemicolon.should be_an_instance_of(Module)
+    ModuleSpecsKeywordWithoutSemicolon.should.instance_of?(Module)
   end
 
   it "creates a new module with a non-qualified constant name" do
     module ModuleSpecsToplevel; end
-    ModuleSpecsToplevel.should be_an_instance_of(Module)
+    ModuleSpecsToplevel.should.instance_of?(Module)
   end
 
   it "creates a new module with a qualified constant name" do
     module ModuleSpecs::Nested; end
-    ModuleSpecs::Nested.should be_an_instance_of(Module)
+    ModuleSpecs::Nested.should.instance_of?(Module)
   end
 
   it "creates a new module with a variable qualified constant name" do
     m = Module.new
     module m::N; end
-    m::N.should be_an_instance_of(Module)
+    m::N.should.instance_of?(Module)
   end
 
   it "reopens an existing module" do

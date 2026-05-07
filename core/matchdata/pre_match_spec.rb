@@ -19,6 +19,6 @@ describe "MatchData#pre_match" do
 
   it "returns an instance of String when given a String subclass" do
     str = MatchDataSpecs::MyString.new("THX1138: The Movie")
-    /(.)(.)(\d+)(\d)/.match(str).pre_match.should be_an_instance_of(String)
+    /(.)(.)(\d+)(\d)/.match(str).pre_match.should.instance_of?(String)
   end
 end

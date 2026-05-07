@@ -37,7 +37,7 @@ describe "Matrix#real" do
 
   describe "for a subclass of Matrix" do
     it "returns an instance of that subclass" do
-      MatrixSub.ins.real.should be_an_instance_of(MatrixSub)
+      MatrixSub.ins.real.should.instance_of?(MatrixSub)
     end
   end
 end

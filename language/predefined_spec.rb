@@ -87,7 +87,7 @@ describe "Predefined global $~" do
     $~ = nil
     $~.should == nil
     $~ = /foo/.match("foo")
-    $~.should be_an_instance_of(MatchData)
+    $~.should.instance_of?(MatchData)
 
     -> { $~ = Object.new }.should raise_error(TypeError, 'wrong argument type Object (expected MatchData)')
     -> { $~ = 1 }.should raise_error(TypeError, 'wrong argument type Integer (expected MatchData)')
@@ -586,7 +586,7 @@ describe "Predefined global $@" do
     begin
       raise
     rescue
-      $@.should be_an_instance_of(Array)
+      $@.should.instance_of?(Array)
       $@.should == $!.backtrace
     end
   end
@@ -608,7 +608,7 @@ describe "Predefined global $@" do
     begin
       raise
     rescue
-      $@.should be_an_instance_of(Array)
+      $@.should.instance_of?(Array)
       $@.should == $!.backtrace
     end
   end
@@ -702,7 +702,7 @@ describe "Predefined global $/" do
       str.instance_variable_set(:@ivar, 1)
       $/ = str
       $/.should.frozen?
-      $/.should be_an_instance_of(String)
+      $/.should.instance_of?(String)
       $/.should_not.instance_variable_defined?(:@ivar)
       $/.should == str
     end
@@ -783,7 +783,7 @@ describe "Predefined global $-0" do
       str.instance_variable_set(:@ivar, 1)
       $-0 = str
       $-0.should.frozen?
-      $-0.should be_an_instance_of(String)
+      $-0.should.instance_of?(String)
       $-0.should_not.instance_variable_defined?(:@ivar)
       $-0.should == str
     end

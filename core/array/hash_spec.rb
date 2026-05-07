@@ -7,7 +7,7 @@ describe "Array#hash" do
 
     [[], [1, 2, 3]].each do |ary|
       ary.hash.should == ary.dup.hash
-      ary.hash.should be_an_instance_of(Integer)
+      ary.hash.should.instance_of?(Integer)
     end
   end
 

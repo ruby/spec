@@ -51,7 +51,7 @@ describe "Process.spawn" do
   it "returns the process ID of the new process as an Integer" do
     pid = Process.spawn(*ruby_exe, "-e", "exit")
     Process.wait pid
-    pid.should be_an_instance_of(Integer)
+    pid.should.instance_of?(Integer)
   end
 
   it "returns immediately" do

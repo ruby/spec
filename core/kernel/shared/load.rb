@@ -109,7 +109,7 @@ describe :kernel_load, shared: true do
       Object.const_defined?(:LoadSpecWrap).should be_false
 
       wrap_module = ScratchPad.recorded[1]
-      wrap_module.should be_an_instance_of(Module)
+      wrap_module.should.instance_of?(Module)
     end
 
     it "allows referencing outside namespaces" do
@@ -127,7 +127,7 @@ describe :kernel_load, shared: true do
       top_level.to_s.should == "main"
       top_level.method(:to_s).owner.should == top_level.singleton_class
       top_level.should_not equal(main)
-      top_level.should be_an_instance_of(Object)
+      top_level.should.instance_of?(Object)
     end
 
     it "includes modules included in main's singleton class in self's class" do

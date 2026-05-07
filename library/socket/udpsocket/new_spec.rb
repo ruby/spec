@@ -8,22 +8,22 @@ describe 'UDPSocket.new' do
 
   it 'without arguments' do
     @socket = UDPSocket.new
-    @socket.should be_an_instance_of(UDPSocket)
+    @socket.should.instance_of?(UDPSocket)
   end
 
   it 'using Integer argument' do
     @socket = UDPSocket.new(Socket::AF_INET)
-    @socket.should be_an_instance_of(UDPSocket)
+    @socket.should.instance_of?(UDPSocket)
   end
 
   it 'using Symbol argument' do
     @socket = UDPSocket.new(:INET)
-    @socket.should be_an_instance_of(UDPSocket)
+    @socket.should.instance_of?(UDPSocket)
   end
 
   it 'using String argument' do
     @socket = UDPSocket.new('INET')
-    @socket.should be_an_instance_of(UDPSocket)
+    @socket.should.instance_of?(UDPSocket)
   end
 
   it "does not use the given block and warns to use UDPSocket::open" do

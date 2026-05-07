@@ -11,11 +11,11 @@ describe "Exception#backtrace" do
   end
 
   it "returns an Array" do
-    @backtrace.should be_an_instance_of(Array)
+    @backtrace.should.instance_of?(Array)
   end
 
   it "sets each element to a String" do
-    @backtrace.each {|l| l.should be_an_instance_of(String)}
+    @backtrace.each {|l| l.should.instance_of?(String)}
   end
 
   it "includes the filename of the location where self raised in the first element" do

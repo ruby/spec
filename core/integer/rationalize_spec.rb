@@ -12,7 +12,7 @@ describe "Integer#rationalize" do
 
   it "returns a Rational object" do
     @numbers.each do |number|
-      number.rationalize.should be_an_instance_of(Rational)
+      number.rationalize.should.instance_of?(Rational)
     end
   end
 

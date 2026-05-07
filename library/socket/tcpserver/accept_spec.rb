@@ -112,7 +112,7 @@ describe 'TCPServer#accept' do
 
       it 'returns a TCPSocket' do
         @socket = @server.accept
-        @socket.should be_an_instance_of(TCPSocket)
+        @socket.should.instance_of?(TCPSocket)
       end
 
       platform_is_not :windows do

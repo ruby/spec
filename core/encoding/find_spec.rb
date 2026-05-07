@@ -7,13 +7,13 @@ describe "Encoding.find" do
 
   it "returns the corresponding Encoding object if given a valid encoding name" do
     @encodings.each do |enc|
-      Encoding.find(enc).should be_an_instance_of(Encoding)
+      Encoding.find(enc).should.instance_of?(Encoding)
     end
   end
 
   it "returns the corresponding Encoding object if given a valid alias name" do
     Encoding.aliases.keys.each do |enc_alias|
-      Encoding.find(enc_alias).should be_an_instance_of(Encoding)
+      Encoding.find(enc_alias).should.instance_of?(Encoding)
     end
   end
 

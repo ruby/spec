@@ -30,7 +30,7 @@ describe "Set#reject!" do
 
   it "returns an Enumerator when passed no block" do
     enum = @set.reject!
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
 
     enum.each { |x| x.size == 3 }
 

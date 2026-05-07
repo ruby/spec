@@ -14,7 +14,7 @@ describe :numeric_rect, shared: true do
 
   it "returns an Array" do
     @numbers.each do |number|
-      number.send(@method).should be_an_instance_of(Array)
+      number.send(@method).should.instance_of?(Array)
     end
   end
 

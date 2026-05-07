@@ -33,7 +33,7 @@ describe "Tempfile.open" do
 
   it "returns a new, open Tempfile instance" do
     @tempfile = Tempfile.open("specs")
-    # Delegation messes up .should be_an_instance_of(Tempfile)
+    # Delegation messes up .should.instance_of?(Tempfile)
     @tempfile.instance_of?(Tempfile).should be_true
   end
 
@@ -74,7 +74,7 @@ describe "Tempfile.open when passed a block" do
       @tempfile = tempfile
       ScratchPad.record :yielded
 
-      # Delegation messes up .should be_an_instance_of(Tempfile)
+      # Delegation messes up .should.instance_of?(Tempfile)
       tempfile.instance_of?(Tempfile).should be_true
       tempfile.closed?.should be_false
     end

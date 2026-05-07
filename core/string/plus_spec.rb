@@ -26,12 +26,12 @@ describe "String#+" do
   end
 
   it "doesn't return subclass instances" do
-    (StringSpecs::MyString.new("hello") + "").should be_an_instance_of(String)
-    (StringSpecs::MyString.new("hello") + "foo").should be_an_instance_of(String)
-    (StringSpecs::MyString.new("hello") + StringSpecs::MyString.new("foo")).should be_an_instance_of(String)
-    (StringSpecs::MyString.new("hello") + StringSpecs::MyString.new("")).should be_an_instance_of(String)
-    (StringSpecs::MyString.new("") + StringSpecs::MyString.new("")).should be_an_instance_of(String)
-    ("hello" + StringSpecs::MyString.new("foo")).should be_an_instance_of(String)
-    ("hello" + StringSpecs::MyString.new("")).should be_an_instance_of(String)
+    (StringSpecs::MyString.new("hello") + "").should.instance_of?(String)
+    (StringSpecs::MyString.new("hello") + "foo").should.instance_of?(String)
+    (StringSpecs::MyString.new("hello") + StringSpecs::MyString.new("foo")).should.instance_of?(String)
+    (StringSpecs::MyString.new("hello") + StringSpecs::MyString.new("")).should.instance_of?(String)
+    (StringSpecs::MyString.new("") + StringSpecs::MyString.new("")).should.instance_of?(String)
+    ("hello" + StringSpecs::MyString.new("foo")).should.instance_of?(String)
+    ("hello" + StringSpecs::MyString.new("")).should.instance_of?(String)
   end
 end

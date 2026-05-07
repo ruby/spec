@@ -32,7 +32,7 @@ describe "CApiTimeSpecs" do
     it "creates a Time in the local zone with only a timestamp" do
       with_timezone("Europe/Amsterdam") do
         time = @s.rb_time_num_new(1232141421, nil)
-        time.should be_an_instance_of(Time)
+        time.should.instance_of?(Time)
         time.to_i.should == 1232141421
         platform_is_not :windows do
           time.gmt_offset.should == 3600
@@ -43,7 +43,7 @@ describe "CApiTimeSpecs" do
     it "creates a Time with the given offset" do
       with_timezone("Europe/Amsterdam") do
         time = @s.rb_time_num_new(1232141421, 7200)
-        time.should be_an_instance_of(Time)
+        time.should.instance_of?(Time)
         time.to_i.should == 1232141421
         time.gmt_offset.should == 7200
       end
@@ -52,7 +52,7 @@ describe "CApiTimeSpecs" do
     it "creates a Time with a Float timestamp" do
       with_timezone("Europe/Amsterdam") do
         time = @s.rb_time_num_new(1.5, 7200)
-        time.should be_an_instance_of(Time)
+        time.should.instance_of?(Time)
         time.to_i.should == 1
         time.nsec.should == 500000000
         time.gmt_offset.should == 7200
@@ -62,7 +62,7 @@ describe "CApiTimeSpecs" do
     it "creates a Time with a Rational timestamp" do
       with_timezone("Europe/Amsterdam") do
         time = @s.rb_time_num_new(Rational(3, 2), 7200)
-        time.should be_an_instance_of(Time)
+        time.should.instance_of?(Time)
         time.to_i.should == 1
         time.nsec.should == 500000000
         time.gmt_offset.should == 7200
@@ -294,7 +294,7 @@ describe "CApiTimeSpecs" do
     it "fills a struct timespec with the current time" do
       now = Time.now
       time = @s.rb_time_from_timespec(now.utc_offset)
-      time.should be_an_instance_of(Time)
+      time.should.instance_of?(Time)
       (time - now).should be_close(0, TIME_TOLERANCE)
     end
   end

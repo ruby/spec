@@ -2,7 +2,7 @@ require_relative '../fixtures/encoded_strings'
 
 describe :array_inspect, shared: true do
   it "returns a string" do
-    [1, 2, 3].send(@method).should be_an_instance_of(String)
+    [1, 2, 3].send(@method).should.instance_of?(String)
   end
 
   it "returns '[]' for an empty Array" do

@@ -138,7 +138,7 @@ describe "C-API Hash function" do
     end
 
     it "returns an Enumerator when no block is passed" do
-      @s.rb_hash_delete_if({a: 1}).should be_an_instance_of(Enumerator)
+      @s.rb_hash_delete_if({a: 1}).should.instance_of?(Enumerator)
     end
   end
 
@@ -335,7 +335,7 @@ describe "C-API Hash function" do
   describe "hash code functions" do
     it "computes a deterministic number" do
       hash_code = @s.compute_a_hash_code(53)
-      hash_code.should be_an_instance_of(Integer)
+      hash_code.should.instance_of?(Integer)
       hash_code.should == @s.compute_a_hash_code(53)
       @s.compute_a_hash_code(90).should == @s.compute_a_hash_code(90)
     end

@@ -28,7 +28,7 @@ describe :string_codepoints, shared: true do
 
   it "yields codepoints as Integers" do
     "glark\u{20}".send(@method).to_a.each do |codepoint|
-      codepoint.should be_an_instance_of(Integer)
+      codepoint.should.instance_of?(Integer)
     end
   end
 

@@ -176,9 +176,9 @@ describe "Kernel#rand" do
   end
 
   it "supports custom object types" do
-    rand(KernelSpecs::CustomRangeInteger.new(1)..KernelSpecs::CustomRangeInteger.new(42)).should be_an_instance_of(KernelSpecs::CustomRangeInteger)
-    rand(KernelSpecs::CustomRangeFloat.new(1.0)..KernelSpecs::CustomRangeFloat.new(42.0)).should be_an_instance_of(KernelSpecs::CustomRangeFloat)
-    rand(Time.now..Time.now).should be_an_instance_of(Time)
+    rand(KernelSpecs::CustomRangeInteger.new(1)..KernelSpecs::CustomRangeInteger.new(42)).should.instance_of?(KernelSpecs::CustomRangeInteger)
+    rand(KernelSpecs::CustomRangeFloat.new(1.0)..KernelSpecs::CustomRangeFloat.new(42.0)).should.instance_of?(KernelSpecs::CustomRangeFloat)
+    rand(Time.now..Time.now).should.instance_of?(Time)
   end
 
   it "is random on boot" do

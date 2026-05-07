@@ -134,8 +134,8 @@ describe "String#slice! with index, length" do
 
   it "returns String instances" do
     s = StringSpecs::MyString.new("hello")
-    s.slice!(0, 0).should be_an_instance_of(String)
-    s.slice!(0, 4).should be_an_instance_of(String)
+    s.slice!(0, 0).should.instance_of?(String)
+    s.slice!(0, 4).should.instance_of?(String)
   end
 
   it "returns the substring given by the character offsets" do
@@ -177,8 +177,8 @@ describe "String#slice! Range" do
 
   it "returns String instances" do
     s = StringSpecs::MyString.new("hello")
-    s.slice!(0...0).should be_an_instance_of(String)
-    s.slice!(0..4).should be_an_instance_of(String)
+    s.slice!(0...0).should.instance_of?(String)
+    s.slice!(0..4).should.instance_of?(String)
   end
 
   it "calls to_int on range arguments" do
@@ -256,8 +256,8 @@ describe "String#slice! with Regexp" do
 
   it "returns String instances" do
     s = StringSpecs::MyString.new("hello")
-    s.slice!(//).should be_an_instance_of(String)
-    s.slice!(/../).should be_an_instance_of(String)
+    s.slice!(//).should.instance_of?(String)
+    s.slice!(/../).should.instance_of?(String)
   end
 
   it "returns the matching portion of self with a multi byte character" do
@@ -316,8 +316,8 @@ describe "String#slice! with Regexp, index" do
 
   it "returns String instances" do
     s = StringSpecs::MyString.new("hello")
-    s.slice!(/(.)(.)/, 0).should be_an_instance_of(String)
-    s.slice!(/(.)(.)/, 1).should be_an_instance_of(String)
+    s.slice!(/(.)(.)/, 0).should.instance_of?(String)
+    s.slice!(/(.)(.)/, 1).should.instance_of?(String)
   end
 
   it "returns the encoding aware capture for the given index" do
@@ -379,7 +379,7 @@ describe "String#slice! with String" do
     s = StringSpecs::MyString.new("el")
     r = "hello".slice!(s)
     r.should == "el"
-    r.should be_an_instance_of(String)
+    r.should.instance_of?(String)
   end
 
   it "raises a FrozenError if self is frozen" do

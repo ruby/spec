@@ -11,17 +11,17 @@ describe "Array#sort_by!" do
   end
 
   it "returns an Enumerator if not given a block" do
-    (1..10).to_a.sort_by!.should be_an_instance_of(Enumerator)
+    (1..10).to_a.sort_by!.should.instance_of?(Enumerator)
   end
 
   it "completes when supplied a block that always returns the same result" do
     a = [2, 3, 5, 1, 4]
     a.sort_by!{  1 }
-    a.should be_an_instance_of(Array)
+    a.should.instance_of?(Array)
     a.sort_by!{  0 }
-    a.should be_an_instance_of(Array)
+    a.should.instance_of?(Array)
     a.sort_by!{ -1 }
-    a.should be_an_instance_of(Array)
+    a.should.instance_of?(Array)
   end
 
   it "raises a FrozenError on a frozen array" do

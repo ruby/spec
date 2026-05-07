@@ -48,12 +48,12 @@ describe 'TCPSocket#initialize' do
 
       it 'returns a TCPSocket when using an Integer as the port' do
         @client = TCPSocket.new(ip_address, @port)
-        @client.should be_an_instance_of(TCPSocket)
+        @client.should.instance_of?(TCPSocket)
       end
 
       it 'returns a TCPSocket when using a String as the port' do
         @client = TCPSocket.new(ip_address, @port.to_s)
-        @client.should be_an_instance_of(TCPSocket)
+        @client.should.instance_of?(TCPSocket)
       end
 
       it 'raises SocketError when the port number is a non numeric String' do

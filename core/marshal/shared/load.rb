@@ -297,7 +297,7 @@ describe :marshal_load, shared: true do
       UserPreviouslyDefinedWithInitializedIvar.should_receive(:_load).and_return(UserPreviouslyDefinedWithInitializedIvar.new)
       marshaled_obj = Marshal.send(@method, dump_str)
 
-      marshaled_obj.should be_an_instance_of(UserPreviouslyDefinedWithInitializedIvar)
+      marshaled_obj.should.instance_of?(UserPreviouslyDefinedWithInitializedIvar)
       marshaled_obj.field1.should be_nil
       marshaled_obj.field2.should be_nil
     end
@@ -643,7 +643,7 @@ describe :marshal_load, shared: true do
 
     it "loads a String subclass with custom constructor" do
       str = Marshal.send(@method, "\x04\bC: UserCustomConstructorString\"\x00")
-      str.should be_an_instance_of(UserCustomConstructorString)
+      str.should.instance_of?(UserCustomConstructorString)
     end
 
     it "loads a US-ASCII String" do

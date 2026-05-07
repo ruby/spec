@@ -9,7 +9,7 @@ end
 describe "Socket::Option.linger" do
   it "creates a new Socket::Option for SO_LINGER" do
     so = Socket::Option.linger(1, 10)
-    so.should be_an_instance_of(Socket::Option)
+    so.should.instance_of?(Socket::Option)
 
     so.family.should == Socket::Constants::AF_UNSPEC
     so.level.should == Socket::Constants::SOL_SOCKET

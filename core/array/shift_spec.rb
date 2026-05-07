@@ -114,7 +114,7 @@ describe "Array#shift" do
     end
 
     it "does not return subclass instances with Array subclass" do
-      ArraySpecs::MyArray[1, 2, 3].shift(2).should be_an_instance_of(Array)
+      ArraySpecs::MyArray[1, 2, 3].shift(2).should.instance_of?(Array)
     end
   end
 end

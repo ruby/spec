@@ -16,7 +16,7 @@ describe :enumerator_lazy_collect_concat, shared: true do
 
   it "returns a new instance of Enumerator::Lazy" do
     ret = @yieldsmixed.send(@method) {}
-    ret.should be_an_instance_of(Enumerator::Lazy)
+    ret.should.instance_of?(Enumerator::Lazy)
     ret.should_not equal(@yieldsmixed)
   end
 

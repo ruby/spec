@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Math.cbrt" do
   it "returns a float" do
-    Math.cbrt(1).should be_an_instance_of(Float)
+    Math.cbrt(1).should.instance_of?(Float)
   end
 
   it "returns the cubic root of the argument" do

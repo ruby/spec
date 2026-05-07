@@ -4,7 +4,7 @@ describe "Encoding#names" do
   it "returns an Array" do
     Encoding.name_list.each do |name|
       e = Encoding.find(name) or next
-      e.names.should be_an_instance_of(Array)
+      e.names.should.instance_of?(Array)
     end
   end
 
@@ -12,7 +12,7 @@ describe "Encoding#names" do
     Encoding.name_list.each do |name|
       e = Encoding.find(name) or next
       e.names.each do |this_name|
-        this_name.should be_an_instance_of(String)
+        this_name.should.instance_of?(String)
       end
     end
   end

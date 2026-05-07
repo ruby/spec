@@ -60,7 +60,7 @@ describe "Array#zip" do
   end
 
   it "does not return subclass instance on Array subclasses" do
-    ArraySpecs::MyArray[1, 2, 3].zip(["a", "b"]).should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].zip(["a", "b"]).should.instance_of?(Array)
   end
 
   it "raises TypeError when some argument isn't Array and doesn't respond to #to_ary and #to_enum" do

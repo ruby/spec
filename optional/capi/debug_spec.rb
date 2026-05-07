@@ -31,7 +31,7 @@ describe "C-API Debug function" do
     it "returns the current binding" do
       a = "test"
       b = @o.rb_debug_inspector_frame_binding_get(1)
-      b.should be_an_instance_of(Binding)
+      b.should.instance_of?(Binding)
       b.local_variable_get(:a).should == "test"
     end
 
@@ -55,7 +55,7 @@ describe "C-API Debug function" do
   describe "rb_debug_inspector_frame_iseq_get" do
     it "returns an InstructionSequence" do
       if defined?(RubyVM::InstructionSequence)
-        @o.rb_debug_inspector_frame_iseq_get(1).should be_an_instance_of(RubyVM::InstructionSequence)
+        @o.rb_debug_inspector_frame_iseq_get(1).should.instance_of?(RubyVM::InstructionSequence)
       else
         @o.rb_debug_inspector_frame_iseq_get(1).should == nil
       end

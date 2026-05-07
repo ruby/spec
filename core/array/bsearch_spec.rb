@@ -3,7 +3,7 @@ require_relative '../enumerable/shared/enumeratorized'
 
 describe "Array#bsearch" do
   it "returns an Enumerator when not passed a block" do
-    [1].bsearch.should be_an_instance_of(Enumerator)
+    [1].bsearch.should.instance_of?(Enumerator)
   end
 
   it_behaves_like :enumeratorized_with_unknown_size, :bsearch, [1,2,3]

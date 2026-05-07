@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe "Fiber.current" do
   it "returns the root Fiber when called outside of a Fiber" do
     root = Fiber.current
-    root.should be_an_instance_of(Fiber)
+    root.should.instance_of?(Fiber)
     # We can always transfer to the root Fiber; it will never die
     5.times do
       root.transfer.should be_nil
@@ -14,7 +14,7 @@ describe "Fiber.current" do
   it "returns the current Fiber when called from a Fiber" do
     fiber = Fiber.new do
       this = Fiber.current
-      this.should be_an_instance_of(Fiber)
+      this.should.instance_of?(Fiber)
       this.should == fiber
       this.alive?.should be_true
     end
@@ -26,7 +26,7 @@ describe "Fiber.current" do
     fiber = Fiber.new do
       states << :fiber
       this = Fiber.current
-      this.should be_an_instance_of(Fiber)
+      this.should.instance_of?(Fiber)
       this.should == fiber
       this.alive?.should be_true
     end

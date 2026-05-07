@@ -24,7 +24,7 @@ describe 'Addrinfo#family_addrinfo' do
       it 'returns an Addrinfo when a host and port are given' do
         addr = @source.family_addrinfo('127.0.0.1', 0)
 
-        addr.should be_an_instance_of(Addrinfo)
+        addr.should.instance_of?(Addrinfo)
       end
 
       describe 'the returned Addrinfo' do
@@ -62,7 +62,7 @@ describe 'Addrinfo#family_addrinfo' do
       it 'returns an Addrinfo when a UNIX socket path is given' do
         addr = @source.family_addrinfo('dogs')
 
-        addr.should be_an_instance_of(Addrinfo)
+        addr.should.instance_of?(Addrinfo)
       end
 
       describe 'the returned Addrinfo' do

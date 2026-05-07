@@ -71,7 +71,7 @@ describe "Complex#fdiv with no imaginary part" do
   it "returns a Complex number" do
     @numbers.each do |real|
       @numbers.each do |other|
-        Complex(real).fdiv(other).should be_an_instance_of(Complex)
+        Complex(real).fdiv(other).should.instance_of?(Complex)
       end
     end
   end
@@ -103,7 +103,7 @@ describe "Complex#fdiv with an imaginary part" do
       @numbers.each_with_index do |other,idx|
         Complex(
           real,@numbers[idx == 0 ? -1 : idx-1]
-        ).fdiv(other).should be_an_instance_of(Complex)
+        ).fdiv(other).should.instance_of?(Complex)
       end
     end
   end

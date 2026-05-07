@@ -35,7 +35,7 @@ describe "Array#reject" do
   end
 
   it "does not return subclass instance on Array subclasses" do
-    ArraySpecs::MyArray[1, 2, 3].reject { |x| x % 2 == 0 }.should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].reject { |x| x % 2 == 0 }.should.instance_of?(Array)
   end
 
   it "does not retain instance variables" do
@@ -105,7 +105,7 @@ describe "Array#reject!" do
   end
 
   it "returns an Enumerator if no block given, and the array is frozen" do
-    ArraySpecs.frozen_array.reject!.should be_an_instance_of(Enumerator)
+    ArraySpecs.frozen_array.reject!.should.instance_of?(Enumerator)
   end
 
   it "raises a FrozenError on a frozen array" do

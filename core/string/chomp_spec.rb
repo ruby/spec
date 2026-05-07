@@ -47,7 +47,7 @@ describe "String#chomp" do
 
     it "returns String instances when called on a subclass" do
       str = StringSpecs::MyString.new("hello\n").chomp
-      str.should be_an_instance_of(String)
+      str.should.instance_of?(String)
     end
 
     it "removes trailing characters that match $/ when it has been assigned a value" do
@@ -196,7 +196,7 @@ describe "String#chomp!" do
 
     it "returns subclass instances when called on a subclass" do
       str = StringSpecs::MyString.new("hello\n").chomp!
-      str.should be_an_instance_of(StringSpecs::MyString)
+      str.should.instance_of?(StringSpecs::MyString)
     end
 
     it "removes trailing characters that match $/ when it has been assigned a value" do

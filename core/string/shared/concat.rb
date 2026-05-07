@@ -18,14 +18,14 @@ describe :string_concat, shared: true do
     a = "hello"
     a.send(@method, StringSpecs::MyString.new(" world"))
     a.should == "hello world"
-    a.should be_an_instance_of(String)
+    a.should.instance_of?(String)
   end
 
   it "returns an instance of same class when called on a subclass" do
     str = StringSpecs::MyString.new("hello")
     str.send(@method, " world")
     str.should == "hello world"
-    str.should be_an_instance_of(StringSpecs::MyString)
+    str.should.instance_of?(StringSpecs::MyString)
   end
 
   describe "with Integer" do

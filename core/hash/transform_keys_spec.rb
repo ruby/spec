@@ -8,7 +8,7 @@ describe "Hash#transform_keys" do
   it "returns new hash" do
     ret = @hash.transform_keys(&:succ)
     ret.should_not equal(@hash)
-    ret.should be_an_instance_of(Hash)
+    ret.should.instance_of?(Hash)
   end
 
   it "sets the result as transformed keys with the given block" do
@@ -28,7 +28,7 @@ describe "Hash#transform_keys" do
   context "when no block is given" do
     it "returns a sized Enumerator" do
       enumerator = @hash.transform_keys
-      enumerator.should be_an_instance_of(Enumerator)
+      enumerator.should.instance_of?(Enumerator)
       enumerator.size.should == @hash.size
       enumerator.each(&:succ).should == { b: 1, c: 2, d: 3 }
     end
@@ -112,7 +112,7 @@ describe "Hash#transform_keys!" do
   context "when no block is given" do
     it "returns a sized Enumerator" do
       enumerator = @hash.transform_keys!
-      enumerator.should be_an_instance_of(Enumerator)
+      enumerator.should.instance_of?(Enumerator)
       enumerator.size.should == @hash.size
       enumerator.each(&:upcase).should == { A: 1, B: 2, C: 3, D: 4 }
     end
@@ -143,7 +143,7 @@ describe "Hash#transform_keys!" do
 
     context "when no block is given" do
       it "does not raise an exception" do
-        @hash.transform_keys!.should be_an_instance_of(Enumerator)
+        @hash.transform_keys!.should.instance_of?(Enumerator)
       end
     end
   end

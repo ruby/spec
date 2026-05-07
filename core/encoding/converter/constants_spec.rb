@@ -6,7 +6,7 @@ describe "Encoding::Converter::INVALID_MASK" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::INVALID_MASK.should be_an_instance_of(Integer)
+    Encoding::Converter::INVALID_MASK.should.instance_of?(Integer)
   end
 end
 
@@ -16,7 +16,7 @@ describe "Encoding::Converter::INVALID_REPLACE" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::INVALID_REPLACE.should be_an_instance_of(Integer)
+    Encoding::Converter::INVALID_REPLACE.should.instance_of?(Integer)
   end
 end
 
@@ -26,7 +26,7 @@ describe "Encoding::Converter::UNDEF_MASK" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::UNDEF_MASK.should be_an_instance_of(Integer)
+    Encoding::Converter::UNDEF_MASK.should.instance_of?(Integer)
   end
 end
 
@@ -36,7 +36,7 @@ describe "Encoding::Converter::UNDEF_REPLACE" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::UNDEF_REPLACE.should be_an_instance_of(Integer)
+    Encoding::Converter::UNDEF_REPLACE.should.instance_of?(Integer)
   end
 end
 
@@ -46,7 +46,7 @@ describe "Encoding::Converter::UNDEF_HEX_CHARREF" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::UNDEF_HEX_CHARREF.should be_an_instance_of(Integer)
+    Encoding::Converter::UNDEF_HEX_CHARREF.should.instance_of?(Integer)
   end
 end
 
@@ -56,7 +56,7 @@ describe "Encoding::Converter::PARTIAL_INPUT" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::PARTIAL_INPUT.should be_an_instance_of(Integer)
+    Encoding::Converter::PARTIAL_INPUT.should.instance_of?(Integer)
   end
 end
 
@@ -66,7 +66,7 @@ describe "Encoding::Converter::AFTER_OUTPUT" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::AFTER_OUTPUT.should be_an_instance_of(Integer)
+    Encoding::Converter::AFTER_OUTPUT.should.instance_of?(Integer)
   end
 end
 
@@ -76,7 +76,7 @@ describe "Encoding::Converter::UNIVERSAL_NEWLINE_DECORATOR" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::UNIVERSAL_NEWLINE_DECORATOR.should be_an_instance_of(Integer)
+    Encoding::Converter::UNIVERSAL_NEWLINE_DECORATOR.should.instance_of?(Integer)
   end
 end
 
@@ -86,7 +86,7 @@ describe "Encoding::Converter::CRLF_NEWLINE_DECORATOR" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::CRLF_NEWLINE_DECORATOR.should be_an_instance_of(Integer)
+    Encoding::Converter::CRLF_NEWLINE_DECORATOR.should.instance_of?(Integer)
   end
 end
 
@@ -96,7 +96,7 @@ describe "Encoding::Converter::CR_NEWLINE_DECORATOR" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::CR_NEWLINE_DECORATOR.should be_an_instance_of(Integer)
+    Encoding::Converter::CR_NEWLINE_DECORATOR.should.instance_of?(Integer)
   end
 end
 
@@ -106,7 +106,7 @@ describe "Encoding::Converter::XML_TEXT_DECORATOR" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::XML_TEXT_DECORATOR.should be_an_instance_of(Integer)
+    Encoding::Converter::XML_TEXT_DECORATOR.should.instance_of?(Integer)
   end
 end
 
@@ -116,7 +116,7 @@ describe "Encoding::Converter::XML_ATTR_CONTENT_DECORATOR" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::XML_ATTR_CONTENT_DECORATOR.should be_an_instance_of(Integer)
+    Encoding::Converter::XML_ATTR_CONTENT_DECORATOR.should.instance_of?(Integer)
   end
 end
 
@@ -126,6 +126,6 @@ describe "Encoding::Converter::XML_ATTR_QUOTE_DECORATOR" do
   end
 
   it "has an Integer value" do
-    Encoding::Converter::XML_ATTR_QUOTE_DECORATOR.should be_an_instance_of(Integer)
+    Encoding::Converter::XML_ATTR_QUOTE_DECORATOR.should.instance_of?(Integer)
   end
 end

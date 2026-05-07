@@ -94,7 +94,7 @@ describe "C-API Thread function" do
       thr = @t.rb_thread_create(-> x { }, nil)
       begin
         thread_group = thr.group
-        thread_group.should be_an_instance_of(ThreadGroup)
+        thread_group.should.instance_of?(ThreadGroup)
       ensure
         thr.join
       end

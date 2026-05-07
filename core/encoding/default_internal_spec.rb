@@ -15,7 +15,7 @@ describe "Encoding.default_internal" do
 
   it "returns an Encoding object if a default internal encoding is set" do
     Encoding.default_internal = Encoding::ASCII
-    Encoding.default_internal.should be_an_instance_of(Encoding)
+    Encoding.default_internal.should.instance_of?(Encoding)
   end
 
   it "returns nil if no default internal encoding is set" do

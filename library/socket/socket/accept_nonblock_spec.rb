@@ -100,8 +100,8 @@ describe 'Socket#accept_nonblock' do
             IO.select([@server])
             @socket, addrinfo = @server.accept_nonblock
 
-            @socket.should be_an_instance_of(Socket)
-            addrinfo.should be_an_instance_of(Addrinfo)
+            @socket.should.instance_of?(Socket)
+            addrinfo.should.instance_of?(Addrinfo)
           end
 
           describe 'the returned Addrinfo' do

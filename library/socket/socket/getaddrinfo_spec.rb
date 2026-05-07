@@ -120,7 +120,7 @@ end
 describe 'Socket.getaddrinfo' do
   describe 'without global reverse lookups' do
     it 'returns an Array' do
-      Socket.getaddrinfo(nil, 'ftp').should be_an_instance_of(Array)
+      Socket.getaddrinfo(nil, 'ftp').should.instance_of?(Array)
     end
 
     it 'accepts an Integer as the address family' do
@@ -319,7 +319,7 @@ describe 'Socket.getaddrinfo' do
       addr[0].should == 'AF_INET'
       addr[1].should == 21
 
-      addr[2].should be_an_instance_of(String)
+      addr[2].should.instance_of?(String)
       addr[2].should_not == addr[3]
 
       addr[3].should == '127.0.0.1'
@@ -332,7 +332,7 @@ describe 'Socket.getaddrinfo' do
       addr[0].should == 'AF_INET'
       addr[1].should == 21
 
-      addr[2].should be_an_instance_of(String)
+      addr[2].should.instance_of?(String)
       addr[2].should_not == addr[3]
 
       addr[3].should == '127.0.0.1'
@@ -372,7 +372,7 @@ describe 'Socket.getaddrinfo' do
       # We don't have control over this value and there's no way to test this
       # without relying on Socket.getaddrinfo()'s own behaviour (meaning this
       # test would faily any way of the method was not implemented correctly).
-      addr[2].should be_an_instance_of(String)
+      addr[2].should.instance_of?(String)
       addr[2].should_not == addr[3]
 
       addr[3].should == '127.0.0.1'

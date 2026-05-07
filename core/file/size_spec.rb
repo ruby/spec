@@ -60,7 +60,7 @@ describe "File#size" do
   end
 
   it "returns the file's size as an Integer" do
-    @file.size.should be_an_instance_of(Integer)
+    @file.size.should.instance_of?(Integer)
   end
 
   it "returns the file's size in bytes" do

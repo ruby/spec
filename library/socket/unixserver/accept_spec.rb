@@ -88,7 +88,7 @@ describe 'UNIXServer#accept' do
     describe 'without any data' do
       it 'returns a UNIXSocket' do
         @socket = @server.accept
-        @socket.should be_an_instance_of(UNIXSocket)
+        @socket.should.instance_of?(UNIXSocket)
       end
     end
 
@@ -99,7 +99,7 @@ describe 'UNIXServer#accept' do
 
       it 'returns a UNIXSocket' do
         @socket = @server.accept
-        @socket.should be_an_instance_of(UNIXSocket)
+        @socket.should.instance_of?(UNIXSocket)
       end
 
       describe 'the returned UNIXSocket' do

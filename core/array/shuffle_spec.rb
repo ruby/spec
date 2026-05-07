@@ -22,7 +22,7 @@ describe "Array#shuffle" do
   end
 
   it "does not return subclass instances with Array subclass" do
-    ArraySpecs::MyArray[1, 2, 3].shuffle.should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].shuffle.should.instance_of?(Array)
   end
 
   it "calls #rand on the Object passed by the :random key in the arguments Hash" do
@@ -44,11 +44,11 @@ describe "Array#shuffle" do
     random = mock("array_shuffle_random")
     random.should_receive(:rand).at_least(1).times.and_return(0.3)
 
-    [1, 2].shuffle(random: random).should be_an_instance_of(Array)
+    [1, 2].shuffle(random: random).should.instance_of?(Array)
   end
 
   it "accepts a Random class for the value for random: argument" do
-    [1, 2].shuffle(random: Random).should be_an_instance_of(Array)
+    [1, 2].shuffle(random: Random).should.instance_of?(Array)
   end
 
   it "calls #to_int on the Object returned by #rand" do
@@ -57,7 +57,7 @@ describe "Array#shuffle" do
     random = mock("array_shuffle_random")
     random.should_receive(:rand).at_least(1).times.and_return(value)
 
-    [1, 2].shuffle(random: random).should be_an_instance_of(Array)
+    [1, 2].shuffle(random: random).should.instance_of?(Array)
   end
 
   it "raises a RangeError if the value is less than zero" do

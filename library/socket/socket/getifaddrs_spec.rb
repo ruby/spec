@@ -7,7 +7,7 @@ describe 'Socket.getifaddrs' do
   end
 
   it 'returns an Array' do
-    @ifaddrs.should be_an_instance_of(Array)
+    @ifaddrs.should.instance_of?(Array)
   end
 
   describe 'the returned Array' do
@@ -17,7 +17,7 @@ describe 'Socket.getifaddrs' do
 
     it 'contains instances of Socket::Ifaddr' do
       @ifaddrs.each do |ifaddr|
-        ifaddr.should be_an_instance_of(Socket::Ifaddr)
+        ifaddr.should.instance_of?(Socket::Ifaddr)
       end
     end
   end
@@ -31,7 +31,7 @@ describe 'Socket.getifaddrs' do
 
     it 'has an interface name' do
       @ifaddrs.each do |ifaddr|
-        ifaddr.name.should be_an_instance_of(String)
+        ifaddr.name.should.instance_of?(String)
       end
     end
 
@@ -49,7 +49,7 @@ describe 'Socket.getifaddrs' do
 
     it 'is an Addrinfo' do
       @addrs.all? do |addr|
-        addr.should be_an_instance_of(Addrinfo)
+        addr.should.instance_of?(Addrinfo)
         true
       end.should be_true
     end
@@ -71,7 +71,7 @@ describe 'Socket.getifaddrs' do
 
       it 'is an Addrinfo' do
         @addrs.all? do |addr|
-          addr.should be_an_instance_of(Addrinfo)
+          addr.should.instance_of?(Addrinfo)
           true
         end.should be_true
       end
@@ -92,7 +92,7 @@ describe 'Socket.getifaddrs' do
 
       it 'is an Addrinfo' do
         @addrs.all? do |addr|
-          addr.should be_an_instance_of(Addrinfo)
+          addr.should.instance_of?(Addrinfo)
           true
         end.should be_true
       end
@@ -107,7 +107,7 @@ describe 'Socket.getifaddrs' do
 
       it 'has an IP address' do
         @addrs.all? do |addr|
-          addr.ip_address.should be_an_instance_of(String)
+          addr.ip_address.should.instance_of?(String)
           true
         end.should be_true
       end

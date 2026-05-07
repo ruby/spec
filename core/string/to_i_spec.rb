@@ -145,24 +145,24 @@ describe "String#to_i" do
 
   it "returns an Integer for long strings with trailing spaces" do
     "0                             ".to_i.should == 0
-    "0                             ".to_i.should be_an_instance_of(Integer)
+    "0                             ".to_i.should.instance_of?(Integer)
 
     "10                             ".to_i.should == 10
-    "10                             ".to_i.should be_an_instance_of(Integer)
+    "10                             ".to_i.should.instance_of?(Integer)
 
     "-10                            ".to_i.should == -10
-    "-10                            ".to_i.should be_an_instance_of(Integer)
+    "-10                            ".to_i.should.instance_of?(Integer)
   end
 
   it "returns an Integer for long strings with leading spaces" do
     "                             0".to_i.should == 0
-    "                             0".to_i.should be_an_instance_of(Integer)
+    "                             0".to_i.should.instance_of?(Integer)
 
     "                             10".to_i.should == 10
-    "                             10".to_i.should be_an_instance_of(Integer)
+    "                             10".to_i.should.instance_of?(Integer)
 
     "                            -10".to_i.should == -10
-    "                            -10".to_i.should be_an_instance_of(Integer)
+    "                            -10".to_i.should.instance_of?(Integer)
   end
 
   it "returns the correct Integer for long strings" do

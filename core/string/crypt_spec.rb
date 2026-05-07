@@ -26,9 +26,9 @@ describe "String#crypt" do
     end
 
     it "doesn't return subclass instances" do
-      StringSpecs::MyString.new("mypassword").crypt("$2a$04$0WVaz0pV3jzfZ5G5tpmHWu").should be_an_instance_of(String)
-      "mypassword".crypt(StringSpecs::MyString.new("$2a$04$0WVaz0pV3jzfZ5G5tpmHWu")).should be_an_instance_of(String)
-      StringSpecs::MyString.new("mypassword").crypt(StringSpecs::MyString.new("$2a$04$0WVaz0pV3jzfZ5G5tpmHWu")).should be_an_instance_of(String)
+      StringSpecs::MyString.new("mypassword").crypt("$2a$04$0WVaz0pV3jzfZ5G5tpmHWu").should.instance_of?(String)
+      "mypassword".crypt(StringSpecs::MyString.new("$2a$04$0WVaz0pV3jzfZ5G5tpmHWu")).should.instance_of?(String)
+      StringSpecs::MyString.new("mypassword").crypt(StringSpecs::MyString.new("$2a$04$0WVaz0pV3jzfZ5G5tpmHWu")).should.instance_of?(String)
     end
   end
 
@@ -71,9 +71,9 @@ describe "String#crypt" do
     end
 
     it "doesn't return subclass instances" do
-      StringSpecs::MyString.new("hello").crypt("aa").should be_an_instance_of(String)
-      "hello".crypt(StringSpecs::MyString.new("aa")).should be_an_instance_of(String)
-      StringSpecs::MyString.new("hello").crypt(StringSpecs::MyString.new("aa")).should be_an_instance_of(String)
+      StringSpecs::MyString.new("hello").crypt("aa").should.instance_of?(String)
+      "hello".crypt(StringSpecs::MyString.new("aa")).should.instance_of?(String)
+      StringSpecs::MyString.new("hello").crypt(StringSpecs::MyString.new("aa")).should.instance_of?(String)
     end
 
     it "raises an ArgumentError when the salt is shorter than two characters" do

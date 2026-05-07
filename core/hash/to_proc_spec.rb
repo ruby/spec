@@ -11,7 +11,7 @@ describe "Hash#to_proc" do
   end
 
   it "returns an instance of Proc" do
-    @hash.to_proc.should be_an_instance_of Proc
+    @hash.to_proc.should.instance_of? Proc
   end
 
   describe "the returned proc" do

@@ -149,7 +149,7 @@ describe "Ruby character strings" do
     # is that if you interpolate an object that fails to return
     # a String, you will still get a String and not raise an
     # exception.
-    "#{obj}".should be_an_instance_of(String)
+    "#{obj}".should.instance_of?(String)
   end
 
   it "allows a dynamic string to parse a nested do...end block as an argument to a call without parens, interpolated" do

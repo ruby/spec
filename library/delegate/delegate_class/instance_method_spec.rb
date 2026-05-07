@@ -9,13 +9,13 @@ describe "DelegateClass.instance_method" do
 
   it "returns a method object for public instance methods of the delegated class" do
     m = @klass.instance_method(:pub)
-    m.should be_an_instance_of(UnboundMethod)
+    m.should.instance_of?(UnboundMethod)
     m.bind(@obj).call.should == :foo
   end
 
   it "returns a method object for protected instance methods of the delegated class" do
     m = @klass.instance_method(:prot)
-    m.should be_an_instance_of(UnboundMethod)
+    m.should.instance_of?(UnboundMethod)
     m.bind(@obj).call.should == :protected
   end
 
@@ -27,19 +27,19 @@ describe "DelegateClass.instance_method" do
 
   it "returns a method object for public instance methods of the DelegateClass class" do
     m = @klass.instance_method(:extra)
-    m.should be_an_instance_of(UnboundMethod)
+    m.should.instance_of?(UnboundMethod)
     m.bind(@obj).call.should == :cheese
   end
 
   it "returns a method object for protected instance methods of the DelegateClass class" do
     m = @klass.instance_method(:extra_protected)
-    m.should be_an_instance_of(UnboundMethod)
+    m.should.instance_of?(UnboundMethod)
     m.bind(@obj).call.should == :baz
   end
 
   it "returns a method object for private instance methods of the DelegateClass class" do
     m = @klass.instance_method(:extra_private)
-    m.should be_an_instance_of(UnboundMethod)
+    m.should.instance_of?(UnboundMethod)
     m.bind(@obj).call.should == :bar
   end
 

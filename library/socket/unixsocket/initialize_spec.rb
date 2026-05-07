@@ -31,7 +31,7 @@ describe 'UNIXSocket#initialize' do
     end
 
     it 'returns a new UNIXSocket' do
-      @socket.should be_an_instance_of(UNIXSocket)
+      @socket.should.instance_of?(UNIXSocket)
     end
 
     it 'sets the socket path to an empty String' do

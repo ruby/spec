@@ -11,7 +11,7 @@ describe :rb_file_open, shared: true do
   it "opens a file in read-only mode with 'r'" do
     touch(@name) { |f| f.puts "readable" }
     @file = @s.send(@method, @name, "r")
-    @file.should be_an_instance_of(File)
+    @file.should.instance_of?(File)
     @file.read.chomp.should == "readable"
   end
 

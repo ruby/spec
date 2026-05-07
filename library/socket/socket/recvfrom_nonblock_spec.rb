@@ -47,7 +47,7 @@ describe 'Socket#recvfrom_nonblock' do
             IO.select([@server])
             ret = @server.recvfrom_nonblock(1)
 
-            ret.should be_an_instance_of(Array)
+            ret.should.instance_of?(Array)
             ret.length.should == 2
           end
         end
@@ -98,7 +98,7 @@ describe 'Socket#recvfrom_nonblock' do
             end
 
             it 'contains an Addrinfo at index 1' do
-              @array[1].should be_an_instance_of(Addrinfo)
+              @array[1].should.instance_of?(Addrinfo)
             end
           end
 

@@ -2,12 +2,12 @@ require_relative '../../spec_helper'
 
 describe "Encoding.list" do
   it "returns an Array" do
-    Encoding.list.should be_an_instance_of(Array)
+    Encoding.list.should.instance_of?(Array)
   end
 
   it "returns an Array of Encoding objects" do
     Encoding.list.each do |enc|
-      enc.should be_an_instance_of(Encoding)
+      enc.should.instance_of?(Encoding)
     end
   end
 

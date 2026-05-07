@@ -8,13 +8,13 @@ describe "Enumerable#chunk" do
 
   it "returns an Enumerator if called without a block" do
     chunk = EnumerableSpecs::Numerous.new(1, 2, 3, 1, 2).chunk
-    chunk.should be_an_instance_of(Enumerator)
+    chunk.should.instance_of?(Enumerator)
     result = chunk.with_index {|elt, i| elt - i }.to_a
     result.should == [[1, [1, 2, 3]], [-2, [1, 2]]]
   end
 
   it "returns an Enumerator if given a block" do
-    EnumerableSpecs::Numerous.new.chunk {}.should be_an_instance_of(Enumerator)
+    EnumerableSpecs::Numerous.new.chunk {}.should.instance_of?(Enumerator)
   end
 
   it "yields the current element and the current chunk to the block" do

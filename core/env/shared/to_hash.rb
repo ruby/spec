@@ -10,7 +10,7 @@ describe :env_to_hash, shared: true do
   it "returns the ENV as a hash" do
     ENV["foo"] = "bar"
     h = ENV.send(@method)
-    h.should be_an_instance_of(Hash)
+    h.should.instance_of?(Hash)
     h["foo"].should == "bar"
   end
 

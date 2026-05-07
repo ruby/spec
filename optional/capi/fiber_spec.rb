@@ -10,7 +10,7 @@ describe "C-API Fiber function" do
   describe "rb_fiber_current" do
     it "returns the current fiber" do
       result = @s.rb_fiber_current()
-      result.should be_an_instance_of(Fiber)
+      result.should.instance_of?(Fiber)
       result.should == Fiber.current
     end
   end
@@ -43,7 +43,7 @@ describe "C-API Fiber function" do
   describe "rb_fiber_new" do
     it "returns a new fiber" do
       fiber = @s.rb_fiber_new
-      fiber.should be_an_instance_of(Fiber)
+      fiber.should.instance_of?(Fiber)
       fiber.resume(42).should == "42"
     end
   end
@@ -61,7 +61,7 @@ describe "C-API Fiber function" do
       fiber.resume
 
       result = @s.rb_fiber_raise(fiber, "Boom!")
-      result.should be_an_instance_of(RuntimeError)
+      result.should.instance_of?(RuntimeError)
       result.message.should == "Boom!"
     end
 
@@ -79,7 +79,7 @@ describe "C-API Fiber function" do
       fiber.transfer
 
       result = @s.rb_fiber_raise(fiber, "Boom!")
-      result.should be_an_instance_of(RuntimeError)
+      result.should.instance_of?(RuntimeError)
       result.message.should == "Boom!"
     end
   end

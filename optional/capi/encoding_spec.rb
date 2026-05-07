@@ -165,7 +165,7 @@ describe "C-API Encoding function" do
 
   describe "rb_enc_from_index" do
     it "returns an Encoding" do
-      @s.rb_enc_from_index(0).should be_an_instance_of(String)
+      @s.rb_enc_from_index(0).should.instance_of?(String)
     end
   end
 

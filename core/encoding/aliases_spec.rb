@@ -2,18 +2,18 @@ require_relative '../../spec_helper'
 
 describe "Encoding.aliases" do
   it "returns a Hash" do
-    Encoding.aliases.should be_an_instance_of(Hash)
+    Encoding.aliases.should.instance_of?(Hash)
   end
 
   it "has Strings as keys" do
     Encoding.aliases.keys.each do |key|
-      key.should be_an_instance_of(String)
+      key.should.instance_of?(String)
     end
   end
 
   it "has Strings as values" do
     Encoding.aliases.values.each do |value|
-      value.should be_an_instance_of(String)
+      value.should.instance_of?(String)
     end
   end
 

@@ -31,7 +31,7 @@ describe "The return keyword" do
           e
         end
       }
-      t.value.should be_an_instance_of(LocalJumpError)
+      t.value.should.instance_of?(LocalJumpError)
     end
   end
 

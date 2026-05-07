@@ -5,7 +5,7 @@ require_relative '../../../spec_helper'
 describe "Encoding::Converter#convert" do
   it "returns a String" do
     ec = Encoding::Converter.new('ascii', 'utf-8')
-    ec.convert('glark').should be_an_instance_of(String)
+    ec.convert('glark').should.instance_of?(String)
   end
 
   it "sets the encoding of the result to the target encoding" do

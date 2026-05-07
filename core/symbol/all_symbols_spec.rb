@@ -3,8 +3,8 @@ require_relative '../../spec_helper'
 describe "Symbol.all_symbols" do
   it "returns an array of Symbols" do
     all_symbols = Symbol.all_symbols
-    all_symbols.should be_an_instance_of(Array)
-    all_symbols.each { |s| s.should be_an_instance_of(Symbol) }
+    all_symbols.should.instance_of?(Array)
+    all_symbols.each { |s| s.should.instance_of?(Symbol) }
   end
 
   it "includes symbols that are strongly referenced" do

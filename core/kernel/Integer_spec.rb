@@ -29,8 +29,8 @@ describe :kernel_integer, shared: true do
   end
 
   it "returns an Integer object" do
-    Integer(2).should be_an_instance_of(Integer)
-    Integer(9**99).should be_an_instance_of(Integer)
+    Integer(2).should.instance_of?(Integer)
+    Integer(9**99).should.instance_of?(Integer)
   end
 
   it "truncates Floats" do

@@ -22,7 +22,7 @@ describe "Numeric#to_c" do
 
   it "returns a Complex object" do
     @numbers.each do |number|
-      number.to_c.should be_an_instance_of(Complex)
+      number.to_c.should.instance_of?(Complex)
     end
   end
 

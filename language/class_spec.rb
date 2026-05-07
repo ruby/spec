@@ -10,23 +10,23 @@ end
 describe "The class keyword" do
   it "creates a new class with semicolon" do
     class ClassSpecsKeywordWithSemicolon; end
-    ClassSpecsKeywordWithSemicolon.should be_an_instance_of(Class)
+    ClassSpecsKeywordWithSemicolon.should.instance_of?(Class)
   end
 
   it "does not raise a SyntaxError when opening a class without a semicolon" do
     eval "class ClassSpecsKeywordWithoutSemicolon end"
-    ClassSpecsKeywordWithoutSemicolon.should be_an_instance_of(Class)
+    ClassSpecsKeywordWithoutSemicolon.should.instance_of?(Class)
   end
 
   it "can redefine a class when called from a block" do
     ClassSpecs::DEFINE_CLASS.call
-    A.should be_an_instance_of(Class)
+    A.should.instance_of?(Class)
 
     Object.send(:remove_const, :A)
     defined?(A).should be_nil
 
     ClassSpecs::DEFINE_CLASS.call
-    A.should be_an_instance_of(Class)
+    A.should.instance_of?(Class)
   ensure
     Object.send(:remove_const, :A) if defined?(::A)
   end

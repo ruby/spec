@@ -194,10 +194,10 @@ describe "String#gsub with pattern and replacement" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("").gsub(//, "").should be_an_instance_of(String)
-    StringSpecs::MyString.new("").gsub(/foo/, "").should be_an_instance_of(String)
-    StringSpecs::MyString.new("foo").gsub(/foo/, "").should be_an_instance_of(String)
-    StringSpecs::MyString.new("foo").gsub("foo", "").should be_an_instance_of(String)
+    StringSpecs::MyString.new("").gsub(//, "").should.instance_of?(String)
+    StringSpecs::MyString.new("").gsub(/foo/, "").should.instance_of?(String)
+    StringSpecs::MyString.new("foo").gsub(/foo/, "").should.instance_of?(String)
+    StringSpecs::MyString.new("foo").gsub("foo", "").should.instance_of?(String)
   end
 
   it "sets $~ to MatchData of last match and nil when there's none" do
@@ -471,7 +471,7 @@ end
 describe "String#gsub with pattern and without replacement and block" do
   it "returns an enumerator" do
     enum = "abca".gsub(/a/)
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.to_a.should == ["a", "a"]
   end
 
@@ -601,7 +601,7 @@ end
 describe "String#gsub! with pattern and without replacement and block" do
   it "returns an enumerator" do
     enum = "abca".gsub!(/a/)
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.to_a.should == ["a", "a"]
   end
 

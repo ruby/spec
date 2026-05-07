@@ -86,7 +86,7 @@ describe "String#delete" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("oh no!!!").delete("!").should be_an_instance_of(String)
+    StringSpecs::MyString.new("oh no!!!").delete("!").should.instance_of?(String)
   end
 
   it "returns a String in the same encoding as self" do

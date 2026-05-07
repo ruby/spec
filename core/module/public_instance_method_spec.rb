@@ -13,11 +13,11 @@ describe "Module#public_instance_method" do
   describe "when given a public method name" do
     it "returns an UnboundMethod corresponding to the defined Module" do
       ret = ModuleSpecs::Super.public_instance_method(:public_module)
-      ret.should be_an_instance_of(UnboundMethod)
+      ret.should.instance_of?(UnboundMethod)
       ret.owner.should equal(ModuleSpecs::Basic)
 
       ret = ModuleSpecs::Super.public_instance_method(:public_super_module)
-      ret.should be_an_instance_of(UnboundMethod)
+      ret.should.instance_of?(UnboundMethod)
       ret.owner.should equal(ModuleSpecs::Super)
     end
 

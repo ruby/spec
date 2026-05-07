@@ -27,7 +27,7 @@ describe "IO#reopen" do
   it "changes the class of the instance to the class of the object returned by #to_io" do
     obj = mock("io")
     obj.should_receive(:to_io).and_return(@other_io)
-    @io.reopen(obj).should be_an_instance_of(File)
+    @io.reopen(obj).should.instance_of?(File)
   end
 
   it "raises an IOError if the object returned by #to_io is closed" do
@@ -244,7 +244,7 @@ describe "IO#reopen with an IO" do
     # MRI actually changes the class of @io in the call to #reopen
     # but does not preserve the existing singleton class of @io.
     def @io.to_io; flunk; end
-    @io.reopen(@other_io).should be_an_instance_of(IO)
+    @io.reopen(@other_io).should.instance_of?(IO)
   end
 
   it "does not change the object_id" do
@@ -303,7 +303,7 @@ describe "IO#reopen with an IO" do
 
   it "may change the class of the instance" do
     @io.reopen @other_io
-    @io.should be_an_instance_of(File)
+    @io.should.instance_of?(File)
   end
 
   it "sets path equals to the other IO's path if other IO is File" do

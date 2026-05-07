@@ -567,7 +567,7 @@ describe "File.open" do
 
   it "accepts options as a keyword argument" do
     @fh = File.open(@file, 'w', 0755, flags: File::CREAT)
-    @fh.should be_an_instance_of(File)
+    @fh.should.instance_of?(File)
 
     -> {
       File.open(@file, 'w', 0755, {flags: File::CREAT})
@@ -576,7 +576,7 @@ describe "File.open" do
 
   it "uses the second argument as an options Hash" do
     @fh = File.open(@file, mode: "r")
-    @fh.should be_an_instance_of(File)
+    @fh.should.instance_of?(File)
   end
 
   it "calls #to_hash to convert the second argument to a Hash" do
@@ -688,7 +688,7 @@ describe "File.open when passed a file descriptor" do
 
   it "opens a file" do
     @file = File.open(@fd, "w")
-    @file.should be_an_instance_of(File)
+    @file.should.instance_of?(File)
     @file.fileno.should equal(@fd)
     @file.write @content
     @file.flush
@@ -697,7 +697,7 @@ describe "File.open when passed a file descriptor" do
 
   it "opens a file when passed a block" do
     @file = File.open(@fd, "w") do |f|
-      f.should be_an_instance_of(File)
+      f.should.instance_of?(File)
       f.fileno.should equal(@fd)
       f.write @content
       f

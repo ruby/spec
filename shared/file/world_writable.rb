@@ -30,7 +30,7 @@ describe :file_world_writable, shared: true do
     # We don't specify what the Integer is because it's system dependent
     it "returns an Integer if the file is chmod 777" do
       File.chmod(0777, @file)
-      @object.world_writable?(@file).should be_an_instance_of(Integer)
+      @object.world_writable?(@file).should.instance_of?(Integer)
     end
 
     it "returns an Integer if the file is a directory and chmod 777" do
@@ -38,7 +38,7 @@ describe :file_world_writable, shared: true do
       Dir.mkdir(dir)
       Dir.should.exist?(dir)
       File.chmod(0777, dir)
-      @object.world_writable?(dir).should be_an_instance_of(Integer)
+      @object.world_writable?(dir).should.instance_of?(Integer)
       Dir.rmdir(dir)
     end
   end

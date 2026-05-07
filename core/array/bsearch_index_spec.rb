@@ -8,7 +8,7 @@ describe "Array#bsearch_index" do
     end
 
     it "returns an Enumerator" do
-      @enum.should be_an_instance_of(Enumerator)
+      @enum.should.instance_of?(Enumerator)
     end
 
     it "returns an Enumerator with unknown size" do

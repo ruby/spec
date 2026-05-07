@@ -18,7 +18,7 @@ describe "Range#reverse_each" do
 
   it "returns an Enumerator if no block given" do
     enum = (1..3).reverse_each
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.to_a.should == [3, 2, 1]
   end
 

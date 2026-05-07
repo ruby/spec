@@ -10,7 +10,7 @@ describe "Encoding.default_external" do
   end
 
   it "returns an Encoding object" do
-    Encoding.default_external.should be_an_instance_of(Encoding)
+    Encoding.default_external.should.instance_of?(Encoding)
   end
 
   it "returns the default external encoding" do

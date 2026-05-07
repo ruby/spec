@@ -20,7 +20,7 @@ describe "ENV.each_key" do
 
   it "returns an Enumerator if called without a block" do
     enum = ENV.each_key
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.to_a.should == ENV.keys
   end
 

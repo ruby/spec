@@ -22,12 +22,12 @@ describe 'Socket.tcp' do
   it 'returns a Socket when no block is given' do
     @client = Socket.tcp(@host, @port)
 
-    @client.should be_an_instance_of(Socket)
+    @client.should.instance_of?(Socket)
   end
 
   it 'yields the Socket when a block is given' do
     Socket.tcp(@host, @port) do |socket|
-      socket.should be_an_instance_of(Socket)
+      socket.should.instance_of?(Socket)
     end
   end
 

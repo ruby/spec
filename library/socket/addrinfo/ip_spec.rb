@@ -36,7 +36,7 @@ end
 describe 'Addrinfo.ip' do
   SocketSpecs.each_ip_protocol do |family, ip_address|
     it 'returns an Addrinfo instance' do
-      Addrinfo.ip(ip_address).should be_an_instance_of(Addrinfo)
+      Addrinfo.ip(ip_address).should.instance_of?(Addrinfo)
     end
 
     it 'sets the IP address' do

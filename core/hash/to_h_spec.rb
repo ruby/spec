@@ -14,7 +14,7 @@ describe "Hash#to_h" do
     end
 
     it "returns a new Hash instance" do
-      @h.to_h.should be_an_instance_of(Hash)
+      @h.to_h.should.instance_of?(Hash)
       @h.to_h.should == @h
       @h[:foo].should == :bar
     end

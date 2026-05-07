@@ -47,8 +47,8 @@ describe "Hash#merge" do
   end
 
   it "returns subclass instance for subclasses" do
-    HashSpecs::MyHash[1 => 2, 3 => 4].merge({ 1 => 2 }).should be_an_instance_of(HashSpecs::MyHash)
-    HashSpecs::MyHash[].merge({ 1 => 2 }).should be_an_instance_of(HashSpecs::MyHash)
+    HashSpecs::MyHash[1 => 2, 3 => 4].merge({ 1 => 2 }).should.instance_of?(HashSpecs::MyHash)
+    HashSpecs::MyHash[].merge({ 1 => 2 }).should.instance_of?(HashSpecs::MyHash)
 
     { 1 => 2, 3 => 4 }.merge(HashSpecs::MyHash[1 => 2]).class.should == Hash
     {}.merge(HashSpecs::MyHash[1 => 2]).class.should == Hash

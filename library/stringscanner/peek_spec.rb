@@ -37,6 +37,6 @@ describe "StringScanner#peek" do
 
     ch = s.peek(1)
     ch.should_not be_kind_of(cls)
-    ch.should be_an_instance_of(String)
+    ch.should.instance_of?(String)
   end
 end

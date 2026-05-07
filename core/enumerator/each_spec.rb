@@ -83,7 +83,7 @@ describe "Enumerator#each" do
 
   it "returns new Enumerator if given arguments but not given a block" do
     ret = @enum_with_arguments.each 1
-    ret.should be_an_instance_of(Enumerator)
+    ret.should.instance_of?(Enumerator)
     ret.should_not equal(@enum_with_arguments)
   end
 

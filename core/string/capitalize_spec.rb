@@ -79,8 +79,8 @@ describe "String#capitalize" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("hello").capitalize.should be_an_instance_of(String)
-    StringSpecs::MyString.new("Hello").capitalize.should be_an_instance_of(String)
+    StringSpecs::MyString.new("hello").capitalize.should.instance_of?(String)
+    StringSpecs::MyString.new("Hello").capitalize.should.instance_of?(String)
   end
 
   it "returns a String in the same encoding as self" do

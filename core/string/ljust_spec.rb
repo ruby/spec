@@ -65,12 +65,12 @@ describe "String#ljust with length, padding" do
   end
 
   it "returns String instances when called on subclasses" do
-    StringSpecs::MyString.new("").ljust(10).should be_an_instance_of(String)
-    StringSpecs::MyString.new("foo").ljust(10).should be_an_instance_of(String)
-    StringSpecs::MyString.new("foo").ljust(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
+    StringSpecs::MyString.new("").ljust(10).should.instance_of?(String)
+    StringSpecs::MyString.new("foo").ljust(10).should.instance_of?(String)
+    StringSpecs::MyString.new("foo").ljust(10, StringSpecs::MyString.new("x")).should.instance_of?(String)
 
-    "".ljust(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
-    "foo".ljust(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
+    "".ljust(10, StringSpecs::MyString.new("x")).should.instance_of?(String)
+    "foo".ljust(10, StringSpecs::MyString.new("x")).should.instance_of?(String)
   end
 
   describe "with width" do

@@ -4,7 +4,7 @@ describe "Kernel#singleton_method" do
   it "finds a method defined on the singleton class" do
     obj = Object.new
     def obj.foo; end
-    obj.singleton_method(:foo).should be_an_instance_of(Method)
+    obj.singleton_method(:foo).should.instance_of?(Method)
   end
 
   it "returns a Method which can be called" do
@@ -50,7 +50,7 @@ describe "Kernel#singleton_method" do
       obj = Object.new
       obj.singleton_class.include(m)
 
-      obj.singleton_method(:foo).should be_an_instance_of(Method)
+      obj.singleton_method(:foo).should.instance_of?(Method)
       obj.singleton_method(:foo).call.should == :foo
     end
 
@@ -64,7 +64,7 @@ describe "Kernel#singleton_method" do
       obj = Object.new
       obj.singleton_class.prepend(m)
 
-      obj.singleton_method(:foo).should be_an_instance_of(Method)
+      obj.singleton_method(:foo).should.instance_of?(Method)
       obj.singleton_method(:foo).call.should == :foo
     end
 
@@ -78,7 +78,7 @@ describe "Kernel#singleton_method" do
       obj = Object.new
       obj.extend(m)
 
-      obj.singleton_method(:foo).should be_an_instance_of(Method)
+      obj.singleton_method(:foo).should.instance_of?(Method)
       obj.singleton_method(:foo).call.should == :foo
     end
   end

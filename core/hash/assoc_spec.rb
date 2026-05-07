@@ -6,7 +6,7 @@ describe "Hash#assoc" do
   end
 
   it "returns an Array if the argument is == to a key of the Hash" do
-    @h.assoc(:apple).should be_an_instance_of(Array)
+    @h.assoc(:apple).should.instance_of?(Array)
   end
 
   it "returns a 2-element Array if the argument is == to a key of the Hash" do

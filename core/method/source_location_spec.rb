@@ -7,18 +7,18 @@ describe "Method#source_location" do
   end
 
   it "returns an Array" do
-    @method.source_location.should be_an_instance_of(Array)
+    @method.source_location.should.instance_of?(Array)
   end
 
   it "sets the first value to the path of the file in which the method was defined" do
     file = @method.source_location.first
-    file.should be_an_instance_of(String)
+    file.should.instance_of?(String)
     file.should == File.realpath('fixtures/classes.rb', __dir__)
   end
 
   it "sets the last value to an Integer representing the line on which the method was defined" do
     line = @method.source_location.last
-    line.should be_an_instance_of(Integer)
+    line.should.instance_of?(Integer)
     line.should == 5
   end
 

@@ -24,12 +24,12 @@ describe :array_pack_basic_non_float, shared: true do
   end
 
   it "ignores whitespace in the format string" do
-    [@obj, @obj].pack("a \t\n\v\f\r"+pack_format).should be_an_instance_of(String)
+    [@obj, @obj].pack("a \t\n\v\f\r"+pack_format).should.instance_of?(String)
   end
 
   it "ignores comments in the format string" do
     # 2 additional directives ('a') are required for the X directive
-    [@obj, @obj, @obj, @obj].pack("aa #{pack_format} # some comment \n#{pack_format}").should be_an_instance_of(String)
+    [@obj, @obj, @obj, @obj].pack("aa #{pack_format} # some comment \n#{pack_format}").should.instance_of?(String)
   end
 
   it "raise ArgumentError when a directive is unknown" do
@@ -42,23 +42,23 @@ describe :array_pack_basic_non_float, shared: true do
   it "calls #to_str to coerce the directives string" do
     d = mock("pack directive")
     d.should_receive(:to_str).and_return("x"+pack_format)
-    [@obj, @obj].pack(d).should be_an_instance_of(String)
+    [@obj, @obj].pack(d).should.instance_of?(String)
   end
 end
 
 describe :array_pack_basic_float, shared: true do
   it "ignores whitespace in the format string" do
-    [9.3, 4.7].pack(" \t\n\v\f\r"+pack_format).should be_an_instance_of(String)
+    [9.3, 4.7].pack(" \t\n\v\f\r"+pack_format).should.instance_of?(String)
   end
 
   it "ignores comments in the format string" do
-    [9.3, 4.7].pack(pack_format + "# some comment \n" + pack_format).should be_an_instance_of(String)
+    [9.3, 4.7].pack(pack_format + "# some comment \n" + pack_format).should.instance_of?(String)
   end
 
   it "calls #to_str to coerce the directives string" do
     d = mock("pack directive")
     d.should_receive(:to_str).and_return("x"+pack_format)
-    [1.2, 4.7].pack(d).should be_an_instance_of(String)
+    [1.2, 4.7].pack(d).should.instance_of?(String)
   end
 end
 

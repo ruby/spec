@@ -12,9 +12,9 @@ describe "String#reverse" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("stressed").reverse.should be_an_instance_of(String)
-    StringSpecs::MyString.new("m").reverse.should be_an_instance_of(String)
-    StringSpecs::MyString.new("").reverse.should be_an_instance_of(String)
+    StringSpecs::MyString.new("stressed").reverse.should.instance_of?(String)
+    StringSpecs::MyString.new("m").reverse.should.instance_of?(String)
+    StringSpecs::MyString.new("").reverse.should.instance_of?(String)
   end
 
   it "reverses a string with multi byte characters" do

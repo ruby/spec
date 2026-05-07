@@ -77,7 +77,7 @@ describe "String#squeeze" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("oh no!!!").squeeze("!").should be_an_instance_of(String)
+    StringSpecs::MyString.new("oh no!!!").squeeze("!").should.instance_of?(String)
   end
 end
 

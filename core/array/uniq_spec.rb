@@ -86,7 +86,7 @@ describe "Array#uniq" do
   end
 
   it "returns Array instance on Array subclasses" do
-    ArraySpecs::MyArray[1, 2, 3].uniq.should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].uniq.should.instance_of?(Array)
   end
 
   it "properly handles an identical item even when its #eql? isn't reflexive" do

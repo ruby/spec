@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Integer#chr without argument" do
   it "returns a String" do
-    17.chr.should be_an_instance_of(String)
+    17.chr.should.instance_of?(String)
   end
 
   it "returns a new String for each call" do
@@ -146,7 +146,7 @@ end
 
 describe "Integer#chr with an encoding argument" do
   it "returns a String" do
-    900.chr(Encoding::UTF_8).should be_an_instance_of(String)
+    900.chr(Encoding::UTF_8).should.instance_of?(String)
   end
 
   it "returns a new String for each call" do

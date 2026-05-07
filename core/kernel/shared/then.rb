@@ -12,7 +12,7 @@ describe :kernel_then, shared: true do
   it "returns a sized Enumerator when no block given" do
     object = Object.new
     enum = object.send(@method)
-    enum.should be_an_instance_of Enumerator
+    enum.should.instance_of? Enumerator
     enum.size.should equal 1
     enum.peek.should equal object
     enum.first.should equal object

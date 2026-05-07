@@ -8,12 +8,12 @@ describe "Proc#curry" do
 
   it "returns a Proc when called on a proc" do
     p = proc { true }
-    p.curry.should be_an_instance_of(Proc)
+    p.curry.should.instance_of?(Proc)
   end
 
   it "returns a Proc when called on a lambda" do
     p = -> { true }
-    p.curry.should be_an_instance_of(Proc)
+    p.curry.should.instance_of?(Proc)
   end
 
   it "calls the curried proc with the arguments if sufficient arguments have been given" do
@@ -23,11 +23,11 @@ describe "Proc#curry" do
 
   it "returns a Proc that consumes the remainder of the arguments unless sufficient arguments have been given" do
     proc2 = @proc_add.curry[1][2]
-    proc2.should be_an_instance_of(Proc)
+    proc2.should.instance_of?(Proc)
     proc2.call(3).should == 6
 
     lambda2 = @lambda_add.curry[1][2]
-    lambda2.should be_an_instance_of(Proc)
+    lambda2.should.instance_of?(Proc)
     lambda2.call(3).should == 6
 
     @proc_add.curry.call(1,2,3).should == 6
@@ -103,11 +103,11 @@ describe "Proc#curry with arity argument" do
   end
 
   it "returns a Proc when called on a proc" do
-    @proc_add.curry(3).should be_an_instance_of(Proc)
+    @proc_add.curry(3).should.instance_of?(Proc)
   end
 
   it "returns a Proc when called on a lambda" do
-    @lambda_add.curry(3).should be_an_instance_of(Proc)
+    @lambda_add.curry(3).should.instance_of?(Proc)
   end
 
   # [ruby-core:24127]
@@ -122,9 +122,9 @@ describe "Proc#curry with arity argument" do
   end
 
   it 'returns a Proc if called on a lambda that requires fewer than _arity_ arguments but may take more' do
-    -> a, b, c, d=nil, e=nil {}.curry(4).should be_an_instance_of(Proc)
-    -> a, b, c, d=nil, *e {}.curry(4).should be_an_instance_of(Proc)
-    -> a, b, c, *d {}.curry(4).should be_an_instance_of(Proc)
+    -> a, b, c, d=nil, e=nil {}.curry(4).should.instance_of?(Proc)
+    -> a, b, c, d=nil, *e {}.curry(4).should.instance_of?(Proc)
+    -> a, b, c, *d {}.curry(4).should.instance_of?(Proc)
   end
 
   it "raises an ArgumentError if called on a lambda that requires fewer than _arity_ arguments" do
@@ -142,11 +142,11 @@ describe "Proc#curry with arity argument" do
 
   it "returns a Proc that consumes the remainder of the arguments when fewer than _arity_ arguments are given" do
     proc2 = @proc_add.curry(3)[1][2]
-    proc2.should be_an_instance_of(Proc)
+    proc2.should.instance_of?(Proc)
     proc2.call(3).should == 6
 
     lambda2 = @lambda_add.curry(3)[1][2]
-    lambda2.should be_an_instance_of(Proc)
+    lambda2.should.instance_of?(Proc)
     lambda2.call(3).should == 6
   end
 

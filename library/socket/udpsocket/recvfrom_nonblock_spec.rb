@@ -48,7 +48,7 @@ describe 'UDPSocket#recvfrom_nonblock' do
 
           it 'returns an Array containing the data and an Array' do
             IO.select([@server])
-            @server.recvfrom_nonblock(1).should be_an_instance_of(Array)
+            @server.recvfrom_nonblock(1).should.instance_of?(Array)
           end
 
           it 'writes the data to the buffer when one is present' do
@@ -78,7 +78,7 @@ describe 'UDPSocket#recvfrom_nonblock' do
             end
 
             it 'contains an Array at index 1' do
-              @array[1].should be_an_instance_of(Array)
+              @array[1].should.instance_of?(Array)
             end
           end
 

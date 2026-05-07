@@ -51,7 +51,7 @@ end
 
 describe "Random#rand with Fixnum" do
   it "returns an Integer" do
-    Random.new.rand(20).should be_an_instance_of(Integer)
+    Random.new.rand(20).should.instance_of?(Integer)
   end
 
   it "returns a Fixnum greater than or equal to 0" do
@@ -95,7 +95,7 @@ end
 describe "Random#rand with Bignum" do
   it "typically returns a Bignum" do
     rnd = Random.new(1)
-    10.times.map{ rnd.rand(bignum_value*2) }.max.should be_an_instance_of(Integer)
+    10.times.map{ rnd.rand(bignum_value*2) }.max.should.instance_of?(Integer)
   end
 
   it "returns a Bignum greater than or equal to 0" do
@@ -127,7 +127,7 @@ end
 
 describe "Random#rand with Float" do
   it "returns a Float" do
-    Random.new.rand(20.43).should be_an_instance_of(Float)
+    Random.new.rand(20.43).should.instance_of?(Float)
   end
 
   it "returns a Float greater than or equal to 0.0" do
@@ -159,13 +159,13 @@ end
 
 describe "Random#rand with Range" do
   it "returns an element from the Range" do
-    Random.new.rand(20..43).should be_an_instance_of(Integer)
+    Random.new.rand(20..43).should.instance_of?(Integer)
   end
 
   it "supports custom object types" do
-    rand(RandomSpecs::CustomRangeInteger.new(1)..RandomSpecs::CustomRangeInteger.new(42)).should be_an_instance_of(RandomSpecs::CustomRangeInteger)
-    rand(RandomSpecs::CustomRangeFloat.new(1.0)..RandomSpecs::CustomRangeFloat.new(42.0)).should be_an_instance_of(RandomSpecs::CustomRangeFloat)
-    rand(Time.now..Time.now).should be_an_instance_of(Time)
+    rand(RandomSpecs::CustomRangeInteger.new(1)..RandomSpecs::CustomRangeInteger.new(42)).should.instance_of?(RandomSpecs::CustomRangeInteger)
+    rand(RandomSpecs::CustomRangeFloat.new(1.0)..RandomSpecs::CustomRangeFloat.new(42.0)).should.instance_of?(RandomSpecs::CustomRangeFloat)
+    rand(Time.now..Time.now).should.instance_of?(Time)
   end
 
   it "returns an object that is a member of the Range" do

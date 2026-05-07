@@ -21,7 +21,7 @@ describe "Enumerator#initialize" do
       r = yielder.yield 3
       yielder << r << 2 << 1
     end
-    @uninitialized.should be_an_instance_of(Enumerator)
+    @uninitialized.should.instance_of?(Enumerator)
     r = []
     @uninitialized.each{|x| r << x; x * 2}
     r.should == [3, 6, 2, 1]

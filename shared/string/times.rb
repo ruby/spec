@@ -33,9 +33,9 @@ describe :string_times, shared: true do
   end
 
   it "returns String instances" do
-    @object.call(MyString.new("cool"), 0).should be_an_instance_of(String)
-    @object.call(MyString.new("cool"), 1).should be_an_instance_of(String)
-    @object.call(MyString.new("cool"), 2).should be_an_instance_of(String)
+    @object.call(MyString.new("cool"), 0).should.instance_of?(String)
+    @object.call(MyString.new("cool"), 1).should.instance_of?(String)
+    @object.call(MyString.new("cool"), 2).should.instance_of?(String)
   end
 
   it "returns a String in the same encoding as self" do

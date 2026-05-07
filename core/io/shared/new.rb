@@ -22,7 +22,7 @@ describe :io_new, shared: true do
 
   it "creates an IO instance from an Integer argument" do
     @io = IO.send(@method, @fd, "w")
-    @io.should be_an_instance_of(IO)
+    @io.should.instance_of?(IO)
   end
 
   it "creates an IO instance when STDOUT is closed" do
@@ -32,7 +32,7 @@ describe :io_new, shared: true do
 
       begin
         @io = IO.send(@method, @fd, "w")
-        @io.should be_an_instance_of(IO)
+        @io.should.instance_of?(IO)
       ensure
         STDOUT = stdout
         rm_r stdout_file
@@ -49,7 +49,7 @@ describe :io_new, shared: true do
 
       begin
         @io = IO.send(@method, @fd, "w")
-        @io.should be_an_instance_of(IO)
+        @io.should.instance_of?(IO)
       ensure
         STDERR = stderr
         rm_r stderr_file
@@ -61,7 +61,7 @@ describe :io_new, shared: true do
     obj = mock("file descriptor")
     obj.should_receive(:to_int).and_return(@fd)
     @io = IO.send(@method, obj, "w")
-    @io.should be_an_instance_of(IO)
+    @io.should.instance_of?(IO)
   end
 
   it "accepts options as keyword arguments" do

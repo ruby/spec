@@ -30,7 +30,7 @@ describe :set_select_bang, shared: true do
 
   it "returns an Enumerator when passed no block" do
     enum = @set.send(@method)
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
 
     enum.each { |x| x.size != 3 }
 

@@ -18,7 +18,7 @@ describe :env_each, shared: true do
 
   it "returns an Enumerator if called without a block" do
     enum = ENV.send(@method)
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.each do |name, value|
       ENV[name].should == value
     end

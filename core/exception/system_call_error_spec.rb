@@ -15,7 +15,7 @@ describe "SystemCallError" do
 
     exc = ExceptionSpecs::SCESub.new
     ScratchPad.recorded.should equal(:initialize)
-    exc.should be_an_instance_of(ExceptionSpecs::SCESub)
+    exc.should.instance_of?(ExceptionSpecs::SCESub)
   ensure
     ExceptionSpecs.send(:remove_const, :SCESub)
   end
@@ -44,16 +44,16 @@ describe "SystemCallError.new" do
   end
 
   it "constructs a SystemCallError for an unknown error number" do
-    SystemCallError.new(-2**24).should be_an_instance_of(SystemCallError)
-    SystemCallError.new(-1).should be_an_instance_of(SystemCallError)
-    SystemCallError.new(@unknown_errno).should be_an_instance_of(SystemCallError)
-    SystemCallError.new(2**24).should be_an_instance_of(SystemCallError)
+    SystemCallError.new(-2**24).should.instance_of?(SystemCallError)
+    SystemCallError.new(-1).should.instance_of?(SystemCallError)
+    SystemCallError.new(@unknown_errno).should.instance_of?(SystemCallError)
+    SystemCallError.new(2**24).should.instance_of?(SystemCallError)
   end
 
   it "constructs the appropriate Errno class" do
     e = SystemCallError.new(@example_errno)
     e.should be_kind_of(SystemCallError)
-    e.should be_an_instance_of(@example_errno_class)
+    e.should.instance_of?(@example_errno_class)
   end
 
   it "sets an error message corresponding to an appropriate Errno class" do
@@ -63,14 +63,14 @@ describe "SystemCallError.new" do
 
   it "accepts an optional custom message preceding the errno" do
     exc = SystemCallError.new("custom message", @example_errno)
-    exc.should be_an_instance_of(@example_errno_class)
+    exc.should.instance_of?(@example_errno_class)
     exc.errno.should == @example_errno
     exc.message.should == 'Invalid argument - custom message'
   end
 
   it "accepts an optional third argument specifying the location" do
     exc = SystemCallError.new("custom message", @example_errno, "location")
-    exc.should be_an_instance_of(@example_errno_class)
+    exc.should.instance_of?(@example_errno_class)
     exc.errno.should == @example_errno
     exc.message.should == 'Invalid argument @ location - custom message'
   end
@@ -90,7 +90,7 @@ describe "SystemCallError.new" do
   end
 
   it "treats nil errno as unknown error value" do
-    SystemCallError.new(nil).should be_an_instance_of(SystemCallError)
+    SystemCallError.new(nil).should.instance_of?(SystemCallError)
   end
 
   it "treats nil custom message as if it is not passed at all" do

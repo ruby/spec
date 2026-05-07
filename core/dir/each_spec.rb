@@ -48,7 +48,7 @@ describe "Dir#each" do
 
   describe "when no block is given" do
     it "returns an Enumerator" do
-      @dir.each.should be_an_instance_of(Enumerator)
+      @dir.each.should.instance_of?(Enumerator)
       @dir.each.to_a.sort.should == DirSpecs.expected_paths
     end
 

@@ -55,7 +55,7 @@ end
 describe 'TCPSocket.gethostbyname' do
   it 'returns an Array' do
     suppress_warning do
-      TCPSocket.gethostbyname('127.0.0.1').should be_an_instance_of(Array)
+      TCPSocket.gethostbyname('127.0.0.1').should.instance_of?(Array)
     end
   end
 
@@ -72,7 +72,7 @@ describe 'TCPSocket.gethostbyname' do
       end
 
       it 'includes an array of alternative hostnames as the 2nd value' do
-        @array[1].should be_an_instance_of(Array)
+        @array[1].should.instance_of?(Array)
       end
 
       it 'includes the address family as the 3rd value' do

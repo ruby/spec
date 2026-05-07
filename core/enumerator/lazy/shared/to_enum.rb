@@ -13,7 +13,7 @@ describe :enumerator_lazy_to_enum, shared: true do
 
   it "returns a new instance of Enumerator::Lazy" do
     ret = @infinite.send @method
-    ret.should be_an_instance_of(Enumerator::Lazy)
+    ret.should.instance_of?(Enumerator::Lazy)
     ret.should_not equal(@infinite)
   end
 
@@ -43,7 +43,7 @@ describe :enumerator_lazy_to_enum, shared: true do
       each_entry: [],
       each_cons: [2]
     }.each_pair do |method, args|
-      @infinite.send(method, *args).should be_an_instance_of(Enumerator::Lazy)
+      @infinite.send(method, *args).should.instance_of?(Enumerator::Lazy)
     end
   end
 

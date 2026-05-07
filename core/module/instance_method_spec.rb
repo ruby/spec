@@ -32,11 +32,11 @@ describe "Module#instance_method" do
   end
 
   it "returns an UnboundMethod when given a protected method name" do
-    ModuleSpecs::Basic.instance_method(:protected_module).should be_an_instance_of(UnboundMethod)
+    ModuleSpecs::Basic.instance_method(:protected_module).should.instance_of?(UnboundMethod)
   end
 
   it "returns an UnboundMethod when given a private method name" do
-    ModuleSpecs::Basic.instance_method(:private_module).should be_an_instance_of(UnboundMethod)
+    ModuleSpecs::Basic.instance_method(:private_module).should.instance_of?(UnboundMethod)
   end
 
   it "gives UnboundMethod method name, Module defined in and Module extracted from" do

@@ -18,17 +18,17 @@ describe "Kernel.Rational" do
       rat = Rational(1, 2)
       rat.numerator.should == 1
       rat.denominator.should == 2
-      rat.should be_an_instance_of(Rational)
+      rat.should.instance_of?(Rational)
 
       rat = Rational(-3, -5)
       rat.numerator.should == 3
       rat.denominator.should == 5
-      rat.should be_an_instance_of(Rational)
+      rat.should.instance_of?(Rational)
 
       rat = Rational(bignum_value, 3)
       rat.numerator.should == bignum_value
       rat.denominator.should == 3
-      rat.should be_an_instance_of(Rational)
+      rat.should.instance_of?(Rational)
     end
 
     it "reduces the Rational" do

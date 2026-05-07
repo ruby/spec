@@ -60,7 +60,7 @@ describe "Kernel.catch" do
   end
 
   it "yields an object when called without arguments" do
-    catch { |tag| tag }.should be_an_instance_of(Object)
+    catch { |tag| tag }.should.instance_of?(Object)
   end
 
   it "can be used even in a method different from where throw is called" do

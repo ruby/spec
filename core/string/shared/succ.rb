@@ -60,9 +60,9 @@ describe :string_succ, shared: true do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("").send(@method).should be_an_instance_of(String)
-    StringSpecs::MyString.new("a").send(@method).should be_an_instance_of(String)
-    StringSpecs::MyString.new("z").send(@method).should be_an_instance_of(String)
+    StringSpecs::MyString.new("").send(@method).should.instance_of?(String)
+    StringSpecs::MyString.new("a").send(@method).should.instance_of?(String)
+    StringSpecs::MyString.new("z").send(@method).should.instance_of?(String)
   end
 
   it "returns a String in the same encoding as self" do

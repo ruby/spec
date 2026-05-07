@@ -4,7 +4,7 @@ require_relative 'fixtures/iso-8859-9-encoding'
 
 describe "String#encoding" do
   it "returns an Encoding object" do
-    String.new.encoding.should be_an_instance_of(Encoding)
+    String.new.encoding.should.instance_of?(Encoding)
   end
 
   it "is equal to the source encoding by default" do

@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe 'Addrinfo.unix' do
   it 'returns an Addrinfo instance' do
-    Addrinfo.unix('socket').should be_an_instance_of(Addrinfo)
+    Addrinfo.unix('socket').should.instance_of?(Addrinfo)
   end
 
   it 'sets the IP address' do

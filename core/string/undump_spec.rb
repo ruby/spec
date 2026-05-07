@@ -8,7 +8,7 @@ describe "String#undump" do
   end
 
   it "always returns String instance" do
-    StringSpecs::MyString.new('"foo"').undump.should be_an_instance_of(String)
+    StringSpecs::MyString.new('"foo"').undump.should.instance_of?(String)
   end
 
   it "strips outer \"" do

@@ -6,7 +6,7 @@ describe "Hash#rassoc" do
   end
 
   it "returns an Array if the argument is a value of the Hash" do
-    @h.rassoc(:green).should be_an_instance_of(Array)
+    @h.rassoc(:green).should.instance_of?(Array)
   end
 
   it "returns a 2-element Array if the argument is a value of the Hash" do

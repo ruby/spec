@@ -82,12 +82,12 @@ describe "String#center with length, padding" do
   end
 
   it "returns String instances when called on subclasses" do
-    StringSpecs::MyString.new("").center(10).should be_an_instance_of(String)
-    StringSpecs::MyString.new("foo").center(10).should be_an_instance_of(String)
-    StringSpecs::MyString.new("foo").center(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
+    StringSpecs::MyString.new("").center(10).should.instance_of?(String)
+    StringSpecs::MyString.new("foo").center(10).should.instance_of?(String)
+    StringSpecs::MyString.new("foo").center(10, StringSpecs::MyString.new("x")).should.instance_of?(String)
 
-    "".center(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
-    "foo".center(10, StringSpecs::MyString.new("x")).should be_an_instance_of(String)
+    "".center(10, StringSpecs::MyString.new("x")).should.instance_of?(String)
+    "foo".center(10, StringSpecs::MyString.new("x")).should.instance_of?(String)
   end
 
   describe "with width" do

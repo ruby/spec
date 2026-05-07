@@ -620,7 +620,7 @@ describe "A method" do
         def m(&b) b end
       ruby
 
-      m { }.should be_an_instance_of(Proc)
+      m { }.should.instance_of?(Proc)
     end
 
     evaluate <<-ruby do

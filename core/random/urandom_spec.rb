@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe "Random.urandom" do
   it "returns a String" do
-    Random.urandom(1).should be_an_instance_of(String)
+    Random.urandom(1).should.instance_of?(String)
   end
 
   it "returns a String of the length given as argument" do

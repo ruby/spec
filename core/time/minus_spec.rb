@@ -110,7 +110,7 @@ describe "Time#-" do
   it "does not return a subclass instance" do
     c = Class.new(Time)
     x = c.now - 1
-    x.should be_an_instance_of(Time)
+    x.should.instance_of?(Time)
   end
 
   it "returns a time with nanoseconds precision between two time objects" do

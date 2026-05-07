@@ -36,19 +36,19 @@ describe "Encoding::Converter#last_error" do
   it "returns an Encoding::InvalidByteSequenceError when #primitive_convert last returned :invalid_byte_sequence" do
     ec = Encoding::Converter.new("utf-8", "iso-8859-1")
     ec.primitive_convert(+"\xf1abcd", +"").should == :invalid_byte_sequence
-    ec.last_error.should be_an_instance_of(Encoding::InvalidByteSequenceError)
+    ec.last_error.should.instance_of?(Encoding::InvalidByteSequenceError)
   end
 
   it "returns an Encoding::UndefinedConversionError when #primitive_convert last returned :undefined_conversion" do
     ec = Encoding::Converter.new("utf-8", "iso-8859-1")
     ec.primitive_convert(+"\u{9876}", +"").should == :undefined_conversion
-    ec.last_error.should be_an_instance_of(Encoding::UndefinedConversionError)
+    ec.last_error.should.instance_of?(Encoding::UndefinedConversionError)
   end
 
   it "returns an Encoding::InvalidByteSequenceError when #primitive_convert last returned :incomplete_input" do
     ec = Encoding::Converter.new("EUC-JP", "ISO-8859-1")
     ec.primitive_convert(+"\xa4", +"", nil, 10).should == :incomplete_input
-    ec.last_error.should be_an_instance_of(Encoding::InvalidByteSequenceError)
+    ec.last_error.should.instance_of?(Encoding::InvalidByteSequenceError)
   end
 
   it "returns an Encoding::InvalidByteSequenceError when the last call to #convert produced one" do
@@ -59,7 +59,7 @@ describe "Encoding::Converter#last_error" do
     }.should raise_error(Encoding::InvalidByteSequenceError) { |e|
       exception = e
     }
-    ec.last_error.should be_an_instance_of(Encoding::InvalidByteSequenceError)
+    ec.last_error.should.instance_of?(Encoding::InvalidByteSequenceError)
     ec.last_error.message.should == exception.message
   end
 
@@ -71,7 +71,7 @@ describe "Encoding::Converter#last_error" do
     }.should raise_error(Encoding::UndefinedConversionError) { |e|
       exception = e
     }
-    ec.last_error.should be_an_instance_of(Encoding::UndefinedConversionError)
+    ec.last_error.should.instance_of?(Encoding::UndefinedConversionError)
     ec.last_error.message.should == exception.message
     ec.last_error.message.should include "from UTF-8 to ISO-8859-1"
   end
@@ -84,7 +84,7 @@ describe "Encoding::Converter#last_error" do
     }.should raise_error(Encoding::UndefinedConversionError) { |e|
       exception = e
     }
-    ec.last_error.should be_an_instance_of(Encoding::UndefinedConversionError)
+    ec.last_error.should.instance_of?(Encoding::UndefinedConversionError)
     ec.last_error.message.should == exception.message
     ec.last_error.message.should include "from ISO-8859-1 to UTF-8 to Big5"
   end

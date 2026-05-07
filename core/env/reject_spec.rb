@@ -32,7 +32,7 @@ describe "ENV.reject!" do
   it "returns an Enumerator if called without a block" do
     ENV["foo"] = "bar"
     enum = ENV.reject!
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.each { |k, v| k == "foo" }.should equal(ENV)
     ENV["foo"].should == nil
   end
@@ -82,7 +82,7 @@ describe "ENV.reject" do
   it "returns an Enumerator if called without a block" do
     ENV["foo"] = "bar"
     enum = ENV.reject
-    enum.should be_an_instance_of(Enumerator)
+    enum.should.instance_of?(Enumerator)
     enum.each { |k, v| k == "foo"}
     ENV["foo"] = nil
   end

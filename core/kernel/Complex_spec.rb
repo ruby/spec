@@ -19,19 +19,19 @@ describe "Kernel.Complex()" do
 
   describe "when passed [Integer, Integer]" do
     it "returns a new Complex number" do
-      Complex(1, 2).should be_an_instance_of(Complex)
+      Complex(1, 2).should.instance_of?(Complex)
       Complex(1, 2).real.should == 1
       Complex(1, 2).imag.should == 2
 
-      Complex(-3, -5).should be_an_instance_of(Complex)
+      Complex(-3, -5).should.instance_of?(Complex)
       Complex(-3, -5).real.should == -3
       Complex(-3, -5).imag.should == -5
 
-      Complex(3.5, -4.5).should be_an_instance_of(Complex)
+      Complex(3.5, -4.5).should.instance_of?(Complex)
       Complex(3.5, -4.5).real.should == 3.5
       Complex(3.5, -4.5).imag.should == -4.5
 
-      Complex(bignum_value, 30).should be_an_instance_of(Complex)
+      Complex(bignum_value, 30).should.instance_of?(Complex)
       Complex(bignum_value, 30).real.should == bignum_value
       Complex(bignum_value, 30).imag.should == 30
     end
@@ -41,19 +41,19 @@ describe "Kernel.Complex()" do
     it "returns a new Complex number with 0 as the imaginary component" do
       # Guard against the Mathn library
       guard -> { !defined?(Math.rsqrt) } do
-        Complex(1).should be_an_instance_of(Complex)
+        Complex(1).should.instance_of?(Complex)
         Complex(1).imag.should == 0
         Complex(1).real.should == 1
 
-        Complex(-3).should be_an_instance_of(Complex)
+        Complex(-3).should.instance_of?(Complex)
         Complex(-3).imag.should == 0
         Complex(-3).real.should == -3
 
-        Complex(-4.5).should be_an_instance_of(Complex)
+        Complex(-4.5).should.instance_of?(Complex)
         Complex(-4.5).imag.should == 0
         Complex(-4.5).real.should == -4.5
 
-        Complex(bignum_value).should be_an_instance_of(Complex)
+        Complex(bignum_value).should.instance_of?(Complex)
         Complex(bignum_value).imag.should == 0
         Complex(bignum_value).real.should == bignum_value
       end

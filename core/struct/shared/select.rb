@@ -14,13 +14,13 @@ describe :struct_select, shared: true do
 
   it "returns an instance of Array" do
     struct = StructClasses::Car.new("Ford", "Escort", "1995")
-    struct.send(@method) { true }.should be_an_instance_of(Array)
+    struct.send(@method) { true }.should.instance_of?(Array)
   end
 
   describe "without block" do
     it "returns an instance of Enumerator" do
       struct = Struct.new(:foo).new
-      struct.send(@method).should be_an_instance_of(Enumerator)
+      struct.send(@method).should.instance_of?(Enumerator)
     end
   end
 end

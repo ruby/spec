@@ -86,7 +86,7 @@ File.should.equal?(File) # Calls #equal? (tests identity)
 (1.0/0.0).should be_positive_infinity
 (-1.0/0.0).should be_negative_infinity
 
-3.14.should be_an_instance_of(Float) # Calls #instance_of?
+3.14.should.instance_of?(Float) # Calls #instance_of?
 3.14.should be_kind_of(Numeric) # Calls #is_a?
 Numeric.should be_ancestor_of(Float) # Float.ancestors.include?(Numeric)
 

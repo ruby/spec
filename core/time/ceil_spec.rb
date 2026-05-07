@@ -29,7 +29,7 @@ describe "Time#ceil" do
     subclass = Class.new(Time)
     instance = subclass.at(0)
     instance.class.should equal subclass
-    instance.ceil.should be_an_instance_of(Time)
+    instance.ceil.should.instance_of?(Time)
   end
 
   it "copies own timezone to the returning value" do

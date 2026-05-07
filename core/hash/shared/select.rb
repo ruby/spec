@@ -17,7 +17,7 @@ describe :hash_select, shared: true do
 
   it "returns a Hash of entries for which block is true" do
     a_pairs = { 'a' => 9, 'c' => 4, 'b' => 5, 'd' => 2 }.send(@method) { |k,v| v % 2 == 0 }
-    a_pairs.should be_an_instance_of(Hash)
+    a_pairs.should.instance_of?(Hash)
     a_pairs.sort.should == [['c', 4], ['d', 2]]
   end
 
@@ -33,11 +33,11 @@ describe :hash_select, shared: true do
   end
 
   it "returns an Enumerator when called on a non-empty hash without a block" do
-    @hsh.send(@method).should be_an_instance_of(Enumerator)
+    @hsh.send(@method).should.instance_of?(Enumerator)
   end
 
   it "returns an Enumerator when called on an empty hash without a block" do
-    @empty.send(@method).should be_an_instance_of(Enumerator)
+    @empty.send(@method).should.instance_of?(Enumerator)
   end
 
   it "does not retain the default value" do

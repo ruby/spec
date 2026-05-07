@@ -4,7 +4,7 @@ describe "Fiber.new" do
   it "creates a fiber from the given block" do
     fiber = Fiber.new {}
     fiber.resume
-    fiber.should be_an_instance_of(Fiber)
+    fiber.should.instance_of?(Fiber)
   end
 
   it "creates a fiber from a subclass" do
@@ -12,7 +12,7 @@ describe "Fiber.new" do
     end
     fiber = MyFiber.new {}
     fiber.resume
-    fiber.should be_an_instance_of(MyFiber)
+    fiber.should.instance_of?(MyFiber)
   end
 
   it "raises an ArgumentError if called without a block" do

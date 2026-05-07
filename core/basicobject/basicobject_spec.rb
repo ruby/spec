@@ -34,7 +34,7 @@ describe "BasicObject metaclass" do
   end
 
   it "is an instance of Class" do
-    @meta.should be_an_instance_of(Class)
+    @meta.should.instance_of?(Class)
   end
 
   it "has Class as superclass" do
@@ -57,7 +57,7 @@ describe "BasicObject instance metaclass" do
   end
 
   it "is an instance of Class" do
-    @meta.should be_an_instance_of(Class)
+    @meta.should.instance_of?(Class)
   end
 
   it "has BasicObject as superclass" do

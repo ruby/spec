@@ -960,7 +960,7 @@ describe "Marshal.dump" do
       end
 
       reloaded = Marshal.load(Marshal.dump(exc))
-      reloaded.cause.should be_an_instance_of(StandardError)
+      reloaded.cause.should.instance_of?(StandardError)
       reloaded.cause.message.should == "the cause"
     end
 

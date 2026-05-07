@@ -21,7 +21,7 @@ describe "Process::Status.wait" do
     it "returns a status with its child pid" do
       pid = Process.spawn(ruby_cmd('exit'))
       status = Process::Status.wait
-      status.should be_an_instance_of(Process::Status)
+      status.should.instance_of?(Process::Status)
       status.pid.should == pid
     end
 

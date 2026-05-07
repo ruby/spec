@@ -3,11 +3,11 @@ require_relative 'fixtures/classes'
 
 describe "Array.new" do
   it "returns an instance of Array" do
-    Array.new.should be_an_instance_of(Array)
+    Array.new.should.instance_of?(Array)
   end
 
   it "returns an instance of a subclass" do
-    ArraySpecs::MyArray.new(1, 2).should be_an_instance_of(ArraySpecs::MyArray)
+    ArraySpecs::MyArray.new(1, 2).should.instance_of?(ArraySpecs::MyArray)
   end
 
   it "raises an ArgumentError if passed 3 or more arguments" do

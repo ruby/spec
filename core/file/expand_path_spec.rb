@@ -179,7 +179,7 @@ describe "File.expand_path" do
     str = FileSpecs::SubString.new "./a/b/../c"
     path = File.expand_path(str, @base)
     path.should == "#{@base}/a/c"
-    path.should be_an_instance_of(String)
+    path.should.instance_of?(String)
   end
 end
 

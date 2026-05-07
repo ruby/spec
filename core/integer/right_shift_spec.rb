@@ -54,13 +54,13 @@ describe "Integer#>> (with n >> m)" do
 
     it "returns a Bignum == fixnum_max * 2 when fixnum_max >> -1 and n > 0" do
       result = fixnum_max >> -1
-      result.should be_an_instance_of(Integer)
+      result.should.instance_of?(Integer)
       result.should == fixnum_max * 2
     end
 
     it "returns a Bignum == fixnum_min * 2 when fixnum_min >> -1 and n < 0" do
       result = fixnum_min >> -1
-      result.should be_an_instance_of(Integer)
+      result.should.instance_of?(Integer)
       result.should == fixnum_min * 2
     end
 
@@ -151,13 +151,13 @@ describe "Integer#>> (with n >> m)" do
 
     it "returns a Fixnum == fixnum_max when (fixnum_max * 2) >> 1 and n > 0" do
       result = (fixnum_max * 2) >> 1
-      result.should be_an_instance_of(Integer)
+      result.should.instance_of?(Integer)
       result.should == fixnum_max
     end
 
     it "returns a Fixnum == fixnum_min when (fixnum_min * 2) >> 1 and n < 0" do
       result = (fixnum_min * 2) >> 1
-      result.should be_an_instance_of(Integer)
+      result.should.instance_of?(Integer)
       result.should == fixnum_min
     end
 

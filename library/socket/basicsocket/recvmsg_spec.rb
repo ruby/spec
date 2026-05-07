@@ -41,7 +41,7 @@ describe 'BasicSocket#recvmsg' do
           end
 
           it 'returns an Array containing the data, an Addrinfo and the flags' do
-            @server.recvmsg.should be_an_instance_of(Array)
+            @server.recvmsg.should.instance_of?(Array)
           end
 
           describe 'without a maximum message length' do
@@ -66,7 +66,7 @@ describe 'BasicSocket#recvmsg' do
             end
 
             it 'stores an Addrinfo at index 1' do
-              @array[1].should be_an_instance_of(Addrinfo)
+              @array[1].should.instance_of?(Addrinfo)
             end
 
             platform_is_not :windows do
@@ -144,7 +144,7 @@ describe 'BasicSocket#recvmsg' do
           end
 
           it 'returns an Array containing the data, an Addrinfo and the flags' do
-            @socket.recvmsg.should be_an_instance_of(Array)
+            @socket.recvmsg.should.instance_of?(Array)
           end
 
           describe 'the returned Array' do
@@ -157,7 +157,7 @@ describe 'BasicSocket#recvmsg' do
             end
 
             it 'stores an Addrinfo at index 1' do
-              @array[1].should be_an_instance_of(Addrinfo)
+              @array[1].should.instance_of?(Addrinfo)
             end
 
             it 'stores the flags at index 2' do

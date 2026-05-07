@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Kernel#inspect" do
   it "returns a String" do
-    Object.new.inspect.should be_an_instance_of(String)
+    Object.new.inspect.should.instance_of?(String)
   end
 
   it "does not call #to_s if it is defined" do

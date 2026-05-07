@@ -990,7 +990,7 @@ describe "Module#autoload" do
 
       start = true
       threads.each { |t|
-        t.value.should be_an_instance_of(NameError)
+        t.value.should.instance_of?(NameError)
       }
     end
 
@@ -1015,7 +1015,7 @@ describe "Module#autoload" do
 
       start = true
       threads.each { |t|
-        t.value.should be_an_instance_of(LoadError)
+        t.value.should.instance_of?(LoadError)
       }
     end
   end

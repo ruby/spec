@@ -188,27 +188,27 @@ describe "Array#slice!" do
     end
 
     it "returns a Array instance with [n, m]" do
-      @array.slice!(0, 2).should be_an_instance_of(Array)
+      @array.slice!(0, 2).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [-n, m]" do
-      @array.slice!(-3, 2).should be_an_instance_of(Array)
+      @array.slice!(-3, 2).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [n..m]" do
-      @array.slice!(1..3).should be_an_instance_of(Array)
+      @array.slice!(1..3).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [n...m]" do
-      @array.slice!(1...3).should be_an_instance_of(Array)
+      @array.slice!(1...3).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [-n..-m]" do
-      @array.slice!(-3..-1).should be_an_instance_of(Array)
+      @array.slice!(-3..-1).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [-n...-m]" do
-      @array.slice!(-3...-1).should be_an_instance_of(Array)
+      @array.slice!(-3...-1).should.instance_of?(Array)
     end
   end
 end

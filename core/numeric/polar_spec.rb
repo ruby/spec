@@ -17,7 +17,7 @@ describe "Numeric#polar" do
 
   it "returns a two-element Array" do
     @numbers.each do |number|
-      number.polar.should be_an_instance_of(Array)
+      number.polar.should.instance_of?(Array)
       number.polar.size.should == 2
     end
   end

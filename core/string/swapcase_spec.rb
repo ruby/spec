@@ -76,8 +76,8 @@ describe "String#swapcase" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("").swapcase.should be_an_instance_of(String)
-    StringSpecs::MyString.new("hello").swapcase.should be_an_instance_of(String)
+    StringSpecs::MyString.new("").swapcase.should.instance_of?(String)
+    StringSpecs::MyString.new("hello").swapcase.should.instance_of?(String)
   end
 end
 

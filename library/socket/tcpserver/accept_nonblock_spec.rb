@@ -77,7 +77,7 @@ describe 'TCPServer#accept_nonblock' do
         it 'returns a TCPSocket' do
           IO.select([@server])
           @socket = @server.accept_nonblock
-          @socket.should be_an_instance_of(TCPSocket)
+          @socket.should.instance_of?(TCPSocket)
         end
       end
     end

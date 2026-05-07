@@ -62,7 +62,7 @@ describe 'UNIXServer#accept_nonblock' do
     describe 'without any data' do
       it 'returns a UNIXSocket' do
         @socket = @server.accept_nonblock
-        @socket.should be_an_instance_of(UNIXSocket)
+        @socket.should.instance_of?(UNIXSocket)
       end
     end
 
@@ -73,7 +73,7 @@ describe 'UNIXServer#accept_nonblock' do
 
       it 'returns a UNIXSocket' do
         @socket = @server.accept_nonblock
-        @socket.should be_an_instance_of(UNIXSocket)
+        @socket.should.instance_of?(UNIXSocket)
       end
 
       describe 'the returned UNIXSocket' do

@@ -398,27 +398,27 @@ describe :array_slice, shared: true do
     end
 
     it "returns a Array instance with [n, m]" do
-      @array.send(@method, 0, 2).should be_an_instance_of(Array)
+      @array.send(@method, 0, 2).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [-n, m]" do
-      @array.send(@method, -3, 2).should be_an_instance_of(Array)
+      @array.send(@method, -3, 2).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [n..m]" do
-      @array.send(@method, 1..3).should be_an_instance_of(Array)
+      @array.send(@method, 1..3).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [n...m]" do
-      @array.send(@method, 1...3).should be_an_instance_of(Array)
+      @array.send(@method, 1...3).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [-n..-m]" do
-      @array.send(@method, -3..-1).should be_an_instance_of(Array)
+      @array.send(@method, -3..-1).should.instance_of?(Array)
     end
 
     it "returns a Array instance with [-n...-m]" do
-      @array.send(@method, -3...-1).should be_an_instance_of(Array)
+      @array.send(@method, -3...-1).should.instance_of?(Array)
     end
 
     it "returns an empty array when m == n with [m...n]" do

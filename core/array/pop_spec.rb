@@ -113,7 +113,7 @@ describe "Array#pop" do
     end
 
     it "does not return subclass instances with Array subclass" do
-      ArraySpecs::MyArray[1, 2, 3].pop(2).should be_an_instance_of(Array)
+      ArraySpecs::MyArray[1, 2, 3].pop(2).should.instance_of?(Array)
     end
 
     it "raises a FrozenError on a frozen array" do

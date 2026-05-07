@@ -54,7 +54,7 @@ describe "String#tr_s" do
   end
 
   it "returns String instances when called on a subclass" do
-    StringSpecs::MyString.new("hello").tr_s("e", "a").should be_an_instance_of(String)
+    StringSpecs::MyString.new("hello").tr_s("e", "a").should.instance_of?(String)
   end
 
   # http://redmine.ruby-lang.org/issues/show/1839

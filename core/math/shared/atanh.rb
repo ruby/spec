@@ -1,6 +1,6 @@
 describe :math_atanh_base, shared: true do
   it "returns a float" do
-    @object.send(@method, 0.5).should be_an_instance_of(Float)
+    @object.send(@method, 0.5).should.instance_of?(Float)
   end
 
   it "returns the inverse hyperbolic tangent of the argument" do

@@ -61,7 +61,7 @@ describe "Array#rotate" do
   end
 
   it "does not return subclass instance for Array subclasses" do
-    ArraySpecs::MyArray[1, 2, 3].rotate.should be_an_instance_of(Array)
+    ArraySpecs::MyArray[1, 2, 3].rotate.should.instance_of?(Array)
   end
 end
 

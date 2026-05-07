@@ -22,8 +22,8 @@ describe "IO.pipe" do
 
   it "returns instances of a subclass when called on a subclass" do
     @r, @w = IOSpecs::SubIO.pipe
-    @r.should be_an_instance_of(IOSpecs::SubIO)
-    @w.should be_an_instance_of(IOSpecs::SubIO)
+    @r.should.instance_of?(IOSpecs::SubIO)
+    @w.should.instance_of?(IOSpecs::SubIO)
   end
 
   it "does not use IO.new method to create pipes and allows its overriding" do
@@ -33,8 +33,8 @@ describe "IO.pipe" do
     @r, @w = IOSpecs::SubIOWithRedefinedNew.pipe
     ScratchPad.recorded.should == [:call_original_initialize, :call_original_initialize] # called 2 times - for each pipe (r and w)
 
-    @r.should be_an_instance_of(IOSpecs::SubIOWithRedefinedNew)
-    @w.should be_an_instance_of(IOSpecs::SubIOWithRedefinedNew)
+    @r.should.instance_of?(IOSpecs::SubIOWithRedefinedNew)
+    @w.should.instance_of?(IOSpecs::SubIOWithRedefinedNew)
   end
 end
 

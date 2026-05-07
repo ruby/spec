@@ -21,7 +21,7 @@ describe "Time#round" do
     subclass = Class.new(Time)
     instance = subclass.at(0)
     instance.class.should equal subclass
-    instance.round.should be_an_instance_of(Time)
+    instance.round.should.instance_of?(Time)
   end
 
   it "copies own timezone to the returning value" do

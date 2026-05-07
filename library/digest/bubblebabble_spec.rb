@@ -3,7 +3,7 @@ require 'digest/bubblebabble'
 
 describe "Digest.bubblebabble" do
   it "returns a String" do
-    Digest.bubblebabble('').should be_an_instance_of(String)
+    Digest.bubblebabble('').should.instance_of?(String)
   end
 
   it "returns a String in the Bubble Babble Binary Data Encoding format" do

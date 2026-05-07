@@ -47,7 +47,7 @@ describe "BasicSocket#getsockopt" do
   it 'returns a Socket::Option using a constant' do
     opt = @sock.getsockopt(Socket::SOL_SOCKET, Socket::SO_TYPE)
 
-    opt.should be_an_instance_of(Socket::Option)
+    opt.should.instance_of?(Socket::Option)
   end
 
   it 'returns a Socket::Option for a boolean option' do

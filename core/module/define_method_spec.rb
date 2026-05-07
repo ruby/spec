@@ -326,7 +326,7 @@ describe "Module#define_method" do
     o = DefineMethodSpecClass.new
     o.data = :foo
     m = o.method(:inspect_data)
-    m.should be_an_instance_of(Method)
+    m.should.instance_of?(Method)
     klass = Class.new(DefineMethodSpecClass)
     klass.send(:define_method,:other_inspect, m)
     c = klass.new

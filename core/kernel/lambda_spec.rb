@@ -94,7 +94,7 @@ describe "Kernel.lambda" do
         2
       end
     end
-    klass.new.lambda { 42 }.should be_an_instance_of Proc
+    klass.new.lambda { 42 }.should.instance_of? Proc
     klass.new.ret.should == 1
   end
 

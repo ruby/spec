@@ -128,7 +128,7 @@ describe "BasicObject#instance_eval" do
       class B; end
       B
     }
-    obj.singleton_class.const_get(:B).should be_an_instance_of(Class)
+    obj.singleton_class.const_get(:B).should.instance_of?(Class)
   end
 
   describe "constants lookup when a String given" do
