@@ -16,9 +16,9 @@ describe "Enumerable#group_by" do
   it "returns a hash without default_proc" do
     e = EnumerableSpecs::Numerous.new("foo", "bar", "baz")
     h = e.group_by { |word| word[0..0].to_sym }
-    h[:some].should be_nil
-    h.default_proc.should be_nil
-    h.default.should be_nil
+    h[:some].should == nil
+    h.default_proc.should == nil
+    h.default.should == nil
   end
 
   it "returns an Enumerator if called without a block" do

@@ -38,6 +38,6 @@ describe "Socket::BasicSocket#close_read" do
   end
 
   it "returns nil" do
-    @server.close_read.should be_nil
+    @server.close_read.should == nil
   end
 end

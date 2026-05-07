@@ -18,7 +18,7 @@ describe "File::Stat#rdev_major" do
 
   platform_is :windows do
     it "returns nil" do
-      File.stat(@name).rdev_major.should be_nil
+      File.stat(@name).rdev_major.should == nil
     end
   end
 end

@@ -20,7 +20,7 @@ describe "Addrinfo#canonname" do
     it 'returns nil' do
       addr = Addrinfo.new(Socket.sockaddr_in(0, '127.0.0.1'))
 
-      addr.canonname.should be_nil
+      addr.canonname.should == nil
     end
   end
 

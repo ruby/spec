@@ -29,7 +29,7 @@ describe "BasicObject#instance_exec" do
   end
 
   it "doesn't pass self to the block as an argument" do
-    "hola".instance_exec { |o| o }.should be_nil
+    "hola".instance_exec { |o| o }.should == nil
   end
 
   it "passes any arguments to the block" do

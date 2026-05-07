@@ -51,7 +51,7 @@ describe "Thread#[]=" do
       Thread.current[:value].should == 1
     end
     fib.resume
-    Thread.current[:value].should be_nil
+    Thread.current[:value].should == nil
     Thread.current[:value] = 2
     fib.resume
     Thread.current[:value] = 2

@@ -31,7 +31,7 @@ describe "Kernel.proc" do
       @reached_end_of_method = true
     end
     test
-    @reached_end_of_method.should be_nil
+    @reached_end_of_method.should == nil
   end
 end
 

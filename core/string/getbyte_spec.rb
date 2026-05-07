@@ -51,11 +51,11 @@ describe "String#getbyte" do
   end
 
   it "returns nil for out-of-bound indexes" do
-    "g".getbyte(1).should be_nil
+    "g".getbyte(1).should == nil
   end
 
   it "regards the empty String as containing no bytes" do
-    "".getbyte(0).should be_nil
+    "".getbyte(0).should == nil
   end
 
   it "raises an ArgumentError unless given one argument" do

@@ -617,7 +617,7 @@ describe :io_read_size_internal_encoding, shared: true do
     buf = "abc".dup.force_encoding Encoding::ISO_8859_1
     @io.read
 
-    @io.read(1, buf).should be_nil
+    @io.read(1, buf).should == nil
     buf.size.should == 0
     buf.encoding.should equal(Encoding::ISO_8859_1)
   end

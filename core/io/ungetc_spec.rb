@@ -110,7 +110,7 @@ describe "IO#ungetc" do
 
   it "puts one or more characters back in the stream" do
     @io.gets
-    @io.ungetc("Aquí ").should be_nil
+    @io.ungetc("Aquí ").should == nil
     @io.gets.chomp.should == "Aquí Qui è la linea due."
   end
 
@@ -118,12 +118,12 @@ describe "IO#ungetc" do
     chars = mock("io ungetc")
     chars.should_receive(:to_str).and_return("Aquí ")
 
-    @io.ungetc(chars).should be_nil
+    @io.ungetc(chars).should == nil
     @io.gets.chomp.should == "Aquí Voici la ligne une."
   end
 
   it "returns nil when invoked on stream that was not yet read" do
-    @io.ungetc(100).should be_nil
+    @io.ungetc(100).should == nil
   end
 
   it "raises IOError on stream not opened for reading" do

@@ -41,7 +41,7 @@ describe "IO#close" do
   it "does nothing if already closed" do
     @io.close
 
-    @io.close.should be_nil
+    @io.close.should == nil
   end
 
   it "does not call the #flush method but flushes the stream internally" do

@@ -32,7 +32,7 @@ describe "Enumerable#min" do
   end
 
   it "returns nil for an empty Enumerable" do
-    EnumerableSpecs::EachDefiner.new.min.should be_nil
+    EnumerableSpecs::EachDefiner.new.min.should == nil
   end
 
   it "raises a NoMethodError for elements without #<=>" do

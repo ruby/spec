@@ -164,7 +164,7 @@ describe "Kernel#rand" do
   end
 
   it "returns nil when range is backwards" do
-    rand(1..0).should be_nil
+    rand(1..0).should == nil
   end
 
   it "returns the range start/end when Float range is 0" do

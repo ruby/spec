@@ -73,7 +73,7 @@ describe "IO.foreach" do
   it "sets $_ to nil" do
     $_ = "test"
     IO.foreach(@name) { }
-    $_.should be_nil
+    $_.should == nil
   end
 
   describe "when no block is given" do

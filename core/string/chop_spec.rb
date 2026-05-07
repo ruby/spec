@@ -103,7 +103,7 @@ describe "String#chop!" do
   end
 
   it "returns nil when called on an empty string" do
-    "".chop!.should be_nil
+    "".chop!.should == nil
   end
 
   it "raises a FrozenError on a frozen instance that is modified" do

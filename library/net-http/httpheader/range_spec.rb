@@ -23,7 +23,7 @@ describe "Net::HTTPHeader#range" do
   end
 
   it "returns nil when there is no 'Range' header entry" do
-    @headers.range.should be_nil
+    @headers.range.should == nil
   end
 
   it "raises a Net::HTTPHeaderSyntaxError when the 'Range' has an invalid format" do

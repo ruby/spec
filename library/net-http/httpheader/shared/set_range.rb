@@ -5,13 +5,13 @@ describe :net_httpheader_set_range, shared: true do
 
   describe "when passed nil" do
     it "returns nil" do
-      @headers.send(@method, nil).should be_nil
+      @headers.send(@method, nil).should == nil
     end
 
     it "deletes the 'Range' header entry" do
       @headers["Range"] = "bytes 0-499/1234"
       @headers.send(@method, nil)
-      @headers["Range"].should be_nil
+      @headers["Range"].should == nil
     end
   end
 

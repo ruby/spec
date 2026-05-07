@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.site("param").should be_nil
+      @ftp.site("param").should == nil
     end
 
     it "does not raise an error when the response code is 202" do

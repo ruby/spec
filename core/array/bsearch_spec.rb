@@ -18,11 +18,11 @@ describe "Array#bsearch" do
 
   context "with a block returning true or false" do
     it "returns nil if the block returns false for every element" do
-      [0, 1, 2, 3].bsearch { |x| x > 3 }.should be_nil
+      [0, 1, 2, 3].bsearch { |x| x > 3 }.should == nil
     end
 
     it "returns nil if the block returns nil for every element" do
-      [0, 1, 2, 3].bsearch { |x| nil }.should be_nil
+      [0, 1, 2, 3].bsearch { |x| nil }.should == nil
     end
 
     it "returns element at zero if the block returns true for every element" do
@@ -38,21 +38,21 @@ describe "Array#bsearch" do
 
   context "with a block returning negative, zero, positive numbers" do
     it "returns nil if the block returns less than zero for every element" do
-      [0, 1, 2, 3].bsearch { |x| x <=> 5 }.should be_nil
+      [0, 1, 2, 3].bsearch { |x| x <=> 5 }.should == nil
     end
 
     it "returns nil if the block returns greater than zero for every element" do
-      [0, 1, 2, 3].bsearch { |x| x <=> -1 }.should be_nil
+      [0, 1, 2, 3].bsearch { |x| x <=> -1 }.should == nil
 
     end
 
     it "returns nil if the block never returns zero" do
-      [0, 1, 3, 4].bsearch { |x| x <=> 2 }.should be_nil
+      [0, 1, 3, 4].bsearch { |x| x <=> 2 }.should == nil
     end
 
     it "accepts (+/-)Float::INFINITY from the block" do
-      [0, 1, 3, 4].bsearch { |x| Float::INFINITY }.should be_nil
-      [0, 1, 3, 4].bsearch { |x| -Float::INFINITY }.should be_nil
+      [0, 1, 3, 4].bsearch { |x| Float::INFINITY }.should == nil
+      [0, 1, 3, 4].bsearch { |x| -Float::INFINITY }.should == nil
     end
 
     it "returns an element at an index for which block returns 0.0" do
@@ -68,11 +68,11 @@ describe "Array#bsearch" do
 
   context "with a block that calls break" do
     it "returns nil if break is called without a value" do
-      ['a', 'b', 'c'].bsearch { |v| break }.should be_nil
+      ['a', 'b', 'c'].bsearch { |v| break }.should == nil
     end
 
     it "returns nil if break is called with a nil value" do
-      ['a', 'b', 'c'].bsearch { |v| break nil }.should be_nil
+      ['a', 'b', 'c'].bsearch { |v| break nil }.should == nil
     end
 
     it "returns object if break is called with an object" do

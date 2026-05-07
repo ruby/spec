@@ -88,6 +88,6 @@ end
 
 describe "Rational#<=> when passed a non-Numeric Object that doesn't respond to #coerce" do
   it "returns nil" do
-    (Rational <=> mock("Object")).should be_nil
+    (Rational <=> mock("Object")).should == nil
   end
 end

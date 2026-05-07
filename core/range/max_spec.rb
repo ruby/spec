@@ -18,12 +18,12 @@ describe "Range#max" do
   end
 
   it "returns nil when the endpoint is less than the start point" do
-    (100..10).max.should be_nil
-    ('z'..'l').max.should be_nil
+    (100..10).max.should == nil
+    ('z'..'l').max.should == nil
   end
 
   it "returns nil when the endpoint equals the start point and the range is exclusive" do
-    (5...5).max.should be_nil
+    (5...5).max.should == nil
   end
 
   it "returns the endpoint when the endpoint equals the start point and the range is inclusive" do
@@ -31,7 +31,7 @@ describe "Range#max" do
   end
 
   it "returns nil when the endpoint is less than the start point in a Float range" do
-    (3003.20..908.1111).max.should be_nil
+    (3003.20..908.1111).max.should == nil
   end
 
   it "returns end point when the range is Time..Time(included end point)" do
@@ -104,9 +104,9 @@ describe "Range#max given a block" do
   end
 
   it "returns nil when the endpoint is less than the start point" do
-    (100..10).max {|x,y| x <=> y}.should be_nil
-    ('z'..'l').max {|x,y| x <=> y}.should be_nil
-    (5...5).max {|x,y| x <=> y}.should be_nil
+    (100..10).max {|x,y| x <=> y}.should == nil
+    ('z'..'l').max {|x,y| x <=> y}.should == nil
+    (5...5).max {|x,y| x <=> y}.should == nil
   end
 
   it "raises RangeError when called with custom comparison method on an beginless range" do

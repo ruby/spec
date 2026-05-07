@@ -74,7 +74,7 @@ describe "Class.new" do
   end
 
   it "creates a class without a name" do
-    Class.new.name.should be_nil
+    Class.new.name.should == nil
   end
 
   it "creates a class that can be given a name by assigning it to a constant" do

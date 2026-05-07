@@ -7,7 +7,7 @@ describe "StringIO#close_write" do
   end
 
   it "returns nil" do
-    @io.close_write.should be_nil
+    @io.close_write.should == nil
   end
 
   it "prevents further writing" do

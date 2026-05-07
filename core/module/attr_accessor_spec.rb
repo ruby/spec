@@ -104,7 +104,7 @@ describe "Module#attr_accessor" do
     end
 
     it "can read through the accessor" do
-      1.foobar.should be_nil
+      1.foobar.should == nil
     end
   end
 

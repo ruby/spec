@@ -7,7 +7,7 @@ describe "Kernel.throw" do
       :value
       throw :blah
       fail("throw didn't transfer the control")
-    end.should be_nil
+    end.should == nil
   end
 
   it "transfers control to the innermost catch block waiting for the same symbol" do

@@ -89,8 +89,8 @@ describe "Literal Regexps" do
     # Basic matching
     /./.match("foo").to_a.should == ["f"]
     # Basic non-matching
-    /./.match("").should be_nil
-    /./.match("\n").should be_nil
+    /./.match("").should == nil
+    /./.match("\n").should == nil
     /./.match("\0").to_a.should == ["\0"]
   end
 
@@ -100,7 +100,7 @@ describe "Literal Regexps" do
 
   it "supports (?> ) (embedded subexpression)" do
     /(?>foo)(?>bar)/.match("foobar").to_a.should == ["foobar"]
-    /(?>foo*)obar/.match("foooooooobar").should be_nil # it is possessive
+    /(?>foo*)obar/.match("foooooooobar").should == nil # it is possessive
   end
 
   it "supports (?# )" do
@@ -135,9 +135,9 @@ describe "Literal Regexps" do
   it "supports possessive quantifiers" do
     /fooA++bar/.match("fooAAAbar").to_a.should == ["fooAAAbar"]
 
-    /fooA++Abar/.match("fooAAAbar").should be_nil
-    /fooA?+Abar/.match("fooAAAbar").should be_nil
-    /fooA*+Abar/.match("fooAAAbar").should be_nil
+    /fooA++Abar/.match("fooAAAbar").should == nil
+    /fooA?+Abar/.match("fooAAAbar").should == nil
+    /fooA*+Abar/.match("fooAAAbar").should == nil
   end
 
   it "supports conditional regular expressions with positional capture groups" do

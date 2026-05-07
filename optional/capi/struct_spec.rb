@@ -25,7 +25,7 @@ describe "C-API Struct function" do
 
     it "has a value of nil for the member of a newly created instance" do
       # Verify that attributes are on an instance basis
-      Struct::CAPIStruct.new.b.should be_nil
+      Struct::CAPIStruct.new.b.should == nil
     end
 
     it "creates a constant scoped under Struct for the named Struct" do
@@ -80,7 +80,7 @@ describe "C-API Struct function" do
 
     it "has a value of nil for the member of a newly created instance" do
       # Verify that attributes are on an instance basis
-      CApiStructSpecs::CAPIStructUnder.new.b.should be_nil
+      CApiStructSpecs::CAPIStructUnder.new.b.should == nil
     end
 
     it "does not create a constant scoped under Struct for the named Struct" do

@@ -442,7 +442,7 @@ describe "CApiNumericSpecs" do
       obj = mock("rb_num_coerce_cmp")
       obj.should_receive(:coerce).with(2).and_return(nil)
 
-      @s.rb_num_coerce_cmp(2, obj, :<=>).should be_nil
+      @s.rb_num_coerce_cmp(2, obj, :<=>).should == nil
     end
   end
 

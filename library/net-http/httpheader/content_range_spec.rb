@@ -16,7 +16,7 @@ describe "Net::HTTPHeader#content_range" do
   end
 
   it "returns nil when there is no 'Content-Range' header entry" do
-    @headers.content_range.should be_nil
+    @headers.content_range.should == nil
   end
 
   it "raises a Net::HTTPHeaderSyntaxError when the 'Content-Range' has an invalid format" do

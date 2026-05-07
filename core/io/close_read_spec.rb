@@ -23,7 +23,7 @@ describe "IO#close_read" do
   it "does nothing on subsequent invocations" do
     @io.close_read
 
-    @io.close_read.should be_nil
+    @io.close_read.should == nil
   end
 
   it "allows subsequent invocation of close" do
@@ -56,6 +56,6 @@ describe "IO#close_read" do
   it "does nothing on closed stream" do
     @io.close
 
-    @io.close_read.should be_nil
+    @io.close_read.should == nil
   end
 end

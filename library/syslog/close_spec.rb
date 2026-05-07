@@ -37,7 +37,7 @@ platform_is_not :windows do
         Syslog.open("rubyspec")
         Syslog.ident.should == "rubyspec"
         Syslog.close
-        Syslog.ident.should be_nil
+        Syslog.ident.should == nil
       end
 
       it "sets the options to nil" do

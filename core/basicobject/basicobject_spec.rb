@@ -16,7 +16,7 @@ describe "BasicObject" do
   end
 
   it "does not define built-in constants (according to defined?)" do
-    BasicObjectSpecs::BOSubclass.kernel_defined?.should be_nil
+    BasicObjectSpecs::BOSubclass.kernel_defined?.should == nil
   end
 
   it "is included in Object's list of constants" do

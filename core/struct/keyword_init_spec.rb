@@ -15,12 +15,12 @@ describe "StructClass#keyword_init?" do
 
   it "returns nil for a struct that did not explicitly specify keyword_init" do
     struct = Struct.new(:arg)
-    struct.keyword_init?.should be_nil
+    struct.keyword_init?.should == nil
   end
 
   it "returns nil for a struct that does specify keyword_init to be nil" do
     struct = Struct.new(:arg, keyword_init: nil)
-    struct.keyword_init?.should be_nil
+    struct.keyword_init?.should == nil
   end
 
   it "returns true for any truthy value, not just for true" do

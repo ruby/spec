@@ -32,10 +32,10 @@ describe "Net::HTTPHeader#[]= when passed key, value" do
   it "removes the header entry with the passed key when the value is false or nil" do
     @headers['My-Header'] = "test"
     @headers['My-Header'] = nil
-    @headers['My-Header'].should be_nil
+    @headers['My-Header'].should == nil
 
     @headers['My-Header'] = "test"
     @headers['My-Header'] = false
-    @headers['My-Header'].should be_nil
+    @headers['My-Header'].should == nil
   end
 end

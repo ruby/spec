@@ -77,11 +77,11 @@ describe "Fiber.[]" do
   end
 
   it "returns nil if the key is not present in the storage of the current fiber" do
-    Fiber.new(storage: {life: 42}) { Fiber[:death] }.resume.should be_nil
+    Fiber.new(storage: {life: 42}) { Fiber[:death] }.resume.should == nil
   end
 
   it "returns nil if the current fiber has no storage" do
-    Fiber.new { Fiber[:life] }.resume.should be_nil
+    Fiber.new { Fiber[:life] }.resume.should == nil
   end
 
   it "can use dynamically defined keys" do

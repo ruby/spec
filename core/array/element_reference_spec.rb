@@ -44,7 +44,7 @@ describe "Array.[]" do
 
     it "does not call #initialize on the subclass instance" do
       ArraySpecs::MyArray[1, 2, 3].should == [1, 2, 3]
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
   end
 end

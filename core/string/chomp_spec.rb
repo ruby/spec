@@ -175,7 +175,7 @@ describe "String#chomp!" do
     end
 
     it "returns nil if self is not modified" do
-      "abc".chomp!.should be_nil
+      "abc".chomp!.should == nil
     end
 
     it "removes one trailing newline" do
@@ -191,7 +191,7 @@ describe "String#chomp!" do
     end
 
     it "returns nil when self is empty" do
-      "".chomp!.should be_nil
+      "".chomp!.should == nil
     end
 
     it "returns subclass instances when called on a subclass" do
@@ -207,11 +207,11 @@ describe "String#chomp!" do
 
   describe "when passed nil" do
     it "returns nil" do
-      "abc\r\n".chomp!(nil).should be_nil
+      "abc\r\n".chomp!(nil).should == nil
     end
 
     it "returns nil when self is empty" do
-      "".chomp!(nil).should be_nil
+      "".chomp!(nil).should == nil
     end
   end
 
@@ -225,7 +225,7 @@ describe "String#chomp!" do
     end
 
     it "does not remove a final carriage return" do
-      "abc\r".chomp!("").should be_nil
+      "abc\r".chomp!("").should == nil
     end
 
     it "removes more than one trailing newlines" do
@@ -237,7 +237,7 @@ describe "String#chomp!" do
     end
 
     it "returns nil when self is empty" do
-      "".chomp!("").should be_nil
+      "".chomp!("").should == nil
     end
   end
 
@@ -255,7 +255,7 @@ describe "String#chomp!" do
     end
 
     it "returns nil when self is empty" do
-      "".chomp!("\n").should be_nil
+      "".chomp!("\n").should == nil
     end
   end
 
@@ -279,11 +279,11 @@ describe "String#chomp!" do
     end
 
     it "returns nil if the argument does not match the trailing characters" do
-      "abc".chomp!("def").should be_nil
+      "abc".chomp!("def").should == nil
     end
 
     it "returns nil when self is empty" do
-      "".chomp!("abc").should be_nil
+      "".chomp!("abc").should == nil
     end
   end
 
@@ -346,7 +346,7 @@ describe "String#chomp!" do
   end
 
   it "returns nil when the String is not modified" do
-    "あれ".chomp!.should be_nil
+    "あれ".chomp!.should == nil
   end
 
   it "removes the final carriage return, newline from a multibyte String" do

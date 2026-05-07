@@ -22,7 +22,7 @@ describe "IO#close_write" do
   it "does nothing on subsequent invocations" do
     @io.close_write
 
-    @io.close_write.should be_nil
+    @io.close_write.should == nil
   end
 
   it "allows subsequent invocation of close" do
@@ -63,6 +63,6 @@ describe "IO#close_write" do
   it "does nothing on closed stream" do
     @io.close
 
-    @io.close_write.should be_nil
+    @io.close_write.should == nil
   end
 end

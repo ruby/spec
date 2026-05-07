@@ -84,7 +84,7 @@ describe "Array#* with an integer" do
 
     it "does not call #initialize on the subclass instance" do
       (@array * 2).should == [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
   end
 end

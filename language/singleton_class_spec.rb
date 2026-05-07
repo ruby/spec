@@ -152,7 +152,7 @@ describe "A constant on a singleton class" do
     @object = @object.clone
 
     class << @object
-      CONST.should_not be_nil
+      CONST.should_not == nil
     end
   end
 end

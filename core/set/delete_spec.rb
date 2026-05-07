@@ -31,6 +31,6 @@ describe "Set#delete?" do
   end
 
   it "returns nil when the passed Object is not in self" do
-    @set.delete?("x").should be_nil
+    @set.delete?("x").should == nil
   end
 end

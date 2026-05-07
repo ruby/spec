@@ -14,17 +14,17 @@ describe :file_world_readable, shared: true do
   platform_is_not :windows do
     it "returns nil if the file is chmod 600" do
       File.chmod(0600, @file)
-      @object.world_readable?(@file).should be_nil
+      @object.world_readable?(@file).should == nil
     end
 
     it "returns nil if the file is chmod 000" do
       File.chmod(0000, @file)
-      @object.world_readable?(@file).should be_nil
+      @object.world_readable?(@file).should == nil
     end
 
     it "returns nil if the file is chmod 700" do
       File.chmod(0700, @file)
-      @object.world_readable?(@file).should be_nil
+      @object.world_readable?(@file).should == nil
     end
   end
 

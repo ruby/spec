@@ -32,7 +32,7 @@ describe "Hash#default_proc=" do
   it "overrides the static default" do
     h = Hash.new(42)
     h.default_proc = Proc.new { 6 }
-    h.default.should be_nil
+    h.default.should == nil
     h.default_proc.call.should == 6
   end
 
@@ -53,7 +53,7 @@ describe "Hash#default_proc=" do
   end
 
   it "returns nil if passed nil" do
-    ({}.default_proc = nil).should be_nil
+    ({}.default_proc = nil).should == nil
   end
 
   it "accepts a lambda with an arity of 2" do

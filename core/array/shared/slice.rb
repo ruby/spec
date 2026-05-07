@@ -423,38 +423,38 @@ describe :array_slice, shared: true do
 
     it "returns an empty array when m == n with [m...n]" do
       @array.send(@method, 1...1).should == []
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
 
     it "returns an empty array with [0...0]" do
       @array.send(@method, 0...0).should == []
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
 
     it "returns an empty array when m > n and m, n are positive with [m..n]" do
       @array.send(@method, 3..2).should == []
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
 
     it "returns an empty array when m > n and m, n are negative with [m..n]" do
       @array.send(@method, -2..-3).should == []
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
 
     it "returns [] if index == array.size with [index, length]" do
       @array.send(@method, 5, 2).should == []
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
 
     it "returns [] if the index is valid but length is zero with [index, length]" do
       @array.send(@method, 0, 0).should == []
       @array.send(@method, 2, 0).should == []
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
 
     it "does not call #initialize on the subclass instance" do
       @array.send(@method, 0, 3).should == [1, 2, 3]
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
     end
   end
 

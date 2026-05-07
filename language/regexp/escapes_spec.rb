@@ -116,7 +116,7 @@ describe "Regexps with escape characters" do
   it "supports \\x (hex characters)" do
     /\xA/.match("\nxyz").to_a.should == ["\n"]
     /\x0A/.match("\n").to_a.should == ["\n"]
-    /\xAA/.match("\nA").should be_nil
+    /\xAA/.match("\nA").should == nil
     /\x0AA/.match("\nA").to_a.should == ["\nA"]
     /\xAG/.match("\nG").to_a.should == ["\nG"]
     # Non-matches
@@ -136,7 +136,7 @@ describe "Regexps with escape characters" do
     /\c,\cL\cl/.match("\f\f\f").to_a.should == ["\f\f\f"]
     /\c-\cM\cm/.match("\r\r\r").to_a.should == ["\r\r\r"]
 
-    /\cJ/.match("\r").should be_nil
+    /\cJ/.match("\r").should == nil
 
     # Parsing precedence
     /\cJ+/.match("\n\n").to_a.should == ["\n\n"] # Quantifiers apply to entire escape sequence

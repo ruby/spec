@@ -105,16 +105,16 @@ describe "Hash.[]" do
 
   it "does not retain the default value" do
     hash = Hash.new(1)
-    Hash[hash].default.should be_nil
+    Hash[hash].default.should == nil
     hash[:a] = 1
-    Hash[hash].default.should be_nil
+    Hash[hash].default.should == nil
   end
 
   it "does not retain the default_proc" do
     hash = Hash.new { |h, k| h[k] = [] }
-    Hash[hash].default_proc.should be_nil
+    Hash[hash].default_proc.should == nil
     hash[:a] = 1
-    Hash[hash].default_proc.should be_nil
+    Hash[hash].default_proc.should == nil
   end
 
   it "does not retain compare_by_identity flag" do

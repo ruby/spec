@@ -21,7 +21,7 @@ describe "ENV.key" do
 
   it "returns nil if the passed value is not found" do
     ENV.delete("foo")
-    ENV.key("foo").should be_nil
+    ENV.key("foo").should == nil
   end
 
   it "coerces the key element with #to_str" do

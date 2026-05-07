@@ -16,25 +16,25 @@ ruby_version_is ""..."4.1" do
     end
 
     it "sets self into binary mode" do
-      @ftp.binary.should be_nil
+      @ftp.binary.should == nil
       @ftp.send(:initialize)
       @ftp.binary.should == true
     end
 
     it "sets self into active mode" do
-      @ftp.passive.should be_nil
+      @ftp.passive.should == nil
       @ftp.send(:initialize)
       @ftp.passive.should == false
     end
 
     it "sets self into non-debug mode" do
-      @ftp.debug_mode.should be_nil
+      @ftp.debug_mode.should == nil
       @ftp.send(:initialize)
       @ftp.debug_mode.should == false
     end
 
     it "sets self to not resume file uploads/downloads" do
-      @ftp.resume.should be_nil
+      @ftp.resume.should == nil
       @ftp.send(:initialize)
       @ftp.resume.should == false
     end

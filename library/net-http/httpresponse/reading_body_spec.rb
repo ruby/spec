@@ -31,8 +31,8 @@ describe "Net::HTTPResponse#reading_body" do
       end
 
       it "returns nil" do
-        @res.reading_body(@socket, false) {}.should be_nil
-        @res.body.should be_nil
+        @res.reading_body(@socket, false) {}.should == nil
+        @res.body.should == nil
       end
 
       it "yields the passed block" do
@@ -45,8 +45,8 @@ describe "Net::HTTPResponse#reading_body" do
 
   describe "when body_allowed is false" do
     it "returns nil" do
-      @res.reading_body(@socket, false) {}.should be_nil
-      @res.body.should be_nil
+      @res.reading_body(@socket, false) {}.should == nil
+      @res.body.should == nil
     end
 
     it "yields the passed block" do

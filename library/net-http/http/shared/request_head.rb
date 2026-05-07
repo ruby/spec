@@ -12,7 +12,7 @@ describe :net_http_request_head, shared: true do
   describe "when passed no block" do
     it "sends a head request to the passed path and returns the response" do
       response = @http.send(@method, "/request")
-      response.body.should be_nil
+      response.body.should == nil
     end
 
     it "returns a Net::HTTPResponse object" do
@@ -24,12 +24,12 @@ describe :net_http_request_head, shared: true do
   describe "when passed a block" do
     it "sends a head request to the passed path and returns the response" do
       response = @http.send(@method, "/request") {}
-      response.body.should be_nil
+      response.body.should == nil
     end
 
     it "yields the response to the passed block" do
       @http.send(@method, "/request") do |response|
-        response.body.should be_nil
+        response.body.should == nil
       end
     end
 

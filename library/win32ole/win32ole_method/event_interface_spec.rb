@@ -20,7 +20,7 @@ platform_is :windows do
       end
 
       it "returns nil if method has no event interface" do
-        @namespace_method.event_interface.should be_nil
+        @namespace_method.event_interface.should == nil
       end
 
     end

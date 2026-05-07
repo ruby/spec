@@ -119,7 +119,7 @@ describe "Kernel#eval" do
     outer_binding = binding
 
     eval("if false; a = 1; end", outer_binding)
-    eval("a", outer_binding).should be_nil
+    eval("a", outer_binding).should == nil
   end
 
   it "allows creating a new class in a binding" do

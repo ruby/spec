@@ -63,7 +63,7 @@ describe "Hash#to_proc" do
 
     context "with no stored key" do
       it "returns nil" do
-        @proc.call(@unstored).should be_nil
+        @proc.call(@unstored).should == nil
       end
 
       context "when the hash has a default value" do

@@ -21,7 +21,7 @@ describe "Set#add?" do
 
   it "returns nil when the Object has already been added to self" do
     @set.add?("cat")
-    @set.add?("cat").should be_nil
+    @set.add?("cat").should == nil
   end
 
   it "raises RuntimeError when called during iteration" do

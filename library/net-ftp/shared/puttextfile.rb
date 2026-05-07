@@ -37,7 +37,7 @@ ruby_version_is ""..."4.1" do
 
     guard -> { Net::FTP::VERSION < '0.3.6' } do
       it "returns nil" do
-        @ftp.send(@method, @local_fixture_file, "text").should be_nil
+        @ftp.send(@method, @local_fixture_file, "text").should == nil
       end
     end
 

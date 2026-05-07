@@ -87,14 +87,14 @@ describe "Hash#to_h" do
     it "does not retain the default value" do
       h = Hash.new(1)
       h2 = h.to_h { |k, v| [k.to_s, v*v]}
-      h2.default.should be_nil
+      h2.default.should == nil
     end
 
     it "does not retain the default_proc" do
       pr = proc { |h, k| h[k] = [] }
       h = Hash.new(&pr)
       h2 = h.to_h { |k, v| [k.to_s, v*v]}
-      h2.default_proc.should be_nil
+      h2.default_proc.should == nil
     end
 
     it "does not retain compare_by_identity flag" do

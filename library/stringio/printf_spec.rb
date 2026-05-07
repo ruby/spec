@@ -8,7 +8,7 @@ describe "StringIO#printf" do
   end
 
   it "returns nil" do
-    @io.printf("%d %04x", 123, 123).should be_nil
+    @io.printf("%d %04x", 123, 123).should == nil
   end
 
   it "pads self with \\000 when the current position is after the end" do

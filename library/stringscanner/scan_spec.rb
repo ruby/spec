@@ -15,7 +15,7 @@ describe "StringScanner#scan" do
 
   it "treats ^ as matching from the beginning of the current position" do
     @s.scan(/\w+/).should == "This"
-    @s.scan(/^\d/).should be_nil
+    @s.scan(/^\d/).should == nil
     @s.scan(/^\s/).should == " "
   end
 
@@ -26,7 +26,7 @@ describe "StringScanner#scan" do
 
   it "treats \\A as matching from the beginning of the current position" do
     @s.scan(/\w+/).should == "This"
-    @s.scan(/\A\d/).should be_nil
+    @s.scan(/\A\d/).should == nil
     @s.scan(/\A\s/).should == " "
   end
 
@@ -41,17 +41,17 @@ describe "StringScanner#scan" do
 
   it "returns nil when there is no more to scan" do
     @s.scan(/[\w\s]+/).should == "This is a test"
-    @s.scan(/\w+/).should be_nil
+    @s.scan(/\w+/).should == nil
   end
 
   it "returns an empty string when the pattern matches empty" do
     @s.scan(/.*/).should == "This is a test"
     @s.scan(/.*/).should == ""
-    @s.scan(/./).should be_nil
+    @s.scan(/./).should == nil
   end
 
   it "treats String as the pattern itself" do
-    @s.scan("this").should be_nil
+    @s.scan("this").should == nil
     @s.scan("This").should == "This"
   end
 
@@ -71,7 +71,7 @@ describe "StringScanner#scan" do
     it "returns nil when matching failed" do
       @s.scan(/(?<a>2008)/)
       @s.should_not.matched?
-      @s[:a].should be_nil
+      @s[:a].should == nil
     end
   end
 end
@@ -91,11 +91,11 @@ describe "StringScanner#scan with fixed_anchor: true" do
   it "treats ^ as matching from the beginning of line" do
     @s.scan(/\w+\n/).should == "This\n"
     @s.scan(/^\w/).should == "i"
-    @s.scan(/^\w/).should be_nil
+    @s.scan(/^\w/).should == nil
   end
 
   it "treats \\A as matching from the beginning of string" do
     @s.scan(/\A\w/).should == "T"
-    @s.scan(/\A\w/).should be_nil
+    @s.scan(/\A\w/).should == nil
   end
 end

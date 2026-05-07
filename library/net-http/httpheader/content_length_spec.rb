@@ -8,7 +8,7 @@ describe "Net::HTTPHeader#content_length" do
   end
 
   it "returns nil if no 'Content-Length' header entry is set" do
-    @headers.content_length.should be_nil
+    @headers.content_length.should == nil
   end
 
   it "raises a Net::HTTPHeaderSyntaxError when the 'Content-Length' header entry has an invalid format" do
@@ -36,7 +36,7 @@ describe "Net::HTTPHeader#content_length=" do
   it "removes the 'Content-Length' entry if passed false or nil" do
     @headers["Content-Length"] = "123"
     @headers.content_length = nil
-    @headers["Content-Length"].should be_nil
+    @headers["Content-Length"].should == nil
   end
 
   it "sets the 'Content-Length' entry to the passed value" do

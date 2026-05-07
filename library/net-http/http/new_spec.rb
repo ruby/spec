@@ -60,20 +60,20 @@ describe "Net::HTTP.new" do
       http = Net::HTTP.new("localhost", 3333, "localhost")
       http.proxy_address.should == "localhost"
       http.proxy_port.should eql(80)
-      http.proxy_user.should be_nil
-      http.proxy_pass.should be_nil
+      http.proxy_user.should == nil
+      http.proxy_pass.should == nil
 
       http = Net::HTTP.new("localhost", 3333, "localhost", 1234)
       http.proxy_address.should == "localhost"
       http.proxy_port.should eql(1234)
-      http.proxy_user.should be_nil
-      http.proxy_pass.should be_nil
+      http.proxy_user.should == nil
+      http.proxy_pass.should == nil
 
       http = Net::HTTP.new("localhost", 3333, "localhost", 1234, "rubyspec")
       http.proxy_address.should == "localhost"
       http.proxy_port.should eql(1234)
       http.proxy_user.should == "rubyspec"
-      http.proxy_pass.should be_nil
+      http.proxy_pass.should == nil
 
       http = Net::HTTP.new("localhost", 3333, "localhost", 1234, "rubyspec", "rocks")
       http.proxy_address.should == "localhost"

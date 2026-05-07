@@ -6,15 +6,15 @@ describe "Hash#dig" do
     h = { 0 => false, a: 1 }
     h.dig(:a).should == 1
     h.dig(0).should == false
-    h.dig(1).should be_nil
+    h.dig(1).should == nil
   end
 
   it "returns the nested value specified by the sequence of keys" do
     h = { foo: { bar: { baz: 1 } } }
     h.dig(:foo, :bar, :baz).should == 1
-    h.dig(:foo, :bar, :nope).should be_nil
-    h.dig(:foo, :baz).should be_nil
-    h.dig(:bar, :baz, :foo).should be_nil
+    h.dig(:foo, :bar, :nope).should == nil
+    h.dig(:foo, :baz).should == nil
+    h.dig(:bar, :baz, :foo).should == nil
   end
 
   it "returns the nested value specified if the sequence includes an index" do

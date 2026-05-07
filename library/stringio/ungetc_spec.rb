@@ -14,7 +14,7 @@ describe "StringIO#ungetc when passed [char]" do
 
   it "returns nil" do
     @io.pos = 1
-    @io.ungetc(?A).should be_nil
+    @io.ungetc(?A).should == nil
   end
 
   it "decreases the current position by one" do

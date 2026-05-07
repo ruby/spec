@@ -28,7 +28,7 @@ describe "BasicSocket#send" do
       client.close
     end
     Thread.pass while t.status and t.status != "sleep"
-    t.status.should_not be_nil
+    t.status.should_not == nil
 
     @socket.send('hello', 0).should == 5
     @socket.shutdown(1) # indicate, that we are done sending
@@ -50,7 +50,7 @@ describe "BasicSocket#send" do
         client.close
       end
       Thread.pass while t.status and t.status != "sleep"
-      t.status.should_not be_nil
+      t.status.should_not == nil
 
       @socket.send('helloU', Socket::MSG_PEEK | Socket::MSG_OOB).should == 6
       @socket.shutdown # indicate, that we are done sending
@@ -73,7 +73,7 @@ describe "BasicSocket#send" do
       client.close
     end
     Thread.pass while t.status and t.status != "sleep"
-    t.status.should_not be_nil
+    t.status.should_not == nil
 
     sockaddr = Socket.pack_sockaddr_in(@port, "127.0.0.1")
     @socket.send('hello', 0, sockaddr).should == 5

@@ -18,7 +18,7 @@ describe "Fiber.yield" do
 
   it "returns nil to the caller if given no arguments" do
     fiber = Fiber.new { true; Fiber.yield; true }
-    fiber.resume.should be_nil
+    fiber.resume.should == nil
     fiber.resume
   end
 

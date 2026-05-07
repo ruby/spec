@@ -106,7 +106,7 @@ describe "CApiGCSpecs" do
 
   describe "rb_gc_register_mark_object" do
     it "can be called with an object" do
-      @f.rb_gc_register_mark_object(Object.new).should be_nil
+      @f.rb_gc_register_mark_object(Object.new).should == nil
     end
 
     it "keeps the value alive even if the value is not referenced by any Ruby object" do

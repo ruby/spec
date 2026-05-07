@@ -19,7 +19,7 @@ describe :stringio_each_byte, shared: true do
     @io.pos = 1000
     seen = nil
     @io.send(@method) { |b| seen = b }
-    seen.should be_nil
+    seen.should == nil
   end
 
   it "returns self" do

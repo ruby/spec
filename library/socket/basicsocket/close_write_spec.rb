@@ -43,6 +43,6 @@ describe "Socket::BasicSocket#close_write" do
   end
 
   it "returns nil" do
-    @server.close_write.should be_nil
+    @server.close_write.should == nil
   end
 end

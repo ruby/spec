@@ -110,7 +110,7 @@ describe "Kernel#autoload?" do
   end
 
   it "returns nil if no file has been registered for a constant" do
-    check_autoload(:Manualload).should be_nil
+    check_autoload(:Manualload).should == nil
   end
 end
 
@@ -173,6 +173,6 @@ describe "Kernel.autoload?" do
   end
 
   it "returns nil if no file has been registered for a constant" do
-    Kernel.autoload?(:Manualload).should be_nil
+    Kernel.autoload?(:Manualload).should == nil
   end
 end

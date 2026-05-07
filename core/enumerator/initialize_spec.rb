@@ -28,11 +28,11 @@ describe "Enumerator#initialize" do
   end
 
   it "sets size to nil if size is not given" do
-    @uninitialized.send(:initialize) {}.size.should be_nil
+    @uninitialized.send(:initialize) {}.size.should == nil
   end
 
   it "sets size to nil if the given size is nil" do
-    @uninitialized.send(:initialize, nil) {}.size.should be_nil
+    @uninitialized.send(:initialize, nil) {}.size.should == nil
   end
 
   it "sets size to the given size if the given size is Float::INFINITY" do

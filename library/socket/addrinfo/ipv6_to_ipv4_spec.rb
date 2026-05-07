@@ -51,20 +51,20 @@ guard -> { SocketSpecs.ipv6_available? } do
     end
 
     it 'returns nil for ::0.0.0.1' do
-      Addrinfo.ip('::0.0.0.1').ipv6_to_ipv4.should be_nil
+      Addrinfo.ip('::0.0.0.1').ipv6_to_ipv4.should == nil
     end
 
     it 'returns nil for a pure IPv6 Addrinfo' do
-      Addrinfo.ip('::1').ipv6_to_ipv4.should be_nil
+      Addrinfo.ip('::1').ipv6_to_ipv4.should == nil
     end
 
     it 'returns nil for an IPv4 Addrinfo' do
-      Addrinfo.ip('192.168.1.1').ipv6_to_ipv4.should be_nil
+      Addrinfo.ip('192.168.1.1').ipv6_to_ipv4.should == nil
     end
 
     describe 'for a unix socket' do
       it 'returns nil for a UNIX Addrinfo' do
-        Addrinfo.unix('foo').ipv6_to_ipv4.should be_nil
+        Addrinfo.unix('foo').ipv6_to_ipv4.should == nil
       end
     end
   end

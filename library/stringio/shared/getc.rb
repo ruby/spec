@@ -16,9 +16,9 @@ describe :stringio_getc, shared: true do
 
   it "returns nil when called at the end of self" do
     @io.pos = 7
-    @io.send(@method).should be_nil
-    @io.send(@method).should be_nil
-    @io.send(@method).should be_nil
+    @io.send(@method).should == nil
+    @io.send(@method).should == nil
+    @io.send(@method).should == nil
   end
 
   it "does not increase self's position when called at the end of file" do

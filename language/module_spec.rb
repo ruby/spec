@@ -91,7 +91,7 @@ end
 describe "Assigning an anonymous module to a constant" do
   it "sets the name of the module" do
     mod = Module.new
-    mod.name.should be_nil
+    mod.name.should == nil
 
     ::ModuleSpecs_CS1 = mod
     mod.name.should == "ModuleSpecs_CS1"

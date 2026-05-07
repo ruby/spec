@@ -287,7 +287,7 @@ describe "String#index with Regexp" do
   end
 
   it "returns nil if the Regexp matches the empty string and the offset is out of range" do
-    "ruby".index(//,12).should be_nil
+    "ruby".index(//,12).should == nil
   end
 
   it "supports \\G which matches at the given start offset" do

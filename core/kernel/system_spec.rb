@@ -34,7 +34,7 @@ describe :kernel_system, shared: true do
   end
 
   it "returns nil when command execution fails" do
-    @object.system("sad").should be_nil
+    @object.system("sad").should == nil
 
     $?.should.instance_of? Process::Status
     $?.pid.should.is_a?(Integer)

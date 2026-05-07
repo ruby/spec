@@ -11,7 +11,7 @@ ruby_version_is "3.4" do
 
       it "returns nil when the nth match isn't found" do
         match_data = /something is( not)? (right)/.match("something is right")
-        match_data.bytebegin(1).should be_nil
+        match_data.bytebegin(1).should == nil
       end
 
       it "returns the byte-based offset for multi-byte strings" do

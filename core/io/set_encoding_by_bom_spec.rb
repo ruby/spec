@@ -15,7 +15,7 @@ describe "IO#set_encoding_by_bom" do
   it "returns nil if not readable" do
     not_readable_io = new_io(@name, 'wb')
 
-    not_readable_io.set_encoding_by_bom.should be_nil
+    not_readable_io.set_encoding_by_bom.should == nil
     not_readable_io.external_encoding.should == Encoding::ASCII_8BIT
   ensure
     not_readable_io.close
@@ -102,7 +102,7 @@ describe "IO#set_encoding_by_bom" do
   end
 
   it "returns nil if io is empty" do
-    @io.set_encoding_by_bom.should be_nil
+    @io.set_encoding_by_bom.should == nil
     @io.external_encoding.should == Encoding::ASCII_8BIT
   end
 

@@ -29,7 +29,7 @@ describe "StringIO#print" do
   end
 
   it "returns nil" do
-    @io.print(1, 2, 3).should be_nil
+    @io.print(1, 2, 3).should == nil
   end
 
   it "pads self with \\000 when the current position is after the end" do

@@ -9,7 +9,7 @@ describe :kernel_raise, shared: true do
       ScratchPad.record :no_abort
     end.should raise_error(Exception, "abort")
 
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
   end
 
   it "accepts an exception that implements to_hash" do

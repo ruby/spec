@@ -218,7 +218,7 @@ describe "CApiGlobalSpecs" do
     end
 
     it "returns nil by default" do
-      @f.rb_output_rs.should be_nil
+      @f.rb_output_rs.should == nil
     end
 
     it "returns the value of $\\" do
@@ -237,7 +237,7 @@ describe "CApiGlobalSpecs" do
     end
 
     it "returns nil by default" do
-      @f.rb_output_fs.should be_nil
+      @f.rb_output_fs.should == nil
     end
 
     it "returns the value of $\\" do
@@ -263,7 +263,7 @@ describe "CApiGlobalSpecs" do
       end
 
       Thread.pass while thr.status and !running
-      $_.should be_nil
+      $_.should == nil
 
       thr.join
     end
@@ -290,7 +290,7 @@ describe "CApiGlobalSpecs" do
       end
 
       Thread.pass while thr.status and !running
-      $_.should be_nil
+      $_.should == nil
 
       thr.join
     end

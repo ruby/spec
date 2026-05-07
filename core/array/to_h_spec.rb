@@ -37,7 +37,7 @@ describe "Array#to_h" do
   end
 
   it "produces a hash that returns nil for a missing element" do
-    [[:a, 1], [:b, 2]].to_h[:c].should be_nil
+    [[:a, 1], [:b, 2]].to_h[:c].should == nil
   end
 
   context "with block" do

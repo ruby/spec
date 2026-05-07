@@ -298,8 +298,8 @@ describe :marshal_load, shared: true do
       marshaled_obj = Marshal.send(@method, dump_str)
 
       marshaled_obj.should.instance_of?(UserPreviouslyDefinedWithInitializedIvar)
-      marshaled_obj.field1.should be_nil
-      marshaled_obj.field2.should be_nil
+      marshaled_obj.field1.should == nil
+      marshaled_obj.field2.should == nil
     end
 
     it "loads the String in non US-ASCII and non UTF-8 encoding" do
@@ -1167,7 +1167,7 @@ describe :marshal_load, shared: true do
 
   describe "for nil" do
     it "loads" do
-      Marshal.send(@method, "\x04\b0").should be_nil
+      Marshal.send(@method, "\x04\b0").should == nil
     end
   end
 

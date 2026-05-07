@@ -4,33 +4,33 @@ require_relative '../../../spec_helper'
 describe "Encoding::Converter#last_error" do
   it "returns nil when the no conversion has been attempted" do
     ec = Encoding::Converter.new('ascii','utf-8')
-    ec.last_error.should be_nil
+    ec.last_error.should == nil
   end
 
   it "returns nil when the last conversion did not produce an error" do
     ec = Encoding::Converter.new('ascii','utf-8')
     ec.convert('a'.dup.force_encoding('ascii'))
-    ec.last_error.should be_nil
+    ec.last_error.should == nil
   end
 
   it "returns nil when #primitive_convert last returned :destination_buffer_full" do
     ec = Encoding::Converter.new("utf-8", "iso-2022-jp")
     ec.primitive_convert(+"\u{9999}", +"", 0, 0, partial_input: false) \
       .should == :destination_buffer_full
-    ec.last_error.should be_nil
+    ec.last_error.should == nil
   end
 
   it "returns nil when #primitive_convert last returned :finished" do
     ec = Encoding::Converter.new("utf-8", "iso-8859-1")
     ec.primitive_convert("glark".dup.force_encoding('utf-8'), +"").should == :finished
-    ec.last_error.should be_nil
+    ec.last_error.should == nil
   end
 
   it "returns nil if the last conversion succeeded but the penultimate failed" do
     ec = Encoding::Converter.new("utf-8", "iso-8859-1")
     ec.primitive_convert(+"\xf1abcd", +"").should == :invalid_byte_sequence
     ec.primitive_convert("glark".dup.force_encoding('utf-8'), +"").should == :finished
-    ec.last_error.should be_nil
+    ec.last_error.should == nil
   end
 
   it "returns an Encoding::InvalidByteSequenceError when #primitive_convert last returned :invalid_byte_sequence" do

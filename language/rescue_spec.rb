@@ -59,7 +59,7 @@ describe "The rescue keyword" do
       rescue SpecificExampleException => target&.captured_error
         :caught
       end.should == :caught
-      target.should be_nil
+      target.should == nil
     end
 
     it 'using a setter method' do

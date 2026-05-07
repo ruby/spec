@@ -10,7 +10,7 @@ describe "Encoding.default_internal" do
   end
 
   it "is nil by default" do
-    Encoding.default_internal.should be_nil
+    Encoding.default_internal.should == nil
   end
 
   it "returns an Encoding object if a default internal encoding is set" do
@@ -20,7 +20,7 @@ describe "Encoding.default_internal" do
 
   it "returns nil if no default internal encoding is set" do
     Encoding.default_internal = nil
-    Encoding.default_internal.should be_nil
+    Encoding.default_internal.should == nil
   end
 
   it "returns the default internal encoding" do
@@ -69,6 +69,6 @@ describe "Encoding.default_internal=" do
 
   it "accepts an argument of nil to unset the default internal encoding" do
     Encoding.default_internal = nil
-    Encoding.default_internal.should be_nil
+    Encoding.default_internal.should == nil
   end
 end

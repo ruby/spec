@@ -4,7 +4,7 @@ describe "Array#dig" do
 
   it "returns #at with one arg" do
     ['a'].dig(0).should == 'a'
-    ['a'].dig(1).should be_nil
+    ['a'].dig(1).should == nil
   end
 
   it "recurses array elements" do

@@ -26,7 +26,7 @@ ruby_version_is ""..."4.1" do
       end
 
       it "returns nil" do
-        @ftp.chdir("..").should be_nil
+        @ftp.chdir("..").should == nil
       end
 
       it "does not raise a Net::FTPPermError when the response code is 500" do
@@ -66,7 +66,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.chdir("test").should be_nil
+      @ftp.chdir("test").should == nil
     end
 
     it "raises a Net::FTPPermError when the response code is 500" do

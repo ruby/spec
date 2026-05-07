@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.rmdir("test.folder").should be_nil
+      @ftp.rmdir("test.folder").should == nil
     end
 
     it "raises a Net::FTPPermError when the response code is 500" do

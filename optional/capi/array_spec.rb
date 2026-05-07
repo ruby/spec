@@ -322,7 +322,7 @@ describe "C-API Array function" do
     end
 
     it "returns nil for an out of range index" do
-      @s.rb_ary_aref([1, 2, 3], 6).should be_nil
+      @s.rb_ary_aref([1, 2, 3], 6).should == nil
     end
 
     it "returns a new array where the first argument is the index and the second is the length" do
@@ -335,7 +335,7 @@ describe "C-API Array function" do
     end
 
     it "returns nil when the start of a range is out of bounds" do
-      @s.rb_ary_aref([1, 2, 3, 4], 6..10).should be_nil
+      @s.rb_ary_aref([1, 2, 3, 4], 6..10).should == nil
     end
 
     it "returns an empty array when the start of a range equals the last element" do
@@ -422,7 +422,7 @@ describe "C-API Array function" do
 
     it "returns nil if the element is not in the array" do
       ary = [1, 2, 3, 4]
-      @s.rb_ary_delete(ary, 5).should be_nil
+      @s.rb_ary_delete(ary, 5).should == nil
       ary.should == [1, 2, 3, 4]
     end
   end
@@ -457,12 +457,12 @@ describe "C-API Array function" do
     end
 
     it "returns nil if the index is out of bounds" do
-      @s.rb_ary_delete_at(@array, 4).should be_nil
+      @s.rb_ary_delete_at(@array, 4).should == nil
       @array.should == [1, 2, 3, 4]
     end
 
     it "returns nil if the negative index is out of bounds" do
-      @s.rb_ary_delete_at(@array, -5).should be_nil
+      @s.rb_ary_delete_at(@array, -5).should == nil
       @array.should == [1, 2, 3, 4]
     end
   end
@@ -519,7 +519,7 @@ describe "C-API Array function" do
     end
 
     it "returns nil if the begin index is out of bound" do
-      @s.rb_ary_subseq([1, 2, 3, 4, 5], 6, 3).should be_nil
+      @s.rb_ary_subseq([1, 2, 3, 4, 5], 6, 3).should == nil
     end
 
     it "returns the existing subsequence of the length is out of bounds" do
@@ -527,7 +527,7 @@ describe "C-API Array function" do
     end
 
     it "returns nil if the size is negative" do
-      @s.rb_ary_subseq([1, 2, 3, 4, 5], 1, -1).should be_nil
+      @s.rb_ary_subseq([1, 2, 3, 4, 5], 1, -1).should == nil
     end
   end
 end

@@ -160,7 +160,7 @@ describe "String#match?" do
   context "when matches the given regex" do
     it "returns true but does not set Regexp.last_match" do
       'string'.match?(/string/i).should == true
-      Regexp.last_match.should be_nil
+      Regexp.last_match.should == nil
     end
   end
 

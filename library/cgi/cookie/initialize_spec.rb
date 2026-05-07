@@ -49,11 +49,11 @@ ruby_version_is ""..."4.0" do
     end
 
     it "does not set self's expiration date" do
-      @cookie.expires.should be_nil
+      @cookie.expires.should == nil
     end
 
     it "does not set self's domain" do
-      @cookie.domain.should be_nil
+      @cookie.domain.should == nil
     end
   end
 

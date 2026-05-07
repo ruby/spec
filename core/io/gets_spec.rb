@@ -27,7 +27,7 @@ describe "IO#gets" do
   it "sets $_ to nil after the last line has been read" do
     while @io.gets
     end
-    $_.should be_nil
+    $_.should == nil
   end
 
   it "returns nil if called at the end of the stream" do

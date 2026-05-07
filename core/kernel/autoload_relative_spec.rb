@@ -29,7 +29,7 @@ ruby_version_is "4.1" do
     it "registers a file to load relative to the current file" do
       KernelSpecs.autoload_relative :KSAutoloadRelativeA, "fixtures/autoload_relative_b.rb"
       path = KernelSpecs.autoload?(:KSAutoloadRelativeA)
-      path.should_not be_nil
+      path.should_not == nil
       path.should.end_with?("autoload_relative_b.rb")
       File.exist?(path).should == true
     end
@@ -67,7 +67,7 @@ ruby_version_is "4.1" do
     end
 
     it "returns nil" do
-      KernelSpecs.autoload_relative(:KSAutoloadRelativeG, "fixtures/autoload_relative_b.rb").should be_nil
+      KernelSpecs.autoload_relative(:KSAutoloadRelativeG, "fixtures/autoload_relative_b.rb").should == nil
     end
 
     it "resolves nested directory paths correctly" do
@@ -80,7 +80,7 @@ ruby_version_is "4.1" do
     it "resolves paths starting with ./" do
       KernelSpecs.autoload_relative :KSAutoloadRelativeH, "./fixtures/autoload_relative_b.rb"
       path = KernelSpecs.autoload?(:KSAutoloadRelativeH)
-      path.should_not be_nil
+      path.should_not == nil
       path.should.end_with?("autoload_relative_b.rb")
     end
 
@@ -90,7 +90,7 @@ ruby_version_is "4.1" do
       begin
         KernelSpecs.autoload_relative :KSAutoloadRelativeI, "fixtures/autoload_relative_b.rb"
         path = KernelSpecs.autoload?(:KSAutoloadRelativeI)
-        path.should_not be_nil
+        path.should_not == nil
         # Should still resolve even with empty $LOAD_PATH
         File.exist?(path).should == true
       ensure

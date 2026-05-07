@@ -32,11 +32,11 @@ describe "Enumerator::Lazy#initialize" do
   end
 
   it "sets #size to nil if not given a size" do
-    @uninitialized.send(:initialize, @receiver) {}.size.should be_nil
+    @uninitialized.send(:initialize, @receiver) {}.size.should == nil
   end
 
   it "sets #size to nil if given size is nil" do
-    @uninitialized.send(:initialize, @receiver, nil) {}.size.should be_nil
+    @uninitialized.send(:initialize, @receiver, nil) {}.size.should == nil
   end
 
   it "sets given size to own size if the given size is Float::INFINITY" do

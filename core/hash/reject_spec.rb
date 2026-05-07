@@ -46,17 +46,17 @@ describe "Hash#reject" do
 
   it "does not retain the default value" do
     h = Hash.new(1)
-    h.reject { false }.default.should be_nil
+    h.reject { false }.default.should == nil
     h[:a] = 1
-    h.reject { false }.default.should be_nil
+    h.reject { false }.default.should == nil
   end
 
   it "does not retain the default_proc" do
     pr = proc { |h, k| h[k] = [] }
     h = Hash.new(&pr)
-    h.reject { false }.default_proc.should be_nil
+    h.reject { false }.default_proc.should == nil
     h[:a] = 1
-    h.reject { false }.default_proc.should be_nil
+    h.reject { false }.default_proc.should == nil
   end
 
   it "retains compare_by_identity flag" do

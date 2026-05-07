@@ -13,8 +13,8 @@ describe "Enumerable#tally" do
 
   it "returns a hash without default" do
     hash = EnumerableSpecs::Numerous.new('foo', 'bar', 'foo', 'baz').tally
-    hash.default_proc.should be_nil
-    hash.default.should be_nil
+    hash.default_proc.should == nil
+    hash.default.should == nil
   end
 
   it "returns an empty hash for empty enumerables" do

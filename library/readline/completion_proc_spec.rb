@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 with_feature :readline do
   describe "Readline.completion_proc" do
     it "returns nil" do
-      Readline.completion_proc.should be_nil
+      Readline.completion_proc.should == nil
     end
   end
 

@@ -7,7 +7,7 @@ describe "StringIO#close_read" do
   end
 
   it "returns nil" do
-    @io.close_read.should be_nil
+    @io.close_read.should == nil
   end
 
   it "prevents further reading" do

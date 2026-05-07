@@ -48,10 +48,10 @@ describe "A lambda literal -> () { }" do
         @d = -> do end
       ruby
 
-      @a.().should be_nil
-      @b.().should be_nil
-      @c.().should be_nil
-      @d.().should be_nil
+      @a.().should == nil
+      @b.().should == nil
+      @c.().should == nil
+      @d.().should == nil
     end
   end
 
@@ -91,9 +91,9 @@ describe "A lambda literal -> () { }" do
         @a = -> (*) { }
       ruby
 
-      @a.().should be_nil
-      @a.(1).should be_nil
-      @a.(1, 2, 3).should be_nil
+      @a.().should == nil
+      @a.(1).should == nil
+      @a.(1, 2, 3).should == nil
     end
 
     evaluate <<-ruby do
@@ -125,8 +125,8 @@ describe "A lambda literal -> () { }" do
         @a = -> (**) {  }
       ruby
 
-      @a.().should be_nil
-      @a.(a: 1, b: 2).should be_nil
+      @a.().should == nil
+      @a.(a: 1, b: 2).should == nil
       -> { @a.(1) }.should raise_error(ArgumentError)
     end
 
@@ -142,7 +142,7 @@ describe "A lambda literal -> () { }" do
         @a = -> (&b) { b  }
       ruby
 
-      @a.().should be_nil
+      @a.().should == nil
       @a.() { }.should.instance_of?(Proc)
     end
 
@@ -193,8 +193,8 @@ describe "A lambda literal -> () { }" do
         @a = -> (*, &b) { b }
       ruby
 
-      @a.().should be_nil
-      @a.(1, 2, 3, 4).should be_nil
+      @a.().should == nil
+      @a.(1, 2, 3, 4).should == nil
       @a.(&(l = ->{})).should equal(l)
     end
 
@@ -359,8 +359,8 @@ describe "A lambda expression 'lambda { ... }'" do
         @b = lambda { || }
       ruby
 
-      @a.().should be_nil
-      @b.().should be_nil
+      @a.().should == nil
+      @b.().should == nil
     end
   end
 
@@ -433,9 +433,9 @@ describe "A lambda expression 'lambda { ... }'" do
         @a = lambda { |*| }
       ruby
 
-      @a.().should be_nil
-      @a.(1).should be_nil
-      @a.(1, 2, 3).should be_nil
+      @a.().should == nil
+      @a.(1).should == nil
+      @a.(1, 2, 3).should == nil
     end
 
     evaluate <<-ruby do
@@ -467,8 +467,8 @@ describe "A lambda expression 'lambda { ... }'" do
         @a = lambda { |**|  }
       ruby
 
-      @a.().should be_nil
-      @a.(a: 1, b: 2).should be_nil
+      @a.().should == nil
+      @a.(a: 1, b: 2).should == nil
       lambda { @a.(1) }.should raise_error(ArgumentError)
     end
 
@@ -484,7 +484,7 @@ describe "A lambda expression 'lambda { ... }'" do
         @a = lambda { |&b| b  }
       ruby
 
-      @a.().should be_nil
+      @a.().should == nil
       @a.() { }.should.instance_of?(Proc)
     end
 
@@ -533,8 +533,8 @@ describe "A lambda expression 'lambda { ... }'" do
         @a = lambda { |*, &b| b }
       ruby
 
-      @a.().should be_nil
-      @a.(1, 2, 3, 4).should be_nil
+      @a.().should == nil
+      @a.(1, 2, 3, 4).should == nil
       @a.(&(l = ->{})).should equal(l)
     end
 

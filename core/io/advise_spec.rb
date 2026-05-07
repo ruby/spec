@@ -48,34 +48,34 @@ describe "IO#advise" do
   end
 
   it "supports the normal advice type" do
-    @io.advise(:normal).should be_nil
+    @io.advise(:normal).should == nil
   end
 
   it "supports the sequential advice type" do
-    @io.advise(:sequential).should be_nil
+    @io.advise(:sequential).should == nil
   end
 
   it "supports the random advice type" do
-    @io.advise(:random).should be_nil
+    @io.advise(:random).should == nil
   end
 
   it "supports the dontneed advice type" do
-    @io.advise(:dontneed).should be_nil
+    @io.advise(:dontneed).should == nil
   end
 
   it "supports the noreuse advice type" do
-    @io.advise(:noreuse).should be_nil
+    @io.advise(:noreuse).should == nil
   end
 
   platform_is_not :linux do
     it "supports the willneed advice type" do
-      @io.advise(:willneed).should be_nil
+      @io.advise(:willneed).should == nil
     end
   end
 
   guard -> { platform_is :linux and kernel_version_is '3.6' } do # [ruby-core:65355] tmpfs is not supported
     it "supports the willneed advice type" do
-      @io.advise(:willneed).should be_nil
+      @io.advise(:willneed).should == nil
     end
   end
 

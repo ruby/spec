@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.noop.should be_nil
+      @ftp.noop.should == nil
     end
 
     it "raises a Net::FTPPermError when the response code is 500" do

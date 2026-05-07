@@ -517,7 +517,7 @@ describe "C-API Encoding function" do
 
     it "returns 0 if Encoding.default_internal is nil" do
       Encoding.default_internal = nil
-      @s.rb_default_internal_encoding.should be_nil
+      @s.rb_default_internal_encoding.should == nil
     end
 
     it "returns the encoding for Encoding.default_internal" do

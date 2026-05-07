@@ -9,13 +9,13 @@ describe :io_internal_encoding, shared: true do
 
     it "returns nil if the internal encoding is not set" do
       @io = new_io @name, @object
-      @io.internal_encoding.should be_nil
+      @io.internal_encoding.should == nil
     end
 
     it "returns nil if Encoding.default_internal is changed after the instance is created" do
       @io = new_io @name, @object
       Encoding.default_internal = Encoding::IBM437
-      @io.internal_encoding.should be_nil
+      @io.internal_encoding.should == nil
     end
 
     it "returns the value set when the instance was created" do
@@ -39,13 +39,13 @@ describe :io_internal_encoding, shared: true do
 
     it "returns nil" do
       @io = new_io @name, @object
-      @io.internal_encoding.should be_nil
+      @io.internal_encoding.should == nil
     end
 
     it "returns nil regardless of Encoding.default_internal changes" do
       @io = new_io @name, @object
       Encoding.default_internal = Encoding::IBM437
-      @io.internal_encoding.should be_nil
+      @io.internal_encoding.should == nil
     end
   end
 
@@ -86,12 +86,12 @@ describe :io_internal_encoding, shared: true do
     it "returns nil when Encoding.default_external is BINARY and the internal encoding is not set" do
       Encoding.default_external = Encoding::BINARY
       @io = new_io @name, @object
-      @io.internal_encoding.should be_nil
+      @io.internal_encoding.should == nil
     end
 
     it "returns nil when the external encoding is BINARY and the internal encoding is not set" do
       @io = new_io @name, "#{@object}:binary"
-      @io.internal_encoding.should be_nil
+      @io.internal_encoding.should == nil
     end
   end
 end

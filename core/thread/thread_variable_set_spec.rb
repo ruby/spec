@@ -21,7 +21,7 @@ describe "Thread#thread_variable_set" do
   it "sets a value private to self" do
     @t.thread_variable_set(:thread_variable_get_spec, 82)
     @t.thread_variable_get(:thread_variable_get_spec).should == 82
-    Thread.current.thread_variable_get(:thread_variable_get_spec).should be_nil
+    Thread.current.thread_variable_get(:thread_variable_get_spec).should == nil
   end
 
   it "accepts String and Symbol keys interchangeably" do

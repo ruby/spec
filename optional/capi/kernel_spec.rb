@@ -505,7 +505,7 @@ describe "C-API Kernel function" do
         throw :thrown_value
         ScratchPad << :after_throw
       end
-      @s.rb_catch("thrown_value", proc).should be_nil
+      @s.rb_catch("thrown_value", proc).should == nil
       ScratchPad.recorded.should == [:before_throw]
     end
 
@@ -531,7 +531,7 @@ describe "C-API Kernel function" do
         throw @tag
         ScratchPad << :after_throw
       end
-      @s.rb_catch_obj(@tag, proc).should be_nil
+      @s.rb_catch_obj(@tag, proc).should == nil
       ScratchPad.recorded.should == [:before_throw]
     end
 

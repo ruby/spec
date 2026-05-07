@@ -23,7 +23,7 @@ describe "The class keyword" do
     A.should.instance_of?(Class)
 
     Object.send(:remove_const, :A)
-    defined?(A).should be_nil
+    defined?(A).should == nil
 
     ClassSpecs::DEFINE_CLASS.call
     A.should.instance_of?(Class)

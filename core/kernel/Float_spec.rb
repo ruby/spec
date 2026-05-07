@@ -242,7 +242,7 @@ describe :kernel_float, shared: true do
     ruby_version_is ""..."3.4.3" do
       it "does not accept embedded _ if the number contains a-f" do
         -> { @object.send(:Float, "0x1_0a") }.should raise_error(ArgumentError)
-        @object.send(:Float, "0x1_0a", exception: false).should be_nil
+        @object.send(:Float, "0x1_0a", exception: false).should == nil
       end
     end
 
@@ -256,9 +256,9 @@ describe :kernel_float, shared: true do
       -> { @object.send(:Float, "_0x10") }.should raise_error(ArgumentError)
       -> { @object.send(:Float, "0_x10") }.should raise_error(ArgumentError)
       -> { @object.send(:Float, "0x_10") }.should raise_error(ArgumentError)
-      @object.send(:Float, "_0x10", exception: false).should be_nil
-      @object.send(:Float, "0_x10", exception: false).should be_nil
-      @object.send(:Float, "0x_10", exception: false).should be_nil
+      @object.send(:Float, "_0x10", exception: false).should == nil
+      @object.send(:Float, "0_x10", exception: false).should == nil
+      @object.send(:Float, "0x_10", exception: false).should == nil
     end
 
     it "parses negative hexadecimal string as negative float" do

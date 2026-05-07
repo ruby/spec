@@ -575,7 +575,7 @@ describe "C-API String function" do
     end
 
     it "returns nil for a negative offset that is out of range" do
-      @s.rb_str_subpos("hello", -6).should be_nil
+      @s.rb_str_subpos("hello", -6).should == nil
     end
 
     it "returns the correct position for a negative offset" do
@@ -587,7 +587,7 @@ describe "C-API String function" do
     end
 
     it "returns nil when offset is beyond string length" do
-      @s.rb_str_subpos("hello", 6).should be_nil
+      @s.rb_str_subpos("hello", 6).should == nil
     end
   end
 
@@ -846,7 +846,7 @@ describe "rb_str_free" do
   # is available. There is no guarantee this even does
   # anything at all
   it "indicates data for a string might be freed" do
-    @s.rb_str_free("xyz").should be_nil
+    @s.rb_str_free("xyz").should == nil
   end
 end
 

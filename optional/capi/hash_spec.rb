@@ -46,7 +46,7 @@ describe "C-API Hash function" do
     end
 
     it "creates a hash with no default proc" do
-      @s.rb_hash_new {}.default_proc.should be_nil
+      @s.rb_hash_new {}.default_proc.should == nil
     end
   end
 
@@ -56,7 +56,7 @@ describe "C-API Hash function" do
     end
 
     it "creates a hash with no default proc" do
-      @s.rb_hash_new_capa(3) {}.default_proc.should be_nil
+      @s.rb_hash_new_capa(3) {}.default_proc.should == nil
     end
 
     it "raises RuntimeError when negative index is provided" do
@@ -101,7 +101,7 @@ describe "C-API Hash function" do
 
     it "returns nil if the key does not exist" do
       hsh = { }
-      @s.rb_hash_aref(hsh, :chunky).should be_nil
+      @s.rb_hash_aref(hsh, :chunky).should == nil
       @s.rb_hash_aref_nil(hsh, :chunky).should == true
     end
   end
@@ -266,13 +266,13 @@ describe "C-API Hash function" do
 
     it "does not return the default value if it exists" do
       hsh = Hash.new(0)
-      @s.rb_hash_lookup(hsh, :chunky).should be_nil
+      @s.rb_hash_lookup(hsh, :chunky).should == nil
       @s.rb_hash_lookup_nil(hsh, :chunky).should == true
     end
 
     it "returns nil if the key does not exist" do
       hsh = { }
-      @s.rb_hash_lookup(hsh, :chunky).should be_nil
+      @s.rb_hash_lookup(hsh, :chunky).should == nil
       @s.rb_hash_lookup_nil(hsh, :chunky).should == true
     end
 

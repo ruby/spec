@@ -3,7 +3,7 @@ require_relative 'fixtures/module'
 
 describe "Module#name" do
   it "is nil for an anonymous module" do
-    Module.new.name.should be_nil
+    Module.new.name.should == nil
   end
 
   it "is not nil when assigned to a constant in an anonymous module" do
@@ -19,9 +19,9 @@ describe "Module#name" do
   end
 
   it "returns nil for a singleton class" do
-    Module.new.singleton_class.name.should be_nil
-    String.singleton_class.name.should be_nil
-    Object.new.singleton_class.name.should be_nil
+    Module.new.singleton_class.name.should == nil
+    String.singleton_class.name.should == nil
+    Object.new.singleton_class.name.should == nil
   end
 
   it "changes when the module is reachable through a constant path" do

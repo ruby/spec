@@ -29,8 +29,8 @@ describe "The || operator" do
     (() || true).should == true
     (() || false).should == false
     (true || ()).should == true
-    (false || ()).should be_nil
-    (() || ()).should be_nil
+    (false || ()).should == nil
+    (() || ()).should == nil
   end
 
   it "has a higher precedence than 'break' in 'break true || false'" do
@@ -71,8 +71,8 @@ describe "The or operator" do
     (() or true).should == true
     (() or false).should == false
     (true or ()).should == true
-    (false or ()).should be_nil
-    (() or ()).should be_nil
+    (false or ()).should == nil
+    (() or ()).should == nil
   end
 
   it "has a lower precedence than 'break' in 'break true or false'" do

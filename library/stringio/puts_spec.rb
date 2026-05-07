@@ -123,7 +123,7 @@ describe "StringIO#puts when passed no arguments" do
   end
 
   it "returns nil" do
-    @io.puts.should be_nil
+    @io.puts.should == nil
   end
 
   it "prints a newline" do

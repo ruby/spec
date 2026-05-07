@@ -311,7 +311,7 @@ describe "A block" do
 
   describe "taking |a| arguments" do
     it "assigns nil to the argument when no values are yielded" do
-      @y.z { |a| a }.should be_nil
+      @y.z { |a| a }.should == nil
     end
 
     it "assigns the value yielded to the argument" do
@@ -539,7 +539,7 @@ describe "A block" do
 
   describe "taking |a, | arguments" do
     it "assigns nil to the argument when no values are yielded" do
-      @y.z { |a, | a }.should be_nil
+      @y.z { |a, | a }.should == nil
     end
 
     it "assigns the argument a single value yielded" do
@@ -555,7 +555,7 @@ describe "A block" do
     end
 
     it "assigns nil to the argument when passed an empty Array" do
-      @y.s([]) { |a, | a }.should be_nil
+      @y.s([]) { |a, | a }.should == nil
     end
 
     it "assigns the argument the first element of the Array when passed a single Array" do
@@ -844,21 +844,21 @@ describe "Block-local variables" do
   end
 
   it "are not automatically instantiated in the outer scope" do
-    defined?(glark).should be_nil
+    defined?(glark).should == nil
     [1].each {|;glark| 1}
-    defined?(glark).should be_nil
+    defined?(glark).should == nil
   end
 
   it "are automatically instantiated in the block" do
     [1].each do |;glark|
-      glark.should be_nil
+      glark.should == nil
     end
   end
 
   it "are visible in deeper scopes before initialization" do
     [1].each {|;glark|
       [1].each {
-        defined?(glark).should_not be_nil
+        defined?(glark).should_not == nil
         glark = 1
       }
       glark.should == 1

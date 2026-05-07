@@ -39,7 +39,7 @@ describe "Struct.new" do
     struct = Struct.new(nil, :foo)
     struct.new("bar").foo.should == "bar"
     struct.should.is_a?(Class)
-    struct.name.should be_nil
+    struct.name.should == nil
   end
 
   it "creates a new anonymous class with symbol arguments" do
@@ -212,13 +212,13 @@ describe "Struct.new" do
       it "allows missing arguments" do
         obj = @struct_with_kwa.new(name: "elefant")
         obj.name.should == "elefant"
-        obj.legs.should be_nil
+        obj.legs.should == nil
       end
 
       it "allows no arguments" do
         obj = @struct_with_kwa.new
-        obj.name.should be_nil
-        obj.legs.should be_nil
+        obj.name.should == nil
+        obj.legs.should == nil
       end
 
       it "raises ArgumentError when passed not declared keyword argument" do

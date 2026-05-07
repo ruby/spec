@@ -15,7 +15,7 @@ describe "Float#numerator" do
 
   it "converts self to a Rational object then returns its numerator" do
     @numbers.each do |number|
-      number.infinite?.should be_nil
+      number.infinite?.should == nil
       number.numerator.should == Rational(number).numerator
     end
   end

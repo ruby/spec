@@ -14,11 +14,11 @@ describe "Array#sample" do
   end
 
   it "returns nil for an empty Array" do
-    [].sample.should be_nil
+    [].sample.should == nil
   end
 
   it "returns nil for an empty array when called without n and a Random is given" do
-    [].sample(random: Random.new(42)).should be_nil
+    [].sample(random: Random.new(42)).should == nil
   end
 
   it "returns a single value when not passed a count" do

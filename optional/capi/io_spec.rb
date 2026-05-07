@@ -136,7 +136,7 @@ describe "C-API IO function" do
     end
 
     it "returns nil for non IO objects" do
-      @o.rb_io_check_io({}).should be_nil
+      @o.rb_io_check_io({}).should == nil
     end
   end
 
@@ -299,7 +299,7 @@ describe "C-API IO function" do
 
   describe "rb_thread_fd_writable" do
     it "waits til an fd is ready for writing" do
-      @o.rb_thread_fd_writable(@w_io).should be_nil
+      @o.rb_thread_fd_writable(@w_io).should == nil
     end
   end
 
@@ -406,7 +406,7 @@ describe "C-API IO function" do
 
       Thread.pass until start
 
-      @o.rb_thread_wait_fd(@r_io).should be_nil
+      @o.rb_thread_wait_fd(@r_io).should == nil
 
       thr.join
     end

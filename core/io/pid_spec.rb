@@ -25,7 +25,7 @@ describe "IO#pid" do
   end
 
   it "returns the ID of a process associated with stream" do
-    @io.pid.should_not be_nil
+    @io.pid.should_not == nil
   end
 
   it "raises an IOError on closed stream" do

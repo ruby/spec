@@ -10,17 +10,17 @@ describe "Array#cycle" do
   end
 
   it "does not yield and returns nil when the array is empty and passed value is an integer" do
-    [].cycle(6, &@prc).should be_nil
+    [].cycle(6, &@prc).should == nil
     ScratchPad.recorded.should == []
   end
 
   it "does not yield and returns nil when the array is empty and passed value is nil" do
-    [].cycle(nil, &@prc).should be_nil
+    [].cycle(nil, &@prc).should == nil
     ScratchPad.recorded.should == []
   end
 
   it "does not yield and returns nil when passed 0" do
-    @array.cycle(0, &@prc).should be_nil
+    @array.cycle(0, &@prc).should == nil
     ScratchPad.recorded.should == []
   end
 

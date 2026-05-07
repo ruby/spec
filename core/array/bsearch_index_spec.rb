@@ -12,7 +12,7 @@ describe "Array#bsearch_index" do
     end
 
     it "returns an Enumerator with unknown size" do
-      @enum.size.should be_nil
+      @enum.size.should == nil
     end
 
     it "returns index of element when block condition is satisfied" do
@@ -25,7 +25,7 @@ describe "Array#bsearch_index" do
   end
 
   it "returns nil when block is empty" do
-    [1, 2, 3].bsearch_index {}.should be_nil
+    [1, 2, 3].bsearch_index {}.should == nil
   end
 
   context "minimum mode" do
@@ -40,8 +40,8 @@ describe "Array#bsearch_index" do
     end
 
     it "returns nil when block condition is never satisfied" do
-      @array.bsearch_index { false }.should be_nil
-      @array.bsearch_index { |x| x >= 100 }.should be_nil
+      @array.bsearch_index { false }.should == nil
+      @array.bsearch_index { |x| x >= 100 }.should == nil
     end
   end
 
@@ -55,12 +55,12 @@ describe "Array#bsearch_index" do
     end
 
     it "returns the index of any matched elements where element is between 8 <= x < 10" do
-      @array.bsearch_index { |x| 4 - x / 2 }.should be_nil
+      @array.bsearch_index { |x| 4 - x / 2 }.should == nil
     end
 
     it "returns nil when block never returns 0" do
-      @array.bsearch_index { |x| 1 }.should be_nil
-      @array.bsearch_index { |x| -1 }.should be_nil
+      @array.bsearch_index { |x| 1 }.should == nil
+      @array.bsearch_index { |x| -1 }.should == nil
     end
 
     context "magnitude does not effect the result" do
@@ -69,8 +69,8 @@ describe "Array#bsearch_index" do
       end
 
       it "returns nil when block never returns 0" do
-        @array.bsearch_index { |x| 1 * (2**100) }.should be_nil
-        @array.bsearch_index { |x| (-1) * (2**100) }.should be_nil
+        @array.bsearch_index { |x| 1 * (2**100) }.should == nil
+        @array.bsearch_index { |x| (-1) * (2**100) }.should == nil
       end
 
       it "handles values from Integer#coerce" do

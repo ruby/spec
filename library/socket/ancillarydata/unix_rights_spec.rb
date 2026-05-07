@@ -41,7 +41,7 @@ with_feature :ancillary_data do
     it 'returns nil when the data is not a list of file descriptors' do
       data = Socket::AncillaryData.new(:UNIX, :SOCKET, :RIGHTS, '')
 
-      data.unix_rights.should be_nil
+      data.unix_rights.should == nil
     end
 
     it 'raises TypeError when the level is not SOL_SOCKET' do

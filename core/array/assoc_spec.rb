@@ -17,7 +17,7 @@ describe "Array#assoc" do
     a.assoc(s5.first).should equal(s2)
     a.assoc(s_nil.first).should equal(s_nil)
     a.assoc(4).should equal(s3)
-    a.assoc("key not in array").should be_nil
+    a.assoc("key not in array").should == nil
   end
 
   it "calls == on first element of each array" do
@@ -26,11 +26,11 @@ describe "Array#assoc" do
     items = [['not it', 1], [ArraySpecs::AssocKey.new, 2], ['na', 3]]
 
     items.assoc(key1).should equal(items[1])
-    items.assoc(key2).should be_nil
+    items.assoc(key2).should == nil
   end
 
   it "ignores any non-Array elements" do
-    [1, 2, 3].assoc(2).should be_nil
+    [1, 2, 3].assoc(2).should == nil
     s1 = [4]
     s2 = [5, 4, 3]
     a = ["foo", [], s1, s2, nil, []]

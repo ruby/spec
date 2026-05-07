@@ -35,7 +35,7 @@ describe "The throw keyword" do
         throw :exit
       end
     end
-    $!.should be_nil
+    $!.should == nil
   end
 
   it "allows any object as its argument" do

@@ -45,7 +45,7 @@ describe "StringScanner#getch" do
         s = StringScanner.new("This is a test")
         s.getch
         s.should.matched?
-        s[:a].should be_nil
+        s[:a].should == nil
       end
     end
     version_is StringScanner::Version, "3.1.3" do # ruby_version_is "3.4.3"
@@ -74,7 +74,7 @@ describe "StringScanner#getch" do
 
         s.getch
         s.should.matched?
-        s[:a].should be_nil
+        s[:a].should == nil
       end
     end
     version_is StringScanner::Version, "3.1.3" do # ruby_version_is "3.4.0"..."3.4.3"

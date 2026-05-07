@@ -10,7 +10,7 @@ describe :io_external_encoding_write, shared: true do
     it "returns nil" do
       @io = new_io @name, @object
       Encoding.default_external = Encoding::IBM437
-      @io.external_encoding.should be_nil
+      @io.external_encoding.should == nil
     end
 
     it "returns the external encoding specified when the instance was created" do

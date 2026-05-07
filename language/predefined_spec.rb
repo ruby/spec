@@ -723,7 +723,7 @@ describe "Predefined global $/" do
 
   it "can be assigned nil" do
     $/ = nil
-    $/.should be_nil
+    $/.should == nil
   end
 
   it "returns the value assigned" do
@@ -804,7 +804,7 @@ describe "Predefined global $-0" do
 
   it "can be assigned nil" do
     $-0 = nil
-    $-0.should be_nil
+    $-0.should == nil
   end
 
   it "returns the value assigned" do
@@ -855,7 +855,7 @@ describe "Predefined global $\\" do
 
   it "can be assigned nil" do
     $\ = nil
-    $\.should be_nil
+    $\.should == nil
   end
 
   it "returns the value assigned" do
@@ -885,7 +885,7 @@ describe "Predefined global $," do
   end
 
   it "defaults to nil" do
-    $,.should be_nil
+    $,.should == nil
   end
 
   it "raises TypeError if assigned a non-String" do
@@ -985,7 +985,7 @@ describe "Predefined global $_" do
     end
 
     Thread.pass until running
-    $_.should be_nil
+    $_.should == nil
 
     thr.join
   end
@@ -1143,7 +1143,7 @@ describe "Global variable $?" do
 
   it "is thread-local" do
     system(ruby_cmd('exit 0'))
-    Thread.new { $?.should be_nil }.join
+    Thread.new { $?.should == nil }.join
   end
 end
 
@@ -1209,7 +1209,7 @@ describe "Global variable $VERBOSE" do
 
   it "allows nil without coercing to false" do
     $VERBOSE = nil
-    $VERBOSE.should be_nil
+    $VERBOSE.should == nil
   end
 end
 
@@ -1442,12 +1442,12 @@ describe "The predefined global constant" do
       end
 
       it "has nil for the internal encoding" do
-        STDIN.internal_encoding.should be_nil
+        STDIN.internal_encoding.should == nil
       end
 
       it "has nil for the internal encoding despite Encoding.default_internal being changed" do
         Encoding.default_internal = Encoding::IBM437
-        STDIN.internal_encoding.should be_nil
+        STDIN.internal_encoding.should == nil
       end
     end
 
@@ -1467,12 +1467,12 @@ describe "The predefined global constant" do
 
   describe "STDOUT" do
     it "has nil for the external encoding" do
-      STDOUT.external_encoding.should be_nil
+      STDOUT.external_encoding.should == nil
     end
 
     it "has nil for the external encoding despite Encoding.default_external being changed" do
       Encoding.default_external = Encoding::ISO_8859_1
-      STDOUT.external_encoding.should be_nil
+      STDOUT.external_encoding.should == nil
     end
 
     it "has the encodings set by #set_encoding" do
@@ -1482,23 +1482,23 @@ describe "The predefined global constant" do
     end
 
     it "has nil for the internal encoding" do
-      STDOUT.internal_encoding.should be_nil
+      STDOUT.internal_encoding.should == nil
     end
 
     it "has nil for the internal encoding despite Encoding.default_internal being changed" do
       Encoding.default_internal = Encoding::IBM437
-      STDOUT.internal_encoding.should be_nil
+      STDOUT.internal_encoding.should == nil
     end
   end
 
   describe "STDERR" do
     it "has nil for the external encoding" do
-      STDERR.external_encoding.should be_nil
+      STDERR.external_encoding.should == nil
     end
 
     it "has nil for the external encoding despite Encoding.default_external being changed" do
       Encoding.default_external = Encoding::ISO_8859_1
-      STDERR.external_encoding.should be_nil
+      STDERR.external_encoding.should == nil
     end
 
     it "has the encodings set by #set_encoding" do
@@ -1508,12 +1508,12 @@ describe "The predefined global constant" do
     end
 
     it "has nil for the internal encoding" do
-      STDERR.internal_encoding.should be_nil
+      STDERR.internal_encoding.should == nil
     end
 
     it "has nil for the internal encoding despite Encoding.default_internal being changed" do
       Encoding.default_internal = Encoding::IBM437
-      STDERR.internal_encoding.should be_nil
+      STDERR.internal_encoding.should == nil
     end
   end
 
@@ -1544,7 +1544,7 @@ describe "$LOAD_PATH.resolve_feature_path" do
   end
 
   it "return nil if feature cannot be found" do
-    $LOAD_PATH.resolve_feature_path('noop').should be_nil
+    $LOAD_PATH.resolve_feature_path('noop').should == nil
   end
 end
 

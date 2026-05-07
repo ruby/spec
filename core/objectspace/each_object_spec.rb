@@ -166,7 +166,7 @@ describe "ObjectSpace.each_object" do
 
     ObjectSpaceFixtures.to_be_found_symbols.should include(:finalizer)
 
-    alive.should_not be_nil
+    alive.should_not == nil
   end
 
   describe "on singleton classes" do

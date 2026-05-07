@@ -476,7 +476,7 @@ describe :string_slice_regexp_group, shared: true do
     end
 
     it "returns nil if there is no match" do
-      "hello there".send(@method, /(?<whut>what?)/, 'whut').should be_nil
+      "hello there".send(@method, /(?<whut>what?)/, 'whut').should == nil
     end
 
     it "raises an IndexError if there is no capture for the given name" do
@@ -505,7 +505,7 @@ describe :string_slice_regexp_group, shared: true do
       $~[0].should == 'he'
 
       'hello'.send(@method, /(?<non>not)/, 'non')
-      $~.should be_nil
+      $~.should == nil
     end
   end
 end

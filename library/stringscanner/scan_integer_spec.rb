@@ -115,7 +115,7 @@ version_is StringScanner::Version, "3.1.1" do # ruby_version_is "3.4"
       s = StringScanner.new("a42")
       s.scan_integer
       s.should_not.matched?
-      s[:a].should be_nil
+      s[:a].should == nil
     end
 
     version_is StringScanner::Version, "3.1.3" do # ruby_version_is "3.4"

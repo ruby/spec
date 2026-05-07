@@ -79,7 +79,7 @@ describe "Module#remove_const" do
 
   it "returns nil when removing autoloaded constant" do
     ConstantSpecs.autoload :AutoloadedConstant, 'a_file'
-    ConstantSpecs.send(:remove_const, :AutoloadedConstant).should be_nil
+    ConstantSpecs.send(:remove_const, :AutoloadedConstant).should == nil
   end
 
   it "updates the constant value" do

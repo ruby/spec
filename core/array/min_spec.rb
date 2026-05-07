@@ -64,7 +64,7 @@ describe "Array#min" do
   end
 
   it "returns nil for an empty Enumerable" do
-    [].min.should be_nil
+    [].min.should == nil
   end
 
   it "raises a NoMethodError for elements without #<=>" do

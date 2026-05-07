@@ -64,7 +64,7 @@ describe "CApiObject" do
     it "allocates a new uninitialized object" do
       o = @o.rb_obj_alloc(CApiObjectSpecs::Alloc)
       o.class.should == CApiObjectSpecs::Alloc
-      o.initialized.should be_nil
+      o.initialized.should == nil
     end
   end
 
@@ -84,7 +84,7 @@ describe "CApiObject" do
   describe "rb_obj_call_init" do
     it "sends #initialize" do
       o = @o.rb_obj_alloc(CApiObjectSpecs::Alloc)
-      o.initialized.should be_nil
+      o.initialized.should == nil
 
       @o.rb_obj_call_init(o, 2, [:one, :two])
       o.initialized.should == true
@@ -258,7 +258,7 @@ describe "CApiObject" do
       obj = mock("rb_check_convert_type")
       obj.should_receive(:to_array).and_return(nil)
 
-      @o.rb_check_convert_type(obj, "Array", "to_array").should be_nil
+      @o.rb_check_convert_type(obj, "Array", "to_array").should == nil
     end
 
     it "raises a TypeError if the converting method returns an object that is not the specified type" do
@@ -317,13 +317,13 @@ describe "CApiObject" do
     end
 
     it "returns nil when the argument does not respond to #to_ary" do
-      @o.rb_check_array_type(Object.new).should be_nil
+      @o.rb_check_array_type(Object.new).should == nil
     end
 
     it "sends #to_ary to the argument and returns the result if it's nil" do
       obj = mock("to_ary")
       obj.should_receive(:to_ary).and_return(nil)
-      @o.rb_check_array_type(obj).should be_nil
+      @o.rb_check_array_type(obj).should == nil
     end
 
     it "sends #to_ary to the argument and returns the result if it's an Array" do
@@ -365,13 +365,13 @@ describe "CApiObject" do
     end
 
     it "returns nil when the argument does not respond to #to_str" do
-      @o.rb_check_string_type(Object.new).should be_nil
+      @o.rb_check_string_type(Object.new).should == nil
     end
 
     it "sends #to_str to the argument and returns the result if it's nil" do
       obj = mock("to_str")
       obj.should_receive(:to_str).and_return(nil)
-      @o.rb_check_string_type(obj).should be_nil
+      @o.rb_check_string_type(obj).should == nil
     end
 
     it "sends #to_str to the argument and returns the result if it's a String" do
@@ -428,14 +428,14 @@ describe "CApiObject" do
       obj = mock("rb_check_to_integer")
       obj.should_receive(:to_integer).and_return(nil)
 
-      @o.rb_check_to_integer(obj, "to_integer").should be_nil
+      @o.rb_check_to_integer(obj, "to_integer").should == nil
     end
 
     it "returns nil when the converting method does not return an Integer" do
       obj = mock("rb_check_to_integer")
       obj.should_receive(:to_integer).and_return("string")
 
-      @o.rb_check_to_integer(obj, "to_integer").should be_nil
+      @o.rb_check_to_integer(obj, "to_integer").should == nil
     end
   end
 
@@ -799,7 +799,7 @@ describe "CApiObject" do
     end
 
     it "returns nil if mod is not a subclass of arg" do
-      @o.rb_class_inherited_p(Array, Hash).should be_nil
+      @o.rb_class_inherited_p(Array, Hash).should == nil
     end
 
     it "raises a TypeError if arg is no class or module" do

@@ -91,13 +91,13 @@ describe "Kernel#BigDecimal" do
 
   describe "with exception: false" do
     it "returns nil for invalid strings" do
-      BigDecimal("invalid", exception: false).should be_nil
-      BigDecimal("0invalid", exception: false).should be_nil
-      BigDecimal("invalid0", exception: false).should be_nil
+      BigDecimal("invalid", exception: false).should == nil
+      BigDecimal("0invalid", exception: false).should == nil
+      BigDecimal("invalid0", exception: false).should == nil
       if BigDecimal::VERSION >= "3.1.9"
         BigDecimal("0.", exception: false).to_i.should == 0
       else
-        BigDecimal("0.", exception: false).should be_nil
+        BigDecimal("0.", exception: false).should == nil
       end
     end
   end

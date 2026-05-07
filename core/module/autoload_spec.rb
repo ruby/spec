@@ -9,7 +9,7 @@ describe "Module#autoload?" do
   end
 
   it "returns nil if no file has been registered for a constant" do
-    ModuleSpecs::Autoload.autoload?(:Manualload).should be_nil
+    ModuleSpecs::Autoload.autoload?(:Manualload).should == nil
   end
 
   it "returns the name of the file that will be autoloaded if an ancestor defined that autoload" do
@@ -19,7 +19,7 @@ describe "Module#autoload?" do
 
   it "returns nil if an ancestor defined that autoload but recursion is disabled" do
     ModuleSpecs::Autoload::Parent.autoload :InheritedAutoload, "inherited_autoload.rb"
-    ModuleSpecs::Autoload::Child.autoload?(:InheritedAutoload, false).should be_nil
+    ModuleSpecs::Autoload::Child.autoload?(:InheritedAutoload, false).should == nil
   end
 
   it "returns the name of the file that will be loaded if recursion is disabled but the autoload is defined on the class itself" do
@@ -82,7 +82,7 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload::DynClass = cls
     @remove << :DynClass
 
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
     ModuleSpecs::Autoload::DynClass::C.new.loaded.should == :dynclass_c
     ScratchPad.recorded.should == :loaded
   end
@@ -92,7 +92,7 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload::DynModule = mod
     @remove << :DynModule
 
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
     ModuleSpecs::Autoload::DynModule::D.new.loaded.should == :dynmodule_d
     ScratchPad.recorded.should == :loaded
   end
@@ -131,7 +131,7 @@ describe "Module#autoload" do
     @remove << :I
     ModuleSpecs::Autoload.const_set :I, 3
     ModuleSpecs::Autoload::I.should == 3
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
   end
 
   it "loads a file with .rb extension when passed the name without the extension" do
@@ -158,7 +158,7 @@ describe "Module#autoload" do
 
     ModuleSpecs::Autoload::KHash.should.is_a?(Class)
     ModuleSpecs::Autoload::KHash::K.should == :autoload_k
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
   end
 
   it "ignores the autoload request if the file is already loaded" do
@@ -171,7 +171,7 @@ describe "Module#autoload" do
 
     ModuleSpecs::Autoload.autoload :S, filename
     @remove << :S
-    ModuleSpecs::Autoload.autoload?(:S).should be_nil
+    ModuleSpecs::Autoload.autoload?(:S).should == nil
   end
 
   it "retains the autoload even if the request to require fails" do
@@ -205,7 +205,7 @@ describe "Module#autoload" do
     filename = fixture(__FILE__, "autoload_during_require_current_file.rb")
     require filename
 
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
   end
 
   describe "interacting with defined?" do
@@ -215,7 +215,7 @@ describe "Module#autoload" do
       end
 
       defined?(ModuleSpecs::Autoload::Dog::R).should == "constant"
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
 
       ModuleSpecs::Autoload::Dog.should have_constant(:R)
     end
@@ -235,7 +235,7 @@ describe "Module#autoload" do
         autoload :BadParent, fixture(__FILE__, "autoload_exception.rb")
       end
 
-      defined?(ModuleSpecs::Autoload::BadParent::Nested).should be_nil
+      defined?(ModuleSpecs::Autoload::BadParent::Nested).should == nil
       ScratchPad.recorded.should == :exception
     end
   end
@@ -724,7 +724,7 @@ describe "Module#autoload" do
       autoload :DynClass, fixture(__FILE__, "autoload_c.rb")
       private_constant :DynClass
 
-      ScratchPad.recorded.should be_nil
+      ScratchPad.recorded.should == nil
 
       DynClass::C.new.loaded.should == :dynclass_c
       ScratchPad.recorded.should == :loaded
@@ -916,7 +916,7 @@ describe "Module#autoload" do
       t1_val.should == 1
       t2_val.should == t1_val
 
-      t2_exc.should be_nil
+      t2_exc.should == nil
     end
 
     # https://bugs.ruby-lang.org/issues/10892

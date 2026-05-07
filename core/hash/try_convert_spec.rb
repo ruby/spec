@@ -13,13 +13,13 @@ describe "Hash.try_convert" do
   end
 
   it "returns nil when the argument does not respond to #to_hash" do
-    Hash.try_convert(Object.new).should be_nil
+    Hash.try_convert(Object.new).should == nil
   end
 
   it "sends #to_hash to the argument and returns the result if it's nil" do
     obj = mock("to_hash")
     obj.should_receive(:to_hash).and_return(nil)
-    Hash.try_convert(obj).should be_nil
+    Hash.try_convert(obj).should == nil
   end
 
   it "sends #to_hash to the argument and returns the result if it's a Hash" do

@@ -46,7 +46,7 @@ describe :dir_exist, shared: true do
 
   it "doesn't set $! when file doesn't exist" do
     Dir.send(@method, "/path/to/non/existent/dir")
-    $!.should be_nil
+    $!.should == nil
   end
 
   it "calls #to_path on non String arguments" do

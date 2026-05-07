@@ -158,7 +158,7 @@ describe "Signal.trap" do
 
     it "ignores the signal when passed nil" do
       Signal.trap :HUP, nil
-      Signal.trap(:HUP, @saved_trap).should be_nil
+      Signal.trap(:HUP, @saved_trap).should == nil
     end
 
     it "accepts :DEFAULT in place of a proc" do

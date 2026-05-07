@@ -13,13 +13,13 @@ describe "String.try_convert" do
   end
 
   it "returns nil when the argument does not respond to #to_str" do
-    String.try_convert(Object.new).should be_nil
+    String.try_convert(Object.new).should == nil
   end
 
   it "sends #to_str to the argument and returns the result if it's nil" do
     obj = mock("to_str")
     obj.should_receive(:to_str).and_return(nil)
-    String.try_convert(obj).should be_nil
+    String.try_convert(obj).should == nil
   end
 
   it "sends #to_str to the argument and returns the result if it's a String" do

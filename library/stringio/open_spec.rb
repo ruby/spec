@@ -39,7 +39,7 @@ describe "StringIO.open when passed [Object, mode]" do
   it "sets self's string to nil after yielding" do
     io = nil
     StringIO.open(+"example", "r") { |strio| io = strio }
-    io.string.should be_nil
+    io.string.should == nil
   end
 
   it "even sets self's string to nil when an exception is raised while yielding" do
@@ -51,7 +51,7 @@ describe "StringIO.open when passed [Object, mode]" do
       end
     rescue
     end
-    io.string.should be_nil
+    io.string.should == nil
   end
 
   it "sets the mode based on the passed mode" do

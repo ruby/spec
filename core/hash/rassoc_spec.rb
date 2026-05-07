@@ -32,11 +32,11 @@ describe "Hash#rassoc" do
   end
 
   it "returns nil if the argument is not a value of the Hash" do
-    @h.rassoc(:banana).should be_nil
+    @h.rassoc(:banana).should == nil
   end
 
   it "returns nil if the argument is not a value of the Hash even when there is a default" do
-    Hash.new(42).merge!( foo: :bar ).rassoc(42).should be_nil
-    Hash.new{|h, k| h[k] = 42}.merge!( foo: :bar ).rassoc(42).should be_nil
+    Hash.new(42).merge!( foo: :bar ).rassoc(42).should == nil
+    Hash.new{|h, k| h[k] = 42}.merge!( foo: :bar ).rassoc(42).should == nil
   end
 end

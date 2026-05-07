@@ -138,7 +138,7 @@ describe "Integer#<=>" do
 
       it "returns nil if #coerce does not return an Array" do
         @num.should_receive(:coerce).with(@big).and_return(nil)
-        (@big <=> @num).should be_nil
+        (@big <=> @num).should == nil
       end
 
       it "returns -1 if the coerced value is larger" do

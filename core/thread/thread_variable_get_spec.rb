@@ -10,7 +10,7 @@ describe "Thread#thread_variable_get" do
   end
 
   it "returns nil if the variable is not set" do
-    @t.thread_variable_get(:a).should be_nil
+    @t.thread_variable_get(:a).should == nil
   end
 
   it "returns the value previously set by #thread_variable_set" do
@@ -20,7 +20,7 @@ describe "Thread#thread_variable_get" do
 
   it "returns a value private to self" do
     @t.thread_variable_set(:thread_variable_get_spec, 82)
-    Thread.current.thread_variable_get(:thread_variable_get_spec).should be_nil
+    Thread.current.thread_variable_get(:thread_variable_get_spec).should == nil
   end
 
   it "accepts String and Symbol keys interchangeably" do
@@ -38,7 +38,7 @@ describe "Thread#thread_variable_get" do
 
   it "does not raise FrozenError if the thread is frozen" do
     @t.freeze
-    @t.thread_variable_get(:a).should be_nil
+    @t.thread_variable_get(:a).should == nil
   end
 
   it "raises a TypeError if the key is neither Symbol nor String when thread variables are already set" do

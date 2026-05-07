@@ -20,7 +20,7 @@ describe "Kernel#instance_variable_get" do
   end
 
   it "returns nil when the referred instance variable does not exist" do
-    @obj.instance_variable_get(:@does_not_exist).should be_nil
+    @obj.instance_variable_get(:@does_not_exist).should == nil
   end
 
   it "raises a TypeError when the passed argument does not respond to #to_str" do

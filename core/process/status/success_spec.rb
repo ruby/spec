@@ -28,7 +28,7 @@ describe "Process::Status#success?" do
 
     platform_is_not :windows do
       it "returns nil" do
-        $?.success?.should be_nil
+        $?.success?.should == nil
       end
     end
 

@@ -6,7 +6,7 @@ describe :symbol_match, shared: true do
   end
 
   it "returns nil if there is no match" do
-    :a.send(@method, /b/).should be_nil
+    :a.send(@method, /b/).should == nil
   end
 
   it "sets the last match pseudo-variables" do
@@ -27,7 +27,7 @@ describe "Symbol#match" do
   end
 
   it "returns nil if there is no match" do
-    :a.match(/b/).should be_nil
+    :a.match(/b/).should == nil
   end
 
   it "sets the last match pseudo-variables" do
@@ -62,7 +62,7 @@ describe "Symbol#match?" do
   context "when matches the given regex" do
     it "returns true but does not set Regexp.last_match" do
       :string.match?(/string/i).should == true
-      Regexp.last_match.should be_nil
+      Regexp.last_match.should == nil
     end
   end
 

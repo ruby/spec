@@ -25,7 +25,7 @@ describe "Set#reject!" do
   end
 
   it "returns nil when self was not modified" do
-    @set.reject! { |x| false }.should be_nil
+    @set.reject! { |x| false }.should == nil
   end
 
   it "returns an Enumerator when passed no block" do

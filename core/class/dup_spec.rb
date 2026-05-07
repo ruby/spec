@@ -53,7 +53,7 @@ describe "Class#dup" do
 
   it "sets the name from the class to nil if not assigned to a constant" do
     copy = CoreClassSpecs::Record.dup
-    copy.name.should be_nil
+    copy.name.should == nil
   end
 
   it "stores the new name if assigned to a constant" do

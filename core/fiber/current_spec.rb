@@ -6,7 +6,7 @@ describe "Fiber.current" do
     root.should.instance_of?(Fiber)
     # We can always transfer to the root Fiber; it will never die
     5.times do
-      root.transfer.should be_nil
+      root.transfer.should == nil
       root.alive?.should == true
     end
   end

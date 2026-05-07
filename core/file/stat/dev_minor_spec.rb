@@ -17,7 +17,7 @@ describe "File::Stat#dev_minor" do
 
   platform_is :windows do
     it "returns nil" do
-      File.stat(@name).dev_minor.should be_nil
+      File.stat(@name).dev_minor.should == nil
     end
   end
 end

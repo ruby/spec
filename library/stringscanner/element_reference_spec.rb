@@ -7,8 +7,8 @@ describe "StringScanner#[]" do
   end
 
   it "returns nil if there is no current match" do
-    @s[0].should be_nil
-    @s[:wday].should be_nil
+    @s[0].should == nil
+    @s[:wday].should == nil
   end
 
   it "returns the n-th subgroup in the most recent match" do

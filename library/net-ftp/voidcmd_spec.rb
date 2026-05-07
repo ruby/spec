@@ -26,7 +26,7 @@ ruby_version_is ""..."4.1" do
 
     it "returns nil" do
       @server.should_receive(:help).and_respond("2xx Does not raise.")
-      @ftp.voidcmd("HELP").should be_nil
+      @ftp.voidcmd("HELP").should == nil
     end
 
     it "raises a Net::FTPReplyError when the response code is 1xx" do

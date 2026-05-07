@@ -3,11 +3,11 @@ require_relative '../../spec_helper'
 
 describe :regexp_match, shared: true do
   it "returns nil if there is no match" do
-    /xyz/.send(@method,"abxyc").should be_nil
+    /xyz/.send(@method,"abxyc").should == nil
   end
 
   it "returns nil if the object is nil" do
-    /\w+/.send(@method, nil).should be_nil
+    /\w+/.send(@method, nil).should == nil
   end
 end
 
@@ -97,7 +97,7 @@ describe "Regexp#match" do
     $~.should.is_a?(MatchData)
 
     /1/.match(nil)
-    $~.should be_nil
+    $~.should == nil
   end
 
   it "raises TypeError when the given argument cannot be coerced to String" do
@@ -120,7 +120,7 @@ describe "Regexp#match?" do
   context "when matches the given value" do
     it "returns true but does not set Regexp.last_match" do
       /string/i.match?('string').should == true
-      Regexp.last_match.should be_nil
+      Regexp.last_match.should == nil
     end
   end
 

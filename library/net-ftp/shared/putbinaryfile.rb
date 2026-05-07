@@ -35,7 +35,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.send(@method, @local_fixture_file, "binary").should be_nil
+      @ftp.send(@method, @local_fixture_file, "binary").should == nil
     end
 
     describe "when passed a block" do

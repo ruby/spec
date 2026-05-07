@@ -169,7 +169,7 @@ describe "IO.popen" do
   it "sets the internal encoding to nil if it's the same as the external encoding" do
     @io = IO.popen(ruby_cmd('exit'), external_encoding: Encoding::EUC_JP,
                           internal_encoding: Encoding::EUC_JP)
-    @io.internal_encoding.should be_nil
+    @io.internal_encoding.should == nil
   end
 
   context "with a leading ENV Hash" do

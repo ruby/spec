@@ -11,7 +11,7 @@ describe "Hash#compare_by_identity" do
     @h[[1]] = :a
     @h[[1]].should == :a
     @h.compare_by_identity
-    @h[[1].dup].should be_nil
+    @h[[1].dup].should == nil
   end
 
   it "rehashes internally so that old keys can be looked up" do
@@ -64,13 +64,13 @@ describe "Hash#compare_by_identity" do
   it "regards #dup'd objects as having different identities" do
     key = ['foo']
     @idh[key.dup] = :str
-    @idh[key].should be_nil
+    @idh[key].should == nil
   end
 
   it "regards #clone'd objects as having different identities" do
     key = ['foo']
     @idh[key.clone] = :str
-    @idh[key].should be_nil
+    @idh[key].should == nil
   end
 
   it "regards references to the same object as having the same identity" do

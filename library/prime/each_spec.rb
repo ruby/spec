@@ -112,7 +112,7 @@ describe :prime_each_with_arguments, shared: true do
   end
 
   it "returns nil when no prime is generated" do
-    @object.each(1) { :value }.should be_nil
+    @object.each(1) { :value }.should == nil
   end
 
   it "yields primes starting at 2 independent of prior enumeration" do

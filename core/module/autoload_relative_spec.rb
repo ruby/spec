@@ -25,7 +25,7 @@ ruby_version_is "4.1" do
     it "registers a file to load relative to the current file the first time the named constant is accessed" do
       ModuleSpecs::Autoload.autoload_relative :AutoloadRelativeA, "fixtures/autoload_relative_a.rb"
       path = ModuleSpecs::Autoload.autoload?(:AutoloadRelativeA)
-      path.should_not be_nil
+      path.should_not == nil
       path.should.end_with?("autoload_relative_a.rb")
       File.exist?(path).should == true
     end
@@ -36,7 +36,7 @@ ruby_version_is "4.1" do
     end
 
     it "returns nil" do
-      ModuleSpecs::Autoload.autoload_relative(:AutoloadRelativeC, "fixtures/autoload_relative_a.rb").should be_nil
+      ModuleSpecs::Autoload.autoload_relative(:AutoloadRelativeC, "fixtures/autoload_relative_a.rb").should == nil
     end
 
     it "registers a file to load the first time the named constant is accessed" do
@@ -44,7 +44,7 @@ ruby_version_is "4.1" do
         autoload_relative :D, "fixtures/autoload_relative_a.rb"
       end
       path = ModuleSpecs::Autoload::AutoloadRelativeTest.autoload?(:D)
-      path.should_not be_nil
+      path.should_not == nil
       path.should.end_with?("autoload_relative_a.rb")
     end
 
@@ -57,14 +57,14 @@ ruby_version_is "4.1" do
       name = mock("autoload_relative mock")
       name.should_receive(:to_path).and_return("fixtures/autoload_relative_a.rb")
       ModuleSpecs::Autoload.autoload_relative :AutoloadRelativeToPath, name
-      ModuleSpecs::Autoload.autoload?(:AutoloadRelativeToPath).should_not be_nil
+      ModuleSpecs::Autoload.autoload?(:AutoloadRelativeToPath).should_not == nil
     end
 
     it "calls #to_str on non-String filenames" do
       name = mock("autoload_relative mock")
       name.should_receive(:to_str).and_return("fixtures/autoload_relative_a.rb")
       ModuleSpecs::Autoload.autoload_relative :AutoloadRelativeToStr, name
-      ModuleSpecs::Autoload.autoload?(:AutoloadRelativeToStr).should_not be_nil
+      ModuleSpecs::Autoload.autoload?(:AutoloadRelativeToStr).should_not == nil
     end
 
     it "raises a TypeError if the filename argument is not a String or pathname" do
@@ -97,7 +97,7 @@ ruby_version_is "4.1" do
         autoload_relative :InstanceEvalTest, "fixtures/autoload_relative_a.rb"
         path = autoload?(:InstanceEvalTest)
       CODE
-      path.should_not be_nil
+      path.should_not == nil
       path.should.end_with?("autoload_relative_a.rb")
     end
 
@@ -112,7 +112,7 @@ ruby_version_is "4.1" do
     it "can load nested directory paths" do
       ModuleSpecs::Autoload.autoload_relative :NestedPath, "fixtures/autoload_relative_a.rb"
       path = ModuleSpecs::Autoload.autoload?(:NestedPath)
-      path.should_not be_nil
+      path.should_not == nil
       File.exist?(path).should == true
     end
 

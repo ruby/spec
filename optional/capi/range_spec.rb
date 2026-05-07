@@ -78,7 +78,7 @@ describe "C-API Range function" do
     it "returns nil when not in range" do
       r = 2..5
       begp, lenp, result = @s.rb_range_beg_len(r, 1, 0)
-      result.should be_nil
+      result.should == nil
     end
 
     it "raises a RangeError when not in range and err is 1" do
@@ -89,7 +89,7 @@ describe "C-API Range function" do
     it "returns nil when not in range and err is 0" do
       r = -5..-1
       begp, lenp, result =  @s.rb_range_beg_len(r, 1, 0)
-      result.should be_nil
+      result.should == nil
     end
   end
 
@@ -197,7 +197,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, = @s.rb_arithmetic_sequence_beg_len_step(as, 1, error_code)
-      success.should be_nil
+      success.should == nil
     end
 
     it "returns nil when not in range, negative boundaries and error code = 0" do
@@ -205,7 +205,7 @@ describe "C-API Range function" do
       error_code = 0
 
       success, = @s.rb_arithmetic_sequence_beg_len_step(as, 1, 0)
-      success.should be_nil
+      success.should == nil
     end
 
     it "returns begin, length and step and doesn't raise a RangeError when not in range and error code = 1" do
@@ -225,7 +225,7 @@ describe "C-API Range function" do
       error_code = 1
 
       success, = @s.rb_arithmetic_sequence_beg_len_step(as, 1, error_code)
-      success.should be_nil
+      success.should == nil
     end
   end
 end

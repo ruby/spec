@@ -81,7 +81,7 @@ describe 'Pathname#glob' do
 
   it 'yields matching file paths to block' do
     ary = []
-    Pathname.new(@dir).glob('lib/*i*.rb') { |p| ary << p }.should be_nil
+    Pathname.new(@dir).glob('lib/*i*.rb') { |p| ary << p }.should == nil
     ary.sort.should == [Pathname.new(@file_1), Pathname.new(@file_2)].sort
   end
 

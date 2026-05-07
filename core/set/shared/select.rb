@@ -25,7 +25,7 @@ describe :set_select_bang, shared: true do
   end
 
   it "returns nil when self was not modified" do
-    @set.send(@method) { true }.should be_nil
+    @set.send(@method) { true }.should == nil
   end
 
   it "returns an Enumerator when passed no block" do

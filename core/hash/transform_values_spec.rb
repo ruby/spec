@@ -42,17 +42,17 @@ describe "Hash#transform_values" do
 
   it "does not retain the default value" do
     h = Hash.new(1)
-    h.transform_values(&:succ).default.should be_nil
+    h.transform_values(&:succ).default.should == nil
     h[:a] = 1
-    h.transform_values(&:succ).default.should be_nil
+    h.transform_values(&:succ).default.should == nil
   end
 
   it "does not retain the default_proc" do
     pr = proc { |h, k| h[k] = [] }
     h = Hash.new(&pr)
-    h.transform_values(&:succ).default_proc.should be_nil
+    h.transform_values(&:succ).default_proc.should == nil
     h[:a] = 1
-    h.transform_values(&:succ).default_proc.should be_nil
+    h.transform_values(&:succ).default_proc.should == nil
   end
 
   it "retains compare_by_identity flag" do

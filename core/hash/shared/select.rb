@@ -42,17 +42,17 @@ describe :hash_select, shared: true do
 
   it "does not retain the default value" do
     h = Hash.new(1)
-    h.send(@method) { true }.default.should be_nil
+    h.send(@method) { true }.default.should == nil
     h[:a] = 1
-    h.send(@method) { true }.default.should be_nil
+    h.send(@method) { true }.default.should == nil
   end
 
   it "does not retain the default_proc" do
     pr = proc { |h, k| h[k] = [] }
     h = Hash.new(&pr)
-    h.send(@method) { true }.default_proc.should be_nil
+    h.send(@method) { true }.default_proc.should == nil
     h[:a] = 1
-    h.send(@method) { true }.default_proc.should be_nil
+    h.send(@method) { true }.default_proc.should == nil
   end
 
   it "retains compare_by_identity flag" do

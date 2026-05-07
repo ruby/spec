@@ -39,7 +39,7 @@ describe "Set#flatten!" do
 
   it "returns nil when self was not modified" do
     set = Set[1, 2, 3, 4]
-    set.flatten!.should be_nil
+    set.flatten!.should == nil
   end
 
   it "raises an ArgumentError when self is recursive" do

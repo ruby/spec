@@ -40,11 +40,11 @@ describe "Hash#assoc" do
   end
 
   it "returns nil if the argument is not a key of the Hash" do
-    @h.assoc(:green).should be_nil
+    @h.assoc(:green).should == nil
   end
 
   it "returns nil if the argument is not a key of the Hash even when there is a default" do
-    Hash.new(42).merge!( foo: :bar ).assoc(42).should be_nil
-    Hash.new{|h, k| h[k] = 42}.merge!( foo: :bar ).assoc(42).should be_nil
+    Hash.new(42).merge!( foo: :bar ).assoc(42).should == nil
+    Hash.new{|h, k| h[k] = 42}.merge!( foo: :bar ).assoc(42).should == nil
   end
 end

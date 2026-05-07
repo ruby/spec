@@ -50,7 +50,7 @@ describe "C-API Thread function" do
     end
 
     it "returns nil if the value has not been set" do
-      @t.rb_thread_local_aref(Thread.current, :thread_capi_specs_undefined).should be_nil
+      @t.rb_thread_local_aref(Thread.current, :thread_capi_specs_undefined).should == nil
     end
   end
 

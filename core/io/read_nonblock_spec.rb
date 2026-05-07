@@ -36,7 +36,7 @@ describe "IO#read_nonblock" do
 
         @read.read_nonblock(5)
 
-        @read.read_nonblock(5, exception: false).should be_nil
+        @read.read_nonblock(5, exception: false).should == nil
       end
     end
   end

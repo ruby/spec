@@ -29,7 +29,7 @@ describe "Time#zone" do
     t = Time.new(2005, 2, 27, 22, 50, 0, -3600)
 
     with_timezone("America/New_York") do
-      t.getlocal("+05:00").zone.should be_nil
+      t.getlocal("+05:00").zone.should == nil
     end
   end
 

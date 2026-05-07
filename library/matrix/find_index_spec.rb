@@ -13,7 +13,7 @@ describe "Matrix#find_index without any argument" do
   end
 
   it "returns nil if the block is always false" do
-    @m.find_index{false}.should be_nil
+    @m.find_index{false}.should == nil
   end
 
   it "returns the first index for which the block is true" do
@@ -116,7 +116,7 @@ describe "Matrix#find_index with only a generic argument" do
   end
 
   it "returns nil if the value is not found" do
-    @m.find_index(42).should be_nil
+    @m.find_index(42).should == nil
   end
 
   it "returns the first index for of the requested value" do

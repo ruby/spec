@@ -169,7 +169,7 @@ describe "BasicObject#instance_eval" do
   end
 
   it "doesn't get constants in the receiver if a block given" do
-    BasicObjectSpecs::InstEvalOuter::Inner::X_BY_BLOCK.should be_nil
+    BasicObjectSpecs::InstEvalOuter::Inner::X_BY_BLOCK.should == nil
   end
 
   it "raises a TypeError when defining methods on an immediate" do

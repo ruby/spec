@@ -41,7 +41,7 @@ describe "Array#rindex" do
   it "properly handles empty recursive arrays" do
     empty = ArraySpecs.empty_recursive_array
     empty.rindex(empty).should == 0
-    empty.rindex(1).should be_nil
+    empty.rindex(1).should == nil
   end
 
   it "properly handles recursive arrays" do

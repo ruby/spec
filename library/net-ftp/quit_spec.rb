@@ -30,7 +30,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.quit.should be_nil
+      @ftp.quit.should == nil
     end
   end
 end

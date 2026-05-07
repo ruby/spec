@@ -11,12 +11,12 @@ describe "Range#min" do
   end
 
   it "returns nil when the start point is greater than the endpoint" do
-    (100..10).min.should be_nil
-    ('z'..'l').min.should be_nil
+    (100..10).min.should == nil
+    ('z'..'l').min.should == nil
   end
 
   it "returns nil when the endpoint equals the start point and the range is exclusive" do
-    (7...7).min.should be_nil
+    (7...7).min.should == nil
   end
 
   it "returns the start point when the endpoint equals the start point and the range is inclusive" do
@@ -24,7 +24,7 @@ describe "Range#min" do
   end
 
   it "returns nil when the start point is greater than the endpoint in a Float range" do
-    (3003.20..908.1111).min.should be_nil
+    (3003.20..908.1111).min.should == nil
   end
 
   it "returns start point when the range is Time..Time(included end point)" do
@@ -77,9 +77,9 @@ describe "Range#min given a block" do
   end
 
   it "returns nil when the start point is greater than the endpoint" do
-    (100..10).min {|x,y| x <=> y}.should be_nil
-    ('z'..'l').min {|x,y| x <=> y}.should be_nil
-    (7...7).min {|x,y| x <=> y}.should be_nil
+    (100..10).min {|x,y| x <=> y}.should == nil
+    ('z'..'l').min {|x,y| x <=> y}.should == nil
+    (7...7).min {|x,y| x <=> y}.should == nil
   end
 
   it "raises RangeError when called with custom comparison method on an endless range" do

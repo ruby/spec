@@ -43,7 +43,7 @@ describe :exception_set_backtrace, shared: true do
 
   it "accepts nil" do
     err = @method.call(nil)
-    err.backtrace.should be_nil
+    err.backtrace.should == nil
   end
 
   it "raises a TypeError when passed a Symbol" do

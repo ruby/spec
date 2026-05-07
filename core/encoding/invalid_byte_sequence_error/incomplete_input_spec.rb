@@ -3,7 +3,7 @@ require_relative '../../../spec_helper'
 
 describe "Encoding::InvalidByteSequenceError#incomplete_input?" do
   it "returns nil by default" do
-    Encoding::InvalidByteSequenceError.new.incomplete_input?.should be_nil
+    Encoding::InvalidByteSequenceError.new.incomplete_input?.should == nil
   end
 
   it "returns true if #primitive_convert returned :incomplete_input for the same data" do

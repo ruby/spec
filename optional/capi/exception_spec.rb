@@ -88,11 +88,11 @@ describe "C-API Exception function" do
     end
 
     it "accepts nil" do
-      @s.rb_set_errinfo(nil).should be_nil
+      @s.rb_set_errinfo(nil).should == nil
     end
 
     it "accepts an Exception instance" do
-      @s.rb_set_errinfo(Exception.new).should be_nil
+      @s.rb_set_errinfo(Exception.new).should == nil
     end
 
     it "raises a TypeError if the object is not nil or an Exception instance" do

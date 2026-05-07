@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.send(@method, "test", @tmp_file).should be_nil
+      @ftp.send(@method, "test", @tmp_file).should == nil
     end
 
     it "saves the contents of the passed remote file to the passed local file" do

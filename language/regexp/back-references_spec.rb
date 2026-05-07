@@ -49,7 +49,7 @@ describe "Regexps with back-references" do
 
   it "supports \<n> (backreference to previous group match)" do
     /(foo.)\1/.match("foo1foo1").to_a.should == ["foo1foo1", "foo1"]
-    /(foo.)\1/.match("foo1foo2").should be_nil
+    /(foo.)\1/.match("foo1foo2").should == nil
   end
 
   it "resets nested \<n> backreference before match of outer subexpression" do

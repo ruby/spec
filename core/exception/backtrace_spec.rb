@@ -7,7 +7,7 @@ describe "Exception#backtrace" do
   end
 
   it "returns nil if no backtrace was set" do
-    Exception.new.backtrace.should be_nil
+    Exception.new.backtrace.should == nil
   end
 
   it "returns an Array" do

@@ -86,7 +86,7 @@ describe "Range#size" do
   end
 
   it "returns nil if first and last are not Numeric" do
-    (:a..:z).size.should be_nil
-    ('a'..'z').size.should be_nil
+    (:a..:z).size.should == nil
+    ('a'..'z').size.should == nil
   end
 end

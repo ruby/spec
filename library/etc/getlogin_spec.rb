@@ -28,7 +28,7 @@ describe "Etc.getlogin" do
       else
         # Etc.getlogin may return nil if the login name is not set
         # because of chroot or sudo or something.
-        Etc.getlogin.should be_nil
+        Etc.getlogin.should == nil
         getlogin_null = true
       end
     ensure

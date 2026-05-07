@@ -6,7 +6,7 @@ describe "StringIO#set_encoding_by_bom" do
   it "returns nil if not readable" do
     io = StringIO.new("".b, "wb")
 
-    io.set_encoding_by_bom.should be_nil
+    io.set_encoding_by_bom.should == nil
     io.external_encoding.should == Encoding::ASCII_8BIT
   end
 
@@ -82,7 +82,7 @@ describe "StringIO#set_encoding_by_bom" do
 
   it "returns nil if io is empty" do
     io = StringIO.new("".b, "rb")
-    io.set_encoding_by_bom.should be_nil
+    io.set_encoding_by_bom.should == nil
     io.external_encoding.should == Encoding::ASCII_8BIT
   end
 

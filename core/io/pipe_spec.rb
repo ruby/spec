@@ -100,7 +100,7 @@ describe "IO.pipe" do
 
     IO.pipe do |r, w|
       r.external_encoding.should == Encoding::ISO_8859_1
-      r.internal_encoding.should be_nil
+      r.internal_encoding.should == nil
     end
   end
 
@@ -120,14 +120,14 @@ describe "IO.pipe" do
 
     IO.pipe do |r, w|
       r.external_encoding.should == Encoding::UTF_8
-      r.internal_encoding.should be_nil
+      r.internal_encoding.should == nil
     end
   end
 
   it "sets the external encoding of the read end when passed an Encoding argument" do
     IO.pipe(Encoding::UTF_8) do |r, w|
       r.external_encoding.should == Encoding::UTF_8
-      r.internal_encoding.should be_nil
+      r.internal_encoding.should == nil
     end
   end
 
@@ -141,14 +141,14 @@ describe "IO.pipe" do
   it "sets the external encoding of the read end when passed the name of an Encoding" do
     IO.pipe("UTF-8") do |r, w|
       r.external_encoding.should == Encoding::UTF_8
-      r.internal_encoding.should be_nil
+      r.internal_encoding.should == nil
     end
   end
 
   it "accepts 'bom|' prefix for external encoding" do
     IO.pipe("BOM|UTF-8") do |r, w|
       r.external_encoding.should == Encoding::UTF_8
-      r.internal_encoding.should be_nil
+      r.internal_encoding.should == nil
     end
   end
 
@@ -213,13 +213,13 @@ describe "IO.pipe" do
 
   it "sets no external encoding for the write end" do
     IO.pipe(Encoding::UTF_8) do |r, w|
-      w.external_encoding.should be_nil
+      w.external_encoding.should == nil
     end
   end
 
   it "sets no internal encoding for the write end" do
     IO.pipe(Encoding::UTF_8) do |r, w|
-      w.external_encoding.should be_nil
+      w.external_encoding.should == nil
     end
   end
 end

@@ -4,13 +4,13 @@ require_relative 'fixtures/set_temporary_name'
 describe "Module#set_temporary_name" do
   it "can assign a temporary name" do
     m = Module.new
-    m.name.should be_nil
+    m.name.should == nil
 
     m.set_temporary_name("fake_name")
     m.name.should == "fake_name"
 
     m.set_temporary_name(nil)
-    m.name.should be_nil
+    m.name.should == nil
   end
 
   it "returns self" do
@@ -73,7 +73,7 @@ describe "Module#set_temporary_name" do
     m::N.name.should == "fake_name"
 
     m::N.set_temporary_name(nil)
-    m::N.name.should be_nil
+    m::N.name.should == nil
   end
 
   it "discards a temporary name when an outer anonymous module gets a permanent name" do

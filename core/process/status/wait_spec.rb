@@ -80,7 +80,7 @@ describe "Process::Status.wait" do
         sleep
       end
 
-      Process::Status.wait(pid, Process::WNOHANG).should be_nil
+      Process::Status.wait(pid, Process::WNOHANG).should == nil
 
       # wait for the child to setup its TERM handler
       write.close

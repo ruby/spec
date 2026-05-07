@@ -33,7 +33,7 @@ describe "Enumerator#feed" do
   end
 
   it "returns nil" do
-    @enum.feed(:a).should be_nil
+    @enum.feed(:a).should == nil
   end
 
   it "raises a TypeError if called more than once without advancing the enumerator" do

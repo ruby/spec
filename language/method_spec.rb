@@ -487,7 +487,7 @@ describe "A method" do
         end
       ruby
 
-      m.should be_nil
+      m.should == nil
     end
 
     evaluate <<-ruby do
@@ -495,7 +495,7 @@ describe "A method" do
         end
       ruby
 
-      m.should be_nil
+      m.should == nil
     end
   end
 
@@ -535,18 +535,18 @@ describe "A method" do
         def m() end
       ruby
 
-      m().should be_nil
-      m(*[]).should be_nil
-      m(**{}).should be_nil
+      m().should == nil
+      m(*[]).should == nil
+      m(**{}).should == nil
     end
 
     evaluate <<-ruby do
         def m(*) end
       ruby
 
-      m().should be_nil
-      m(1).should be_nil
-      m(1, 2, 3).should be_nil
+      m().should == nil
+      m(1).should == nil
+      m(1, 2, 3).should == nil
     end
 
     evaluate <<-ruby do
@@ -590,8 +590,8 @@ describe "A method" do
         def m(**) end
       ruby
 
-      m().should be_nil
-      m(a: 1, b: 2).should be_nil
+      m().should == nil
+      m(a: 1, b: 2).should == nil
       -> { m(1) }.should raise_error(ArgumentError)
     end
 
@@ -650,8 +650,8 @@ describe "A method" do
         def m((*), (*)) end
       ruby
 
-      m(2, 3).should be_nil
-      m([2, 3, 4], [5, 6]).should be_nil
+      m(2, 3).should == nil
+      m([2, 3, 4], [5, 6]).should == nil
       -> { m a: 1 }.should raise_error(ArgumentError)
     end
 
@@ -953,8 +953,8 @@ describe "A method" do
         def m(*, &b) b end
       ruby
 
-      m().should be_nil
-      m(1, 2, 3, 4).should be_nil
+      m().should == nil
+      m(1, 2, 3, 4).should == nil
       m(&(l = ->{})).should equal(l)
     end
 

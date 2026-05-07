@@ -38,11 +38,11 @@ describe "Range#bsearch" do
   context "with Integer values" do
     context "with a block returning true or false" do
       it "returns nil if the block returns false for every element" do
-        (0...3).bsearch { |x| x > 3 }.should be_nil
+        (0...3).bsearch { |x| x > 3 }.should == nil
       end
 
       it "returns nil if the block returns nil for every element" do
-        (0..3).bsearch { |x| nil }.should be_nil
+        (0..3).bsearch { |x| nil }.should == nil
       end
 
       it "returns minimum element if the block returns true for every element" do
@@ -62,21 +62,21 @@ describe "Range#bsearch" do
 
     context "with a block returning negative, zero, positive numbers" do
       it "returns nil if the block returns less than zero for every element" do
-        (0..3).bsearch { |x| x <=> 5 }.should be_nil
+        (0..3).bsearch { |x| x <=> 5 }.should == nil
       end
 
       it "returns nil if the block returns greater than zero for every element" do
-        (0..3).bsearch { |x| x <=> -1 }.should be_nil
+        (0..3).bsearch { |x| x <=> -1 }.should == nil
 
       end
 
       it "returns nil if the block never returns zero" do
-        (0..3).bsearch { |x| x < 2 ? 1 : -1 }.should be_nil
+        (0..3).bsearch { |x| x < 2 ? 1 : -1 }.should == nil
       end
 
       it "accepts (+/-)Float::INFINITY from the block" do
-        (0..4).bsearch { |x| Float::INFINITY }.should be_nil
-        (0..4).bsearch { |x| -Float::INFINITY }.should be_nil
+        (0..4).bsearch { |x| Float::INFINITY }.should == nil
+        (0..4).bsearch { |x| -Float::INFINITY }.should == nil
       end
 
       it "returns an element at an index for which block returns 0.0" do
@@ -111,11 +111,11 @@ describe "Range#bsearch" do
   context "with Float values" do
     context "with a block returning true or false" do
       it "returns nil if the block returns false for every element" do
-        (0.1...2.3).bsearch { |x| x > 3 }.should be_nil
+        (0.1...2.3).bsearch { |x| x > 3 }.should == nil
       end
 
       it "returns nil if the block returns nil for every element" do
-        (-0.0..2.3).bsearch { |x| nil }.should be_nil
+        (-0.0..2.3).bsearch { |x| nil }.should == nil
       end
 
       it "returns minimum element if the block returns true for every element" do
@@ -163,20 +163,20 @@ describe "Range#bsearch" do
 
     context "with a block returning negative, zero, positive numbers" do
       it "returns nil if the block returns less than zero for every element" do
-        (-2.0..3.2).bsearch { |x| x <=> 5 }.should be_nil
+        (-2.0..3.2).bsearch { |x| x <=> 5 }.should == nil
       end
 
       it "returns nil if the block returns greater than zero for every element" do
-        (0.3..3.0).bsearch { |x| x <=> -1 }.should be_nil
+        (0.3..3.0).bsearch { |x| x <=> -1 }.should == nil
       end
 
       it "returns nil if the block never returns zero" do
-        (0.2..2.3).bsearch { |x| x < 2 ? 1 : -1 }.should be_nil
+        (0.2..2.3).bsearch { |x| x < 2 ? 1 : -1 }.should == nil
       end
 
       it "accepts (+/-)Float::INFINITY from the block" do
-        (0.1..4.5).bsearch { |x| Float::INFINITY }.should be_nil
-        (-5.0..4.0).bsearch { |x| -Float::INFINITY }.should be_nil
+        (0.1..4.5).bsearch { |x| Float::INFINITY }.should == nil
+        (-5.0..4.0).bsearch { |x| -Float::INFINITY }.should == nil
       end
 
       it "returns an element at an index for which block returns 0.0" do
@@ -244,15 +244,15 @@ describe "Range#bsearch" do
 
     context "with a block returning negative, zero, positive numbers" do
       it "returns nil if the block returns less than zero for every element" do
-        eval("(0..)").bsearch { |x| -1 }.should be_nil
+        eval("(0..)").bsearch { |x| -1 }.should == nil
       end
 
       it "returns nil if the block never returns zero" do
-        eval("(0..)").bsearch { |x| x > 5 ? -1 : 1 }.should be_nil
+        eval("(0..)").bsearch { |x| x > 5 ? -1 : 1 }.should == nil
       end
 
       it "accepts -Float::INFINITY from the block" do
-        eval("(0..)").bsearch { |x| -Float::INFINITY }.should be_nil
+        eval("(0..)").bsearch { |x| -Float::INFINITY }.should == nil
       end
 
       it "returns an element at an index for which block returns 0.0" do
@@ -274,13 +274,13 @@ describe "Range#bsearch" do
   context "with endless ranges and Float values" do
     context "with a block returning true or false" do
       it "returns nil if the block returns false for every element" do
-        eval("(0.1..)").bsearch { |x| x < 0.0 }.should be_nil
-        eval("(0.1...)").bsearch { |x| x < 0.0 }.should be_nil
+        eval("(0.1..)").bsearch { |x| x < 0.0 }.should == nil
+        eval("(0.1...)").bsearch { |x| x < 0.0 }.should == nil
       end
 
       it "returns nil if the block returns nil for every element" do
-        eval("(-0.0..)").bsearch { |x| nil }.should be_nil
-        eval("(-0.0...)").bsearch { |x| nil }.should be_nil
+        eval("(-0.0..)").bsearch { |x| nil }.should == nil
+        eval("(-0.0...)").bsearch { |x| nil }.should == nil
       end
 
       it "returns minimum element if the block returns true for every element" do
@@ -304,22 +304,22 @@ describe "Range#bsearch" do
 
     context "with a block returning negative, zero, positive numbers" do
       it "returns nil if the block returns less than zero for every element" do
-        eval("(-2.0..)").bsearch { |x| -1 }.should be_nil
-        eval("(-2.0...)").bsearch { |x| -1 }.should be_nil
+        eval("(-2.0..)").bsearch { |x| -1 }.should == nil
+        eval("(-2.0...)").bsearch { |x| -1 }.should == nil
       end
 
       it "returns nil if the block returns greater than zero for every element" do
-        eval("(0.3..)").bsearch { |x| 1 }.should be_nil
-        eval("(0.3...)").bsearch { |x| 1 }.should be_nil
+        eval("(0.3..)").bsearch { |x| 1 }.should == nil
+        eval("(0.3...)").bsearch { |x| 1 }.should == nil
       end
 
       it "returns nil if the block never returns zero" do
-        eval("(0.2..)").bsearch { |x| x < 2 ? 1 : -1 }.should be_nil
+        eval("(0.2..)").bsearch { |x| x < 2 ? 1 : -1 }.should == nil
       end
 
       it "accepts (+/-)Float::INFINITY from the block" do
-        eval("(0.1..)").bsearch { |x| Float::INFINITY }.should be_nil
-        eval("(-5.0..)").bsearch { |x| -Float::INFINITY }.should be_nil
+        eval("(0.1..)").bsearch { |x| Float::INFINITY }.should == nil
+        eval("(-5.0..)").bsearch { |x| -Float::INFINITY }.should == nil
       end
 
       it "returns an element at an index for which block returns 0.0" do
@@ -362,15 +362,15 @@ describe "Range#bsearch" do
 
     context "with a block returning negative, zero, positive numbers" do
       it "returns nil if the block returns greater than zero for every element" do
-        (..0).bsearch { |x| 1 }.should be_nil
+        (..0).bsearch { |x| 1 }.should == nil
       end
 
       it "returns nil if the block never returns zero" do
-        (..0).bsearch { |x| x > 5 ? -1 : 1 }.should be_nil
+        (..0).bsearch { |x| x > 5 ? -1 : 1 }.should == nil
       end
 
       it "accepts Float::INFINITY from the block" do
-        (..0).bsearch { |x| Float::INFINITY }.should be_nil
+        (..0).bsearch { |x| Float::INFINITY }.should == nil
       end
 
       it "returns an element at an index for which block returns 0.0" do
@@ -392,13 +392,13 @@ describe "Range#bsearch" do
   context "with beginless ranges and Float values" do
     context "with a block returning true or false" do
       it "returns nil if the block returns true for every element" do
-        (..-0.1).bsearch { |x| x > 0.0 }.should be_nil
-        (...-0.1).bsearch { |x| x > 0.0 }.should be_nil
+        (..-0.1).bsearch { |x| x > 0.0 }.should == nil
+        (...-0.1).bsearch { |x| x > 0.0 }.should == nil
       end
 
       it "returns nil if the block returns nil for every element" do
-        (..-0.1).bsearch { |x| nil }.should be_nil
-        (...-0.1).bsearch { |x| nil }.should be_nil
+        (..-0.1).bsearch { |x| nil }.should == nil
+        (...-0.1).bsearch { |x| nil }.should == nil
       end
 
       it "returns the smallest element for which block returns true" do
@@ -417,22 +417,22 @@ describe "Range#bsearch" do
 
     context "with a block returning negative, zero, positive numbers" do
       it "returns nil if the block returns less than zero for every element" do
-        (..5.0).bsearch { |x| -1 }.should be_nil
-        (...5.0).bsearch { |x| -1 }.should be_nil
+        (..5.0).bsearch { |x| -1 }.should == nil
+        (...5.0).bsearch { |x| -1 }.should == nil
       end
 
       it "returns nil if the block returns greater than zero for every element" do
-        (..1.1).bsearch { |x| 1 }.should be_nil
-        (...1.1).bsearch { |x| 1 }.should be_nil
+        (..1.1).bsearch { |x| 1 }.should == nil
+        (...1.1).bsearch { |x| 1 }.should == nil
       end
 
       it "returns nil if the block never returns zero" do
-        (..6.3).bsearch { |x| x < 2 ? 1 : -1 }.should be_nil
+        (..6.3).bsearch { |x| x < 2 ? 1 : -1 }.should == nil
       end
 
       it "accepts (+/-)Float::INFINITY from the block" do
-        (..5.0).bsearch { |x| Float::INFINITY }.should be_nil
-        (..7.0).bsearch { |x| -Float::INFINITY }.should be_nil
+        (..5.0).bsearch { |x| Float::INFINITY }.should == nil
+        (..7.0).bsearch { |x| -Float::INFINITY }.should == nil
       end
 
       it "returns an element at an index for which block returns 0.0" do

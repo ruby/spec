@@ -25,7 +25,7 @@ ruby_version_is ""..."4.1" do
     end
 
     it "returns nil" do
-      @ftp.connect(@server.hostname, @server.server_port).should be_nil
+      @ftp.connect(@server.hostname, @server.server_port).should == nil
     end
 
     it "does not raise any error when the response code is 220" do

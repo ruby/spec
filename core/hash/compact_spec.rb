@@ -64,7 +64,7 @@ describe "Hash#compact!" do
     end
 
     it "returns nil" do
-      @hash.compact!.should be_nil
+      @hash.compact!.should == nil
     end
   end
 

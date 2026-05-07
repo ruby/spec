@@ -26,7 +26,7 @@ ruby_version_is ""..."4.1" do
       end
 
       it "returns something" do
-        @ftp.rename("from.file", "to.file").should be_nil
+        @ftp.rename("from.file", "to.file").should == nil
       end
     end
 

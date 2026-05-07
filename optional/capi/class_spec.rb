@@ -253,7 +253,7 @@ describe "C-API Class function" do
   describe "rb_cv_set" do
     it "sets a class variable" do
       o = CApiClassSpecs::CVars.new
-      o.new_cv.should be_nil
+      o.new_cv.should == nil
       @s.rb_cv_set(CApiClassSpecs::CVars, "@@new_cv", 1)
       o.new_cv.should == 1
       CApiClassSpecs::CVars.remove_class_variable :@@new_cv
@@ -275,7 +275,7 @@ describe "C-API Class function" do
   describe "rb_cvar_set" do
     it "sets a class variable" do
       o = CApiClassSpecs::CVars.new
-      o.new_cvar.should be_nil
+      o.new_cvar.should == nil
       @s.rb_cvar_set(CApiClassSpecs::CVars, "@@new_cvar", 1)
       o.new_cvar.should == 1
       CApiClassSpecs::CVars.remove_class_variable :@@new_cvar
@@ -426,7 +426,7 @@ describe "C-API Class function" do
   describe "rb_define_class_variable" do
     it "sets a class variable" do
       o = CApiClassSpecs::CVars.new
-      o.rbdcv_cvar.should be_nil
+      o.rbdcv_cvar.should == nil
       @s.rb_define_class_variable(CApiClassSpecs::CVars, "@@rbdcv_cvar", 1)
       o.rbdcv_cvar.should == 1
       CApiClassSpecs::CVars.remove_class_variable :@@rbdcv_cvar
@@ -468,7 +468,7 @@ describe "C-API Class function" do
     end
 
     it "returns nil if the class has no superclass" do
-      @s.rb_class_superclass(BasicObject).should be_nil
+      @s.rb_class_superclass(BasicObject).should == nil
     end
   end
 

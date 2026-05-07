@@ -35,7 +35,7 @@ describe "Kernel#raise with previously rescued exception" do
       end
     end.should raise_error(Exception, "outer")
 
-    ScratchPad.recorded.should be_nil
+    ScratchPad.recorded.should == nil
   end
 
   it "re-raises a previously rescued exception without overwriting the cause" do
