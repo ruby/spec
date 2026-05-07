@@ -84,7 +84,7 @@ describe "IO::Buffer#transfer" do
   it "is disallowed while locked, raising IO::Buffer::LockedError" do
     @buffer = IO::Buffer.new(4)
     @buffer.locked do
-      -> { @buffer.transfer }.should raise_error(IO::Buffer::LockedError, "Cannot transfer ownership of locked buffer!")
+      -> { @buffer.transfer }.should.raise(IO::Buffer::LockedError, "Cannot transfer ownership of locked buffer!")
     end
   end
 
@@ -110,7 +110,7 @@ describe "IO::Buffer#transfer" do
 
       slice.null?.should == false
       slice.valid?.should == false
-      -> { slice.get_string }.should raise_error(IO::Buffer::InvalidatedError, "Buffer has been invalidated!")
+      -> { slice.get_string }.should.raise(IO::Buffer::InvalidatedError, "Buffer has been invalidated!")
     end
   end
 end

@@ -49,7 +49,7 @@ describe "Kernel#autoload" do
     main = TOPLEVEL_BINDING.eval("self")
     main.should_receive(:require).with("main_autoload_not_exist.rb")
     # The constant won't be defined since require is mocked to do nothing
-    -> { KSAutoloadCallsRequire }.should raise_error(NameError)
+    -> { KSAutoloadCallsRequire }.should.raise(NameError)
   end
 
   it "can autoload in instance_eval" do

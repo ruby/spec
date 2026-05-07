@@ -56,17 +56,17 @@ describe 'TracePoint.new' do
 
   it 'raises a TypeError when the given object is not a string/symbol' do
     o = mock('123')
-    -> { TracePoint.new(o) {} }.should raise_error(TypeError)
+    -> { TracePoint.new(o) {} }.should.raise(TypeError)
 
     o.should_receive(:to_sym).and_return(123)
-    -> { TracePoint.new(o) {} }.should raise_error(TypeError)
+    -> { TracePoint.new(o) {} }.should.raise(TypeError)
   end
 
   it 'expects to be called with a block' do
-    -> { TracePoint.new(:line) }.should raise_error(ArgumentError, "must be called with a block")
+    -> { TracePoint.new(:line) }.should.raise(ArgumentError, "must be called with a block")
   end
 
   it "raises a Argument error when the given argument doesn't match an event name" do
-    -> { TracePoint.new(:test) }.should raise_error(ArgumentError, "unknown event: test")
+    -> { TracePoint.new(:test) }.should.raise(ArgumentError, "unknown event: test")
   end
 end

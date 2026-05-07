@@ -64,6 +64,6 @@ describe "Class#dup" do
   end
 
   it "raises TypeError if called on BasicObject" do
-    -> { BasicObject.dup }.should raise_error(TypeError, "can't copy the root class")
+    -> { BasicObject.dup }.should.raise(TypeError, "can't copy the root class")
   end
 end

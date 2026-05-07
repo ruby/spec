@@ -21,21 +21,21 @@ describe "Kernel#singleton_class" do
   end
 
   it "raises TypeError for Integer" do
-    -> { 123.singleton_class }.should raise_error(TypeError, "can't define singleton")
+    -> { 123.singleton_class }.should.raise(TypeError, "can't define singleton")
   end
 
   it "raises TypeError for Float" do
-    -> { 3.14.singleton_class }.should raise_error(TypeError, "can't define singleton")
+    -> { 3.14.singleton_class }.should.raise(TypeError, "can't define singleton")
   end
 
   it "raises TypeError for Symbol" do
-    -> { :foo.singleton_class }.should raise_error(TypeError, "can't define singleton")
+    -> { :foo.singleton_class }.should.raise(TypeError, "can't define singleton")
   end
 
   it "raises TypeError for a frozen deduplicated String" do
-    -> { (-"string").singleton_class }.should raise_error(TypeError, "can't define singleton")
-    -> { a = -"string"; a.singleton_class }.should raise_error(TypeError, "can't define singleton")
-    -> { a = "string"; (-a).singleton_class }.should raise_error(TypeError, "can't define singleton")
+    -> { (-"string").singleton_class }.should.raise(TypeError, "can't define singleton")
+    -> { a = -"string"; a.singleton_class }.should.raise(TypeError, "can't define singleton")
+    -> { a = "string"; (-a).singleton_class }.should.raise(TypeError, "can't define singleton")
   end
 
   it "returns a frozen singleton class if object is frozen" do

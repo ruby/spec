@@ -42,7 +42,7 @@ describe "Enumerator::Lazy#reject" do
 
     -> {
       lazy.first
-    }.should raise_error(RuntimeError, "foo")
+    }.should.raise(RuntimeError, "foo")
   end
 
   it "calls the block with a gathered array when yield with multiple arguments" do
@@ -52,7 +52,7 @@ describe "Enumerator::Lazy#reject" do
   end
 
   it "raises an ArgumentError when not given a block" do
-    -> { @yieldsmixed.reject }.should raise_error(ArgumentError)
+    -> { @yieldsmixed.reject }.should.raise(ArgumentError)
   end
 
   describe "on a nested Lazy" do

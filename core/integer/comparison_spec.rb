@@ -128,12 +128,12 @@ describe "Integer#<=>" do
         @num.should_receive(:coerce).with(@big).and_raise(RuntimeError.new("my error"))
         -> {
           @big <=> @num
-        }.should raise_error(RuntimeError, "my error")
+        }.should.raise(RuntimeError, "my error")
       end
 
       it "raises an exception if #coerce raises a non-StandardError exception" do
         @num.should_receive(:coerce).with(@big).and_raise(Exception)
-        -> { @big <=> @num }.should raise_error(Exception)
+        -> { @big <=> @num }.should.raise(Exception)
       end
 
       it "returns nil if #coerce does not return an Array" do

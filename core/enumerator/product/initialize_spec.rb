@@ -25,7 +25,7 @@ describe "Enumerator::Product#initialize" do
     it "raises a FrozenError" do
       -> {
         @uninitialized.freeze.send(:initialize, 0..1)
-      }.should raise_error(FrozenError)
+      }.should.raise(FrozenError)
     end
   end
 end

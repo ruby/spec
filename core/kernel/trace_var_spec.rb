@@ -49,6 +49,6 @@ describe "Kernel#trace_var" do
   it "raises ArgumentError if no block or proc is provided" do
     -> do
       trace_var :$Kernel_trace_var_global
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 end

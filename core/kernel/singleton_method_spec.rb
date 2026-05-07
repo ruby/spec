@@ -23,7 +23,7 @@ describe "Kernel#singleton_method" do
     obj.foo.should == 42
     -> {
       obj.singleton_method(:foo)
-    }.should raise_error(NameError) { |e|
+    }.should.raise(NameError) { |e|
       # a NameError and not a NoMethodError
       e.class.should == NameError
     }
@@ -33,7 +33,7 @@ describe "Kernel#singleton_method" do
     obj = Object.new
     -> {
       obj.singleton_method(:not_existing)
-    }.should raise_error(NameError) { |e|
+    }.should.raise(NameError) { |e|
       # a NameError and not a NoMethodError
       e.class.should == NameError
     }

@@ -17,7 +17,7 @@ describe "Math.atan" do
   end
 
   it "raises a TypeError if the argument cannot be coerced with Float()" do
-    -> { Math.atan("test") }.should raise_error(TypeError)
+    -> { Math.atan("test") }.should.raise(TypeError)
   end
 
   it "returns NaN given NaN" do
@@ -25,7 +25,7 @@ describe "Math.atan" do
   end
 
   it "raises a TypeError if the argument is nil" do
-    -> { Math.atan(nil) }.should raise_error(TypeError)
+    -> { Math.atan(nil) }.should.raise(TypeError)
   end
 
   it "accepts any argument that can be coerced with Float()" do

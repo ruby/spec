@@ -112,7 +112,7 @@ describe "StringIO#initialize when passed [Object, mode]" do
 
   it "raises a FrozenError when passed a frozen String in truncate mode as StringIO backend" do
     io = StringIO.allocate
-    -> { io.send(:initialize, "example".freeze, IO::TRUNC) }.should raise_error(FrozenError)
+    -> { io.send(:initialize, "example".freeze, IO::TRUNC) }.should.raise(FrozenError)
   end
 
   it "tries to convert the passed mode to a String using #to_str" do
@@ -126,9 +126,9 @@ describe "StringIO#initialize when passed [Object, mode]" do
 
   it "raises an Errno::EACCES error when passed a frozen string with a write-mode" do
     (str = "example").freeze
-    -> { @io.send(:initialize, str, "r+") }.should raise_error(Errno::EACCES)
-    -> { @io.send(:initialize, str, "w") }.should raise_error(Errno::EACCES)
-    -> { @io.send(:initialize, str, "a") }.should raise_error(Errno::EACCES)
+    -> { @io.send(:initialize, str, "r+") }.should.raise(Errno::EACCES)
+    -> { @io.send(:initialize, str, "w") }.should.raise(Errno::EACCES)
+    -> { @io.send(:initialize, str, "a") }.should.raise(Errno::EACCES)
   end
 
   it "truncates all the content if passed w mode" do
@@ -223,54 +223,54 @@ describe "StringIO#initialize when passed keyword arguments and error happens" d
   it "raises an error if passed encodings two ways" do
     -> {
       @io = StringIO.new(+'', 'w:ISO-8859-1', encoding: 'ISO-8859-1')
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', 'w:ISO-8859-1', external_encoding: 'ISO-8859-1')
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', 'w:ISO-8859-1:UTF-8', internal_encoding: 'ISO-8859-1')
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "raises an error if passed matching binary/text mode two ways" do
     -> {
       @io = StringIO.new(+'', "wb", binmode: true)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', "wt", textmode: true)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
 
     -> {
       @io = StringIO.new(+'', "wb", textmode: false)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', "wt", binmode: false)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "raises an error if passed conflicting binary/text mode two ways" do
     -> {
       @io = StringIO.new(+'', "wb", binmode: false)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', "wt", textmode: false)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
 
     -> {
       @io = StringIO.new(+'', "wb", textmode: true)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', "wt", binmode: true)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "raises an error when trying to set both binmode and textmode" do
     -> {
       @io = StringIO.new(+'', "w", textmode: true, binmode: true)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @io = StringIO.new(+'', File::Constants::WRONLY, textmode: true, binmode: true)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 end
 

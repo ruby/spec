@@ -25,13 +25,13 @@ describe "Range#reverse_each" do
   it "raises a TypeError for endless Ranges of Integers" do
     -> {
       (1..).reverse_each.take(3)
-    }.should raise_error(TypeError, "can't iterate from NilClass")
+    }.should.raise(TypeError, "can't iterate from NilClass")
   end
 
   it "raises a TypeError for endless Ranges of non-Integers" do
     -> {
       ("a"..).reverse_each.take(3)
-    }.should raise_error(TypeError, "can't iterate from NilClass")
+    }.should.raise(TypeError, "can't iterate from NilClass")
   end
 
   context "Integer boundaries" do
@@ -69,15 +69,15 @@ describe "Range#reverse_each" do
     end
 
     it "raises a TypeError when `begin` value does not respond to #succ" do
-      -> { (Time.now..Time.now).reverse_each { |x| x } }.should raise_error(TypeError, /can't iterate from Time/)
-      -> { (//..//).reverse_each { |x| x } }.should raise_error(TypeError, /can't iterate from Regexp/)
-      -> { ([]..[]).reverse_each { |x| x } }.should raise_error(TypeError, /can't iterate from Array/)
+      -> { (Time.now..Time.now).reverse_each { |x| x } }.should.raise(TypeError, /can't iterate from Time/)
+      -> { (//..//).reverse_each { |x| x } }.should.raise(TypeError, /can't iterate from Regexp/)
+      -> { ([]..[]).reverse_each { |x| x } }.should.raise(TypeError, /can't iterate from Array/)
     end
 
     it "does not support beginningless Ranges" do
       -> {
         (..'a').reverse_each { |x| x }
-      }.should raise_error(TypeError, /can't iterate from NilClass/)
+      }.should.raise(TypeError, /can't iterate from NilClass/)
     end
   end
 
@@ -103,11 +103,11 @@ describe "Range#reverse_each" do
 
       ruby_version_is "3.4" do
         it "raises TypeError when the range is not iterable" do
-          -> { (1.1..3).reverse_each.size }.should raise_error(TypeError, /can't iterate from Integer/)
-          -> { (1.1..3.3).reverse_each.size }.should raise_error(TypeError, /can't iterate from Float/)
-          -> { (1.1..nil).reverse_each.size }.should raise_error(TypeError, /can't iterate from NilClass/)
-          -> { (nil..3.3).reverse_each.size }.should raise_error(TypeError, /can't iterate from Float/)
-          -> { (nil..nil).reverse_each.size }.should raise_error(TypeError, /can't iterate from NilClass/)
+          -> { (1.1..3).reverse_each.size }.should.raise(TypeError, /can't iterate from Integer/)
+          -> { (1.1..3.3).reverse_each.size }.should.raise(TypeError, /can't iterate from Float/)
+          -> { (1.1..nil).reverse_each.size }.should.raise(TypeError, /can't iterate from NilClass/)
+          -> { (nil..3.3).reverse_each.size }.should.raise(TypeError, /can't iterate from Float/)
+          -> { (nil..nil).reverse_each.size }.should.raise(TypeError, /can't iterate from NilClass/)
         end
       end
 

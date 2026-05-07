@@ -5,10 +5,10 @@ require 'matrix'
 describe "Matrix.[]" do
 
   it "requires arrays as parameters" do
-    -> { Matrix[5] }.should raise_error(TypeError)
-    -> { Matrix[nil] }.should raise_error(TypeError)
-    -> { Matrix[1..2] }.should raise_error(TypeError)
-    -> { Matrix[[1, 2], 3] }.should raise_error(TypeError)
+    -> { Matrix[5] }.should.raise(TypeError)
+    -> { Matrix[nil] }.should.raise(TypeError)
+    -> { Matrix[1..2] }.should.raise(TypeError)
+    -> { Matrix[[1, 2], 3] }.should.raise(TypeError)
   end
 
   it "creates an empty Matrix with no arguments" do
@@ -18,8 +18,8 @@ describe "Matrix.[]" do
   end
 
   it "raises for non-rectangular matrices" do
-    ->{ Matrix[ [0], [0,1] ] }.should raise_error(Matrix::ErrDimensionMismatch)
-    ->{ Matrix[ [0,1], [0,1,2], [0,1] ]}.should raise_error(Matrix::ErrDimensionMismatch)
+    ->{ Matrix[ [0], [0,1] ] }.should.raise(Matrix::ErrDimensionMismatch)
+    ->{ Matrix[ [0,1], [0,1,2], [0,1] ]}.should.raise(Matrix::ErrDimensionMismatch)
   end
 
   it "accepts vector arguments" do

@@ -388,7 +388,7 @@ ruby_version_is ""..."4.1" do
 
               -> {
                 @ftp.send(:initialize, nil, options)
-              }.should raise_error(ArgumentError, /private_data_connection can be set to true only when ssl is enabled/)
+              }.should.raise(ArgumentError, /private_data_connection can be set to true only when ssl is enabled/)
             end
           end
 

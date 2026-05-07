@@ -18,7 +18,7 @@ describe "Delegator#method" do
       -> {
         @delegate.method(:prot)
       }.should complain(/delegator does not forward private method #prot/)
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 
   it "raises a NameError for a private methods of the delegate object" do
@@ -26,7 +26,7 @@ describe "Delegator#method" do
       -> {
         @delegate.method(:priv)
       }.should complain(/delegator does not forward private method #priv/)
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 
   it "returns a method object for public methods of the Delegator class" do
@@ -50,7 +50,7 @@ describe "Delegator#method" do
   it "raises a NameError for an invalid method name" do
     -> {
       @delegate.method(:invalid_and_silly_method_name)
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 
   it "returns a method that respond_to_missing?" do
@@ -64,6 +64,6 @@ describe "Delegator#method" do
     @delegate.__setobj__([1,2,3])
     -> {
       m.call
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 end

@@ -40,7 +40,7 @@ describe "Enumerator::Lazy#take_while" do
   end
 
   it "raises an ArgumentError when not given a block" do
-    -> { @yieldsmixed.take_while }.should raise_error(ArgumentError)
+    -> { @yieldsmixed.take_while }.should.raise(ArgumentError)
   end
 
   describe "on a nested Lazy" do

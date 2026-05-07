@@ -33,29 +33,29 @@ describe "IO#reopen" do
   it "raises an IOError if the object returned by #to_io is closed" do
     obj = mock("io")
     obj.should_receive(:to_io).and_return(IOSpecs.closed_io)
-    -> { @io.reopen obj }.should raise_error(IOError)
+    -> { @io.reopen obj }.should.raise(IOError)
   end
 
   it "raises a TypeError if #to_io does not return an IO instance" do
     obj = mock("io")
     obj.should_receive(:to_io).and_return("something else")
-    -> { @io.reopen obj }.should raise_error(TypeError)
+    -> { @io.reopen obj }.should.raise(TypeError)
   end
 
   it "raises an IOError when called on a closed stream with an object" do
     @io.close
     obj = mock("io")
     obj.should_not_receive(:to_io)
-    -> { @io.reopen(STDOUT) }.should raise_error(IOError)
+    -> { @io.reopen(STDOUT) }.should.raise(IOError)
   end
 
   it "raises an IOError if the IO argument is closed" do
-    -> { @io.reopen(IOSpecs.closed_io) }.should raise_error(IOError)
+    -> { @io.reopen(IOSpecs.closed_io) }.should.raise(IOError)
   end
 
   it "raises an IOError when called on a closed stream with an IO" do
     @io.close
-    -> { @io.reopen(STDOUT) }.should raise_error(IOError)
+    -> { @io.reopen(STDOUT) }.should.raise(IOError)
   end
 end
 
@@ -188,7 +188,7 @@ describe "IO#reopen with a String" do
 
   it "raises an Errno::ENOENT if the file does not exist and the IO is not opened in write mode" do
     @io = new_io @name, "r"
-    -> { @io.reopen(@other_name) }.should raise_error(Errno::ENOENT)
+    -> { @io.reopen(@other_name) }.should.raise(Errno::ENOENT)
   end
 end
 

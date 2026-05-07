@@ -15,19 +15,19 @@ describe "OpenStruct.new when frozen" do
   end
 
   it "is not writable" do
-    ->{ @os.age = 42 }.should raise_error( RuntimeError )
+    ->{ @os.age = 42 }.should.raise( RuntimeError )
   end
 
   it "cannot create new fields" do
-    ->{ @os.state = :new }.should raise_error( RuntimeError )
+    ->{ @os.state = :new }.should.raise( RuntimeError )
   end
 
   it "creates a frozen clone" do
     f = @os.clone
     f.frozen?.should == true
     f.age.should == 70
-    ->{ f.age = 0 }.should raise_error( RuntimeError )
-    ->{ f.state = :newer }.should raise_error( RuntimeError )
+    ->{ f.age = 0 }.should.raise( RuntimeError )
+    ->{ f.state = :newer }.should.raise( RuntimeError )
   end
 
   it "creates an unfrozen dup" do

@@ -80,7 +80,7 @@ describe 'Coverage.result' do
     Coverage.result
     -> {
       Coverage.result
-    }.should raise_error(RuntimeError, 'coverage measurement is not enabled')
+    }.should.raise(RuntimeError, 'coverage measurement is not enabled')
   end
 
   it 'second run should give same result' do

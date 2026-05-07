@@ -21,12 +21,12 @@ describe "Array#clear" do
   end
 
   it "does not accept any arguments" do
-    -> { [1].clear(true) }.should raise_error(ArgumentError)
+    -> { [1].clear(true) }.should.raise(ArgumentError)
   end
 
   it "raises a FrozenError on a frozen array" do
     a = [1]
     a.freeze
-    -> { a.clear }.should raise_error(FrozenError)
+    -> { a.clear }.should.raise(FrozenError)
   end
 end

@@ -70,7 +70,7 @@ describe "Class.new" do
   it "raises a TypeError if passed a metaclass" do
     obj = mock("Class.new metaclass")
     meta = obj.singleton_class
-    -> { Class.new meta }.should raise_error(TypeError)
+    -> { Class.new meta }.should.raise(TypeError)
   end
 
   it "creates a class without a name" do
@@ -98,12 +98,12 @@ describe "Class.new" do
 
   it "raises a TypeError when given a non-Class" do
     error_msg = /superclass must be a.*Class/
-    -> { Class.new("")              }.should raise_error(TypeError, error_msg)
-    -> { Class.new(1)               }.should raise_error(TypeError, error_msg)
-    -> { Class.new(:symbol)         }.should raise_error(TypeError, error_msg)
-    -> { Class.new(mock('o'))       }.should raise_error(TypeError, error_msg)
-    -> { Class.new(Module.new)      }.should raise_error(TypeError, error_msg)
-    -> { Class.new(BasicObject.new) }.should raise_error(TypeError, error_msg)
+    -> { Class.new("")              }.should.raise(TypeError, error_msg)
+    -> { Class.new(1)               }.should.raise(TypeError, error_msg)
+    -> { Class.new(:symbol)         }.should.raise(TypeError, error_msg)
+    -> { Class.new(mock('o'))       }.should.raise(TypeError, error_msg)
+    -> { Class.new(Module.new)      }.should.raise(TypeError, error_msg)
+    -> { Class.new(BasicObject.new) }.should.raise(TypeError, error_msg)
   end
 end
 

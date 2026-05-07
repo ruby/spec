@@ -51,7 +51,7 @@ describe 'Socket.tcp' do
   it 'raises ArgumentError when 6 arguments are provided' do
     -> {
       Socket.tcp(@host, @port, @host, 0, {:connect_timeout => 1}, 10)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it 'connects to the server' do

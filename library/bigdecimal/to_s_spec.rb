@@ -31,7 +31,7 @@ describe "BigDecimal#to_s" do
   end
 
   it "takes an optional argument" do
-    -> {@bigdec.to_s("F")}.should_not raise_error()
+    -> {@bigdec.to_s("F")}.should_not.raise()
   end
 
   it "starts with + if + is supplied and value is positive" do

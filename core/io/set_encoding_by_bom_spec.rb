@@ -243,7 +243,7 @@ describe "IO#set_encoding_by_bom" do
   it 'returns exception if io not in binary mode' do
     not_binary_io = new_io(@name, 'r')
 
-    -> { not_binary_io.set_encoding_by_bom }.should raise_error(ArgumentError, 'ASCII incompatible encoding needs binmode')
+    -> { not_binary_io.set_encoding_by_bom }.should.raise(ArgumentError, 'ASCII incompatible encoding needs binmode')
   ensure
     not_binary_io.close
   end
@@ -251,12 +251,12 @@ describe "IO#set_encoding_by_bom" do
   it 'returns exception if encoding already set' do
     @io.set_encoding("utf-8")
 
-    -> { @io.set_encoding_by_bom }.should raise_error(ArgumentError, 'encoding is set to UTF-8 already')
+    -> { @io.set_encoding_by_bom }.should.raise(ArgumentError, 'encoding is set to UTF-8 already')
   end
 
   it 'returns exception if encoding conversion is already set' do
     @io.set_encoding(Encoding::UTF_8, Encoding::UTF_16BE)
 
-    -> { @io.set_encoding_by_bom }.should raise_error(ArgumentError, 'encoding conversion is set')
+    -> { @io.set_encoding_by_bom }.should.raise(ArgumentError, 'encoding conversion is set')
   end
 end

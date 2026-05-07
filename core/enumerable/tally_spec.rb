@@ -58,14 +58,14 @@ describe "Enumerable#tally with a hash" do
   it "raises a FrozenError and does not update the given hash when the hash is frozen" do
     enum = EnumerableSpecs::Numerous.new('foo', 'bar', 'foo', 'baz')
     hash = { 'foo' => 1 }.freeze
-    -> { enum.tally(hash) }.should raise_error(FrozenError)
+    -> { enum.tally(hash) }.should.raise(FrozenError)
     hash.should == { 'foo' => 1 }
   end
 
   it "raises a FrozenError even if enumerable is empty" do
     enum = EnumerableSpecs::Numerous.new()
     hash = { 'foo' => 1 }.freeze
-    -> { enum.tally(hash) }.should raise_error(FrozenError)
+    -> { enum.tally(hash) }.should.raise(FrozenError)
   end
 
   it "does not call given block" do
@@ -86,6 +86,6 @@ describe "Enumerable#tally with a hash" do
 
   it "needs the values counting each elements to be an integer" do
     enum = EnumerableSpecs::Numerous.new('foo')
-    -> { enum.tally({ 'foo' => 'bar' }) }.should raise_error(TypeError)
+    -> { enum.tally({ 'foo' => 'bar' }) }.should.raise(TypeError)
   end
 end

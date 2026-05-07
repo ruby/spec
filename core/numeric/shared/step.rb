@@ -226,33 +226,33 @@ describe :numeric_step, shared: true do
   describe "when step is a String" do
     describe "with self and stop as Integers" do
       it "raises an ArgumentError when step is a numeric representation" do
-        -> { @step.call(1, 5, "1") {} }.should raise_error(ArgumentError)
-        -> { @step.call(1, 5, "0.1") {} }.should raise_error(ArgumentError)
-        -> { @step.call(1, 5, "1/3") {} }.should raise_error(ArgumentError)
+        -> { @step.call(1, 5, "1") {} }.should.raise(ArgumentError)
+        -> { @step.call(1, 5, "0.1") {} }.should.raise(ArgumentError)
+        -> { @step.call(1, 5, "1/3") {} }.should.raise(ArgumentError)
       end
       it "raises an ArgumentError with step as an alphanumeric string" do
-        -> { @step.call(1, 5, "foo") {} }.should raise_error(ArgumentError)
+        -> { @step.call(1, 5, "foo") {} }.should.raise(ArgumentError)
       end
     end
 
     describe "with self and stop as Floats" do
       it "raises an ArgumentError when step is a numeric representation" do
-        -> { @step.call(1.1, 5.1, "1") {} }.should raise_error(ArgumentError)
-        -> { @step.call(1.1, 5.1, "0.1") {} }.should raise_error(ArgumentError)
-        -> { @step.call(1.1, 5.1, "1/3") {} }.should raise_error(ArgumentError)
+        -> { @step.call(1.1, 5.1, "1") {} }.should.raise(ArgumentError)
+        -> { @step.call(1.1, 5.1, "0.1") {} }.should.raise(ArgumentError)
+        -> { @step.call(1.1, 5.1, "1/3") {} }.should.raise(ArgumentError)
       end
       it "raises an ArgumentError with step as an alphanumeric string" do
-        -> { @step.call(1.1, 5.1, "foo") {} }.should raise_error(ArgumentError)
+        -> { @step.call(1.1, 5.1, "foo") {} }.should.raise(ArgumentError)
       end
     end
   end
 
   it "does not rescue ArgumentError exceptions" do
-    -> { @step.call(1, 2) { raise ArgumentError, "" }}.should raise_error(ArgumentError)
+    -> { @step.call(1, 2) { raise ArgumentError, "" }}.should.raise(ArgumentError)
   end
 
   it "does not rescue TypeError exceptions" do
-    -> { @step.call(1, 2) { raise TypeError, "" } }.should raise_error(TypeError)
+    -> { @step.call(1, 2) { raise TypeError, "" } }.should.raise(TypeError)
   end
 
   describe "when no block is given" do
@@ -289,23 +289,23 @@ describe :numeric_step, shared: true do
         describe "when step is a String" do
           describe "with self and stop as Integers" do
             it "raises an ArgumentError when step is a numeric representation" do
-              -> { @step.call(1, 5, "1").size }.should raise_error(ArgumentError)
-              -> { @step.call(1, 5, "0.1").size }.should raise_error(ArgumentError)
-              -> { @step.call(1, 5, "1/3").size }.should raise_error(ArgumentError)
+              -> { @step.call(1, 5, "1").size }.should.raise(ArgumentError)
+              -> { @step.call(1, 5, "0.1").size }.should.raise(ArgumentError)
+              -> { @step.call(1, 5, "1/3").size }.should.raise(ArgumentError)
             end
             it "raises an ArgumentError with step as an alphanumeric string" do
-              -> { @step.call(1, 5, "foo").size }.should raise_error(ArgumentError)
+              -> { @step.call(1, 5, "foo").size }.should.raise(ArgumentError)
             end
           end
 
           describe "with self and stop as Floats" do
             it "raises an ArgumentError when step is a numeric representation" do
-              -> { @step.call(1.1, 5.1, "1").size }.should raise_error(ArgumentError)
-              -> { @step.call(1.1, 5.1, "0.1").size }.should raise_error(ArgumentError)
-              -> { @step.call(1.1, 5.1, "1/3").size }.should raise_error(ArgumentError)
+              -> { @step.call(1.1, 5.1, "1").size }.should.raise(ArgumentError)
+              -> { @step.call(1.1, 5.1, "0.1").size }.should.raise(ArgumentError)
+              -> { @step.call(1.1, 5.1, "1/3").size }.should.raise(ArgumentError)
             end
             it "raises an ArgumentError with step as an alphanumeric string" do
-              -> { @step.call(1.1, 5.1, "foo").size }.should raise_error(ArgumentError)
+              -> { @step.call(1.1, 5.1, "foo").size }.should.raise(ArgumentError)
             end
           end
         end

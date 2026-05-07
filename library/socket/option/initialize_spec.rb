@@ -34,19 +34,19 @@ describe 'Socket::Option#initialize' do
     it 'raises when using an invalid address family' do
       -> {
         Socket::Option.new(:INET2, :SOCKET, :KEEPALIVE, @bool)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
 
     it 'raises when using an invalid level' do
       -> {
         Socket::Option.new(:INET, :CATS, :KEEPALIVE, @bool)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
 
     it 'raises when using an invalid option name' do
       -> {
         Socket::Option.new(:INET, :SOCKET, :CATS, @bool)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
   end
 
@@ -65,19 +65,19 @@ describe 'Socket::Option#initialize' do
     it 'raises when using an invalid address family' do
       -> {
         Socket::Option.new('INET2', 'SOCKET', 'KEEPALIVE', @bool)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
 
     it 'raises when using an invalid level' do
       -> {
         Socket::Option.new('INET', 'CATS', 'KEEPALIVE', @bool)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
 
     it 'raises when using an invalid option name' do
       -> {
         Socket::Option.new('INET', 'SOCKET', 'CATS', @bool)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
   end
 end

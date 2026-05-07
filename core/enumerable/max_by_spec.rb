@@ -67,7 +67,7 @@ describe "Enumerable#max_by" do
 
       context "when n is negative" do
         it "raises an ArgumentError" do
-          -> { @enum.max_by(-1) { |i| i.to_s } }.should raise_error(ArgumentError)
+          -> { @enum.max_by(-1) { |i| i.to_s } }.should.raise(ArgumentError)
         end
       end
     end

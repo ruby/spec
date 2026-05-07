@@ -8,6 +8,6 @@ describe "BasicObject#initialize" do
   it "does not accept arguments" do
     -> {
       BasicObject.new("This", "makes it easier", "to call super", "from other constructors")
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 end

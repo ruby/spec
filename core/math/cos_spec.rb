@@ -16,7 +16,7 @@ describe "Math.cos" do
   end
 
   it "raises a TypeError unless the argument is Numeric and has #to_f" do
-    -> { Math.cos("test") }.should raise_error(TypeError)
+    -> { Math.cos("test") }.should.raise(TypeError)
   end
 
   it "returns NaN given NaN" do
@@ -31,14 +31,14 @@ describe "Math.cos" do
     end
 
     it "raises a TypeError if the given argument can't be converted to a Float" do
-      -> { Math.cos(nil) }.should raise_error(TypeError)
-      -> { Math.cos(:abc) }.should raise_error(TypeError)
+      -> { Math.cos(nil) }.should.raise(TypeError)
+      -> { Math.cos(:abc) }.should.raise(TypeError)
     end
 
     it "raises a NoMethodError if the given argument raises a NoMethodError during type coercion to a Float" do
       object = mock_numeric('mock-float')
       object.should_receive(:to_f).and_raise(NoMethodError)
-      -> { Math.cos(object) }.should raise_error(NoMethodError)
+      -> { Math.cos(object) }.should.raise(NoMethodError)
     end
   end
 end

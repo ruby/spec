@@ -8,18 +8,18 @@ describe "Class#initialize" do
   it "raises a TypeError when called on already initialized classes" do
     ->{
       Integer.send :initialize
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
 
     ->{
       Object.send :initialize
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   # See [redmine:2601]
   it "raises a TypeError when called on BasicObject" do
     ->{
       BasicObject.send :initialize
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   describe "when given the Class" do
@@ -28,7 +28,7 @@ describe "Class#initialize" do
     end
 
     it "raises a TypeError" do
-      ->{@uninitialized.send(:initialize, Class)}.should raise_error(TypeError)
+      ->{@uninitialized.send(:initialize, Class)}.should.raise(TypeError)
     end
   end
 end

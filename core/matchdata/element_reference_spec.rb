@@ -108,12 +108,12 @@ describe "MatchData#[Symbol]" do
 
   it "raises an IndexError if there is no named match corresponding to the Symbol" do
     md = 'haystack'.match(/(?<t>t(?<a>ack))/)
-    -> { md[:baz] }.should raise_error(IndexError, /baz/)
+    -> { md[:baz] }.should.raise(IndexError, /baz/)
   end
 
   it "raises an IndexError if there is no named match corresponding to the String" do
     md = 'haystack'.match(/(?<t>t(?<a>ack))/)
-    -> { md['baz'] }.should raise_error(IndexError, /baz/)
+    -> { md['baz'] }.should.raise(IndexError, /baz/)
   end
 
   it "returns matches in the String's encoding" do

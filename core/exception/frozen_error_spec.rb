@@ -30,10 +30,10 @@ describe "FrozenError#message" do
 
     -> {
       def object.x; end
-    }.should raise_error(FrozenError, "can't modify frozen #{msg_class}: #{object}")
+    }.should.raise(FrozenError, "can't modify frozen #{msg_class}: #{object}")
 
     object = [].freeze
-    -> { object << nil }.should raise_error(FrozenError, "can't modify frozen Array: []")
+    -> { object << nil }.should.raise(FrozenError, "can't modify frozen Array: []")
   end
 end
 
@@ -48,7 +48,7 @@ describe "Modifying a frozen object" do
 
       # CRuby's message contains multiple whitespaces before '...'.
       # So handle both multiple and single whitespace.
-      -> { object.modify }.should raise_error(FrozenError, /can't modify frozen .*?: \s*.../)
+      -> { object.modify }.should.raise(FrozenError, /can't modify frozen .*?: \s*.../)
     end
   end
 end

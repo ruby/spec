@@ -106,11 +106,11 @@ describe "C-API Struct function" do
 
   describe "rb_struct_define" do
     it "raises an ArgumentError if arguments contain duplicate member name" do
-      -> { @s.rb_struct_define(nil, "a", "b", "a") }.should raise_error(ArgumentError)
+      -> { @s.rb_struct_define(nil, "a", "b", "a") }.should.raise(ArgumentError)
     end
 
     it "raises a NameError if an invalid constant name is given" do
-      -> { @s.rb_struct_define("foo", "a", "b", "c") }.should raise_error(NameError)
+      -> { @s.rb_struct_define("foo", "a", "b", "c") }.should.raise(NameError)
     end
   end
 
@@ -131,12 +131,12 @@ describe "C-API Struct function" do
     end
 
     it "raises a NameError if the struct member does not exist" do
-      -> { @s.rb_struct_aref(@struct, :d) }.should raise_error(NameError)
+      -> { @s.rb_struct_aref(@struct, :d) }.should.raise(NameError)
     end
 
     it "raises an IndexError if the given index is out of range" do
-      -> { @s.rb_struct_aref(@struct, -4) }.should raise_error(IndexError)
-      -> { @s.rb_struct_aref(@struct, 3) }.should raise_error(IndexError)
+      -> { @s.rb_struct_aref(@struct, -4) }.should.raise(IndexError)
+      -> { @s.rb_struct_aref(@struct, 3) }.should.raise(IndexError)
     end
   end
 
@@ -147,7 +147,7 @@ describe "C-API Struct function" do
     end
 
     it "raises a NameError if the struct member does not exist" do
-      -> { @s.rb_struct_getmember(@struct, :d) }.should raise_error(NameError)
+      -> { @s.rb_struct_getmember(@struct, :d) }.should.raise(NameError)
     end
   end
 
@@ -180,17 +180,17 @@ describe "C-API Struct function" do
     end
 
     it "raises a NameError if the struct member does not exist" do
-      -> { @s.rb_struct_aset(@struct, :d, 1) }.should raise_error(NameError)
+      -> { @s.rb_struct_aset(@struct, :d, 1) }.should.raise(NameError)
     end
 
     it "raises an IndexError if the given index is out of range" do
-      -> { @s.rb_struct_aset(@struct, -4, 1) }.should raise_error(IndexError)
-      -> { @s.rb_struct_aset(@struct, 3, 1) }.should raise_error(IndexError)
+      -> { @s.rb_struct_aset(@struct, -4, 1) }.should.raise(IndexError)
+      -> { @s.rb_struct_aset(@struct, 3, 1) }.should.raise(IndexError)
     end
 
     it "raises a FrozenError if the struct is frozen" do
       @struct.freeze
-      -> { @s.rb_struct_aset(@struct, :a, 1) }.should raise_error(FrozenError)
+      -> { @s.rb_struct_aset(@struct, :a, 1) }.should.raise(FrozenError)
     end
   end
 
@@ -227,7 +227,7 @@ describe "C-API Struct function" do
     end
 
     it "raises ArgumentError if too many values" do
-      -> { @s.rb_struct_initialize(@struct, [1, 2, 3, 4]) }.should raise_error(ArgumentError, "struct size differs")
+      -> { @s.rb_struct_initialize(@struct, [1, 2, 3, 4]) }.should.raise(ArgumentError, "struct size differs")
     end
 
     it "treats missing values as nil" do
@@ -274,11 +274,11 @@ describe "C-API Data function" do
     end
 
     it "raises an ArgumentError if arguments contain duplicate member name" do
-      -> { @s.rb_data_define(nil, "a", "b", "a") }.should raise_error(ArgumentError)
+      -> { @s.rb_data_define(nil, "a", "b", "a") }.should.raise(ArgumentError)
     end
 
     it "raises when first argument is not a class" do
-      -> { @s.rb_data_define([], "a", "b", "c") }.should raise_error(TypeError, "wrong argument type Array (expected Class)")
+      -> { @s.rb_data_define([], "a", "b", "c") }.should.raise(TypeError, "wrong argument type Array (expected Class)")
     end
   end
 
@@ -295,12 +295,12 @@ describe "C-API Data function" do
       data = @klass.allocate
       @s.rb_struct_initialize(data, [1, 2, 3]).should == nil
       data.should.frozen?
-      -> { @s.rb_struct_initialize(data, [1, 2, 3]) }.should raise_error(FrozenError)
+      -> { @s.rb_struct_initialize(data, [1, 2, 3]) }.should.raise(FrozenError)
     end
 
     it "raises ArgumentError if too many values" do
       data = @klass.allocate
-      -> { @s.rb_struct_initialize(data, [1, 2, 3, 4]) }.should raise_error(ArgumentError, "struct size differs")
+      -> { @s.rb_struct_initialize(data, [1, 2, 3, 4]) }.should.raise(ArgumentError, "struct size differs")
     end
 
     it "treats missing values as nil" do

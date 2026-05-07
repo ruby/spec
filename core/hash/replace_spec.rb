@@ -68,12 +68,12 @@ describe "Hash#replace" do
   it "raises a FrozenError if called on a frozen instance that would not be modified" do
     -> do
       HashSpecs.frozen_hash.replace(HashSpecs.frozen_hash)
-    end.should raise_error(FrozenError)
+    end.should.raise(FrozenError)
   end
 
   it "raises a FrozenError if called on a frozen instance that is modified" do
     -> do
       HashSpecs.frozen_hash.replace(HashSpecs.empty_frozen_hash)
-    end.should raise_error(FrozenError)
+    end.should.raise(FrozenError)
   end
 end

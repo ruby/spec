@@ -7,8 +7,8 @@ describe "Complex.polar" do
   end
 
   it "raises a TypeError when given non real arguments" do
-    ->{ Complex.polar(nil)      }.should raise_error(TypeError)
-    ->{ Complex.polar(nil, nil) }.should raise_error(TypeError)
+    ->{ Complex.polar(nil)      }.should.raise(TypeError)
+    ->{ Complex.polar(nil, nil) }.should.raise(TypeError)
   end
 
   it "computes the real values of the real & imaginary parts from the polar form" do

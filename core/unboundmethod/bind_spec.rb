@@ -12,7 +12,7 @@ describe "UnboundMethod#bind" do
   end
 
   it "raises TypeError if object is not kind_of? the Module the method defined in" do
-    -> { @normal_um.bind(UnboundMethodSpecs::B.new) }.should raise_error(TypeError)
+    -> { @normal_um.bind(UnboundMethodSpecs::B.new) }.should.raise(TypeError)
   end
 
   it "returns Method for any object that is kind_of? the Module method was extracted from" do
@@ -58,7 +58,7 @@ describe "UnboundMethod#bind" do
       end
     end
     um = p.method(:singleton_method).unbind
-    ->{ um.bind(other) }.should raise_error(TypeError)
+    ->{ um.bind(other) }.should.raise(TypeError)
   end
 
   it "allows calling super for module methods bound to hierarchies that do not already have that module" do

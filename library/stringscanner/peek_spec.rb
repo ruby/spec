@@ -22,11 +22,11 @@ describe "StringScanner#peek" do
   end
 
   it "raises a ArgumentError when the passed argument is negative" do
-    -> { @s.peek(-2) }.should raise_error(ArgumentError)
+    -> { @s.peek(-2) }.should.raise(ArgumentError)
   end
 
   it "raises a RangeError when the passed argument is a Bignum" do
-    -> { @s.peek(bignum_value) }.should raise_error(RangeError)
+    -> { @s.peek(bignum_value) }.should.raise(RangeError)
   end
 
   it "returns an instance of String when passed a String subclass" do

@@ -76,8 +76,8 @@ describe "String#delete_prefix!" do
   end
 
   it "raises a FrozenError when self is frozen" do
-    -> { 'hello'.freeze.delete_prefix!('hell') }.should raise_error(FrozenError)
-    -> { 'hello'.freeze.delete_prefix!('') }.should raise_error(FrozenError)
-    -> { ''.freeze.delete_prefix!('') }.should raise_error(FrozenError)
+    -> { 'hello'.freeze.delete_prefix!('hell') }.should.raise(FrozenError)
+    -> { 'hello'.freeze.delete_prefix!('') }.should.raise(FrozenError)
+    -> { ''.freeze.delete_prefix!('') }.should.raise(FrozenError)
   end
 end

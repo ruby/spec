@@ -32,7 +32,7 @@ describe "Kernel#`" do
   end
 
   it "raises an Errno::ENOENT if the command is not executable" do
-    -> { `nonexistent_command` }.should raise_error(Errno::ENOENT)
+    -> { `nonexistent_command` }.should.raise(Errno::ENOENT)
   end
 
   platform_is_not :windows do

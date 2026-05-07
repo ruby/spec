@@ -229,10 +229,10 @@ describe "IO#set_encoding" do
   end
 
   it "raises ArgumentError when no arguments are given" do
-    -> { @io.set_encoding() }.should raise_error(ArgumentError)
+    -> { @io.set_encoding() }.should.raise(ArgumentError)
   end
 
   it "raises ArgumentError when too many arguments are given" do
-    -> { @io.set_encoding(1, 2, 3) }.should raise_error(ArgumentError)
+    -> { @io.set_encoding(1, 2, 3) }.should.raise(ArgumentError)
   end
 end

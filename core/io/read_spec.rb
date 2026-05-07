@@ -29,7 +29,7 @@ describe "IO.read" do
 
     -> {
       IO.read(@fname, 3, 0, {mode: "r+"})
-    }.should raise_error(ArgumentError, /wrong number of arguments/)
+    }.should.raise(ArgumentError, /wrong number of arguments/)
   end
 
   it "accepts an empty options Hash" do
@@ -45,11 +45,11 @@ describe "IO.read" do
   end
 
   it "raises an IOError if the options Hash specifies write mode" do
-    -> { IO.read(@fname, 3, 0, mode: "w") }.should raise_error(IOError)
+    -> { IO.read(@fname, 3, 0, mode: "w") }.should.raise(IOError)
   end
 
   it "raises an IOError if the options Hash specifies append only mode" do
-    -> { IO.read(@fname, mode: "a") }.should raise_error(IOError)
+    -> { IO.read(@fname, mode: "a") }.should.raise(IOError)
   end
 
   it "reads the file if the options Hash includes read mode" do
@@ -115,20 +115,20 @@ describe "IO.read" do
 
   it "raises an Errno::ENOENT when the requested file does not exist" do
     rm_r @fname
-    -> { IO.read @fname }.should raise_error(Errno::ENOENT)
+    -> { IO.read @fname }.should.raise(Errno::ENOENT)
   end
 
   it "raises a TypeError when not passed a String type" do
-    -> { IO.read nil }.should raise_error(TypeError)
+    -> { IO.read nil }.should.raise(TypeError)
   end
 
   it "raises an ArgumentError when not passed a valid length" do
-    -> { IO.read @fname, -1 }.should raise_error(ArgumentError)
+    -> { IO.read @fname, -1 }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError when not passed a valid offset" do
-    -> { IO.read @fname, 0, -1  }.should raise_error(ArgumentError)
-    -> { IO.read @fname, -1, -1 }.should raise_error(ArgumentError)
+    -> { IO.read @fname, 0, -1  }.should.raise(ArgumentError)
+    -> { IO.read @fname, -1, -1 }.should.raise(ArgumentError)
   end
 
   it "uses the external encoding specified via the :external_encoding option" do
@@ -196,7 +196,7 @@ ruby_version_is ""..."4.0" do
           suppress_warning do # https://bugs.ruby-lang.org/issues/19630
             IO.read("|sh -c 'echo hello'", 1, 1)
           end
-        }.should raise_error(Errno::ESPIPE)
+        }.should.raise(Errno::ESPIPE)
       end
     end
 
@@ -209,7 +209,7 @@ ruby_version_is ""..."4.0" do
             suppress_warning do # https://bugs.ruby-lang.org/issues/19630
               IO.read("|cmd.exe /C echo hello", 1, 1)
             end
-          }.should raise_error(Errno::EINVAL)
+          }.should.raise(Errno::EINVAL)
         end
       end
     end
@@ -270,7 +270,7 @@ describe "IO#read" do
   end
 
   it "raises an ArgumentError when not passed a valid length" do
-    -> { @io.read(-1) }.should raise_error(ArgumentError)
+    -> { @io.read(-1) }.should.raise(ArgumentError)
   end
 
   it "clears the output buffer if there is nothing to read" do
@@ -297,14 +297,14 @@ describe "IO#read" do
 
   it "raise FrozenError if the output buffer is frozen" do
     @io.read
-    -> { @io.read(0, 'frozen-string'.freeze) }.should raise_error(FrozenError)
-    -> { @io.read(1, 'frozen-string'.freeze) }.should raise_error(FrozenError)
-    -> { @io.read(nil, 'frozen-string'.freeze) }.should raise_error(FrozenError)
+    -> { @io.read(0, 'frozen-string'.freeze) }.should.raise(FrozenError)
+    -> { @io.read(1, 'frozen-string'.freeze) }.should.raise(FrozenError)
+    -> { @io.read(nil, 'frozen-string'.freeze) }.should.raise(FrozenError)
   end
 
   it "raise FrozenError if the output buffer is frozen (2)" do
     @io.read
-    -> { @io.read(1, ''.freeze) }.should raise_error(FrozenError)
+    -> { @io.read(1, ''.freeze) }.should.raise(FrozenError)
   end
 
   it "consumes zero bytes when reading zero bytes" do
@@ -423,11 +423,11 @@ describe "IO#read" do
   end
 
   it "raises IOError on closed stream" do
-    -> { IOSpecs.closed_io.read }.should raise_error(IOError)
+    -> { IOSpecs.closed_io.read }.should.raise(IOError)
   end
 
   it "raises ArgumentError when length is less than 0" do
-    -> { @io.read(-1) }.should raise_error(ArgumentError)
+    -> { @io.read(-1) }.should.raise(ArgumentError)
   end
 
   platform_is_not :windows do

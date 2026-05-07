@@ -1,6 +1,6 @@
 describe :array_pack_arguments, shared: true do
   it "raises an ArgumentError if there are fewer elements than the format requires" do
-    -> { [].pack(pack_format(1)) }.should raise_error(ArgumentError)
+    -> { [].pack(pack_format(1)) }.should.raise(ArgumentError)
   end
 end
 
@@ -10,11 +10,11 @@ describe :array_pack_basic, shared: true do
   end
 
   it "raises a TypeError when passed nil" do
-    -> { [@obj].pack(nil) }.should raise_error(TypeError)
+    -> { [@obj].pack(nil) }.should.raise(TypeError)
   end
 
   it "raises a TypeError when passed an Integer" do
-    -> { [@obj].pack(1) }.should raise_error(TypeError)
+    -> { [@obj].pack(1) }.should.raise(TypeError)
   end
 end
 
@@ -34,9 +34,9 @@ describe :array_pack_basic_non_float, shared: true do
 
   it "raise ArgumentError when a directive is unknown" do
     # additional directive ('a') is required for the X directive
-    -> { [@obj, @obj].pack("a K" + pack_format) }.should raise_error(ArgumentError, /unknown pack directive 'K'/)
-    -> { [@obj, @obj].pack("a 0" + pack_format) }.should raise_error(ArgumentError, /unknown pack directive '0'/)
-    -> { [@obj, @obj].pack("a :" + pack_format) }.should raise_error(ArgumentError, /unknown pack directive ':'/)
+    -> { [@obj, @obj].pack("a K" + pack_format) }.should.raise(ArgumentError, /unknown pack directive 'K'/)
+    -> { [@obj, @obj].pack("a 0" + pack_format) }.should.raise(ArgumentError, /unknown pack directive '0'/)
+    -> { [@obj, @obj].pack("a :" + pack_format) }.should.raise(ArgumentError, /unknown pack directive ':'/)
   end
 
   it "calls #to_str to coerce the directives string" do
@@ -64,10 +64,10 @@ end
 
 describe :array_pack_no_platform, shared: true do
   it "raises ArgumentError when the format modifier is '_'" do
-    ->{ [1].pack(pack_format("_")) }.should raise_error(ArgumentError)
+    ->{ [1].pack(pack_format("_")) }.should.raise(ArgumentError)
   end
 
   it "raises ArgumentError when the format modifier is '!'" do
-    ->{ [1].pack(pack_format("!")) }.should raise_error(ArgumentError)
+    ->{ [1].pack(pack_format("!")) }.should.raise(ArgumentError)
   end
 end

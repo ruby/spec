@@ -24,12 +24,12 @@ describe "Array#pack with :buffer option" do
   end
 
   it "raises TypeError exception if buffer is not String" do
-    -> { [65].pack("ccc", buffer: []) }.should raise_error(
+    -> { [65].pack("ccc", buffer: []) }.should.raise(
       TypeError, "buffer must be String, not Array")
   end
 
   it "raise FrozenError if buffer is frozen" do
-    -> { [65].pack("c", buffer: "frozen-string".freeze) }.should raise_error(FrozenError)
+    -> { [65].pack("c", buffer: "frozen-string".freeze) }.should.raise(FrozenError)
   end
 
   it "preserves the encoding of the given buffer" do

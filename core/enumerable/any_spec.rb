@@ -21,19 +21,19 @@ describe "Enumerable#any?" do
   end
 
   it "raises an ArgumentError when more than 1 argument is provided" do
-    -> { @enum.any?(1, 2, 3) }.should raise_error(ArgumentError)
-    -> { [].any?(1, 2, 3) }.should raise_error(ArgumentError)
-    -> { {}.any?(1, 2, 3) }.should raise_error(ArgumentError)
+    -> { @enum.any?(1, 2, 3) }.should.raise(ArgumentError)
+    -> { [].any?(1, 2, 3) }.should.raise(ArgumentError)
+    -> { {}.any?(1, 2, 3) }.should.raise(ArgumentError)
   end
 
   it "does not hide exceptions out of #each" do
     -> {
       EnumerableSpecs::ThrowingEach.new.any?
-    }.should raise_error(RuntimeError)
+    }.should.raise(RuntimeError)
 
     -> {
       EnumerableSpecs::ThrowingEach.new.any? { false }
-    }.should raise_error(RuntimeError)
+    }.should.raise(RuntimeError)
   end
 
   describe "with no block" do
@@ -120,7 +120,7 @@ describe "Enumerable#any?" do
     it "does not hide exceptions out of the block" do
       -> {
         @enum.any? { raise "from block" }
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
 
     it "gathers initial args as elements when each yields multiple" do
@@ -154,7 +154,7 @@ describe "Enumerable#any?" do
     it "does not hide exceptions out of #each" do
       -> {
         EnumerableSpecs::ThrowingEach.new.any?(Integer)
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
 
     it "returns true if the pattern ever returns a truthy value" do
@@ -181,7 +181,7 @@ describe "Enumerable#any?" do
       pattern = EnumerableSpecs::Pattern.new { raise "from pattern" }
       -> {
         @enum.any?(pattern)
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
 
     it "calls the pattern with gathered array when yielded with multiple arguments" do

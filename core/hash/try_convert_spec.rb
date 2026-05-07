@@ -45,6 +45,6 @@ describe "Hash.try_convert" do
   it "does not rescue exceptions raised by #to_hash" do
     obj = mock("to_hash")
     obj.should_receive(:to_hash).and_raise(RuntimeError)
-    -> { Hash.try_convert obj }.should raise_error(RuntimeError)
+    -> { Hash.try_convert obj }.should.raise(RuntimeError)
   end
 end

@@ -20,7 +20,7 @@ describe "Exception#dup" do
   it "does not copy singleton methods" do
     def @obj.special() :the_one end
     dup = @obj.dup
-    -> { dup.special }.should raise_error(NameError)
+    -> { dup.special }.should.raise(NameError)
   end
 
   it "does not copy modules included in the singleton class" do
@@ -29,7 +29,7 @@ describe "Exception#dup" do
     end
 
     dup = @obj.dup
-    -> { dup.repr }.should raise_error(NameError)
+    -> { dup.repr }.should.raise(NameError)
   end
 
   it "does not copy constants defined in the singleton class" do
@@ -38,7 +38,7 @@ describe "Exception#dup" do
     end
 
     dup = @obj.dup
-    -> { class << dup; CLONE; end }.should raise_error(NameError)
+    -> { class << dup; CLONE; end }.should.raise(NameError)
   end
 
   it "does copy the message" do

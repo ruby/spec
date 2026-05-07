@@ -17,7 +17,7 @@ describe "IO#readlines" do
 
   it "raises an IOError if the stream is closed" do
     @io.close
-    -> { @io.readlines }.should raise_error(IOError)
+    -> { @io.readlines }.should.raise(IOError)
   end
 
   describe "when passed no arguments" do
@@ -104,11 +104,11 @@ describe "IO#readlines" do
 
   describe "when passed limit" do
     it "raises ArgumentError when passed 0 as a limit" do
-      -> { @io.readlines(0) }.should raise_error(ArgumentError)
+      -> { @io.readlines(0) }.should.raise(ArgumentError)
     end
 
     it "does not accept Integers that don't fit in a C off_t" do
-      -> { @io.readlines(2**128) }.should raise_error(RangeError)
+      -> { @io.readlines(2**128) }.should.raise(RangeError)
     end
   end
 
@@ -118,11 +118,11 @@ describe "IO#readlines" do
     end
 
     it "raises exception when options passed as Hash" do
-      -> { @io.readlines({ chomp: true }) }.should raise_error(TypeError)
+      -> { @io.readlines({ chomp: true }) }.should.raise(TypeError)
 
       -> {
         @io.readlines("\n", 1, { chomp: true })
-      }.should raise_error(ArgumentError, "wrong number of arguments (given 3, expected 0..2)")
+      }.should.raise(ArgumentError, "wrong number of arguments (given 3, expected 0..2)")
     end
   end
 
@@ -145,13 +145,13 @@ describe "IO#readlines" do
   it "raises an IOError if the stream is opened for append only" do
     -> do
       File.open(@name, "a:utf-8") { |f| f.readlines }
-    end.should raise_error(IOError)
+    end.should.raise(IOError)
   end
 
   it "raises an IOError if the stream is opened for write only" do
     -> do
       File.open(@name, "w:utf-8") { |f| f.readlines }
-    end.should raise_error(IOError)
+    end.should.raise(IOError)
   end
 end
 

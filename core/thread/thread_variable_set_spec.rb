@@ -47,16 +47,16 @@ describe "Thread#thread_variable_set" do
 
   it "raises a FrozenError if the thread is frozen" do
     @t.freeze
-    -> { @t.thread_variable_set(:a, 1) }.should raise_error(FrozenError, "can't modify frozen thread locals")
+    -> { @t.thread_variable_set(:a, 1) }.should.raise(FrozenError, "can't modify frozen thread locals")
   end
 
   it "raises a TypeError if the key is neither Symbol nor String, nor responds to #to_str" do
-    -> { @t.thread_variable_set(123, 1) }.should raise_error(TypeError, /123 is not a symbol/)
+    -> { @t.thread_variable_set(123, 1) }.should.raise(TypeError, /123 is not a symbol/)
   end
 
   it "does not try to convert the key with #to_sym" do
     key = mock('key')
     key.should_not_receive(:to_sym)
-    -> { @t.thread_variable_set(key, 42) }.should raise_error(TypeError, /#{Regexp.quote(key.inspect)} is not a symbol/)
+    -> { @t.thread_variable_set(key, 42) }.should.raise(TypeError, /#{Regexp.quote(key.inspect)} is not a symbol/)
   end
 end

@@ -34,7 +34,7 @@ describe :io_each, shared: true do
     end
 
     it "raises an IOError when self is not readable" do
-      -> { IOSpecs.closed_io.send(@method) {} }.should raise_error(IOError)
+      -> { IOSpecs.closed_io.send(@method) {} }.should.raise(IOError)
     end
 
     it "makes line count accessible via lineno" do
@@ -70,12 +70,12 @@ describe :io_each, shared: true do
     describe "when limit is 0" do
       it "raises an ArgumentError" do
         # must pass block so Enumerator is evaluated and raises
-        -> { @io.send(@method, 0){} }.should raise_error(ArgumentError)
+        -> { @io.send(@method, 0){} }.should.raise(ArgumentError)
       end
     end
 
     it "does not accept Integers that don't fit in a C off_t" do
-      -> { @io.send(@method, 2**128){} }.should raise_error(RangeError)
+      -> { @io.send(@method, 2**128){} }.should.raise(RangeError)
     end
   end
 
@@ -179,11 +179,11 @@ describe :io_each, shared: true do
     it "raises exception when options passed as Hash" do
       -> {
         @io.send(@method, { chomp: true }) { |s| }
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
 
       -> {
         @io.send(@method, "\n", 1, { chomp: true }) { |s| }
-      }.should raise_error(ArgumentError, "wrong number of arguments (given 3, expected 0..2)")
+      }.should.raise(ArgumentError, "wrong number of arguments (given 3, expected 0..2)")
     end
   end
 
@@ -227,7 +227,7 @@ describe :io_each, shared: true do
     it "raises ArgumentError" do
       -> {
         @io.send(@method, "", 1, "excess argument", chomp: true) {}
-      }.should raise_error(ArgumentError)
+      }.should.raise(ArgumentError)
     end
   end
 end

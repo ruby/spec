@@ -76,11 +76,11 @@ platform_is_not :windows do
         Syslog.open
         -> {
           Syslog.open
-        }.should raise_error(RuntimeError, /syslog already open/)
+        }.should.raise(RuntimeError, /syslog already open/)
         -> {
           Syslog.close
           Syslog.open
-        }.should_not raise_error
+        }.should_not.raise
         Syslog.close
       end
     end

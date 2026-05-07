@@ -42,11 +42,11 @@ describe :stringio_read, shared: true do
   end
 
   it "raises a TypeError when the passed buffer Object can't be converted to a String" do
-    -> { @io.send(@method, 7, Object.new) }.should raise_error(TypeError)
+    -> { @io.send(@method, 7, Object.new) }.should.raise(TypeError)
   end
 
   it "raises a FrozenError error when passed a frozen String as buffer" do
-    -> { @io.send(@method, 7, "".freeze) }.should raise_error(FrozenError)
+    -> { @io.send(@method, 7, "".freeze) }.should.raise(FrozenError)
   end
 end
 
@@ -79,11 +79,11 @@ describe :stringio_read_length, shared: true do
   end
 
   it "raises a TypeError when the passed length can't be converted to an Integer" do
-    -> { @io.send(@method, Object.new) }.should raise_error(TypeError)
+    -> { @io.send(@method, Object.new) }.should.raise(TypeError)
   end
 
   it "raises a TypeError when the passed length is negative" do
-    -> { @io.send(@method, -2) }.should raise_error(ArgumentError)
+    -> { @io.send(@method, -2) }.should.raise(ArgumentError)
   end
 
   it "returns a binary String" do
@@ -136,10 +136,10 @@ end
 describe :stringio_read_not_readable, shared: true do
   it "raises an IOError" do
     io = StringIO.new(+"test", "w")
-    -> { io.send(@method) }.should raise_error(IOError)
+    -> { io.send(@method) }.should.raise(IOError)
 
     io = StringIO.new("test")
     io.close_read
-    -> { io.send(@method) }.should raise_error(IOError)
+    -> { io.send(@method) }.should.raise(IOError)
   end
 end

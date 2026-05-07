@@ -107,11 +107,11 @@ end
 describe :stringio_write_not_writable, shared: true do
   it "raises an IOError" do
     io = StringIO.new(+"test", "r")
-    -> { io.send(@method, "test") }.should raise_error(IOError)
+    -> { io.send(@method, "test") }.should.raise(IOError)
 
     io = StringIO.new(+"test")
     io.close_write
-    -> { io.send(@method, "test") }.should raise_error(IOError)
+    -> { io.send(@method, "test") }.should.raise(IOError)
   end
 end
 

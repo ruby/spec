@@ -14,37 +14,37 @@ describe "IO#advise" do
   it "raises a TypeError if advise is not a Symbol" do
     -> {
       @io.advise("normal")
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises a TypeError if offset cannot be coerced to an Integer" do
     -> {
       @io.advise(:normal, "wat")
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises a TypeError if len cannot be coerced to an Integer" do
     -> {
       @io.advise(:normal, 0, "wat")
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises a RangeError if offset is too big" do
     -> {
       @io.advise(:normal, 10 ** 32)
-    }.should raise_error(RangeError)
+    }.should.raise(RangeError)
   end
 
   it "raises a RangeError if len is too big" do
     -> {
       @io.advise(:normal, 0, 10 ** 32)
-    }.should raise_error(RangeError)
+    }.should.raise(RangeError)
   end
 
   it "raises a NotImplementedError if advise is not recognized" do
     ->{
       @io.advise(:foo)
-    }.should raise_error(NotImplementedError)
+    }.should.raise(NotImplementedError)
   end
 
   it "supports the normal advice type" do
@@ -81,6 +81,6 @@ describe "IO#advise" do
 
   it "raises an IOError if the stream is closed" do
     @io.close
-    -> { @io.advise(:normal) }.should raise_error(IOError)
+    -> { @io.advise(:normal) }.should.raise(IOError)
   end
 end

@@ -82,7 +82,7 @@ describe "CSV.parse" do
   it "raises CSV::MalformedCSVError exception if input is illegal" do
     -> {
       CSV.parse('"quoted" field')
-    }.should raise_error(CSV::MalformedCSVError)
+    }.should.raise(CSV::MalformedCSVError)
   end
 
   it "handles illegal input with the liberal_parsing option" do

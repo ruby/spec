@@ -64,27 +64,27 @@ describe "The module keyword" do
   it "raises a TypeError if the constant is a Class" do
     -> do
       module ModuleSpecs::Modules::Klass; end
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "raises a TypeError if the constant is a String" do
-    -> { module ModuleSpecs::Modules::A; end }.should raise_error(TypeError)
+    -> { module ModuleSpecs::Modules::A; end }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the constant is an Integer" do
-    -> { module ModuleSpecs::Modules::B; end }.should raise_error(TypeError)
+    -> { module ModuleSpecs::Modules::B; end }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the constant is nil" do
-    -> { module ModuleSpecs::Modules::C; end }.should raise_error(TypeError)
+    -> { module ModuleSpecs::Modules::C; end }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the constant is true" do
-    -> { module ModuleSpecs::Modules::D; end }.should raise_error(TypeError)
+    -> { module ModuleSpecs::Modules::D; end }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the constant is false" do
-    -> { module ModuleSpecs::Modules::D; end }.should raise_error(TypeError)
+    -> { module ModuleSpecs::Modules::D; end }.should.raise(TypeError)
   end
 end
 

@@ -51,7 +51,7 @@ describe "Enumerator#each" do
     enum = Object.new.to_enum
     -> do
       enum.each { |e| e }
-    end.should raise_error(NoMethodError)
+    end.should.raise(NoMethodError)
   end
 
   it "returns self if not given arguments and not given a block" do

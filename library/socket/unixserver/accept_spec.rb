@@ -49,7 +49,7 @@ describe "UNIXServer#accept" do
     t = Thread.new {
       -> {
         @server.accept
-      }.should raise_error(Exception, "interrupted")
+      }.should.raise(Exception, "interrupted")
     }
 
     Thread.pass while t.status and t.status != "sleep"

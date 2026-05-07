@@ -23,7 +23,7 @@ describe "Matrix.symmetric?" do
     ].each do |rectangular_matrix|
       -> {
         rectangular_matrix.symmetric?
-      }.should raise_error(Matrix::ErrDimensionMismatch)
+      }.should.raise(Matrix::ErrDimensionMismatch)
     end
   end
 end

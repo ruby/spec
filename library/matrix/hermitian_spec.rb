@@ -23,7 +23,7 @@ describe "Matrix.hermitian?" do
     ].each do |rectangular_matrix|
       -> {
         rectangular_matrix.hermitian?
-      }.should raise_error(Matrix::ErrDimensionMismatch)
+      }.should.raise(Matrix::ErrDimensionMismatch)
     end
   end
 

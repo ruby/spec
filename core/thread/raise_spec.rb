@@ -68,7 +68,7 @@ describe "Thread#raise on a sleeping thread" do
     ThreadSpecs.spin_until_sleeping(t)
 
     t.raise
-    -> { t.value }.should raise_error(RuntimeError)
+    -> { t.value }.should.raise(RuntimeError)
   end
 
   it "raises a RuntimeError when called with no arguments inside rescue" do
@@ -86,7 +86,7 @@ describe "Thread#raise on a sleeping thread" do
       ThreadSpecs.spin_until_sleeping(t)
       t.raise
     end
-    -> { t.value }.should raise_error(RuntimeError)
+    -> { t.value }.should.raise(RuntimeError)
   end
 
   it "re-raises a previously rescued exception without overwriting the backtrace" do
@@ -181,7 +181,7 @@ describe "Thread#raise on a running thread" do
 
     q.pop # wait for `report_on_exception = false`.
     t.raise
-    -> { t.value }.should raise_error(RuntimeError)
+    -> { t.value }.should.raise(RuntimeError)
   end
 
   it "raises the given argument even when there is an active exception" do
@@ -200,7 +200,7 @@ describe "Thread#raise on a running thread" do
     rescue
       Thread.pass until raised
       t.raise RangeError
-      -> { t.value }.should raise_error(RangeError)
+      -> { t.value }.should.raise(RangeError)
     end
   end
 
@@ -221,7 +221,7 @@ describe "Thread#raise on a running thread" do
       Thread.pass until raised
       t.raise
     end
-    -> { t.value }.should raise_error(RuntimeError)
+    -> { t.value }.should.raise(RuntimeError)
   end
 end
 
@@ -237,6 +237,6 @@ describe "Thread#raise on same thread" do
         Thread.current.raise
       end
     end
-    -> { t.value }.should raise_error(RuntimeError, '')
+    -> { t.value }.should.raise(RuntimeError, '')
   end
 end

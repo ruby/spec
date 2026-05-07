@@ -21,17 +21,17 @@ describe "BasicObject#instance_eval" do
   end
 
   it "raises an ArgumentError when no arguments and no block are given" do
-    -> { "hola".instance_eval }.should raise_error(ArgumentError, "wrong number of arguments (given 0, expected 1..3)")
+    -> { "hola".instance_eval }.should.raise(ArgumentError, "wrong number of arguments (given 0, expected 1..3)")
   end
 
   it "raises an ArgumentError when a block and normal arguments are given" do
-    -> { "hola".instance_eval(4, 5) {|a,b| a + b } }.should raise_error(ArgumentError, "wrong number of arguments (given 2, expected 0)")
+    -> { "hola".instance_eval(4, 5) {|a,b| a + b } }.should.raise(ArgumentError, "wrong number of arguments (given 2, expected 0)")
   end
 
   it "raises an ArgumentError when more than 3 arguments are given" do
     -> {
       "hola".instance_eval("1 + 1", "some file", 0, "bogus")
-    }.should raise_error(ArgumentError, "wrong number of arguments (given 4, expected 1..3)")
+    }.should.raise(ArgumentError, "wrong number of arguments (given 4, expected 1..3)")
   end
 
   it "yields the object to the block" do
@@ -51,7 +51,7 @@ describe "BasicObject#instance_eval" do
       end
     end
     f.foo.should == 1
-    -> { Object.new.foo }.should raise_error(NoMethodError)
+    -> { Object.new.foo }.should.raise(NoMethodError)
   end
 
   it "preserves self in the original block when passed a block argument" do
@@ -95,15 +95,15 @@ describe "BasicObject#instance_eval" do
   end
 
   it "raises TypeError for frozen objects when tries to set receiver's instance variables" do
-    -> { nil.instance_eval { @foo = 42 } }.should raise_error(FrozenError, "can't modify frozen NilClass: nil")
-    -> { true.instance_eval { @foo = 42 } }.should raise_error(FrozenError, "can't modify frozen TrueClass: true")
-    -> { false.instance_eval { @foo = 42 } }.should raise_error(FrozenError, "can't modify frozen FalseClass: false")
-    -> { 1.instance_eval { @foo = 42 } }.should raise_error(FrozenError, "can't modify frozen Integer: 1")
-    -> { :symbol.instance_eval { @foo = 42 } }.should raise_error(FrozenError, "can't modify frozen Symbol: :symbol")
+    -> { nil.instance_eval { @foo = 42 } }.should.raise(FrozenError, "can't modify frozen NilClass: nil")
+    -> { true.instance_eval { @foo = 42 } }.should.raise(FrozenError, "can't modify frozen TrueClass: true")
+    -> { false.instance_eval { @foo = 42 } }.should.raise(FrozenError, "can't modify frozen FalseClass: false")
+    -> { 1.instance_eval { @foo = 42 } }.should.raise(FrozenError, "can't modify frozen Integer: 1")
+    -> { :symbol.instance_eval { @foo = 42 } }.should.raise(FrozenError, "can't modify frozen Symbol: :symbol")
 
     obj = Object.new
     obj.freeze
-    -> { obj.instance_eval { @foo = 42 } }.should raise_error(FrozenError)
+    -> { obj.instance_eval { @foo = 42 } }.should.raise(FrozenError)
   end
 
   it "treats block-local variables as local to the block" do
@@ -175,10 +175,10 @@ describe "BasicObject#instance_eval" do
   it "raises a TypeError when defining methods on an immediate" do
     -> do
       1.instance_eval { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
     -> do
       :foo.instance_eval { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   describe "class variables lookup" do
@@ -217,23 +217,23 @@ describe "BasicObject#instance_eval" do
     it "does not have access to class variables in the receiver class when called with a String" do
       receiver = BasicObjectSpecs::InstEval::CVar::Get::ReceiverScope.new
       caller = BasicObjectSpecs::InstEval::CVar::Get::CallerWithoutCVarScope.new
-      -> { caller.get_class_variable_with_string(receiver) }.should raise_error(NameError, /uninitialized class variable @@cvar/)
+      -> { caller.get_class_variable_with_string(receiver) }.should.raise(NameError, /uninitialized class variable @@cvar/)
     end
 
     it "does not have access to class variables in the receiver's singleton class when called with a String" do
       receiver = BasicObjectSpecs::InstEval::CVar::Get::ReceiverWithCVarDefinedInSingletonClass
       caller = BasicObjectSpecs::InstEval::CVar::Get::CallerWithoutCVarScope.new
-      -> { caller.get_class_variable_with_string(receiver) }.should raise_error(NameError, /uninitialized class variable @@cvar/)
+      -> { caller.get_class_variable_with_string(receiver) }.should.raise(NameError, /uninitialized class variable @@cvar/)
     end
   end
 
   it "raises a TypeError when defining methods on numerics" do
     -> do
       (1.0).instance_eval { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
     -> do
       (1 << 64).instance_eval { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "evaluates procs originating from methods" do

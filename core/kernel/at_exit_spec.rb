@@ -10,7 +10,7 @@ describe "Kernel.at_exit" do
   end
 
   it "raises ArgumentError if called without a block" do
-    -> { at_exit }.should raise_error(ArgumentError, "called without a block")
+    -> { at_exit }.should.raise(ArgumentError, "called without a block")
   end
 end
 

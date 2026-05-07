@@ -44,7 +44,7 @@ describe "CGI.unescapeURIComponent" do
   end
 
   it "raises ArgumentError if specified encoding is unknown" do
-    -> { CGI.unescapeURIComponent("ABC", "ISO-JOKE-1") }.should raise_error(ArgumentError, "unknown encoding name - ISO-JOKE-1")
+    -> { CGI.unescapeURIComponent("ABC", "ISO-JOKE-1") }.should.raise(ArgumentError, "unknown encoding name - ISO-JOKE-1")
   end
 
   ruby_version_is ""..."4.0" do
@@ -114,7 +114,7 @@ describe "CGI.unescapeURIComponent" do
   it "raises a TypeError with nil" do
     -> {
       CGI.unescapeURIComponent(nil)
-    }.should raise_error(TypeError, "no implicit conversion of nil into String")
+    }.should.raise(TypeError, "no implicit conversion of nil into String")
   end
 
   it "uses implicit type conversion to String" do

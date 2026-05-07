@@ -105,10 +105,10 @@ describe "File.basename" do
   end
 
   it "raises a TypeError if the arguments are not String types" do
-    -> { File.basename(nil)          }.should raise_error(TypeError)
-    -> { File.basename(1)            }.should raise_error(TypeError)
-    -> { File.basename("bar.txt", 1) }.should raise_error(TypeError)
-    -> { File.basename(true)         }.should raise_error(TypeError)
+    -> { File.basename(nil)          }.should.raise(TypeError)
+    -> { File.basename(1)            }.should.raise(TypeError)
+    -> { File.basename("bar.txt", 1) }.should.raise(TypeError)
+    -> { File.basename(true)         }.should.raise(TypeError)
   end
 
   it "accepts an object that has a #to_path method" do
@@ -116,7 +116,7 @@ describe "File.basename" do
   end
 
   it "raises an ArgumentError if passed more than two arguments" do
-    -> { File.basename('bar.txt', '.txt', '.txt') }.should raise_error(ArgumentError)
+    -> { File.basename('bar.txt', '.txt', '.txt') }.should.raise(ArgumentError)
   end
 
   # specific to MS Windows
@@ -166,7 +166,7 @@ describe "File.basename" do
 
       -> {
         File.basename(path)
-      }.should raise_error(Encoding::CompatibilityError)
+      }.should.raise(Encoding::CompatibilityError)
     end
   end
 

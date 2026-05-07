@@ -30,7 +30,7 @@ describe "Enumerable#chunk_while" do
 
   context "when not given a block" do
     it "raises an ArgumentError" do
-      -> { @enum.chunk_while }.should raise_error(ArgumentError)
+      -> { @enum.chunk_while }.should.raise(ArgumentError)
     end
   end
 

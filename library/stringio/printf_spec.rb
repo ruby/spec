@@ -82,10 +82,10 @@ end
 describe "StringIO#printf when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new(+"test", "r")
-    -> { io.printf("test") }.should raise_error(IOError)
+    -> { io.printf("test") }.should.raise(IOError)
 
     io = StringIO.new(+"test")
     io.close_write
-    -> { io.printf("test") }.should raise_error(IOError)
+    -> { io.printf("test") }.should.raise(IOError)
   end
 end

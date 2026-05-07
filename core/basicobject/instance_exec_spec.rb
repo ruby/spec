@@ -17,7 +17,7 @@ describe "BasicObject#instance_exec" do
   end
 
   it "raises a LocalJumpError unless given a block" do
-    -> { "hola".instance_exec }.should raise_error(LocalJumpError)
+    -> { "hola".instance_exec }.should.raise(LocalJumpError)
   end
 
   it "has an arity of -1" do
@@ -25,7 +25,7 @@ describe "BasicObject#instance_exec" do
   end
 
   it "accepts arguments with a block" do
-    -> { "hola".instance_exec(4, 5) { |a,b| a + b } }.should_not raise_error
+    -> { "hola".instance_exec(4, 5) { |a,b| a + b } }.should_not.raise
   end
 
   it "doesn't pass self to the block as an argument" do
@@ -50,7 +50,7 @@ describe "BasicObject#instance_exec" do
       end
     end
     f.foo.should == 1
-    -> { Object.new.foo }.should raise_error(NoMethodError)
+    -> { Object.new.foo }.should.raise(NoMethodError)
   end
 
   # TODO: This should probably be replaced with a "should behave like" that uses
@@ -84,10 +84,10 @@ describe "BasicObject#instance_exec" do
   it "raises a TypeError when defining methods on an immediate" do
     -> do
       1.instance_exec { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
     -> do
       :foo.instance_exec { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   quarantine! do # Not clean, leaves cvars lying around to break other specs
@@ -105,9 +105,9 @@ describe "BasicObject#instance_exec" do
   it "raises a TypeError when defining methods on numerics" do
     -> do
       (1.0).instance_exec { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
     -> do
       (1 << 64).instance_exec { def foo; end }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 end

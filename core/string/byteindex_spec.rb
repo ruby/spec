@@ -149,7 +149,7 @@ describe "String#byteindex with String" do
     char = "れ".encode Encoding::EUC_JP
     -> do
       "あれ".byteindex(char)
-    end.should raise_error(Encoding::CompatibilityError)
+    end.should.raise(Encoding::CompatibilityError)
   end
 
   it "handles a substring in a superset encoding" do

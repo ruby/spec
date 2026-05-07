@@ -21,6 +21,6 @@ describe 'UNIXServer#initialize' do
   end
 
   it 'raises Errno::EADDRINUSE when the socket is already in use' do
-    -> { UNIXServer.new(@path) }.should raise_error(Errno::EADDRINUSE)
+    -> { UNIXServer.new(@path) }.should.raise(Errno::EADDRINUSE)
   end
 end

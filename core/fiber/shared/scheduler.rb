@@ -8,7 +8,7 @@ describe :scheduler, shared: true do
       end
       -> {
         suppress_warning { Fiber.set_scheduler(scheduler) }
-      }.should raise_error(ArgumentError, /Scheduler must implement ##{missing_method}/)
+      }.should.raise(ArgumentError, /Scheduler must implement ##{missing_method}/)
     end
   end
 

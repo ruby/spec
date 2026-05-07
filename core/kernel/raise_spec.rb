@@ -33,7 +33,7 @@ describe "Kernel#raise with previously rescued exception" do
         raise
         ScratchPad.record :no_reraise
       end
-    end.should raise_error(Exception, "outer")
+    end.should.raise(Exception, "outer")
 
     ScratchPad.recorded.should == nil
   end

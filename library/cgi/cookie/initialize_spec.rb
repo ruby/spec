@@ -122,8 +122,8 @@ ruby_version_is ""..."4.0" do
     end
 
     it "raises a ArgumentError when the passed Hash has no 'name' entry" do
-      -> { @cookie.send(:initialize, {}) }.should raise_error(ArgumentError)
-      -> { @cookie.send(:initialize, "value" => "test") }.should raise_error(ArgumentError)
+      -> { @cookie.send(:initialize, {}) }.should.raise(ArgumentError)
+      -> { @cookie.send(:initialize, "value" => "test") }.should.raise(ArgumentError)
     end
   end
 

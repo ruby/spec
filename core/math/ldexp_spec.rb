@@ -15,7 +15,7 @@ describe "Math.ldexp" do
   end
 
   it "raises a TypeError if the first argument cannot be coerced with Float()" do
-    -> { Math.ldexp("test", 2) }.should raise_error(TypeError)
+    -> { Math.ldexp("test", 2) }.should.raise(TypeError)
   end
 
   it "returns NaN given NaN" do
@@ -23,19 +23,19 @@ describe "Math.ldexp" do
   end
 
   it "raises RangeError if NaN is given as the second arg" do
-    -> { Math.ldexp(0, nan_value) }.should raise_error(RangeError)
+    -> { Math.ldexp(0, nan_value) }.should.raise(RangeError)
   end
 
   it "raises a TypeError if the second argument cannot be coerced with Integer()" do
-    -> { Math.ldexp(3.2, "this") }.should raise_error(TypeError)
+    -> { Math.ldexp(3.2, "this") }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the first argument is nil" do
-    -> { Math.ldexp(nil, 2) }.should raise_error(TypeError)
+    -> { Math.ldexp(nil, 2) }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the second argument is nil" do
-    -> { Math.ldexp(3.1, nil) }.should raise_error(TypeError)
+    -> { Math.ldexp(3.1, nil) }.should.raise(TypeError)
   end
 
   it "accepts any first argument that can be coerced with Float()" do

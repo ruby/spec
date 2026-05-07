@@ -29,12 +29,12 @@ describe "Kernel#sleep" do
   end
 
   it "raises an ArgumentError when passed a negative duration" do
-    -> { sleep(-0.1) }.should raise_error(ArgumentError)
-    -> { sleep(-1) }.should raise_error(ArgumentError)
+    -> { sleep(-0.1) }.should.raise(ArgumentError)
+    -> { sleep(-1) }.should.raise(ArgumentError)
   end
 
   it "raises a TypeError when passed a String" do
-    -> { sleep('2')   }.should raise_error(TypeError)
+    -> { sleep('2')   }.should.raise(TypeError)
   end
 
   it "pauses execution indefinitely if not given a duration" do

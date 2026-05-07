@@ -35,7 +35,7 @@ describe :kernel_load, shared: true do
     # This behavior is specific to Kernel#load, it differs for Kernel#require
     it "does not look for a c-extension file when passed a path without extension (when no .rb is present)" do
       path = File.join CODE_LOADING_DIR, "a", "load_fixture"
-      -> { @object.send(@method, path) }.should raise_error(LoadError)
+      -> { @object.send(@method, path) }.should.raise(LoadError)
     end
   end
 
@@ -93,7 +93,7 @@ describe :kernel_load, shared: true do
 
   it "raises a LoadError if passed a non-extensioned path that does not exist but a .rb extensioned path does exist" do
     path = File.expand_path "load_ext_fixture", CODE_LOADING_DIR
-    -> { @object.load(path) }.should raise_error(LoadError)
+    -> { @object.load(path) }.should.raise(LoadError)
   end
 
   describe "when passed true for 'wrap'" do
@@ -159,7 +159,7 @@ describe :kernel_load, shared: true do
       end
 
       it "does not pollute the receiver" do
-        -> { @object.send(:top_level_method) }.should raise_error(NameError)
+        -> { @object.send(:top_level_method) }.should.raise(NameError)
       end
     end
   end

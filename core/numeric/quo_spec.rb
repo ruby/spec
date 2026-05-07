@@ -15,11 +15,11 @@ describe "Numeric#quo" do
   end
 
   it "raises a ZeroDivisionError when the given Integer is 0" do
-    -> { 0.quo(0) }.should raise_error(ZeroDivisionError)
-    -> { 10.quo(0) }.should raise_error(ZeroDivisionError)
-    -> { -10.quo(0) }.should raise_error(ZeroDivisionError)
-    -> { bignum_value.quo(0) }.should raise_error(ZeroDivisionError)
-    -> { (-bignum_value).quo(0) }.should raise_error(ZeroDivisionError)
+    -> { 0.quo(0) }.should.raise(ZeroDivisionError)
+    -> { 10.quo(0) }.should.raise(ZeroDivisionError)
+    -> { -10.quo(0) }.should.raise(ZeroDivisionError)
+    -> { bignum_value.quo(0) }.should.raise(ZeroDivisionError)
+    -> { (-bignum_value).quo(0) }.should.raise(ZeroDivisionError)
   end
 
   it "calls #to_r to convert the object to a Rational" do
@@ -33,16 +33,16 @@ describe "Numeric#quo" do
     obj = NumericSpecs::Subclass.new
     obj.should_receive(:to_r).and_return(1)
 
-    -> { obj.quo(19) }.should raise_error(TypeError)
+    -> { obj.quo(19) }.should.raise(TypeError)
   end
 
   it "raises a TypeError when given a non-Integer" do
     -> {
       (obj = mock('x')).should_not_receive(:to_int)
       13.quo(obj)
-    }.should raise_error(TypeError)
-    -> { 13.quo("10")    }.should raise_error(TypeError)
-    -> { 13.quo(:symbol) }.should raise_error(TypeError)
+    }.should.raise(TypeError)
+    -> { 13.quo("10")    }.should.raise(TypeError)
+    -> { 13.quo(:symbol) }.should.raise(TypeError)
   end
 
   it "returns the result of calling self#/ with other" do
@@ -53,7 +53,7 @@ describe "Numeric#quo" do
   end
 
   it "raises a ZeroDivisionError if the given argument is zero and not a Float" do
-    -> { 1.quo(0) }.should raise_error(ZeroDivisionError)
+    -> { 1.quo(0) }.should.raise(ZeroDivisionError)
   end
 
   it "returns infinity if the given argument is zero and is a Float" do

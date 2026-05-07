@@ -45,7 +45,7 @@ describe "StringScanner#get_byte" do
         s = StringScanner.new("This is a test")
         s.get_byte
         s.should.matched?
-        -> { s[:a] }.should raise_error(IndexError)
+        -> { s[:a] }.should.raise(IndexError)
       end
     end
 
@@ -77,7 +77,7 @@ describe "StringScanner#get_byte" do
 
         s.get_byte
         s.should.matched?
-        -> { s[:a] }.should raise_error(IndexError)
+        -> { s[:a] }.should.raise(IndexError)
       end
     end
   end

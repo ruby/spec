@@ -53,7 +53,7 @@ describe "StringScanner#getch" do
         s = StringScanner.new("This is a test")
         s.getch
         s.should.matched?
-        -> { s[:a] }.should raise_error(IndexError)
+        -> { s[:a] }.should.raise(IndexError)
       end
     end
 
@@ -87,7 +87,7 @@ describe "StringScanner#getch" do
 
         s.getch
         s.should.matched?
-        -> { s[:a] }.should raise_error(IndexError)
+        -> { s[:a] }.should.raise(IndexError)
       end
     end
   end

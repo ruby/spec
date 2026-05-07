@@ -26,7 +26,7 @@ describe "Matrix#permutation?" do
     ].each do |rectangular_matrix|
       -> {
         rectangular_matrix.permutation?
-      }.should raise_error(Matrix::ErrDimensionMismatch)
+      }.should.raise(Matrix::ErrDimensionMismatch)
     end
   end
 end

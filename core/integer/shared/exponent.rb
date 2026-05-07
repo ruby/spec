@@ -66,13 +66,13 @@ describe :integer_exponent, shared: true do
       end
 
       it "raises an ArgumentError when the result size exceeds the limit" do
-        -> { 100000000.send(@method, 1000000000) }.should raise_error(ArgumentError)
+        -> { 100000000.send(@method, 1000000000) }.should.raise(ArgumentError)
       end
     end
 
     it "raises a ZeroDivisionError for 0 ** -1" do
-      -> { 0.send(@method, -1) }.should raise_error(ZeroDivisionError)
-      -> { 0.send(@method, Rational(-1, 1)) }.should raise_error(ZeroDivisionError)
+      -> { 0.send(@method, -1) }.should.raise(ZeroDivisionError)
+      -> { 0.send(@method, Rational(-1, 1)) }.should.raise(ZeroDivisionError)
     end
 
     it "returns Float::INFINITY for 0 ** -1.0" do
@@ -80,9 +80,9 @@ describe :integer_exponent, shared: true do
     end
 
     it "raises a TypeError when given a non-numeric power" do
-      -> { 13.send(@method, "10") }.should raise_error(TypeError)
-      -> { 13.send(@method, :symbol) }.should raise_error(TypeError)
-      -> { 13.send(@method, nil) }.should raise_error(TypeError)
+      -> { 13.send(@method, "10") }.should.raise(TypeError)
+      -> { 13.send(@method, :symbol) }.should.raise(TypeError)
+      -> { 13.send(@method, nil) }.should.raise(TypeError)
     end
 
     it "coerces power and calls #**" do
@@ -119,9 +119,9 @@ describe :integer_exponent, shared: true do
     end
 
     it "raises a TypeError when given a non-Integer" do
-      -> { @bignum.send(@method, mock('10')) }.should raise_error(TypeError)
-      -> { @bignum.send(@method, "10") }.should raise_error(TypeError)
-      -> { @bignum.send(@method, :symbol) }.should raise_error(TypeError)
+      -> { @bignum.send(@method, mock('10')) }.should.raise(TypeError)
+      -> { @bignum.send(@method, "10") }.should.raise(TypeError)
+      -> { @bignum.send(@method, :symbol) }.should.raise(TypeError)
     end
 
     ruby_version_is ""..."3.4" do
@@ -149,7 +149,7 @@ describe :integer_exponent, shared: true do
         # @bignum ** @bignum would require enormous memory
         -> {
           @bignum.send(@method, @bignum)
-        }.should raise_error(ArgumentError)
+        }.should.raise(ArgumentError)
       end
     end
 

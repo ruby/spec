@@ -40,6 +40,6 @@ describe "Module#public" do
   it "raises a NameError when given an undefined name" do
     -> do
       Module.new.send(:public, :undefined)
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 end

@@ -90,14 +90,14 @@ describe "Module#const_defined?" do
     end
 
     it "raises a TypeError if the given name can't be converted to a String" do
-      -> { ConstantSpecs.const_defined?(nil) }.should raise_error(TypeError)
-      -> { ConstantSpecs.const_defined?([])  }.should raise_error(TypeError)
+      -> { ConstantSpecs.const_defined?(nil) }.should.raise(TypeError)
+      -> { ConstantSpecs.const_defined?([])  }.should.raise(TypeError)
     end
 
     it "raises a NoMethodError if the given argument raises a NoMethodError during type coercion to a String" do
       name = mock("classA")
       name.should_receive(:to_str).and_raise(NoMethodError)
-      -> { ConstantSpecs.const_defined?(name) }.should raise_error(NoMethodError)
+      -> { ConstantSpecs.const_defined?(name) }.should.raise(NoMethodError)
     end
   end
 
@@ -130,19 +130,19 @@ describe "Module#const_defined?" do
   end
 
   it "raises a NameError if the name does not start with a capital letter" do
-    -> { ConstantSpecs.const_defined? "name" }.should raise_error(NameError)
+    -> { ConstantSpecs.const_defined? "name" }.should.raise(NameError)
   end
 
   it "raises a NameError if the name starts with '_'" do
-    -> { ConstantSpecs.const_defined? "__CONSTX__" }.should raise_error(NameError)
+    -> { ConstantSpecs.const_defined? "__CONSTX__" }.should.raise(NameError)
   end
 
   it "raises a NameError if the name starts with '@'" do
-    -> { ConstantSpecs.const_defined? "@Name" }.should raise_error(NameError)
+    -> { ConstantSpecs.const_defined? "@Name" }.should.raise(NameError)
   end
 
   it "raises a NameError if the name starts with '!'" do
-    -> { ConstantSpecs.const_defined? "!Name" }.should raise_error(NameError)
+    -> { ConstantSpecs.const_defined? "!Name" }.should.raise(NameError)
   end
 
   it "returns true or false for the nested name" do
@@ -155,15 +155,15 @@ describe "Module#const_defined?" do
 
   it "raises a NameError if the name contains non-alphabetic characters except '_'" do
     ConstantSpecs.const_defined?("CS_CONSTX").should == false
-    -> { ConstantSpecs.const_defined? "Name=" }.should raise_error(NameError)
-    -> { ConstantSpecs.const_defined? "Name?" }.should raise_error(NameError)
+    -> { ConstantSpecs.const_defined? "Name=" }.should.raise(NameError)
+    -> { ConstantSpecs.const_defined? "Name?" }.should.raise(NameError)
   end
 
   it "raises a TypeError if conversion to a String by calling #to_str fails" do
     name = mock('123')
-    -> { ConstantSpecs.const_defined? name }.should raise_error(TypeError)
+    -> { ConstantSpecs.const_defined? name }.should.raise(TypeError)
 
     name.should_receive(:to_str).and_return(123)
-    -> { ConstantSpecs.const_defined? name }.should raise_error(TypeError)
+    -> { ConstantSpecs.const_defined? name }.should.raise(TypeError)
   end
 end

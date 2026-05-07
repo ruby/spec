@@ -136,7 +136,7 @@ describe "Ruby character strings" do
   it "raise NoMethodError when #to_s is not defined for the object" do
     obj = BasicObject.new
 
-    -> { "#{obj}" }.should raise_error(NoMethodError)
+    -> { "#{obj}" }.should.raise(NoMethodError)
   end
 
   it "uses an internal representation when #to_s doesn't return a String" do
@@ -287,7 +287,7 @@ describe "Ruby String interpolation" do
     a = "\u3042"
     b = "\xff".dup.force_encoding "binary"
 
-    -> { "#{a} #{b}" }.should raise_error(Encoding::CompatibilityError)
+    -> { "#{a} #{b}" }.should.raise(Encoding::CompatibilityError)
   end
 
   it "creates a non-frozen String" do

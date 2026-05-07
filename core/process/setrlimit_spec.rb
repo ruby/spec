@@ -16,7 +16,7 @@ describe "Process.setrlimit" do
         obj = mock("process getrlimit integer")
         obj.should_receive(:to_int).and_return(nil)
 
-        -> { Process.setrlimit(obj, @limit, @max) }.should raise_error(TypeError)
+        -> { Process.setrlimit(obj, @limit, @max) }.should.raise(TypeError)
       end
 
       it "calls #to_int to convert the soft limit to an Integer" do
@@ -27,7 +27,7 @@ describe "Process.setrlimit" do
         obj = mock("process getrlimit integer")
         obj.should_receive(:to_int).and_return(nil)
 
-        -> { Process.setrlimit(@resource, obj, @max) }.should raise_error(TypeError)
+        -> { Process.setrlimit(@resource, obj, @max) }.should.raise(TypeError)
       end
 
       it "calls #to_int to convert the hard limit to an Integer" do
@@ -38,7 +38,7 @@ describe "Process.setrlimit" do
         obj = mock("process getrlimit integer")
         obj.should_receive(:to_int).and_return(nil)
 
-        -> { Process.setrlimit(@resource, @limit, obj) }.should raise_error(TypeError)
+        -> { Process.setrlimit(@resource, @limit, obj) }.should.raise(TypeError)
       end
     end
 
@@ -118,7 +118,7 @@ describe "Process.setrlimit" do
       end
 
       it "raises ArgumentError when passed an unknown resource" do
-        -> { Process.setrlimit(:FOO, 1, 1) }.should raise_error(ArgumentError)
+        -> { Process.setrlimit(:FOO, 1, 1) }.should.raise(ArgumentError)
       end
     end
 
@@ -198,7 +198,7 @@ describe "Process.setrlimit" do
       end
 
       it "raises ArgumentError when passed an unknown resource" do
-        -> { Process.setrlimit("FOO", 1, 1) }.should raise_error(ArgumentError)
+        -> { Process.setrlimit("FOO", 1, 1) }.should.raise(ArgumentError)
       end
     end
 
@@ -231,7 +231,7 @@ describe "Process.setrlimit" do
       Process.respond_to?(:setrlimit).should == false
       -> do
         Process.setrlimit(nil, nil)
-      end.should raise_error NotImplementedError
+      end.should.raise NotImplementedError
     end
   end
 end

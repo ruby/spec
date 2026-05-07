@@ -124,8 +124,8 @@ describe "String#tr_s!" do
 
   it "raises a FrozenError if self is frozen" do
     s = "hello".freeze
-    -> { s.tr_s!("el", "ar") }.should raise_error(FrozenError)
-    -> { s.tr_s!("l", "r")   }.should raise_error(FrozenError)
-    -> { s.tr_s!("", "")     }.should raise_error(FrozenError)
+    -> { s.tr_s!("el", "ar") }.should.raise(FrozenError)
+    -> { s.tr_s!("l", "r")   }.should.raise(FrozenError)
+    -> { s.tr_s!("", "")     }.should.raise(FrozenError)
   end
 end

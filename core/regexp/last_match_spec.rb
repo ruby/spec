@@ -28,7 +28,7 @@ describe "Regexp.last_match" do
 
     it "raises an IndexError when given a missing name" do
       /(?<test>[A-Z]+.*)/ =~ "TEST123"
-      -> { Regexp.last_match(:missing) }.should raise_error(IndexError)
+      -> { Regexp.last_match(:missing) }.should.raise(IndexError)
     end
   end
 
@@ -50,7 +50,7 @@ describe "Regexp.last_match" do
     it "raises a TypeError when unable to coerce" do
       obj = Object.new
       /(?<test>[A-Z]+.*)/ =~ "TEST123"
-      -> { Regexp.last_match(obj) }.should raise_error(TypeError)
+      -> { Regexp.last_match(obj) }.should.raise(TypeError)
     end
   end
 end

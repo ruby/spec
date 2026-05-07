@@ -21,11 +21,11 @@ describe "Matrix#singular?" do
   it "raises an error for rectangular matrices" do
     -> {
       Matrix[[1], [2], [3]].singular?
-    }.should raise_error(Matrix::ErrDimensionMismatch)
+    }.should.raise(Matrix::ErrDimensionMismatch)
 
     -> {
       Matrix.empty(3,0).singular?
-    }.should raise_error(Matrix::ErrDimensionMismatch)
+    }.should.raise(Matrix::ErrDimensionMismatch)
   end
 
 end

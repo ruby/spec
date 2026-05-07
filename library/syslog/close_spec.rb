@@ -23,13 +23,13 @@ platform_is_not :windows do
       end
 
       it "raises a RuntimeError if the log's already closed" do
-        -> { Syslog.close }.should raise_error(RuntimeError)
+        -> { Syslog.close }.should.raise(RuntimeError)
       end
 
       it "it does not work inside blocks" do
         -> {
           Syslog.open { |s| s.close }
-        }.should raise_error(RuntimeError)
+        }.should.raise(RuntimeError)
         Syslog.should_not.opened?
       end
 

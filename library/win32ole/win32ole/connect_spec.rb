@@ -9,7 +9,7 @@ platform_is :windows do
     end
 
     it "raises TypeError when given invalid argument" do
-      -> { WIN32OLE.connect 1 }.should raise_error TypeError
+      -> { WIN32OLE.connect 1 }.should.raise TypeError
     end
 
   end

@@ -3,13 +3,13 @@ require_relative '../../fixtures/classes'
 
 describe :tcpsocket_new, shared: true do
   it "requires a hostname and a port as arguments" do
-    -> { TCPSocket.send(@method) }.should raise_error(ArgumentError)
+    -> { TCPSocket.send(@method) }.should.raise(ArgumentError)
   end
 
   it "refuses the connection when there is no server to connect to" do
     -> do
       TCPSocket.send(@method, SocketSpecs.hostname, SocketSpecs.reserved_unused_port)
-    end.should raise_error(SystemCallError) {|e|
+    end.should.raise(SystemCallError) {|e|
       [Errno::ECONNREFUSED, Errno::EADDRNOTAVAIL].should.include?(e.class)
     }
   end
@@ -17,7 +17,7 @@ describe :tcpsocket_new, shared: true do
   it 'raises IO::TimeoutError with :connect_timeout when no server is listening on the given address' do
     -> {
       TCPSocket.send(@method, "192.0.2.1", 80, connect_timeout: 0)
-    }.should raise_error(IO::TimeoutError)
+    }.should.raise(IO::TimeoutError)
   rescue Errno::ENETUNREACH
     # In the case all network interfaces down.
     # raise_error cannot deal with multiple expected exceptions

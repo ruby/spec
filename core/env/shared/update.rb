@@ -67,19 +67,19 @@ describe :env_update, shared: true do
   end
 
   it "raises TypeError when a name is not coercible to String" do
-    -> { ENV.send @method, Object.new => "0" }.should raise_error(TypeError, "no implicit conversion of Object into String")
+    -> { ENV.send @method, Object.new => "0" }.should.raise(TypeError, "no implicit conversion of Object into String")
   end
 
   it "raises TypeError when a value is not coercible to String" do
-    -> { ENV.send @method, "foo" => Object.new }.should raise_error(TypeError, "no implicit conversion of Object into String")
+    -> { ENV.send @method, "foo" => Object.new }.should.raise(TypeError, "no implicit conversion of Object into String")
   end
 
   it "raises Errno::EINVAL when a name contains the '=' character" do
-    -> { ENV.send(@method, "foo=" => "bar") }.should raise_error(Errno::EINVAL)
+    -> { ENV.send(@method, "foo=" => "bar") }.should.raise(Errno::EINVAL)
   end
 
   it "raises Errno::EINVAL when a name is an empty string" do
-    -> { ENV.send(@method, "" => "bar") }.should raise_error(Errno::EINVAL)
+    -> { ENV.send(@method, "" => "bar") }.should.raise(Errno::EINVAL)
   end
 
   it "updates good data preceding an error" do

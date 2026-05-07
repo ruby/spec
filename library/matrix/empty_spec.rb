@@ -17,7 +17,7 @@ describe "Matrix#empty?" do
   it "doesn't accept any parameter" do
     ->{
       Matrix[ [1, 2] ].empty?(42)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 end
 
@@ -40,23 +40,23 @@ describe "Matrix.empty" do
   it "does not accept more than two parameters" do
     ->{
       Matrix.empty(1, 2, 3)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "raises an error if both dimensions are > 0" do
     ->{
       Matrix.empty(1, 2)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "raises an error if any dimension is < 0" do
     ->{
       Matrix.empty(-2, 0)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
 
     ->{
       Matrix.empty(0, -2)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
 end

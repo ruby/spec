@@ -104,11 +104,11 @@ describe "Hash#reject!" do
   end
 
   it "raises a FrozenError if called on a frozen instance that is modified" do
-    -> { HashSpecs.empty_frozen_hash.reject! { true } }.should raise_error(FrozenError)
+    -> { HashSpecs.empty_frozen_hash.reject! { true } }.should.raise(FrozenError)
   end
 
   it "raises a FrozenError if called on a frozen instance that would not be modified" do
-    -> { HashSpecs.frozen_hash.reject! { false } }.should raise_error(FrozenError)
+    -> { HashSpecs.frozen_hash.reject! { false } }.should.raise(FrozenError)
   end
 
   it_behaves_like :hash_iteration_no_block, :reject!

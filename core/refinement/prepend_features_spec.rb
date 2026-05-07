@@ -11,7 +11,7 @@ describe "Refinement#prepend_features" do
       refine c do
         called = false
         define_method(:prepend_features){called = true}
-        proc{c.prepend(self)}.should raise_error(TypeError)
+        proc{c.prepend(self)}.should.raise(TypeError)
         called.should == false
       end
     end

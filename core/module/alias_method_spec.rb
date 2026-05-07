@@ -28,12 +28,12 @@ describe "Module#alias_method" do
 
   it "retains method visibility" do
     @class.make_alias :private_ichi, :private_one
-    -> { @object.private_one  }.should raise_error(NameError)
-    -> { @object.private_ichi }.should raise_error(NameError)
+    -> { @object.private_one  }.should.raise(NameError)
+    -> { @object.private_ichi }.should.raise(NameError)
     @class.make_alias :public_ichi, :public_one
     @object.public_ichi.should == @object.public_one
     @class.make_alias :protected_ichi, :protected_one
-    -> { @object.protected_ichi }.should raise_error(NameError)
+    -> { @object.protected_ichi }.should.raise(NameError)
   end
 
   it "handles aliasing a stub that changes visibility" do
@@ -55,7 +55,7 @@ describe "Module#alias_method" do
   end
 
   it "fails if origin method not found" do
-    -> { @class.make_alias :ni, :san }.should raise_error(NameError) { |e|
+    -> { @class.make_alias :ni, :san }.should.raise(NameError) { |e|
       # a NameError and not a NoMethodError
       e.class.should == NameError
     }
@@ -63,7 +63,7 @@ describe "Module#alias_method" do
 
   it "raises FrozenError if frozen" do
     @class.freeze
-    -> { @class.make_alias :uno, :public_one }.should raise_error(FrozenError)
+    -> { @class.make_alias :uno, :public_one }.should.raise(FrozenError)
   end
 
   it "converts the names using #to_str" do
@@ -78,13 +78,13 @@ describe "Module#alias_method" do
   end
 
   it "raises a TypeError when the given name can't be converted using to_str" do
-    -> { @class.make_alias mock('x'), :public_one }.should raise_error(TypeError)
+    -> { @class.make_alias mock('x'), :public_one }.should.raise(TypeError)
   end
 
   it "raises a NoMethodError if the given name raises a NoMethodError during type coercion using to_str" do
     obj = mock("mock-name")
     obj.should_receive(:to_str).and_raise(NoMethodError)
-    -> { @class.make_alias obj, :public_one }.should raise_error(NoMethodError)
+    -> { @class.make_alias obj, :public_one }.should.raise(NoMethodError)
   end
 
   it "is a public method" do
@@ -104,7 +104,7 @@ describe "Module#alias_method" do
 
   it "works on private module methods in a module that has been reopened" do
     ModuleSpecs::ReopeningModule.foo.should == true
-    -> { ModuleSpecs::ReopeningModule.foo2 }.should_not raise_error(NoMethodError)
+    -> { ModuleSpecs::ReopeningModule.foo2 }.should_not.raise(NoMethodError)
   end
 
   it "accesses a method defined on Object from Kernel" do

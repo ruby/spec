@@ -15,7 +15,7 @@ describe "File::Stat#initialize" do
   it "raises an exception if the file doesn't exist" do
     -> {
       File::Stat.new(tmp("i_am_a_dummy_file_that_doesnt_exist"))
-    }.should raise_error(Errno::ENOENT)
+    }.should.raise(Errno::ENOENT)
   end
 
   it "creates a File::Stat object for the given file" do

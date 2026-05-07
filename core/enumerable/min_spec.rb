@@ -38,16 +38,16 @@ describe "Enumerable#min" do
   it "raises a NoMethodError for elements without #<=>" do
     -> do
       EnumerableSpecs::EachDefiner.new(BasicObject.new, BasicObject.new).min
-    end.should raise_error(NoMethodError)
+    end.should.raise(NoMethodError)
   end
 
   it "raises an ArgumentError for incomparable elements" do
     -> do
       EnumerableSpecs::EachDefiner.new(11,"22").min
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
     -> do
       EnumerableSpecs::EachDefiner.new(11,12,22,33).min{|a, b| nil}
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 
   it "returns the minimum when using a block rule" do
@@ -110,7 +110,7 @@ describe "Enumerable#min" do
 
     context "that is negative" do
       it "raises an ArgumentError" do
-        -> { @e_ints.min(-1) }.should raise_error(ArgumentError)
+        -> { @e_ints.min(-1) }.should.raise(ArgumentError)
       end
     end
   end

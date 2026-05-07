@@ -57,10 +57,10 @@ describe "String#center with length, padding" do
   end
 
   it "raises a TypeError when length can't be converted to an integer" do
-    -> { "hello".center("x")       }.should raise_error(TypeError)
-    -> { "hello".center("x", "y")  }.should raise_error(TypeError)
-    -> { "hello".center([])        }.should raise_error(TypeError)
-    -> { "hello".center(mock('x')) }.should raise_error(TypeError)
+    -> { "hello".center("x")       }.should.raise(TypeError)
+    -> { "hello".center("x", "y")  }.should.raise(TypeError)
+    -> { "hello".center([])        }.should.raise(TypeError)
+    -> { "hello".center(mock('x')) }.should.raise(TypeError)
   end
 
   it "calls #to_str to convert padstr to a String" do
@@ -71,14 +71,14 @@ describe "String#center with length, padding" do
   end
 
   it "raises a TypeError when padstr can't be converted to a string" do
-    -> { "hello".center(20, 100)       }.should raise_error(TypeError)
-    -> { "hello".center(20, [])      }.should raise_error(TypeError)
-    -> { "hello".center(20, mock('x')) }.should raise_error(TypeError)
+    -> { "hello".center(20, 100)       }.should.raise(TypeError)
+    -> { "hello".center(20, [])      }.should.raise(TypeError)
+    -> { "hello".center(20, mock('x')) }.should.raise(TypeError)
   end
 
   it "raises an ArgumentError if padstr is empty" do
-    -> { "hello".center(10, "") }.should raise_error(ArgumentError)
-    -> { "hello".center(0, "")  }.should raise_error(ArgumentError)
+    -> { "hello".center(10, "") }.should.raise(ArgumentError)
+    -> { "hello".center(0, "")  }.should.raise(ArgumentError)
   end
 
   it "returns String instances when called on subclasses" do
@@ -111,7 +111,7 @@ describe "String#center with length, padding" do
       pat = "ア".encode Encoding::EUC_JP
       -> do
         "あれ".center 5, pat
-      end.should raise_error(Encoding::CompatibilityError)
+      end.should.raise(Encoding::CompatibilityError)
     end
   end
 end

@@ -96,11 +96,11 @@ describe :hash_select!, shared: true do
   end
 
   it "raises a FrozenError if called on an empty frozen instance" do
-    -> { HashSpecs.empty_frozen_hash.send(@method) { false } }.should raise_error(FrozenError)
+    -> { HashSpecs.empty_frozen_hash.send(@method) { false } }.should.raise(FrozenError)
   end
 
   it "raises a FrozenError if called on a frozen instance that would not be modified" do
-    -> { HashSpecs.frozen_hash.send(@method) { true } }.should raise_error(FrozenError)
+    -> { HashSpecs.frozen_hash.send(@method) { true } }.should.raise(FrozenError)
   end
 
   it_should_behave_like :hash_iteration_no_block

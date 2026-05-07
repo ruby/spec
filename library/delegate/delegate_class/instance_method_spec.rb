@@ -22,7 +22,7 @@ describe "DelegateClass.instance_method" do
   it "raises a NameError for a private instance methods of the delegated class" do
     -> {
       @klass.instance_method(:priv)
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 
   it "returns a method object for public instance methods of the DelegateClass class" do
@@ -46,7 +46,7 @@ describe "DelegateClass.instance_method" do
   it "raises a NameError for an invalid method name" do
     -> {
       @klass.instance_method(:invalid_and_silly_method_name)
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 
 end

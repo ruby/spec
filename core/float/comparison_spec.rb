@@ -62,7 +62,7 @@ describe "Float#<=>" do
     bad_coercible = klass.new
     -> {
       4.2 <=> bad_coercible
-    }.should raise_error(TypeError, "coerce must return [x, y]")
+    }.should.raise(TypeError, "coerce must return [x, y]")
   end
 
   it "returns the correct result when one side is infinite" do

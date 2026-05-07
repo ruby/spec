@@ -33,8 +33,8 @@ describe "Float#/" do
   end
 
   it "raises a TypeError when given a non-Numeric" do
-    -> { 13.0 / "10"    }.should raise_error(TypeError)
-    -> { 13.0 / :symbol }.should raise_error(TypeError)
+    -> { 13.0 / "10"    }.should.raise(TypeError)
+    -> { 13.0 / :symbol }.should.raise(TypeError)
   end
 
   it "divides correctly by Rational numbers" do

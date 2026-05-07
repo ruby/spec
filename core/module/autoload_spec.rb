@@ -144,7 +144,7 @@ describe "Module#autoload" do
     main = TOPLEVEL_BINDING.eval("self")
     main.should_receive(:require).with("module_autoload_not_exist.rb")
     # The constant won't be defined since require is mocked to do nothing
-    -> { ModuleSpecs::Autoload::ModuleAutoloadCallsRequire }.should raise_error(NameError)
+    -> { ModuleSpecs::Autoload::ModuleAutoloadCallsRequire }.should.raise(NameError)
   end
 
   it "does not load the file if the file is manually required" do
@@ -182,7 +182,7 @@ describe "Module#autoload" do
 
     -> {
       require filename
-    }.should raise_error(LoadError)
+    }.should.raise(LoadError)
 
     ModuleSpecs::Autoload.autoload?(:NotThere).should == filename
   end
@@ -457,13 +457,13 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.should.const_defined?(:Fail, false)
     ModuleSpecs::Autoload.autoload?(:Fail).should == @non_existent
 
-    -> { ModuleSpecs::Autoload::Fail }.should raise_error(LoadError)
+    -> { ModuleSpecs::Autoload::Fail }.should.raise(LoadError)
 
     ModuleSpecs::Autoload.should.const_defined?(:Fail, false)
     ModuleSpecs::Autoload.const_defined?(:Fail).should == true
     ModuleSpecs::Autoload.autoload?(:Fail).should == @non_existent
 
-    -> { ModuleSpecs::Autoload::Fail }.should raise_error(LoadError)
+    -> { ModuleSpecs::Autoload::Fail }.should.raise(LoadError)
   end
 
   it "does not remove the constant from Module#constants if load raises a RuntimeError and keeps it as an autoload" do
@@ -475,14 +475,14 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.should.const_defined?(:Raise, false)
     ModuleSpecs::Autoload.autoload?(:Raise).should == path
 
-    -> { ModuleSpecs::Autoload::Raise }.should raise_error(RuntimeError)
+    -> { ModuleSpecs::Autoload::Raise }.should.raise(RuntimeError)
     ScratchPad.recorded.should == [:raise]
 
     ModuleSpecs::Autoload.should.const_defined?(:Raise, false)
     ModuleSpecs::Autoload.const_defined?(:Raise).should == true
     ModuleSpecs::Autoload.autoload?(:Raise).should == path
 
-    -> { ModuleSpecs::Autoload::Raise }.should raise_error(RuntimeError)
+    -> { ModuleSpecs::Autoload::Raise }.should.raise(RuntimeError)
     ScratchPad.recorded.should == [:raise, :raise]
   end
 
@@ -495,12 +495,12 @@ describe "Module#autoload" do
     ModuleSpecs::Autoload.should.const_defined?(:O, false)
     ModuleSpecs::Autoload.autoload?(:O).should == path
 
-    -> { ModuleSpecs::Autoload::O }.should raise_error(NameError)
+    -> { ModuleSpecs::Autoload::O }.should.raise(NameError)
 
     ModuleSpecs::Autoload.const_defined?(:O).should == false
     ModuleSpecs::Autoload.should_not.const_defined?(:O)
     ModuleSpecs::Autoload.autoload?(:O).should == nil
-    -> { ModuleSpecs::Autoload.const_get(:O) }.should raise_error(NameError)
+    -> { ModuleSpecs::Autoload.const_get(:O) }.should.raise(NameError)
   end
 
   it "does not try to load the file again if the loaded file did not define the constant" do
@@ -508,13 +508,13 @@ describe "Module#autoload" do
     ScratchPad.record []
     ModuleSpecs::Autoload.autoload :NotDefinedByFile, path
 
-    -> { ModuleSpecs::Autoload::NotDefinedByFile }.should raise_error(NameError)
+    -> { ModuleSpecs::Autoload::NotDefinedByFile }.should.raise(NameError)
     ScratchPad.recorded.should == [:loaded]
-    -> { ModuleSpecs::Autoload::NotDefinedByFile }.should raise_error(NameError)
+    -> { ModuleSpecs::Autoload::NotDefinedByFile }.should.raise(NameError)
     ScratchPad.recorded.should == [:loaded]
 
     Thread.new {
-      -> { ModuleSpecs::Autoload::NotDefinedByFile }.should raise_error(NameError)
+      -> { ModuleSpecs::Autoload::NotDefinedByFile }.should.raise(NameError)
     }.join
     ScratchPad.recorded.should == [:loaded]
   end
@@ -574,7 +574,7 @@ describe "Module#autoload" do
 
           # The constant is really in Autoload, not Autoload::LexicalScope
           self.should_not.const_defined?(:DeclaredAndDefinedInParent)
-          -> { const_get(:DeclaredAndDefinedInParent) }.should raise_error(NameError)
+          -> { const_get(:DeclaredAndDefinedInParent) }.should.raise(NameError)
         end
         DeclaredAndDefinedInParent.should == :declared_and_defined_in_parent
       end
@@ -597,7 +597,7 @@ describe "Module#autoload" do
         # Basically, the parent autoload constant remains in a "undefined" state
         self.autoload?(:DeclaredInParentDefinedInCurrent).should == nil
         const_defined?(:DeclaredInParentDefinedInCurrent).should == false
-        -> { DeclaredInParentDefinedInCurrent }.should raise_error(NameError)
+        -> { DeclaredInParentDefinedInCurrent }.should.raise(NameError)
 
         ModuleSpecs::Autoload::LexicalScope.send(:remove_const, :DeclaredInParentDefinedInCurrent)
       end
@@ -640,11 +640,11 @@ describe "Module#autoload" do
 
         class LexicalScope
           autoload :DeclaredInCurrentDefinedInParent, fixture(__FILE__, "autoload_callback.rb")
-          -> { DeclaredInCurrentDefinedInParent }.should_not raise_error(NameError)
+          -> { DeclaredInCurrentDefinedInParent }.should_not.raise(NameError)
           # Basically, the autoload constant remains in a "undefined" state
           self.autoload?(:DeclaredInCurrentDefinedInParent).should == nil
           const_defined?(:DeclaredInCurrentDefinedInParent).should == false
-          -> { const_get(:DeclaredInCurrentDefinedInParent) }.should raise_error(NameError)
+          -> { const_get(:DeclaredInCurrentDefinedInParent) }.should.raise(NameError)
         end
 
         DeclaredInCurrentDefinedInParent.should == :declared_in_current_defined_in_parent
@@ -730,7 +730,7 @@ describe "Module#autoload" do
       ScratchPad.recorded.should == :loaded
     end
 
-    -> { ModuleSpecs::Autoload::DynClass }.should raise_error(NameError, /private constant/)
+    -> { ModuleSpecs::Autoload::DynClass }.should.raise(NameError, /private constant/)
   end
 
   # [ruby-core:19127] [ruby-core:29941]
@@ -791,19 +791,19 @@ describe "Module#autoload" do
   end
 
   it "raises an ArgumentError when an empty filename is given" do
-    -> { ModuleSpecs.autoload :A, "" }.should raise_error(ArgumentError)
+    -> { ModuleSpecs.autoload :A, "" }.should.raise(ArgumentError)
   end
 
   it "raises a NameError when the constant name starts with a lower case letter" do
-    -> { ModuleSpecs.autoload "a", @non_existent }.should raise_error(NameError)
+    -> { ModuleSpecs.autoload "a", @non_existent }.should.raise(NameError)
   end
 
   it "raises a NameError when the constant name starts with a number" do
-    -> { ModuleSpecs.autoload "1two", @non_existent }.should raise_error(NameError)
+    -> { ModuleSpecs.autoload "1two", @non_existent }.should.raise(NameError)
   end
 
   it "raises a NameError when the constant name has a space in it" do
-    -> { ModuleSpecs.autoload "a name", @non_existent }.should raise_error(NameError)
+    -> { ModuleSpecs.autoload "a name", @non_existent }.should.raise(NameError)
   end
 
   it "shares the autoload request across dup'ed copies of modules" do
@@ -820,7 +820,7 @@ describe "Module#autoload" do
     mod2.autoload?(:T).should == filename
 
     mod1::T.should == :autoload_t
-    -> { mod2::T }.should raise_error(NameError)
+    -> { mod2::T }.should.raise(NameError)
   end
 
   it "raises a TypeError if opening a class with a different superclass than the class defined in the autoload file" do
@@ -831,26 +831,26 @@ describe "Module#autoload" do
     -> do
       class ModuleSpecs::Autoload::Z < ModuleSpecs::Autoload::ZZ
       end
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "raises a TypeError if not passed a String or object responding to #to_path for the filename" do
     name = mock("autoload_name.rb")
 
-    -> { ModuleSpecs::Autoload.autoload :Str, name }.should raise_error(TypeError)
+    -> { ModuleSpecs::Autoload.autoload :Str, name }.should.raise(TypeError)
   end
 
   it "calls #to_path on non-String filename arguments" do
     name = mock("autoload_name.rb")
     name.should_receive(:to_path).and_return("autoload_name.rb")
 
-    -> { ModuleSpecs::Autoload.autoload :Str, name }.should_not raise_error
+    -> { ModuleSpecs::Autoload.autoload :Str, name }.should_not.raise
   end
 
   describe "on a frozen module" do
     it "raises a FrozenError before setting the name" do
       frozen_module = Module.new.freeze
-      -> { frozen_module.autoload :Foo, @non_existent }.should raise_error(FrozenError)
+      -> { frozen_module.autoload :Foo, @non_existent }.should.raise(FrozenError)
       frozen_module.should_not.const_defined?(:Foo)
     end
   end

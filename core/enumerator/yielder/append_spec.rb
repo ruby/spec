@@ -29,7 +29,7 @@ describe "Enumerator::Yielder#<<" do
 
       -> {
         y.<<(1, 2)
-      }.should raise_error(ArgumentError, /wrong number of arguments/)
+      }.should.raise(ArgumentError, /wrong number of arguments/)
     end
   end
 end

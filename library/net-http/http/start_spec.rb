@@ -81,7 +81,7 @@ describe "Net::HTTP#start" do
   describe "when self has already been started" do
     it "raises an IOError" do
       @http.start
-      -> { @http.start }.should raise_error(IOError)
+      -> { @http.start }.should.raise(IOError)
     end
   end
 

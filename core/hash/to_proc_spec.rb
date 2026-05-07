@@ -30,11 +30,11 @@ describe "Hash#to_proc" do
     it "raises ArgumentError if not passed exactly one argument" do
       -> {
         @proc.call
-      }.should raise_error(ArgumentError)
+      }.should.raise(ArgumentError)
 
       -> {
         @proc.call 1, 2
-      }.should raise_error(ArgumentError)
+      }.should.raise(ArgumentError)
     end
 
     context "with a stored key" do
@@ -85,7 +85,7 @@ describe "Hash#to_proc" do
     end
 
     it "raises an ArgumentError when calling #call on the Proc with no arguments" do
-      -> { @hash.to_proc.call }.should raise_error(ArgumentError)
+      -> { @hash.to_proc.call }.should.raise(ArgumentError)
     end
   end
 end

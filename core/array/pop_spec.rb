@@ -31,11 +31,11 @@ describe "Array#pop" do
   end
 
   it "raises a FrozenError on a frozen array" do
-    -> { ArraySpecs.frozen_array.pop }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.pop }.should.raise(FrozenError)
   end
 
   it "raises a FrozenError on an empty frozen array" do
-    -> { ArraySpecs.empty_frozen_array.pop }.should raise_error(FrozenError)
+    -> { ArraySpecs.empty_frozen_array.pop }.should.raise(FrozenError)
   end
 
   describe "passed a number n as an argument" do
@@ -89,7 +89,7 @@ describe "Array#pop" do
     end
 
     it "raises an ArgumentError if n is negative" do
-      ->{ [1, 2, 3].pop(-1) }.should raise_error(ArgumentError)
+      ->{ [1, 2, 3].pop(-1) }.should.raise(ArgumentError)
     end
 
     it "tries to convert n to an Integer using #to_int" do
@@ -104,12 +104,12 @@ describe "Array#pop" do
     end
 
     it "raises a TypeError when the passed n cannot be coerced to Integer" do
-      ->{ [1, 2].pop("cat") }.should raise_error(TypeError)
-      ->{ [1, 2].pop(nil) }.should raise_error(TypeError)
+      ->{ [1, 2].pop("cat") }.should.raise(TypeError)
+      ->{ [1, 2].pop(nil) }.should.raise(TypeError)
     end
 
     it "raises an ArgumentError if more arguments are passed" do
-      ->{ [1, 2].pop(1, 2) }.should raise_error(ArgumentError)
+      ->{ [1, 2].pop(1, 2) }.should.raise(ArgumentError)
     end
 
     it "does not return subclass instances with Array subclass" do
@@ -117,8 +117,8 @@ describe "Array#pop" do
     end
 
     it "raises a FrozenError on a frozen array" do
-      -> { ArraySpecs.frozen_array.pop(2) }.should raise_error(FrozenError)
-      -> { ArraySpecs.frozen_array.pop(0) }.should raise_error(FrozenError)
+      -> { ArraySpecs.frozen_array.pop(2) }.should.raise(FrozenError)
+      -> { ArraySpecs.frozen_array.pop(0) }.should.raise(FrozenError)
     end
   end
 end

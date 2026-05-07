@@ -8,6 +8,6 @@ describe "Complex#negative?" do
 
     -> {
       c.negative?
-    }.should raise_error(NoMethodError)
+    }.should.raise(NoMethodError)
   end
 end

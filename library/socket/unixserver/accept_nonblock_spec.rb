@@ -45,7 +45,7 @@ describe 'UNIXServer#accept_nonblock' do
 
   describe 'without a client' do
     it 'raises IO::WaitReadable' do
-      -> { @server.accept_nonblock }.should raise_error(IO::WaitReadable)
+      -> { @server.accept_nonblock }.should.raise(IO::WaitReadable)
     end
   end
 

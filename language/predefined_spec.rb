@@ -89,8 +89,8 @@ describe "Predefined global $~" do
     $~ = /foo/.match("foo")
     $~.should.instance_of?(MatchData)
 
-    -> { $~ = Object.new }.should raise_error(TypeError, 'wrong argument type Object (expected MatchData)')
-    -> { $~ = 1 }.should raise_error(TypeError, 'wrong argument type Integer (expected MatchData)')
+    -> { $~ = Object.new }.should.raise(TypeError, 'wrong argument type Object (expected MatchData)')
+    -> { $~ = 1 }.should.raise(TypeError, 'wrong argument type Integer (expected MatchData)')
   end
 
   it "changes the value of derived capture globals when assigned" do
@@ -141,14 +141,14 @@ describe "Predefined global $&" do
   it "is read-only" do
     -> {
       eval %q{$& = ""}
-    }.should raise_error(SyntaxError, /Can't set variable \$&/)
+    }.should.raise(SyntaxError, /Can't set variable \$&/)
   end
 
   it "is read-only when aliased" do
     alias $predefined_spec_ampersand $&
     -> {
       $predefined_spec_ampersand = ""
-    }.should raise_error(NameError, '$predefined_spec_ampersand is a read-only variable')
+    }.should.raise(NameError, '$predefined_spec_ampersand is a read-only variable')
   end
 end
 
@@ -172,14 +172,14 @@ describe "Predefined global $`" do
   it "is read-only" do
     -> {
       eval %q{$` = ""}
-    }.should raise_error(SyntaxError, /Can't set variable \$`/)
+    }.should.raise(SyntaxError, /Can't set variable \$`/)
   end
 
   it "is read-only when aliased" do
     alias $predefined_spec_backquote $`
     -> {
       $predefined_spec_backquote = ""
-    }.should raise_error(NameError, '$predefined_spec_backquote is a read-only variable')
+    }.should.raise(NameError, '$predefined_spec_backquote is a read-only variable')
   end
 end
 
@@ -203,14 +203,14 @@ describe "Predefined global $'" do
   it "is read-only" do
     -> {
       eval %q{$' = ""}
-    }.should raise_error(SyntaxError, /Can't set variable \$'/)
+    }.should.raise(SyntaxError, /Can't set variable \$'/)
   end
 
   it "is read-only when aliased" do
     alias $predefined_spec_single_quote $'
     -> {
       $predefined_spec_single_quote = ""
-    }.should raise_error(NameError, '$predefined_spec_single_quote is a read-only variable')
+    }.should.raise(NameError, '$predefined_spec_single_quote is a read-only variable')
   end
 end
 
@@ -234,14 +234,14 @@ describe "Predefined global $+" do
   it "is read-only" do
     -> {
       eval %q{$+ = ""}
-    }.should raise_error(SyntaxError, /Can't set variable \$\+/)
+    }.should.raise(SyntaxError, /Can't set variable \$\+/)
   end
 
   it "is read-only when aliased" do
     alias $predefined_spec_plus $+
     -> {
       $predefined_spec_plus = ""
-    }.should raise_error(NameError, '$predefined_spec_plus is a read-only variable')
+    }.should.raise(NameError, '$predefined_spec_plus is a read-only variable')
   end
 end
 
@@ -282,12 +282,12 @@ describe "Predefined global $stdout" do
   end
 
   it "raises TypeError error if assigned to nil" do
-    -> { $stdout = nil }.should raise_error(TypeError, '$stdout must have write method, NilClass given')
+    -> { $stdout = nil }.should.raise(TypeError, '$stdout must have write method, NilClass given')
   end
 
   it "raises TypeError error if assigned to object that doesn't respond to #write" do
     obj = mock('object')
-    -> { $stdout = obj }.should raise_error(TypeError)
+    -> { $stdout = obj }.should.raise(TypeError)
 
     obj.stub!(:write)
     $stdout = obj
@@ -309,7 +309,7 @@ describe "Predefined global $!" do
   it "is read-only" do
     -> {
       $! = []
-    }.should raise_error(NameError, '$! is a read-only variable')
+    }.should.raise(NameError, '$! is a read-only variable')
   end
 
   # See http://jira.codehaus.org/browse/JRUBY-5550
@@ -636,7 +636,7 @@ describe "Predefined global $@" do
   it "cannot be assigned when there is no a rescued exception" do
     -> {
       $@ = []
-    }.should raise_error(ArgumentError, '$! not set')
+    }.should.raise(ArgumentError, '$! not set')
   end
 end
 
@@ -739,15 +739,15 @@ describe "Predefined global $/" do
     obj = mock("$/ value")
     obj.should_not_receive(:to_str)
 
-    -> { $/ = obj }.should raise_error(TypeError, 'value of $/ must be String')
+    -> { $/ = obj }.should.raise(TypeError, 'value of $/ must be String')
   end
 
   it "raises a TypeError if assigned an Integer" do
-    -> { $/ = 1 }.should raise_error(TypeError, 'value of $/ must be String')
+    -> { $/ = 1 }.should.raise(TypeError, 'value of $/ must be String')
   end
 
   it "raises a TypeError if assigned a boolean" do
-    -> { $/ = true }.should raise_error(TypeError, 'value of $/ must be String')
+    -> { $/ = true }.should.raise(TypeError, 'value of $/ must be String')
   end
 
   it "warns if assigned non-nil" do
@@ -820,15 +820,15 @@ describe "Predefined global $-0" do
     obj = mock("$-0 value")
     obj.should_not_receive(:to_str)
 
-    -> { $-0 = obj }.should raise_error(TypeError, 'value of $-0 must be String')
+    -> { $-0 = obj }.should.raise(TypeError, 'value of $-0 must be String')
   end
 
   it "raises a TypeError if assigned an Integer" do
-    -> { $-0 = 1 }.should raise_error(TypeError, 'value of $-0 must be String')
+    -> { $-0 = 1 }.should.raise(TypeError, 'value of $-0 must be String')
   end
 
   it "raises a TypeError if assigned a boolean" do
-    -> { $-0 = true }.should raise_error(TypeError, 'value of $-0 must be String')
+    -> { $-0 = true }.should.raise(TypeError, 'value of $-0 must be String')
   end
 
   it "warns if assigned non-nil" do
@@ -866,12 +866,12 @@ describe "Predefined global $\\" do
     obj = mock("$\\ value")
     obj.should_not_receive(:to_str)
 
-    -> { $\ = obj }.should raise_error(TypeError, 'value of $\ must be String')
+    -> { $\ = obj }.should.raise(TypeError, 'value of $\ must be String')
   end
 
   it "raises a TypeError if assigned not String" do
-    -> { $\ = 1 }.should raise_error(TypeError, 'value of $\ must be String')
-    -> { $\ = true }.should raise_error(TypeError, 'value of $\ must be String')
+    -> { $\ = 1 }.should.raise(TypeError, 'value of $\ must be String')
+    -> { $\ = true }.should.raise(TypeError, 'value of $\ must be String')
   end
 
   it "warns if assigned non-nil" do
@@ -889,7 +889,7 @@ describe "Predefined global $," do
   end
 
   it "raises TypeError if assigned a non-String" do
-    -> { $, = Object.new }.should raise_error(TypeError, 'value of $, must be String')
+    -> { $, = Object.new }.should.raise(TypeError, 'value of $, must be String')
   end
 
   it "warns if assigned non-nil" do
@@ -920,7 +920,7 @@ describe "Predefined global $." do
     obj = mock("bad-value")
     obj.should_receive(:to_int).and_return('abc')
 
-    -> { $. = obj }.should raise_error(TypeError)
+    -> { $. = obj }.should.raise(TypeError)
   end
 end
 
@@ -1074,15 +1074,15 @@ describe "Execution variable $:" do
   it "is read-only" do
     -> {
       $: = []
-    }.should raise_error(NameError, '$: is a read-only variable')
+    }.should.raise(NameError, '$: is a read-only variable')
 
     -> {
       $LOAD_PATH = []
-    }.should raise_error(NameError, '$LOAD_PATH is a read-only variable')
+    }.should.raise(NameError, '$LOAD_PATH is a read-only variable')
 
     -> {
       $-I = []
-    }.should raise_error(NameError, '$-I is a read-only variable')
+    }.should.raise(NameError, '$-I is a read-only variable')
   end
 
   it "default $LOAD_PATH entries until sitelibdir included have @gem_prelude_index set" do
@@ -1110,11 +1110,11 @@ describe "Global variable $\"" do
   it "is read-only" do
     -> {
       $" = []
-    }.should raise_error(NameError, '$" is a read-only variable')
+    }.should.raise(NameError, '$" is a read-only variable')
 
     -> {
       $LOADED_FEATURES = []
-    }.should raise_error(NameError, '$LOADED_FEATURES is a read-only variable')
+    }.should.raise(NameError, '$LOADED_FEATURES is a read-only variable')
   end
 end
 
@@ -1122,7 +1122,7 @@ describe "Global variable $<" do
   it "is read-only" do
     -> {
       $< = nil
-    }.should raise_error(NameError, '$< is a read-only variable')
+    }.should.raise(NameError, '$< is a read-only variable')
   end
 end
 
@@ -1130,7 +1130,7 @@ describe "Global variable $FILENAME" do
   it "is read-only" do
     -> {
       $FILENAME = "-"
-    }.should raise_error(NameError, '$FILENAME is a read-only variable')
+    }.should.raise(NameError, '$FILENAME is a read-only variable')
   end
 end
 
@@ -1138,7 +1138,7 @@ describe "Global variable $?" do
   it "is read-only" do
     -> {
       $? = nil
-    }.should raise_error(NameError, '$? is a read-only variable')
+    }.should.raise(NameError, '$? is a read-only variable')
   end
 
   it "is thread-local" do
@@ -1149,19 +1149,19 @@ end
 
 describe "Global variable $-a" do
   it "is read-only" do
-    -> { $-a = true }.should raise_error(NameError, '$-a is a read-only variable')
+    -> { $-a = true }.should.raise(NameError, '$-a is a read-only variable')
   end
 end
 
 describe "Global variable $-l" do
   it "is read-only" do
-    -> { $-l = true }.should raise_error(NameError, '$-l is a read-only variable')
+    -> { $-l = true }.should.raise(NameError, '$-l is a read-only variable')
   end
 end
 
 describe "Global variable $-p" do
   it "is read-only" do
-    -> { $-p = true }.should raise_error(NameError, '$-p is a read-only variable')
+    -> { $-p = true }.should.raise(NameError, '$-p is a read-only variable')
   end
 end
 
@@ -1272,7 +1272,7 @@ describe "Global variable $0" do
   end
 
   it "raises a TypeError when not given an object that can be coerced to a String" do
-    -> { $0 = nil }.should raise_error(TypeError)
+    -> { $0 = nil }.should.raise(TypeError)
   end
 end
 
@@ -1312,7 +1312,7 @@ describe "The predefined standard object nil" do
   end
 
   it "raises a SyntaxError if assigned to" do
-    -> { eval("nil = true") }.should raise_error(SyntaxError, /Can't assign to nil/)
+    -> { eval("nil = true") }.should.raise(SyntaxError, /Can't assign to nil/)
   end
 end
 
@@ -1322,7 +1322,7 @@ describe "The predefined standard object true" do
   end
 
   it "raises a SyntaxError if assigned to" do
-    -> { eval("true = false") }.should raise_error(SyntaxError, /Can't assign to true/)
+    -> { eval("true = false") }.should.raise(SyntaxError, /Can't assign to true/)
   end
 end
 
@@ -1332,13 +1332,13 @@ describe "The predefined standard object false" do
   end
 
   it "raises a SyntaxError if assigned to" do
-    -> { eval("false = nil") }.should raise_error(SyntaxError, /Can't assign to false/)
+    -> { eval("false = nil") }.should.raise(SyntaxError, /Can't assign to false/)
   end
 end
 
 describe "The self pseudo-variable" do
   it "raises a SyntaxError if assigned to" do
-    -> { eval("self = 1") }.should raise_error(SyntaxError, /Can't change the value of self/)
+    -> { eval("self = 1") }.should.raise(SyntaxError, /Can't change the value of self/)
   end
 end
 

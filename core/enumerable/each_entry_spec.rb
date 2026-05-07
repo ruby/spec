@@ -27,8 +27,8 @@ describe "Enumerable#each_entry" do
   end
 
   it "raises an ArgumentError when extra arguments" do
-    -> { @enum.each_entry("one").to_a   }.should raise_error(ArgumentError)
-    -> { @enum.each_entry("one"){}.to_a }.should raise_error(ArgumentError)
+    -> { @enum.each_entry("one").to_a   }.should.raise(ArgumentError)
+    -> { @enum.each_entry("one"){}.to_a }.should.raise(ArgumentError)
   end
 
   it "passes extra arguments to #each" do

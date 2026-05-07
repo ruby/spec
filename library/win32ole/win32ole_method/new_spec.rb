@@ -8,12 +8,12 @@ platform_is :windows do
     end
 
     it "raises TypeError when given non-strings" do
-      -> { WIN32OLE::Method.new(1, 2) }.should raise_error TypeError
+      -> { WIN32OLE::Method.new(1, 2) }.should.raise TypeError
     end
 
     it "raises ArgumentError if only 1 argument is given" do
-      -> { WIN32OLE::Method.new("hello") }.should raise_error ArgumentError
-      -> { WIN32OLE::Method.new(@ole_type) }.should raise_error ArgumentError
+      -> { WIN32OLE::Method.new("hello") }.should.raise ArgumentError
+      -> { WIN32OLE::Method.new(@ole_type) }.should.raise ArgumentError
     end
 
     it "returns a valid WIN32OLE::Method object" do
@@ -22,11 +22,11 @@ platform_is :windows do
     end
 
     it "raises WIN32OLE::RuntimeError if the method does not exist" do
-      -> { WIN32OLE::Method.new(@ole_type, "NonexistentMethod") }.should raise_error WIN32OLE::RuntimeError
+      -> { WIN32OLE::Method.new(@ole_type, "NonexistentMethod") }.should.raise WIN32OLE::RuntimeError
     end
 
     it "raises TypeError if second argument is not a String" do
-      -> { WIN32OLE::Method.new(@ole_type, 5) }.should raise_error TypeError
+      -> { WIN32OLE::Method.new(@ole_type, 5) }.should.raise TypeError
     end
 
   end

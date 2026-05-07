@@ -100,7 +100,7 @@ describe "CApiGCSpecs" do
       -> {
         @f.rb_gc_adjust_memory_usage(8)
         @f.rb_gc_adjust_memory_usage(-8)
-      }.should_not raise_error
+      }.should_not.raise
     end
   end
 
@@ -116,11 +116,11 @@ describe "CApiGCSpecs" do
 
   describe "rb_gc_latest_gc_info" do
     it "raises a TypeError when hash or symbol not given" do
-      -> { @f.rb_gc_latest_gc_info("foo") }.should raise_error(TypeError)
+      -> { @f.rb_gc_latest_gc_info("foo") }.should.raise(TypeError)
     end
 
     it "raises an ArgumentError when unknown symbol given" do
-      -> { @f.rb_gc_latest_gc_info(:unknown) }.should raise_error(ArgumentError)
+      -> { @f.rb_gc_latest_gc_info(:unknown) }.should.raise(ArgumentError)
     end
 
     it "returns the populated hash when a hash is given" do

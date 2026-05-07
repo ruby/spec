@@ -65,6 +65,6 @@ describe "ObjectSpace.dump" do
   end
 
   it "raises ArgumentError when passed not supported :output value" do
-    -> { ObjectSpace.dump("abc", output: Object.new) }.should raise_error(ArgumentError, /wrong output option/)
+    -> { ObjectSpace.dump("abc", output: Object.new) }.should.raise(ArgumentError, /wrong output option/)
   end
 end

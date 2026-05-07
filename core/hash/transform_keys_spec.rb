@@ -129,16 +129,16 @@ describe "Hash#transform_keys!" do
     end
 
     it "raises a FrozenError on an empty hash" do
-      ->{ {}.freeze.transform_keys!(&:upcase) }.should raise_error(FrozenError)
+      ->{ {}.freeze.transform_keys!(&:upcase) }.should.raise(FrozenError)
     end
 
     it "keeps pairs and raises a FrozenError" do
-      ->{ @hash.transform_keys!(&:upcase) }.should raise_error(FrozenError)
+      ->{ @hash.transform_keys!(&:upcase) }.should.raise(FrozenError)
       @hash.should == @initial_pairs
     end
 
     it "raises a FrozenError on hash argument" do
-      ->{ @hash.transform_keys!({ a: :A, b: :B, c: :C }) }.should raise_error(FrozenError)
+      ->{ @hash.transform_keys!({ a: :A, b: :B, c: :C }) }.should.raise(FrozenError)
     end
 
     context "when no block is given" do

@@ -30,7 +30,7 @@ describe "Hash#merge" do
 
     -> {
       h1.merge(h2) { |k, x, y| raise(IndexError) }
-    }.should raise_error(IndexError)
+    }.should.raise(IndexError)
 
     r = h1.merge(h1) { |k,x,y| :x }
     r.should == { a: :x, b: :x, d: :x }

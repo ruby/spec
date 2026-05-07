@@ -29,10 +29,10 @@ describe "OpenSSL.secure_compare" do
   it "does not accept arguments that are not string and cannot be coerced into strings" do
     -> {
       OpenSSL.secure_compare("input1", :input2)
-    }.should raise_error(TypeError, 'no implicit conversion of Symbol into String')
+    }.should.raise(TypeError, 'no implicit conversion of Symbol into String')
 
     -> {
       OpenSSL.secure_compare(Object.new, "input2")
-    }.should raise_error(TypeError, 'no implicit conversion of Object into String')
+    }.should.raise(TypeError, 'no implicit conversion of Object into String')
   end
 end

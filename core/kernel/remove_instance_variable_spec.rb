@@ -25,33 +25,33 @@ describe "Kernel#remove_instance_variable" do
   it "raises a NameError if the instance variable is not defined" do
     -> do
       @instance.send :remove_instance_variable, :@unknown
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "raises a NameError if the argument is not a valid instance variable name" do
     -> do
       @instance.send :remove_instance_variable, :"@0"
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "raises a TypeError if passed an Object not defining #to_str" do
     -> do
       obj = mock("kernel remove_instance_variable")
       @instance.send :remove_instance_variable, obj
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "raises a FrozenError if self is frozen" do
     o = Object.new
     o.freeze
-    -> { o.remove_instance_variable(:@foo) }.should raise_error(FrozenError)
-    -> { o.remove_instance_variable(:foo) }.should raise_error(NameError)
+    -> { o.remove_instance_variable(:@foo) }.should.raise(FrozenError)
+    -> { o.remove_instance_variable(:foo) }.should.raise(NameError)
   end
 
   it "raises for frozen objects" do
-    -> { nil.remove_instance_variable(:@foo) }.should raise_error(FrozenError)
-    -> { nil.remove_instance_variable(:foo) }.should raise_error(NameError)
-    -> { :foo.remove_instance_variable(:@foo) }.should raise_error(FrozenError)
+    -> { nil.remove_instance_variable(:@foo) }.should.raise(FrozenError)
+    -> { nil.remove_instance_variable(:foo) }.should.raise(NameError)
+    -> { :foo.remove_instance_variable(:@foo) }.should.raise(FrozenError)
   end
 
   describe "when passed a String" do

@@ -15,7 +15,7 @@ describe "String#crypt" do
     end
 
     it "raises Errno::EINVAL when the salt is shorter than 29 characters" do
-      -> { "mypassword".crypt("$2a$04$0WVaz0pV3jzfZ5G5tpmHW") }.should raise_error(Errno::EINVAL)
+      -> { "mypassword".crypt("$2a$04$0WVaz0pV3jzfZ5G5tpmHW") }.should.raise(Errno::EINVAL)
     end
 
     it "calls #to_str to converts the salt arg to a String" do
@@ -60,7 +60,7 @@ describe "String#crypt" do
     end
 
     it "raises an ArgumentError when the string contains NUL character" do
-      -> { "poison\0null".crypt("aa") }.should raise_error(ArgumentError)
+      -> { "poison\0null".crypt("aa") }.should.raise(ArgumentError)
     end
 
     it "calls #to_str to converts the salt arg to a String" do
@@ -77,16 +77,16 @@ describe "String#crypt" do
     end
 
     it "raises an ArgumentError when the salt is shorter than two characters" do
-      -> { "hello".crypt("")  }.should raise_error(ArgumentError)
-      -> { "hello".crypt("f") }.should raise_error(ArgumentError)
-      -> { "hello".crypt("\x00\x00") }.should raise_error(ArgumentError)
-      -> { "hello".crypt("\x00a") }.should raise_error(ArgumentError)
-      -> { "hello".crypt("a\x00") }.should raise_error(ArgumentError)
+      -> { "hello".crypt("")  }.should.raise(ArgumentError)
+      -> { "hello".crypt("f") }.should.raise(ArgumentError)
+      -> { "hello".crypt("\x00\x00") }.should.raise(ArgumentError)
+      -> { "hello".crypt("\x00a") }.should.raise(ArgumentError)
+      -> { "hello".crypt("a\x00") }.should.raise(ArgumentError)
     end
   end
 
   it "raises a type error when the salt arg can't be converted to a string" do
-    -> { "".crypt(5)         }.should raise_error(TypeError)
-    -> { "".crypt(mock('x')) }.should raise_error(TypeError)
+    -> { "".crypt(5)         }.should.raise(TypeError)
+    -> { "".crypt(mock('x')) }.should.raise(TypeError)
   end
 end

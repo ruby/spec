@@ -16,6 +16,6 @@ describe "Prime.instance" do
   end
 
   it "raises a ArgumentError when is called with some arguments" do
-    -> { Prime.instance(1) }.should raise_error(ArgumentError)
+    -> { Prime.instance(1) }.should.raise(ArgumentError)
   end
 end

@@ -46,14 +46,14 @@ describe "A class definition" do
     -> {
       class ClassSpecsNumber
       end
-    }.should raise_error(TypeError, /\AClassSpecsNumber is not a class/)
+    }.should.raise(TypeError, /\AClassSpecsNumber is not a class/)
   end
 
   it "raises TypeError if constant given as class name exists and is a Module but not a Class" do
     -> {
       class ClassSpecs
       end
-    }.should raise_error(TypeError, /\AClassSpecs is not a class/)
+    }.should.raise(TypeError, /\AClassSpecs is not a class/)
   end
 
   # test case known to be detecting bugs (JRuby, MRI)
@@ -61,19 +61,19 @@ describe "A class definition" do
     -> {
       class nil::Foo
       end
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises TypeError if any constant qualifying the class is not a Module" do
     -> {
       class ClassSpecs::Number::MyClass
       end
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
 
     -> {
       class ClassSpecsNumber::MyClass
       end
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "inherits from Object by default" do
@@ -87,7 +87,7 @@ describe "A class definition" do
       -> {
         class SuperclassResetToSubclass < M
         end
-      }.should raise_error(TypeError, /superclass mismatch/)
+      }.should.raise(TypeError, /superclass mismatch/)
     end
   end
 
@@ -100,7 +100,7 @@ describe "A class definition" do
       -> {
         class SuperclassReopenedBasicObject < BasicObject
         end
-      }.should raise_error(TypeError, /superclass mismatch/)
+      }.should.raise(TypeError, /superclass mismatch/)
       SuperclassReopenedBasicObject.superclass.should == A
     end
   end
@@ -115,7 +115,7 @@ describe "A class definition" do
       -> {
         class SuperclassReopenedObject < Object
         end
-      }.should raise_error(TypeError, /superclass mismatch/)
+      }.should.raise(TypeError, /superclass mismatch/)
       SuperclassReopenedObject.superclass.should == A
     end
   end
@@ -140,7 +140,7 @@ describe "A class definition" do
       -> {
         class NoSuperclassSet < String
         end
-      }.should raise_error(TypeError, /superclass mismatch/)
+      }.should.raise(TypeError, /superclass mismatch/)
     end
   end
 
@@ -149,7 +149,7 @@ describe "A class definition" do
 
     -> {
       class ShouldNotWork < self; end
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "first evaluates the superclass before checking if the class already exists" do
@@ -168,7 +168,7 @@ describe "A class definition" do
   it "raises a TypeError if inheriting from a metaclass" do
     obj = mock("metaclass super")
     meta = obj.singleton_class
-    -> { class ClassSpecs::MetaclassSuper < meta; end }.should raise_error(TypeError)
+    -> { class ClassSpecs::MetaclassSuper < meta; end }.should.raise(TypeError)
   end
 
   it "allows the declaration of class variables in the body" do
@@ -305,23 +305,23 @@ describe "A class definition extending an object (sclass)" do
           end
         end
       CODE
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises a TypeError when trying to extend non-Class" do
     error_msg = /superclass must be a.* Class/
-    -> { class TestClass < "";              end }.should raise_error(TypeError, error_msg)
-    -> { class TestClass < 1;               end }.should raise_error(TypeError, error_msg)
-    -> { class TestClass < :symbol;         end }.should raise_error(TypeError, error_msg)
-    -> { class TestClass < mock('o');       end }.should raise_error(TypeError, error_msg)
-    -> { class TestClass < Module.new;      end }.should raise_error(TypeError, error_msg)
-    -> { class TestClass < BasicObject.new; end }.should raise_error(TypeError, error_msg)
+    -> { class TestClass < "";              end }.should.raise(TypeError, error_msg)
+    -> { class TestClass < 1;               end }.should.raise(TypeError, error_msg)
+    -> { class TestClass < :symbol;         end }.should.raise(TypeError, error_msg)
+    -> { class TestClass < mock('o');       end }.should.raise(TypeError, error_msg)
+    -> { class TestClass < Module.new;      end }.should.raise(TypeError, error_msg)
+    -> { class TestClass < BasicObject.new; end }.should.raise(TypeError, error_msg)
   end
 
   it "does not allow accessing the block of the original scope" do
     -> {
       ClassSpecs.sclass_with_block { 123 }
-    }.should raise_error(SyntaxError)
+    }.should.raise(SyntaxError)
   end
 
   it "can use return to cause the enclosing method to return" do
@@ -341,11 +341,11 @@ describe "Reopening a class" do
   end
 
   it "raises a TypeError when superclasses mismatch" do
-    -> { class ClassSpecs::A < Array; end }.should raise_error(TypeError)
+    -> { class ClassSpecs::A < Array; end }.should.raise(TypeError)
   end
 
   it "adds new methods to subclasses" do
-    -> { ClassSpecs::M.m }.should raise_error(NoMethodError)
+    -> { ClassSpecs::M.m }.should.raise(NoMethodError)
     class ClassSpecs::L
       def self.m
         1

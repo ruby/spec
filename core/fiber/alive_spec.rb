@@ -28,16 +28,16 @@ describe "Fiber#alive?" do
   it "returns false for a Fiber that's dead" do
     fiber = Fiber.new { true }
     fiber.resume
-    -> { fiber.resume }.should raise_error(FiberError)
+    -> { fiber.resume }.should.raise(FiberError)
     fiber.alive?.should == false
   end
 
   it "always returns false for a dead Fiber" do
     fiber = Fiber.new { true }
     fiber.resume
-    -> { fiber.resume }.should raise_error(FiberError)
+    -> { fiber.resume }.should.raise(FiberError)
     fiber.alive?.should == false
-    -> { fiber.resume }.should raise_error(FiberError)
+    -> { fiber.resume }.should.raise(FiberError)
     fiber.alive?.should == false
     fiber.alive?.should == false
   end

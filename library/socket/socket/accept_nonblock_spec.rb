@@ -17,7 +17,7 @@ describe "Socket#accept_nonblock" do
   it "raises IO::WaitReadable if the connection is not accepted yet" do
     -> {
       @socket.accept_nonblock
-    }.should raise_error(IO::WaitReadable) { |e|
+    }.should.raise(IO::WaitReadable) { |e|
       platform_is_not :windows do
         e.should.is_a?(Errno::EAGAIN)
       end
@@ -45,8 +45,8 @@ describe 'Socket#accept_nonblock' do
 
     describe 'using an unbound socket' do
       it 'raises Errno::EINVAL' do
-        -> { @server.accept_nonblock }.should raise_error(Errno::EINVAL)
-        -> { @server.accept_nonblock(exception: false) }.should raise_error(Errno::EINVAL)
+        -> { @server.accept_nonblock }.should.raise(Errno::EINVAL)
+        -> { @server.accept_nonblock(exception: false) }.should.raise(Errno::EINVAL)
       end
     end
 
@@ -56,8 +56,8 @@ describe 'Socket#accept_nonblock' do
       end
 
       it 'raises Errno::EINVAL' do
-        -> { @server.accept_nonblock }.should raise_error(Errno::EINVAL)
-        -> { @server.accept_nonblock(exception: false) }.should raise_error(Errno::EINVAL)
+        -> { @server.accept_nonblock }.should.raise(Errno::EINVAL)
+        -> { @server.accept_nonblock(exception: false) }.should.raise(Errno::EINVAL)
       end
     end
 
@@ -65,8 +65,8 @@ describe 'Socket#accept_nonblock' do
       it 'raises IOError' do
         @server.close
 
-        -> { @server.accept_nonblock }.should raise_error(IOError)
-        -> { @server.accept_nonblock(exception: false) }.should raise_error(IOError)
+        -> { @server.accept_nonblock }.should.raise(IOError)
+        -> { @server.accept_nonblock(exception: false) }.should.raise(IOError)
       end
     end
 
@@ -78,7 +78,7 @@ describe 'Socket#accept_nonblock' do
 
       describe 'without a connected client' do
         it 'raises IO::WaitReadable' do
-          -> { @server.accept_nonblock }.should raise_error(IO::WaitReadable)
+          -> { @server.accept_nonblock }.should.raise(IO::WaitReadable)
         end
       end
 

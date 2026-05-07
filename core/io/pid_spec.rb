@@ -30,6 +30,6 @@ describe "IO#pid" do
 
   it "raises an IOError on closed stream" do
     @io.close
-    -> { @io.pid }.should raise_error(IOError)
+    -> { @io.pid }.should.raise(IOError)
   end
 end

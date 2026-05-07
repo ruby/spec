@@ -67,47 +67,47 @@ describe "Kernel.Complex()" do
       it "raises Encoding::CompatibilityError if String is in not ASCII-compatible encoding" do
         -> {
           Complex("79+4i".encode("UTF-16"))
-        }.should raise_error(Encoding::CompatibilityError, "ASCII incompatible encoding: UTF-16")
+        }.should.raise(Encoding::CompatibilityError, "ASCII incompatible encoding: UTF-16")
       end
 
       it "raises ArgumentError for unrecognised Strings" do
         -> {
           Complex("ruby")
-        }.should raise_error(ArgumentError, 'invalid value for convert(): "ruby"')
+        }.should.raise(ArgumentError, 'invalid value for convert(): "ruby"')
       end
 
       it "raises ArgumentError for trailing garbage" do
         -> {
           Complex("79+4iruby")
-        }.should raise_error(ArgumentError, 'invalid value for convert(): "79+4iruby"')
+        }.should.raise(ArgumentError, 'invalid value for convert(): "79+4iruby"')
       end
 
       it "does not understand Float::INFINITY" do
         -> {
           Complex("Infinity")
-        }.should raise_error(ArgumentError, 'invalid value for convert(): "Infinity"')
+        }.should.raise(ArgumentError, 'invalid value for convert(): "Infinity"')
 
         -> {
           Complex("-Infinity")
-        }.should raise_error(ArgumentError, 'invalid value for convert(): "-Infinity"')
+        }.should.raise(ArgumentError, 'invalid value for convert(): "-Infinity"')
       end
 
       it "does not understand Float::NAN" do
         -> {
           Complex("NaN")
-        }.should raise_error(ArgumentError, 'invalid value for convert(): "NaN"')
+        }.should.raise(ArgumentError, 'invalid value for convert(): "NaN"')
       end
 
       it "does not understand a sequence of _" do
         -> {
           Complex("7__9+4__0i")
-        }.should raise_error(ArgumentError, 'invalid value for convert(): "7__9+4__0i"')
+        }.should.raise(ArgumentError, 'invalid value for convert(): "7__9+4__0i"')
       end
 
       it "does not allow null-byte" do
         -> {
           Complex("1-2i\0")
-        }.should raise_error(ArgumentError, "string contains null byte")
+        }.should.raise(ArgumentError, "string contains null byte")
       end
     end
 
@@ -115,7 +115,7 @@ describe "Kernel.Complex()" do
       it "raises Encoding::CompatibilityError if String is in not ASCII-compatible encoding" do
         -> {
           Complex("79+4i".encode("UTF-16"), exception: false)
-        }.should raise_error(Encoding::CompatibilityError, "ASCII incompatible encoding: UTF-16")
+        }.should.raise(Encoding::CompatibilityError, "ASCII incompatible encoding: UTF-16")
       end
 
       it "returns nil for unrecognised Strings" do
@@ -213,16 +213,16 @@ describe "Kernel.Complex()" do
 
   describe "when passed a non-Numeric second argument" do
     it "raises TypeError" do
-      -> { Complex(:sym, :sym) }.should raise_error(TypeError)
-      -> { Complex(0,    :sym) }.should raise_error(TypeError)
+      -> { Complex(:sym, :sym) }.should.raise(TypeError)
+      -> { Complex(0,    :sym) }.should.raise(TypeError)
     end
   end
 
   describe "when passed nil" do
     it "raises TypeError" do
-      -> { Complex(nil) }.should raise_error(TypeError, "can't convert nil into Complex")
-      -> { Complex(0, nil) }.should raise_error(TypeError, "can't convert nil into Complex")
-      -> { Complex(nil, 0) }.should raise_error(TypeError, "can't convert nil into Complex")
+      -> { Complex(nil) }.should.raise(TypeError, "can't convert nil into Complex")
+      -> { Complex(0, nil) }.should.raise(TypeError, "can't convert nil into Complex")
+      -> { Complex(nil, 0) }.should.raise(TypeError, "can't convert nil into Complex")
     end
   end
 
@@ -241,7 +241,7 @@ describe "Kernel.Complex()" do
 
     describe "and [non-Numeric, Numeric] argument" do
       it "throws a TypeError" do
-        -> { Complex(:sym, 0, exception: false) }.should raise_error(TypeError, "not a real")
+        -> { Complex(:sym, 0, exception: false) }.should.raise(TypeError, "not a real")
       end
     end
 

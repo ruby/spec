@@ -268,7 +268,7 @@ describe "The 'case'-construct" do
         true
       end
       CODE
-    }.should raise_error(SyntaxError)
+    }.should.raise(SyntaxError)
   end
 
   it "raises a SyntaxError when 'else' is used before a 'when' was given" do
@@ -280,7 +280,7 @@ describe "The 'case'-construct" do
       when 4; false
       end
       CODE
-    }.should raise_error(SyntaxError)
+    }.should.raise(SyntaxError)
   end
 
   it "supports nested case statements" do

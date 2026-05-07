@@ -10,13 +10,13 @@ describe :syslog_reopen, shared: true do
 
     it "reopens the log" do
       Syslog.open
-      -> { Syslog.send(@method)}.should_not raise_error
+      -> { Syslog.send(@method)}.should_not.raise
       Syslog.opened?.should == true
       Syslog.close
     end
 
     it "fails with RuntimeError if the log is closed" do
-      -> { Syslog.send(@method)}.should raise_error(RuntimeError)
+      -> { Syslog.send(@method)}.should.raise(RuntimeError)
     end
 
     it "receives the same parameters as Syslog.open" do

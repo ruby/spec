@@ -46,7 +46,7 @@ platform_is_not :windows do
       missing_path = "/missingfilepath\xE3E4".b
       -> {
         File.stat(missing_path)
-      }.should raise_error(SystemCallError) { |e|
+      }.should.raise(SystemCallError) { |e|
         [Errno::ENOENT, Errno::EILSEQ].should.include?(e.class)
         e.message.should.include?(missing_path)
       }

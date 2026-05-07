@@ -42,7 +42,7 @@ describe :numeric_rect, shared: true do
 
   it "raises an ArgumentError if given any arguments" do
     @numbers.each do |number|
-      -> { number.send(@method, number) }.should raise_error(ArgumentError)
+      -> { number.send(@method, number) }.should.raise(ArgumentError)
     end
   end
 end

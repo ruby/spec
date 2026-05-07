@@ -71,7 +71,7 @@ describe "Proc.new with an associated block" do
     end
     res = some_method()
 
-    -> { res.call }.should raise_error(LocalJumpError)
+    -> { res.call }.should.raise(LocalJumpError)
   end
 
   it "returns from within enclosing method when 'return' is used in the block" do
@@ -155,15 +155,15 @@ end
 
 describe "Proc.new without a block" do
   it "raises an ArgumentError" do
-    -> { Proc.new }.should raise_error(ArgumentError)
+    -> { Proc.new }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError if invoked from within a method with no block" do
-    -> { ProcSpecs.new_proc_in_method }.should raise_error(ArgumentError)
+    -> { ProcSpecs.new_proc_in_method }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError if invoked on a subclass from within a method with no block" do
-    -> { ProcSpecs.new_proc_subclass_in_method }.should raise_error(ArgumentError)
+    -> { ProcSpecs.new_proc_subclass_in_method }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError when passed no block" do
@@ -171,8 +171,8 @@ describe "Proc.new without a block" do
       Proc.new
     end
 
-    -> { ProcSpecs.new_proc_in_method { "hello" } }.should raise_error(ArgumentError, 'tried to create Proc object without a block')
-    -> { ProcSpecs.new_proc_subclass_in_method { "hello" } }.should raise_error(ArgumentError, 'tried to create Proc object without a block')
-    -> { some_method { "hello" } }.should raise_error(ArgumentError, 'tried to create Proc object without a block')
+    -> { ProcSpecs.new_proc_in_method { "hello" } }.should.raise(ArgumentError, 'tried to create Proc object without a block')
+    -> { ProcSpecs.new_proc_subclass_in_method { "hello" } }.should.raise(ArgumentError, 'tried to create Proc object without a block')
+    -> { some_method { "hello" } }.should.raise(ArgumentError, 'tried to create Proc object without a block')
   end
 end

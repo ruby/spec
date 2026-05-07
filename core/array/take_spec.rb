@@ -23,7 +23,7 @@ describe "Array#take" do
   end
 
   it "raises an ArgumentError when the argument is negative" do
-    ->{ [1].take(-3) }.should raise_error(ArgumentError)
+    ->{ [1].take(-3) }.should.raise(ArgumentError)
   end
 
   it 'returns a Array instance for Array subclasses' do

@@ -45,6 +45,6 @@ describe "String.try_convert" do
   it "does not rescue exceptions raised by #to_str" do
     obj = mock("to_str")
     obj.should_receive(:to_str).and_raise(RuntimeError)
-    -> { String.try_convert obj }.should raise_error(RuntimeError)
+    -> { String.try_convert obj }.should.raise(RuntimeError)
   end
 end

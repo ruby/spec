@@ -110,7 +110,7 @@ describe "Socket.getaddrinfo" do
     it "raises ResolutionError when fails to resolve address" do
       -> {
         Socket.getaddrinfo("www.kame.net", 80, "AF_UNIX")
-      }.should raise_error(Socket::ResolutionError) { |e|
+      }.should.raise(Socket::ResolutionError) { |e|
         [Socket::EAI_FAMILY, Socket::EAI_FAIL].should.include?(e.error_code)
       }
     end

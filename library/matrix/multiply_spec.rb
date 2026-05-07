@@ -33,7 +33,7 @@ describe "Matrix#*" do
   end
 
   it "raises a Matrix::ErrDimensionMismatch if the matrices are different sizes" do
-    -> { @a * Matrix[ [1] ] }.should raise_error(Matrix::ErrDimensionMismatch)
+    -> { @a * Matrix[ [1] ] }.should.raise(Matrix::ErrDimensionMismatch)
   end
 
   it "returns a zero matrix if (nx0) * (0xn)" do
@@ -53,10 +53,10 @@ describe "Matrix#*" do
   end
 
   it "raises a TypeError if other is of wrong type" do
-    -> { @a * nil        }.should raise_error(TypeError)
-    -> { @a * "a"        }.should raise_error(TypeError)
-    -> { @a * [ [1, 2] ] }.should raise_error(TypeError)
-    -> { @a * Object.new }.should raise_error(TypeError)
+    -> { @a * nil        }.should.raise(TypeError)
+    -> { @a * "a"        }.should.raise(TypeError)
+    -> { @a * [ [1, 2] ] }.should.raise(TypeError)
+    -> { @a * Object.new }.should.raise(TypeError)
   end
 
   describe "for a subclass of Matrix" do

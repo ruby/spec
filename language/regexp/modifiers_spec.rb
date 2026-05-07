@@ -36,7 +36,7 @@ describe "Regexps with modifiers" do
     /foo/imox.match("foo").to_a.should == ["foo"]
     /foo/imoximox.match("foo").to_a.should == ["foo"]
 
-    -> { eval('/foo/a') }.should raise_error(SyntaxError)
+    -> { eval('/foo/a') }.should.raise(SyntaxError)
   end
 
   it "supports (?~) (absent operator)" do
@@ -76,7 +76,7 @@ describe "Regexps with modifiers" do
     /(?i-i)foo/.match("FOO").should == nil
     /(?ii)foo/.match("FOO").to_a.should == ["FOO"]
     /(?-)foo/.match("foo").to_a.should == ["foo"]
-    -> { eval('/(?o)/') }.should raise_error(SyntaxError)
+    -> { eval('/(?o)/') }.should.raise(SyntaxError)
   end
 
   it "supports (?imx-imx:expr) (scoped inline modifiers)" do
@@ -96,7 +96,7 @@ describe "Regexps with modifiers" do
     /(?i-i:foo)/.match("FOO").should == nil
     /(?ii:foo)/.match("FOO").to_a.should == ["FOO"]
     /(?-:)foo/.match("foo").to_a.should == ["foo"]
-    -> { eval('/(?o:)/') }.should raise_error(SyntaxError)
+    -> { eval('/(?o:)/') }.should.raise(SyntaxError)
   end
 
   it "supports . with /m" do

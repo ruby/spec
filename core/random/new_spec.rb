@@ -33,6 +33,6 @@ describe "Random.new" do
   it "raises a RangeError if passed a Complex (with imaginary part) seed value as an argument" do
     -> do
       Random.new(Complex(20,2))
-    end.should raise_error(RangeError)
+    end.should.raise(RangeError)
   end
 end

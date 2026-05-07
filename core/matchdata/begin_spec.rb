@@ -42,11 +42,11 @@ describe "MatchData#begin" do
 
       -> {
         match_data.begin(-1)
-      }.should raise_error(IndexError, "index -1 out of matches")
+      }.should.raise(IndexError, "index -1 out of matches")
 
       -> {
         match_data.begin(3)
-      }.should raise_error(IndexError, "index 3 out of matches")
+      }.should.raise(IndexError, "index 3 out of matches")
     end
   end
 
@@ -86,7 +86,7 @@ describe "MatchData#begin" do
 
       -> {
         match_data.begin("y")
-      }.should raise_error(IndexError, "undefined group name reference: y")
+      }.should.raise(IndexError, "undefined group name reference: y")
     end
   end
 
@@ -126,7 +126,7 @@ describe "MatchData#begin" do
 
       -> {
         match_data.begin(:y)
-      }.should raise_error(IndexError, "undefined group name reference: y")
+      }.should.raise(IndexError, "undefined group name reference: y")
     end
   end
 end

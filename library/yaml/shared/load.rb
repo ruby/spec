@@ -60,7 +60,7 @@ describe :yaml_load_safe, shared: true do
     else
       error = ArgumentError
     end
-    -> { YAML.send(@method, "key1: value\ninvalid_key") }.should raise_error(error)
+    -> { YAML.send(@method, "key1: value\ninvalid_key") }.should.raise(error)
   end
 
   it "accepts symbols" do
@@ -137,6 +137,6 @@ describe :yaml_load_unsafe, shared: true do
     loaded = YAML.send(@method, "--- !ruby/object:File {}\n")
     -> {
       loaded.read(1)
-    }.should raise_error(IOError)
+    }.should.raise(IOError)
   end
 end

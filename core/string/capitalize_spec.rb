@@ -52,7 +52,7 @@ describe "String#capitalize" do
     end
 
     it "does not allow any other additional option" do
-      -> { "iSa".capitalize(:turkic, :ascii) }.should raise_error(ArgumentError)
+      -> { "iSa".capitalize(:turkic, :ascii) }.should.raise(ArgumentError)
     end
   end
 
@@ -66,16 +66,16 @@ describe "String#capitalize" do
     end
 
     it "does not allow any other additional option" do
-      -> { "iß".capitalize(:lithuanian, :ascii) }.should raise_error(ArgumentError)
+      -> { "iß".capitalize(:lithuanian, :ascii) }.should.raise(ArgumentError)
     end
   end
 
   it "does not allow the :fold option for upcasing" do
-    -> { "abc".capitalize(:fold) }.should raise_error(ArgumentError)
+    -> { "abc".capitalize(:fold) }.should.raise(ArgumentError)
   end
 
   it "does not allow invalid options" do
-    -> { "abc".capitalize(:invalid_option) }.should raise_error(ArgumentError)
+    -> { "abc".capitalize(:invalid_option) }.should.raise(ArgumentError)
   end
 
   it "returns String instances when called on a subclass" do
@@ -159,7 +159,7 @@ describe "String#capitalize!" do
     end
 
     it "does not allow any other additional option" do
-      -> { a = "iSa"; a.capitalize!(:turkic, :ascii) }.should raise_error(ArgumentError)
+      -> { a = "iSa"; a.capitalize!(:turkic, :ascii) }.should.raise(ArgumentError)
     end
   end
 
@@ -177,16 +177,16 @@ describe "String#capitalize!" do
     end
 
     it "does not allow any other additional option" do
-      -> { a = "iß"; a.capitalize!(:lithuanian, :ascii) }.should raise_error(ArgumentError)
+      -> { a = "iß"; a.capitalize!(:lithuanian, :ascii) }.should.raise(ArgumentError)
     end
   end
 
   it "does not allow the :fold option for upcasing" do
-    -> { a = "abc"; a.capitalize!(:fold) }.should raise_error(ArgumentError)
+    -> { a = "abc"; a.capitalize!(:fold) }.should.raise(ArgumentError)
   end
 
   it "does not allow invalid options" do
-    -> { a = "abc"; a.capitalize!(:invalid_option) }.should raise_error(ArgumentError)
+    -> { a = "abc"; a.capitalize!(:invalid_option) }.should.raise(ArgumentError)
   end
 
   it "returns nil when no changes are made" do
@@ -201,7 +201,7 @@ describe "String#capitalize!" do
   it "raises a FrozenError when self is frozen" do
     ["", "Hello", "hello"].each do |a|
       a.freeze
-      -> { a.capitalize! }.should raise_error(FrozenError)
+      -> { a.capitalize! }.should.raise(FrozenError)
     end
   end
 end

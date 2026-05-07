@@ -18,7 +18,7 @@ describe "Module#protected" do
       protected :protected_method_1
     end
 
-    -> { ModuleSpecs::Parent.protected_method_1 }.should raise_error(NoMethodError)
+    -> { ModuleSpecs::Parent.protected_method_1 }.should.raise(NoMethodError)
   end
 
   it "makes a public Object instance method protected in a new module" do
@@ -52,6 +52,6 @@ describe "Module#protected" do
   it "raises a NameError when given an undefined name" do
     -> do
       Module.new.send(:protected, :undefined)
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 end

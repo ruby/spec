@@ -7,14 +7,14 @@ describe "File.ftype" do
   end
 
   it "raises ArgumentError if not given exactly one filename" do
-    -> { File.ftype }.should raise_error(ArgumentError)
-    -> { File.ftype('blah', 'bleh') }.should raise_error(ArgumentError)
+    -> { File.ftype }.should.raise(ArgumentError)
+    -> { File.ftype('blah', 'bleh') }.should.raise(ArgumentError)
   end
 
   it "raises Errno::ENOENT if the file is not valid" do
     -> {
       File.ftype("/#{$$}#{Time.now.to_f}")
-    }.should raise_error(Errno::ENOENT)
+    }.should.raise(Errno::ENOENT)
   end
 
   it "returns a String" do

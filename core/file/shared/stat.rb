@@ -27,6 +27,6 @@ describe :file_stat, shared: true do
   it "raises an Errno::ENOENT if the file does not exist" do
     -> {
       File.send(@method, "fake_file")
-    }.should raise_error(Errno::ENOENT)
+    }.should.raise(Errno::ENOENT)
   end
 end

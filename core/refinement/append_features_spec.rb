@@ -11,7 +11,7 @@ describe "Refinement#append_features" do
       refine c do
         called = false
         define_method(:append_features){called = true}
-        proc{c.include(self)}.should raise_error(TypeError)
+        proc{c.include(self)}.should.raise(TypeError)
         called.should == false
       end
     end

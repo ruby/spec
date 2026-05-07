@@ -48,13 +48,13 @@ describe "Array#cycle" do
   it "does not rescue StopIteration when not passed a count" do
     -> do
       @array.cycle { raise StopIteration }
-    end.should raise_error(StopIteration)
+    end.should.raise(StopIteration)
   end
 
   it "does not rescue StopIteration when passed a count" do
     -> do
       @array.cycle(3) { raise StopIteration }
-    end.should raise_error(StopIteration)
+    end.should.raise(StopIteration)
   end
 
   it "iterates the array Integer(count) times when passed a Float count" do
@@ -74,23 +74,23 @@ describe "Array#cycle" do
     count = mock("cycle count 2")
     count.should_receive(:to_int).and_return("2")
 
-    -> { @array.cycle(count, &@prc) }.should raise_error(TypeError)
+    -> { @array.cycle(count, &@prc) }.should.raise(TypeError)
   end
 
   it "raises a TypeError if passed a String" do
-    -> { @array.cycle("4") { } }.should raise_error(TypeError)
+    -> { @array.cycle("4") { } }.should.raise(TypeError)
   end
 
   it "raises a TypeError if passed an Object" do
-    -> { @array.cycle(mock("cycle count")) { } }.should raise_error(TypeError)
+    -> { @array.cycle(mock("cycle count")) { } }.should.raise(TypeError)
   end
 
   it "raises a TypeError if passed true" do
-    -> { @array.cycle(true) { } }.should raise_error(TypeError)
+    -> { @array.cycle(true) { } }.should.raise(TypeError)
   end
 
   it "raises a TypeError if passed false" do
-    -> { @array.cycle(false) { } }.should raise_error(TypeError)
+    -> { @array.cycle(false) { } }.should.raise(TypeError)
   end
 
   before :all do

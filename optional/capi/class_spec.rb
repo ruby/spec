@@ -20,21 +20,21 @@ describe :rb_path_to_class, shared: true do
   end
 
   it "raises an ArgumentError if a constant in the path does not exist" do
-    -> { @s.send(@method, "CApiClassSpecs::NotDefined::B") }.should raise_error(ArgumentError)
+    -> { @s.send(@method, "CApiClassSpecs::NotDefined::B") }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError if the final constant does not exist" do
-    -> { @s.send(@method, "CApiClassSpecs::NotDefined") }.should raise_error(ArgumentError)
+    -> { @s.send(@method, "CApiClassSpecs::NotDefined") }.should.raise(ArgumentError)
   end
 
   it "raises a TypeError if the constant is not a class or module" do
     -> {
       @s.send(@method, "CApiClassSpecs::A::C")
-    }.should raise_error(TypeError, 'CApiClassSpecs::A::C does not refer to class/module')
+    }.should.raise(TypeError, 'CApiClassSpecs::A::C does not refer to class/module')
   end
 
   it "raises an ArgumentError even if a constant in the path exists on toplevel" do
-    -> { @s.send(@method, "CApiClassSpecs::Object") }.should raise_error(ArgumentError)
+    -> { @s.send(@method, "CApiClassSpecs::Object") }.should.raise(ArgumentError)
   end
 end
 
@@ -135,7 +135,7 @@ describe "C-API Class function" do
     it "raises TypeError if the last argument is not a Hash" do
       -> {
         @s.rb_class_new_instance_kw([42], CApiClassSpecs::KeywordAlloc)
-      }.should raise_error(TypeError, 'no implicit conversion of Integer into Hash')
+      }.should.raise(TypeError, 'no implicit conversion of Integer into Hash')
     end
   end
 
@@ -143,7 +143,7 @@ describe "C-API Class function" do
     it "includes a module into a class" do
       c = Class.new
       o = c.new
-      -> { o.included? }.should raise_error(NameError)
+      -> { o.included? }.should.raise(NameError)
       @s.rb_include_module(c, CApiClassSpecs::M)
       o.included?.should == true
     end
@@ -157,12 +157,12 @@ describe "C-API Class function" do
     it "defines an attr_reader when passed true, false" do
       @s.rb_define_attr(CApiClassSpecs::Attr, :foo, true, false)
       @a.foo.should == 1
-      -> { @a.foo = 5 }.should raise_error(NameError)
+      -> { @a.foo = 5 }.should.raise(NameError)
     end
 
     it "defines an attr_writer when passed false, true" do
       @s.rb_define_attr(CApiClassSpecs::Attr, :bar, false, true)
-      -> { @a.bar }.should raise_error(NameError)
+      -> { @a.bar }.should.raise(NameError)
       @a.bar = 5
       @a.instance_variable_get(:@bar).should == 5
     end
@@ -270,7 +270,7 @@ describe "C-API Class function" do
     it "raises a NameError if the class variable is not defined" do
       -> {
         @s.rb_cv_get(CApiClassSpecs::CVars, "@@no_cvar")
-      }.should raise_error(NameError, /class variable @@no_cvar/)
+      }.should.raise(NameError, /class variable @@no_cvar/)
     end
   end
 
@@ -309,19 +309,19 @@ describe "C-API Class function" do
     it "raises a TypeError when given a non class object to superclass" do
       -> {
         @s.rb_define_class("ClassSpecDefineClass3", Module.new)
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     end
 
     it "raises a TypeError when given a mismatched class to superclass" do
       -> {
         @s.rb_define_class("ClassSpecDefineClass", Object)
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     end
 
     it "raises a ArgumentError when given NULL as superclass" do
       -> {
         @s.rb_define_class("ClassSpecDefineClass4", nil)
-      }.should raise_error(ArgumentError)
+      }.should.raise(ArgumentError)
     end
 
     it "allows arbitrary names, including constant names not valid in Ruby" do
@@ -330,7 +330,7 @@ describe "C-API Class function" do
 
       -> {
         Object.const_get(cls.name)
-      }.should raise_error(NameError, /wrong constant name/)
+      }.should.raise(NameError, /wrong constant name/)
     end
   end
 
@@ -358,7 +358,7 @@ describe "C-API Class function" do
       -> { @s.rb_define_class_under(CApiClassSpecs,
                                         "ClassUnder5",
                                         Module.new)
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     end
 
     it "raises a TypeError when given a mismatched class to superclass" do
@@ -366,7 +366,7 @@ describe "C-API Class function" do
       -> { @s.rb_define_class_under(CApiClassSpecs,
                                         "ClassUnder6",
                                         Class.new)
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     ensure
       CApiClassSpecs.send(:remove_const, :ClassUnder6)
     end
@@ -376,7 +376,7 @@ describe "C-API Class function" do
     end
 
     it "raises a TypeError if class is defined and its superclass mismatches the given one" do
-      -> { @s.rb_define_class_under(CApiClassSpecs, "Sub", Object) }.should raise_error(TypeError)
+      -> { @s.rb_define_class_under(CApiClassSpecs, "Sub", Object) }.should.raise(TypeError)
     end
 
     it "allows arbitrary names, including constant names not valid in Ruby" do
@@ -385,7 +385,7 @@ describe "C-API Class function" do
 
       -> {
         CApiClassSpecs.const_get(cls.name)
-      }.should raise_error(NameError, /wrong constant name/)
+      }.should.raise(NameError, /wrong constant name/)
     end
   end
 
@@ -412,7 +412,7 @@ describe "C-API Class function" do
     end
 
     it "raises a TypeError if class is defined and its superclass mismatches the given one" do
-      -> { @s.rb_define_class_id_under(CApiClassSpecs, :Sub, Object) }.should raise_error(TypeError)
+      -> { @s.rb_define_class_id_under(CApiClassSpecs, :Sub, Object) }.should.raise(TypeError)
     end
 
     it "allows arbitrary names, including constant names not valid in Ruby" do
@@ -421,7 +421,7 @@ describe "C-API Class function" do
 
       -> {
         CApiClassSpecs.const_get(cls.name)
-      }.should raise_error(NameError, /wrong constant name/)
+      }.should.raise(NameError, /wrong constant name/)
     end
   end
 
@@ -443,7 +443,7 @@ describe "C-API Class function" do
     it "raises a NameError if the class variable is not defined" do
       -> {
         @s.rb_cvar_get(CApiClassSpecs::CVars, "@@no_cvar")
-      }.should raise_error(NameError, /class variable @@no_cvar/)
+      }.should.raise(NameError, /class variable @@no_cvar/)
     end
   end
 
@@ -454,12 +454,12 @@ describe "C-API Class function" do
     end
 
     it "raises a TypeError if passed Class as the superclass" do
-      -> { @s.rb_class_new(Class) }.should raise_error(TypeError)
+      -> { @s.rb_class_new(Class) }.should.raise(TypeError)
     end
 
     it "raises a TypeError if passed a singleton class as the superclass" do
       metaclass = Object.new.singleton_class
-      -> { @s.rb_class_new(metaclass) }.should raise_error(TypeError)
+      -> { @s.rb_class_new(metaclass) }.should.raise(TypeError)
     end
   end
 

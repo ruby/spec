@@ -54,7 +54,7 @@ describe 'Socket.gethostbyaddr' do
       end
 
       it 'raises SocketError when the address is not supported by the family' do
-        -> { suppress_warning { Socket.gethostbyaddr(@addr, :INET6) } }.should raise_error(SocketError)
+        -> { suppress_warning { Socket.gethostbyaddr(@addr, :INET6) } }.should.raise(SocketError)
       end
     end
   end
@@ -112,7 +112,7 @@ describe 'Socket.gethostbyaddr' do
 
         platform_is_not :windows, :wsl do
           it 'raises SocketError when the address is not supported by the family' do
-            -> { suppress_warning { Socket.gethostbyaddr(@addr, :INET) } }.should raise_error(SocketError)
+            -> { suppress_warning { Socket.gethostbyaddr(@addr, :INET) } }.should.raise(SocketError)
           end
         end
       end

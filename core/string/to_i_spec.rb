@@ -138,9 +138,9 @@ describe "String#to_i" do
   end
 
   it "raises an ArgumentError for illegal bases (1, < 0 or > 36)" do
-    -> { "".to_i(1)  }.should raise_error(ArgumentError)
-    -> { "".to_i(-1) }.should raise_error(ArgumentError)
-    -> { "".to_i(37) }.should raise_error(ArgumentError)
+    -> { "".to_i(1)  }.should.raise(ArgumentError)
+    -> { "".to_i(-1) }.should.raise(ArgumentError)
+    -> { "".to_i(37) }.should.raise(ArgumentError)
   end
 
   it "returns an Integer for long strings with trailing spaces" do

@@ -61,7 +61,7 @@ describe "Dir#read" do
             while entry = d.read
               shift_jis_entries << entry
             end
-          }.should_not raise_error
+          }.should_not.raise
         end
       ensure
         Encoding.default_internal = old_internal_encoding

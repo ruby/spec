@@ -170,7 +170,7 @@ describe 'BasicSocket#recvmsg' do
               end
 
               it 'raises when receiving the ip_address message' do
-                -> { @addr.ip_address }.should raise_error(SocketError)
+                -> { @addr.ip_address }.should.raise(SocketError)
               end
 
               it 'uses the correct address family' do
@@ -186,7 +186,7 @@ describe 'BasicSocket#recvmsg' do
               end
 
               it 'raises when receiving the ip_port message' do
-                -> { @addr.ip_port }.should raise_error(SocketError)
+                -> { @addr.ip_port }.should.raise(SocketError)
               end
             end
           end

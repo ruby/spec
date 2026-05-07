@@ -57,8 +57,8 @@ describe "Hash#shift" do
   end
 
   it "raises a FrozenError if called on a frozen instance" do
-    -> { HashSpecs.frozen_hash.shift  }.should raise_error(FrozenError)
-    -> { HashSpecs.empty_frozen_hash.shift }.should raise_error(FrozenError)
+    -> { HashSpecs.frozen_hash.shift  }.should.raise(FrozenError)
+    -> { HashSpecs.empty_frozen_hash.shift }.should.raise(FrozenError)
   end
 
   it "works when the hash is at capacity" do

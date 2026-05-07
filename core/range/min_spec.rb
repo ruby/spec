@@ -45,7 +45,7 @@ describe "Range#min" do
   end
 
   it "raises RangeError when called on an beginless range" do
-    -> { (..1).min }.should raise_error(RangeError)
+    -> { (..1).min }.should.raise(RangeError)
   end
 end
 
@@ -83,6 +83,6 @@ describe "Range#min given a block" do
   end
 
   it "raises RangeError when called with custom comparison method on an endless range" do
-    -> { eval("(1..)").min {|a, b| a} }.should raise_error(RangeError)
+    -> { eval("(1..)").min {|a, b| a} }.should.raise(RangeError)
   end
 end

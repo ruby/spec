@@ -27,9 +27,9 @@ describe "Set#subset?" do
   end
 
   it "raises an ArgumentError when passed a non-Set" do
-    -> { Set[].subset?([]) }.should raise_error(ArgumentError)
-    -> { Set[].subset?(1) }.should raise_error(ArgumentError)
-    -> { Set[].subset?("test") }.should raise_error(ArgumentError)
-    -> { Set[].subset?(Object.new) }.should raise_error(ArgumentError)
+    -> { Set[].subset?([]) }.should.raise(ArgumentError)
+    -> { Set[].subset?(1) }.should.raise(ArgumentError)
+    -> { Set[].subset?("test") }.should.raise(ArgumentError)
+    -> { Set[].subset?(Object.new) }.should.raise(ArgumentError)
   end
 end

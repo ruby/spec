@@ -70,25 +70,25 @@ ruby_version_is "4.1" do
     it "raises a TypeError if the filename argument is not a String or pathname" do
       -> {
         ModuleSpecs::Autoload.autoload_relative :AutoloadRelativeTypError, nil
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     end
 
     it "raises a NameError if the constant name is not valid" do
       -> {
         ModuleSpecs::Autoload.autoload_relative :invalid_name, "fixtures/autoload_relative_a.rb"
-      }.should raise_error(NameError)
+      }.should.raise(NameError)
     end
 
     it "raises an ArgumentError if the constant name starts with a lowercase letter" do
       -> {
         ModuleSpecs::Autoload.autoload_relative :autoload, "fixtures/autoload_relative_a.rb"
-      }.should raise_error(NameError)
+      }.should.raise(NameError)
     end
 
     it "raises LoadError if called from eval without file context" do
       -> {
         ModuleSpecs::Autoload.module_eval('autoload_relative :EvalTest, "fixtures/autoload_relative_a.rb"')
-      }.should raise_error(LoadError, /autoload_relative called without file context/)
+      }.should.raise(LoadError, /autoload_relative called without file context/)
     end
 
     it "can autoload in instance_eval with a file context" do

@@ -87,7 +87,7 @@ ruby_version_is "4.1" do
     end
 
     it "raises a SystemCallError if called with a nonexistent directory" do
-      -> { Dir.scan DirSpecs.nonexistent }.should raise_error(SystemCallError)
+      -> { Dir.scan DirSpecs.nonexistent }.should.raise(SystemCallError)
     end
 
     it "handles symlink" do

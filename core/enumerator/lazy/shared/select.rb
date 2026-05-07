@@ -40,7 +40,7 @@ describe :enumerator_lazy_select, shared: true do
   end
 
   it "raises an ArgumentError when not given a block" do
-    -> { @yieldsmixed.send(@method) }.should raise_error(ArgumentError)
+    -> { @yieldsmixed.send(@method) }.should.raise(ArgumentError)
   end
 
   describe "on a nested Lazy" do

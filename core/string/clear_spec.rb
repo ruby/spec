@@ -32,7 +32,7 @@ describe "String#clear" do
 
   it "raises a FrozenError if self is frozen" do
     @s.freeze
-    -> { @s.clear        }.should raise_error(FrozenError)
-    -> { "".freeze.clear }.should raise_error(FrozenError)
+    -> { @s.clear        }.should.raise(FrozenError)
+    -> { "".freeze.clear }.should.raise(FrozenError)
   end
 end

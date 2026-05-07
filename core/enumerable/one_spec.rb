@@ -15,19 +15,19 @@ describe "Enumerable#one?" do
   end
 
   it "raises an ArgumentError when more than 1 argument is provided" do
-    -> { @enum.one?(1, 2, 3) }.should raise_error(ArgumentError)
-    -> { [].one?(1, 2, 3) }.should raise_error(ArgumentError)
-    -> { {}.one?(1, 2, 3) }.should raise_error(ArgumentError)
+    -> { @enum.one?(1, 2, 3) }.should.raise(ArgumentError)
+    -> { [].one?(1, 2, 3) }.should.raise(ArgumentError)
+    -> { {}.one?(1, 2, 3) }.should.raise(ArgumentError)
   end
 
   it "does not hide exceptions out of #each" do
     -> {
       EnumerableSpecs::ThrowingEach.new.one?
-    }.should raise_error(RuntimeError)
+    }.should.raise(RuntimeError)
 
     -> {
       EnumerableSpecs::ThrowingEach.new.one? { false }
-    }.should raise_error(RuntimeError)
+    }.should.raise(RuntimeError)
   end
 
   describe "with no block" do
@@ -65,7 +65,7 @@ describe "Enumerable#one?" do
     it "does not hide exceptions out of the block" do
       -> {
         @enum.one? { raise "from block" }
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
 
     it "gathers initial args as elements when each yields multiple" do
@@ -99,7 +99,7 @@ describe "Enumerable#one?" do
     it "does not hide exceptions out of #each" do
       -> {
         EnumerableSpecs::ThrowingEach.new.one?(Integer)
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
 
     it "returns true if the pattern returns a truthy value only once" do
@@ -135,7 +135,7 @@ describe "Enumerable#one?" do
       pattern = EnumerableSpecs::Pattern.new { raise "from pattern" }
       -> {
         @enum.one?(pattern)
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
 
     it "calls the pattern with gathered array when yielded with multiple arguments" do

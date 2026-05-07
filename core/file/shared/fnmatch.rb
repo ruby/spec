@@ -271,21 +271,21 @@ describe :file_fnmatch, shared: true do
   end
 
   it "raises a TypeError if the first and second arguments are not string-like" do
-    -> { File.send(@method, nil, nil, 0, 0) }.should raise_error(ArgumentError)
-    -> { File.send(@method, 1, 'some/thing') }.should raise_error(TypeError)
-    -> { File.send(@method, 'some/thing', 1) }.should raise_error(TypeError)
-    -> { File.send(@method, 1, 1) }.should raise_error(TypeError)
+    -> { File.send(@method, nil, nil, 0, 0) }.should.raise(ArgumentError)
+    -> { File.send(@method, 1, 'some/thing') }.should.raise(TypeError)
+    -> { File.send(@method, 'some/thing', 1) }.should.raise(TypeError)
+    -> { File.send(@method, 1, 1) }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the third argument is not an Integer" do
-    -> { File.send(@method, "*/place", "path/to/file", "flags") }.should raise_error(TypeError)
-    -> { File.send(@method, "*/place", "path/to/file", nil) }.should raise_error(TypeError)
+    -> { File.send(@method, "*/place", "path/to/file", "flags") }.should.raise(TypeError)
+    -> { File.send(@method, "*/place", "path/to/file", nil) }.should.raise(TypeError)
   end
 
   it "does not raise a TypeError if the third argument can be coerced to an Integer" do
     flags = mock("flags")
     flags.should_receive(:to_int).and_return(10)
-    -> { File.send(@method, "*/place", "path/to/file", flags) }.should_not raise_error
+    -> { File.send(@method, "*/place", "path/to/file", flags) }.should_not.raise
   end
 
   it "matches multibyte characters" do

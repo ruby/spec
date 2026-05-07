@@ -44,15 +44,15 @@ describe "Integer#lcm" do
   end
 
   it "raises an ArgumentError if not given an argument" do
-    -> { 12.lcm }.should raise_error(ArgumentError)
+    -> { 12.lcm }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError if given more than one argument" do
-    -> { 12.lcm(30, 20) }.should raise_error(ArgumentError)
+    -> { 12.lcm(30, 20) }.should.raise(ArgumentError)
   end
 
   it "raises a TypeError unless the argument is an Integer" do
-    -> { 39.lcm(3.8)   }.should raise_error(TypeError)
-    -> { 45872.lcm([]) }.should raise_error(TypeError)
+    -> { 39.lcm(3.8)   }.should.raise(TypeError)
+    -> { 45872.lcm([]) }.should.raise(TypeError)
   end
 end

@@ -17,7 +17,7 @@ describe "IO#binmode" do
   end
 
   it "raises an IOError on closed stream" do
-    -> { IOSpecs.closed_io.binmode }.should raise_error(IOError)
+    -> { IOSpecs.closed_io.binmode }.should.raise(IOError)
   end
 
   it "sets external encoding to binary" do
@@ -59,6 +59,6 @@ describe "IO#binmode?" do
   end
 
   it "raises an IOError on closed stream" do
-    -> { IOSpecs.closed_io.binmode? }.should raise_error(IOError)
+    -> { IOSpecs.closed_io.binmode? }.should.raise(IOError)
   end
 end

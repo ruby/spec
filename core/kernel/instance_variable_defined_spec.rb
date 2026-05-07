@@ -30,7 +30,7 @@ describe "Kernel#instance_variable_defined?" do
     -> do
       obj = mock("kernel instance_variable_defined?")
       @instance.instance_variable_defined? obj
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "returns false if the instance variable is not defined for different types" do

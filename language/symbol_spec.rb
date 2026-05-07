@@ -101,7 +101,7 @@ describe "A Symbol literal" do
       ScratchPad.record []
       -> {
         eval 'ScratchPad << 1; :"\xC3"'
-      }.should raise_error(SyntaxError, /invalid symbol/)
+      }.should.raise(SyntaxError, /invalid symbol/)
       ScratchPad.recorded.should == []
     end
   end

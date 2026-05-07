@@ -13,7 +13,7 @@ describe "Set#flatten" do
 
   it "raises an ArgumentError when self is recursive" do
     (set = Set[]) << set
-    -> { set.flatten }.should raise_error(ArgumentError)
+    -> { set.flatten }.should.raise(ArgumentError)
   end
 
   ruby_version_is ""..."4.0" do
@@ -44,6 +44,6 @@ describe "Set#flatten!" do
 
   it "raises an ArgumentError when self is recursive" do
     (set = Set[]) << set
-    -> { set.flatten! }.should raise_error(ArgumentError)
+    -> { set.flatten! }.should.raise(ArgumentError)
   end
 end

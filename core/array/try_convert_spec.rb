@@ -45,6 +45,6 @@ describe "Array.try_convert" do
   it "does not rescue exceptions raised by #to_ary" do
     obj = mock("to_ary")
     obj.should_receive(:to_ary).and_raise(RuntimeError)
-    -> { Array.try_convert obj }.should raise_error(RuntimeError)
+    -> { Array.try_convert obj }.should.raise(RuntimeError)
   end
 end

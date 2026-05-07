@@ -31,7 +31,7 @@ describe "Array#<<" do
   end
 
   it "raises a FrozenError on a frozen array" do
-    -> { ArraySpecs.frozen_array << 5 }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array << 5 }.should.raise(FrozenError)
   end
 end
 

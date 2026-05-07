@@ -28,7 +28,7 @@ describe "Array#last" do
   end
 
   it "raises an ArgumentError when count is negative" do
-    -> { [1, 2].last(-1) }.should raise_error(ArgumentError)
+    -> { [1, 2].last(-1) }.should.raise(ArgumentError)
   end
 
   it "returns the entire array when count > length" do
@@ -60,11 +60,11 @@ describe "Array#last" do
   end
 
   it "raises a TypeError if the passed argument is not numeric" do
-    -> { [1,2].last(nil) }.should raise_error(TypeError)
-    -> { [1,2].last("a") }.should raise_error(TypeError)
+    -> { [1,2].last(nil) }.should.raise(TypeError)
+    -> { [1,2].last("a") }.should.raise(TypeError)
 
     obj = mock("nonnumeric")
-    -> { [1,2].last(obj) }.should raise_error(TypeError)
+    -> { [1,2].last(obj) }.should.raise(TypeError)
   end
 
   it "does not return subclass instance on Array subclasses" do

@@ -107,6 +107,6 @@ describe "ObjectSpace.dump_all" do
   end
 
   it "raises ArgumentError when passed not supported :output value" do
-    -> { ObjectSpace.dump_all(output: Object.new) }.should raise_error(ArgumentError, /wrong output option/)
+    -> { ObjectSpace.dump_all(output: Object.new) }.should.raise(ArgumentError, /wrong output option/)
   end
 end

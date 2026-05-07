@@ -15,14 +15,14 @@ describe "Enumerable#each_cons" do
   end
 
   it "raises an ArgumentError if there is not a single parameter > 0" do
-    ->{ @enum.each_cons(0){}    }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons(-2){}   }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons{}       }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons(2,2){}  }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons(0)      }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons(-2)     }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons         }.should raise_error(ArgumentError)
-    ->{ @enum.each_cons(2,2)    }.should raise_error(ArgumentError)
+    ->{ @enum.each_cons(0){}    }.should.raise(ArgumentError)
+    ->{ @enum.each_cons(-2){}   }.should.raise(ArgumentError)
+    ->{ @enum.each_cons{}       }.should.raise(ArgumentError)
+    ->{ @enum.each_cons(2,2){}  }.should.raise(ArgumentError)
+    ->{ @enum.each_cons(0)      }.should.raise(ArgumentError)
+    ->{ @enum.each_cons(-2)     }.should.raise(ArgumentError)
+    ->{ @enum.each_cons         }.should.raise(ArgumentError)
+    ->{ @enum.each_cons(2,2)    }.should.raise(ArgumentError)
   end
 
   it "tries to convert n to an Integer using #to_int" do

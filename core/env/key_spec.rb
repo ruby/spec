@@ -34,6 +34,6 @@ describe "ENV.key" do
   it "raises TypeError if the argument is not a String and does not respond to #to_str" do
     -> {
       ENV.key(Object.new)
-    }.should raise_error(TypeError, "no implicit conversion of Object into String")
+    }.should.raise(TypeError, "no implicit conversion of Object into String")
   end
 end

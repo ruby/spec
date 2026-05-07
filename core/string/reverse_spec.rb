@@ -44,13 +44,13 @@ describe "String#reverse!" do
   end
 
   it "raises a FrozenError on a frozen instance that is modified" do
-    -> { "anna".freeze.reverse!  }.should raise_error(FrozenError)
-    -> { "hello".freeze.reverse! }.should raise_error(FrozenError)
+    -> { "anna".freeze.reverse!  }.should.raise(FrozenError)
+    -> { "hello".freeze.reverse! }.should.raise(FrozenError)
   end
 
   # see [ruby-core:23666]
   it "raises a FrozenError on a frozen instance that would not be modified" do
-    -> { "".freeze.reverse! }.should raise_error(FrozenError)
+    -> { "".freeze.reverse! }.should.raise(FrozenError)
   end
 
   it "reverses a string with multi byte characters" do

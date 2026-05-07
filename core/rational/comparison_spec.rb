@@ -82,7 +82,7 @@ describe "Rational#<=> when passed an Object that responds to #coerce" do
     b = mock("numeric with failed #coerce")
     b.should_receive(:coerce).and_raise(RationalSpecs::CoerceError)
 
-    -> { Rational(3, 4) <=> b }.should raise_error(RationalSpecs::CoerceError)
+    -> { Rational(3, 4) <=> b }.should.raise(RationalSpecs::CoerceError)
   end
 end
 

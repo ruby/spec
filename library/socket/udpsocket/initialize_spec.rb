@@ -46,7 +46,7 @@ describe 'UDPSocket#initialize' do
   it 'raises Errno::EAFNOSUPPORT or Errno::EPROTONOSUPPORT when given an invalid address family' do
     -> {
       UDPSocket.new(666)
-    }.should raise_error(SystemCallError) { |e|
+    }.should.raise(SystemCallError) { |e|
       [Errno::EAFNOSUPPORT, Errno::EPROTONOSUPPORT].should.include?(e.class)
     }
   end

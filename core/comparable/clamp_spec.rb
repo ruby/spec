@@ -7,9 +7,9 @@ describe 'Comparable#clamp' do
     two = ComparableSpecs::WithOnlyCompareDefined.new(2)
     c = ComparableSpecs::Weird.new(3)
 
-    -> { c.clamp(two, one) }.should raise_error(ArgumentError)
+    -> { c.clamp(two, one) }.should.raise(ArgumentError)
     one.should_receive(:<=>).any_number_of_times.and_return(nil)
-    -> { c.clamp(one, two) }.should raise_error(ArgumentError)
+    -> { c.clamp(one, two) }.should.raise(ArgumentError)
   end
 
   it 'returns self if within the given parameters' do
@@ -106,7 +106,7 @@ describe 'Comparable#clamp' do
     two = ComparableSpecs::WithOnlyCompareDefined.new(2)
     c = ComparableSpecs::Weird.new(3)
 
-    -> { c.clamp(one...two) }.should raise_error(ArgumentError)
+    -> { c.clamp(one...two) }.should.raise(ArgumentError)
   end
 
   context 'with nil as the max argument' do
@@ -195,7 +195,7 @@ describe 'Comparable#clamp' do
       one = ComparableSpecs::WithOnlyCompareDefined.new(1)
       c = ComparableSpecs::Weird.new(0)
 
-      -> { c.clamp(...one) }.should raise_error(ArgumentError)
+      -> { c.clamp(...one) }.should.raise(ArgumentError)
     end
   end
 

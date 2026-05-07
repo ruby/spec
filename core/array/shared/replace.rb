@@ -55,6 +55,6 @@ describe :array_replace, shared: true do
   it "raises a FrozenError on a frozen array" do
     -> {
       ArraySpecs.frozen_array.send(@method, ArraySpecs.frozen_array)
-    }.should raise_error(FrozenError)
+    }.should.raise(FrozenError)
   end
 end

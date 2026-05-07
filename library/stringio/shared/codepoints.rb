@@ -20,15 +20,15 @@ describe :stringio_codepoints, shared: true do
 
   it "raises an error if reading invalid sequence" do
     @io.pos = 1  # inside of a multibyte sequence
-    -> { @enum.first }.should raise_error(ArgumentError)
+    -> { @enum.first }.should.raise(ArgumentError)
   end
 
   it "raises an IOError if not readable" do
     @io.close_read
-    -> { @enum.to_a }.should raise_error(IOError)
+    -> { @enum.to_a }.should.raise(IOError)
 
     io = StringIO.new(+"xyz", "w")
-    -> { io.send(@method).to_a }.should raise_error(IOError)
+    -> { io.send(@method).to_a }.should.raise(IOError)
   end
 
 

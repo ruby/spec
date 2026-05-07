@@ -29,14 +29,14 @@ describe "Matrix.build" do
   end
 
   it "requires integers as parameters" do
-    -> { Matrix.build("1", "2"){1} }.should raise_error(TypeError)
-    -> { Matrix.build(nil, nil){1} }.should raise_error(TypeError)
-    -> { Matrix.build(1..2){1} }.should raise_error(TypeError)
+    -> { Matrix.build("1", "2"){1} }.should.raise(TypeError)
+    -> { Matrix.build(nil, nil){1} }.should.raise(TypeError)
+    -> { Matrix.build(1..2){1} }.should.raise(TypeError)
   end
 
   it "requires non-negative integers" do
-    -> { Matrix.build(-1, 1){1} }.should raise_error(ArgumentError)
-    -> { Matrix.build(+1,-1){1} }.should raise_error(ArgumentError)
+    -> { Matrix.build(-1, 1){1} }.should.raise(ArgumentError)
+    -> { Matrix.build(+1,-1){1} }.should.raise(ArgumentError)
   end
 
   it "returns empty Matrix if one argument is zero" do

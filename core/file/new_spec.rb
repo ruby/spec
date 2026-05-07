@@ -44,7 +44,7 @@ describe "File.new" do
     rm_r @file
     begin
       f = File.new(@file, "w", 0444)
-      -> { f.puts("test") }.should_not raise_error(IOError)
+      -> { f.puts("test") }.should_not.raise(IOError)
     ensure
       f.close
     end
@@ -81,7 +81,7 @@ describe "File.new" do
   it "returns a new read-only File when mode is not specified" do
     @fh = File.new(@file)
 
-    -> { @fh.puts("test") }.should raise_error(IOError)
+    -> { @fh.puts("test") }.should.raise(IOError)
     @fh.read.should == ""
     File.should.exist?(@file)
   end
@@ -89,7 +89,7 @@ describe "File.new" do
   it "returns a new read-only File when mode is not specified but flags option is present" do
     @fh = File.new(@file, flags: File::CREAT)
 
-    -> { @fh.puts("test") }.should raise_error(IOError)
+    -> { @fh.puts("test") }.should.raise(IOError)
     @fh.read.should == ""
     File.should.exist?(@file)
   end
@@ -101,7 +101,7 @@ describe "File.new" do
   end
 
   it "raises an Errno::EEXIST if the file exists when create a new file with File::CREAT|File::EXCL" do
-    -> { @fh = File.new(@file, File::CREAT|File::EXCL) }.should raise_error(Errno::EEXIST)
+    -> { @fh = File.new(@file, File::CREAT|File::EXCL) }.should.raise(Errno::EEXIST)
   end
 
   it "creates a new file when use File::WRONLY|File::APPEND mode" do
@@ -140,7 +140,7 @@ describe "File.new" do
     File.should.exist?(@file)
 
     # it's read-only
-    -> { @fh.puts("test") }.should raise_error(IOError)
+    -> { @fh.puts("test") }.should.raise(IOError)
     @fh.read.should == ""
   end
 
@@ -150,7 +150,7 @@ describe "File.new" do
     File.should.exist?(@file)
 
     # it's read-only
-    -> { @fh.puts("test") }.should raise_error(IOError)
+    -> { @fh.puts("test") }.should.raise(IOError)
     @fh.read.should == ""
   end
 
@@ -175,17 +175,17 @@ describe "File.new" do
 
     -> {
       @fh = File.new(@file, 'w', 0755, {flags: @flags})
-    }.should raise_error(ArgumentError, "wrong number of arguments (given 4, expected 1..3)")
+    }.should.raise(ArgumentError, "wrong number of arguments (given 4, expected 1..3)")
   end
 
   it "bitwise-ORs mode and flags option" do
     -> {
       @fh = File.new(@file, 'w', flags: File::EXCL)
-    }.should raise_error(Errno::EEXIST, /File exists/)
+    }.should.raise(Errno::EEXIST, /File exists/)
 
     -> {
       @fh = File.new(@file, mode: 'w', flags: File::EXCL)
-    }.should raise_error(Errno::EEXIST, /File exists/)
+    }.should.raise(Errno::EEXIST, /File exists/)
   end
 
   it "does not use the given block and warns to use File::open" do
@@ -195,16 +195,16 @@ describe "File.new" do
   end
 
   it "raises a TypeError if the first parameter can't be coerced to a string" do
-    -> { File.new(true) }.should raise_error(TypeError)
-    -> { File.new(false) }.should raise_error(TypeError)
+    -> { File.new(true) }.should.raise(TypeError)
+    -> { File.new(false) }.should.raise(TypeError)
   end
 
   it "raises a TypeError if the first parameter is nil" do
-    -> { File.new(nil) }.should raise_error(TypeError)
+    -> { File.new(nil) }.should.raise(TypeError)
   end
 
   it "raises an Errno::EBADF if the first parameter is an invalid file descriptor" do
-    -> { File.new(-1) }.should raise_error(Errno::EBADF)
+    -> { File.new(-1) }.should.raise(Errno::EBADF)
   end
 
   platform_is_not :windows do
@@ -213,7 +213,7 @@ describe "File.new" do
       -> {
         f = File.new(@fh.fileno, @flags)
         f.autoclose = false
-      }.should raise_error(Errno::EINVAL)
+      }.should.raise(Errno::EINVAL)
     end
   end
 

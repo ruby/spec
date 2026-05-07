@@ -16,7 +16,7 @@ describe "Class#allocate" do
     klass = Class.allocate
     -> do
       klass.new
-    end.should raise_error(Exception)
+    end.should.raise(Exception)
   end
 
   it "does not call initialize on the new instance" do
@@ -36,6 +36,6 @@ describe "Class#allocate" do
   it "raises TypeError for #superclass" do
     -> do
       Class.allocate.superclass
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 end

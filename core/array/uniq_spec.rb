@@ -185,17 +185,17 @@ describe "Array#uniq!" do
   it "raises a FrozenError on a frozen array when the array is modified" do
     dup_ary = [1, 1, 2]
     dup_ary.freeze
-    -> { dup_ary.uniq! }.should raise_error(FrozenError)
+    -> { dup_ary.uniq! }.should.raise(FrozenError)
   end
 
   # see [ruby-core:23666]
   it "raises a FrozenError on a frozen array when the array would not be modified" do
-    -> { ArraySpecs.frozen_array.uniq!}.should raise_error(FrozenError)
-    -> { ArraySpecs.empty_frozen_array.uniq!}.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.uniq!}.should.raise(FrozenError)
+    -> { ArraySpecs.empty_frozen_array.uniq!}.should.raise(FrozenError)
   end
 
   it "doesn't yield to the block on a frozen array" do
-    -> { ArraySpecs.frozen_array.uniq!{ raise RangeError, "shouldn't yield"}}.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.uniq!{ raise RangeError, "shouldn't yield"}}.should.raise(FrozenError)
   end
 
   it "compares elements based on the value returned from the block" do

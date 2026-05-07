@@ -6,7 +6,7 @@ describe :thread_start, shared: true do
   it "raises an ArgumentError if not passed a block" do
     -> {
       Thread.send(@method)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "spawns a new Thread running the block" do

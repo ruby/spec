@@ -55,7 +55,7 @@ ruby_version_is "3.4" do
       end
 
       it "raises an ArgumentError if options include global keys" do
-        -> { GC.config(implementation: "default") }.should raise_error(ArgumentError, 'Attempting to set read-only key "Implementation"')
+        -> { GC.config(implementation: "default") }.should.raise(ArgumentError, 'Attempting to set read-only key "Implementation"')
       end
     end
 
@@ -65,9 +65,9 @@ ruby_version_is "3.4" do
       end
 
       it "raises ArgumentError for all other arguments" do
-        -> { GC.config([]) }.should raise_error(ArgumentError)
-        -> { GC.config("default") }.should raise_error(ArgumentError)
-        -> { GC.config(1) }.should raise_error(ArgumentError)
+        -> { GC.config([]) }.should.raise(ArgumentError)
+        -> { GC.config("default") }.should.raise(ArgumentError)
+        -> { GC.config(1) }.should.raise(ArgumentError)
       end
     end
 

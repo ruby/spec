@@ -14,11 +14,11 @@ describe "Module#module_function" do
     it "raises a TypeError if calling after rebinded to Class" do
       -> {
         Module.instance_method(:module_function).bind(Class.new).call
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
 
       -> {
         Module.instance_method(:module_function).bind(Class.new).call :foo
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     end
   end
 end
@@ -85,7 +85,7 @@ describe "Module#module_function with specific method names" do
     o.respond_to?(:test).should == false
     m.private_instance_methods(false).should.include?(:test)
     o.send(:test).should == "hello"
-    -> { o.test }.should raise_error(NoMethodError)
+    -> { o.test }.should.raise(NoMethodError)
   end
 
   it "makes the new Module methods public" do
@@ -114,10 +114,10 @@ describe "Module#module_function with specific method names" do
   it "raises a TypeError when the given names can't be converted to string using to_str" do
     o = mock('123')
 
-    -> { Module.new { module_function(o) } }.should raise_error(TypeError)
+    -> { Module.new { module_function(o) } }.should.raise(TypeError)
 
     o.should_receive(:to_str).and_return(123)
-    -> { Module.new { module_function(o) } }.should raise_error(TypeError)
+    -> { Module.new { module_function(o) } }.should.raise(TypeError)
   end
 
   it "can make accessible private methods" do # JRUBY-4214

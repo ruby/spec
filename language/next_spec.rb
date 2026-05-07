@@ -111,7 +111,7 @@ describe "The next statement" do
     it "is invalid and raises a SyntaxError" do
       -> {
         eval("def m; next; end")
-      }.should raise_error(SyntaxError)
+      }.should.raise(SyntaxError)
     end
   end
 end

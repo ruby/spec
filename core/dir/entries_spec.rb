@@ -65,6 +65,6 @@ describe "Dir.entries" do
   end
 
   it "raises a SystemCallError if called with a nonexistent directory" do
-    -> { Dir.entries DirSpecs.nonexistent }.should raise_error(SystemCallError)
+    -> { Dir.entries DirSpecs.nonexistent }.should.raise(SystemCallError)
   end
 end

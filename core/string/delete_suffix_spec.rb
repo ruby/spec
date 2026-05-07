@@ -76,8 +76,8 @@ describe "String#delete_suffix!" do
   end
 
   it "raises a FrozenError when self is frozen" do
-    -> { 'hello'.freeze.delete_suffix!('ello') }.should raise_error(FrozenError)
-    -> { 'hello'.freeze.delete_suffix!('') }.should raise_error(FrozenError)
-    -> { ''.freeze.delete_suffix!('') }.should raise_error(FrozenError)
+    -> { 'hello'.freeze.delete_suffix!('ello') }.should.raise(FrozenError)
+    -> { 'hello'.freeze.delete_suffix!('') }.should.raise(FrozenError)
+    -> { ''.freeze.delete_suffix!('') }.should.raise(FrozenError)
   end
 end

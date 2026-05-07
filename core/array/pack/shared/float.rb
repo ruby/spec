@@ -14,7 +14,7 @@ describe :array_pack_float_le, shared: true do
   end
 
   it "raises a TypeError if passed a String representation of a floating point number" do
-    -> { ["13"].pack(pack_format) }.should raise_error(TypeError)
+    -> { ["13"].pack(pack_format) }.should.raise(TypeError)
   end
 
   it "encodes the number of array elements specified by the count modifier" do
@@ -28,7 +28,7 @@ describe :array_pack_float_le, shared: true do
   it "raise ArgumentError for NULL bytes between directives" do
     -> {
       [5.3, 9.2].pack(pack_format("\000", 2))
-    }.should raise_error(ArgumentError, /unknown pack directive/)
+    }.should.raise(ArgumentError, /unknown pack directive/)
   end
 
   it "ignores spaces between directives" do
@@ -84,7 +84,7 @@ describe :array_pack_float_be, shared: true do
   end
 
   it "raises a TypeError if passed a String representation of a floating point number" do
-    -> { ["13"].pack(pack_format) }.should raise_error(TypeError)
+    -> { ["13"].pack(pack_format) }.should.raise(TypeError)
   end
 
   it "encodes the number of array elements specified by the count modifier" do
@@ -98,7 +98,7 @@ describe :array_pack_float_be, shared: true do
   it "raise ArgumentError for NULL bytes between directives" do
     -> {
       [5.3, 9.2].pack(pack_format("\000", 2))
-    }.should raise_error(ArgumentError, /unknown pack directive/)
+    }.should.raise(ArgumentError, /unknown pack directive/)
   end
 
   it "ignores spaces between directives" do
@@ -146,7 +146,7 @@ describe :array_pack_double_le, shared: true do
   end
 
   it "raises a TypeError if passed a String representation of a floating point number" do
-    -> { ["13"].pack(pack_format) }.should raise_error(TypeError)
+    -> { ["13"].pack(pack_format) }.should.raise(TypeError)
   end
 
   it "encodes the number of array elements specified by the count modifier" do
@@ -160,7 +160,7 @@ describe :array_pack_double_le, shared: true do
   it "raise ArgumentError for NULL bytes between directives" do
     -> {
       [5.3, 9.2].pack(pack_format("\000", 2))
-    }.should raise_error(ArgumentError, /unknown pack directive/)
+    }.should.raise(ArgumentError, /unknown pack directive/)
   end
 
   it "ignores spaces between directives" do
@@ -207,7 +207,7 @@ describe :array_pack_double_be, shared: true do
   end
 
   it "raises a TypeError if passed a String representation of a floating point number" do
-    -> { ["13"].pack(pack_format) }.should raise_error(TypeError)
+    -> { ["13"].pack(pack_format) }.should.raise(TypeError)
   end
 
   it "encodes the number of array elements specified by the count modifier" do
@@ -221,7 +221,7 @@ describe :array_pack_double_be, shared: true do
   it "raise ArgumentError for NULL bytes between directives" do
     -> {
       [5.3, 9.2].pack(pack_format("\000", 2))
-    }.should raise_error(ArgumentError, /unknown pack directive/)
+    }.should.raise(ArgumentError, /unknown pack directive/)
   end
 
   it "ignores spaces between directives" do

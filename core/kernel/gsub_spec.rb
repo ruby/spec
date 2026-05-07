@@ -13,7 +13,7 @@ ruby_version_is ""..."1.9" do
       -> {
         $_ = 123
         gsub(/./, "!")
-      }.should raise_error(TypeError)
+      }.should.raise(TypeError)
     end
 
     it "when matches sets $_ to a new string, leaving the former value unaltered" do

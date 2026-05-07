@@ -7,14 +7,14 @@ describe "Pathname.new" do
   end
 
   it "raises an ArgumentError when called with \0" do
-    -> { Pathname.new("\0")}.should raise_error(ArgumentError)
+    -> { Pathname.new("\0")}.should.raise(ArgumentError)
   end
 
   it "raises a TypeError if not passed a String type" do
-    -> { Pathname.new(nil)   }.should raise_error(TypeError)
-    -> { Pathname.new(0)     }.should raise_error(TypeError)
-    -> { Pathname.new(true)  }.should raise_error(TypeError)
-    -> { Pathname.new(false) }.should raise_error(TypeError)
+    -> { Pathname.new(nil)   }.should.raise(TypeError)
+    -> { Pathname.new(0)     }.should.raise(TypeError)
+    -> { Pathname.new(true)  }.should.raise(TypeError)
+    -> { Pathname.new(false) }.should.raise(TypeError)
   end
 
   it "initializes with an object with to_path" do

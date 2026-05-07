@@ -57,15 +57,15 @@ describe "Rational#truncate" do
 
   describe "with an invalid value for precision" do
     it "raises a TypeError" do
-      -> { @rational.truncate(nil) }.should raise_error(TypeError, "not an integer")
-      -> { @rational.truncate(1.0) }.should raise_error(TypeError, "not an integer")
-      -> { @rational.truncate('') }.should raise_error(TypeError, "not an integer")
+      -> { @rational.truncate(nil) }.should.raise(TypeError, "not an integer")
+      -> { @rational.truncate(1.0) }.should.raise(TypeError, "not an integer")
+      -> { @rational.truncate('') }.should.raise(TypeError, "not an integer")
     end
 
     it "does not call to_int on the argument" do
       object = Object.new
       object.should_not_receive(:to_int)
-      -> { @rational.truncate(object) }.should raise_error(TypeError, "not an integer")
+      -> { @rational.truncate(object) }.should.raise(TypeError, "not an integer")
     end
   end
 end

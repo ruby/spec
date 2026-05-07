@@ -6,24 +6,24 @@ describe "Regexp#initialize" do
   end
 
   it "raises a FrozenError on a Regexp literal" do
-    -> { //.send(:initialize, "") }.should raise_error(FrozenError)
+    -> { //.send(:initialize, "") }.should.raise(FrozenError)
   end
 
   ruby_version_is "4.1" do
     it "raises a FrozenError on an initialized non-literal Regexp" do
       regexp = Regexp.new("")
-      -> { regexp.send(:initialize, "") }.should raise_error(FrozenError)
+      -> { regexp.send(:initialize, "") }.should.raise(FrozenError)
     end
   end
 
   ruby_version_is ""..."4.1" do
     it "raises a TypeError on an initialized non-literal Regexp" do
-      -> { Regexp.new("").send(:initialize, "") }.should raise_error(TypeError)
+      -> { Regexp.new("").send(:initialize, "") }.should.raise(TypeError)
     end
   end
 
   it "raises a TypeError on an initialized non-literal Regexp subclass" do
     r = Class.new(Regexp).new("")
-    -> { r.send(:initialize, "") }.should raise_error(TypeError)
+    -> { r.send(:initialize, "") }.should.raise(TypeError)
   end
 end

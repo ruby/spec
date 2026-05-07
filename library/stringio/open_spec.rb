@@ -135,7 +135,7 @@ describe "StringIO.open when passed [Object, mode]" do
   end
 
   it "raises a FrozenError when passed a frozen String in truncate mode as StringIO backend" do
-    -> { StringIO.open("example".freeze, IO::TRUNC) }.should raise_error(FrozenError)
+    -> { StringIO.open("example".freeze, IO::TRUNC) }.should.raise(FrozenError)
   end
 
   it "tries to convert the passed mode to a String using #to_str" do
@@ -149,9 +149,9 @@ describe "StringIO.open when passed [Object, mode]" do
 
   it "raises an Errno::EACCES error when passed a frozen string with a write-mode" do
     (str = "example").freeze
-    -> { StringIO.open(str, "r+") }.should raise_error(Errno::EACCES)
-    -> { StringIO.open(str, "w") }.should raise_error(Errno::EACCES)
-    -> { StringIO.open(str, "a") }.should raise_error(Errno::EACCES)
+    -> { StringIO.open(str, "r+") }.should.raise(Errno::EACCES)
+    -> { StringIO.open(str, "w") }.should.raise(Errno::EACCES)
+    -> { StringIO.open(str, "a") }.should.raise(Errno::EACCES)
   end
 end
 

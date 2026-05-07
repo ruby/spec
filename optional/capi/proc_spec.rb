@@ -36,7 +36,7 @@ describe "C-API Proc function" do
     it "calls the C function with arguments in argv" do
       @prc2.call(1, :foo).should == :foo
       @prc2.call(2, :foo, :bar).should == :bar
-      -> { @prc2.call(3, :foo, :bar) }.should raise_error(ArgumentError)
+      -> { @prc2.call(3, :foo, :bar) }.should.raise(ArgumentError)
     end
 
     it "calls the C function with the block passed in blockarg" do
@@ -95,7 +95,7 @@ describe "C-API Proc function" do
     it "raises TypeError if the last argument is not a Hash" do
       -> {
         @p.rb_proc_call_kw(proc {}, [42])
-      }.should raise_error(TypeError, 'no implicit conversion of Integer into Hash')
+      }.should.raise(TypeError, 'no implicit conversion of Integer into Hash')
     end
   end
 
@@ -125,7 +125,7 @@ describe "C-API Proc function" do
     it "raises TypeError if the last argument is not a Hash" do
       -> {
         @p.rb_proc_call_with_block_kw(proc {}, [42], proc {})
-      }.should raise_error(TypeError, 'no implicit conversion of Integer into Hash')
+      }.should.raise(TypeError, 'no implicit conversion of Integer into Hash')
     end
 
     it "passes keyword arguments to the proc when a block is nil" do
@@ -172,13 +172,13 @@ describe "C-API when calling Proc.new from a C function" do
   it "raises an ArgumentError when the C function calls a Ruby method that calls Proc.new" do
     -> {
       @p.rb_Proc_new(2) { :called }
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   # Ruby -> C -> Ruby -> C -> rb_funcall(Proc.new)
   it "raises an ArgumentError when the C function calls a Ruby method and that method calls a C function that calls Proc.new" do
     def @p.redispatch() rb_Proc_new(0) end
-    -> { @p.rb_Proc_new(3) { :called } }.should raise_error(ArgumentError)
+    -> { @p.rb_Proc_new(3) { :called } }.should.raise(ArgumentError)
   end
 
   # Ruby -> C -> Ruby -> block_given?

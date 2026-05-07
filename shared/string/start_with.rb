@@ -26,9 +26,9 @@ describe :start_with, shared: true do
 
   it "ignores arguments not convertible to string" do
     "hello".send(@method).should_not.start_with?()
-    -> { "hello".send(@method).start_with?(1) }.should raise_error(TypeError)
-    -> { "hello".send(@method).start_with?(["h"]) }.should raise_error(TypeError)
-    -> { "hello".send(@method).start_with?(1, nil, "h") }.should raise_error(TypeError)
+    -> { "hello".send(@method).start_with?(1) }.should.raise(TypeError)
+    -> { "hello".send(@method).start_with?(["h"]) }.should.raise(TypeError)
+    -> { "hello".send(@method).start_with?(1, nil, "h") }.should.raise(TypeError)
   end
 
   it "uses only the needed arguments" do

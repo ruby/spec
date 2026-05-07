@@ -21,7 +21,7 @@ describe :kernel_require_basic, shared: true do
     it "raises a LoadError if the file does not exist" do
       path = File.expand_path "nonexistent.rb", CODE_LOADING_DIR
       File.should_not.exist?(path)
-      -> { @object.send(@method, path) }.should raise_error(LoadError)
+      -> { @object.send(@method, path) }.should.raise(LoadError)
       ScratchPad.recorded.should == []
     end
 
@@ -42,7 +42,7 @@ describe :kernel_require_basic, shared: true do
 
           it "raises a LoadError" do
             File.should.exist?(@path)
-            -> { @object.send(@method, @path) }.should raise_error(LoadError)
+            -> { @object.send(@method, @path) }.should.raise(LoadError)
           end
         end
       end
@@ -57,19 +57,19 @@ describe :kernel_require_basic, shared: true do
     end
 
     it "raises a TypeError if passed nil" do
-      -> { @object.send(@method, nil) }.should raise_error(TypeError)
+      -> { @object.send(@method, nil) }.should.raise(TypeError)
     end
 
     it "raises a TypeError if passed an Integer" do
-      -> { @object.send(@method, 42) }.should raise_error(TypeError)
+      -> { @object.send(@method, 42) }.should.raise(TypeError)
     end
 
     it "raises a TypeError if passed an Array" do
-      -> { @object.send(@method, []) }.should raise_error(TypeError)
+      -> { @object.send(@method, []) }.should.raise(TypeError)
     end
 
     it "raises a TypeError if passed an object that does not provide #to_str" do
-      -> { @object.send(@method, mock("not a filename")) }.should raise_error(TypeError)
+      -> { @object.send(@method, mock("not a filename")) }.should.raise(TypeError)
     end
 
     it "raises a TypeError if passed an object that has #to_s but not #to_str" do
@@ -77,14 +77,14 @@ describe :kernel_require_basic, shared: true do
       name.stub!(:to_s).and_return("load_fixture.rb")
       $LOAD_PATH << "."
       Dir.chdir CODE_LOADING_DIR do
-        -> { @object.send(@method, name) }.should raise_error(TypeError)
+        -> { @object.send(@method, name) }.should.raise(TypeError)
       end
     end
 
     it "raises a TypeError if #to_str does not return a String" do
       name = mock("#to_str returns nil")
       name.should_receive(:to_str).at_least(1).times.and_return(nil)
-      -> { @object.send(@method, name) }.should raise_error(TypeError)
+      -> { @object.send(@method, name) }.should.raise(TypeError)
     end
 
     it "calls #to_path on non-String objects" do
@@ -180,7 +180,7 @@ describe :kernel_require_basic, shared: true do
       $LOAD_PATH << CODE_LOADING_DIR
       -> do
         @object.send(@method, "./load_fixture.rb")
-      end.should raise_error(LoadError)
+      end.should.raise(LoadError)
       ScratchPad.recorded.should == []
     end
 
@@ -188,7 +188,7 @@ describe :kernel_require_basic, shared: true do
       $LOAD_PATH << CODE_LOADING_DIR
       -> do
         @object.send(@method, "../code/load_fixture.rb")
-      end.should raise_error(LoadError)
+      end.should.raise(LoadError)
       ScratchPad.recorded.should == []
     end
 
@@ -223,7 +223,7 @@ describe :kernel_require, shared: true do
       it "loads c-extension file when passed absolute path without extension when no .rb is present" do
         # the error message is specific to what dlerror() returns
         path = File.join CODE_LOADING_DIR, "a", "load_fixture"
-        -> { @object.send(@method, path) }.should raise_error(LoadError)
+        -> { @object.send(@method, path) }.should.raise(LoadError)
       end
     end
 
@@ -231,20 +231,20 @@ describe :kernel_require, shared: true do
       it "loads .bundle file when passed absolute path with .so" do
         # the error message is specific to what dlerror() returns
         path = File.join CODE_LOADING_DIR, "a", "load_fixture.so"
-        -> { @object.send(@method, path) }.should raise_error(LoadError)
+        -> { @object.send(@method, path) }.should.raise(LoadError)
       end
     end
 
     it "does not try an extra .rb if the path already ends in .rb" do
       path = File.join CODE_LOADING_DIR, "d", "load_fixture.rb"
-      -> { @object.send(@method, path) }.should raise_error(LoadError)
+      -> { @object.send(@method, path) }.should.raise(LoadError)
     end
 
     # For reference see [ruby-core:24155] in which matz confirms this feature is
     # intentional for security reasons.
     it "does not load a bare filename unless the current working directory is in $LOAD_PATH" do
       Dir.chdir CODE_LOADING_DIR do
-        -> { @object.require("load_fixture.rb") }.should raise_error(LoadError)
+        -> { @object.require("load_fixture.rb") }.should.raise(LoadError)
         ScratchPad.recorded.should == []
       end
     end
@@ -253,7 +253,7 @@ describe :kernel_require, shared: true do
       Dir.chdir File.dirname(CODE_LOADING_DIR) do
         -> do
           @object.require("code/load_fixture.rb")
-        end.should raise_error(LoadError)
+        end.should.raise(LoadError)
         ScratchPad.recorded.should == []
       end
     end
@@ -300,7 +300,7 @@ describe :kernel_require, shared: true do
 
       -> {
         @object.send(@method, path)
-      }.should raise_error(LoadError) { |e|
+      }.should.raise(LoadError) { |e|
         e.path.should == path
       }
     end
@@ -445,7 +445,7 @@ describe :kernel_require, shared: true do
     it "does not store the path if the load fails" do
       $LOAD_PATH << CODE_LOADING_DIR
       saved_loaded_features = $LOADED_FEATURES.dup
-      -> { @object.require("raise_fixture.rb") }.should raise_error(RuntimeError)
+      -> { @object.require("raise_fixture.rb") }.should.raise(RuntimeError)
       $LOADED_FEATURES.should == saved_loaded_features
     end
 
@@ -597,7 +597,7 @@ describe :kernel_require, shared: true do
         feature.should_not.include?("unicode_normalize")
       }
 
-      -> { @object.require("unicode_normalize") }.should raise_error(LoadError)
+      -> { @object.require("unicode_normalize") }.should.raise(LoadError)
     end
 
     it "does not load a file earlier on the $LOAD_PATH when other similar features were already loaded" do
@@ -738,7 +738,7 @@ describe :kernel_require, shared: true do
 
         -> {
           @object.require(@path)
-        }.should raise_error(RuntimeError)
+        }.should.raise(RuntimeError)
 
         Thread.pass until fin
         ScratchPad.recorded << :t1_post
@@ -779,7 +779,7 @@ describe :kernel_require, shared: true do
 
         -> {
           @object.require(@path)
-        }.should raise_error(RuntimeError)
+        }.should.raise(RuntimeError)
 
         raised = true
 
@@ -819,7 +819,7 @@ describe :kernel_require, shared: true do
 
     -> {
       @object.send(@method, path)
-    }.should raise_error(LoadError) { |e|
+    }.should.raise(LoadError) { |e|
       e.path.should == path
     }
   end
@@ -828,7 +828,7 @@ describe :kernel_require, shared: true do
     it "does not store the missing path in a LoadError object when c-extension file exists but loading fails and passed absolute path without extension" do
       # the error message is specific to what dlerror() returns
       path = File.join CODE_LOADING_DIR, "a", "load_fixture"
-      -> { @object.send(@method, path) }.should raise_error(LoadError) { |e|
+      -> { @object.send(@method, path) }.should.raise(LoadError) { |e|
         e.path.should == nil
       }
     end
@@ -838,7 +838,7 @@ describe :kernel_require, shared: true do
     it "does not store the missing path in a LoadError object when c-extension file exists but loading fails and passed absolute path with extension" do
       # the error message is specific to what dlerror() returns
       path = File.join CODE_LOADING_DIR, "a", "load_fixture.bundle"
-      -> { @object.send(@method, path) }.should raise_error(LoadError) { |e|
+      -> { @object.send(@method, path) }.should.raise(LoadError) { |e|
         e.path.should == nil
       }
     end

@@ -52,12 +52,12 @@ describe "Enumerator::Lazy#initialize" do
   end
 
   it "raises an ArgumentError when block is not given" do
-    -> {  @uninitialized.send :initialize, @receiver }.should raise_error(ArgumentError)
+    -> {  @uninitialized.send :initialize, @receiver }.should.raise(ArgumentError)
   end
 
   describe "on frozen instance" do
     it "raises a FrozenError" do
-      -> {  @uninitialized.freeze.send(:initialize, @receiver) {} }.should raise_error(FrozenError)
+      -> {  @uninitialized.freeze.send(:initialize, @receiver) {} }.should.raise(FrozenError)
     end
   end
 end

@@ -239,11 +239,11 @@ describe :stringio_gets_write_only, shared: true do
   describe "when in write-only mode" do
     it "raises an IOError" do
       io = StringIO.new(+"xyz", "w")
-      -> { io.send(@method) }.should raise_error(IOError)
+      -> { io.send(@method) }.should.raise(IOError)
 
       io = StringIO.new("xyz")
       io.close_read
-      -> { io.send(@method) }.should raise_error(IOError)
+      -> { io.send(@method) }.should.raise(IOError)
     end
   end
 end

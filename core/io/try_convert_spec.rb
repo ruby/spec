@@ -44,6 +44,6 @@ describe "IO.try_convert" do
   it "propagates an exception raised by #to_io" do
     obj = mock("io")
     obj.should_receive(:to_io).and_raise(TypeError.new)
-    ->{ IO.try_convert(obj) }.should raise_error(TypeError)
+    ->{ IO.try_convert(obj) }.should.raise(TypeError)
   end
 end

@@ -39,7 +39,7 @@ describe :thread_abort_on_exception, shared: true do
         ThreadSpecs.state = :run
         # Wait for the main thread to be interrupted
         sleep
-      end.should raise_error(RuntimeError, "Thread#abort_on_exception= specs")
+      end.should.raise(RuntimeError, "Thread#abort_on_exception= specs")
 
       ScratchPad << :after
     rescue Exception => e

@@ -94,7 +94,7 @@ describe "BasicObject#singleton_method_added" do
         -> {
           def self.foo
           end
-        }.should raise_error(NoMethodError, /undefined method [`']singleton_method_added' for/)
+        }.should.raise(NoMethodError, /undefined method [`']singleton_method_added' for/)
       end
     ensure
       BasicObjectSpecs.send(:remove_const, :NoSingletonMethodAdded)
@@ -108,16 +108,16 @@ describe "BasicObject#singleton_method_added" do
         -> {
           def foo
           end
-        }.should raise_error(NoMethodError, /undefined method [`']singleton_method_added' for #<Object:/)
+        }.should.raise(NoMethodError, /undefined method [`']singleton_method_added' for #<Object:/)
 
         -> {
           define_method(:bar) {}
-        }.should raise_error(NoMethodError, /undefined method [`']singleton_method_added' for #<Object:/)
+        }.should.raise(NoMethodError, /undefined method [`']singleton_method_added' for #<Object:/)
       end
 
       -> {
         object.define_singleton_method(:baz) {}
-      }.should raise_error(NoMethodError, /undefined method [`']singleton_method_added' for #<Object:/)
+      }.should.raise(NoMethodError, /undefined method [`']singleton_method_added' for #<Object:/)
     end
 
     it "calls #method_missing" do

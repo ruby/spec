@@ -14,7 +14,7 @@ describe "Mutex#synchronize" do
           m2.lock
           raise Exception
         end
-      end.should raise_error(Exception)
+      end.should.raise(Exception)
     end
 
     Thread.pass until synchronized
@@ -60,7 +60,7 @@ describe "Mutex#synchronize" do
     m = Mutex.new
 
     m.synchronize do
-      -> { m.synchronize { } }.should raise_error(ThreadError)
+      -> { m.synchronize { } }.should.raise(ThreadError)
     end
   end
 end

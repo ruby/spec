@@ -34,10 +34,10 @@ describe "Module#method_defined?" do
     c = Class.new
     o = mock('123')
 
-    -> { c.method_defined?(o) }.should raise_error(TypeError)
+    -> { c.method_defined?(o) }.should.raise(TypeError)
 
     o.should_receive(:to_str).and_return(123)
-    -> { c.method_defined?(o) }.should raise_error(TypeError)
+    -> { c.method_defined?(o) }.should.raise(TypeError)
   end
 
   it "converts the given name to a string using to_str" do

@@ -147,16 +147,16 @@ describe "String#sub with pattern, replacement" do
 
   not_supported_on :opal do
     it "raises a TypeError when pattern is a Symbol" do
-      -> { "hello".sub(:woot, "x") }.should raise_error(TypeError)
+      -> { "hello".sub(:woot, "x") }.should.raise(TypeError)
     end
   end
 
   it "raises a TypeError when pattern is an Array" do
-    -> { "hello".sub([], "x") }.should raise_error(TypeError)
+    -> { "hello".sub([], "x") }.should.raise(TypeError)
   end
 
   it "raises a TypeError when pattern can't be converted to a string" do
-    -> { "hello".sub(Object.new, nil) }.should raise_error(TypeError)
+    -> { "hello".sub(Object.new, nil) }.should.raise(TypeError)
   end
 
   it "tries to convert replacement to a string using to_str" do
@@ -167,8 +167,8 @@ describe "String#sub with pattern, replacement" do
   end
 
   it "raises a TypeError when replacement can't be converted to a string" do
-    -> { "hello".sub(/[aeiou]/, []) }.should raise_error(TypeError)
-    -> { "hello".sub(/[aeiou]/, 99) }.should raise_error(TypeError)
+    -> { "hello".sub(/[aeiou]/, []) }.should.raise(TypeError)
+    -> { "hello".sub(/[aeiou]/, 99) }.should.raise(TypeError)
   end
 
   it "returns String instances when called on a subclass" do
@@ -296,9 +296,9 @@ describe "String#sub! with pattern, replacement" do
     s = "hello"
     s.freeze
 
-    -> { s.sub!(/ROAR/, "x")    }.should raise_error(FrozenError)
-    -> { s.sub!(/e/, "e")       }.should raise_error(FrozenError)
-    -> { s.sub!(/[aeiou]/, '*') }.should raise_error(FrozenError)
+    -> { s.sub!(/ROAR/, "x")    }.should.raise(FrozenError)
+    -> { s.sub!(/e/, "e")       }.should.raise(FrozenError)
+    -> { s.sub!(/[aeiou]/, '*') }.should.raise(FrozenError)
   end
 
   it "handles a pattern in a superset encoding" do
@@ -357,16 +357,16 @@ describe "String#sub! with pattern and block" do
 
   it "raises a RuntimeError if the string is modified while substituting" do
     str = "hello"
-    -> { str.sub!(//) { str << 'x' } }.should raise_error(RuntimeError)
+    -> { str.sub!(//) { str << 'x' } }.should.raise(RuntimeError)
   end
 
   it "raises a FrozenError when self is frozen" do
     s = "hello"
     s.freeze
 
-    -> { s.sub!(/ROAR/) { "x" }    }.should raise_error(FrozenError)
-    -> { s.sub!(/e/) { "e" }       }.should raise_error(FrozenError)
-    -> { s.sub!(/[aeiou]/) { '*' } }.should raise_error(FrozenError)
+    -> { s.sub!(/ROAR/) { "x" }    }.should.raise(FrozenError)
+    -> { s.sub!(/e/) { "e" }       }.should.raise(FrozenError)
+    -> { s.sub!(/[aeiou]/) { '*' } }.should.raise(FrozenError)
   end
 end
 
@@ -501,12 +501,12 @@ end
 
 describe "String#sub with pattern and without replacement and block" do
   it "raises a ArgumentError" do
-    -> { "abca".sub(/a/) }.should raise_error(ArgumentError)
+    -> { "abca".sub(/a/) }.should.raise(ArgumentError)
   end
 end
 
 describe "String#sub! with pattern and without replacement and block" do
   it "raises a ArgumentError" do
-    -> { "abca".sub!(/a/) }.should raise_error(ArgumentError)
+    -> { "abca".sub!(/a/) }.should.raise(ArgumentError)
   end
 end

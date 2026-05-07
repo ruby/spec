@@ -8,11 +8,11 @@ describe :marshal_load, shared: true do
 
   it "raises an ArgumentError when the dumped data is truncated" do
     obj = {first: 1, second: 2, third: 3}
-    -> { Marshal.send(@method, Marshal.dump(obj)[0, 5]) }.should raise_error(ArgumentError, "marshal data too short")
+    -> { Marshal.send(@method, Marshal.dump(obj)[0, 5]) }.should.raise(ArgumentError, "marshal data too short")
   end
 
   it "raises an ArgumentError when the argument is empty String" do
-    -> { Marshal.send(@method, "") }.should raise_error(ArgumentError, "marshal data too short")
+    -> { Marshal.send(@method, "") }.should.raise(ArgumentError, "marshal data too short")
   end
 
   it "raises an ArgumentError when the dumped class is missing" do
@@ -20,7 +20,7 @@ describe :marshal_load, shared: true do
     kaboom = Marshal.dump(KaBoom.new)
     Object.send(:remove_const, :KaBoom)
 
-    -> { Marshal.send(@method, kaboom) }.should raise_error(ArgumentError)
+    -> { Marshal.send(@method, kaboom) }.should.raise(ArgumentError)
   end
 
   describe "when called with freeze: true" do
@@ -403,20 +403,20 @@ describe :marshal_load, shared: true do
     marshal_data[0] = (Marshal::MAJOR_VERSION).chr
     marshal_data[1] = (Marshal::MINOR_VERSION + 1).chr
 
-    -> { Marshal.send(@method, marshal_data) }.should raise_error(TypeError)
+    -> { Marshal.send(@method, marshal_data) }.should.raise(TypeError)
 
     marshal_data = +'\xff\xff'
     marshal_data[0] = (Marshal::MAJOR_VERSION - 1).chr
     marshal_data[1] = (Marshal::MINOR_VERSION).chr
 
-    -> { Marshal.send(@method, marshal_data) }.should raise_error(TypeError)
+    -> { Marshal.send(@method, marshal_data) }.should.raise(TypeError)
   end
 
   it "raises EOFError on loading an empty file" do
     temp_file = tmp("marshal.rubyspec.tmp.#{Process.pid}")
     file = File.new(temp_file, "w+")
     begin
-      -> { Marshal.send(@method, file) }.should raise_error(EOFError)
+      -> { Marshal.send(@method, file) }.should.raise(EOFError)
     ensure
       file.close
       rm_r temp_file
@@ -613,7 +613,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\x04\b:\nhel")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -633,7 +633,7 @@ describe :marshal_load, shared: true do
     it "sets binmode if it is loading through StringIO stream" do
       io = StringIO.new("\004\b:\vsymbol")
       def io.binmode; raise "binmode"; end
-      -> { Marshal.load(io) }.should raise_error(RuntimeError, "binmode")
+      -> { Marshal.load(io) }.should.raise(RuntimeError, "binmode")
     end
 
     it "loads a string with an ivar" do
@@ -683,7 +683,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\x04\b\"\nhel")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -843,7 +843,7 @@ describe :marshal_load, shared: true do
     it "raises ArgumentError if the object from an 'o' stream is not dumpable as 'o' type user class" do
       -> do
         Marshal.send(@method, "\x04\bo:\tFile\001\001:\001\005@path\"\x10/etc/passwd")
-      end.should raise_error(ArgumentError)
+      end.should.raise(ArgumentError)
     end
 
     it "raises ArgumentError when end of byte sequence reached before class name end" do
@@ -851,7 +851,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\x04\bo:\vObj")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -892,10 +892,10 @@ describe :marshal_load, shared: true do
         data = Marshal.dump(MarshalSpec::SwappedClass.new)
 
         MarshalSpec.set_swapped_class(Class.new(Array))
-        -> { Marshal.send(@method, data) }.should raise_error(ArgumentError)
+        -> { Marshal.send(@method, data) }.should.raise(ArgumentError)
 
         MarshalSpec.set_swapped_class(Class.new)
-        -> { Marshal.send(@method, data) }.should raise_error(ArgumentError)
+        -> { Marshal.send(@method, data) }.should.raise(ArgumentError)
       end
     end
   end
@@ -905,13 +905,13 @@ describe :marshal_load, shared: true do
       it "raises FrozenError for an extended Regexp" do
         -> {
           Marshal.send(@method, "\004\be:\nMethse:\016MethsMore/\n[a-z]\000")
-        }.should raise_error(FrozenError)
+        }.should.raise(FrozenError)
       end
 
       it "raises FrozenError when regexp has instance variables" do
         -> {
           Marshal.send(@method, "\x04\bI/\nhello\x00\a:\x06EF:\x11@regexp_ivar[\x06i/")
-        }.should raise_error(FrozenError)
+        }.should.raise(FrozenError)
       end
     end
 
@@ -975,7 +975,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\x04\bI/\x10hel")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -1004,7 +1004,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\004\bf\v1")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -1058,7 +1058,7 @@ describe :marshal_load, shared: true do
        "\004\bi\004\0",
        "\004\bi\004\0\0",
        "\004\bi\004\0\0\0"].each do |invalid|
-        -> { Marshal.send(@method, invalid) }.should raise_error(ArgumentError)
+        -> { Marshal.send(@method, invalid) }.should.raise(ArgumentError)
       end
     end
 
@@ -1189,11 +1189,11 @@ describe :marshal_load, shared: true do
     end
 
     it "raises ArgumentError if given the name of a non-Module" do
-      -> { Marshal.send(@method, "\x04\bc\vKernel") }.should raise_error(ArgumentError)
+      -> { Marshal.send(@method, "\x04\bc\vKernel") }.should.raise(ArgumentError)
     end
 
     it "raises ArgumentError if given a nonexistent class" do
-      -> { Marshal.send(@method, "\x04\bc\vStrung") }.should raise_error(ArgumentError)
+      -> { Marshal.send(@method, "\x04\bc\vStrung") }.should.raise(ArgumentError)
     end
 
     it "raises ArgumentError when end of byte sequence reached before class name end" do
@@ -1201,7 +1201,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\x04\bc\vStr")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -1211,7 +1211,7 @@ describe :marshal_load, shared: true do
     end
 
     it "raises ArgumentError if given the name of a non-Class" do
-      -> { Marshal.send(@method, "\x04\bm\vString") }.should raise_error(ArgumentError)
+      -> { Marshal.send(@method, "\x04\bm\vString") }.should.raise(ArgumentError)
     end
 
     it "loads an old module" do
@@ -1223,7 +1223,7 @@ describe :marshal_load, shared: true do
 
       -> {
         Marshal.send(@method, "\x04\bm\vKer")
-      }.should raise_error(ArgumentError, "marshal data too short")
+      }.should.raise(ArgumentError, "marshal data too short")
     end
   end
 
@@ -1258,13 +1258,13 @@ describe :marshal_load, shared: true do
 
       data = "\x04\bd:\x1AUnloadableDumpableDirI\"\x06.\x06:\x06ET"
 
-      -> { Marshal.send(@method, data) }.should raise_error(TypeError)
+      -> { Marshal.send(@method, data) }.should.raise(TypeError)
     end
 
     it "raises ArgumentError when the local class is a regular object" do
       data = "\004\bd:\020UserDefined\0"
 
-      -> { Marshal.send(@method, data) }.should raise_error(ArgumentError)
+      -> { Marshal.send(@method, data) }.should.raise(ArgumentError)
     end
   end
 
@@ -1277,7 +1277,7 @@ describe :marshal_load, shared: true do
 
     it "raises an ArgumentError" do
       message = "undefined class/module NamespaceTest::SameName"
-      -> { Marshal.send(@method, @data) }.should raise_error(ArgumentError, message)
+      -> { Marshal.send(@method, @data) }.should.raise(ArgumentError, message)
     end
   end
 
@@ -1286,6 +1286,6 @@ describe :marshal_load, shared: true do
     @data = Marshal.dump(NamespaceTest::KaBoom.new)
     NamespaceTest.send(:remove_const, :KaBoom)
 
-    -> { Marshal.send(@method, @data) }.should raise_error(ArgumentError, /NamespaceTest::KaBoom/)
+    -> { Marshal.send(@method, @data) }.should.raise(ArgumentError, /NamespaceTest::KaBoom/)
   end
 end

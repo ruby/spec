@@ -82,13 +82,13 @@ describe "Random#rand with Fixnum" do
   it "raises an ArgumentError when the argument is 0" do
     -> do
       Random.new.rand(0)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError when the argument is negative" do
     -> do
       Random.new.rand(-12)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 end
 
@@ -121,7 +121,7 @@ describe "Random#rand with Bignum" do
   it "raises an ArgumentError when the argument is negative" do
     -> do
       Random.new.rand(-bignum_value)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 end
 
@@ -153,7 +153,7 @@ describe "Random#rand with Float" do
   it "raises an ArgumentError when the argument is negative" do
     -> do
       Random.new.rand(-1.234567)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 end
 
@@ -213,12 +213,12 @@ describe "Random#rand with Range" do
   it "raises an ArgumentError when the startpoint lacks #+ and #- methods" do
     -> do
       Random.new.rand(Object.new..67)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError when the endpoint lacks #+ and #- methods" do
     -> do
       Random.new.rand(68..Object.new)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 end

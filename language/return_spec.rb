@@ -417,7 +417,7 @@ describe "The return keyword" do
           end
         END_OF_CODE
 
-        -> { load @filename }.should raise_error(SyntaxError)
+        -> { load @filename }.should.raise(SyntaxError)
       end
     end
 
@@ -431,7 +431,7 @@ describe "The return keyword" do
           end
         END_OF_CODE
 
-        -> { load @filename }.should raise_error(LocalJumpError)
+        -> { load @filename }.should.raise(LocalJumpError)
       end
     end
 

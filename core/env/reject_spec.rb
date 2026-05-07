@@ -41,7 +41,7 @@ describe "ENV.reject!" do
     orig = ENV.to_hash
     begin
       ENV.clear
-      -> { ENV.reject! }.should_not raise_error(LocalJumpError)
+      -> { ENV.reject! }.should_not.raise(LocalJumpError)
     ensure
       ENV.replace orig
     end
@@ -91,7 +91,7 @@ describe "ENV.reject" do
     orig = ENV.to_hash
     begin
       ENV.clear
-      -> { ENV.reject }.should_not raise_error(LocalJumpError)
+      -> { ENV.reject }.should_not.raise(LocalJumpError)
     ensure
       ENV.replace orig
     end

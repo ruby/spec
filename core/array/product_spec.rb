@@ -3,7 +3,7 @@ require_relative 'fixtures/classes'
 
 describe "Array#product" do
   it "returns converted arguments using :to_ary" do
-    ->{ [1].product(2..3) }.should raise_error(TypeError)
+    ->{ [1].product(2..3) }.should.raise(TypeError)
     ar = ArraySpecs::ArrayConvertible.new(2,3)
     [1].product(ar).should == [[1,2],[1,3]]
     ar.called.should == :to_ary
@@ -31,7 +31,7 @@ describe "Array#product" do
     a = (0..100).to_a
     -> do
       a.product(a, a, a, a, a, a, a, a, a, a)
-    end.should raise_error(RangeError)
+    end.should.raise(RangeError)
   end
 
   describe "when given a block" do
@@ -56,7 +56,7 @@ describe "Array#product" do
       a = (0..100).to_a
       -> do
         a.product(a, a, a, a, a, a, a, a, a, a)
-      end.should raise_error(RangeError)
+      end.should.raise(RangeError)
     end
   end
 

@@ -41,12 +41,12 @@ describe :array_unshift, shared: true do
   end
 
   it "raises a FrozenError on a frozen array when the array is modified" do
-    -> { ArraySpecs.frozen_array.send(@method, 1) }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.send(@method, 1) }.should.raise(FrozenError)
   end
 
   # see [ruby-core:23666]
   it "raises a FrozenError on a frozen array when the array would not be modified" do
-    -> { ArraySpecs.frozen_array.send(@method) }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.send(@method) }.should.raise(FrozenError)
   end
 
   # https://github.com/truffleruby/truffleruby/issues/2772

@@ -8,7 +8,7 @@ describe :process_fork, shared: true do
     end
 
     it "raises a NotImplementedError when called" do
-      -> { @object.fork }.should raise_error(NotImplementedError)
+      -> { @object.fork }.should.raise(NotImplementedError)
     end
   end
 

@@ -17,7 +17,7 @@ describe "IO#close_read" do
   it "closes the read end of a duplex I/O stream" do
     @io.close_read
 
-    -> { @io.read }.should raise_error(IOError)
+    -> { @io.read }.should.raise(IOError)
   end
 
   it "does nothing on subsequent invocations" do
@@ -29,14 +29,14 @@ describe "IO#close_read" do
   it "allows subsequent invocation of close" do
     @io.close_read
 
-    -> { @io.close }.should_not raise_error
+    -> { @io.close }.should_not.raise
   end
 
   it "raises an IOError if the stream is writable and not duplexed" do
     io = File.open @path, 'w'
 
     begin
-      -> { io.close_read }.should raise_error(IOError)
+      -> { io.close_read }.should.raise(IOError)
     ensure
       io.close unless io.closed?
     end

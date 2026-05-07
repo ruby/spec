@@ -46,6 +46,6 @@ describe "Array#compact!" do
   end
 
   it "raises a FrozenError on a frozen array" do
-    -> { ArraySpecs.frozen_array.compact! }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.compact! }.should.raise(FrozenError)
   end
 end

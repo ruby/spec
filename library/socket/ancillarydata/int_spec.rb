@@ -37,7 +37,7 @@ with_feature :ancillary_data do
     it 'raises when the data is not an Integer' do
       data = Socket::AncillaryData.new(:UNIX, :SOCKET, :RIGHTS, 'ugh')
 
-      -> { data.int }.should raise_error(TypeError)
+      -> { data.int }.should.raise(TypeError)
     end
   end
 end

@@ -11,7 +11,7 @@ platform_is :windows do
     end
 
     it "raises ArgumentError if argument is given" do
-      -> { @m_file_name.params(1) }.should raise_error ArgumentError
+      -> { @m_file_name.params(1) }.should.raise ArgumentError
     end
 
     it "returns empty array for Scripting Runtime's 'name' method" do

@@ -76,12 +76,12 @@ describe "Kernel#eval" do
     x = 1
     bind = proc {}
 
-    -> { eval("x", bind) }.should raise_error(TypeError)
+    -> { eval("x", bind) }.should.raise(TypeError)
   end
 
   it "does not make Proc locals visible to evaluated code" do
     bind = proc { inner = 4 }
-    -> { eval("inner", bind.binding) }.should raise_error(NameError)
+    -> { eval("inner", bind.binding) }.should.raise(NameError)
   end
 
   # REWRITE ME: This obscures the real behavior of where locals are stored
@@ -136,7 +136,7 @@ describe "Kernel#eval" do
     expected = 'speccing.rb'
     -> {
       eval('if true', TOPLEVEL_BINDING, expected)
-    }.should raise_error(SyntaxError) { |e|
+    }.should.raise(SyntaxError) { |e|
       e.message.should =~ /#{expected}:1:.+/
     }
   end
@@ -145,7 +145,7 @@ describe "Kernel#eval" do
     expected_file = 'speccing.rb'
     -> {
       eval('if true', TOPLEVEL_BINDING, expected_file, -100)
-    }.should raise_error(SyntaxError) { |e|
+    }.should.raise(SyntaxError) { |e|
       e.message.should =~ /#{expected_file}:-100:.+/
     }
   end
@@ -270,7 +270,7 @@ describe "Kernel#eval" do
   it "does not pass the block to the method being eval'ed" do
     -> {
       eval('KernelSpecs::EvalTest.call_yield') { "content" }
-    }.should raise_error(LocalJumpError)
+    }.should.raise(LocalJumpError)
   end
 
   it "returns from the scope calling #eval when evaluating 'return'" do

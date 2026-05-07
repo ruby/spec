@@ -16,13 +16,13 @@ describe "Enumerator#with_index" do
   it "accepts an optional argument when given a block" do
     -> do
       @enum.with_index(1) { |f| f}
-    end.should_not raise_error(ArgumentError)
+    end.should_not.raise(ArgumentError)
   end
 
   it "accepts an optional argument when not given a block" do
     -> do
       @enum.with_index(1)
-    end.should_not raise_error(ArgumentError)
+    end.should_not.raise(ArgumentError)
   end
 
   it "numbers indices from the given index when given an offset but no block" do
@@ -38,7 +38,7 @@ describe "Enumerator#with_index" do
   it "raises a TypeError when the argument cannot be converted to numeric" do
     -> do
       @enum.with_index('1') {|*i| i}
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "converts non-numeric arguments to Integer via #to_int" do

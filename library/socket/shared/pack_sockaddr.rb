@@ -86,7 +86,7 @@ describe :socket_pack_sockaddr_un, shared: true do
     it "raises ArgumentError for paths that are too long" do
       # AIX doesn't raise error
       long_path = 'a' * 110
-      -> { Socket.public_send(@method, long_path) }.should raise_error(ArgumentError)
+      -> { Socket.public_send(@method, long_path) }.should.raise(ArgumentError)
     end
   end
 end

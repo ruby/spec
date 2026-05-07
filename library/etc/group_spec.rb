@@ -21,7 +21,7 @@ describe "Etc.group" do
           Etc.group do | group2 |
           end
         end
-      }.should raise_error(RuntimeError)
+      }.should.raise(RuntimeError)
     end
   end
 end

@@ -26,10 +26,10 @@ describe "Set#superset?" do
   end
 
   it "raises an ArgumentError when passed a non-Set" do
-    -> { Set[].superset?([]) }.should raise_error(ArgumentError)
-    -> { Set[].superset?(1) }.should raise_error(ArgumentError)
-    -> { Set[].superset?("test") }.should raise_error(ArgumentError)
-    -> { Set[].superset?(Object.new) }.should raise_error(ArgumentError)
+    -> { Set[].superset?([]) }.should.raise(ArgumentError)
+    -> { Set[].superset?(1) }.should.raise(ArgumentError)
+    -> { Set[].superset?("test") }.should.raise(ArgumentError)
+    -> { Set[].superset?(Object.new) }.should.raise(ArgumentError)
   end
 
   ruby_version_is ""..."4.0" do

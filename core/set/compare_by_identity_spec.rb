@@ -95,7 +95,7 @@ describe "Set#compare_by_identity" do
       set = Set.new.freeze
       -> {
         set.compare_by_identity
-      }.should raise_error(FrozenError, /can't modify frozen Set: (#<)?Set(\[|: {)[\]}]>?/)
+      }.should.raise(FrozenError, /can't modify frozen Set: (#<)?Set(\[|: {)[\]}]>?/)
     end
   end
 
@@ -104,7 +104,7 @@ describe "Set#compare_by_identity" do
       set = Set.new.freeze
       -> {
         set.compare_by_identity
-      }.should raise_error(FrozenError, /frozen Hash/)
+      }.should.raise(FrozenError, /frozen Hash/)
     end
   end
 

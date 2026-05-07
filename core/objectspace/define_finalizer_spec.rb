@@ -13,7 +13,7 @@ describe "ObjectSpace.define_finalizer" do
   it "raises an ArgumentError if the action does not respond to call" do
     -> {
       ObjectSpace.define_finalizer(Object.new, mock("ObjectSpace.define_finalizer no #call"))
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "accepts an object and a proc" do
@@ -42,7 +42,7 @@ describe "ObjectSpace.define_finalizer" do
   it "raises ArgumentError trying to define a finalizer on a non-reference" do
     -> {
       ObjectSpace.define_finalizer(:blah) { 1 }
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   # see [ruby-core:24095]

@@ -5,14 +5,14 @@ describe 'UNIXSocket#initialize' do
   describe 'using a non existing path' do
     platform_is_not :windows do
       it 'raises Errno::ENOENT' do
-        -> { UNIXSocket.new(SocketSpecs.socket_path) }.should raise_error(Errno::ENOENT)
+        -> { UNIXSocket.new(SocketSpecs.socket_path) }.should.raise(Errno::ENOENT)
       end
     end
 
     platform_is :windows do
       # Why, Windows, why?
       it 'raises Errno::ECONNREFUSED' do
-        -> { UNIXSocket.new(SocketSpecs.socket_path) }.should raise_error(Errno::ECONNREFUSED)
+        -> { UNIXSocket.new(SocketSpecs.socket_path) }.should.raise(Errno::ECONNREFUSED)
       end
     end
   end

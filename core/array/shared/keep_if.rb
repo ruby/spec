@@ -38,29 +38,29 @@ describe :keep_if, shared: true do
 
     describe "with truthy block" do
       it "keeps elements after any exception" do
-        -> { @frozen.send(@method) { true } }.should raise_error(Exception)
+        -> { @frozen.send(@method) { true } }.should.raise(Exception)
         @frozen.should == @origin
       end
 
       it "raises a FrozenError" do
-        -> { @frozen.send(@method) { true } }.should raise_error(FrozenError)
+        -> { @frozen.send(@method) { true } }.should.raise(FrozenError)
       end
     end
 
     describe "with falsy block" do
       it "keeps elements after any exception" do
-        -> { @frozen.send(@method) { false } }.should raise_error(Exception)
+        -> { @frozen.send(@method) { false } }.should.raise(Exception)
         @frozen.should == @origin
       end
 
       it "raises a FrozenError" do
-        -> { @frozen.send(@method) { false } }.should raise_error(FrozenError)
+        -> { @frozen.send(@method) { false } }.should.raise(FrozenError)
       end
     end
 
     it "raises a FrozenError on a frozen array only during iteration if called without a block" do
       enum = @frozen.send(@method)
-      -> { enum.each {} }.should raise_error(FrozenError)
+      -> { enum.each {} }.should.raise(FrozenError)
     end
   end
 

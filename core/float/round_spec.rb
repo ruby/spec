@@ -16,9 +16,9 @@ describe "Float#round" do
   end
 
   it "raises FloatDomainError for exceptional values" do
-    -> { (+infinity_value).round }.should raise_error(FloatDomainError)
-    -> { (-infinity_value).round }.should raise_error(FloatDomainError)
-    -> { nan_value.round }.should raise_error(FloatDomainError)
+    -> { (+infinity_value).round }.should.raise(FloatDomainError)
+    -> { (-infinity_value).round }.should.raise(FloatDomainError)
+    -> { nan_value.round }.should.raise(FloatDomainError)
   end
 
   it "rounds self to an optionally given precision" do
@@ -40,20 +40,20 @@ describe "Float#round" do
   end
 
   it "raises a TypeError when its argument can not be converted to an Integer" do
-    -> { 1.0.round("4") }.should raise_error(TypeError)
-    -> { 1.0.round(nil) }.should raise_error(TypeError)
+    -> { 1.0.round("4") }.should.raise(TypeError)
+    -> { 1.0.round(nil) }.should.raise(TypeError)
   end
 
   it "raises FloatDomainError for exceptional values when passed a non-positive precision" do
-    -> { Float::INFINITY.round( 0) }.should raise_error(FloatDomainError)
-    -> { Float::INFINITY.round(-2) }.should raise_error(FloatDomainError)
-    -> { (-Float::INFINITY).round( 0) }.should raise_error(FloatDomainError)
-    -> { (-Float::INFINITY).round(-2) }.should raise_error(FloatDomainError)
+    -> { Float::INFINITY.round( 0) }.should.raise(FloatDomainError)
+    -> { Float::INFINITY.round(-2) }.should.raise(FloatDomainError)
+    -> { (-Float::INFINITY).round( 0) }.should.raise(FloatDomainError)
+    -> { (-Float::INFINITY).round(-2) }.should.raise(FloatDomainError)
   end
 
   it "raises RangeError for NAN when passed a non-positive precision" do
-    -> { Float::NAN.round(0) }.should raise_error(RangeError)
-    -> { Float::NAN.round(-2) }.should raise_error(RangeError)
+    -> { Float::NAN.round(0) }.should.raise(RangeError)
+    -> { Float::NAN.round(-2) }.should.raise(RangeError)
   end
 
   it "returns self for exceptional values when passed a non-negative precision" do
@@ -178,13 +178,13 @@ describe "Float#round" do
   end
 
   it "raises FloatDomainError for exceptional values with a half option" do
-    -> { (+infinity_value).round(half: :up) }.should raise_error(FloatDomainError)
-    -> { (-infinity_value).round(half: :down) }.should raise_error(FloatDomainError)
-    -> { nan_value.round(half: :even) }.should raise_error(FloatDomainError)
+    -> { (+infinity_value).round(half: :up) }.should.raise(FloatDomainError)
+    -> { (-infinity_value).round(half: :down) }.should.raise(FloatDomainError)
+    -> { nan_value.round(half: :even) }.should.raise(FloatDomainError)
   end
 
   it "raise for a non-existent round mode" do
-    -> { 14.2.round(half: :nonsense) }.should raise_error(ArgumentError, "invalid rounding mode: nonsense")
+    -> { 14.2.round(half: :nonsense) }.should.raise(ArgumentError, "invalid rounding mode: nonsense")
   end
 
   describe "when 0.0 is given" do

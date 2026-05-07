@@ -36,7 +36,7 @@ describe "CApiModule" do
     it "allows arbitrary names, including constant names not valid in Ruby" do
       -> {
         CApiModuleSpecs::C.const_set(:_INVALID, 1)
-      }.should raise_error(NameError, /wrong constant name/)
+      }.should.raise(NameError, /wrong constant name/)
 
       suppress_warning { @m.rb_const_set(CApiModuleSpecs::C, :_INVALID, 2) }
       @m.rb_const_get(CApiModuleSpecs::C, :_INVALID).should == 2
@@ -44,7 +44,7 @@ describe "CApiModule" do
       # Ruby-level should still not allow access
       -> {
         CApiModuleSpecs::C.const_get(:_INVALID)
-      }.should raise_error(NameError, /wrong constant name/)
+      }.should.raise(NameError, /wrong constant name/)
     end
   end
 
@@ -56,7 +56,7 @@ describe "CApiModule" do
 
     it "raises a TypeError if the constant is not a module" do
       ::CApiModuleSpecsGlobalConst = 7
-      -> { @m.rb_define_module("CApiModuleSpecsGlobalConst") }.should raise_error(TypeError)
+      -> { @m.rb_define_module("CApiModuleSpecsGlobalConst") }.should.raise(TypeError)
       Object.send :remove_const, :CApiModuleSpecsGlobalConst
     end
 
@@ -166,11 +166,11 @@ describe "CApiModule" do
     it "allows arbitrary names, including constant names not valid in Ruby" do
       -> {
         CApiModuleSpecs::A.const_get(:_INVALID)
-      }.should raise_error(NameError, /wrong constant name/)
+      }.should.raise(NameError, /wrong constant name/)
 
       -> {
         @m.rb_const_get(CApiModuleSpecs::A, :_INVALID)
-      }.should raise_error(NameError, /uninitialized constant/)
+      }.should.raise(NameError, /uninitialized constant/)
     end
   end
 
@@ -360,7 +360,7 @@ describe "CApiModule" do
       a = cls.new
       @m.rb_define_singleton_method a, "module_specs_singleton_method"
       a.module_specs_singleton_method.should == :test_method
-      -> { cls.new.module_specs_singleton_method }.should raise_error(NoMethodError)
+      -> { cls.new.module_specs_singleton_method }.should.raise(NoMethodError)
     end
   end
 
@@ -381,11 +381,11 @@ describe "CApiModule" do
 
     it "undefines private methods also" do
       @m.rb_undef_method @class, "initialize_copy"
-      -> { @class.new.dup }.should raise_error(NoMethodError)
+      -> { @class.new.dup }.should.raise(NoMethodError)
     end
 
     it "does not raise exceptions when passed a missing name" do
-      -> { @m.rb_undef_method @class, "not_exist" }.should_not raise_error
+      -> { @m.rb_undef_method @class, "not_exist" }.should_not.raise
     end
 
     describe "when given a frozen Class" do
@@ -394,11 +394,11 @@ describe "CApiModule" do
       end
 
       it "raises a FrozenError when passed a name" do
-        -> { @m.rb_undef_method @frozen, "ruby_test_method" }.should raise_error(FrozenError)
+        -> { @m.rb_undef_method @frozen, "ruby_test_method" }.should.raise(FrozenError)
       end
 
       it "raises a FrozenError when passed a missing name" do
-        -> { @m.rb_undef_method @frozen, "not_exist" }.should raise_error(FrozenError)
+        -> { @m.rb_undef_method @frozen, "not_exist" }.should.raise(FrozenError)
       end
     end
   end

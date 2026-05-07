@@ -67,7 +67,7 @@ describe "Array#sample" do
   end
 
   it "raises ArgumentError when passed a negative count" do
-    -> { [1, 2].sample(-1) }.should raise_error(ArgumentError)
+    -> { [1, 2].sample(-1) }.should.raise(ArgumentError)
   end
 
   it "does not return subclass instances with Array subclass" do
@@ -85,7 +85,7 @@ describe "Array#sample" do
     it "raises a NoMethodError if an object passed for the RNG does not define #rand" do
       obj = BasicObject.new
 
-      -> { [1, 2].sample(random: obj) }.should raise_error(NoMethodError)
+      -> { [1, 2].sample(random: obj) }.should.raise(NoMethodError)
     end
 
     describe "when the object returned by #rand is an Integer" do
@@ -105,21 +105,21 @@ describe "Array#sample" do
         random = mock("array_sample_random")
         random.should_receive(:rand).and_return(-1)
 
-        -> { [1, 2].sample(random: random) }.should raise_error(RangeError)
+        -> { [1, 2].sample(random: random) }.should.raise(RangeError)
       end
 
       it "raises a RangeError if the value is equal to the Array size" do
         random = mock("array_sample_random")
         random.should_receive(:rand).and_return(2)
 
-        -> { [1, 2].sample(random: random) }.should raise_error(RangeError)
+        -> { [1, 2].sample(random: random) }.should.raise(RangeError)
       end
 
       it "raises a RangeError if the value is greater than the Array size" do
         random = mock("array_sample_random")
         random.should_receive(:rand).and_return(3)
 
-        -> { [1, 2].sample(random: random) }.should raise_error(RangeError)
+        -> { [1, 2].sample(random: random) }.should.raise(RangeError)
       end
     end
   end
@@ -140,7 +140,7 @@ describe "Array#sample" do
       random = mock("array_sample_random")
       random.should_receive(:rand).and_return(value)
 
-      -> { [1, 2].sample(random: random) }.should raise_error(RangeError)
+      -> { [1, 2].sample(random: random) }.should.raise(RangeError)
     end
 
     it "raises a RangeError if the value is equal to the Array size" do
@@ -149,7 +149,7 @@ describe "Array#sample" do
       random = mock("array_sample_random")
       random.should_receive(:rand).and_return(value)
 
-      -> { [1, 2].sample(random: random) }.should raise_error(RangeError)
+      -> { [1, 2].sample(random: random) }.should.raise(RangeError)
     end
   end
 end

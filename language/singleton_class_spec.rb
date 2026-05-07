@@ -15,11 +15,11 @@ describe "A singleton class" do
   end
 
   it "raises a TypeError for Integer's" do
-    -> { 1.singleton_class }.should raise_error(TypeError)
+    -> { 1.singleton_class }.should.raise(TypeError)
   end
 
   it "raises a TypeError for symbols" do
-    -> { :symbol.singleton_class }.should raise_error(TypeError)
+    -> { :symbol.singleton_class }.should.raise(TypeError)
   end
 
   it "is a singleton Class instance" do
@@ -74,7 +74,7 @@ describe "A singleton class" do
   end
 
   it "doesn't have singleton class" do
-    -> { bignum_value.singleton_class }.should raise_error(TypeError)
+    -> { bignum_value.singleton_class }.should.raise(TypeError)
   end
 end
 
@@ -112,13 +112,13 @@ describe "A constant on a singleton class" do
     class << @object
       CONST
     end
-    -> { CONST }.should raise_error(NameError)
+    -> { CONST }.should.raise(NameError)
   end
 
   it "cannot be accessed via object::CONST" do
     -> do
       @object::CONST
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "raises a NameError for anonymous_module::CONST" do
@@ -129,7 +129,7 @@ describe "A constant on a singleton class" do
 
     -> do
       @object::CONST
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "appears in the singleton class constant list" do
@@ -145,7 +145,7 @@ describe "A constant on a singleton class" do
 
     -> do
       class << @object; CONST; end
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "is preserved when the object is cloned" do
@@ -282,13 +282,13 @@ describe "Instantiating a singleton class" do
   it "raises a TypeError when new is called" do
     -> {
       Object.new.singleton_class.new
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises a TypeError when allocate is called" do
     -> {
       Object.new.singleton_class.allocate
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 end
 

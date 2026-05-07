@@ -22,14 +22,14 @@ describe "Array#+" do
     end
 
     it "raises a TypeError if the given argument can't be converted to an array" do
-      -> { [1, 2, 3] + nil }.should raise_error(TypeError)
-      -> { [1, 2, 3] + "abc" }.should raise_error(TypeError)
+      -> { [1, 2, 3] + nil }.should.raise(TypeError)
+      -> { [1, 2, 3] + "abc" }.should.raise(TypeError)
     end
 
     it "raises a NoMethodError if the given argument raises a NoMethodError during type coercion to an Array" do
       obj = mock("hello")
       obj.should_receive(:to_ary).and_raise(NoMethodError)
-      -> { [1, 2, 3] + obj }.should raise_error(NoMethodError)
+      -> { [1, 2, 3] + obj }.should.raise(NoMethodError)
     end
   end
 

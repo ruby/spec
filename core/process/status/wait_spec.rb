@@ -42,7 +42,7 @@ describe "Process::Status.wait" do
     it "waits for any child process if no pid is given" do
       pid = Process.spawn(ruby_cmd('exit'))
       Process::Status.wait.pid.should == pid
-      -> { Process.kill(0, pid) }.should raise_error(Errno::ESRCH)
+      -> { Process.kill(0, pid) }.should.raise(Errno::ESRCH)
     end
 
     it "waits for a specific child if a pid is given" do
@@ -50,14 +50,14 @@ describe "Process::Status.wait" do
       pid2 = Process.spawn(ruby_cmd('exit'))
       Process::Status.wait(pid2).pid.should == pid2
       Process::Status.wait(pid1).pid.should == pid1
-      -> { Process.kill(0, pid1) }.should raise_error(Errno::ESRCH)
-      -> { Process.kill(0, pid2) }.should raise_error(Errno::ESRCH)
+      -> { Process.kill(0, pid1) }.should.raise(Errno::ESRCH)
+      -> { Process.kill(0, pid2) }.should.raise(Errno::ESRCH)
     end
 
     it "coerces the pid to an Integer" do
       pid1 = Process.spawn(ruby_cmd('exit'))
       Process::Status.wait(mock_int(pid1)).pid.should == pid1
-      -> { Process.kill(0, pid1) }.should raise_error(Errno::ESRCH)
+      -> { Process.kill(0, pid1) }.should.raise(Errno::ESRCH)
     end
 
     # This spec is probably system-dependent.
@@ -94,7 +94,7 @@ describe "Process::Status.wait" do
     it "always accepts flags=0" do
       pid = Process.spawn(ruby_cmd('exit'))
       Process::Status.wait(-1, 0).pid.should == pid
-      -> { Process.kill(0, pid) }.should raise_error(Errno::ESRCH)
+      -> { Process.kill(0, pid) }.should.raise(Errno::ESRCH)
     end
   end
 end

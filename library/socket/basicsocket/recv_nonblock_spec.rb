@@ -16,7 +16,7 @@ describe "Socket::BasicSocket#recv_nonblock" do
     platform_is_not :windows do
       describe 'using an unbound socket' do
         it 'raises an exception extending IO::WaitReadable' do
-          -> { @s1.recv_nonblock(1) }.should raise_error(IO::WaitReadable)
+          -> { @s1.recv_nonblock(1) }.should.raise(IO::WaitReadable)
         end
       end
     end
@@ -25,7 +25,7 @@ describe "Socket::BasicSocket#recv_nonblock" do
       @s1.bind(Socket.pack_sockaddr_in(0, ip_address))
       -> {
         @s1.recv_nonblock(5)
-      }.should raise_error(IO::WaitReadable) { |e|
+      }.should.raise(IO::WaitReadable) { |e|
         platform_is_not :windows do
           e.should.is_a?(Errno::EAGAIN)
         end
@@ -74,7 +74,7 @@ describe "Socket::BasicSocket#recv_nonblock" do
       @s1.recv_nonblock(1).should == "a"
       -> {
         @s1.recv_nonblock(5)
-      }.should raise_error(IO::WaitReadable)
+      }.should.raise(IO::WaitReadable)
     end
   end
 
@@ -89,10 +89,10 @@ describe "Socket::BasicSocket#recv_nonblock" do
       end
 
       it "raises Errno::ENOTCONN" do
-        -> { @server.recv_nonblock(1) }.should raise_error { |e|
+        -> { @server.recv_nonblock(1) }.should.raise { |e|
           [Errno::ENOTCONN, Errno::EINVAL].should.include?(e.class)
         }
-        -> { @server.recv_nonblock(1, exception: false) }.should raise_error { |e|
+        -> { @server.recv_nonblock(1, exception: false) }.should.raise { |e|
           [Errno::ENOTCONN, Errno::EINVAL].should.include?(e.class)
         }
       end

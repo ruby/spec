@@ -8,7 +8,7 @@ platform_is_not :windows, :android do
     end
 
     it "raises Errno::EINVAL for unknown configuration variables" do
-      -> { Etc.confstr(-1) }.should raise_error(Errno::EINVAL)
+      -> { Etc.confstr(-1) }.should.raise(Errno::EINVAL)
     end
   end
 end

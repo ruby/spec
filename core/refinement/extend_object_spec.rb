@@ -13,7 +13,7 @@ describe "Refinement#extend_object" do
         define_method(:extend_object) { called = true }
         -> {
           c.extend(self)
-        }.should raise_error(TypeError)
+        }.should.raise(TypeError)
         called.should == false
       end
     end

@@ -37,7 +37,7 @@ describe "Hash#default_proc=" do
   end
 
   it "raises an error if passed stuff not convertible to procs" do
-    ->{{}.default_proc = 42}.should raise_error(TypeError)
+    ->{{}.default_proc = 42}.should.raise(TypeError)
   end
 
   it "returns the passed Proc" do
@@ -60,21 +60,21 @@ describe "Hash#default_proc=" do
     h = {}
     -> do
       h.default_proc = -> a, b { }
-    end.should_not raise_error(TypeError)
+    end.should_not.raise(TypeError)
   end
 
   it "raises a TypeError if passed a lambda with an arity other than 2" do
     h = {}
     -> do
       h.default_proc = -> a { }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
     -> do
       h.default_proc = -> a, b, c { }
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "raises a FrozenError if self is frozen" do
-    -> { {}.freeze.default_proc = Proc.new {} }.should raise_error(FrozenError)
-    -> { {}.freeze.default_proc = nil }.should raise_error(FrozenError)
+    -> { {}.freeze.default_proc = Proc.new {} }.should.raise(FrozenError)
+    -> { {}.freeze.default_proc = nil }.should.raise(FrozenError)
   end
 end

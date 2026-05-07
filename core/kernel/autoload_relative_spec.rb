@@ -55,7 +55,7 @@ ruby_version_is "4.1" do
     it "raises LoadError if called from eval without file context" do
       -> {
         eval('autoload_relative :Foo, "foo.rb"')
-      }.should raise_error(LoadError, /autoload_relative called without file context/)
+      }.should.raise(LoadError, /autoload_relative called without file context/)
     end
 
     it "accepts both string and symbol for constant name" do
@@ -74,7 +74,7 @@ ruby_version_is "4.1" do
       -> {
         autoload_relative :NestedTest, "../kernel/fixtures/autoload_relative_b.rb"
         autoload?(:NestedTest)
-      }.should_not raise_error
+      }.should_not.raise
     end
 
     it "resolves paths starting with ./" do

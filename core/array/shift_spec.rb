@@ -31,10 +31,10 @@ describe "Array#shift" do
   end
 
   it "raises a FrozenError on a frozen array" do
-    -> { ArraySpecs.frozen_array.shift }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.shift }.should.raise(FrozenError)
   end
   it "raises a FrozenError on an empty frozen array" do
-    -> { ArraySpecs.empty_frozen_array.shift }.should raise_error(FrozenError)
+    -> { ArraySpecs.empty_frozen_array.shift }.should.raise(FrozenError)
   end
 
   describe "passed a number n as an argument" do
@@ -90,7 +90,7 @@ describe "Array#shift" do
     end
 
     it "raises an ArgumentError if n is negative" do
-      ->{ [1, 2, 3].shift(-1) }.should raise_error(ArgumentError)
+      ->{ [1, 2, 3].shift(-1) }.should.raise(ArgumentError)
     end
 
     it "tries to convert n to an Integer using #to_int" do
@@ -105,12 +105,12 @@ describe "Array#shift" do
     end
 
     it "raises a TypeError when the passed n cannot be coerced to Integer" do
-      ->{ [1, 2].shift("cat") }.should raise_error(TypeError)
-      ->{ [1, 2].shift(nil) }.should raise_error(TypeError)
+      ->{ [1, 2].shift("cat") }.should.raise(TypeError)
+      ->{ [1, 2].shift(nil) }.should.raise(TypeError)
     end
 
     it "raises an ArgumentError if more arguments are passed" do
-      ->{ [1, 2].shift(1, 2) }.should raise_error(ArgumentError)
+      ->{ [1, 2].shift(1, 2) }.should.raise(ArgumentError)
     end
 
     it "does not return subclass instances with Array subclass" do

@@ -31,8 +31,8 @@ describe "C-API Range function" do
     end
 
     it "raises an ArgumentError when the given start and end can't be compared by using #<=>" do
-      -> { @s.rb_range_new(1, mock('x'))         }.should raise_error(ArgumentError)
-      -> { @s.rb_range_new(mock('x'), mock('y')) }.should raise_error(ArgumentError)
+      -> { @s.rb_range_new(1, mock('x'))         }.should.raise(ArgumentError)
+      -> { @s.rb_range_new(mock('x'), mock('y')) }.should.raise(ArgumentError)
     end
   end
 
@@ -83,7 +83,7 @@ describe "C-API Range function" do
 
     it "raises a RangeError when not in range and err is 1" do
       r = -5..-1
-      -> { @s.rb_range_beg_len(r, 1, 1) }.should raise_error(RangeError)
+      -> { @s.rb_range_beg_len(r, 1, 1) }.should.raise(RangeError)
     end
 
     it "returns nil when not in range and err is 0" do

@@ -36,10 +36,10 @@ describe "Proc#curry" do
 
   it "can be called multiple times on the same Proc" do
     @proc_add.curry
-    -> { @proc_add.curry }.should_not raise_error
+    -> { @proc_add.curry }.should_not.raise
 
     @lambda_add.curry
-    -> { @lambda_add.curry }.should_not raise_error
+    -> { @lambda_add.curry }.should_not.raise
   end
 
   it "can be passed superfluous arguments if created from a proc" do
@@ -49,8 +49,8 @@ describe "Proc#curry" do
   end
 
   it "raises an ArgumentError if passed superfluous arguments when created from a lambda" do
-    -> { @lambda_add.curry[1,2,3,4] }.should raise_error(ArgumentError)
-    -> { @lambda_add.curry[1,2].curry[3,4,5,6] }.should raise_error(ArgumentError)
+    -> { @lambda_add.curry[1,2,3,4] }.should.raise(ArgumentError)
+    -> { @lambda_add.curry[1,2].curry[3,4,5,6] }.should.raise(ArgumentError)
   end
 
   it "returns Procs with arities of -1" do
@@ -63,7 +63,7 @@ describe "Proc#curry" do
   it "produces Procs that raise ArgumentError for #binding" do
     -> do
       @proc_add.curry.binding
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 
   it "produces Procs that return [[:rest]] for #parameters" do
@@ -98,8 +98,8 @@ describe "Proc#curry with arity argument" do
   end
 
   it "accepts an optional Integer argument for the arity" do
-    -> { @proc_add.curry(3) }.should_not raise_error
-    -> { @lambda_add.curry(3) }.should_not raise_error
+    -> { @proc_add.curry(3) }.should_not.raise
+    -> { @lambda_add.curry(3) }.should_not.raise
   end
 
   it "returns a Proc when called on a proc" do
@@ -117,8 +117,8 @@ describe "Proc#curry with arity argument" do
   end
 
   it "raises an ArgumentError if called on a lambda that requires more than _arity_ arguments" do
-    -> { @lambda_add.curry(2) }.should raise_error(ArgumentError)
-    -> { -> x, y, z, *more{}.curry(2) }.should raise_error(ArgumentError)
+    -> { @lambda_add.curry(2) }.should.raise(ArgumentError)
+    -> { -> x, y, z, *more{}.curry(2) }.should.raise(ArgumentError)
   end
 
   it 'returns a Proc if called on a lambda that requires fewer than _arity_ arguments but may take more' do
@@ -128,11 +128,11 @@ describe "Proc#curry with arity argument" do
   end
 
   it "raises an ArgumentError if called on a lambda that requires fewer than _arity_ arguments" do
-    -> { @lambda_add.curry(4) }.should raise_error(ArgumentError)
-    -> { -> { true }.curry(1) }.should raise_error(ArgumentError)
-    -> { -> a, b=nil {}.curry(5) }.should raise_error(ArgumentError)
-    -> { -> a, &b {}.curry(2) }.should raise_error(ArgumentError)
-    -> { -> a, b=nil, &c {}.curry(3) }.should raise_error(ArgumentError)
+    -> { @lambda_add.curry(4) }.should.raise(ArgumentError)
+    -> { -> { true }.curry(1) }.should.raise(ArgumentError)
+    -> { -> a, b=nil {}.curry(5) }.should.raise(ArgumentError)
+    -> { -> a, &b {}.curry(2) }.should.raise(ArgumentError)
+    -> { -> a, b=nil, &c {}.curry(3) }.should.raise(ArgumentError)
   end
 
   it "calls the curried proc with the arguments if _arity_ arguments have been given" do
@@ -152,10 +152,10 @@ describe "Proc#curry with arity argument" do
 
   it "can be specified multiple times on the same Proc" do
     @proc_add.curry(2)
-    -> { @proc_add.curry(1) }.should_not raise_error
+    -> { @proc_add.curry(1) }.should_not.raise
 
     @lambda_add.curry(3)
-    -> { @lambda_add.curry(3) }.should_not raise_error
+    -> { @lambda_add.curry(3) }.should_not.raise
   end
 
   it "can be passed more than _arity_ arguments if created from a proc" do
@@ -165,8 +165,8 @@ describe "Proc#curry with arity argument" do
   end
 
   it "raises an ArgumentError if passed more than _arity_ arguments when created from a lambda" do
-    -> { @lambda_add.curry(3)[1,2,3,4] }.should raise_error(ArgumentError)
-    -> { @lambda_add.curry(3)[1,2].curry(3)[3,4,5,6] }.should raise_error(ArgumentError)
+    -> { @lambda_add.curry(3)[1,2,3,4] }.should.raise(ArgumentError)
+    -> { @lambda_add.curry(3)[1,2].curry(3)[3,4,5,6] }.should.raise(ArgumentError)
   end
 
   it "returns Procs with arities of -1 regardless of the value of _arity_" do

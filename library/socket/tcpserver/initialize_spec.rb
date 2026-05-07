@@ -52,7 +52,7 @@ describe 'TCPServer#initialize' do
 
   describe 'with a single String argument containing a non numeric value' do
     it 'raises SocketError' do
-      -> { TCPServer.new('cats') }.should raise_error(SocketError)
+      -> { TCPServer.new('cats') }.should.raise(SocketError)
     end
   end
 

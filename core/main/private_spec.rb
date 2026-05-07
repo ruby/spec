@@ -37,6 +37,6 @@ describe "main#private" do
   it "raises a NameError when at least one of given method names is undefined" do
     -> do
       eval "private :main_public_method, :main_undefined_method", TOPLEVEL_BINDING
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 end

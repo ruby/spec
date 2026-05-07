@@ -12,7 +12,7 @@ describe "Random.urandom" do
   it "raises an ArgumentError on a negative size" do
     -> {
       Random.urandom(-1)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "returns a binary String" do

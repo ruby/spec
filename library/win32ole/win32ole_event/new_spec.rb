@@ -13,16 +13,16 @@ platform_is :windows do
       end
 
       it "raises TypeError given invalid argument" do
-        -> { WIN32OLE::Event.new "A" }.should raise_error TypeError
+        -> { WIN32OLE::Event.new "A" }.should.raise TypeError
       end
 
       it "raises RuntimeError if event does not exist" do
-        -> { WIN32OLE::Event.new(@xml_dom, 'A') }.should raise_error RuntimeError
+        -> { WIN32OLE::Event.new(@xml_dom, 'A') }.should.raise RuntimeError
       end
 
       it "raises RuntimeError if OLE object has no events" do
         dict = WIN32OLESpecs.new_ole('Scripting.Dictionary')
-        -> { WIN32OLE::Event.new(dict) }.should raise_error RuntimeError
+        -> { WIN32OLE::Event.new(dict) }.should.raise RuntimeError
       end
 
       it "creates WIN32OLE::Event object" do

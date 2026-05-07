@@ -16,11 +16,11 @@ describe "self in a metaclass body (class << obj)" do
   end
 
   it "raises a TypeError for numbers" do
-    -> { class << 1; self; end }.should raise_error(TypeError)
+    -> { class << 1; self; end }.should.raise(TypeError)
   end
 
   it "raises a TypeError for symbols" do
-    -> { class << :symbol; self; end }.should raise_error(TypeError)
+    -> { class << :symbol; self; end }.should.raise(TypeError)
   end
 
   it "is a singleton Class instance" do
@@ -64,13 +64,13 @@ describe "A constant on a metaclass" do
     class << @object
       CONST
     end
-    -> { CONST }.should raise_error(NameError)
+    -> { CONST }.should.raise(NameError)
   end
 
   it "cannot be accessed via object::CONST" do
     -> do
       @object::CONST
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 
   it "raises a NameError for anonymous_module::CONST" do
@@ -81,7 +81,7 @@ describe "A constant on a metaclass" do
 
     -> do
       @object::CONST
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "appears in the metaclass constant list" do
@@ -98,7 +98,7 @@ describe "A constant on a metaclass" do
 
     -> do
       class << @object; CONST; end
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "is preserved when the object is cloned" do

@@ -55,7 +55,7 @@ describe "Kernel.loop" do
   end
 
   it "does not rescue other errors" do
-    ->{ loop do raise StandardError end }.should raise_error( StandardError )
+    ->{ loop do raise StandardError end }.should.raise( StandardError )
   end
 
   it "returns StopIteration#result, the result value of a finished iterator" do

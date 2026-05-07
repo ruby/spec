@@ -43,6 +43,6 @@ describe "Kernel#proc" do
   it "raises an ArgumentError when passed no block" do
     -> {
       some_method { "hello" }
-    }.should raise_error(ArgumentError, 'tried to create Proc object without a block')
+    }.should.raise(ArgumentError, 'tried to create Proc object without a block')
   end
 end

@@ -17,7 +17,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
       platform_is_not :windows do
         describe 'using an unbound socket' do
           it 'raises an exception extending IO::WaitReadable' do
-            -> { @server.recvmsg_nonblock }.should raise_error(IO::WaitReadable)
+            -> { @server.recvmsg_nonblock }.should.raise(IO::WaitReadable)
           end
         end
       end
@@ -29,7 +29,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
 
         describe 'without any data available' do
           it 'raises an exception extending IO::WaitReadable' do
-            -> { @server.recvmsg_nonblock }.should raise_error(IO::WaitReadable)
+            -> { @server.recvmsg_nonblock }.should.raise(IO::WaitReadable)
           end
 
           it 'returns :wait_readable with exception: false' do
@@ -124,8 +124,8 @@ describe 'BasicSocket#recvmsg_nonblock' do
         end
 
         it "raises Errno::ENOTCONN" do
-          -> { @server.recvmsg_nonblock }.should raise_error(Errno::ENOTCONN)
-          -> { @server.recvmsg_nonblock(exception: false) }.should raise_error(Errno::ENOTCONN)
+          -> { @server.recvmsg_nonblock }.should.raise(Errno::ENOTCONN)
+          -> { @server.recvmsg_nonblock(exception: false) }.should.raise(Errno::ENOTCONN)
         end
       end
 
@@ -154,7 +154,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
               ensure
                 socket.close
               end
-            }.should raise_error(IO::WaitReadable)
+            }.should.raise(IO::WaitReadable)
           end
         end
 
@@ -197,7 +197,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
               end
 
               it 'raises when receiving the ip_address message' do
-                -> { @addr.ip_address }.should raise_error(SocketError)
+                -> { @addr.ip_address }.should.raise(SocketError)
               end
 
               it 'uses the correct address family' do
@@ -213,7 +213,7 @@ describe 'BasicSocket#recvmsg_nonblock' do
               end
 
               it 'raises when receiving the ip_port message' do
-                -> { @addr.ip_port }.should raise_error(SocketError)
+                -> { @addr.ip_port }.should.raise(SocketError)
               end
             end
           end

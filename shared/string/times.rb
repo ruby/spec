@@ -18,14 +18,14 @@ describe :string_times, shared: true do
   end
 
   it "raises an ArgumentError when given integer is negative" do
-    -> { @object.call("cool", -3)    }.should raise_error(ArgumentError)
-    -> { @object.call("cool", -3.14) }.should raise_error(ArgumentError)
-    -> { @object.call("cool", min_long) }.should raise_error(ArgumentError)
+    -> { @object.call("cool", -3)    }.should.raise(ArgumentError)
+    -> { @object.call("cool", -3.14) }.should.raise(ArgumentError)
+    -> { @object.call("cool", min_long) }.should.raise(ArgumentError)
   end
 
   it "raises a RangeError when given integer is a Bignum" do
-    -> { @object.call("cool", 999999999999999999999) }.should raise_error(RangeError)
-    -> { @object.call("", 999999999999999999999) }.should raise_error(RangeError)
+    -> { @object.call("cool", 999999999999999999999) }.should.raise(RangeError)
+    -> { @object.call("", 999999999999999999999) }.should.raise(RangeError)
   end
 
   it "works with huge long values when string is empty" do
@@ -46,13 +46,13 @@ describe :string_times, shared: true do
 
   platform_is c_long_size: 32 do
     it "raises an ArgumentError if the length of the resulting string doesn't fit into a long" do
-      -> { @object.call("abc", (2 ** 31) - 1) }.should raise_error(ArgumentError)
+      -> { @object.call("abc", (2 ** 31) - 1) }.should.raise(ArgumentError)
     end
   end
 
   platform_is c_long_size: 64 do
     it "raises an ArgumentError if the length of the resulting string doesn't fit into a long" do
-      -> { @object.call("abc", (2 ** 63) - 1) }.should raise_error(ArgumentError)
+      -> { @object.call("abc", (2 ** 63) - 1) }.should.raise(ArgumentError)
     end
   end
 end

@@ -30,7 +30,7 @@ platform_is :windows, :darwin, :freebsd, :netbsd, :linux do
     end
 
     it "raises an Errno::ENOENT exception if the file is not found" do
-      -> { File.birthtime('bogus') }.should raise_error(Errno::ENOENT)
+      -> { File.birthtime('bogus') }.should.raise(Errno::ENOENT)
     rescue NotImplementedError => e
       e.message.should.start_with?(*not_implemented_messages)
     end

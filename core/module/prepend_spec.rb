@@ -444,13 +444,13 @@ describe "Module#prepend" do
   end
 
   it "raises a TypeError when the argument is not a Module" do
-    -> { ModuleSpecs::Basic.prepend(Class.new) }.should raise_error(TypeError)
+    -> { ModuleSpecs::Basic.prepend(Class.new) }.should.raise(TypeError)
   end
 
   it "does not raise a TypeError when the argument is an instance of a subclass of Module" do
     class ModuleSpecs::SubclassSpec::AClass
     end
-    -> { ModuleSpecs::SubclassSpec::AClass.prepend(ModuleSpecs::Subclass.new) }.should_not raise_error(TypeError)
+    -> { ModuleSpecs::SubclassSpec::AClass.prepend(ModuleSpecs::Subclass.new) }.should_not.raise(TypeError)
   ensure
     ModuleSpecs::SubclassSpec.send(:remove_const, :AClass)
   end
@@ -464,7 +464,7 @@ describe "Module#prepend" do
       end
     end
 
-    -> { ModuleSpecs::Basic.prepend(refinement) }.should raise_error(TypeError, "Cannot prepend refinement")
+    -> { ModuleSpecs::Basic.prepend(refinement) }.should.raise(TypeError, "Cannot prepend refinement")
   end
 
   it "imports constants" do
@@ -627,7 +627,7 @@ describe "Module#prepend" do
         super << :class
       end
     end
-    -> { c.new.chain }.should raise_error(NoMethodError)
+    -> { c.new.chain }.should.raise(NoMethodError)
   end
 
   it "calls prepended after prepend_features" do
@@ -663,7 +663,7 @@ describe "Module#prepend" do
       module ModuleSpecs::P
         prepend ModuleSpecs::P
       end
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "doesn't accept no-arguments" do
@@ -671,7 +671,7 @@ describe "Module#prepend" do
       Module.new do
         prepend
       end
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "returns the class it's included into" do

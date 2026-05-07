@@ -22,21 +22,21 @@ describe "Range#step" do
     it "raises a TypeError if step does not respond to #to_int" do
       obj = mock("Range#step non-integer")
 
-      -> { (1..2).step(obj) { } }.should raise_error(TypeError)
+      -> { (1..2).step(obj) { } }.should.raise(TypeError)
     end
 
     it "raises a TypeError if #to_int does not return an Integer" do
       obj = mock("Range#step non-integer")
       obj.should_receive(:to_int).and_return("1")
 
-      -> { (1..2).step(obj) { } }.should raise_error(TypeError)
+      -> { (1..2).step(obj) { } }.should.raise(TypeError)
     end
 
     it "raises a TypeError if the first element does not respond to #succ" do
       obj = mock("Range#step non-comparable")
       obj.should_receive(:<=>).with(obj).and_return(1)
 
-      -> { (obj..obj).step { |x| x } }.should raise_error(TypeError)
+      -> { (obj..obj).step { |x| x } }.should.raise(TypeError)
     end
   end
 
@@ -52,16 +52,16 @@ describe "Range#step" do
     it "raises a TypeError if step does not respond to #coerce" do
       obj = mock("Range#step non-coercible")
 
-      -> { (1..2).step(obj) { } }.should raise_error(TypeError)
+      -> { (1..2).step(obj) { } }.should.raise(TypeError)
     end
   end
 
   it "raises an ArgumentError if step is 0" do
-    -> { (-1..1).step(0) { |x| x } }.should raise_error(ArgumentError)
+    -> { (-1..1).step(0) { |x| x } }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError if step is 0.0" do
-    -> { (-1..1).step(0.0) { |x| x } }.should raise_error(ArgumentError)
+    -> { (-1..1).step(0.0) { |x| x } }.should.raise(ArgumentError)
   end
 
   ruby_version_is "3.4" do
@@ -72,14 +72,14 @@ describe "Range#step" do
     end
 
     it "raises an ArgumentError when iterating a beginless range" do
-      -> { (..10).step(1) { break } }.should raise_error(ArgumentError,
+      -> { (..10).step(1) { break } }.should.raise(ArgumentError,
         "#step iteration for beginless ranges is meaningless")
     end
   end
 
   ruby_version_is ""..."3.4" do
     it "raises an ArgumentError if step is negative" do
-      -> { (-1..1).step(-2) { |x| x } }.should raise_error(ArgumentError)
+      -> { (-1..1).step(-2) { |x| x } }.should.raise(ArgumentError)
     end
   end
 
@@ -204,7 +204,7 @@ describe "Range#step" do
       end
 
       it "raises a TypeError when passed a Float step" do
-        -> { ("A".."G").step(2.0) { } }.should raise_error(TypeError)
+        -> { ("A".."G").step(2.0) { } }.should.raise(TypeError)
       end
 
       ruby_version_is ""..."3.4" do
@@ -225,7 +225,7 @@ describe "Range#step" do
         end
 
         it "raises a TypeError when passed an incompatible type step" do
-          -> { ("A".."G").step([]) { } }.should raise_error(TypeError)
+          -> { ("A".."G").step([]) { } }.should.raise(TypeError)
         end
 
         it "calls #+ on begin and each element returned by #+" do
@@ -411,7 +411,7 @@ describe "Range#step" do
         end
 
         it "raises a TypeError when passed a Float step" do
-          -> { ("A"..."G").step(2.0) { } }.should raise_error(TypeError)
+          -> { ("A"..."G").step(2.0) { } }.should.raise(TypeError)
         end
       end
 
@@ -422,7 +422,7 @@ describe "Range#step" do
         end
 
         it "raises a TypeError when passed an incompatible type step" do
-          -> { ("A".."G").step([]) { } }.should raise_error(TypeError)
+          -> { ("A".."G").step([]) { } }.should.raise(TypeError)
         end
       end
     end
@@ -523,8 +523,8 @@ describe "Range#step" do
       end
 
       it "raises a TypeError when passed a Float step" do
-        -> { ('A'..).step(2.0) { } }.should raise_error(TypeError)
-        -> { ('A'...).step(2.0) { } }.should raise_error(TypeError)
+        -> { ('A'..).step(2.0) { } }.should.raise(TypeError)
+        -> { ('A'...).step(2.0) { } }.should.raise(TypeError)
       end
 
       ruby_version_is "3.4" do
@@ -538,8 +538,8 @@ describe "Range#step" do
         end
 
         it "raises a TypeError when passed an incompatible type step" do
-          -> { ('A'..).step([]) { } }.should raise_error(TypeError)
-          -> { ('A'...).step([]) { } }.should raise_error(TypeError)
+          -> { ('A'..).step([]) { } }.should.raise(TypeError)
+          -> { ('A'...).step([]) { } }.should.raise(TypeError)
         end
       end
     end
@@ -547,7 +547,7 @@ describe "Range#step" do
 
   describe "when no block is given" do
     it "raises an ArgumentError if step is 0" do
-      -> { (-1..1).step(0) }.should raise_error(ArgumentError)
+      -> { (-1..1).step(0) }.should.raise(ArgumentError)
     end
 
     describe "returned Enumerator" do
@@ -555,20 +555,20 @@ describe "Range#step" do
         ruby_version_is ""..."3.4" do
           it "raises a TypeError if step does not respond to #to_int" do
             obj = mock("Range#step non-integer")
-            -> { (1..2).step(obj) }.should raise_error(TypeError)
+            -> { (1..2).step(obj) }.should.raise(TypeError)
           end
 
           it "raises a TypeError if #to_int does not return an Integer" do
             obj = mock("Range#step non-integer")
             obj.should_receive(:to_int).and_return("1")
-            -> { (1..2).step(obj) }.should raise_error(TypeError)
+            -> { (1..2).step(obj) }.should.raise(TypeError)
           end
         end
 
         ruby_version_is "3.4" do
           it "does not raise if step is incompatible" do
             obj = mock("Range#step non-integer")
-            -> { (1..2).step(obj) }.should_not raise_error
+            -> { (1..2).step(obj) }.should_not.raise
           end
         end
 
@@ -621,7 +621,7 @@ describe "Range#step" do
             obj = mock("Range#step non-comparable")
             obj.should_receive(:<=>).with(obj).and_return(1)
             enum = (obj..obj).step
-            -> { enum.size }.should_not raise_error
+            -> { enum.size }.should_not.raise
             enum.size.should == nil
           end
         end
@@ -636,7 +636,7 @@ describe "Range#step" do
             obj = mock("Range#step non-comparable")
             obj.should_receive(:<=>).with(obj).and_return(1)
             enum = (obj..obj).step(obj)
-            -> { enum.size }.should_not raise_error
+            -> { enum.size }.should_not.raise
             enum.size.should == nil
           end
         end
@@ -689,7 +689,7 @@ describe "Range#step" do
 
           ruby_version_is "3.4" do
             it "raises an ArgumentError" do
-              -> { Range.new(nil, nil).step(1) }.should raise_error(ArgumentError,
+              -> { Range.new(nil, nil).step(1) }.should.raise(ArgumentError,
                 "#step for non-numeric beginless ranges is meaningless")
             end
           end
@@ -698,7 +698,7 @@ describe "Range#step" do
         context "when range is beginless and finite" do
           ruby_version_is "3.4" do
             it "raises an ArgumentError if step is non-numeric" do
-              -> { (..10).step("a") }.should raise_error(ArgumentError,
+              -> { (..10).step("a") }.should.raise(ArgumentError,
                 "#step for non-numeric beginless ranges is meaningless")
             end
           end

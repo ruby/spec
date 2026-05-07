@@ -50,7 +50,7 @@ describe "TCPServer#accept" do
     t = Thread.new {
       -> {
         @server.accept
-      }.should raise_error(Exception, "interrupted")
+      }.should.raise(Exception, "interrupted")
     }
 
     Thread.pass while t.status and t.status != "sleep"
@@ -80,7 +80,7 @@ describe "TCPServer#accept" do
 
   it "raises an IOError if the socket is closed" do
     @server.close
-    -> { @server.accept }.should raise_error(IOError)
+    -> { @server.accept }.should.raise(IOError)
   end
 end
 

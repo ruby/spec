@@ -17,7 +17,7 @@ describe "Module#private" do
       private :foo
     end
 
-    -> { obj.foo }.should raise_error(NoMethodError)
+    -> { obj.foo }.should.raise(NoMethodError)
   end
 
   it "makes a public Object instance method private in a new module" do
@@ -51,7 +51,7 @@ describe "Module#private" do
   it "raises a NameError when given an undefined name" do
     -> do
       Module.new.send(:private, :undefined)
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "only makes the method private in the class it is called on" do
@@ -71,7 +71,7 @@ describe "Module#private" do
     base.new.wrapped.should == 1
     -> do
       klass.new.wrapped
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "continues to allow a prepended module method to call super" do

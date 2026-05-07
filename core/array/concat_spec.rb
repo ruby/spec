@@ -33,12 +33,12 @@ describe "Array#concat" do
   end
 
   it "raises a FrozenError when Array is frozen and modification occurs" do
-    -> { ArraySpecs.frozen_array.concat [1] }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.concat [1] }.should.raise(FrozenError)
   end
 
   # see [ruby-core:23666]
   it "raises a FrozenError when Array is frozen and no modification occurs" do
-    -> { ArraySpecs.frozen_array.concat([]) }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.concat([]) }.should.raise(FrozenError)
   end
 
   it "appends elements to an Array with enough capacity that has been shifted" do

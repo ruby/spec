@@ -10,7 +10,7 @@ describe "Rational#divmod when passed a Rational" do
   end
 
   it "raises a ZeroDivisionError when passed a Rational with a numerator of 0" do
-    -> { Rational(7, 4).divmod(Rational(0, 3)) }.should raise_error(ZeroDivisionError)
+    -> { Rational(7, 4).divmod(Rational(0, 3)) }.should.raise(ZeroDivisionError)
   end
 end
 
@@ -23,7 +23,7 @@ describe "Rational#divmod when passed an Integer" do
   end
 
   it "raises a ZeroDivisionError when passed 0" do
-    -> { Rational(7, 4).divmod(0) }.should raise_error(ZeroDivisionError)
+    -> { Rational(7, 4).divmod(0) }.should.raise(ZeroDivisionError)
   end
 end
 
@@ -37,6 +37,6 @@ describe "Rational#divmod when passed a Float" do
   end
 
   it "raises a ZeroDivisionError when passed 0" do
-    -> { Rational(7, 4).divmod(0.0) }.should raise_error(ZeroDivisionError)
+    -> { Rational(7, 4).divmod(0.0) }.should.raise(ZeroDivisionError)
   end
 end

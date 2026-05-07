@@ -25,7 +25,7 @@ describe "Enumerator::Chain#initialize" do
     it "raises a FrozenError" do
       -> {
         @uninitialized.freeze.send(:initialize)
-      }.should raise_error(FrozenError)
+      }.should.raise(FrozenError)
     end
   end
 end

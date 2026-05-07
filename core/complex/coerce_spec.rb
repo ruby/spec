@@ -53,18 +53,18 @@ describe "Complex#coerce" do
   it "raises TypeError when other is a Numeric which responds to #real? with false" do
     other = mock_numeric('other')
     other.should_receive(:real?).any_number_of_times.and_return(false)
-    -> { @one.coerce(other) }.should raise_error(TypeError)
+    -> { @one.coerce(other) }.should.raise(TypeError)
   end
 
   it "raises a TypeError when other is a String" do
-    -> { @one.coerce("20") }.should raise_error(TypeError)
+    -> { @one.coerce("20") }.should.raise(TypeError)
   end
 
   it "raises a TypeError when other is nil" do
-    -> { @one.coerce(nil) }.should raise_error(TypeError)
+    -> { @one.coerce(nil) }.should.raise(TypeError)
   end
 
   it "raises a TypeError when other is false" do
-    -> { @one.coerce(false) }.should raise_error(TypeError)
+    -> { @one.coerce(false) }.should.raise(TypeError)
   end
 end

@@ -14,7 +14,7 @@ describe "Integer.sqrt" do
   end
 
   it "raises a Math::DomainError if the argument is negative" do
-    -> { Integer.sqrt(-4) }.should raise_error(Math::DomainError)
+    -> { Integer.sqrt(-4) }.should.raise(Math::DomainError)
   end
 
   it "accepts any argument that can be coerced to Integer" do
@@ -26,6 +26,6 @@ describe "Integer.sqrt" do
   end
 
   it "raises a TypeError if the argument cannot be coerced to Integer" do
-    -> { Integer.sqrt("test") }.should raise_error(TypeError)
+    -> { Integer.sqrt("test") }.should.raise(TypeError)
   end
 end

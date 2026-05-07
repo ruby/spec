@@ -31,7 +31,7 @@ describe "SystemCallError.new" do
   end
 
   it "requires at least one argument" do
-    -> { SystemCallError.new }.should raise_error(ArgumentError)
+    -> { SystemCallError.new }.should.raise(ArgumentError)
   end
 
   it "accepts single Integer argument as errno" do
@@ -111,15 +111,15 @@ describe "SystemCallError.new" do
   end
 
   it "raises TypeError if message is not a String" do
-    -> { SystemCallError.new(:foo, 1) }.should raise_error(TypeError, /no implicit conversion of Symbol into String/)
+    -> { SystemCallError.new(:foo, 1) }.should.raise(TypeError, /no implicit conversion of Symbol into String/)
   end
 
   it "raises TypeError if errno is not an Integer" do
-    -> { SystemCallError.new('foo', 'bar') }.should raise_error(TypeError, /no implicit conversion of String into Integer/)
+    -> { SystemCallError.new('foo', 'bar') }.should.raise(TypeError, /no implicit conversion of String into Integer/)
   end
 
   it "raises RangeError if errno is a Complex not convertible to Integer" do
-    -> { SystemCallError.new('foo', Complex(2.9, 1)) }.should raise_error(RangeError, /can't convert/)
+    -> { SystemCallError.new('foo', Complex(2.9, 1)) }.should.raise(RangeError, /can't convert/)
   end
 end
 

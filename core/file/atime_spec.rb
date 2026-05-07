@@ -35,7 +35,7 @@ describe "File.atime" do
   end
 
   it "raises an Errno::ENOENT exception if the file is not found" do
-    -> { File.atime('a_fake_file') }.should raise_error(Errno::ENOENT)
+    -> { File.atime('a_fake_file') }.should.raise(Errno::ENOENT)
   end
 
   it "accepts an object that has a #to_path method" do

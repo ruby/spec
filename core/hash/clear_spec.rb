@@ -26,7 +26,7 @@ describe "Hash#clear" do
   end
 
   it "raises a FrozenError if called on a frozen instance" do
-    -> { HashSpecs.frozen_hash.clear  }.should raise_error(FrozenError)
-    -> { HashSpecs.empty_frozen_hash.clear }.should raise_error(FrozenError)
+    -> { HashSpecs.frozen_hash.clear  }.should.raise(FrozenError)
+    -> { HashSpecs.empty_frozen_hash.clear }.should.raise(FrozenError)
   end
 end

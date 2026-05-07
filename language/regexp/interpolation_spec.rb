@@ -41,9 +41,9 @@ describe "Regexps with interpolation" do
 
   it "throws RegexpError for malformed interpolation" do
     s = ""
-    -> { /(#{s}/ }.should raise_error(RegexpError)
+    -> { /(#{s}/ }.should.raise(RegexpError)
     s = "("
-    -> { /#{s}/ }.should raise_error(RegexpError)
+    -> { /#{s}/ }.should.raise(RegexpError)
   end
 
   it "allows interpolation in extended mode" do

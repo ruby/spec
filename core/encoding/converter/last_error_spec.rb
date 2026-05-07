@@ -56,7 +56,7 @@ describe "Encoding::Converter#last_error" do
     exception = nil
     -> {
       ec.convert("\xf1abcd")
-    }.should raise_error(Encoding::InvalidByteSequenceError) { |e|
+    }.should.raise(Encoding::InvalidByteSequenceError) { |e|
       exception = e
     }
     ec.last_error.should.instance_of?(Encoding::InvalidByteSequenceError)
@@ -68,7 +68,7 @@ describe "Encoding::Converter#last_error" do
     exception = nil
     -> {
       ec.convert("\u{9899}")
-    }.should raise_error(Encoding::UndefinedConversionError) { |e|
+    }.should.raise(Encoding::UndefinedConversionError) { |e|
       exception = e
     }
     ec.last_error.should.instance_of?(Encoding::UndefinedConversionError)
@@ -81,7 +81,7 @@ describe "Encoding::Converter#last_error" do
     exception = nil
     -> {
       ec.convert("\xE9") # é in ISO-8859-1
-    }.should raise_error(Encoding::UndefinedConversionError) { |e|
+    }.should.raise(Encoding::UndefinedConversionError) { |e|
       exception = e
     }
     ec.last_error.should.instance_of?(Encoding::UndefinedConversionError)

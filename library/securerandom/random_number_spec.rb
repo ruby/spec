@@ -92,6 +92,6 @@ describe "SecureRandom.random_number" do
   it "raises ArgumentError if the argument is non-numeric" do
     -> {
       SecureRandom.random_number(Object.new)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 end

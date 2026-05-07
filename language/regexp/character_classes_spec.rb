@@ -89,7 +89,7 @@ describe "Regexp with character classes" do
     /[^[:lower:]A-C]+/.match("abcABCDEF123def").to_a.should == ["DEF123"] # negated character class
     /[:alnum:]+/.match("a:l:n:u:m").to_a.should == ["a:l:n:u:m"] # should behave like regular character class composed of the individual letters
     /[\[:alnum:]+/.match("[:a:l:n:u:m").to_a.should == ["[:a:l:n:u:m"] # should behave like regular character class composed of the individual letters
-    -> { eval('/[[:alpha:]-[:digit:]]/') }.should raise_error(SyntaxError) # can't use character class as a start value of range
+    -> { eval('/[[:alpha:]-[:digit:]]/') }.should.raise(SyntaxError) # can't use character class as a start value of range
   end
 
   it "matches ASCII characters with [[:ascii:]]" do
@@ -622,7 +622,7 @@ describe "Regexp with character classes" do
   end
 
   it "raises a RegexpError for an unterminated unicode property" do
-    -> { Regexp.new('\p{') }.should raise_error(RegexpError)
+    -> { Regexp.new('\p{') }.should.raise(RegexpError)
   end
 
   it "supports \\X (unicode 9.0 with UTR #51 workarounds)" do

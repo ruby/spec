@@ -33,7 +33,7 @@ describe :time_gmtime, shared: true do
       with_timezone("CST", -6) do
         time = Time.now
         time.freeze
-        -> { time.send(@method) }.should raise_error(FrozenError)
+        -> { time.send(@method) }.should.raise(FrozenError)
       end
     end
   end

@@ -43,7 +43,7 @@ describe "SecureRandom.hex" do
   it "raises ArgumentError on negative arguments" do
     -> {
       SecureRandom.hex(-1)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "tries to convert the passed argument to an Integer using #to_int" do

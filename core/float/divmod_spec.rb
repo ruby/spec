@@ -18,22 +18,22 @@ describe "Float#divmod" do
 
   # Behaviour established as correct in r23953
   it "raises a FloatDomainError if self is NaN" do
-    -> { nan_value.divmod(1) }.should raise_error(FloatDomainError)
+    -> { nan_value.divmod(1) }.should.raise(FloatDomainError)
   end
 
   # Behaviour established as correct in r23953
   it "raises a FloatDomainError if other is NaN" do
-    -> { 1.0.divmod(nan_value) }.should raise_error(FloatDomainError)
+    -> { 1.0.divmod(nan_value) }.should.raise(FloatDomainError)
   end
 
   # Behaviour established as correct in r23953
   it "raises a FloatDomainError if self is Infinity" do
-    -> { infinity_value.divmod(1) }.should raise_error(FloatDomainError)
+    -> { infinity_value.divmod(1) }.should.raise(FloatDomainError)
   end
 
   it "raises a ZeroDivisionError if other is zero" do
-    -> { 1.0.divmod(0)   }.should raise_error(ZeroDivisionError)
-    -> { 1.0.divmod(0.0) }.should raise_error(ZeroDivisionError)
+    -> { 1.0.divmod(0)   }.should.raise(ZeroDivisionError)
+    -> { 1.0.divmod(0.0) }.should.raise(ZeroDivisionError)
   end
 
   # redmine #5276"

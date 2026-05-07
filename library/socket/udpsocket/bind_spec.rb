@@ -20,7 +20,7 @@ describe "UDPSocket#bind" do
 
     -> {
       @socket.bind(SocketSpecs.hostname, @socket.addr[1])
-    }.should raise_error(Errno::EINVAL)
+    }.should.raise(Errno::EINVAL)
   end
 
   it "receives a hostname and a port" do

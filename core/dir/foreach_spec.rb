@@ -31,7 +31,7 @@ describe "Dir.foreach" do
   end
 
   it "raises a SystemCallError if passed a nonexistent directory" do
-    -> { Dir.foreach(DirSpecs.nonexistent) {} }.should raise_error(SystemCallError)
+    -> { Dir.foreach(DirSpecs.nonexistent) {} }.should.raise(SystemCallError)
   end
 
   it "returns an Enumerator if no block given" do

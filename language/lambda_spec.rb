@@ -109,7 +109,7 @@ describe "A lambda literal -> () { }" do
         @a = -> (a:) { a }
       ruby
 
-      -> { @a.() }.should raise_error(ArgumentError)
+      -> { @a.() }.should.raise(ArgumentError)
       @a.(a: 1).should == 1
     end
 
@@ -127,7 +127,7 @@ describe "A lambda literal -> () { }" do
 
       @a.().should == nil
       @a.(a: 1, b: 2).should == nil
-      -> { @a.(1) }.should raise_error(ArgumentError)
+      -> { @a.(1) }.should.raise(ArgumentError)
     end
 
     evaluate <<-ruby do
@@ -151,8 +151,8 @@ describe "A lambda literal -> () { }" do
       ruby
 
       @a.(1, 2).should == [1, 2]
-      -> { @a.() }.should raise_error(ArgumentError)
-      -> { @a.(1) }.should raise_error(ArgumentError)
+      -> { @a.() }.should.raise(ArgumentError)
+      -> { @a.(1) }.should.raise(ArgumentError)
     end
 
     evaluate <<-ruby do
@@ -268,7 +268,7 @@ describe "A lambda literal -> () { }" do
           a = 1
           -> {
             eval "-> (a=a) { a }"
-          }.should raise_error(SyntaxError)
+          }.should.raise(SyntaxError)
         end
       end
 
@@ -292,9 +292,9 @@ describe "A lambda literal -> () { }" do
     ruby
 
     @a.call().should == :ok
-    -> { @a.call(a: 1) }.should raise_error(ArgumentError, 'no keywords accepted')
-    -> { @a.call(**{a: 1}) }.should raise_error(ArgumentError, 'no keywords accepted')
-    -> { @a.call("a" => 1) }.should raise_error(ArgumentError, 'no keywords accepted')
+    -> { @a.call(a: 1) }.should.raise(ArgumentError, 'no keywords accepted')
+    -> { @a.call(**{a: 1}) }.should.raise(ArgumentError, 'no keywords accepted')
+    -> { @a.call("a" => 1) }.should.raise(ArgumentError, 'no keywords accepted')
   end
 
   evaluate <<-ruby do
@@ -302,7 +302,7 @@ describe "A lambda literal -> () { }" do
     ruby
 
     @a.call({a: 1}).should == {a: 1}
-    -> { @a.call(a: 1) }.should raise_error(ArgumentError, 'no keywords accepted')
+    -> { @a.call(a: 1) }.should.raise(ArgumentError, 'no keywords accepted')
   end
 end
 
@@ -330,7 +330,7 @@ describe "A lambda expression 'lambda { ... }'" do
 
   it "requires a block" do
     suppress_warning do
-      lambda { lambda }.should raise_error(ArgumentError)
+      lambda { lambda }.should.raise(ArgumentError)
     end
   end
 
@@ -348,7 +348,7 @@ describe "A lambda expression 'lambda { ... }'" do
       suppress_warning do
         -> {
           meth { 1 }
-        }.should raise_error(ArgumentError, /tried to create Proc object without a block/)
+        }.should.raise(ArgumentError, /tried to create Proc object without a block/)
       end
     end
   end
@@ -377,8 +377,8 @@ describe "A lambda expression 'lambda { ... }'" do
         @a = lambda { |a| a }
       ruby
 
-      lambda { m(&@a) }.should raise_error(ArgumentError)
-      lambda { m(1, 2, &@a) }.should raise_error(ArgumentError)
+      lambda { m(&@a) }.should.raise(ArgumentError)
+      lambda { m(1, 2, &@a) }.should.raise(ArgumentError)
     end
 
     evaluate <<-ruby do
@@ -388,8 +388,8 @@ describe "A lambda expression 'lambda { ... }'" do
       @a.(1).should == 1
       @a.([1, 2]).should == [1, 2]
 
-      lambda { @a.() }.should raise_error(ArgumentError)
-      lambda { @a.(1, 2) }.should raise_error(ArgumentError)
+      lambda { @a.() }.should.raise(ArgumentError)
+      lambda { @a.(1, 2) }.should.raise(ArgumentError)
     end
 
     evaluate <<-ruby do
@@ -402,7 +402,7 @@ describe "A lambda expression 'lambda { ... }'" do
       m(1, &@a).should == 1
       m([1, 2], &@a).should == [1, 2]
 
-      lambda { m2(&@a) }.should raise_error(ArgumentError)
+      lambda { m2(&@a) }.should.raise(ArgumentError)
     end
 
     evaluate <<-ruby do
@@ -451,7 +451,7 @@ describe "A lambda expression 'lambda { ... }'" do
         @a = lambda { |a:| a }
       ruby
 
-      lambda { @a.() }.should raise_error(ArgumentError)
+      lambda { @a.() }.should.raise(ArgumentError)
       @a.(a: 1).should == 1
     end
 
@@ -469,7 +469,7 @@ describe "A lambda expression 'lambda { ... }'" do
 
       @a.().should == nil
       @a.(a: 1, b: 2).should == nil
-      lambda { @a.(1) }.should raise_error(ArgumentError)
+      lambda { @a.(1) }.should.raise(ArgumentError)
     end
 
     evaluate <<-ruby do
@@ -607,9 +607,9 @@ describe "A lambda expression 'lambda { ... }'" do
       ruby
 
       @a.call().should == :ok
-      -> { @a.call(a: 1) }.should raise_error(ArgumentError, 'no keywords accepted')
-      -> { @a.call(**{a: 1}) }.should raise_error(ArgumentError, 'no keywords accepted')
-      -> { @a.call("a" => 1) }.should raise_error(ArgumentError, 'no keywords accepted')
+      -> { @a.call(a: 1) }.should.raise(ArgumentError, 'no keywords accepted')
+      -> { @a.call(**{a: 1}) }.should.raise(ArgumentError, 'no keywords accepted')
+      -> { @a.call("a" => 1) }.should.raise(ArgumentError, 'no keywords accepted')
     end
 
     evaluate <<-ruby do
@@ -617,7 +617,7 @@ describe "A lambda expression 'lambda { ... }'" do
       ruby
 
       @a.call({a: 1}).should == {a: 1}
-      -> { @a.call(a: 1) }.should raise_error(ArgumentError, 'no keywords accepted')
+      -> { @a.call(a: 1) }.should.raise(ArgumentError, 'no keywords accepted')
     end
   end
 end

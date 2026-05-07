@@ -53,33 +53,33 @@ describe "Time.now" do
     end
 
     it "raises ArgumentError if format is invalid" do
-      -> { Time.now(in: "+09:99") }.should raise_error(ArgumentError)
-      -> { Time.now(in: "ABC") }.should raise_error(ArgumentError)
+      -> { Time.now(in: "+09:99") }.should.raise(ArgumentError)
+      -> { Time.now(in: "ABC") }.should.raise(ArgumentError)
     end
 
     it "raises ArgumentError if String argument and hours greater than 23" do
-      -> { Time.now(in: "+24:00") }.should raise_error(ArgumentError, "utc_offset out of range")
-      -> { Time.now(in: "+2400") }.should raise_error(ArgumentError, "utc_offset out of range")
+      -> { Time.now(in: "+24:00") }.should.raise(ArgumentError, "utc_offset out of range")
+      -> { Time.now(in: "+2400") }.should.raise(ArgumentError, "utc_offset out of range")
 
-      -> { Time.now(in: "+99:00") }.should raise_error(ArgumentError, "utc_offset out of range")
-      -> { Time.now(in: "+9900") }.should raise_error(ArgumentError, "utc_offset out of range")
+      -> { Time.now(in: "+99:00") }.should.raise(ArgumentError, "utc_offset out of range")
+      -> { Time.now(in: "+9900") }.should.raise(ArgumentError, "utc_offset out of range")
     end
 
     it "raises ArgumentError if String argument and minutes greater than 59" do
-      -> { Time.now(in: "+00:60") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:60')
-      -> { Time.now(in: "+0060") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +0060')
+      -> { Time.now(in: "+00:60") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:60')
+      -> { Time.now(in: "+0060") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +0060')
 
-      -> { Time.now(in: "+00:99") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:99')
-      -> { Time.now(in: "+0099") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +0099')
+      -> { Time.now(in: "+00:99") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:99')
+      -> { Time.now(in: "+0099") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +0099')
     end
 
     ruby_bug '#20797', ''...'3.4' do
       it "raises ArgumentError if String argument and seconds greater than 59" do
-        -> { Time.now(in: "+00:00:60") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:00:60')
-        -> { Time.now(in: "+000060") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +000060')
+        -> { Time.now(in: "+00:00:60") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:00:60')
+        -> { Time.now(in: "+000060") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +000060')
 
-        -> { Time.now(in: "+00:00:99") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:00:99')
-        -> { Time.now(in: "+000099") }.should raise_error(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +000099')
+        -> { Time.now(in: "+00:00:99") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +00:00:99')
+        -> { Time.now(in: "+000099") }.should.raise(ArgumentError, '"+HH:MM", "-HH:MM", "UTC" or "A".."I","K".."Z" expected for utc_offset: +000099')
       end
     end
   end
@@ -93,7 +93,7 @@ describe "Time.now" do
 
       -> {
         Time.now(in: zone)
-      }.should raise_error(TypeError, /can't convert Object into an exact number/)
+      }.should.raise(TypeError, /can't convert Object into an exact number/)
     end
 
     it "does not raise exception if timezone does not implement #local_to_utc method" do
@@ -174,7 +174,7 @@ describe "Time.now" do
 
         -> {
           Time.now(in: zone)
-        }.should raise_error(ArgumentError, "utc_offset out of range")
+        }.should.raise(ArgumentError, "utc_offset out of range")
       end
     end
   end

@@ -227,7 +227,7 @@ describe "StringIO#set_encoding_by_bom" do
   it "raises FrozenError when io is frozen" do
     io = StringIO.new()
     io.freeze
-    -> { io.set_encoding_by_bom }.should raise_error(FrozenError)
+    -> { io.set_encoding_by_bom }.should.raise(FrozenError)
   end
 
   it "does not raise FrozenError when initial string is frozen" do

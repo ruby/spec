@@ -87,7 +87,7 @@ describe :hash_store, shared: true do
   end
 
   it "raises a FrozenError if called on a frozen instance" do
-    -> { HashSpecs.frozen_hash.send(@method, 1, 2) }.should raise_error(FrozenError)
+    -> { HashSpecs.frozen_hash.send(@method, 1, 2) }.should.raise(FrozenError)
   end
 
   it "does not raise an exception if changing the value of an existing key during iteration" do

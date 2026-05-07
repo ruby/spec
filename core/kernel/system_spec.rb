@@ -26,11 +26,11 @@ describe :kernel_system, shared: true do
   end
 
   it "raises RuntimeError when `exception: true` is given and the command exits with a non-zero exit status" do
-    -> { @object.system(ruby_cmd('exit 1'), exception: true) }.should raise_error(RuntimeError)
+    -> { @object.system(ruby_cmd('exit 1'), exception: true) }.should.raise(RuntimeError)
   end
 
   it "raises Errno::ENOENT when `exception: true` is given and the specified command does not exist" do
-    -> { @object.system('feature_14386', exception: true) }.should raise_error(Errno::ENOENT)
+    -> { @object.system('feature_14386', exception: true) }.should.raise(Errno::ENOENT)
   end
 
   it "returns nil when command execution fails" do

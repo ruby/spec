@@ -56,9 +56,9 @@ describe "StringScanner#scan" do
   end
 
   it "raises a TypeError if pattern isn't a Regexp nor String" do
-    -> { @s.scan(5)         }.should raise_error(TypeError)
-    -> { @s.scan(:test)     }.should raise_error(TypeError)
-    -> { @s.scan(mock('x')) }.should raise_error(TypeError)
+    -> { @s.scan(5)         }.should.raise(TypeError)
+    -> { @s.scan(:test)     }.should.raise(TypeError)
+    -> { @s.scan(mock('x')) }.should.raise(TypeError)
   end
 
   describe "#[] successive call with a capture group name" do

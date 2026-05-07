@@ -15,7 +15,7 @@ describe "String#delete" do
   end
 
   it "raises an ArgumentError when given no arguments" do
-    -> { "hell yeah".delete }.should raise_error(ArgumentError)
+    -> { "hell yeah".delete }.should.raise(ArgumentError)
   end
 
   it "negates sets starting with ^" do
@@ -63,10 +63,10 @@ describe "String#delete" do
     not_supported_on :opal do
       xFF = [0xFF].pack('C')
       range = "\x00 - #{xFF}".force_encoding('utf-8')
-      -> { "hello".delete(range).should == "" }.should raise_error(ArgumentError)
+      -> { "hello".delete(range).should == "" }.should.raise(ArgumentError)
     end
-    -> { "hello".delete("h-e") }.should raise_error(ArgumentError)
-    -> { "hello".delete("^h-e") }.should raise_error(ArgumentError)
+    -> { "hello".delete("h-e") }.should.raise(ArgumentError)
+    -> { "hello".delete("^h-e") }.should.raise(ArgumentError)
   end
 
   it "tries to convert each set arg to a string using to_str" do
@@ -80,9 +80,9 @@ describe "String#delete" do
   end
 
   it "raises a TypeError when one set arg can't be converted to a string" do
-    -> { "hello world".delete(100)       }.should raise_error(TypeError)
-    -> { "hello world".delete([])        }.should raise_error(TypeError)
-    -> { "hello world".delete(mock('x')) }.should raise_error(TypeError)
+    -> { "hello world".delete(100)       }.should.raise(TypeError)
+    -> { "hello world".delete([])        }.should.raise(TypeError)
+    -> { "hello world".delete(mock('x')) }.should.raise(TypeError)
   end
 
   it "returns String instances when called on a subclass" do
@@ -111,7 +111,7 @@ describe "String#delete!" do
     a = "hello"
     a.freeze
 
-    -> { a.delete!("")            }.should raise_error(FrozenError)
-    -> { a.delete!("aeiou", "^e") }.should raise_error(FrozenError)
+    -> { a.delete!("")            }.should.raise(FrozenError)
+    -> { a.delete!("aeiou", "^e") }.should.raise(FrozenError)
   end
 end

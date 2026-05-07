@@ -66,7 +66,7 @@ describe "Matrix.diagonal?" do
     ].each do |rectangular_matrix|
       -> {
         rectangular_matrix.diagonal?
-      }.should raise_error(Matrix::ErrDimensionMismatch)
+      }.should.raise(Matrix::ErrDimensionMismatch)
     end
   end
 end

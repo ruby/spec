@@ -165,11 +165,11 @@ end
 describe "StringIO#puts when self is not writable" do
   it "raises an IOError" do
     io = StringIO.new(+"test", "r")
-    -> { io.puts }.should raise_error(IOError)
+    -> { io.puts }.should.raise(IOError)
 
     io = StringIO.new(+"test")
     io.close_write
-    -> { io.puts }.should raise_error(IOError)
+    -> { io.puts }.should.raise(IOError)
   end
 end
 

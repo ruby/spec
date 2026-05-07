@@ -36,12 +36,12 @@ describe "Thread.each_caller_location" do
   it "raises LocalJumpError when called without a block" do
     -> {
       Thread.each_caller_location
-    }.should raise_error(LocalJumpError, "no block given")
+    }.should.raise(LocalJumpError, "no block given")
   end
 
   it "doesn't accept keyword arguments" do
     -> {
       Thread.each_caller_location(12, foo: 10) {}
-    }.should raise_error(ArgumentError);
+    }.should.raise(ArgumentError);
   end
 end

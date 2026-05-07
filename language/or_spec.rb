@@ -77,14 +77,14 @@ describe "The or operator" do
 
   it "has a lower precedence than 'break' in 'break true or false'" do
     # see also 'break true || false' above
-    -> { eval "break true or false" }.should raise_error(SyntaxError, /void value expression/)
+    -> { eval "break true or false" }.should.raise(SyntaxError, /void value expression/)
   end
 
   it "has a lower precedence than 'next' in 'next true or false'" do
-    -> { eval "next true or false" }.should raise_error(SyntaxError, /void value expression/)
+    -> { eval "next true or false" }.should.raise(SyntaxError, /void value expression/)
   end
 
   it "has a lower precedence than 'return' in 'return true or false'" do
-    -> { eval "return true or false" }.should raise_error(SyntaxError, /void value expression/)
+    -> { eval "return true or false" }.should.raise(SyntaxError, /void value expression/)
   end
 end

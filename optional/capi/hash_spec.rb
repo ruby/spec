@@ -36,7 +36,7 @@ describe "C-API Hash function" do
       obj = mock("rb_hash no to_int")
       obj.should_receive(:hash).and_return(nil)
 
-      -> { @s.rb_hash(obj) }.should raise_error(TypeError)
+      -> { @s.rb_hash(obj) }.should.raise(TypeError)
     end
   end
 
@@ -60,7 +60,7 @@ describe "C-API Hash function" do
     end
 
     it "raises RuntimeError when negative index is provided" do
-      -> { @s.rb_hash_new_capa(-1) }.should raise_error(RuntimeError, "st_table too big")
+      -> { @s.rb_hash_new_capa(-1) }.should.raise(RuntimeError, "st_table too big")
     end
   end
 
@@ -153,11 +153,11 @@ describe "C-API Hash function" do
 
     it "raises a KeyError if the key is not found and default is set" do
       @hsh.default = :d
-      -> { @s.rb_hash_fetch(@hsh, :c) }.should raise_error(KeyError)
+      -> { @s.rb_hash_fetch(@hsh, :c) }.should.raise(KeyError)
     end
 
     it "raises a KeyError if the key is not found and no default is set" do
-      -> { @s.rb_hash_fetch(@hsh, :c) }.should raise_error(KeyError)
+      -> { @s.rb_hash_fetch(@hsh, :c) }.should.raise(KeyError)
     end
 
     context "when key is not found" do
@@ -322,13 +322,13 @@ describe "C-API Hash function" do
     end
 
     it "raises a TypeError if the argument does not respond to #to_hash" do
-      -> { @s.rb_Hash(42) }.should raise_error(TypeError)
+      -> { @s.rb_Hash(42) }.should.raise(TypeError)
     end
 
     it "raises a TypeError if #to_hash does not return a hash" do
       h = BasicObject.new
       def h.to_hash; 42; end
-      -> { @s.rb_Hash(h) }.should raise_error(TypeError)
+      -> { @s.rb_Hash(h) }.should.raise(TypeError)
     end
   end
 

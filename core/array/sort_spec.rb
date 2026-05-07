@@ -68,7 +68,7 @@ describe "Array#sort" do
 
     -> {
       [o, 1].sort
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "may take a block which is used to determine the order of objects a and b described as -1, 0 or +1" do
@@ -78,7 +78,7 @@ describe "Array#sort" do
   end
 
   it "raises an error when a given block returns nil" do
-    -> { [1, 2].sort {} }.should raise_error(ArgumentError)
+    -> { [1, 2].sort {} }.should.raise(ArgumentError)
   end
 
   it "does not call #<=> on contained objects when invoked with a block" do
@@ -136,7 +136,7 @@ describe "Array#sort" do
     }.should == [-4, 1, 2, 5, 7, 10, 12]
     -> {
       a.sort { |n, m| (n - m).to_s }
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "sorts an array that has a value shifted off without a block" do
@@ -155,7 +155,7 @@ describe "Array#sort" do
 
   it "raises an error if objects can't be compared" do
     a=[ArraySpecs::Uncomparable.new, ArraySpecs::Uncomparable.new]
-    -> {a.sort}.should raise_error(ArgumentError)
+    -> {a.sort}.should.raise(ArgumentError)
   end
 
   # From a strange Rubinius bug
@@ -234,7 +234,7 @@ describe "Array#sort!" do
   end
 
   it "raises a FrozenError on a frozen array" do
-    -> { ArraySpecs.frozen_array.sort! }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.sort! }.should.raise(FrozenError)
   end
 
   it "returns the specified value when it would break in the given block" do

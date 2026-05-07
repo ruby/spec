@@ -75,7 +75,7 @@ describe "String#scrub with a custom replacement" do
     xE4 = [0xE4].pack('C').force_encoding('utf-8')
     block = -> { "foo#{x81}".scrub(xE4) }
 
-    block.should raise_error(ArgumentError)
+    block.should.raise(ArgumentError)
   end
 
   it "returns a String in the same encoding as self" do
@@ -87,7 +87,7 @@ describe "String#scrub with a custom replacement" do
     x81 = [0x81].pack('C').force_encoding('utf-8')
     block = -> { "foo#{x81}".scrub(1) }
 
-    block.should raise_error(TypeError)
+    block.should.raise(TypeError)
   end
 
   it "returns String instances when called on a subclass" do

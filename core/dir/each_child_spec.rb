@@ -36,7 +36,7 @@ describe "Dir.each_child" do
   end
 
   it "raises a SystemCallError if passed a nonexistent directory" do
-    -> { Dir.each_child(DirSpecs.nonexistent) {} }.should raise_error(SystemCallError)
+    -> { Dir.each_child(DirSpecs.nonexistent) {} }.should.raise(SystemCallError)
   end
 
   describe "when no block is given" do

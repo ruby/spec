@@ -25,7 +25,7 @@ describe "Numeric#real" do
 
   it "raises an ArgumentError if given any arguments" do
     @numbers.each do |number|
-      -> { number.real(number) }.should raise_error(ArgumentError)
+      -> { number.real(number) }.should.raise(ArgumentError)
     end
   end
 end

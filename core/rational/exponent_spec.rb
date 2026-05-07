@@ -66,7 +66,7 @@ describe "Rational#**" do
     end
 
     it "raises ZeroDivisionError when self is Rational(0) and the exponent is negative" do
-      -> { Rational(0) ** -bignum_value }.should raise_error(ZeroDivisionError)
+      -> { Rational(0) ** -bignum_value }.should.raise(ZeroDivisionError)
     end
 
     it "returns Rational(1) when self is Rational(1)" do
@@ -108,37 +108,37 @@ describe "Rational#**" do
       it "raises an ArgumentError when self is > 1" do
         -> {
           (Rational(2) ** bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
         -> {
           (Rational(fixnum_max) ** bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
       end
 
       it "raises an ArgumentError when self is > 1 and the exponent is negative" do
         -> {
           (Rational(2) ** -bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
         -> {
           (Rational(fixnum_max) ** -bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
       end
 
       it "raises an ArgumentError when self is < -1" do
         -> {
           (Rational(-2) ** bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
         -> {
           (Rational(fixnum_min) ** bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
       end
 
       it "raises an ArgumentError when self is < -1 and the exponent is negative" do
         -> {
           (Rational(-2) ** -bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
         -> {
           (Rational(fixnum_min) ** -bignum_value)
-        }.should raise_error(ArgumentError, "exponent is too large")
+        }.should.raise(ArgumentError, "exponent is too large")
       end
     end
 
@@ -213,19 +213,19 @@ describe "Rational#**" do
 
   it "raises ZeroDivisionError for Rational(0, 1) passed a negative Integer" do
     [-1, -4, -9999].each do |exponent|
-      -> { Rational(0, 1) ** exponent }.should raise_error(ZeroDivisionError, "divided by 0")
+      -> { Rational(0, 1) ** exponent }.should.raise(ZeroDivisionError, "divided by 0")
     end
   end
 
   it "raises ZeroDivisionError for Rational(0, 1) passed a negative Rational with denominator 1" do
     [Rational(-1, 1), Rational(-3, 1)].each do |exponent|
-      -> { Rational(0, 1) ** exponent }.should raise_error(ZeroDivisionError, "divided by 0")
+      -> { Rational(0, 1) ** exponent }.should.raise(ZeroDivisionError, "divided by 0")
     end
   end
 
   # #7513
   it "raises ZeroDivisionError for Rational(0, 1) passed a negative Rational" do
-    -> { Rational(0, 1) ** Rational(-3, 2) }.should raise_error(ZeroDivisionError, "divided by 0")
+    -> { Rational(0, 1) ** Rational(-3, 2) }.should.raise(ZeroDivisionError, "divided by 0")
   end
 
   it "returns Infinity for Rational(0, 1) passed a negative Float" do

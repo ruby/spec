@@ -67,7 +67,7 @@ describe "IO.pipe" do
           w = _w
           raise RuntimeError
         end
-      end.should raise_error(RuntimeError)
+      end.should.raise(RuntimeError)
       r.should.closed?
       w.should.closed?
     end

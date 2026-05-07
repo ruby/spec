@@ -51,10 +51,10 @@ describe "Module#instance_method" do
   end
 
   it "raises a TypeError if the given name is not a String/Symbol" do
-    -> { Object.instance_method([]) }.should raise_error(TypeError, /is not a symbol nor a string/)
-    -> { Object.instance_method(0) }.should raise_error(TypeError, /is not a symbol nor a string/)
-    -> { Object.instance_method(nil) }.should raise_error(TypeError, /is not a symbol nor a string/)
-    -> { Object.instance_method(mock('x')) }.should raise_error(TypeError, /is not a symbol nor a string/)
+    -> { Object.instance_method([]) }.should.raise(TypeError, /is not a symbol nor a string/)
+    -> { Object.instance_method(0) }.should.raise(TypeError, /is not a symbol nor a string/)
+    -> { Object.instance_method(nil) }.should.raise(TypeError, /is not a symbol nor a string/)
+    -> { Object.instance_method(mock('x')) }.should.raise(TypeError, /is not a symbol nor a string/)
   end
 
   it "accepts String name argument" do
@@ -89,11 +89,11 @@ describe "Module#instance_method" do
     um.should == @parent_um
     -> do
       child.instance_method(:foo)
-    end.should raise_error(NameError)
+    end.should.raise(NameError)
   end
 
   it "raises a NameError if the method does not exist" do
-    -> { Object.instance_method(:missing) }.should raise_error(NameError)
+    -> { Object.instance_method(:missing) }.should.raise(NameError)
   end
 
   it "sets the NameError#name attribute to the name of the missing method" do

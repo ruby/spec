@@ -19,7 +19,7 @@ describe :complex_divide, shared: true do
     end
 
     it "raises a ZeroDivisionError when given zero" do
-      -> { Complex(20, 40).send(@method, 0) }.should raise_error(ZeroDivisionError)
+      -> { Complex(20, 40).send(@method, 0) }.should.raise(ZeroDivisionError)
     end
 
     it "produces Rational parts" do

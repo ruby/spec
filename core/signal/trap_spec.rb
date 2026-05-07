@@ -97,7 +97,7 @@ describe "Signal.trap" do
       -> {
         Process.kill :HUP, Process.pid
         loop { Thread.pass }
-      }.should raise_error(NoMethodError)
+      }.should.raise(NoMethodError)
     end
 
     it "accepts a non-callable that becomes callable when used" do
@@ -237,19 +237,19 @@ describe "Signal.trap" do
     it "does not call #to_int on an object to convert to an Integer" do
       obj = mock("signal")
       obj.should_not_receive(:to_int)
-      -> { Signal.trap obj, @proc }.should raise_error(ArgumentError, /bad signal type/)
+      -> { Signal.trap obj, @proc }.should.raise(ArgumentError, /bad signal type/)
     end
 
     it "raises ArgumentError when passed unknown signal" do
-      -> { Signal.trap(300) { } }.should raise_error(ArgumentError, "invalid signal number (300)")
-      -> { Signal.trap("USR10") { } }.should raise_error(ArgumentError, /\Aunsupported signal [`']SIGUSR10'\z/)
-      -> { Signal.trap("SIGUSR10") { } }.should raise_error(ArgumentError, /\Aunsupported signal [`']SIGUSR10'\z/)
+      -> { Signal.trap(300) { } }.should.raise(ArgumentError, "invalid signal number (300)")
+      -> { Signal.trap("USR10") { } }.should.raise(ArgumentError, /\Aunsupported signal [`']SIGUSR10'\z/)
+      -> { Signal.trap("SIGUSR10") { } }.should.raise(ArgumentError, /\Aunsupported signal [`']SIGUSR10'\z/)
     end
 
     it "raises ArgumentError when passed signal is not Integer, String or Symbol" do
-      -> { Signal.trap(nil) { } }.should raise_error(ArgumentError, "bad signal type NilClass")
-      -> { Signal.trap(100.0) { } }.should raise_error(ArgumentError, "bad signal type Float")
-      -> { Signal.trap(Rational(100)) { } }.should raise_error(ArgumentError, "bad signal type Rational")
+      -> { Signal.trap(nil) { } }.should.raise(ArgumentError, "bad signal type NilClass")
+      -> { Signal.trap(100.0) { } }.should.raise(ArgumentError, "bad signal type Float")
+      -> { Signal.trap(Rational(100)) { } }.should.raise(ArgumentError, "bad signal type Rational")
     end
 
     # See man 2 signal
@@ -257,7 +257,7 @@ describe "Signal.trap" do
       it "raises ArgumentError or Errno::EINVAL for SIG#{signal}" do
         -> {
           Signal.trap(signal, -> {})
-        }.should raise_error(StandardError) { |e|
+        }.should.raise(StandardError) { |e|
           [ArgumentError, Errno::EINVAL].should.include?(e.class)
           e.message.should =~ /Invalid argument|Signal already used by VM or OS/
         }
@@ -268,7 +268,7 @@ describe "Signal.trap" do
       it "raises ArgumentError for SIG#{signal} which is reserved by Ruby" do
         -> {
           Signal.trap(signal, -> {})
-        }.should raise_error(ArgumentError, "can't trap reserved signal: SIG#{signal}")
+        }.should.raise(ArgumentError, "can't trap reserved signal: SIG#{signal}")
       end
     end
 

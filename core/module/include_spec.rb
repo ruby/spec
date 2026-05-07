@@ -40,13 +40,13 @@ describe "Module#include" do
   end
 
   it "raises a TypeError when the argument is not a Module" do
-    -> { ModuleSpecs::Basic.include(Class.new) }.should raise_error(TypeError)
+    -> { ModuleSpecs::Basic.include(Class.new) }.should.raise(TypeError)
   end
 
   it "does not raise a TypeError when the argument is an instance of a subclass of Module" do
     class ModuleSpecs::SubclassSpec::AClass
     end
-    -> { ModuleSpecs::SubclassSpec::AClass.include(ModuleSpecs::Subclass.new) }.should_not raise_error(TypeError)
+    -> { ModuleSpecs::SubclassSpec::AClass.include(ModuleSpecs::Subclass.new) }.should_not.raise(TypeError)
   ensure
     ModuleSpecs::SubclassSpec.send(:remove_const, :AClass)
   end
@@ -60,7 +60,7 @@ describe "Module#include" do
       end
     end
 
-    -> { ModuleSpecs::Basic.include(refinement) }.should raise_error(TypeError, "Cannot include refinement")
+    -> { ModuleSpecs::Basic.include(refinement) }.should.raise(TypeError, "Cannot include refinement")
   end
 
   it "imports constants to modules and classes" do
@@ -178,7 +178,7 @@ describe "Module#include" do
       module ModuleSpecs::M
         include ModuleSpecs::M
       end
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "doesn't accept no-arguments" do
@@ -186,7 +186,7 @@ describe "Module#include" do
       Module.new do
         include
       end
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "returns the class it's included into" do
@@ -622,7 +622,7 @@ describe "Module#include?" do
   end
 
   it "raises a TypeError when no module was given" do
-    -> { ModuleSpecs::Child.include?("Test") }.should raise_error(TypeError)
-    -> { ModuleSpecs::Child.include?(ModuleSpecs::Parent) }.should raise_error(TypeError)
+    -> { ModuleSpecs::Child.include?("Test") }.should.raise(TypeError)
+    -> { ModuleSpecs::Child.include?(ModuleSpecs::Parent) }.should.raise(TypeError)
   end
 end

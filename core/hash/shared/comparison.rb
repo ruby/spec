@@ -1,8 +1,8 @@
 describe :hash_comparison, shared: true do
   it "raises a TypeError if the right operand is not a hash" do
-    -> { { a: 1 }.send(@method, 1) }.should raise_error(TypeError)
-    -> { { a: 1 }.send(@method, nil) }.should raise_error(TypeError)
-    -> { { a: 1 }.send(@method, []) }.should raise_error(TypeError)
+    -> { { a: 1 }.send(@method, 1) }.should.raise(TypeError)
+    -> { { a: 1 }.send(@method, nil) }.should.raise(TypeError)
+    -> { { a: 1 }.send(@method, []) }.should.raise(TypeError)
   end
 
   it "returns false if both hashes have the same keys but different values" do

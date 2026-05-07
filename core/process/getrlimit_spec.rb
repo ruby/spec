@@ -36,7 +36,7 @@ describe "Process.getrlimit" do
         obj = mock("process getrlimit integer")
         obj.should_receive(:to_int).and_return(nil)
 
-        -> { Process.getrlimit(obj) }.should raise_error(TypeError)
+        -> { Process.getrlimit(obj) }.should.raise(TypeError)
       end
     end
 
@@ -49,7 +49,7 @@ describe "Process.getrlimit" do
       end
 
       it "raises ArgumentError when passed an unknown resource" do
-        -> { Process.getrlimit(:FOO) }.should raise_error(ArgumentError)
+        -> { Process.getrlimit(:FOO) }.should.raise(ArgumentError)
       end
     end
 
@@ -62,7 +62,7 @@ describe "Process.getrlimit" do
       end
 
       it "raises ArgumentError when passed an unknown resource" do
-        -> { Process.getrlimit("FOO") }.should raise_error(ArgumentError)
+        -> { Process.getrlimit("FOO") }.should.raise(ArgumentError)
       end
     end
 
@@ -94,7 +94,7 @@ describe "Process.getrlimit" do
       Process.respond_to?(:getrlimit).should == false
       -> do
         Process.getrlimit(nil)
-      end.should raise_error NotImplementedError
+      end.should.raise NotImplementedError
     end
   end
 end

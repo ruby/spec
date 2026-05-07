@@ -57,6 +57,6 @@ describe "Hash#flatten" do
   it "raises a TypeError if given a non-Integer argument" do
     -> do
       @h.flatten(Object.new)
-    end.should raise_error(TypeError)
+    end.should.raise(TypeError)
   end
 end

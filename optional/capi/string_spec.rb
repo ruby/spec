@@ -370,7 +370,7 @@ describe "C-API String function" do
     end
 
     it "raises a TypeError trying to append non-String-like object" do
-      -> { @s.rb_str_append("Hello", 32323)}.should raise_error(TypeError)
+      -> { @s.rb_str_append("Hello", 32323)}.should.raise(TypeError)
     end
 
     it "changes Encoding if a string is appended to an empty string" do
@@ -499,7 +499,7 @@ describe "C-API String function" do
     end
 
     it "converts a C string to a Fixnum strictly if base is 0" do
-      -> { @s.rb_cstr2inum("1234a", 0) }.should raise_error(ArgumentError)
+      -> { @s.rb_cstr2inum("1234a", 0) }.should.raise(ArgumentError)
     end
   end
 
@@ -517,7 +517,7 @@ describe "C-API String function" do
     end
 
     it "converts a C string to a Fixnum strictly" do
-      -> { @s.rb_cstr_to_inum("1234a", 10, true) }.should raise_error(ArgumentError)
+      -> { @s.rb_cstr_to_inum("1234a", 10, true) }.should.raise(ArgumentError)
     end
   end
 
@@ -598,8 +598,8 @@ describe "C-API String function" do
     end
 
     it "raises a TypeError if coercion fails" do
-      -> { @s.rb_str_to_str(0) }.should raise_error(TypeError)
-      -> { @s.rb_str_to_str(CApiStringSpecs::InvalidTostrTest.new) }.should raise_error(TypeError)
+      -> { @s.rb_str_to_str(0) }.should.raise(TypeError)
+      -> { @s.rb_str_to_str(CApiStringSpecs::InvalidTostrTest.new) }.should.raise(TypeError)
     end
   end
 
@@ -723,7 +723,7 @@ describe "C-API String function" do
     it "does not call #to_s on non-String objects" do
       str = mock("fake")
       str.should_not_receive(:to_s)
-      -> { @s.send(@method, str) }.should raise_error(TypeError)
+      -> { @s.send(@method, str) }.should.raise(TypeError)
     end
   end
 
@@ -736,7 +736,7 @@ describe "C-API String function" do
 
   describe "rb_str_modify" do
     it "raises an error if the string is frozen" do
-      -> { @s.rb_str_modify("frozen".freeze) }.should raise_error(FrozenError)
+      -> { @s.rb_str_modify("frozen".freeze) }.should.raise(FrozenError)
     end
   end
 
@@ -767,7 +767,7 @@ describe "C-API String function" do
     end
 
     it "raises an error if the string is frozen" do
-      -> { @s.rb_str_modify_expand("frozen".freeze, 10) }.should raise_error(FrozenError)
+      -> { @s.rb_str_modify_expand("frozen".freeze, 10) }.should.raise(FrozenError)
     end
   end
 
@@ -1181,7 +1181,7 @@ describe "C-API String function" do
     end
 
     it "raises a TypeError if #to_str does not return a string" do
-      -> { @s.rb_String(CApiStringSpecs::InvalidTostrTest.new) }.should raise_error(TypeError)
+      -> { @s.rb_String(CApiStringSpecs::InvalidTostrTest.new) }.should.raise(TypeError)
     end
 
     it "tries to convert the passed argument to a string by calling #to_s" do
@@ -1199,11 +1199,11 @@ describe "C-API String function" do
     end
 
     it "raises an error if a string contains a null" do
-      -> { @s.rb_string_value_cstr("Hello\0 with a null.") }.should raise_error(ArgumentError)
+      -> { @s.rb_string_value_cstr("Hello\0 with a null.") }.should.raise(ArgumentError)
     end
 
     it "raises an error if a UTF-16 string contains a null" do
-      -> { @s.rb_string_value_cstr("Hello\0 with a null.".encode('UTF-16BE')) }.should raise_error(ArgumentError)
+      -> { @s.rb_string_value_cstr("Hello\0 with a null.".encode('UTF-16BE')) }.should.raise(ArgumentError)
     end
 
   end
@@ -1278,23 +1278,23 @@ describe "C-API String function" do
     it "raises an error when trying to lock an already locked string" do
       str = +"test"
       @s.rb_str_locktmp(str).should == str
-      -> { @s.rb_str_locktmp(str) }.should raise_error(RuntimeError, 'temporal locking already locked string')
+      -> { @s.rb_str_locktmp(str) }.should.raise(RuntimeError, 'temporal locking already locked string')
     end
 
     it "locks a string so that modifications would raise an error" do
       str = +"test"
       @s.rb_str_locktmp(str).should == str
-      -> { str.upcase! }.should raise_error(RuntimeError, 'can\'t modify string; temporarily locked')
+      -> { str.upcase! }.should.raise(RuntimeError, 'can\'t modify string; temporarily locked')
     end
 
     ruby_version_is "4.0" do
       it "raises FrozenError if string is frozen" do
         str = -"rb_str_locktmp"
-        -> { @s.rb_str_locktmp(str) }.should raise_error(FrozenError)
+        -> { @s.rb_str_locktmp(str) }.should.raise(FrozenError)
 
         str = +"rb_str_locktmp"
         str.freeze
-        -> { @s.rb_str_locktmp(str) }.should raise_error(FrozenError)
+        -> { @s.rb_str_locktmp(str) }.should.raise(FrozenError)
       end
     end
   end
@@ -1308,17 +1308,17 @@ describe "C-API String function" do
     end
 
     it "raises an error when trying to unlock an already unlocked string" do
-      -> { @s.rb_str_unlocktmp(+"test") }.should raise_error(RuntimeError, 'temporal unlocking already unlocked string')
+      -> { @s.rb_str_unlocktmp(+"test") }.should.raise(RuntimeError, 'temporal unlocking already unlocked string')
     end
 
     ruby_version_is "4.0" do
       it "raises FrozenError if string is frozen" do
         str = -"rb_str_locktmp"
-        -> { @s.rb_str_unlocktmp(str) }.should raise_error(FrozenError)
+        -> { @s.rb_str_unlocktmp(str) }.should.raise(FrozenError)
 
         str = +"rb_str_locktmp"
         str.freeze
-        -> { @s.rb_str_unlocktmp(str) }.should raise_error(FrozenError)
+        -> { @s.rb_str_unlocktmp(str) }.should.raise(FrozenError)
       end
     end
   end

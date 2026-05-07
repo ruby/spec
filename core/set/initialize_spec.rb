@@ -35,7 +35,7 @@ describe "Set#initialize" do
 
   it "raises if the provided Enumerable does not respond to #each_entry or #each" do
     enumerable = MockObject.new('mock-enumerable')
-    -> { Set.new(enumerable) }.should raise_error(ArgumentError, "value must be enumerable")
+    -> { Set.new(enumerable) }.should.raise(ArgumentError, "value must be enumerable")
   end
 
   it "should initialize with empty array and set" do

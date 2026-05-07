@@ -12,6 +12,6 @@ describe "WeakRef#__getobj__" do
     ref = WeakRefSpec.make_dead_weakref
     -> {
       ref.__getobj__
-    }.should raise_error(WeakRef::RefError)
+    }.should.raise(WeakRef::RefError)
   end
 end

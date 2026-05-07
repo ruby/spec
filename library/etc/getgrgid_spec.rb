@@ -47,12 +47,12 @@ platform_is_not :windows do
       end
 
       it "raises if the group does not exist" do
-        -> { Etc.getgrgid(9876)}.should raise_error(ArgumentError)
+        -> { Etc.getgrgid(9876)}.should.raise(ArgumentError)
       end
 
       it "raises a TypeError if not passed an Integer" do
-        -> { Etc.getgrgid("foo") }.should raise_error(TypeError)
-        -> { Etc.getgrgid(nil)   }.should raise_error(TypeError)
+        -> { Etc.getgrgid("foo") }.should.raise(TypeError)
+        -> { Etc.getgrgid(nil)   }.should.raise(TypeError)
       end
 
       it "can be called safely by multiple threads" do

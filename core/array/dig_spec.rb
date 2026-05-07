@@ -22,20 +22,20 @@ describe "Array#dig" do
   it "raises a TypeError for a non-numeric index" do
     -> {
       ['a'].dig(:first)
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises a TypeError if any intermediate step does not respond to #dig" do
     a = [1, 2]
     -> {
       a.dig(0, 1)
-    }.should raise_error(TypeError)
+    }.should.raise(TypeError)
   end
 
   it "raises an ArgumentError if no arguments provided" do
     -> {
       [10].dig()
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "returns nil if any intermediate step is nil" do

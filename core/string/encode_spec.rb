@@ -190,12 +190,12 @@ describe "String#encode!" do
   it_behaves_like :string_encode, :encode!
 
   it "raises a FrozenError when called on a frozen String" do
-    -> { "foo".freeze.encode!("euc-jp") }.should raise_error(FrozenError)
+    -> { "foo".freeze.encode!("euc-jp") }.should.raise(FrozenError)
   end
 
   # http://redmine.ruby-lang.org/issues/show/1836
   it "raises a FrozenError when called on a frozen String when it's a no-op" do
-    -> { "foo".freeze.encode!("utf-8") }.should raise_error(FrozenError)
+    -> { "foo".freeze.encode!("utf-8") }.should.raise(FrozenError)
   end
 
   describe "when passed no options" do

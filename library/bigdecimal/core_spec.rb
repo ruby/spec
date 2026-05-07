@@ -56,7 +56,7 @@ describe "Core extension by bigdecimal" do
     it "raises an error when passed a BigDecimal" do
       -> {
         Rational(500, 3).coerce(BigDecimal('166.666666666'))
-      }.should raise_error(TypeError, /BigDecimal can't be coerced into Rational/)
+      }.should.raise(TypeError, /BigDecimal can't be coerced into Rational/)
     end
   end
 end

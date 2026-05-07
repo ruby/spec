@@ -33,7 +33,7 @@ describe :kernel_sprintf_encoding, shared: true do
 
     -> {
       @method.call(string, argument)
-    }.should raise_error(Encoding::CompatibilityError)
+    }.should.raise(Encoding::CompatibilityError)
   end
 
   describe "%c" do
@@ -52,7 +52,7 @@ describe :kernel_sprintf_encoding, shared: true do
 
       -> {
         @method.call(format, 1286)
-      }.should raise_error(RangeError, /out of char range/)
+      }.should.raise(RangeError, /out of char range/)
     end
 
     it "uses the encoding of the format string to interpret codepoints" do

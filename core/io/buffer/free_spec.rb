@@ -72,7 +72,7 @@ describe "IO::Buffer#free" do
   it "is disallowed while locked, raising IO::Buffer::LockedError" do
     buffer = IO::Buffer.new(4)
     buffer.locked do
-      -> { buffer.free }.should raise_error(IO::Buffer::LockedError, "Buffer is locked!")
+      -> { buffer.free }.should.raise(IO::Buffer::LockedError, "Buffer is locked!")
     end
     buffer.free
     buffer.null?.should == true

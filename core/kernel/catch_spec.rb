@@ -31,11 +31,11 @@ describe "Kernel.catch" do
   end
 
   it "raises an ArgumentError if a Symbol is thrown for a String catch value" do
-    -> { catch("exit") { throw :exit } }.should raise_error(ArgumentError)
+    -> { catch("exit") { throw :exit } }.should.raise(ArgumentError)
   end
 
   it "raises an ArgumentError if a String with different identity is thrown" do
-    -> { catch("exit".dup) { throw "exit".dup } }.should raise_error(ArgumentError)
+    -> { catch("exit".dup) { throw "exit".dup } }.should.raise(ArgumentError)
   end
 
   it "catches a Symbol when thrown a matching Symbol" do
@@ -116,7 +116,7 @@ describe "Kernel.catch" do
   end
 
   it "raises LocalJumpError if no block is given" do
-    -> { catch :blah }.should raise_error(LocalJumpError)
+    -> { catch :blah }.should.raise(LocalJumpError)
   end
 end
 

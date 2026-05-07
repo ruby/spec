@@ -13,7 +13,7 @@ describe "Math.sqrt" do
   end
 
   it "raises a TypeError if the argument cannot be coerced with Float()" do
-    -> { Math.sqrt("test") }.should raise_error(TypeError)
+    -> { Math.sqrt("test") }.should.raise(TypeError)
   end
 
   it "returns NaN given NaN" do
@@ -21,7 +21,7 @@ describe "Math.sqrt" do
   end
 
   it "raises a TypeError if the argument is nil" do
-    -> { Math.sqrt(nil) }.should raise_error(TypeError)
+    -> { Math.sqrt(nil) }.should.raise(TypeError)
   end
 
   it "accepts any argument that can be coerced with Float()" do
@@ -29,7 +29,7 @@ describe "Math.sqrt" do
   end
 
   it "raises a Math::DomainError when given a negative number" do
-    -> { Math.sqrt(-1) }.should raise_error(Math::DomainError)
+    -> { Math.sqrt(-1) }.should.raise(Math::DomainError)
   end
 end
 

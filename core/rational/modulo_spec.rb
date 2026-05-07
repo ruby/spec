@@ -24,20 +24,20 @@ describe "Rational#%" do
   it "raises ZeroDivisionError on zero denominator" do
     -> {
       Rational(3, 5) % Rational(0, 1)
-    }.should raise_error(ZeroDivisionError)
+    }.should.raise(ZeroDivisionError)
 
     -> {
       Rational(0, 1) % Rational(0, 1)
-    }.should raise_error(ZeroDivisionError)
+    }.should.raise(ZeroDivisionError)
 
     -> {
       Rational(3, 5) % 0
-    }.should raise_error(ZeroDivisionError)
+    }.should.raise(ZeroDivisionError)
   end
 
   it "raises a ZeroDivisionError when the argument is 0.0" do
     -> {
       Rational(3, 5) % 0.0
-    }.should raise_error(ZeroDivisionError)
+    }.should.raise(ZeroDivisionError)
   end
 end

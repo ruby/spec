@@ -40,7 +40,7 @@ platform_is_not :windows do
 
       -> {
         @read.expect("hello")
-      }.should raise_error(IOError)
+      }.should.raise(IOError)
     end
 
     it "returns nil if eof is hit" do

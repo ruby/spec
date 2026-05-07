@@ -35,11 +35,11 @@ describe "Regexp#match" do
   end
 
   it "raises a TypeError on an uninitialized Regexp" do
-    -> { Regexp.allocate.match('foo') }.should raise_error(TypeError)
+    -> { Regexp.allocate.match('foo') }.should.raise(TypeError)
   end
 
   it "raises TypeError on an uninitialized Regexp" do
-    -> { Regexp.allocate.match('foo'.encode("UTF-16LE")) }.should raise_error(TypeError)
+    -> { Regexp.allocate.match('foo'.encode("UTF-16LE")) }.should.raise(TypeError)
   end
 
   describe "with [string, position]" do
@@ -54,7 +54,7 @@ describe "Regexp#match" do
 
       it "raises an ArgumentError for an invalid encoding" do
         x96 = ([150].pack('C')).force_encoding('utf-8')
-        -> { /(.).(.)/.match("Hello, #{x96} world!", 1) }.should raise_error(ArgumentError)
+        -> { /(.).(.)/.match("Hello, #{x96} world!", 1) }.should.raise(ArgumentError)
       end
     end
 
@@ -69,7 +69,7 @@ describe "Regexp#match" do
 
       it "raises an ArgumentError for an invalid encoding" do
         x96 = ([150].pack('C')).force_encoding('utf-8')
-        -> { /(.).(.)/.match("Hello, #{x96} world!", -1) }.should raise_error(ArgumentError)
+        -> { /(.).(.)/.match("Hello, #{x96} world!", -1) }.should.raise(ArgumentError)
       end
     end
 
@@ -102,12 +102,12 @@ describe "Regexp#match" do
 
   it "raises TypeError when the given argument cannot be coerced to String" do
     f = 1
-    -> { /foo/.match(f)[0] }.should raise_error(TypeError)
+    -> { /foo/.match(f)[0] }.should.raise(TypeError)
   end
 
   it "raises TypeError when the given argument is an Exception" do
     f = Exception.new("foo")
-    -> { /foo/.match(f)[0] }.should raise_error(TypeError)
+    -> { /foo/.match(f)[0] }.should.raise(TypeError)
   end
 end
 

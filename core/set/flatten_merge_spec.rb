@@ -18,7 +18,7 @@ describe "Set#flatten_merge" do
       set2 = Set[5, 6, 7]
       set2 << set2
 
-      -> { set1.send(:flatten_merge, set2) }.should raise_error(ArgumentError)
+      -> { set1.send(:flatten_merge, set2) }.should.raise(ArgumentError)
     end
   end
 end

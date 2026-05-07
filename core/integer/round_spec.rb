@@ -22,23 +22,23 @@ describe "Integer#round" do
   end
 
   it "raises a RangeError when passed a big negative value" do
-    -> { 42.round(min_long - 1) }.should raise_error(RangeError)
+    -> { 42.round(min_long - 1) }.should.raise(RangeError)
   end
 
   it "raises a RangeError when passed Float::INFINITY" do
-    -> { 42.round(Float::INFINITY) }.should raise_error(RangeError)
+    -> { 42.round(Float::INFINITY) }.should.raise(RangeError)
   end
 
   it "raises a RangeError when passed a beyond signed int" do
-    -> { 42.round(1<<31) }.should raise_error(RangeError)
+    -> { 42.round(1<<31) }.should.raise(RangeError)
   end
 
   it "raises a TypeError when passed a String" do
-    -> { 42.round("4") }.should raise_error(TypeError)
+    -> { 42.round("4") }.should.raise(TypeError)
   end
 
   it "raises a TypeError when its argument cannot be converted to an Integer" do
-    -> { 42.round(nil) }.should raise_error(TypeError)
+    -> { 42.round(nil) }.should.raise(TypeError)
   end
 
   it "calls #to_int on the argument to convert it to an Integer" do
@@ -50,7 +50,7 @@ describe "Integer#round" do
   it "raises a TypeError when #to_int does not return an Integer" do
     obj = mock("Object")
     obj.stub!(:to_int).and_return([])
-    -> { 42.round(obj) }.should raise_error(TypeError)
+    -> { 42.round(obj) }.should.raise(TypeError)
   end
 
   it "returns different rounded values depending on the half option" do
@@ -75,7 +75,7 @@ describe "Integer#round" do
   end
 
   it "raises ArgumentError for an unknown rounding mode" do
-    -> { 42.round(-1, half: :foo) }.should raise_error(ArgumentError, /invalid rounding mode: foo/)
-    -> { 42.round(1, half: :foo) }.should raise_error(ArgumentError, /invalid rounding mode: foo/)
+    -> { 42.round(-1, half: :foo) }.should.raise(ArgumentError, /invalid rounding mode: foo/)
+    -> { 42.round(1, half: :foo) }.should.raise(ArgumentError, /invalid rounding mode: foo/)
   end
 end

@@ -40,7 +40,7 @@ describe :array_collect, shared: true do
     a = [1, 2, 3]
     -> {
       a.send(@method, :foo)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   before :all do
@@ -87,21 +87,21 @@ describe :array_collect_b, shared: true do
 
   describe "when frozen" do
     it "raises a FrozenError" do
-      -> { ArraySpecs.frozen_array.send(@method) {} }.should raise_error(FrozenError)
+      -> { ArraySpecs.frozen_array.send(@method) {} }.should.raise(FrozenError)
     end
 
     it "raises a FrozenError when empty" do
-      -> { ArraySpecs.empty_frozen_array.send(@method) {} }.should raise_error(FrozenError)
+      -> { ArraySpecs.empty_frozen_array.send(@method) {} }.should.raise(FrozenError)
     end
 
     it "raises a FrozenError when calling #each on the returned Enumerator" do
       enumerator = ArraySpecs.frozen_array.send(@method)
-      -> { enumerator.each {|x| x } }.should raise_error(FrozenError)
+      -> { enumerator.each {|x| x } }.should.raise(FrozenError)
     end
 
     it "raises a FrozenError when calling #each on the returned Enumerator when empty" do
       enumerator = ArraySpecs.empty_frozen_array.send(@method)
-      -> { enumerator.each {|x| x } }.should raise_error(FrozenError)
+      -> { enumerator.each {|x| x } }.should.raise(FrozenError)
     end
   end
 

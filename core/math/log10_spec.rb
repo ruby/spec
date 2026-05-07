@@ -16,15 +16,15 @@ describe "Math.log10" do
   end
 
   it "raises an Math::DomainError if the argument is less than 0" do
-    -> { Math.log10(-1e-15) }.should raise_error(Math::DomainError)
+    -> { Math.log10(-1e-15) }.should.raise(Math::DomainError)
   end
 
   it "raises a TypeError if the argument cannot be coerced with Float()" do
-    -> { Math.log10("test") }.should raise_error(TypeError)
+    -> { Math.log10("test") }.should.raise(TypeError)
   end
 
   it "raises a TypeError if passed a numerical argument as a string" do
-    -> { Math.log10("1.0") }.should raise_error(TypeError)
+    -> { Math.log10("1.0") }.should.raise(TypeError)
   end
 
   it "returns NaN given NaN" do
@@ -32,7 +32,7 @@ describe "Math.log10" do
   end
 
   it "raises a TypeError if the argument is nil" do
-    -> { Math.log10(nil) }.should raise_error(TypeError)
+    -> { Math.log10(nil) }.should.raise(TypeError)
   end
 
   it "accepts any argument that can be coerced with Float()" do

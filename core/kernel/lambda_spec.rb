@@ -30,30 +30,30 @@ describe "Kernel.lambda" do
     l = lambda { :called }
     l.call.should == :called
 
-    lambda { l.call(1) }.should raise_error(ArgumentError)
-    lambda { l.call(1, 2) }.should raise_error(ArgumentError)
+    lambda { l.call(1) }.should.raise(ArgumentError)
+    lambda { l.call(1, 2) }.should.raise(ArgumentError)
   end
 
   it "checks the arity when 1 arg is specified" do
     l = lambda { |a| :called }
     l.call(1).should == :called
 
-    lambda { l.call }.should raise_error(ArgumentError)
-    lambda { l.call(1, 2) }.should raise_error(ArgumentError)
+    lambda { l.call }.should.raise(ArgumentError)
+    lambda { l.call(1, 2) }.should.raise(ArgumentError)
   end
 
   it "does not check the arity when passing a Proc with &" do
     l = lambda { || :called }
     p = proc { || :called }
 
-    lambda { l.call(1) }.should raise_error(ArgumentError)
+    lambda { l.call(1) }.should.raise(ArgumentError)
     p.call(1).should == :called
   end
 
   it "accepts 0 arguments when used with ||" do
     lambda {
       lambda { || }.call(1)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "strictly checks the arity when 0 or 2..inf args are specified" do
@@ -61,15 +61,15 @@ describe "Kernel.lambda" do
 
     lambda {
       l.call
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
 
     lambda {
       l.call(1)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
 
     lambda {
       l.call(1,2)
-    }.should_not raise_error(ArgumentError)
+    }.should_not.raise(ArgumentError)
   end
 
   it "returns from the lambda itself, not the creation site of the lambda" do
@@ -100,7 +100,7 @@ describe "Kernel.lambda" do
 
   context "when called without a literal block" do
     it "raises when proc isn't a lambda" do
-      -> { lambda(&proc{}) }.should raise_error(ArgumentError, /the lambda method requires a literal block/)
+      -> { lambda(&proc{}) }.should.raise(ArgumentError, /the lambda method requires a literal block/)
     end
 
     it "doesn't warn when proc is lambda" do

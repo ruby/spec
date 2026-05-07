@@ -30,19 +30,19 @@ describe :string_replace, shared: true do
   end
 
   it "raises a TypeError if other can't be converted to string" do
-    -> { "hello".send(@method, 123)       }.should raise_error(TypeError)
-    -> { "hello".send(@method, [])        }.should raise_error(TypeError)
-    -> { "hello".send(@method, mock('x')) }.should raise_error(TypeError)
+    -> { "hello".send(@method, 123)       }.should.raise(TypeError)
+    -> { "hello".send(@method, [])        }.should.raise(TypeError)
+    -> { "hello".send(@method, mock('x')) }.should.raise(TypeError)
   end
 
   it "raises a FrozenError on a frozen instance that is modified" do
     a = "hello".freeze
-    -> { a.send(@method, "world") }.should raise_error(FrozenError)
+    -> { a.send(@method, "world") }.should.raise(FrozenError)
   end
 
   # see [ruby-core:23666]
   it "raises a FrozenError on a frozen instance when self-replacing" do
     a = "hello".freeze
-    -> { a.send(@method, a) }.should raise_error(FrozenError)
+    -> { a.send(@method, a) }.should.raise(FrozenError)
   end
 end

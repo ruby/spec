@@ -60,21 +60,21 @@ describe "Struct.new" do
   end
 
   it "fails with invalid constant name as first argument" do
-    -> { Struct.new('animal', :name, :legs, :eyeballs) }.should raise_error(NameError)
+    -> { Struct.new('animal', :name, :legs, :eyeballs) }.should.raise(NameError)
   end
 
   it "raises a TypeError if object doesn't respond to to_sym" do
-    -> { Struct.new(:animal, mock('giraffe'))      }.should raise_error(TypeError)
-    -> { Struct.new(:animal, 1.0)                  }.should raise_error(TypeError)
-    -> { Struct.new(:animal, Time.now)             }.should raise_error(TypeError)
-    -> { Struct.new(:animal, Class)                }.should raise_error(TypeError)
-    -> { Struct.new(:animal, nil)                  }.should raise_error(TypeError)
-    -> { Struct.new(:animal, true)                 }.should raise_error(TypeError)
-    -> { Struct.new(:animal, ['chris', 'evan'])    }.should raise_error(TypeError)
+    -> { Struct.new(:animal, mock('giraffe'))      }.should.raise(TypeError)
+    -> { Struct.new(:animal, 1.0)                  }.should.raise(TypeError)
+    -> { Struct.new(:animal, Time.now)             }.should.raise(TypeError)
+    -> { Struct.new(:animal, Class)                }.should.raise(TypeError)
+    -> { Struct.new(:animal, nil)                  }.should.raise(TypeError)
+    -> { Struct.new(:animal, true)                 }.should.raise(TypeError)
+    -> { Struct.new(:animal, ['chris', 'evan'])    }.should.raise(TypeError)
   end
 
   it "raises a TypeError if passed a Hash with an unknown key" do
-    -> { Struct.new(:animal, { name: 'chris' }) }.should raise_error(TypeError)
+    -> { Struct.new(:animal, { name: 'chris' }) }.should.raise(TypeError)
   end
 
   it "works when not provided any arguments" do
@@ -84,13 +84,13 @@ describe "Struct.new" do
   end
 
   it "raises ArgumentError when there is a duplicate member" do
-    -> { Struct.new(:foo, :foo) }.should raise_error(ArgumentError, "duplicate member: foo")
+    -> { Struct.new(:foo, :foo) }.should.raise(ArgumentError, "duplicate member: foo")
   end
 
   it "raises a TypeError if object is not a Symbol" do
     obj = mock(':ruby')
     def obj.to_sym() :ruby end
-    -> { Struct.new(:animal, obj) }.should raise_error(TypeError)
+    -> { Struct.new(:animal, obj) }.should.raise(TypeError)
   end
 
   it "processes passed block with instance_eval" do
@@ -143,7 +143,7 @@ describe "Struct.new" do
     end
 
     it "fails with too many arguments" do
-      -> { StructClasses::Ruby.new('2.0', 'i686', true) }.should raise_error(ArgumentError)
+      -> { StructClasses::Ruby.new('2.0', 'i686', true) }.should.raise(ArgumentError)
     end
 
     it "accepts keyword arguments to initialize" do
@@ -182,7 +182,7 @@ describe "Struct.new" do
 
       it "raises ArgumentError when all struct attribute values are specified" do
         type = Struct.new(:a, :b)
-        -> { type.new("a", "b", c: "c") }.should raise_error(ArgumentError, "struct size differs")
+        -> { type.new("a", "b", c: "c") }.should.raise(ArgumentError, "struct size differs")
       end
     end
   end
@@ -199,7 +199,7 @@ describe "Struct.new" do
     end
 
     it "raises when there is a duplicate member" do
-      -> { Struct.new(:foo, :foo, keyword_init: true) }.should raise_error(ArgumentError, "duplicate member: foo")
+      -> { Struct.new(:foo, :foo, keyword_init: true) }.should.raise(ArgumentError, "duplicate member: foo")
     end
 
     describe "new class instantiation" do
@@ -224,19 +224,19 @@ describe "Struct.new" do
       it "raises ArgumentError when passed not declared keyword argument" do
         -> {
           @struct_with_kwa.new(name: "elefant", legs: 4, foo: "bar")
-        }.should raise_error(ArgumentError, /unknown keywords: foo/)
+        }.should.raise(ArgumentError, /unknown keywords: foo/)
       end
 
       it "raises ArgumentError when passed a list of arguments" do
         -> {
           @struct_with_kwa.new("elefant", 4)
-        }.should raise_error(ArgumentError, /wrong number of arguments/)
+        }.should.raise(ArgumentError, /wrong number of arguments/)
       end
 
       it "raises ArgumentError when passed a single non-hash argument" do
         -> {
           @struct_with_kwa.new("elefant")
-        }.should raise_error(ArgumentError, /wrong number of arguments/)
+        }.should.raise(ArgumentError, /wrong number of arguments/)
       end
     end
   end

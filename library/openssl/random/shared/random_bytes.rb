@@ -24,6 +24,6 @@ describe :openssl_random_bytes, shared: true do
   it "raises ArgumentError on negative arguments" do
     -> {
       OpenSSL::Random.send(@method, -1)
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 end

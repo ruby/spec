@@ -9,6 +9,6 @@ describe :float_to_i, shared: true do
   end
 
   it "raises a FloatDomainError for NaN" do
-    -> { nan_value.send(@method) }.should raise_error(FloatDomainError)
+    -> { nan_value.send(@method) }.should.raise(FloatDomainError)
   end
 end

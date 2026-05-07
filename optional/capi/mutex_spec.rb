@@ -46,14 +46,14 @@ describe "C-API Mutex functions" do
 
     it "throws an exception when already locked in the same thread" do
       @m.lock
-      -> { @s.rb_mutex_lock(@m) }.should raise_error(ThreadError)
+      -> { @s.rb_mutex_lock(@m) }.should.raise(ThreadError)
       @m.locked?.should == true
     end
   end
 
   describe "rb_mutex_unlock" do
     it "raises an exception when not locked" do
-      -> { @s.rb_mutex_unlock(@m) }.should raise_error(ThreadError)
+      -> { @s.rb_mutex_unlock(@m) }.should.raise(ThreadError)
       @m.locked?.should == false
     end
 
@@ -66,7 +66,7 @@ describe "C-API Mutex functions" do
 
   describe "rb_mutex_sleep" do
     it "throws an exception when the mutex is not locked" do
-      -> { @s.rb_mutex_sleep(@m, 0.1) }.should raise_error(ThreadError)
+      -> { @s.rb_mutex_sleep(@m, 0.1) }.should.raise(ThreadError)
       @m.locked?.should == false
     end
 

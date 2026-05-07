@@ -95,7 +95,7 @@ describe "Module#remove_method" do
     Class.new(ModuleSpecs::Second) do
       -> {
         remove_method :method_to_remove
-      }.should raise_error(NameError)
+      }.should.raise(NameError)
     end
   end
 
@@ -103,7 +103,7 @@ describe "Module#remove_method" do
     Class.new(ModuleSpecs::Second) do
       -> {
         remove_method :blah
-      }.should raise_error(NameError)
+      }.should.raise(NameError)
     end
   end
 
@@ -113,15 +113,15 @@ describe "Module#remove_method" do
     end
 
     it "raises a FrozenError when passed a name" do
-      -> { @frozen.send :remove_method, :method_to_remove }.should raise_error(FrozenError)
+      -> { @frozen.send :remove_method, :method_to_remove }.should.raise(FrozenError)
     end
 
     it "raises a FrozenError when passed a missing name" do
-      -> { @frozen.send :remove_method, :not_exist }.should raise_error(FrozenError)
+      -> { @frozen.send :remove_method, :not_exist }.should.raise(FrozenError)
     end
 
     it "raises a TypeError when passed a not name" do
-      -> { @frozen.send :remove_method, Object.new }.should raise_error(TypeError)
+      -> { @frozen.send :remove_method, Object.new }.should.raise(TypeError)
     end
 
     it "does not raise exceptions when no arguments given" do

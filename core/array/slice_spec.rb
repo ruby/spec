@@ -116,8 +116,8 @@ describe "Array#slice!" do
     a.slice!(from .. to).should == [2, 3, 4]
     a.should == [1, 5]
 
-    -> { a.slice!("a" .. "b")  }.should raise_error(TypeError)
-    -> { a.slice!(from .. "b") }.should raise_error(TypeError)
+    -> { a.slice!("a" .. "b")  }.should.raise(TypeError)
+    -> { a.slice!(from .. "b") }.should.raise(TypeError)
   end
 
   it "returns last element for consecutive calls at zero index" do
@@ -151,7 +151,7 @@ describe "Array#slice!" do
   end
 
   it "raises a FrozenError on a frozen array" do
-    -> { ArraySpecs.frozen_array.slice!(0, 0) }.should raise_error(FrozenError)
+    -> { ArraySpecs.frozen_array.slice!(0, 0) }.should.raise(FrozenError)
   end
 
   it "works with endless ranges" do

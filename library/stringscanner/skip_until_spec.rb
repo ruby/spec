@@ -27,7 +27,7 @@ describe "StringScanner#skip_until" do
     it "raises TypeError if given a String" do
       -> {
         @s.skip_until('T')
-      }.should raise_error(TypeError, 'wrong argument type String (expected Regexp)')
+      }.should.raise(TypeError, 'wrong argument type String (expected Regexp)')
     end
   end
 
@@ -88,7 +88,7 @@ describe "StringScanner#skip_until" do
           it "raises IndexError when matching succeeded" do
             @s.skip_until("This")
             @s.should.matched?
-            -> { @s[:a] }.should raise_error(IndexError)
+            -> { @s[:a] }.should.raise(IndexError)
           end
         end
 
@@ -123,7 +123,7 @@ describe "StringScanner#skip_until" do
 
             @s.skip_until("This")
             @s.should.matched?
-            -> { @s[:a] }.should raise_error(IndexError)
+            -> { @s[:a] }.should.raise(IndexError)
           end
         end
       end

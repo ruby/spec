@@ -8,7 +8,7 @@ platform_is :windows do
     end
 
     it "raises ArgumentError if argument is given" do
-      -> { @dict.ole_put_methods(1) }.should raise_error ArgumentError
+      -> { @dict.ole_put_methods(1) }.should.raise ArgumentError
     end
 
     it "returns an array of WIN32OLE::Methods" do

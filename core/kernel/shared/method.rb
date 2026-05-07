@@ -31,12 +31,12 @@ describe :kernel_method, shared: true do
     class KernelSpecs::Foo; def bar; 'done'; end; end
     -> {
       KernelSpecs::Foo.new.send(@method, :invalid_and_silly_method_name)
-    }.should raise_error(NameError)
+    }.should.raise(NameError)
   end
 
   it "raises a NameError for an invalid singleton method name" do
     class KernelSpecs::Foo; def self.bar; 'done'; end; end
-    -> { KernelSpecs::Foo.send(@method, :baz) }.should raise_error(NameError)
+    -> { KernelSpecs::Foo.send(@method, :baz) }.should.raise(NameError)
   end
 
   it "changes the method called for super on a target aliased method" do

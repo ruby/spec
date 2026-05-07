@@ -84,7 +84,7 @@ describe "Kernel#inspect" do
         private def instance_variables_to_inspect = {}
       end
 
-      ->{ obj.inspect }.should raise_error(TypeError, "Expected #instance_variables_to_inspect to return an Array or nil, but it returned Hash")
+      ->{ obj.inspect }.should.raise(TypeError, "Expected #instance_variables_to_inspect to return an Array or nil, but it returned Hash")
     end
   end
 end

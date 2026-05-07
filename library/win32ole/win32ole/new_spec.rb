@@ -14,11 +14,11 @@ platform_is :windows do
     end
 
     it "raises TypeError if argument cannot be converted to String" do
-      -> { WIN32OLESpecs.new_ole(42) }.should raise_error( TypeError )
+      -> { WIN32OLESpecs.new_ole(42) }.should.raise( TypeError )
     end
 
     it "raises WIN32OLE::RuntimeError if invalid string is given" do
-      -> { WIN32OLE.new('foo') }.should raise_error( WIN32OLE::RuntimeError )
+      -> { WIN32OLE.new('foo') }.should.raise( WIN32OLE::RuntimeError )
     end
 
   end

@@ -30,8 +30,8 @@ describe "Process.wait2" do
   end
 
   it "raises a StandardError if no child processes exist" do
-    -> { Process.wait2 }.should raise_error(Errno::ECHILD)
-    -> { Process.wait2 }.should raise_error(StandardError)
+    -> { Process.wait2 }.should.raise(Errno::ECHILD)
+    -> { Process.wait2 }.should.raise(StandardError)
   end
 
   it "returns nil if the child process is still running when given the WNOHANG flag" do

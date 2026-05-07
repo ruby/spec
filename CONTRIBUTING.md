@@ -97,11 +97,11 @@ Array.should.respond_to?(:new)
 ```ruby
 -> {
   raise "oops"
-}.should raise_error(RuntimeError, /oops/)
+}.should.raise(RuntimeError, /oops/)
 
 -> {
   raise "oops"
-}.should raise_error(RuntimeError) { |e|
+}.should.raise(RuntimeError) { |e|
   # Custom checks on the Exception object
   e.message.should.include?("oops")
   e.cause.should == nil
@@ -114,7 +114,7 @@ Array.should.respond_to?(:new)
 If an exception is raised, it will fail the example anyway.
 
 ```ruby
--> { ... }.should_not raise_error
+-> { ... }.should_not.raise
 ```
 
 #### Warning matcher
@@ -269,7 +269,7 @@ how this is used currently:
 ```ruby
 describe :kernel_sprintf, shared: true do
   it "raises TypeError exception if cannot convert to Integer" do
-    -> { @method.call("%b", Object.new) }.should raise_error(TypeError)
+    -> { @method.call("%b", Object.new) }.should.raise(TypeError)
   end
 end
 

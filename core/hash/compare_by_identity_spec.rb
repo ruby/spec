@@ -82,7 +82,7 @@ describe "Hash#compare_by_identity" do
 
   it "raises a FrozenError on frozen hashes" do
     @h = @h.freeze
-    -> { @h.compare_by_identity }.should raise_error(FrozenError)
+    -> { @h.compare_by_identity }.should.raise(FrozenError)
   end
 
   # Behaviour confirmed in https://bugs.ruby-lang.org/issues/1871

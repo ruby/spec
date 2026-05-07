@@ -43,6 +43,6 @@ describe "Integer.try_convert" do
   it "does not rescue exceptions raised by #to_int" do
     obj = mock("to_int")
     obj.should_receive(:to_int).and_raise(RuntimeError)
-    -> { Integer.try_convert obj }.should raise_error(RuntimeError)
+    -> { Integer.try_convert obj }.should.raise(RuntimeError)
   end
 end

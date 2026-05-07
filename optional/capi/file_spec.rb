@@ -5,7 +5,7 @@ load_extension('file')
 describe :rb_file_open, shared: true do
   it "raises an ArgumentError if passed an empty mode string" do
     touch @name
-    -> { @s.rb_file_open(@name, "") }.should raise_error(ArgumentError)
+    -> { @s.rb_file_open(@name, "") }.should.raise(ArgumentError)
   end
 
   it "opens a file in read-only mode with 'r'" do

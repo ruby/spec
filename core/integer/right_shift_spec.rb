@@ -78,15 +78,15 @@ describe "Integer#>> (with n >> m)" do
       obj = mock("a string")
       obj.should_receive(:to_int).and_return("asdf")
 
-      -> { 3 >> obj }.should raise_error(TypeError)
+      -> { 3 >> obj }.should.raise(TypeError)
     end
 
     it "raises a TypeError when passed nil" do
-      -> { 3 >> nil }.should raise_error(TypeError)
+      -> { 3 >> nil }.should.raise(TypeError)
     end
 
     it "raises a TypeError when passed a String" do
-      -> { 3 >> "4" }.should raise_error(TypeError)
+      -> { 3 >> "4" }.should.raise(TypeError)
     end
   end
 
@@ -172,15 +172,15 @@ describe "Integer#>> (with n >> m)" do
       obj = mock("a string")
       obj.should_receive(:to_int).and_return("asdf")
 
-      -> { @bignum >> obj }.should raise_error(TypeError)
+      -> { @bignum >> obj }.should.raise(TypeError)
     end
 
     it "raises a TypeError when passed nil" do
-      -> { @bignum >> nil }.should raise_error(TypeError)
+      -> { @bignum >> nil }.should.raise(TypeError)
     end
 
     it "raises a TypeError when passed a String" do
-      -> { @bignum >> "4" }.should raise_error(TypeError)
+      -> { @bignum >> "4" }.should.raise(TypeError)
     end
   end
 
@@ -223,10 +223,10 @@ describe "Integer#>> (with n >> m)" do
       exps << -bignum_value << coerce_bignum if bignum_value >= limit
 
       exps.each { |exp|
-        -> { (1 >> exp) }.should raise_error(RangeError, 'shift width too big')
-        -> { (-1 >> exp) }.should raise_error(RangeError, 'shift width too big')
-        -> { (bignum_value >> exp) }.should raise_error(RangeError, 'shift width too big')
-        -> { (-bignum_value >> exp) }.should raise_error(RangeError, 'shift width too big')
+        -> { (1 >> exp) }.should.raise(RangeError, 'shift width too big')
+        -> { (-1 >> exp) }.should.raise(RangeError, 'shift width too big')
+        -> { (bignum_value >> exp) }.should.raise(RangeError, 'shift width too big')
+        -> { (-bignum_value >> exp) }.should.raise(RangeError, 'shift width too big')
       }
     end
   end

@@ -67,7 +67,7 @@ describe "TCPServer.new" do
   end
 
   it "coerces port to string, then determines port from that number or service name" do
-    -> { TCPServer.new(SocketSpecs.hostname, Object.new) }.should raise_error(TypeError)
+    -> { TCPServer.new(SocketSpecs.hostname, Object.new) }.should.raise(TypeError)
 
     port = Object.new
     port.should_receive(:to_str).and_return("0")
@@ -87,7 +87,7 @@ describe "TCPServer.new" do
   end
 
   it "coerces port to a string when it is the only argument" do
-    -> { TCPServer.new(Object.new) }.should raise_error(TypeError)
+    -> { TCPServer.new(Object.new) }.should.raise(TypeError)
 
     port = Object.new
     port.should_receive(:to_str).and_return("0")
@@ -104,7 +104,7 @@ describe "TCPServer.new" do
   end
 
   it "raises Errno::EADDRNOTAVAIL when the address is unknown" do
-    -> { TCPServer.new("1.2.3.4", 0) }.should raise_error(Errno::EADDRNOTAVAIL)
+    -> { TCPServer.new("1.2.3.4", 0) }.should.raise(Errno::EADDRNOTAVAIL)
   end
 
   # There is no way to make this fail-proof on all machines, because
@@ -114,7 +114,7 @@ describe "TCPServer.new" do
     it "raises a SocketError when the host is unknown" do
       -> {
         TCPServer.new("--notavalidname", 0)
-      }.should raise_error(SocketError)
+      }.should.raise(SocketError)
     end
   end
 
@@ -122,7 +122,7 @@ describe "TCPServer.new" do
     @server = TCPServer.new('127.0.0.1', 0)
     -> {
       @server = TCPServer.new('127.0.0.1', @server.addr[1])
-    }.should raise_error(Errno::EADDRINUSE)
+    }.should.raise(Errno::EADDRINUSE)
   end
 
   platform_is_not :windows, :aix do

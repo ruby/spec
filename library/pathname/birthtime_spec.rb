@@ -10,7 +10,7 @@ describe "Pathname#birthtime" do
 
   platform_is :openbsd do
     it "raises an NotImplementedError" do
-      -> { Pathname.new(__FILE__).birthtime }.should raise_error(NotImplementedError)
+      -> { Pathname.new(__FILE__).birthtime }.should.raise(NotImplementedError)
     end
   end
 end

@@ -9,7 +9,7 @@ describe "Process._fork" do
   # are that _fork is implemented if and only if fork is (see above).
   guard_not -> { Process.respond_to?(:fork) } do
     it "raises a NotImplementedError when called" do
-      -> { Process._fork }.should raise_error(NotImplementedError)
+      -> { Process._fork }.should.raise(NotImplementedError)
     end
   end
 

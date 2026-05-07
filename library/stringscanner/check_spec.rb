@@ -50,7 +50,7 @@ describe "StringScanner#check" do
         it "raises IndexError when matching succeeded" do
           @s.check("This")
           @s.should.matched?
-          -> { @s[:a] }.should raise_error(IndexError)
+          -> { @s[:a] }.should.raise(IndexError)
         end
       end
 
@@ -85,7 +85,7 @@ describe "StringScanner#check" do
 
           @s.check("This")
           @s.should.matched?
-          -> { @s[:a] }.should raise_error(IndexError)
+          -> { @s[:a] }.should.raise(IndexError)
         end
       end
     end

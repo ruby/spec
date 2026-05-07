@@ -40,13 +40,13 @@ describe "Matrix#each_with_index with an argument" do
   it "raises an ArgumentError for unrecognized argument" do
     -> {
       @m.each_with_index("all"){}
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @m.each_with_index(nil){}
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
     -> {
       @m.each_with_index(:left){}
-    }.should raise_error(ArgumentError)
+    }.should.raise(ArgumentError)
   end
 
   it "yields the rights elements when passed :diagonal" do

@@ -106,9 +106,9 @@ describe "Tempfile.create" do
     end
 
     it "raises ArgumentError if passed something else than a String or an array of Strings" do
-      -> { Tempfile.create(:create_spec) }.should raise_error(ArgumentError, "unexpected prefix: :create_spec")
-      -> { Tempfile.create([:create_spec]) }.should raise_error(ArgumentError, "unexpected prefix: :create_spec")
-      -> { Tempfile.create(["create_spec", :temp]) }.should raise_error(ArgumentError, "unexpected suffix: :temp")
+      -> { Tempfile.create(:create_spec) }.should.raise(ArgumentError, "unexpected prefix: :create_spec")
+      -> { Tempfile.create([:create_spec]) }.should.raise(ArgumentError, "unexpected prefix: :create_spec")
+      -> { Tempfile.create(["create_spec", :temp]) }.should.raise(ArgumentError, "unexpected suffix: :temp")
     end
   end
 
@@ -119,7 +119,7 @@ describe "Tempfile.create" do
     end
 
     it "raises TypeError if argument can not be converted to a String" do
-      -> { Tempfile.create("create_spec", :temp) }.should raise_error(TypeError, "no implicit conversion of Symbol into String")
+      -> { Tempfile.create("create_spec", :temp) }.should.raise(TypeError, "no implicit conversion of Symbol into String")
     end
   end
 
@@ -132,7 +132,7 @@ describe "Tempfile.create" do
     end
 
     it "raises NoMethodError if passed a String mode" do
-      -> { Tempfile.create(mode: "wb") }.should raise_error(NoMethodError, /undefined method ['`]|' for .+String/)
+      -> { Tempfile.create(mode: "wb") }.should.raise(NoMethodError, /undefined method ['`]|' for .+String/)
     end
   end
 

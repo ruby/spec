@@ -21,7 +21,7 @@ describe "IO::Buffer#locked" do
       @buffer = IO::Buffer.new(4)
       @buffer.locked do
         # Just an example, each method is responsible for checking the lock state.
-        -> { @buffer.resize(8) }.should raise_error(IO::Buffer::LockedError)
+        -> { @buffer.resize(8) }.should.raise(IO::Buffer::LockedError)
       end
     end
   end
@@ -29,7 +29,7 @@ describe "IO::Buffer#locked" do
   it "disallows reentrant locking, raising IO::Buffer::LockedError" do
     @buffer = IO::Buffer.new(4)
     @buffer.locked do
-      -> { @buffer.locked {} }.should raise_error(IO::Buffer::LockedError, "Buffer already locked!")
+      -> { @buffer.locked {} }.should.raise(IO::Buffer::LockedError, "Buffer already locked!")
     end
   end
 

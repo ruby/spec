@@ -87,7 +87,7 @@ describe "C-API Thread function" do
 
       -> {
         thr.join
-      }.should raise_error(RuntimeError, "my error")
+      }.should.raise(RuntimeError, "my error")
     end
 
     it "sets the thread's group" do

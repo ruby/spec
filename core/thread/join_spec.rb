@@ -24,8 +24,8 @@ describe "Thread#join" do
   it "raises TypeError if the argument is not a valid timeout" do
     t = Thread.new { }
     t.join
-    -> { t.join(:foo) }.should raise_error TypeError
-    -> { t.join("bar") }.should raise_error TypeError
+    -> { t.join(:foo) }.should.raise TypeError
+    -> { t.join("bar") }.should.raise TypeError
   end
 
   it "returns nil if it is not finished when given a timeout" do
@@ -55,7 +55,7 @@ describe "Thread#join" do
       Thread.current.report_on_exception = false
       raise NotImplementedError.new("Just kidding")
     }
-    -> { t.join }.should raise_error(NotImplementedError)
+    -> { t.join }.should.raise(NotImplementedError)
   end
 
   it "returns the dead thread" do
@@ -65,6 +65,6 @@ describe "Thread#join" do
 
   it "raises any uncaught exception encountered in ensure block" do
     t = ThreadSpecs.dying_thread_ensures { raise NotImplementedError.new("Just kidding") }
-    -> { t.join }.should raise_error(NotImplementedError)
+    -> { t.join }.should.raise(NotImplementedError)
   end
 end

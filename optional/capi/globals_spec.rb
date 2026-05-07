@@ -52,7 +52,7 @@ describe "CApiGlobalSpecs" do
 
     @f.rb_define_readonly_variable("#{name}", 15)
     $#{name}.should == 15
-    -> { $#{name} = 10 }.should raise_error(NameError)
+    -> { $#{name} = 10 }.should.raise(NameError)
     RUBY
   end
 
@@ -80,7 +80,7 @@ describe "CApiGlobalSpecs" do
       end
 
       it "is read-only" do
-        -> { $virtual_variable_default_accessors = 10 }.should raise_error(NameError, /read-only/)
+        -> { $virtual_variable_default_accessors = 10 }.should.raise(NameError, /read-only/)
       end
 
       it "returns false with the default getter" do

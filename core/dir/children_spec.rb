@@ -65,7 +65,7 @@ describe "Dir.children" do
   end
 
   it "raises a SystemCallError if called with a nonexistent directory" do
-    -> { Dir.children DirSpecs.nonexistent }.should raise_error(SystemCallError)
+    -> { Dir.children DirSpecs.nonexistent }.should.raise(SystemCallError)
   end
 end
 

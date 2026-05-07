@@ -86,7 +86,7 @@ describe :enumerable_collect, shared: true do
 
     -> do
       { 1 => 'a', 2 => 'b' }.map(&m)
-    end.should raise_error(ArgumentError)
+    end.should.raise(ArgumentError)
   end
 
   it "calls the each method on sub-classes" do
