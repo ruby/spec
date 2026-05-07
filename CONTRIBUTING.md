@@ -55,6 +55,11 @@ which indicates the file was generated but the method unspecified.
 Here is a list of frequently-used matchers, which should be enough for most specs.
 There are a few extra specific matchers used in the couple specs that need it.
 
+The general idea is: add `.should` just before the predicate you expect to be truthy, and done!
+This works for most needs and provides a great error when it fails.
+It's immediately clear which method is used and there no need to remember a mapping like in RSpec between e.g. `eq` and `==`.
+See [this blog post](https://eregon.me/blog/2019/10/07/a-new-should-syntax.html) for the motivation behind that syntax.
+
 #### Comparison matchers
 
 ```ruby
