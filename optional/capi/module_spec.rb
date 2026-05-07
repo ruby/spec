@@ -343,14 +343,14 @@ describe "CApiModule" do
     it "defines a protected method on a class" do
       cls = Class.new
       @m.rb_define_protected_method(cls, "test_method")
-      cls.should have_protected_instance_method(:test_method)
+      cls.protected_instance_methods(false).should.include?(:test_method)
       cls.new.send(:test_method).should == :test_method
     end
 
     it "defines a protected method on a module" do
       mod = Module.new
       @m.rb_define_protected_method(mod, "test_method")
-      mod.should have_protected_instance_method(:test_method)
+      mod.protected_instance_methods(false).should.include?(:test_method)
     end
   end
 
