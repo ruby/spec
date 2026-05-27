@@ -1,3 +1,4 @@
+# This is the behavior of rb_enum_values_pack() in CRuby
 describe :enumerable_value_packing, shared: true do
   # @take must be set to a Proc that returns the take-result whose #each
   # yields packed values (e.g. -> e { e.take(1) } or -> e { e.lazy.take(1) }).
