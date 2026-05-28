@@ -87,6 +87,24 @@ describe "Complex.rectangular" do
     end
   end
 
+  describe "when passed a Complex" do
+    it "raises a TypeError when the imaginary part is not zero" do
+      -> {
+        Complex.rectangular(1.0+1i, 2)
+      }.should.raise(TypeError)
+
+      -> {
+        Complex.rectangular(1.0, 2i)
+      }.should.raise(TypeError)
+    end
+
+    it "ignores the imaginary part if it is zero" do
+      result = Complex.rectangular(1.0+0i, 2+0.0i)
+      result.real.should == 1.0
+      result.imag.should == 2
+    end
+  end
+
   describe "passed a non-Numeric" do
     it "raises TypeError" do
       -> { Complex.rectangular(:sym) }.should.raise(TypeError)
