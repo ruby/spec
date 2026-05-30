@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 require_relative 'fixtures/classes'
 
 describe "Hash#[]=" do
-  it "associates the key with the value and return the value" do
+  it "associates the key with the value" do
     h = { a: 1 }
     h[:b] = 2
     h.should == { b:2, a:1 }

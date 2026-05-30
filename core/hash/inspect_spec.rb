@@ -81,7 +81,7 @@ describe "Hash#inspect" do
 
   it "works for keys and values whose #inspect return a frozen String" do
     expected = ruby_version_is("3.4") ? "{true => false}" : "{true=>false}"
-    { true => false }.to_s.should == expected
+    { true => false }.inspect.should == expected
   end
 
   ruby_version_is "3.4" do

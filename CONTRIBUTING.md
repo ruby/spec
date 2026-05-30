@@ -246,7 +246,7 @@ Here's an example of a snippet of a shared spec and two specs which integrates i
 # core/hash/shared/iteration.rb
 describe :hash_iteration_no_block, shared: true do
   it "returns an Enumerator if called on a non-empty hash without a block" do
-    {}.send(@method).should.instance_of?(Enumerator)
+    { 1 => 2 }.send(@method).should.instance_of?(Enumerator)
   end
 end
 
@@ -256,7 +256,7 @@ describe "Hash#select" do
 end
 
 # core/hash/reject_spec.rb
-describe "Hash#reject?" do
+describe "Hash#reject" do
   it_behaves_like :hash_iteration_no_block, :reject
 end
 ```
