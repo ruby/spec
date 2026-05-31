@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative 'fixtures/classes'
 
 describe "Data#inspect" do
   it "returns a string representation showing members and values" do
