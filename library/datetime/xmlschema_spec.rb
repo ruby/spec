@@ -6,5 +6,7 @@ describe "DateTime.xmlschema" do
 end
 
 describe "DateTime#xmlschema" do
-  it "needs to be reviewed for spec completeness"
+  it "is an alias of DateTime#iso8601" do
+    DateTime.instance_method(:xmlschema).should == DateTime.instance_method(:iso8601)
+  end
 end
