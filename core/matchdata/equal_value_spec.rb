@@ -1,6 +1,7 @@
 require_relative '../../spec_helper'
-require_relative 'shared/eql'
 
 describe "MatchData#==" do
-  it_behaves_like :matchdata_eql, :==
+  it "is an alias of MatchData#eql?" do
+    MatchData.instance_method(:==).should == MatchData.instance_method(:eql?)
+  end
 end
