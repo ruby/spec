@@ -22,6 +22,17 @@ describe "Process.wait" do
     Process.wait.should == pid
   end
 
+  it "returns nil when the process has not yet completed and WNOHANG is specified" do
+    cmd = platform_is(:windows) ? "timeout" : "sleep"
+    pid = spawn("#{cmd} 5")
+    begin
+      Process.wait(pid, Process::WNOHANG).should == nil
+      Process.kill("KILL", pid)
+    ensure
+      Process.wait(pid)
+    end
+  end
+
   it "sets $? to a Process::Status" do
     pid = Process.spawn(ruby_cmd('exit'))
     Process.wait
