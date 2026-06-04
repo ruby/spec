@@ -2,20 +2,7 @@ require_relative '../../spec_helper'
 require 'getoptlong'
 
 describe "GetoptLong#each" do
-  before :each do
-    @opts = GetoptLong.new(
-      [ '--size', '-s',             GetoptLong::REQUIRED_ARGUMENT ],
-      [ '--verbose', '-v',          GetoptLong::NO_ARGUMENT ],
-      [ '--query', '-q',            GetoptLong::NO_ARGUMENT ],
-      [ '--check', '--valid', '-c', GetoptLong::NO_ARGUMENT ]
-    )
-  end
-
-  it "passes each argument/value pair to the block" do
-    argv [ "--size", "10k", "-v", "-q", "a.txt", "b.txt" ] do
-      pairs = []
-      @opts.each { |arg, val| pairs << [ arg, val ] }
-      pairs.should == [ [ "--size", "10k" ], [ "--verbose", "" ], [ "--query", ""] ]
-    end
+  it "is an alias of GetoptLong#each_option" do
+    GetoptLong.instance_method(:each).should == GetoptLong.instance_method(:each_option)
   end
 end
