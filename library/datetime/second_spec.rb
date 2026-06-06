@@ -36,8 +36,7 @@ describe "DateTime#second" do
   end
 
   it "raises an error for second fractions smaller than -60" do
-    -> { new_datetime(second: -60 - Rational(1,2))}.should(
-      raise_error(ArgumentError))
+    -> { new_datetime(second: -60 - Rational(1,2))}.should.raise(ArgumentError)
   end
 
   it "takes a second fraction near 60" do

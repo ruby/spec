@@ -35,7 +35,6 @@ describe "DateTime#minute" do
   end
 
   it "raises an error for minute fractions smaller than -60" do
-    -> { new_datetime(minute: -60 - Rational(1,2))}.should(
-      raise_error(ArgumentError))
+    -> { new_datetime(minute: -60 - Rational(1,2))}.should.raise(ArgumentError)
   end
 end
