@@ -1,7 +1,11 @@
 require_relative '../../spec_helper'
 require_relative '../rational/fixtures/rational'
 
-describe "Kernel.Rational" do
+describe "Kernel#Rational" do
+  it "is a private method" do
+    Kernel.private_instance_methods(false).should.include?(:Rational)
+  end
+
   describe "passed Integer" do
     # Guard against the Mathn library
     guard -> { !defined?(Math.rsqrt) } do
@@ -232,5 +236,11 @@ describe "Kernel.Rational" do
 
   it "freezes its result" do
     Rational(1).frozen?.should == true
+  end
+end
+
+describe "Kernel.Rational" do
+  it "is a public method" do
+    Kernel.public_methods(false).should.include?(:Rational)
   end
 end

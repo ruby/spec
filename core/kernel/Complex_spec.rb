@@ -2,7 +2,11 @@ require_relative '../../spec_helper'
 require_relative '../../shared/kernel/complex'
 require_relative 'fixtures/Complex'
 
-describe "Kernel.Complex()" do
+describe "Kernel#Complex" do
+  it "is a private method" do
+    Kernel.private_instance_methods(false).should.include?(:Complex)
+  end
+
   describe "when passed [Complex, Complex]" do
     it "returns a new Complex number based on the two given numbers" do
       Complex(Complex(3, 4), Complex(5, 6)).should == Complex(3 - 6, 4 + 5)
@@ -272,5 +276,11 @@ describe "Kernel.Complex()" do
 
   it "freezes its result" do
     Complex(1).frozen?.should == true
+  end
+end
+
+describe "Kernel.Complex" do
+  it "is a public method" do
+    Kernel.public_methods(false).should.include?(:Complex)
   end
 end
