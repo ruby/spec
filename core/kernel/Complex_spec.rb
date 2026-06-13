@@ -43,24 +43,21 @@ describe "Kernel#Complex" do
 
   describe "when passed [Integer/Float]" do
     it "returns a new Complex number with 0 as the imaginary component" do
-      # Guard against the Mathn library
-      guard -> { !defined?(Math.rsqrt) } do
-        Complex(1).should.instance_of?(Complex)
-        Complex(1).imag.should == 0
-        Complex(1).real.should == 1
+      Complex(1).should.instance_of?(Complex)
+      Complex(1).imag.should == 0
+      Complex(1).real.should == 1
 
-        Complex(-3).should.instance_of?(Complex)
-        Complex(-3).imag.should == 0
-        Complex(-3).real.should == -3
+      Complex(-3).should.instance_of?(Complex)
+      Complex(-3).imag.should == 0
+      Complex(-3).real.should == -3
 
-        Complex(-4.5).should.instance_of?(Complex)
-        Complex(-4.5).imag.should == 0
-        Complex(-4.5).real.should == -4.5
+      Complex(-4.5).should.instance_of?(Complex)
+      Complex(-4.5).imag.should == 0
+      Complex(-4.5).real.should == -4.5
 
-        Complex(bignum_value).should.instance_of?(Complex)
-        Complex(bignum_value).imag.should == 0
-        Complex(bignum_value).real.should == bignum_value
-      end
+      Complex(bignum_value).should.instance_of?(Complex)
+      Complex(bignum_value).imag.should == 0
+      Complex(bignum_value).real.should == bignum_value
     end
   end
 
