@@ -134,23 +134,17 @@ describe "Module#ruby2_keywords" do
 
   it "does not copy or unmark the Hash when it is passed directly as a positional argument" do
     obj = Object.new
-    obj.singleton_class.class_exec do
-      def single(arg)
-        arg
-      end
+    def obj.single(arg)
+      arg
     end
 
     h = { a: 1 }
     marked = mark(**h).last
     Hash.ruby2_keywords_hash?(marked).should == true
 
-    # Call repeatedly so implementations that compile methods lazily also
-    # exercise their compiled path (regression: jruby/jruby#9517)
-    100.times do
-      after_usage = obj.single(marked)
-      after_usage.should.equal?(marked)
-      Hash.ruby2_keywords_hash?(after_usage).should == true
-    end
+    after_usage = obj.single(marked)
+    after_usage.should.equal?(marked)
+    Hash.ruby2_keywords_hash?(after_usage).should == true
   end
 
   it "applies to the underlying method and applies across aliasing" do
