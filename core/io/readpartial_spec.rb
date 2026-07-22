@@ -58,6 +58,16 @@ describe "IO#readpartial" do
     @rd.readpartial(2).should == "b"
   end
 
+  it "raises an exception after ungetc with character conversion enabled" do
+    @wr.write("foobar")
+    @rd.set_encoding('utf-8', 'ascii')
+    c = @rd.getc
+    @rd.ungetc(c)
+    -> do
+      @rd.readpartial(3)
+    end.should.raise(IOError, "byte oriented read for character buffered IO")
+  end
+
   it "discards the existing buffer content upon successful read" do
     buffer = +"existing content"
     @wr.write("hello world")
