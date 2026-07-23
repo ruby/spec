@@ -59,10 +59,12 @@ describe "IO#pwrite" do
     }.should.raise(NoMethodError, /undefined method [`']to_s'/)
   end
 
-  it "raises a Errno::EINVAL if the offset is invalid" do
-    -> {
-      @file.pwrite("foo", -1)
-    }.should.raise(Errno::EINVAL)
+  platform_is_not :windows do
+    it "raises a Errno::EINVAL if the offset is invalid" do
+      -> {
+        @file.pwrite("foo", -1)
+      }.should.raise(Errno::EINVAL)
+    end
   end
 
   it "raises a TypeError if the offset cannot be converted to an Integer" do
