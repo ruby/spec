@@ -31,6 +31,19 @@ describe "IO#binmode" do
     @io.binmode
     @io.internal_encoding.should == nil
   end
+
+  it "disables newline conversion for reading" do
+    data = "line1\r\nline2\r\n"
+
+    @io = new_io(@name, "wb")
+    @io.write(data)
+    @io.close
+
+    @io = new_io(@name, "rt")
+    @io.set_encoding("utf-8:ISO-8859-1", newline: :universal)
+    @io.binmode
+    @io.read.should == data
+  end
 end
 
 describe "IO#binmode?" do

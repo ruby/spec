@@ -28,7 +28,17 @@ describe "IO#sysseek" do
 
   it "raises an error when called after buffered reads" do
     @io.readline
-    -> { @io.sysseek(-5, IO::SEEK_CUR) }.should.raise(IOError)
+    -> do
+      @io.sysseek(-5, IO::SEEK_CUR)
+    end.should.raise(IOError, "sysseek for buffered IO")
+  end
+
+  it "raises an error when called with a non-empty character buffer" do
+    @io.set_encoding(Encoding::UTF_8, Encoding::UTF_16BE)
+    @io.ungetc("a".encode(Encoding::UTF_16BE))
+    -> do
+      @io.sysseek(-5, IO::SEEK_CUR)
+    end.should.raise(IOError, "sysseek for buffered IO")
   end
 
   it "seeks normally even when called immediately after a buffered IO#read" do

@@ -25,6 +25,22 @@ describe "IO#getbyte" do
   it "raises an IOError on closed stream" do
     -> { IOSpecs.closed_io.getbyte }.should.raise(IOError)
   end
+
+  it "reads after ungetc without character conversion" do
+    @io.set_encoding("utf-8")
+    c = @io.getc
+    @io.ungetc(c)
+    @io.getbyte.should == 86
+  end
+
+  it "raises an exception after ungetc with character conversion" do
+    @io.set_encoding("utf-8:utf-16be")
+    c = @io.getc
+    @io.ungetc(c)
+    -> do
+      @io.getbyte
+    end.should.raise(IOError, "byte oriented read for character buffered IO")
+  end
 end
 
 describe "IO#getbyte" do

@@ -66,14 +66,16 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(3).should == "bar"
   end
 
-  it "raises an exception after ungetc with data in the buffer and character conversion enabled" do
+  it "raises an exception after ungetc with character conversion enabled" do
     @write.write("foobar")
     @read.set_encoding(
       'utf-8', universal_newline: true
     )
     c = @read.getc
     @read.ungetc(c)
-    -> { @read.read_nonblock(3).should == "foo" }.should.raise(IOError)
+    -> do
+      @read.read_nonblock(3)
+    end.should.raise(IOError, "byte oriented read for character buffered IO")
   end
 
   it "returns less data if that is all that is available" do
@@ -135,6 +137,14 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(5)
 
     -> { @read.read_nonblock(5) }.should.raise(EOFError)
+  end
+
+  ruby_bug "#18421", ""..."3.0.4" do
+    it "clears and returns the given buffer if the length argument is 0" do
+      buffer = String.new("existing content")
+      @read.read_nonblock(0, buffer).should == buffer
+      buffer.should == ""
+    end
   end
 
   it "preserves the encoding of the given buffer" do

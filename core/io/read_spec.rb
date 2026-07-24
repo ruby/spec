@@ -672,12 +672,26 @@ describe "IO#read" do
         @io.read.encoding.should.equal?(Encoding::EUC_JP)
       end
 
+      it "reads after ungetc" do
+        c = @io.getc
+        @io.ungetc(c)
+        @io.read(2).should == [164, 162].pack('C*').force_encoding(Encoding::BINARY)
+      end
+
       it_behaves_like :io_read_size_internal_encoding, nil
     end
 
     describe "specified by open mode" do
       before :each do
         @io = IOSpecs.io_fixture "read_euc_jp.txt", "r:euc-jp:utf-8"
+      end
+
+      it "raises an exception after ungetc" do
+        c = @io.getc
+        @io.ungetc(c)
+        -> do
+          @io.read(2)
+        end.should.raise(IOError, "byte oriented read for character buffered IO")
       end
 
       it_behaves_like :io_read_internal_encoding, nil
@@ -687,6 +701,14 @@ describe "IO#read" do
     describe "specified by mode: option" do
       before :each do
         @io = IOSpecs.io_fixture "read_euc_jp.txt", mode: "r:euc-jp:utf-8"
+      end
+
+      it "raises an exception after ungetc" do
+        c = @io.getc
+        @io.ungetc(c)
+        -> do
+          @io.read(2)
+        end.should.raise(IOError, "byte oriented read for character buffered IO")
       end
 
       it_behaves_like :io_read_internal_encoding, nil
@@ -701,6 +723,14 @@ describe "IO#read" do
         @io = IOSpecs.io_fixture "read_euc_jp.txt", options
       end
 
+      it "raises an exception after ungetc" do
+        c = @io.getc
+        @io.ungetc(c)
+        -> do
+          @io.read(2)
+        end.should.raise(IOError, "byte oriented read for character buffered IO")
+      end
+
       it_behaves_like :io_read_internal_encoding, nil
       it_behaves_like :io_read_size_internal_encoding, nil
     end
@@ -709,6 +739,14 @@ describe "IO#read" do
       before :each do
         options = { mode: "r", encoding: "euc-jp:utf-8" }
         @io = IOSpecs.io_fixture "read_euc_jp.txt", options
+      end
+
+      it "raises an exception after ungetc" do
+        c = @io.getc
+        @io.ungetc(c)
+        -> do
+          @io.read(2)
+        end.should.raise(IOError, "byte oriented read for character buffered IO")
       end
 
       it_behaves_like :io_read_internal_encoding, nil
