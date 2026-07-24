@@ -70,26 +70,6 @@ describe "IO#syswrite on a pipe" do
     @write.close
   end
 
-  ruby_version_is ""..."3.2" do
-    platform_is_not :windows do
-      it "raises Errno::EAGAIN when the write would block" do
-        @write.nonblock = true
-        -> {
-          loop { @write.syswrite('a' * 10_000) }
-        }.should.raise(Errno::EAGAIN)
-      end
-    end
-
-    platform_is :windows do
-      it "raises Errno::EWOULDBLOCK when the write would block" do
-        @write.nonblock = true
-        -> {
-          loop { @write.syswrite('a' * 10_000) }
-        }.should.raise(Errno::EWOULDBLOCK)
-      end
-    end
-  end
-
   it "returns the written bytes if the fd is in nonblock mode and write would block" do
     @write.nonblock = true
     larger_than_pipe_capacity = 2 * 1024 * 1024
