@@ -99,20 +99,10 @@ describe :io_internal_encoding, shared: true do
       @io.internal_encoding.should == nil
     end
 
-    ruby_version_is ""..."3.3" do
-      it "returns the value set by #set_encoding when the external encoding is BINARY" do
-        @io = new_io @name, @object
-        @io.set_encoding(Encoding::BINARY, Encoding::IBM437)
-        @io.internal_encoding.should.equal?(Encoding::IBM437)
-      end
-    end
-
-    ruby_version_is "3.3" do
-      it "ignores the value set by #set_encoding when the external encoding is BINARY and returns nil" do
-        @io = new_io @name, @object
-        @io.set_encoding(Encoding::BINARY, Encoding::IBM437)
-        @io.internal_encoding.should == nil
-      end
+    it "ignores the value set by #set_encoding when the external encoding is BINARY and returns nil" do
+      @io = new_io @name, @object
+      @io.set_encoding(Encoding::BINARY, Encoding::IBM437)
+      @io.internal_encoding.should == nil
     end
   end
 end

@@ -399,32 +399,21 @@ describe "IO#set_encoding" do
     Encoding.default_external = default_external
   end
 
-  ruby_version_is "3.2" do
-    it "raises ArgumentError when newline decorator provided in binary mode" do
-      @io.binmode
-      -> {
-        @io.set_encoding("utf-8", newline: :lf)
-      }.should.raise(ArgumentError, "newline decorator with binary mode")
-    end
+  it "raises ArgumentError when newline decorator provided in binary mode" do
+    @io.binmode
+    -> {
+      @io.set_encoding("utf-8", newline: :lf)
+    }.should.raise(ArgumentError, "newline decorator with binary mode")
   end
 
-  ruby_version_is "" ... "3.3" do
-    it "sets the internal encoding to nil when the second argument is nil" do
-      @io.set_encoding(Encoding::UTF_8, nil)
-      @io.internal_encoding.should == nil
-    end
-  end
+  it "sets the internal encoding to Encoding.default_internal when the second argument is nil" do
+    default_internal = Encoding.default_internal
+    Encoding.default_internal = Encoding::UTF_16BE
 
-  ruby_version_is "3.3" do
-    it "sets the internal encoding to Encoding.default_internal when the second argument is nil" do
-      default_internal = Encoding.default_internal
-      Encoding.default_internal = Encoding::UTF_16BE
-
-      @io.set_encoding(Encoding::UTF_8, nil)
-      @io.internal_encoding.should == Encoding::UTF_16BE
-    ensure
-      Encoding.default_internal = default_internal
-    end
+    @io.set_encoding(Encoding::UTF_8, nil)
+    @io.internal_encoding.should == Encoding::UTF_16BE
+  ensure
+    Encoding.default_internal = default_internal
   end
 
   it "raises Argument error when given 2 arguments and an encoding name containing a null byte" do
