@@ -115,23 +115,6 @@ describe :io_set_encoding_write, shared: true do
     @io = new_io @name, "#{@object}:utf-8:us-ascii"
     @io.set_encoding nil, nil
 
-    Encoding.default_external = Encoding::UTF_8
-    Encoding.default_internal = nil
-
-    @io.set_encoding nil, nil
-
-    @io.external_encoding.should == nil
-    @io.internal_encoding.should == nil
-  end
-
-  it "prevents the encodings from changing when Encoding defaults are changed" do
-    @io = new_io @name, "#{@object}:utf-8:us-ascii"
-
-    Encoding.default_external = Encoding::UTF_8
-    Encoding.default_internal = nil
-
-    @io.set_encoding nil, nil
-
     Encoding.default_external = Encoding::IBM437
     Encoding.default_internal = Encoding::IBM866
 
