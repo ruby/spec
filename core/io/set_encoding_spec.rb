@@ -289,6 +289,12 @@ describe "IO#set_encoding" do
     Encoding.default_internal = default_internal
   end
 
+  it "sets the internal encoding to nil when external encoding is BINARY" do
+    @io.set_encoding(Encoding::BINARY, Encoding::IBM437)
+    @io.external_encoding.should == Encoding::BINARY
+    @io.internal_encoding.should == nil
+  end
+
   it "calls #to_str to convert an abject to a String" do
     obj = mock("io_set_encoding")
     obj.should_receive(:to_str).and_return("utf-8:utf-16be")
