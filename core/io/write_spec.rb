@@ -148,7 +148,7 @@ describe "IO#write on a file" do
     ë = ([235].pack('U')).encode('ISO-8859-1')
     ö = ([246].pack('U')).encode('ISO-8859-1')
     res = "H#{ë}ll#{ö}"
-    File.binread(@filename).should == res.force_encoding(Encoding::BINARY)
+    File.binread(@filename).should == res.b
   end
 
   it "writes binary data with newline conversion if no encoding is given" do
@@ -158,7 +158,7 @@ describe "IO#write on a file" do
     ë = ([235].pack('U')).encode('ISO-8859-1')
     ö = ([246].pack('U')).encode('ISO-8859-1')
     res = "H#{ë}ll#{ö}\r\n"
-    File.binread(@filename).should == res.force_encoding(Encoding::BINARY)
+    File.binread(@filename).should == res.b
   end
 
   it "writes binary data with newline conversion if encoding is ASCII-8BIT" do
@@ -168,7 +168,7 @@ describe "IO#write on a file" do
     ë = ([235].pack('U')).encode('ISO-8859-1')
     ö = ([246].pack('U')).encode('ISO-8859-1')
     res = "H#{ë}ll#{ö}\r\n"
-    File.binread(@filename).should == res.force_encoding(Encoding::BINARY)
+    File.binread(@filename).should == res.b
   end
 end
 
