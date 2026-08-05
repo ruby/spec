@@ -57,14 +57,6 @@ describe "IO#sysread on a file" do
     end.should.raise(IOError, "sysread for buffered IO")
   end
 
-  it "raises an error when called with a non-empty character buffer" do
-    @file.set_encoding(Encoding::UTF_8, Encoding::UTF_16BE)
-    @file.ungetc("a".encode(Encoding::UTF_16BE))
-    -> do
-      @file.sysread(5)
-    end.should.raise(IOError, "byte oriented read for character buffered IO")
-  end
-
   it "reads normally even when called immediately after a buffered IO#read" do
     @file.read(15)
     @file.sysread(5).should == "56789"

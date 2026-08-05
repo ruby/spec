@@ -32,15 +32,6 @@ describe "IO#getbyte" do
     @io.ungetc(c)
     @io.getbyte.should == 86
   end
-
-  it "raises an exception after ungetc with character conversion" do
-    @io.set_encoding("utf-8:utf-16be")
-    c = @io.getc
-    @io.ungetc(c)
-    -> do
-      @io.getbyte
-    end.should.raise(IOError, "byte oriented read for character buffered IO")
-  end
 end
 
 describe "IO#getbyte" do

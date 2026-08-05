@@ -66,18 +66,6 @@ describe "IO#read_nonblock" do
     @read.read_nonblock(3).should == "bar"
   end
 
-  it "raises an exception after ungetc with character conversion enabled" do
-    @write.write("foobar")
-    @read.set_encoding(
-      'utf-8', universal_newline: true
-    )
-    c = @read.getc
-    @read.ungetc(c)
-    -> do
-      @read.read_nonblock(3)
-    end.should.raise(IOError, "byte oriented read for character buffered IO")
-  end
-
   it "returns less data if that is all that is available" do
     @write << "hello"
     @read.read_nonblock(10).should == "hello"

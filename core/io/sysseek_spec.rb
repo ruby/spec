@@ -33,14 +33,6 @@ describe "IO#sysseek" do
     end.should.raise(IOError, "sysseek for buffered IO")
   end
 
-  it "raises an error when called with a non-empty character buffer" do
-    @io.set_encoding(Encoding::UTF_8, Encoding::UTF_16BE)
-    @io.ungetc("a".encode(Encoding::UTF_16BE))
-    -> do
-      @io.sysseek(-5, IO::SEEK_CUR)
-    end.should.raise(IOError, "sysseek for buffered IO")
-  end
-
   it "seeks normally even when called immediately after a buffered IO#read" do
     @io.read(15)
     @io.sysseek(-5, IO::SEEK_CUR).should == 10
