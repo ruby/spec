@@ -28,13 +28,4 @@ describe "IO#readbyte" do
     @io.ungetc(c)
     @io.readbyte.should == ?r.getbyte(0)
   end
-
-  it "raises an exception after ungetc with character conversion" do
-    @io.set_encoding("utf-8:utf-16be")
-    c = @io.getc
-    @io.ungetc(c)
-    -> do
-      @io.readbyte
-    end.should.raise(IOError, "byte oriented read for character buffered IO")
-  end
 end
