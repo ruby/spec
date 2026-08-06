@@ -74,7 +74,7 @@ describe "Kernel#raise with previously rescued exception" do
   end
 
   it "re-raises a previously rescued exception with overwriting the cause when it's explicitly specified with :cause option" do
-    check = -> raiser, re_raiser_with_cause do
+    check = -> ((raiser, re_raiser_with_cause)) do # rubocop:disable Style/StabbyLambdaParentheses
       e4 = RuntimeError.new("Error 4")
       begin
         begin
@@ -98,7 +98,7 @@ describe "Kernel#raise with previously rescued exception" do
   end
 
   it "re-raises a previously rescued exception without overwriting the cause when it's explicitly specified with a :cause option that has nil value" do
-    check = -> raiser, re_raiser_with_cause do
+    check = -> ((raiser, re_raiser_with_cause)) do # rubocop:disable Style/StabbyLambdaParentheses
       begin
         begin
           begin
