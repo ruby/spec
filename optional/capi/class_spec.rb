@@ -359,7 +359,7 @@ describe "C-API Class function" do
       obj = CApiClassSpecs::SubKw.new
       h = mock('to_hash')
       h.should_receive(:to_hash).and_return(42)
-      
+
       -> {
         obj.call_super_method_args(1, 2, h)
       }.should raise_consistent_error(TypeError, "can't convert MockObject into Hash (MockObject#to_hash gives Integer)")
