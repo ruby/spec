@@ -24,6 +24,9 @@ jobs:
           - { os: ubuntu, ruby: 4.0.4, rubyopt: "--parser=parse.y" }
 
     runs-on: ${{ matrix.os }}-latest
+    env:
+      CHECK_LEAKS: true
+      MSPEC_FATAL_DEPRECATION: true
     steps:
     - name: git config autocrlf
       run: git config --global core.autocrlf false
@@ -40,21 +43,16 @@ jobs:
     - name: Run specs (Linux)
       if: matrix.os == 'ubuntu'
       env:
-        CHECK_LEAKS: true
         RUBYOPT: "${{ matrix.rubyopt }}"
       run: ${{ matrix.locale }} ../mspec/bin/mspec -j --timeout 30 ${{ matrix.mspecopt }}
 
     - name: Run specs (macOS)
       if: matrix.os == 'macos'
-      env:
-        CHECK_LEAKS: true
       # Use a larger timeout on macOS since it seems to have less reliable performance
       run: ../mspec/bin/mspec -j --timeout 90 ${{ matrix.mspecopt }}
 
     - name: Run specs (Windows)
       if: matrix.os == 'windows'
-      env:
-        CHECK_LEAKS: true
       run: |
         # Actions uses UTF8 but most Windows systems don't.
         # Use non-UTF8 to make sure specs pass with non-UTF8 too.
