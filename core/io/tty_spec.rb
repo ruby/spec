@@ -23,7 +23,7 @@ describe "IO#tty?" do
     -> { IOSpecs.closed_io.tty? }.should.raise(IOError)
   end
 
-  it "returns false for stdio streams if they not connected to a terminal" do
+  it "returns false for stdio streams if they are not connected to a terminal" do
     skip "requires STDOUT and STDERR to be terminal devices" unless STDOUT.tty? && STDERR.tty?
     begin
       io = IO.popen(ruby_cmd('print [STDIN.tty?, STDOUT.tty?, STDERR.tty?].inspect'), "r")
