@@ -63,5 +63,23 @@ describe "Fiber.current_scheduler" do
       end.resume
       seen.should.equal?(@scheduler)
     end
+
+    it "returns nil on the root Fiber after a blocking Fiber has finished" do
+      Fiber.new(blocking: true) { }.resume
+      Fiber.current_scheduler.should == nil
+    end
+
+    it "returns nil on the root Fiber after a blocking Fiber has raised" do
+      fiber = Fiber.new(blocking: true) { raise "from the fiber" }
+      -> { fiber.resume }.should.raise(RuntimeError)
+      Fiber.current_scheduler.should == nil
+    end
+
+    it "returns nil on the root Fiber after a blocking Fiber has been killed" do
+      fiber = Fiber.new(blocking: true) { Fiber.yield }
+      fiber.resume
+      fiber.kill
+      Fiber.current_scheduler.should == nil
+    end
   end
 end
