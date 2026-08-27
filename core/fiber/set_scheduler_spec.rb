@@ -52,4 +52,17 @@ describe "Fiber.scheduler" do
     Fiber.set_scheduler(nil)
     Fiber.scheduler.should == nil
   end
+
+  it "closes the scheduler at exit, before any at_exit handler runs" do
+    code = <<-RUBY
+      scheduler = Object.new
+      [:block, :unblock, :kernel_sleep, :io_wait].each { |m| scheduler.define_singleton_method(m) {} }
+      scheduler.define_singleton_method(:close) { print "c" }
+
+      at_exit { print "a" }
+      Fiber.set_scheduler(scheduler)
+    RUBY
+
+    ruby_exe(code).should == "ca"
+  end
 end
