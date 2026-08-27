@@ -3,8 +3,12 @@ require_relative '../../spec_helper'
 require "fiber"
 
 describe "Fiber.scheduler" do
+  required_methods = [:block, :unblock, :kernel_sleep, :io_wait]
+  ruby_version_is "4.1" do
+    required_methods << :fiber_interrupt
+  end
+
   it "validates the scheduler for required methods" do
-    required_methods = [:block, :unblock, :kernel_sleep, :io_wait]
     required_methods.each do |missing_method|
       scheduler = Object.new
       required_methods.difference([missing_method]).each do |method|
@@ -17,7 +21,6 @@ describe "Fiber.scheduler" do
   end
 
   it "can set and get the scheduler" do
-    required_methods = [:block, :unblock, :kernel_sleep, :io_wait]
     scheduler = Object.new
     required_methods.each do |method|
       scheduler.define_singleton_method(method) {}
@@ -27,7 +30,6 @@ describe "Fiber.scheduler" do
   end
 
   it "returns the scheduler after setting it" do
-    required_methods = [:block, :unblock, :kernel_sleep, :io_wait]
     scheduler = Object.new
     required_methods.each do |method|
       scheduler.define_singleton_method(method) {}
@@ -37,7 +39,6 @@ describe "Fiber.scheduler" do
   end
 
   it "can remove the scheduler" do
-    required_methods = [:block, :unblock, :kernel_sleep, :io_wait]
     scheduler = Object.new
     required_methods.each do |method|
       scheduler.define_singleton_method(method) {}
@@ -56,7 +57,7 @@ describe "Fiber.scheduler" do
   it "closes the scheduler at exit, before any at_exit handler runs" do
     code = <<-RUBY
       scheduler = Object.new
-      [:block, :unblock, :kernel_sleep, :io_wait].each { |m| scheduler.define_singleton_method(m) {} }
+      #{required_methods}.each { |m| scheduler.define_singleton_method(m) {} }
       scheduler.define_singleton_method(:close) { print "c" }
 
       at_exit { print "a" }
