@@ -689,12 +689,13 @@ describe "C-API IO function" do
     end
 
     it "includes FMODE_CREATE when the file is created" do
-      rm_r @name
-      io = File.open(@name, "w")
+      name = tmp("rb_io_mode_specs")
+      io = File.open(name, "w")
       begin
         (@o.rb_io_mode(io) & CApiIOSpecs::FMODE_CREATE).should == CApiIOSpecs::FMODE_CREATE
       ensure
         io.close
+        rm_r name
       end
     end
 
