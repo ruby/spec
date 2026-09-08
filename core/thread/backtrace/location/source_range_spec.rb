@@ -3,6 +3,10 @@ require_relative '../../../../fixtures/source_range_helpers'
 
 ruby_version_is "4.1" do
   describe "Thread::Backtrace::Location#source_range" do
+    before do
+      skip "parse.y" if proc {}.syntax_tree.is_a?(RubyVM::AbstractSyntaxTree::Node)
+    end
+
     it "returns a Ruby::SourceRange with the location paths" do
       location, range, path, absolute_path = capture_backtrace_location_source_range(<<-RUBY, :CallNode)
       $nil.foo$
