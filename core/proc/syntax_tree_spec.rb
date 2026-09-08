@@ -34,7 +34,6 @@ ruby_version_is "4.1" do
     end
 
     it "does not return implicit parameter nodes" do
-      suppress_warning do eval <<~RUBY # ruby_version_is ""..."3.4"
       # Interesting because the BlockNode and the ItParametersNode/NumberedParametersNode are fully overlapping
       node = -> { it }.syntax_tree
       node.start_line.should == __LINE__ - 1
@@ -51,8 +50,6 @@ ruby_version_is "4.1" do
       node = proc { _1 }.syntax_tree
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Prism::CallNode)
-      RUBY
-      end
     end
 
     it "returns a ForNode for a for-loop block" do

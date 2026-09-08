@@ -301,13 +301,13 @@ ruby_version_is "4.1" do
       RUBY
 
       "class with rescue" => [<<-RUBY, :ClassNode],
-      SourceRangeClass = 1
-      $class SourceRangeClass; rescue; end$
+      SourceRangeClassSpecs = 1
+      $class SourceRangeClassSpecs; rescue; end$
       RUBY
 
       "module with rescue" => [<<-RUBY, :ModuleNode],
-      SourceRangeModule = 1
-      $module SourceRangeModule; rescue; end$
+      SourceRangeModuleSpecs = 1
+      $module SourceRangeModuleSpecs; rescue; end$
       RUBY
 
       # These nodes can own real calls, so source-range lookup cannot always exclude their classes.
