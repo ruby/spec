@@ -75,6 +75,17 @@ describe "Fiber#kill" do
     rescue_executed.should == false
   end
 
+  it "returns control to the transferring fiber when killing a fiber entered by Fiber#transfer" do
+    states = []
+    runner = Fiber.new do
+      Fiber.new { Fiber.current.kill; states << :unreachable }.transfer
+      states << :runner_resumed
+    end
+
+    runner.resume
+    states.should == [:runner_resumed]
+  end
+
   it "repeatedly kills a fiber" do
     fiber = Fiber.new do
       while true; Fiber.yield; end
