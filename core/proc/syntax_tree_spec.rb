@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 ruby_version_is "4.1" do
   describe "Proc#syntax_tree" do
     before :each do
-      skip "parse.y" if proc {}.syntax_tree.is_a?(RubyVM::AbstractSyntaxTree::Node)
+      skip "parse.y" unless syntax_tree_returns_prism_node
     end
 
     def return_block(&b)

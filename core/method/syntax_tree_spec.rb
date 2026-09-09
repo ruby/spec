@@ -6,7 +6,7 @@ ruby_version_is "4.1" do
     before :each do
       @object = -> method { method }
 
-      skip "parse.y" if method(:it).syntax_tree.is_a?(RubyVM::AbstractSyntaxTree::Node)
+      skip "parse.y" unless syntax_tree_returns_prism_node
     end
 
     it_behaves_like :method_syntax_tree, :syntax_tree
