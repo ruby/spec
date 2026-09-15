@@ -13,15 +13,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu, macos, windows ]
-        ruby: [ 3.3.11, 3.4.9, 4.0.4 ]
+        ruby: [ 3.3.12, 3.4.10, 4.0.7 ]
         mspecopt: [""]
         rubyopt: [""]
         locale: [""]
         include:
-          - { os: ubuntu, ruby: 4.0.4, locale: "LC_ALL=C" }
-          - { os: ubuntu, ruby: 4.0.4, mspecopt: "--repeat 2" }
-          - { os: ubuntu, ruby: 4.0.4, rubyopt: "--enable-frozen-string-literal" }
-          - { os: ubuntu, ruby: 4.0.4, rubyopt: "--parser=parse.y" }
+          - { os: ubuntu, ruby: 4.0.7, locale: "LC_ALL=C" }
+          - { os: ubuntu, ruby: 4.0.7, mspecopt: "--repeat 2" }
+          - { os: ubuntu, ruby: 4.0.7, rubyopt: "--enable-frozen-string-literal" }
+          - { os: ubuntu, ruby: 4.0.7, rubyopt: "--parser=parse.y" }
 
     runs-on: ${{ matrix.os }}-latest
     env:
