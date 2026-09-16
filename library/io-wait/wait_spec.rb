@@ -45,6 +45,11 @@ describe "IO#wait" do
       @w.wait(IO::WRITABLE, 0).should_not == nil
     end
 
+    it "does not report READABLE when there is nothing to read" do
+      events = @r.wait(IO::READABLE | IO::WRITABLE, 0) || 0
+      (events & IO::READABLE).should == 0
+    end
+
     it "returns nil when the READABLE event is not ready during the timeout" do
       @w.wait(IO::READABLE, 0).should == nil
     end
