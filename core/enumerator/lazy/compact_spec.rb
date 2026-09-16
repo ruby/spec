@@ -29,3 +29,21 @@ describe "Enumerator::Lazy#compact" do
     Enumerator::Lazy.new(Object.new, 100) {}.compact.size.should == nil
   end
 end
+
+describe "Enumerator::Lazy#compact" do
+  # Cannot use shared/packed_propagation.rb wholesale: #compact removes the
+  # packed nil, so neither YieldsMixed nor a zero-argument yield survives it.
+  describe "propagating the source yield arity to a later stage" do
+    it "passes every value of a multiple-argument source yield to a later stage's splat block" do
+      args = nil
+      Enumerator.new { |y| y.yield 1, 2 }.lazy.compact.map { |*a| args = a }.force
+      args.should == [1, 2]
+    end
+
+    it "stops propagating once a stage replaces the value" do
+      yields = []
+      Enumerator.new { |y| y.yield 1, 2 }.lazy.compact.map { |x| x }.map { |*a| yields << a }.force
+      yields.should == [[1]]
+    end
+  end
+end
