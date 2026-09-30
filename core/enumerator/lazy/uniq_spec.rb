@@ -80,3 +80,27 @@ describe 'Enumerator::Lazy#uniq' do
       s.first(100).uniq
   end
 end
+
+describe "Enumerator::Lazy#uniq" do
+  # Cannot use shared/packed_propagation.rb wholesale: the repeated yields of
+  # YieldsMixed are dropped by #uniq.
+  describe "propagating the source yield arity to a later stage" do
+    it "passes every value of a multiple-argument source yield to a later stage's splat block" do
+      args = nil
+      Enumerator.new { |y| y.yield 1, 2 }.lazy.uniq.map { |*a| args = a }.force
+      args.should == [1, 2]
+    end
+
+    it "passes a zero-argument source yield on as a single nil" do
+      args = nil
+      Enumerator.new { |y| y.yield }.lazy.uniq.map { |*a| args = a }.force
+      args.should == [nil]
+    end
+
+    it "stops propagating once a stage replaces the value" do
+      yields = []
+      Enumerator.new { |y| y.yield 1, 2 }.lazy.uniq.map { |x| x }.map { |*a| yields << a }.force
+      yields.should == [[1]]
+    end
+  end
+end

@@ -3,6 +3,7 @@
 require_relative '../../../spec_helper'
 require_relative 'fixtures/classes'
 require_relative '../../enumerable/shared/value_packing'
+require_relative 'shared/packed_propagation'
 
 describe "Enumerator::Lazy#drop" do
   describe "value packing of source yields (matches Enumerable#drop)" do
@@ -70,5 +71,14 @@ describe "Enumerator::Lazy#drop" do
     s = 0..Float::INFINITY
     s.lazy.drop(100).first(100).should ==
       s.first(200).drop(100)
+  end
+end
+
+describe "Enumerator::Lazy#drop" do
+  describe "propagating the source yield arity to a later stage" do
+    before :each do
+      @stage = -> e { e.drop(0) }
+    end
+    it_behaves_like :enumerator_lazy_packed_propagation, nil
   end
 end
