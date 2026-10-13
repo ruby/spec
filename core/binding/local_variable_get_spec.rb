@@ -59,4 +59,18 @@ describe "Binding#local_variable_get" do
       binding.local_variable_get(1)
     }.should.raise(TypeError, '1 is not a symbol nor a string')
   end
+
+  ruby_version_is "4.0" do
+    it "raises a NameError for numbered parameters" do
+      -> {
+        proc { _1; binding.local_variable_get(:_1) }.call(1)
+      }.should.raise(NameError, /numbered parameter '_1' is not a local variable/)
+    end
+
+    it "raises a NameError for the \"it\" parameter" do
+      -> {
+        eval("proc { it; binding.local_variable_get(:it) }").call(1)
+      }.should.raise(NameError, /local variable 'it' is not defined/)
+    end
+  end
 end
