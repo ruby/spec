@@ -1,5 +1,7 @@
 require_relative '../../spec_helper'
 require_relative 'fixtures/hook_scheduler'
+require 'socket'
+require 'io/nonblock'
 
 describe "Fiber::Scheduler hooks" do
   ruby_version_is "4.0" do
@@ -7,20 +9,28 @@ describe "Fiber::Scheduler hooks" do
       it "is called with the blocked fiber and an IOError when its IO is closed by another fiber" do
         blocked_fiber = nil
         error = nil
+        server = TCPServer.new("127.0.0.1", 0)
+        r = TCPSocket.new("127.0.0.1", server.addr[1])
+        w = server.accept
+        r.nonblock = true
+        w.nonblock = true
 
-        scheduler = FiberSpecs::HookScheduler.run_in_thread do
-          r, w = IO.pipe
-          Fiber.schedule do
-            blocked_fiber = Fiber.current
-            begin
-              r.read(1)
-            rescue IOError => e
-              error = e
+        begin
+          scheduler = FiberSpecs::HookScheduler.run_in_thread do
+            Fiber.schedule do
+              blocked_fiber = Fiber.current
+              begin
+                r.read(1)
+              rescue IOError => e
+                error = e
+              end
             end
+            Fiber.schedule { r.close }
+            Fiber.scheduler.run
           end
-          Fiber.schedule { r.close }
-          Fiber.scheduler.run
+        ensure
           w.close
+          server.close
         end
 
         events = scheduler.events_named(:fiber_interrupt)

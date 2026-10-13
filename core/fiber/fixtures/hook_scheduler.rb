@@ -74,10 +74,14 @@ module FiberSpecs
 
     def self.run_in_thread
       scheduler = new
-      Thread.new do
+      thread = Thread.new do
         Fiber.set_scheduler(scheduler)
         yield scheduler
-      end.join
+      end
+      unless thread.join(10)
+        thread.kill
+        raise "the scheduler thread did not finish after 10 seconds"
+      end
       scheduler
     end
   end
