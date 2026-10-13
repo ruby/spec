@@ -32,4 +32,14 @@ describe "Binding#local_variables" do
     b.local_variable_set :a, 42
     b.local_variables.should == [:a, :b]
   end
+
+  ruby_version_is "4.0" do
+    it "does not include numbered parameters" do
+      proc { _1; binding.local_variables }.call(1).should == []
+    end
+
+    it "does not include the \"it\" parameter" do
+      eval("proc { it; binding.local_variables }").call(1).should == []
+    end
+  end
 end

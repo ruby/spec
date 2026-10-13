@@ -26,6 +26,16 @@ describe "String#upcase" do
       upcased.bytesize.should == 5
       upcased.ascii_only?.should == true
     end
+
+    ruby_version_is "4.0" do
+      it "upcases U+A7CF added in Unicode 17" do
+        "\u{A7CF}".upcase.should == "\u{A7CE}"
+      end
+
+      it "upcases BERIA ERFE letters added in Unicode 17" do
+        "\u{16EBB}".upcase.should == "\u{16EA0}"
+      end
+    end
   end
 
   describe "ASCII-only case mapping" do

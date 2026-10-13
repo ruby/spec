@@ -103,4 +103,12 @@ describe "Exception#backtrace" do
       err.dup.backtrace.should.equal?(new_bt)
     end
   end
+
+  ruby_version_is "4.0" do
+    it "includes the receiver's class name in the callee frame" do
+      -> { ExceptionSpecs::Arity.new.bar }.should.raise(ArgumentError) { |e|
+        e.backtrace_locations.first.label.should == "ExceptionSpecs::Arity#bar"
+      }
+    end
+  end
 end

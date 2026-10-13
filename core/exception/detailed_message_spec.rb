@@ -52,4 +52,15 @@ describe "Exception#detailed_message" do
   it "allows and ignores other keyword arguments" do
     RuntimeError.new("new error").detailed_message(foo: true).should == "new error (RuntimeError)"
   end
+
+  ruby_version_is "4.0" do
+    it "shows code snippets for both caller and callee of an ArgumentError" do
+      script = fixture(__FILE__, "error_highlight_arity.rb")
+      out = ruby_exe(script, args: "2>&1", exit_status: 1)
+      out.should.include?("caller:")
+      out.should.include?("callee:")
+      out.should.include?("add(1)")
+      out.should.include?("def add(x, y)")
+    end
+  end
 end

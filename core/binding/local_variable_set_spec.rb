@@ -73,4 +73,12 @@ describe "Binding#local_variable_set" do
       binding.local_variable_set(1, 2)
     }.should.raise(TypeError, '1 is not a symbol nor a string')
   end
+
+  ruby_version_is "4.0" do
+    it "raises a NameError for numbered parameters" do
+      -> {
+        proc { _1; binding.local_variable_set(:_1, 2) }.call(1)
+      }.should.raise(NameError, /numbered parameter '_1' is not a local variable/)
+    end
+  end
 end
