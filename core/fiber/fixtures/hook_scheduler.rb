@@ -60,6 +60,7 @@ module FiberSpecs
 
     def io_close(io)
       @events << [:io_close, io]
+      nil
     end
 
     def io_write(io, buffer, length, offset)
