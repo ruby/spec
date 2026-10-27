@@ -203,9 +203,9 @@ describe "BasicSocket#getsockopt" do
       rescue Errno::ECONNREFUSED
       end
 
-      @connecting.closed?.should be_false
-      -> { @connecting.close }.should_not raise_error
-      @connecting.closed?.should be_true
+      @connecting.closed?.should == false
+      @connecting.close
+      @connecting.closed?.should == true
     end
   end
 

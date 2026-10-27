@@ -1435,10 +1435,10 @@ describe "An endless method definition" do
     it "raises a SyntaxError" do
       -> {
         eval("class SetterEndless; def foo=(x) = x; end")
-      }.should raise_error(SyntaxError, /setter method cannot be defined in an endless method definition/)
+      }.should.raise(SyntaxError, /setter method cannot be defined in an endless method definition/)
       -> {
         eval("class SetterEndless; def []=(k, v) = v; end")
-      }.should raise_error(SyntaxError, /setter method cannot be defined in an endless method definition/)
+      }.should.raise(SyntaxError, /setter method cannot be defined in an endless method definition/)
     end
 
     ruby_version_is "3.4" do

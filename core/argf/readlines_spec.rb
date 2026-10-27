@@ -70,6 +70,6 @@ describe "ARGF.readlines when reading $stdin and $stdin is not an IO" do
 
   it "raises NoMethodError when $stdin has no public readlines" do
     $stdin = Object.new
-    -> { ARGF.class.new.readlines }.should raise_error(NoMethodError)
+    -> { ARGF.class.new.readlines }.should.raise(NoMethodError)
   end
 end
