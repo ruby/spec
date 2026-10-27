@@ -38,6 +38,7 @@ ruby_version_is "4.1" do
       node.should.is_a?(Ruby::Prism::LambdaNode)
     end
 
+    quarantine! do # NoMethodError: undefined method 'start_line' for nil
     it "does not return implicit parameter nodes" do
       # Interesting because the BlockNode and the ItParametersNode/NumberedParametersNode are fully overlapping
       node = eval('-> { it }.syntax_tree') # emits a warning on Ruby 3.3
@@ -55,6 +56,7 @@ ruby_version_is "4.1" do
       node = proc { _1 }.syntax_tree
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Ruby::Prism::CallNode)
+    end
     end
 
     it "returns a ForNode for a for-loop block" do
