@@ -40,7 +40,7 @@ ruby_version_is "4.1" do
 
     it "does not return implicit parameter nodes" do
       # Interesting because the BlockNode and the ItParametersNode/NumberedParametersNode are fully overlapping
-      node = -> { it }.syntax_tree
+      node = eval('-> { it }.syntax_tree') # emits a warning on Ruby 3.3
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Ruby::Prism::LambdaNode)
 
@@ -48,7 +48,7 @@ ruby_version_is "4.1" do
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Ruby::Prism::LambdaNode)
 
-      node = proc { it }.syntax_tree
+      node = eval('proc { it }.syntax_tree') # emits a warning on Ruby 3.3
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Ruby::Prism::CallNode)
 
