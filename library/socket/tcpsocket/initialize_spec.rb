@@ -130,7 +130,9 @@ platform_is_not :freebsd, :aix do
       event = Fiber.scheduler.events[0]
       event[:event].should == :io_wait
       event[:fiber].should == @fiber
-      event[:args][0].should.instance_of?(TCPSocket)
+      ruby_version_is "3.4" do
+        event[:args][0].should.instance_of?(TCPSocket)
+      end
       event[:args][1..].should == [IO::READABLE | IO::WRITABLE, nil]
     end
 
@@ -151,11 +153,13 @@ platform_is_not :freebsd, :aix do
       @socket.remote_address.ip_port.should == @port
     end
 
-    it "raises IO::TimeoutError when #io_wait returns false" do
-      @fiber = Fiber.new(blocking: false) { TCPSocket.new("127.0.0.1", @port) }
-      @fiber.resume
+    ruby_version_is "3.4" do
+      it "raises IO::TimeoutError when #io_wait returns false" do
+        @fiber = Fiber.new(blocking: false) { TCPSocket.new("127.0.0.1", @port) }
+        @fiber.resume
 
-      -> { @fiber.resume(false) }.should.raise(IO::TimeoutError)
+        -> { @fiber.resume(false) }.should.raise(IO::TimeoutError)
+      end
     end
 
     it "raises Errno::ECONNREFUSED once #io_wait returns when no server is listening" do

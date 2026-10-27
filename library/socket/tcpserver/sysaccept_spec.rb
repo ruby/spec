@@ -88,13 +88,15 @@ describe "TCPServer#sysaccept with Fiber scheduler" do
     @server.close unless @server.closed?
   end
 
-  it "calls the scheduler's #io_wait with IO::READABLE and no timeout" do
-    @fiber = Fiber.new(blocking: false) { @server.sysaccept }
-    @fiber.resume
+  ruby_version_is "3.4" do
+    it "calls the scheduler's #io_wait with IO::READABLE and no timeout" do
+      @fiber = Fiber.new(blocking: false) { @server.sysaccept }
+      @fiber.resume
 
-    Fiber.scheduler.events.should == [
-      { event: :io_wait, fiber: @fiber, args: [@server, IO::READABLE, nil] }
-    ]
+      Fiber.scheduler.events.should == [
+        { event: :io_wait, fiber: @fiber, args: [@server, IO::READABLE, nil] }
+      ]
+    end
   end
 
   it "returns the file descriptor of the connection once #io_wait reports the server readable" do

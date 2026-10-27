@@ -1441,10 +1441,12 @@ describe "An endless method definition" do
       }.should raise_error(SyntaxError, /setter method cannot be defined in an endless method definition/)
     end
 
-    it "is reported as a parse error by Ripper" do
-      ["def foo=(v) = v", "def []=(k, v) = v"].each do |src|
-        ripper_errors.("class Example; #{src}; end").should ==
-          ["setter method cannot be defined in an endless method definition"]
+    ruby_version_is "3.4" do
+      it "is reported as a parse error by Ripper" do
+        ["def foo=(v) = v", "def []=(k, v) = v"].each do |src|
+          ripper_errors.("class Example; #{src}; end").should ==
+            ["setter method cannot be defined in an endless method definition"]
+        end
       end
     end
   end
