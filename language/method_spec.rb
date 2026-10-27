@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+require_relative 'fixtures/classes'
 
 describe "A method send" do
   evaluate <<-ruby do
@@ -1407,7 +1408,7 @@ describe "An endless method definition" do
   context "with an operator name ending in `=`" do
     it "defines the operator methods" do
       eval <<-ruby
-        class OpEndlessOperator
+        class LanguageSpecs::OpEndlessOperator
           def ==(other) = "equal"
           def ===(other) = "case-equal"
           def !=(other) = "not-equal"
@@ -1416,7 +1417,7 @@ describe "An endless method definition" do
         end
       ruby
 
-      obj = OpEndlessOperator.new
+      obj = LanguageSpecs::OpEndlessOperator.new
       obj.send(:==, 1).should == "equal"
       obj.send(:===, 1).should == "case-equal"
       obj.send(:!=, 1).should == "not-equal"
