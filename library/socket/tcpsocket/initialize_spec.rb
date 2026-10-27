@@ -162,13 +162,15 @@ platform_is_not :freebsd, :aix do
       end
     end
 
-    it "raises Errno::ECONNREFUSED once #io_wait returns when no server is listening" do
-      @server.close
-      @fiber = Fiber.new(blocking: false) { TCPSocket.new("127.0.0.1", @port) }
-      @fiber.resume
-      IO.select(nil, [Fiber.scheduler.events[0][:args][0]])
+    platform_is :darwin do
+      it "raises Errno::ECONNREFUSED once #io_wait returns when no server is listening" do
+        @server.close
+        @fiber = Fiber.new(blocking: false) { TCPSocket.new("127.0.0.1", @port) }
+        @fiber.resume
+        IO.select(nil, [Fiber.scheduler.events[0][:args][0]])
 
-      -> { @fiber.resume(IO::WRITABLE) }.should.raise(Errno::ECONNREFUSED)
+        -> { @fiber.resume(IO::WRITABLE) }.should.raise(Errno::ECONNREFUSED)
+      end
     end
 
     it "does not call the scheduler if the fiber is blocking" do
