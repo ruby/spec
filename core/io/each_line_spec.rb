@@ -177,7 +177,7 @@ describe "IO#each_line" do
     end
 
     it "returns an Enumerator that passes chomp to the method when no block is given" do
-      @io.send(@method, chomp: true).to_a.should == IOSpecs.lines_without_newline_characters
+      @io.each_line(chomp: true).to_a.should == IOSpecs.lines_without_newline_characters
     end
 
     it "raises exception when options passed as Hash" do
@@ -198,7 +198,7 @@ describe "IO#each_line" do
     end
 
     it "returns an Enumerator that passes the separator and chomp to the method when no block is given" do
-      @io.send(@method, " ", chomp: true).to_a.should == IOSpecs.lines_space_separator_without_trailing_spaces
+      @io.each_line( " ", chomp: true).to_a.should == IOSpecs.lines_space_separator_without_trailing_spaces
     end
   end
 
@@ -209,7 +209,7 @@ describe "IO#each_line" do
     end
 
     it "returns an Enumerator that passes the separator, limit and chomp to the method when no block is given" do
-      @io.send(@method, "", 1024, chomp: true).to_a.should == IOSpecs.paragraphs_without_trailing_new_line_characters
+      @io.each_line("", 1024, chomp: true).to_a.should == IOSpecs.paragraphs_without_trailing_new_line_characters
     end
   end
 
