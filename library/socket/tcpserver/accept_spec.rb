@@ -144,10 +144,12 @@ describe "TCPServer#accept with Fiber scheduler" do
   # leaves the fiber parked inside #io_wait, so end its accept before closing:
   # #io_wait returning false makes accept raise IO::TimeoutError.
   after :each do
+    @closer.resume if @closer&.alive?
     begin
       @fiber.resume(false) if @fiber&.alive?
-    rescue IO::TimeoutError
+    rescue IOError
     end
+    @closer.resume if @closer&.alive?
     Fiber.set_scheduler(nil)
     @socket&.close
     @client&.close
@@ -218,20 +220,21 @@ describe "TCPServer#accept with Fiber scheduler" do
     it "calls the scheduler's #fiber_interrupt with an IOError when the server is closed while it waits" do
       @fiber = Fiber.new(blocking: false) { @server.accept }
       @fiber.resume
-      closer = Fiber.new(blocking: false) { @server.close }
-      closer.resume
+      @closer = Fiber.new(blocking: false) { @server.close }
+      @closer.resume
 
       event = Fiber.scheduler.events.last
       event[:event].should == :fiber_interrupt
-      event[:fiber].should == closer
+      event[:fiber].should == @closer
       ruby_version_is "4.0"..."4.1" do
         event[:args][0].should == @fiber
       end
       event[:args][1].should.instance_of?(IOError)
       event[:args][1].message.should == "stream closed in another thread"
 
-      closer.resume
+      @closer.resume
       -> { @fiber.resume(IO::READABLE) while @fiber.alive? }.should.raise(IOError)
+      @closer.resume
     end
   end
 
