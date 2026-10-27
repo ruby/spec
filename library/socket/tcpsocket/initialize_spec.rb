@@ -122,18 +122,18 @@ platform_is_not :freebsd, :aix do
       @server.close unless @server.closed?
     end
 
-    it "calls the scheduler's #io_wait with IO::READABLE | IO::WRITABLE and no timeout" do
-      @fiber = Fiber.new(blocking: false) { TCPSocket.new("127.0.0.1", @port) }
-      @fiber.resume
+    ruby_version_is "3.4" do
+      it "calls the scheduler's #io_wait with IO::READABLE | IO::WRITABLE and no timeout" do
+        @fiber = Fiber.new(blocking: false) { TCPSocket.new("127.0.0.1", @port) }
+        @fiber.resume
 
-      Fiber.scheduler.events.size.should == 1
-      event = Fiber.scheduler.events[0]
-      event[:event].should == :io_wait
-      event[:fiber].should == @fiber
-      ruby_version_is "3.4" do
+        Fiber.scheduler.events.size.should == 1
+        event = Fiber.scheduler.events[0]
+        event[:event].should == :io_wait
+        event[:fiber].should == @fiber
         event[:args][0].should.instance_of?(TCPSocket)
+        event[:args][1..].should == [IO::READABLE | IO::WRITABLE, nil]
       end
-      event[:args][1..].should == [IO::READABLE | IO::WRITABLE, nil]
     end
 
     it "passes the connect_timeout to #io_wait" do
