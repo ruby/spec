@@ -1,4 +1,5 @@
 require_relative '../../../spec_helper'
+require_relative '../../../fixtures/source_range_helpers'
 require_relative '../fixtures/classes'
 require 'coverage'
 
@@ -475,6 +476,8 @@ describe "Coverage.result with branches: true" do
 
   ruby_version_is "3.4" do
     it "reports an elsif as an if that is the else arm of the one before" do
+      skip "parse.y" if parse_y?
+
       result = CoverageSpecs.branch_coverage(<<~'RUBY')
         [1, -1, -2].each do |x|
           if x > 0
@@ -500,6 +503,8 @@ describe "Coverage.result with branches: true" do
     end
 
     it "ends a safe navigation before its empty parentheses" do
+      skip "parse.y" if parse_y?
+
       result = CoverageSpecs.branch_coverage(<<~'RUBY')
         o = nil
         o&.foo()
@@ -524,6 +529,8 @@ describe "Coverage.result with branches: true" do
     end
 
     it "ends a safe navigation before a block argument that is its only argument" do
+      skip "parse.y" if parse_y?
+
       result = CoverageSpecs.branch_coverage(<<~'RUBY')
         o = b = nil
         o&.foo(&b)
@@ -548,6 +555,8 @@ describe "Coverage.result with branches: true" do
     end
 
     it "ends a safe navigation without parentheses before its block argument" do
+      skip "parse.y" if parse_y?
+
       result = CoverageSpecs.branch_coverage(<<~'RUBY')
         o = b = nil
         o&.foo 1, &b
@@ -562,6 +571,8 @@ describe "Coverage.result with branches: true" do
     end
 
     it "reports no branch for a pattern match outside a case" do
+      skip "parse.y" if parse_y?
+
       result = CoverageSpecs.branch_coverage(<<~'RUBY')
         a = 1
         a => Integer
