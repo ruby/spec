@@ -505,12 +505,22 @@ describe "Coverage.result with branches: true" do
         o&.foo()
       RUBY
 
-      result.should == {
-        [:"&.", 0, 2, 0, 2, 6] => {
-          [:then, 1, 2, 0, 2, 6] => 0,
-          [:else, 2, 2, 0, 2, 6] => 1
+      ruby_version_is ""..."4.1" do
+        result.should == {
+          [:"&.", 0, 2, 0, 2, 6] => {
+            [:then, 1, 2, 0, 2, 6] => 0,
+            [:else, 2, 2, 0, 2, 6] => 1
+          }
         }
-      }
+      end
+      ruby_version_is "4.1" do
+        result.should == {
+          [:"&.", 0, 2, 0, 2, 8] => {
+            [:then, 1, 2, 0, 2, 8] => 0,
+            [:else, 2, 2, 0, 2, 8] => 1
+          }
+        }
+      end
     end
 
     it "ends a safe navigation before a block argument that is its only argument" do
@@ -519,12 +529,22 @@ describe "Coverage.result with branches: true" do
         o&.foo(&b)
       RUBY
 
-      result.should == {
-        [:"&.", 0, 2, 0, 2, 6] => {
-          [:then, 1, 2, 0, 2, 6] => 0,
-          [:else, 2, 2, 0, 2, 6] => 1
+      ruby_version_is ""..."4.1" do
+        result.should == {
+          [:"&.", 0, 2, 0, 2, 6] => {
+            [:then, 1, 2, 0, 2, 6] => 0,
+            [:else, 2, 2, 0, 2, 6] => 1
+          }
         }
-      }
+      end
+      ruby_version_is "4.1" do
+        result.should == {
+          [:"&.", 0, 2, 0, 2, 10] => {
+            [:then, 1, 2, 0, 2, 10] => 0,
+            [:else, 2, 2, 0, 2, 10] => 1
+          }
+        }
+      end
     end
 
     it "ends a safe navigation without parentheses before its block argument" do
