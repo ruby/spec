@@ -1,5 +1,5 @@
 require_relative '../../spec_helper'
-require_relative '../fixtures/classes'
+require_relative 'fixtures/classes'
 
 describe "ARGF.each_line" do
   before :each do
@@ -39,7 +39,7 @@ describe "ARGF.each_line" do
   describe "with a separator" do
     it "yields each separated section of all streams" do
       argf [@file1_name, @file2_name] do
-        @argf.send(:each_line, '.').to_a.should ==
+        @argf.each_line('.').to_a.should ==
           (File.readlines(@file1_name, '.') + File.readlines(@file2_name, '.'))
       end
     end
@@ -49,7 +49,7 @@ describe "ARGF.each_line" do
     it "yields each limited section of all streams" do
       argf [@file1_name, @file2_name] do
         lines = []
-        @argf.send(@method, '.', 4) { |s| lines << s }
+        @argf.each_line('.', 4) { |s| lines << s }
         lines.should == (File.readlines(@file1_name, '.', 4) + File.readlines(@file2_name, '.', 4))
       end
     end
@@ -59,7 +59,7 @@ describe "ARGF.each_line" do
     it "yields each line without the trailing separator" do
       argf [@file1_name, @file2_name] do
         lines = []
-        @argf.send(@method, chomp: true) { |s| lines << s }
+        @argf.each_line(chomp: true) { |s| lines << s }
         lines.should == @lines.map(&:chomp)
       end
     end
@@ -67,7 +67,7 @@ describe "ARGF.each_line" do
     it "yields each separated section without the separator when also passed a separator and a limit" do
       argf [@file1_name, @file2_name] do
         lines = []
-        @argf.send(@method, '.', 8, chomp: true) { |s| lines << s }
+        @argf.each_line('.', 8, chomp: true) { |s| lines << s }
         lines.should == (File.readlines(@file1_name, '.', 8, chomp: true) + File.readlines(@file2_name, '.', 8, chomp: true))
       end
     end
@@ -86,14 +86,14 @@ describe "ARGF.each_line" do
 
     it "calls each_line on $stdin and yields each line" do
       lines = []
-      @stdin_argf.send(@method) { |s| lines << s }
+      @stdin_argf.each_line { |s| lines << s }
       lines.should == ["a\n", "b\n"]
       $stdin.calls.should == [[:each_line, [], {}]]
     end
 
     it "passes the separator, limit and keywords to $stdin.each_line" do
       lines = []
-      @stdin_argf.send(@method, "\n", 1, chomp: true) { |s| lines << s }
+      @stdin_argf.each_line("\n", 1, chomp: true) { |s| lines << s }
       lines.should == ["a", "", "b", ""]
       $stdin.calls.should == [[:each_line, ["\n", 1], { chomp: true }]]
     end
@@ -108,13 +108,13 @@ describe "ARGF.each_line" do
 
     it "returns an Enumerator that passes chomp to the method" do
       argf [@file1_name, @file2_name] do
-        @argf.send(@method, chomp: true).to_a.should == @lines.map(&:chomp)
+        @argf.each_line(chomp: true).to_a.should == @lines.map(&:chomp)
       end
     end
 
     it "returns an Enumerator that passes the separator, limit and chomp to the method" do
       argf [@file1_name, @file2_name] do
-        @argf.send(@method, '.', 8, chomp: true).to_a.should ==
+        @argf.each_line('.', 8, chomp: true).to_a.should ==
           (File.readlines(@file1_name, '.', 8, chomp: true) + File.readlines(@file2_name, '.', 8, chomp: true))
       end
     end
