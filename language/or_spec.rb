@@ -45,6 +45,28 @@ describe "The || operator" do
   it "has a higher precedence than 'return' in 'return true || false'" do
     -> { return false || true }.call.should == true
   end
+
+  ruby_version_is "4.0" do
+    it "continues the previous line when it begins the next line" do
+      code = <<~CODE
+        false
+          || 2
+        CODE
+
+      eval(code).should == 2
+    end
+
+    it "short-circuits when it begins the next line" do
+      code = <<~CODE
+        x = nil
+        1
+          || (x = 2)
+        x
+        CODE
+
+      eval(code).should == nil
+    end
+  end
 end
 
 describe "The or operator" do
@@ -86,5 +108,27 @@ describe "The or operator" do
 
   it "has a lower precedence than 'return' in 'return true or false'" do
     -> { eval "return true or false" }.should.raise(SyntaxError, /void value expression/)
+  end
+
+  ruby_version_is "4.0" do
+    it "continues the previous line when it begins the next line" do
+      code = <<~CODE
+        false
+          or 2
+        CODE
+
+      eval(code).should == 2
+    end
+
+    it "short-circuits when it begins the next line" do
+      code = <<~CODE
+        x = nil
+        1
+          or (x = 2)
+        x
+        CODE
+
+      eval(code).should == nil
+    end
   end
 end
