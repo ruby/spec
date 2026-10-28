@@ -100,7 +100,7 @@ describe 'TCPSocket#initialize' do
 end
 
 # A nonblocking connect to loopback reports EINPROGRESS, as in Socket#connect_nonblock's specs
-platform_is_not :freebsd, :aix do
+platform_is_not :windows, :freebsd, :aix do
   describe "TCPSocket#initialize with Fiber scheduler" do
     require_relative '../../../core/fiber/fixtures/scheduler'
 
