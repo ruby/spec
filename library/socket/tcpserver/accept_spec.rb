@@ -131,6 +131,7 @@ describe 'TCPServer#accept' do
   end
 end
 
+platform_is_not :windows do # Hangs on Windows
 describe "TCPServer#accept with Fiber scheduler" do
   require_relative '../../../core/fiber/fixtures/scheduler'
 
@@ -252,4 +253,5 @@ describe "TCPServer#accept with Fiber scheduler" do
   ensure
     @client = connector&.value
   end
+end
 end

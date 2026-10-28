@@ -49,6 +49,7 @@ describe 'UNIXServer#sysaccept' do
   end
 end
 
+platform_is_not :windows do # Hangs on Windows
 describe "UNIXServer#sysaccept with Fiber scheduler" do
   require_relative '../../../core/fiber/fixtures/scheduler'
 
@@ -111,4 +112,5 @@ describe "UNIXServer#sysaccept with Fiber scheduler" do
   ensure
     @client = connector&.value
   end
+end
 end
