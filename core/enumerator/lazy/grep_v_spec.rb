@@ -1,5 +1,6 @@
 require_relative '../../../spec_helper'
 require_relative 'fixtures/classes'
+require_relative 'shared/packed_propagation'
 
 describe "Enumerator::Lazy#grep_v" do
   before(:each) do
@@ -119,5 +120,14 @@ describe "Enumerator::Lazy#grep_v" do
     s = 0..Float::INFINITY
     s.lazy.grep_v(String).first(100).should ==
       s.first(100).grep_v(String)
+  end
+end
+
+describe "Enumerator::Lazy#grep_v" do
+  describe "propagating the source yield arity to a later stage" do
+    before :each do
+      @stage = -> e { e.grep_v(Float) }
+    end
+    it_behaves_like :enumerator_lazy_packed_propagation, nil
   end
 end

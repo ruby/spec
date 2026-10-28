@@ -1,6 +1,7 @@
 require_relative '../../../spec_helper'
 require_relative 'fixtures/classes'
 require_relative '../../enumerable/shared/value_packing'
+require_relative 'shared/packed_propagation'
 
 describe "Enumerator::Lazy#select" do
   describe "value packing of source yields (matches Enumerable#select)" do
@@ -107,5 +108,14 @@ describe "Enumerator::Lazy#select" do
     eval_count.should == 1
     enum.next
     eval_count.should == 1
+  end
+end
+
+describe "Enumerator::Lazy#select" do
+  describe "propagating the source yield arity to a later stage" do
+    before :each do
+      @stage = -> e { e.select { true } }
+    end
+    it_behaves_like :enumerator_lazy_packed_propagation, nil
   end
 end
