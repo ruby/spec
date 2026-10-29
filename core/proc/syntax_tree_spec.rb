@@ -2,6 +2,8 @@ require_relative '../../spec_helper'
 require_relative '../../fixtures/source_range_helpers'
 
 ruby_version_is "4.1" do
+  require_relative 'fixtures/syntax_tree' # avoids warnings on Ruby 3.3
+
   describe "Proc#syntax_tree" do
     before :each do
       skip "parse.y" unless syntax_tree_returns_prism_node
@@ -38,25 +40,23 @@ ruby_version_is "4.1" do
       node.should.is_a?(Ruby::Prism::LambdaNode)
     end
 
-    quarantine! do # NoMethodError: undefined method 'start_line' for nil
     it "does not return implicit parameter nodes" do
       # Interesting because the BlockNode and the ItParametersNode/NumberedParametersNode are fully overlapping
-      node = eval('-> { it }.syntax_tree') # emits a warning on Ruby 3.3
-      node.start_line.should == __LINE__ - 1
+      node = ProcSpecs::SyntaxTree.lambda_it.syntax_tree
+      node.start_line.should == ProcSpecs::SyntaxTree::LAMBDA_IT_LINE
       node.should.is_a?(Ruby::Prism::LambdaNode)
 
       node = -> { _1 }.syntax_tree
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Ruby::Prism::LambdaNode)
 
-      node = eval('proc { it }.syntax_tree') # emits a warning on Ruby 3.3
-      node.start_line.should == __LINE__ - 1
+      node = ProcSpecs::SyntaxTree.proc_it.syntax_tree
+      node.start_line.should == ProcSpecs::SyntaxTree::PROC_IT_LINE
       node.should.is_a?(Ruby::Prism::CallNode)
 
       node = proc { _1 }.syntax_tree
       node.start_line.should == __LINE__ - 1
       node.should.is_a?(Ruby::Prism::CallNode)
-    end
     end
 
     it "returns a ForNode for a for-loop block" do
