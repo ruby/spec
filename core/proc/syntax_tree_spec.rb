@@ -6,7 +6,7 @@ ruby_version_is "4.1" do
 
   describe "Proc#syntax_tree" do
     before :each do
-      skip "parse.y" unless syntax_tree_returns_prism_node
+      skip "parse.y" if parse_y?
     end
 
     def return_block(&b)

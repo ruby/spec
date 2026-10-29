@@ -560,7 +560,7 @@ ruby_version_is "4.1" do
           "destructuring block parameters",
           "rescue with an attribute target",
         ]
-        skip "parse.y" if parse_y_failures.include?(description) && !syntax_tree_returns_prism_node
+        skip "parse.y" if parse_y_failures.include?(description) && parse_y?
 
         capture_backtrace_location_source_range(source, prism_class, frame: frame || 0)
       end
