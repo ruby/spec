@@ -720,6 +720,15 @@ describe "Predefined global $/" do
       $/ = str
       $/.should.equal?(str)
     end
+
+    it "assigns the default separator if the given String is equal to it" do
+      default = "\n"
+      str = "\n".dup.freeze
+      $/ = str
+      $/.should_not.equal?(str)
+      $/.should.frozen?
+      $/.should == default
+    end
   end
 
   it "can be assigned nil" do
@@ -800,6 +809,15 @@ describe "Predefined global $-0" do
       str = "abc".freeze
       $-0 = str
       $-0.should.equal?(str)
+    end
+
+    it "assigns the default separator if the given String is equal to it" do
+      default = "\n"
+      str = "\n".dup.freeze
+      $-0 = str
+      $-0.should_not.equal?(str)
+      $-0.should.frozen?
+      $-0.should == default
     end
   end
 
