@@ -19,3 +19,15 @@ describe "Kernel.Pathname" do
     Kernel.public_methods(false).should.include?(:Pathname)
   end
 end
+
+ruby_version_is "4.0" do
+  describe "Pathname" do
+    it "is a core class available without require 'pathname'" do
+      ruby_exe("print defined?(Pathname)", options: "--disable-gems").should == "constant"
+    end
+
+    it "provides Kernel#Pathname without require 'pathname'" do
+      ruby_exe("print Pathname('a/b').class", options: "--disable-gems").should == "Pathname"
+    end
+  end
+end

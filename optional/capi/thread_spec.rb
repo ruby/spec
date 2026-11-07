@@ -191,6 +191,32 @@ describe "C-API Thread function" do
         @t.ruby_thread_has_gvl_p.should == true
       end
     end
+
+    describe "rb_thread_call_with_gvl" do
+      it "works when the current thread already has the GVL" do
+        @t.rb_thread_call_with_gvl.should == "called with GVL"
+      end
+
+      it "works when called from a function running without the GVL" do
+        @t.rb_thread_call_with_gvl_from_without_gvl.should == "called with GVL"
+      end
+    end
+
+    describe "rb_thread_fd_close" do
+      it "is a no-op and does not close the file descriptor" do
+        r, w = IO.pipe
+        begin
+          -> { @t.rb_thread_fd_close(w.fileno) }.should complain(/rb_thread_fd_close is deprecated/)
+          w.should_not.closed?
+          w.write("a")
+          w.flush
+          r.read(1).should == "a"
+        ensure
+          w.close unless w.closed?
+          r.close unless r.closed?
+        end
+      end
+    end
   end
 
   ruby_version_is "4.1" do

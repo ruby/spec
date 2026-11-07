@@ -644,4 +644,22 @@ describe "Regexp with character classes" do
     /\X+/.match("\u{1F3F3}\u{FE0F}\u{200D}\u{1F308}\u{1F469}\u{200D}\u{1F469}\u{200D}\u{1F467}\u{200D}\u{1F466}")
       .to_a.should == ["🏳️‍🌈👩‍👩‍👧‍👦"]
   end
+
+  ruby_version_is "4.0" do
+    # Regexp.new is used because a regexp literal with an unknown property is a SyntaxError when loading the file
+    it "supports \p{Age=17.0}" do
+      "\u{A7CE}".should =~ Regexp.new('\p{Age=17.0}')
+      "\u{A7CE}".should_not =~ Regexp.new('\p{Age=16.0}')
+    end
+
+    it "supports the Sidetic script added in Unicode 17" do
+      "\u{10940}".should =~ Regexp.new('\p{Sidetic}')
+      "\u{10940}".should =~ /\p{Alphabetic}/
+    end
+
+    it "supports new Emoji 17 characters" do
+      "\u{1FAEA}".should =~ /\p{Emoji}/
+      "\u{1FAEA}".should =~ /\p{Emoji_Presentation}/
+    end
+  end
 end

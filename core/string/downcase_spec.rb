@@ -26,6 +26,16 @@ describe "String#downcase" do
       downcased.bytesize.should == 4
       downcased.ascii_only?.should == true
     end
+
+    ruby_version_is "4.0" do
+      it "downcases U+A7CE added in Unicode 17" do
+        "\u{A7CE}".downcase.should == "\u{A7CF}"
+      end
+
+      it "downcases BERIA ERFE letters added in Unicode 17" do
+        "\u{16EA0}".downcase.should == "\u{16EBB}"
+      end
+    end
   end
 
   describe "ASCII-only case mapping" do

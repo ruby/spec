@@ -1,5 +1,6 @@
 #include "ruby.h"
 #include "ruby/thread.h"
+#include "ruby/io.h"
 #include "rubyspec.h"
 
 #include <math.h>
@@ -172,6 +173,38 @@ static VALUE thread_spec_ruby_thread_has_gvl_p(VALUE self) {
 }
 #endif
 
+#ifdef RUBY_VERSION_IS_4_0
+static void *with_gvl_func(void *data) {
+  return (void *)rb_str_new_cstr("called with GVL");
+}
+
+/* Since Ruby 4.0 rb_thread_call_with_gvl() also works when the GVL is already held. */
+static VALUE thread_spec_rb_thread_call_with_gvl(VALUE self) {
+  return (VALUE)rb_thread_call_with_gvl(with_gvl_func, NULL);
+}
+
+static void *without_gvl_calling_with_gvl_func(void *data) {
+  return rb_thread_call_with_gvl(with_gvl_func, NULL);
+}
+
+static VALUE thread_spec_rb_thread_call_with_gvl_from_without_gvl(VALUE self) {
+  return (VALUE)rb_thread_call_without_gvl(without_gvl_calling_with_gvl_func, NULL, RUBY_UBF_IO, NULL);
+}
+
+/* Since Ruby 4.0 rb_thread_fd_close() is deprecated and a no-op. */
+static VALUE thread_spec_rb_thread_fd_close(VALUE self, VALUE fd) {
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+  rb_thread_fd_close(NUM2INT(fd));
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
+  return Qnil;
+}
+#endif
+
 #ifdef RUBY_VERSION_IS_4_1
 struct nogvl_pending_intr_fail_data {
   int called;
@@ -214,6 +247,9 @@ void Init_thread_spec(void) {
   rb_define_method(cls,  "ruby_native_thread_p_new_thread", thread_spec_ruby_native_thread_p_new_thread, 0);
 #ifdef RUBY_VERSION_IS_4_0
   rb_define_method(cls,  "ruby_thread_has_gvl_p", thread_spec_ruby_thread_has_gvl_p, 0);
+  rb_define_method(cls,  "rb_thread_call_with_gvl", thread_spec_rb_thread_call_with_gvl, 0);
+  rb_define_method(cls,  "rb_thread_call_with_gvl_from_without_gvl", thread_spec_rb_thread_call_with_gvl_from_without_gvl, 0);
+  rb_define_method(cls,  "rb_thread_fd_close", thread_spec_rb_thread_fd_close, 1);
 #endif
 #ifdef RUBY_VERSION_IS_4_1
   rb_define_method(cls,  "rb_nogvl_pending_intr_fail", thread_spec_rb_nogvl_pending_intr_fail, 0);
