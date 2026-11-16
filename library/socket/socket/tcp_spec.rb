@@ -109,17 +109,19 @@ platform_is_not :windows do
           @server.close
         end
 
-        it 'connects over IPv4 when only the IPv4 address is listening' do
-          @client = Socket.tcp('localhost', @port, connect_timeout: 10)
+        ruby_version_is "3.4" do
+          it 'connects over IPv4 when only the IPv4 address is listening' do
+            @client = Socket.tcp('localhost', @port, connect_timeout: 10)
 
-          @client.remote_address.ip_address.should == '127.0.0.1'
-          @client.write('hello').should == 5
+            @client.remote_address.ip_address.should == '127.0.0.1'
+            @client.write('hello').should == 5
 
-          connection = @server.accept
-          begin
-            connection.read(5).should == 'hello'
-          ensure
-            connection.close
+            connection = @server.accept
+            begin
+              connection.read(5).should == 'hello'
+            ensure
+              connection.close
+            end
           end
         end
       end
