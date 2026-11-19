@@ -38,6 +38,27 @@ describe "The '&&' statement" do
     (() && ()).should == nil
   end
 
+  ruby_version_is "4.0" do
+    it "continues the previous line when it begins the next line" do
+      code = <<~CODE
+        1
+          && 2
+        CODE
+
+      eval(code).should == 2
+    end
+
+    it "short-circuits when it begins the next line" do
+      code = <<~CODE
+        x = nil
+        false
+          && (x = 1)
+        x
+        CODE
+
+      eval(code).should == nil
+    end
+  end
 end
 
 describe "The 'and' statement" do
@@ -77,4 +98,25 @@ describe "The 'and' statement" do
     (() and ()).should == nil
   end
 
+  ruby_version_is "4.0" do
+    it "continues the previous line when it begins the next line" do
+      code = <<~CODE
+        1
+          and 2
+        CODE
+
+      eval(code).should == 2
+    end
+
+    it "short-circuits when it begins the next line" do
+      code = <<~CODE
+        x = nil
+        false
+          and (x = 1)
+        x
+        CODE
+
+      eval(code).should == nil
+    end
+  end
 end

@@ -100,3 +100,9 @@ end
 module DetailedMessageSpec
   C = Class.new(RuntimeError)
 end
+
+module ExceptionSpecs
+  class Arity
+    def bar(a); end
+  end
+end
